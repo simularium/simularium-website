@@ -1,0 +1,48 @@
+@import "../../styles/colors.css";
+.sider {
+    height: 100vh;
+    left: 0;
+    z-index: 3000;
+    padding-bottom: 0;
+}
+.sider.right {
+    right: 0;
+    left: inherit;
+}
+
+.sider :global(.ant-layout-sider-children) {
+    overflow: scroll;
+}
+
+:global(.ant-collapse),
+:global(.ant-collapse-header),
+:global(.ant-collapse > .ant-collapse-item:last-child),
+:global(.ant-collapse > .ant-collapse-item:last-child > .ant-collapse-header)
+{
+    border-radius: 0;
+}
+
+.sider :global(.ant-collapse) {
+    border-top: 0;
+    border-left: 0;
+}
+.sider :global(.ant-layout-sider-trigger) {
+    position: inherit;
+}
+
+.sider :global(.ant-layout-sider-zero-width-trigger) {
+    position: absolute;
+    top: 0px;
+    border:0.5px solid var(--border-gray);
+
+}
+
+.sider.left :global(.ant-layout-sider-zero-width-trigger) {
+    right: -30px;
+}
+
+.sider i {
+    position: absolute;
+    top: 50%;
+    left: 3.5px;
+}
