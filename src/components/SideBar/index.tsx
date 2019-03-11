@@ -18,6 +18,7 @@ export default class App extends React.Component<SiderProps, {}> {
                 collapsedWidth={0}
                 trigger={<Icon type="pause" />}
                 reverseArrow={type === "right"}
+                width={400}
             >
                 Sider
             </Sider>

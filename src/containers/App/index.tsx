@@ -10,11 +10,11 @@ const styles = require("./style.css");
 export default class App extends React.Component<{}, {}> {
     public render(): JSX.Element {
         return (
-            <Layout>
-                <Header>Header</Header>
-                <Layout>
+            <Layout tagName="main">
+                <Header tagName="header">Header</Header>
+                <Layout tagName="main">
                     <SideBar type="left">Sider</SideBar>
-                    <Content>Content</Content>
+                    <Content tagName="main">Content</Content>
                     <SideBar type="right">Sider</SideBar>
                 </Layout>
             </Layout>
