@@ -8,9 +8,10 @@ const styles = require("./style.css");
 interface SiderProps {
     type: string;
 }
-export default class App extends React.Component<SiderProps, {}> {
+
+export default class SideBar extends React.Component<SiderProps, {}> {
     public render(): JSX.Element {
-        const { type } = this.props;
+        const { type, children } = this.props;
         return (
             <Sider
                 className={[styles.sider, styles[type]].join(" ")}
@@ -20,7 +21,7 @@ export default class App extends React.Component<SiderProps, {}> {
                 reverseArrow={type === "right"}
                 width={400}
             >
-                Sider
+                {children}
             </Sider>
         );
     }
