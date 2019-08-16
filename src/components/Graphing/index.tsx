@@ -1,30 +1,41 @@
 import React from "react";
-import { VictoryChart, VictoryLine, VictoryCursorContainer } from "victory";
+import {
+    VictoryChart,
+    VictoryLine,
+    VictoryCursorContainer,
+    VictoryAxis,
+} from "victory";
+import data from "./data_resultsUI.js";
+import { map } from "lodash";
 
 export default class Graphing extends React.Component<{}, {}> {
-    public render(): JSX.Element {
-        return (
-            <VictoryChart>
-                <VictoryLine
-                    style={{
-                        data: { stroke: "#c43a31" },
-                        parent: { border: "1px solid #ccc" },
-                    }}
-                    data={[
-                        { x: 0, y: 0 },
-                        { x: 25000, y: 318 },
-                        { x: 50000, y: 635 },
-                        { x: 75000, y: 1070 },
-                        { x: 100000, y: 1623 },
-                    ]}
-                    containerComponent={
-                        <VictoryCursorContainer
-                            cursorDimension="x"
-                            cursorLabel={(d: any) => `${d.x}, ${d.y}`}
-                        />
-                    }
-                />
-            </VictoryChart>
-        );
+    public render(): JSX.Element[] {
+        return map(data, (chart: any) => {
+            return (
+                <VictoryChart>
+                    <VictoryLine
+                        style={{
+                            data: { stroke: "#c43a31" },
+                            parent: { border: "1px solid #ccc" },
+                        }}
+                        data={map(chart.x, (x, index) => {
+                            return {
+                                x,
+                                y: chart.y[index],
+                            };
+                        })}
+                        containerComponent={
+                            <VictoryCursorContainer
+                                cursorDimension="x"
+                                cursorLabel={(d: any) => `${d.x}, ${d.y}`}
+                            />
+                        }
+                    />
+                    <VictoryAxis dependentAxis label={chart["y-label"]} />
+
+                    <VictoryAxis label={chart["x-label"]} />
+                </VictoryChart>
+            );
+        });
     }
 }
