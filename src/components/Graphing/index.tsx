@@ -27,7 +27,9 @@ interface ChartObject {
 }
 
 export default class Graphing extends React.Component<GraphingProps, {}> {
-    public render(): JSX.Element[] {
+    // NOTE: the bool here is for the conditional in the map function.
+    // technically that returns null and doesn't render, but it seems typescript doesnt know that
+    public render(): (JSX.Element | boolean)[] {
         const { changeTime, time } = this.props;
 
         return map(data, (chart: ChartObject) => {
