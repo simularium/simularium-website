@@ -1,26 +1,27 @@
 import * as React from "react";
 import { Layout } from "antd";
 
-const { Header, Content } = Layout;
-
 import SideBar from "../../components/SideBar";
 import ResultsPanel from "../ResultsPanel";
-import ModelPanel from "../ModelPanel/index";
+import ModelPanel from "../ModelPanel";
 import ThreeDViewer from "../../components/Viewer";
+import CenterPanel from "../CenterPanel";
+
+const { Header, Content } = Layout;
 
 const styles = require("./style.css");
 
 export default class App extends React.Component<{}, {}> {
     public render(): JSX.Element {
         return (
-            <Layout tagName="main">
+            <Layout tagName="main" className={styles.container}>
                 <Header tagName="header">Header</Header>
                 <Layout tagName="main">
                     <SideBar type="left">
                         <ModelPanel />
                     </SideBar>
                     <Content tagName="main">
-                        <ThreeDViewer />
+                        <CenterPanel />
                     </Content>
                     <SideBar type="right">
                         <ResultsPanel />

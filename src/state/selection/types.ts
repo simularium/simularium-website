@@ -20,3 +20,8 @@ export interface SelectMetadataAction {
     payload: string | number;
     type: string;
 }
+
+export interface ChangeTimeAction {
+    payload: number;
+    type: string;
+}

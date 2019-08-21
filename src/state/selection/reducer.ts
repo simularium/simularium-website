@@ -4,16 +4,23 @@ import { AnyAction } from "redux";
 import { TypeToDescriptionMap } from "../types";
 import { makeReducer } from "../util";
 
-import { DESELECT_FILE, SELECT_FILE, SELECT_METADATA } from "./constants";
+import {
+    DESELECT_FILE,
+    SELECT_FILE,
+    SELECT_METADATA,
+    CHANGE_TIME_HEAD,
+} from "./constants";
 import {
     DeselectFileAction,
     SelectFileAction,
     SelectionStateBranch,
     SelectMetadataAction,
+    ChangeTimeAction,
 } from "./types";
 
 export const initialState = {
     files: [],
+    time: 0,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -33,6 +40,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
             files: [...state.files, ...castArray(action.payload)],
         }),
     },
+
     [SELECT_METADATA]: {
         accepts: (action: AnyAction): action is SelectMetadataAction =>
             action.type === SELECT_METADATA,
@@ -42,6 +50,14 @@ const actionToConfigMap: TypeToDescriptionMap = {
         ) => ({
             ...state,
             [action.key]: action.payload,
+        }),
+    },
+    [CHANGE_TIME_HEAD]: {
+        accepts: (action: AnyAction): action is ChangeTimeAction =>
+            action.type === CHANGE_TIME_HEAD,
+        perform: (state: SelectionStateBranch, action: ChangeTimeAction) => ({
+            ...state,
+            time: action.payload,
         }),
     },
 };

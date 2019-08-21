@@ -1,20 +1,33 @@
 import * as ReactDOM from "react-dom";
 import * as React from "react";
+import AgentVizViewer from "agentviz-viewer";
 
-import AgentVizViewer, { AgentSimController } from "agentviz-viewer";
+import PlaybackControls from "../PlaybackControls";
+import { changeTime } from "../../state/selection/actions";
+
 // import './style.css';
 
-const netConnectionSettings = {
-    serverIp: "52.15.70.94",
-    serverPort: 9002,
-};
+interface ThreeDViewerProps {
+    time: number;
+    agentSim: any;
+}
 
-const agentSim = new AgentSimController(netConnectionSettings, {
-    trajectoryPlaybackFile: "actin5-1.h5",
-});
+interface ThreeDViewerState {
+    isPlaying: boolean;
+}
 
-class ThreeDViewer extends React.Component {
+class ThreeDViewer extends React.Component<
+    ThreeDViewerProps,
+    ThreeDViewerState
+> {
+    constructor(props: ThreeDViewerProps) {
+        super(props);
+        this.state = {
+            isPlaying: true,
+        };
+    }
     render() {
+        const { agentSim, time } = this.props;
         return (
             <React.Fragment>
                 <button onClick={() => agentSim.start()}>Start</button>
