@@ -4,7 +4,6 @@ import { Layout } from "antd";
 import SideBar from "../../components/SideBar";
 import ResultsPanel from "../ResultsPanel";
 import ModelPanel from "../ModelPanel";
-import ThreeDViewer from "../../components/Viewer";
 import CenterPanel from "../CenterPanel";
 
 const { Header, Content } = Layout;

@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Card, Collapse } from "antd";
 import { ActionCreator } from "redux";
+import CollaspableMenu from "../../components/CollapseableMenu";
 
 import Graphing from "../../components/Graphing";
 import { getCurrentTime } from "../../state/selection/selectors";
@@ -8,37 +8,38 @@ import { State } from "../../state/types";
 import { connect } from "react-redux";
 import { changeTime } from "../../state/selection/actions";
 import { ChangeTimeAction } from "../../state/selection/types";
-
-const { Panel } = Collapse;
-
-const styles = require("./style.css");
-const panelKeys = ["graphing", "statistics"];
+import { requestMetadata } from "../../state/metadata/actions";
+import { RequestAction } from "../../state/metadata/types";
+import { getMetadata } from "../../state/metadata/selectors";
 
 interface ResultsPanelProps {
+    graphData: any;
+    requestMetadata: ActionCreator<RequestAction>;
     time: number;
     changeTime: ActionCreator<ChangeTimeAction>;
 }
 
 class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
+    public componentDidMount() {
+        const { requestMetadata } = this.props;
+        requestMetadata();
+    }
     public render(): JSX.Element {
-        const { changeTime, time } = this.props;
+        const { changeTime, time, graphData } = this.props;
         return (
-            <Card title="Analysis" className={styles.container}>
-                <Collapse defaultActiveKey={panelKeys}>
-                    <Panel
-                        showArrow={false}
-                        key={panelKeys[0]}
-                        header="Graphing"
-                    >
-                        <Graphing time={time} changeTime={changeTime} />
-                    </Panel>
-                    <Panel
-                        showArrow={false}
-                        key={panelKeys[1]}
-                        header="Statistics"
-                    />
-                </Collapse>
-            </Card>
+            <CollaspableMenu
+                panelKeys={["graphing", "statistics"]}
+                mainTitle="Analysis"
+                subTitles={["Graphing", "Statistics"]}
+                content={[
+                    <Graphing
+                        time={time}
+                        changeTime={changeTime}
+                        graphData={graphData}
+                    />,
+                    null,
+                ]}
+            />
         );
     }
 }
@@ -46,11 +47,13 @@ class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
 function mapStateToProps(state: State) {
     return {
         time: getCurrentTime(state),
+        graphData: getMetadata(state),
     };
 }
 
 const dispatchToPropsMap = {
     changeTime,
+    requestMetadata,
 };
 
 export default connect(
