@@ -68,9 +68,8 @@ task lint(type: NodeTask) {
 
 task start(type: NodeTask) {
     dependsOn npmInstall
-
     script = file("${npmBin}/webpack-dev-server")
-    args = "--config ./webpack/webpack.config.js".tokenize()
+    args = "--config ./webpack/webpack.config.js  --env.env ${env}".tokenize()
 }
 
 task test(type: NodeTask) {

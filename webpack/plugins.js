@@ -5,6 +5,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 const webpack = require('webpack');
 
 const Env = require('./constants').Env;
@@ -35,6 +37,11 @@ const PLUGINS_BY_ENV = {
     ],
     [Env.STAGE]: [
         new webpack.NamedModulesPlugin()
+    ],
+    [Env.DEVELOPMENT]: [
+        new CopyWebpackPlugin([
+            { from: 'src/data', to: 'api/v1' }
+        ]), 
     ]
 };
 
