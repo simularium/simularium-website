@@ -7,13 +7,13 @@ import {
     VictoryTheme,
     VictoryScatter,
 } from "victory";
-import data from "./data_resultsUI.js";
 import { map, min, max } from "lodash";
 import { ActionCreator } from "redux";
 
 import { ChangeTimeAction } from "../../state/selection/types.js";
 
 interface GraphingProps {
+    graphData: any;
     time: number;
     changeTime: ActionCreator<ChangeTimeAction>;
 }
@@ -30,9 +30,8 @@ export default class Graphing extends React.Component<GraphingProps, {}> {
     // NOTE: the bool here is for the conditional in the map function.
     // technically that returns null and doesn't render, but it seems typescript doesnt know that
     public render(): (JSX.Element | boolean)[] {
-        const { changeTime, time } = this.props;
-
-        return map(data, (chart: ChartObject) => {
+        const { changeTime, time, graphData } = this.props;
+        return map(graphData, (chart: ChartObject) => {
             return (
                 chart.type === "scatterplot" && (
                     <VictoryChart
