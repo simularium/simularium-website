@@ -37,7 +37,7 @@ const netConnectionSettings = {
 };
 
 const agentSim = new AgentSimController(netConnectionSettings, {
-    trajectoryPlaybackFile: "actin5-1.h5",
+    trajectoryPlaybackFile: "actin19.h5",
 });
 
 const interval = 500;
@@ -62,6 +62,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             isInitialPlay: true,
             highlightId: -1,
             particleTypeIds: [],
+            height: 0,
+            width: 0,
         };
     }
 
@@ -137,7 +139,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             agentSim.start();
             this.setState({ isInitialPlay: false });
         } else {
-            agentSim.playFromCache(time / 1000);
+            agentSim.playFromTime(time);
         }
         this.setState({ isPlaying: true });
     }
@@ -149,7 +151,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public receiveTimeChange(timeData: any) {
         const { changeTime } = this.props;
-        return changeTime(timeData.time / 1000);
+        return changeTime(timeData.time);
     }
 
     public render(): JSX.Element {
