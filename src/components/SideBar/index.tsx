@@ -7,11 +7,12 @@ const styles = require("./style.css");
 
 interface SiderProps {
     type: string;
+    onCollapse: (open: boolean) => void;
 }
 
 export default class SideBar extends React.Component<SiderProps, {}> {
     public render(): JSX.Element {
-        const { type, children } = this.props;
+        const { type, children, onCollapse } = this.props;
         return (
             <Sider
                 className={[styles.sider, styles[type]].join(" ")}
@@ -20,6 +21,7 @@ export default class SideBar extends React.Component<SiderProps, {}> {
                 trigger={<Icon type="pause" />}
                 reverseArrow={type === "right"}
                 width={400}
+                onCollapse={onCollapse}
             >
                 {children}
             </Sider>

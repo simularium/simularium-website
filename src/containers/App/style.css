@@ -1,8 +1,14 @@
+@import "../../styles/constants.css";
+
 .container {
     all: initial;
     width: 100%;
     height: 100%;
-
+    overflow: hidden;
     display: flex;
     flex-direction: column;
+}
+.container :global(.ant-layout-content) {
+    margin: 0 30px;
+    height: calc(100vh - var(--header-height));
 }

@@ -14,12 +14,11 @@ const requestMetadata = createLogic({
         done: () => void
     ) {
         const { baseApiUrl, httpClient } = deps;
-
         httpClient
-            .get(`${baseApiUrl}/metadata`)
-            .then((metadata: AxiosResponse) =>
-                dispatch(receiveMetadata(metadata.data))
-            )
+            .get(`${baseApiUrl}/metadata.json`)
+            .then((metadata: AxiosResponse) => {
+                dispatch(receiveMetadata(metadata.data));
+            })
             .catch((reason) => {
                 console.log(reason);
             })

@@ -4,16 +4,26 @@ import { AnyAction } from "redux";
 import { TypeToDescriptionMap } from "../types";
 import { makeReducer } from "../util";
 
-import { DESELECT_FILE, SELECT_FILE, SELECT_METADATA } from "./constants";
+import {
+    DESELECT_FILE,
+    SELECT_FILE,
+    SELECT_METADATA,
+    CHANGE_TIME_HEAD,
+    SIDE_PANEL_COLLAPSED,
+} from "./constants";
 import {
     DeselectFileAction,
     SelectFileAction,
     SelectionStateBranch,
     SelectMetadataAction,
+    ChangeTimeAction,
+    ChangeNumberCollapsedPanelsAction,
 } from "./types";
 
 export const initialState = {
     files: [],
+    time: 0,
+    numberPanelsCollapsed: 0,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -33,6 +43,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
             files: [...state.files, ...castArray(action.payload)],
         }),
     },
+
     [SELECT_METADATA]: {
         accepts: (action: AnyAction): action is SelectMetadataAction =>
             action.type === SELECT_METADATA,
@@ -42,6 +53,27 @@ const actionToConfigMap: TypeToDescriptionMap = {
         ) => ({
             ...state,
             [action.key]: action.payload,
+        }),
+    },
+    [CHANGE_TIME_HEAD]: {
+        accepts: (action: AnyAction): action is ChangeTimeAction =>
+            action.type === CHANGE_TIME_HEAD,
+        perform: (state: SelectionStateBranch, action: ChangeTimeAction) => ({
+            ...state,
+            time: action.payload,
+        }),
+    },
+    [SIDE_PANEL_COLLAPSED]: {
+        accepts: (
+            action: AnyAction
+        ): action is ChangeNumberCollapsedPanelsAction =>
+            action.type === SIDE_PANEL_COLLAPSED,
+        perform: (
+            state: SelectionStateBranch,
+            action: ChangeNumberCollapsedPanelsAction
+        ) => ({
+            ...state,
+            numberPanelsCollapsed: state.numberPanelsCollapsed + action.payload,
         }),
     },
 };

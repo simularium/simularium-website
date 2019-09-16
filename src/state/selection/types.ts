@@ -20,3 +20,13 @@ export interface SelectMetadataAction {
     payload: string | number;
     type: string;
 }
+
+export interface ChangeTimeAction {
+    payload: number;
+    type: string;
+}
+
+export interface ChangeNumberCollapsedPanelsAction {
+    payload: number;
+    type: string;
+}
