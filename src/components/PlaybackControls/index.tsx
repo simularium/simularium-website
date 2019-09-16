@@ -1,9 +1,5 @@
 import React from "react";
-import { Icon, Button } from "antd";
-
-const WHITE_SMOKE = "#eee";
-const GRAY = "#878c88";
-const GREEN = "#72d687";
+import { Button } from "antd";
 
 interface PlayBackProps {
     playHandler: () => void;
@@ -15,8 +11,8 @@ interface PlayBackProps {
 }
 
 const PlayBackControls = ({
-    playHandler,
     time,
+    playHandler,
     pauseHandler,
     prevHandler,
     isPlaying,
@@ -30,7 +26,11 @@ const PlayBackControls = ({
             >
                 {isPlaying ? "Pause" : "Play"}{" "}
             </Button>
-            <Button icon="step-backward" onClick={prevHandler}>
+            <Button
+                icon="step-backward"
+                onClick={prevHandler}
+                disabled={time === 0}
+            >
                 Back{" "}
             </Button>
             <Button icon="step-forward" onClick={nextHandler}>
