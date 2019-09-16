@@ -1,8 +1,6 @@
 import * as React from "react";
 import CollaspableMenu from "../../components/CollapseableMenu";
 
-const styles = require("./style.css");
-
 export default class ModelPanel extends React.Component<{}, {}> {
     public render(): JSX.Element {
         return (

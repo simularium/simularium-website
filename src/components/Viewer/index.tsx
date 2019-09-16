@@ -1,15 +1,14 @@
-import * as ReactDOM from "react-dom";
 import * as React from "react";
 import AgentVizViewer from "agentviz-viewer";
 
-import PlaybackControls from "../PlaybackControls";
-import { changeTime } from "../../state/selection/actions";
-
-// import './style.css';
-
 interface ThreeDViewerProps {
-    time: number;
     agentSim: any;
+    onTimeChange: any;
+    time: number;
+    handleJsonMeshData: (jsonData: any) => void;
+    highlightId: number;
+    height: number;
+    width: number;
 }
 
 interface ThreeDViewerState {
@@ -27,12 +26,20 @@ class ThreeDViewer extends React.Component<
         };
     }
     render() {
-        const { agentSim, time } = this.props;
+        const {
+            agentSim,
+            onTimeChange,
+            time,
+            handleJsonMeshData,
+            highlightId,
+            width,
+            height,
+        } = this.props;
         return (
             <React.Fragment>
                 <button onClick={() => agentSim.start()}>Start</button>
                 <button onClick={() => agentSim.pause()}>Pause</button>
-                <button onClick={() => agentSim.playFromCache()}>
+                <button onClick={() => agentSim.playFromCache(time)}>
                     Play from cache
                 </button>
                 <button onClick={() => agentSim.stop()}>stop</button>
@@ -45,11 +52,14 @@ class ThreeDViewer extends React.Component<
                     actin file
                 </button>
                 <AgentVizViewer
-                    height={600}
-                    width={600}
+                    height={height}
+                    width={width}
                     devgui={false}
                     loggerLevel="debug"
+                    onTimeChange={onTimeChange}
                     agentSimController={agentSim}
+                    onJsonDataArrived={handleJsonMeshData}
+                    highlightedParticleType={highlightId}
                 />
             </React.Fragment>
         );

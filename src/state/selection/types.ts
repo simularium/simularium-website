@@ -25,3 +25,8 @@ export interface ChangeTimeAction {
     payload: number;
     type: string;
 }
+
+export interface ChangeNumberCollapsedPanelsAction {
+    payload: number;
+    type: string;
+}

@@ -1,6 +1,6 @@
 @import "../../styles/colors.css";
 .sider {
-    height: 100vh;
+    height: calc(100vh - 113px);
     left: 0;
     z-index: 3000;
     padding-bottom: 0;

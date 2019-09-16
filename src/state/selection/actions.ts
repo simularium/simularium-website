@@ -3,6 +3,7 @@ import {
     SELECT_FILE,
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
+    SIDE_PANEL_COLLAPSED,
 } from "./constants";
 import {
     DeselectFileAction,
@@ -29,6 +30,13 @@ export function changeTime(time: number): ChangeTimeAction {
     return {
         payload: time,
         type: CHANGE_TIME_HEAD,
+    };
+}
+
+export function onSidePanelCollapse(numberCollapsed: number) {
+    return {
+        payload: numberCollapsed,
+        type: SIDE_PANEL_COLLAPSED,
     };
 }
 

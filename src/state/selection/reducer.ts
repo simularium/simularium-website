@@ -9,6 +9,7 @@ import {
     SELECT_FILE,
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
+    SIDE_PANEL_COLLAPSED,
 } from "./constants";
 import {
     DeselectFileAction,
@@ -16,11 +17,13 @@ import {
     SelectionStateBranch,
     SelectMetadataAction,
     ChangeTimeAction,
+    ChangeNumberCollapsedPanelsAction,
 } from "./types";
 
 export const initialState = {
     files: [],
     time: 0,
+    numberPanelsCollapsed: 0,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -58,6 +61,19 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: SelectionStateBranch, action: ChangeTimeAction) => ({
             ...state,
             time: action.payload,
+        }),
+    },
+    [SIDE_PANEL_COLLAPSED]: {
+        accepts: (
+            action: AnyAction
+        ): action is ChangeNumberCollapsedPanelsAction =>
+            action.type === SIDE_PANEL_COLLAPSED,
+        perform: (
+            state: SelectionStateBranch,
+            action: ChangeNumberCollapsedPanelsAction
+        ) => ({
+            ...state,
+            numberPanelsCollapsed: state.numberPanelsCollapsed + action.payload,
         }),
     },
 };

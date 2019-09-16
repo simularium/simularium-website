@@ -1,28 +1,40 @@
 import * as React from "react";
 import { Layout } from "antd";
 
+import Header from "../../components/Header";
 import SideBar from "../../components/SideBar";
 import ResultsPanel from "../ResultsPanel";
 import ModelPanel from "../ModelPanel";
 import CenterPanel from "../CenterPanel";
+import { connect } from "react-redux";
+import { onSidePanelCollapse } from "../../state/selection/actions";
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 
 const styles = require("./style.css");
 
-export default class App extends React.Component<{}, {}> {
+interface AppProps {
+    onSidePanelCollapse: () => void;
+}
+class App extends React.Component<{}, {}> {
     public render(): JSX.Element {
+        const { onSidePanelCollapse } = this.props;
+
+        const onPanelCollapse = (open) => {
+            const value = open ? 1 : -1;
+            onSidePanelCollapse(value);
+        };
         return (
             <Layout tagName="main" className={styles.container}>
-                <Header tagName="header">Header</Header>
+                <Header>Header</Header>
                 <Layout tagName="main">
-                    <SideBar type="left">
+                    <SideBar onCollapse={onPanelCollapse} type="left">
                         <ModelPanel />
                     </SideBar>
                     <Content tagName="main">
                         <CenterPanel />
                     </Content>
-                    <SideBar type="right">
+                    <SideBar onCollapse={onPanelCollapse} type="right">
                         <ResultsPanel />
                     </SideBar>
                 </Layout>
@@ -30,3 +42,12 @@ export default class App extends React.Component<{}, {}> {
         );
     }
 }
+
+const dispatchToPropsMap = {
+    onSidePanelCollapse,
+};
+
+export default connect(
+    null,
+    dispatchToPropsMap
+)(App);
