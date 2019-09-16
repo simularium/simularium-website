@@ -34,6 +34,7 @@ class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
                 content={[
                     <Graphing
                         time={time}
+                        key="graph"
                         changeTime={changeTime}
                         graphData={graphData}
                     />,
