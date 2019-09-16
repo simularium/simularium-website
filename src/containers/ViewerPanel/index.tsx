@@ -12,7 +12,6 @@ import { connect } from "react-redux";
 import { changeTime } from "../../state/selection/actions";
 import PlaybackControls from "../../components/PlaybackControls";
 import { ChangeTimeAction } from "../../state/selection/types";
-import { HEADER_HEIGHT } from "../../constants";
 
 const styles = require("./style.css");
 
@@ -155,7 +154,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public render(): JSX.Element {
-        const { time, numberPanelsCollapsed } = this.props;
+        const { time } = this.props;
         return (
             <div ref={this.centerContent} className={styles.container}>
                 <ThreeDViewer

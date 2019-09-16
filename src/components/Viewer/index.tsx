@@ -29,7 +29,6 @@ class ThreeDViewer extends React.Component<
         const {
             agentSim,
             onTimeChange,
-            time,
             handleJsonMeshData,
             highlightId,
             width,
