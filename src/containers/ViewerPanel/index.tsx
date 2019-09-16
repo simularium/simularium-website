@@ -16,13 +16,13 @@ import { HEADER_HEIGHT } from "../../constants";
 
 const styles = require("./style.css");
 
-interface CenterPanelProps {
+interface ViewerPanelProps {
     time: number;
     numberPanelsCollapsed: number;
     changeTime: ActionCreator<ChangeTimeAction>;
 }
 
-interface CenterPanelState {
+interface ViewerPanelState {
     isPlaying: boolean;
     isInitialPlay: boolean;
     highlightId: number;
@@ -42,11 +42,11 @@ const agentSim = new AgentSimController(netConnectionSettings, {
 
 const interval = 500;
 
-class CenterPanel extends React.Component<CenterPanelProps, CenterPanelState> {
+class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     private animationTimer: number | null;
     private centerContent = React.createRef<HTMLDivElement>();
 
-    constructor(props: CenterPanelProps) {
+    constructor(props: ViewerPanelProps) {
         super(props);
         this.animationTimer = null;
         this.playBackOne = this.playBackOne.bind(this);
@@ -82,7 +82,7 @@ class CenterPanel extends React.Component<CenterPanelProps, CenterPanelState> {
         }
     }
 
-    public componentDidUpdate(prevProps: CenterPanelProps) {
+    public componentDidUpdate(prevProps: ViewerPanelProps) {
         const current = this.centerContent.current;
         if (
             current &&
@@ -192,4 +192,4 @@ const dispatchToPropsMap = {
 export default connect(
     mapStateToProps,
     dispatchToPropsMap
-)(CenterPanel);
+)(ViewerPanel);

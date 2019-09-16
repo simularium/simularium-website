@@ -5,7 +5,7 @@ import Header from "../../components/Header";
 import SideBar from "../../components/SideBar";
 import ResultsPanel from "../ResultsPanel";
 import ModelPanel from "../ModelPanel";
-import CenterPanel from "../CenterPanel";
+import ViewerPanel from "../ViewerPanel";
 import { connect } from "react-redux";
 import { onSidePanelCollapse } from "../../state/selection/actions";
 
@@ -36,7 +36,7 @@ class App extends React.Component<AppProps, {}> {
                         <ModelPanel />
                     </SideBar>
                     <Content tagName="main">
-                        <CenterPanel />
+                        <ViewerPanel />
                     </Content>
                     <SideBar onCollapse={this.onPanelCollapse} type="right">
                         <ResultsPanel />
