@@ -7,7 +7,7 @@ const styles = require("./style.css");
 
 interface SiderProps {
     type: string;
-    onCollapse: () => void;
+    onCollapse: (open: boolean) => void;
 }
 
 export default class SideBar extends React.Component<SiderProps, {}> {

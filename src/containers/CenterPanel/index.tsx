@@ -14,6 +14,8 @@ import PlaybackControls from "../../components/PlaybackControls";
 import { ChangeTimeAction } from "../../state/selection/types";
 import { HEADER_HEIGHT } from "../../constants";
 
+const styles = require("./style.css");
+
 interface CenterPanelProps {
     time: number;
     numberPanelsCollapsed: number;
@@ -54,6 +56,7 @@ class CenterPanel extends React.Component<CenterPanelProps, CenterPanelState> {
         this.pause = this.pause.bind(this);
         this.receiveTimeChange = this.receiveTimeChange.bind(this);
         this.handleJsonMeshData = this.handleJsonMeshData.bind(this);
+        this.resize = this.resize.bind(this);
         this.state = {
             isPlaying: false,
             isInitialPlay: true,
@@ -62,23 +65,33 @@ class CenterPanel extends React.Component<CenterPanelProps, CenterPanelState> {
         };
     }
 
+    public resize(current: HTMLDivElement) {
+        const width = current.offsetWidth;
+        const height = current.offsetHeight;
+        this.setState({ height, width });
+    }
+
     public componentDidMount() {
-        if (this.centerContent.current) {
-            const width = this.centerContent.current.offsetWidth;
-            console.log(width, this.centerContent);
-            const height = window.innerHeight - HEADER_HEIGHT;
-            this.setState({ height, width });
+        const current = this.centerContent.current;
+        if (current) {
+            window.addEventListener("resize", () => this.resize(current));
+            setTimeout(() => {
+                // wait for panel animation to finish.
+                this.resize(current);
+            }, 200);
         }
     }
 
     public componentDidUpdate(prevProps: CenterPanelProps) {
+        const current = this.centerContent.current;
         if (
-            this.centerContent.current &&
+            current &&
             this.props.numberPanelsCollapsed !== prevProps.numberPanelsCollapsed
         ) {
-            const width = this.centerContent.current.offsetWidth;
-            const height = window.innerHeight - HEADER_HEIGHT;
-            this.setState({ height, width });
+            setTimeout(() => {
+                // wait for panel animation to finish.
+                this.resize(current);
+            }, 200);
         }
     }
 
@@ -141,12 +154,11 @@ class CenterPanel extends React.Component<CenterPanelProps, CenterPanelState> {
 
     public render(): JSX.Element {
         const { time, numberPanelsCollapsed } = this.props;
-        console.log(numberPanelsCollapsed);
         return (
-            <div ref={this.centerContent} className="center-panel-container">
+            <div ref={this.centerContent} className={styles.container}>
                 <ThreeDViewer
                     time={time}
-                    width={this.state.width - 60}
+                    width={this.state.width}
                     height={this.state.height}
                     agentSim={agentSim}
                     onTimeChange={this.receiveTimeChange}

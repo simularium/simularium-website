@@ -1,6 +1,8 @@
 import React from "react";
 import { Button } from "antd";
 
+const styles = require("./style.css");
+
 interface PlayBackProps {
     playHandler: () => void;
     time: number;
@@ -19,7 +21,7 @@ const PlayBackControls = ({
     nextHandler,
 }: PlayBackProps) => {
     return (
-        <React.Fragment>
+        <div className={styles.container}>
             <Button
                 icon={isPlaying ? "pause" : "caret-right"}
                 onClick={isPlaying ? pauseHandler : playHandler}
@@ -36,7 +38,7 @@ const PlayBackControls = ({
             <Button icon="step-forward" onClick={nextHandler}>
                 Forward{" "}
             </Button>
-        </React.Fragment>
+        </div>
     );
 };
 export default PlayBackControls;
