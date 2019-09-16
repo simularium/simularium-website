@@ -37,6 +37,7 @@ export default class Graphing extends React.Component<GraphingProps, {}> {
                     <VictoryChart
                         padding={{ top: 20, bottom: 80, left: 80, right: 50 }}
                         theme={VictoryTheme.material}
+                        key={chart["y-label"]}
                     >
                         <VictoryScatter
                             style={{
