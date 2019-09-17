@@ -6,7 +6,7 @@ String PROMOTE_ARTIFACT = "PROMOTE_ARTIFACT"
 
 String STAGING_DEPLOYMENT = "staging"  // matches value from jenkinstools.deploy.DeployEnv enum
 String PRODUCTION_DEPLOYMENT = "production"  // matches value from jenkinstools.deploy.DeployEnv enum
-Map DEPLOYMENT_TARGET_TO_S3_BUCKET = [(STAGING_DEPLOYMENT): "staging.cfe.allencell.org", (PRODUCTION_DEPLOYMENT): "production.cfe.allencell.org"]
+Map DEPLOYMENT_TARGET_TO_S3_BUCKET = [(STAGING_DEPLOYMENT): "staging.agentviz.allencell.org", (PRODUCTION_DEPLOYMENT): "production.agentviz.allencell.org"]
 Map DEPLOYMENT_TARGET_TO_MAVEN_REPO = [(STAGING_DEPLOYMENT): "maven-snapshot-local", (PRODUCTION_DEPLOYMENT): "maven-release-local"]
 
 String[] IGNORE_AUTHORS = ["jenkins", "Jenkins User", "Jenkins Builder"]
