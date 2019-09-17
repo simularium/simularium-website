@@ -6,7 +6,7 @@ import { MetadataStateBranch } from "./types";
 
 // BASIC SELECTORS
 export const getMetadata = (state: State) => state.metadata;
-
+export const getAgentIds = (state: State) => state.metadata.agentIds;
 // COMPOSED SELECTORS
 export const getKeysOfMetadata = createSelector(
     [getMetadata],

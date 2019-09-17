@@ -12,6 +12,12 @@ import { connect } from "react-redux";
 import { changeTime } from "../../state/selection/actions";
 import PlaybackControls from "../../components/PlaybackControls";
 import { ChangeTimeAction } from "../../state/selection/types";
+import {
+    receiveMetadata,
+    receiveAgentTypeIds,
+} from "../../state/metadata/actions";
+import { getMetadata } from "../../state/metadata/selectors";
+import { ReceiveAction } from "../../state/metadata/types";
 
 const styles = require("./style.css");
 
@@ -19,6 +25,7 @@ interface ViewerPanelProps {
     time: number;
     numberPanelsCollapsed: number;
     changeTime: ActionCreator<ChangeTimeAction>;
+    receiveAgentTypeIds: ActionCreator<ReceiveAction>;
 }
 
 interface ViewerPanelState {
@@ -120,8 +127,10 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleJsonMeshData(jsonData: any) {
+        const { receiveAgentTypeIds } = this.props;
         const particleTypeIds = Object.keys(jsonData);
         this.setState({ particleTypeIds });
+        receiveAgentTypeIds(particleTypeIds);
     }
 
     public highlightParticleType(typeId: number) {
@@ -189,6 +198,7 @@ function mapStateToProps(state: State) {
 
 const dispatchToPropsMap = {
     changeTime,
+    receiveAgentTypeIds,
 };
 
 export default connect(
