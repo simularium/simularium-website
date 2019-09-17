@@ -1,5 +1,7 @@
 import React from "react";
-import { Button } from "antd";
+import { Button, Slider } from "antd";
+import { ChangeTimeAction } from "../../state/selection/types";
+import { ActionCreator } from "redux";
 
 const styles = require("./style.css");
 
@@ -10,6 +12,7 @@ interface PlayBackProps {
     prevHandler: () => void;
     nextHandler: () => void;
     isPlaying: boolean;
+    onTimeChange: ActionCreator<ChangeTimeAction>;
 }
 
 const PlayBackControls = ({
@@ -18,8 +21,25 @@ const PlayBackControls = ({
     pauseHandler,
     prevHandler,
     isPlaying,
+    onTimeChange,
     nextHandler,
 }: PlayBackProps) => {
+    const convertSliderValueToNs = (sliderValue: number): number => {
+        return sliderValue * 10000;
+    };
+
+    const convertTimeToSliderValue = (time: number): number => {
+        return time / 10000;
+    };
+
+    const handleTimeChange = (sliderValue: number | [number, number]): void => {
+        const time = convertSliderValueToNs(sliderValue as number);
+        onTimeChange(time);
+    };
+
+    const tipFormatter = (time: number): string => {
+        return `${time / 1000}k ns`;
+    };
     return (
         <div className={styles.container}>
             <Button
@@ -38,6 +58,11 @@ const PlayBackControls = ({
             <Button icon="step-forward" onClick={nextHandler}>
                 Forward{" "}
             </Button>
+            <Slider
+                value={convertTimeToSliderValue(time)}
+                onChange={handleTimeChange}
+                tipFormatter={tipFormatter}
+            />
         </div>
     );
 };

@@ -154,7 +154,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public render(): JSX.Element {
-        const { time } = this.props;
+        const { time, changeTime } = this.props;
         return (
             <div ref={this.centerContent} className={styles.container}>
                 <ThreeDViewer
@@ -169,6 +169,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 <PlaybackControls
                     playHandler={this.startPlay}
                     time={time}
+                    onTimeChange={changeTime}
                     pauseHandler={this.pause}
                     prevHandler={this.playBackOne}
                     nextHandler={this.playForwardOne}
