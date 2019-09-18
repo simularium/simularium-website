@@ -6,7 +6,9 @@ import { makeReducer } from "../util";
 import { RECEIVE_METADATA, RECEIVE_AGENT_IDS } from "./constants";
 import { MetadataStateBranch, ReceiveAction } from "./types";
 
-export const initialState = {};
+export const initialState = {
+    agentIds: [],
+};
 
 const actionToConfigMap: TypeToDescriptionMap = {
     [RECEIVE_METADATA]: {

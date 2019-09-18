@@ -7,19 +7,34 @@ import { requestMetadata } from "../../state/metadata/actions";
 import { getMetadata, getAgentIds } from "../../state/metadata/selectors";
 import { State } from "../../state/types";
 import CheckBoxes from "../../components/CheckBoxes";
-import { getAgentsOn } from "../../state/selection/selectors";
-import { turnAgentsOn } from "../../state/selection/actions";
-import { TurnAgentsOnAction } from "../../state/selection/types";
+import {
+    getAgentsOn,
+    getHightlightedId,
+} from "../../state/selection/selectors";
+import { turnAgentsOn, highlightAgent } from "../../state/selection/actions";
+import {
+    TurnAgentsOnAction,
+    HighlightAgentAction,
+} from "../../state/selection/types";
+import RadioButtons from "../../components/RadioButtons";
 
 interface ModelPanelProps {
     agentIds: string[];
     agentsOn: string[];
     turnAgentsOn: ActionCreator<TurnAgentsOnAction>;
+    highlightedAgent: string;
+    highlightAgent: ActionCreator<HighlightAgentAction>;
 }
 
 class ModelPanel extends React.Component<ModelPanelProps, {}> {
     public render(): JSX.Element {
-        const { agentIds, agentsOn, turnAgentsOn } = this.props;
+        const {
+            agentIds,
+            agentsOn,
+            turnAgentsOn,
+            highlightedAgent,
+            highlightAgent,
+        } = this.props;
 
         return (
             <CollaspableMenu
@@ -27,12 +42,19 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
                 mainTitle="Adjustable Parameters"
                 subTitles={["Adjustable Parameter", "Statistics"]}
                 content={[
-                    <CheckBoxes
-                        options={agentIds}
-                        values={agentsOn}
-                        onChange={turnAgentsOn}
-                        key="checkbox-group"
-                    />,
+                    <>
+                        <CheckBoxes
+                            options={agentIds}
+                            values={agentsOn}
+                            onChange={turnAgentsOn}
+                            key="checkbox-group"
+                        />
+                        <RadioButtons
+                            value={highlightedAgent}
+                            options={agentIds}
+                            onChange={highlightAgent}
+                        />
+                    </>,
                     null,
                 ]}
             />
@@ -44,12 +66,14 @@ function mapStateToProps(state: State) {
     return {
         agentIds: getAgentIds(state),
         agentsOn: getAgentsOn(state),
+        highlightedAgent: getHightlightedId(state),
     };
 }
 
 const dispatchToPropsMap = {
     requestMetadata,
     turnAgentsOn,
+    highlightAgent,
 };
 
 export default connect(

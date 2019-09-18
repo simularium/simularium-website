@@ -11,6 +11,7 @@ import {
     CHANGE_TIME_HEAD,
     SIDE_PANEL_COLLAPSED,
     TURN_AGENTS_ON,
+    HIGHLIGHT_AGENT,
 } from "./constants";
 import {
     DeselectFileAction,
@@ -19,6 +20,7 @@ import {
     SelectMetadataAction,
     ChangeTimeAction,
     ChangeNumberCollapsedPanelsAction,
+    HighlightAgentAction,
 } from "./types";
 
 export const initialState = {
@@ -26,6 +28,7 @@ export const initialState = {
     time: 0,
     numberPanelsCollapsed: 0,
     agentsOn: [],
+    hightlightedId: -1,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -78,6 +81,17 @@ const actionToConfigMap: TypeToDescriptionMap = {
         ) => ({
             ...state,
             numberPanelsCollapsed: state.numberPanelsCollapsed + action.payload,
+        }),
+    },
+    [HIGHLIGHT_AGENT]: {
+        accepts: (action: AnyAction): action is HighlightAgentAction =>
+            action.type === HIGHLIGHT_AGENT,
+        perform: (
+            state: SelectionStateBranch,
+            action: HighlightAgentAction
+        ) => ({
+            ...state,
+            hightlightedId: action.payload,
         }),
     },
 };

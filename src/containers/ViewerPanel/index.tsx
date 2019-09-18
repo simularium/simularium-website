@@ -7,6 +7,7 @@ import ThreeDViewer from "../../components/Viewer";
 import {
     getCurrentTime,
     getNumberCollapsed,
+    getHightlightedId,
 } from "../../state/selection/selectors";
 import { State } from "../../state/types";
 import { changeTime, turnAgentsOn } from "../../state/selection/actions";
@@ -30,6 +31,7 @@ interface ViewerPanelProps {
     changeTime: ActionCreator<ChangeTimeAction>;
     turnAgentsOn: ActionCreator<TurnAgentsOnAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
+    highlightedId: string;
 }
 
 interface ViewerPanelState {
@@ -167,7 +169,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public render(): JSX.Element {
-        const { time, changeTime } = this.props;
+        const { time, changeTime, highlightedId } = this.props;
         return (
             <div ref={this.centerContent} className={styles.container}>
                 <ThreeDViewer
@@ -176,7 +178,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     height={this.state.height}
                     agentSim={agentSim}
                     onTimeChange={this.receiveTimeChange}
-                    highlightId={this.state.highlightId}
+                    highlightId={highlightedId}
                     handleJsonMeshData={this.handleJsonMeshData}
                 />
                 <PlaybackControls
@@ -197,6 +199,7 @@ function mapStateToProps(state: State) {
     return {
         time: getCurrentTime(state),
         numberPanelsCollapsed: getNumberCollapsed(state),
+        highlightedId: getHightlightedId(state),
     };
 }
 

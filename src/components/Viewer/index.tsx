@@ -6,7 +6,7 @@ interface ThreeDViewerProps {
     onTimeChange: any;
     time: number;
     handleJsonMeshData: (jsonData: any) => void;
-    highlightId: number;
+    highlightId: string;
     height: number;
     width: number;
 }

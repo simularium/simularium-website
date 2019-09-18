@@ -29,3 +29,8 @@ export interface ChangeNumberCollapsedPanelsAction {
     payload: number;
     type: string;
 }
+
+export interface HighlightAgentAction {
+    payload: string;
+    type: string;
+}
