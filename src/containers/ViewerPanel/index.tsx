@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
 import { AgentSimController } from "agentviz-viewer";
+import { connect } from "react-redux";
 
 import ThreeDViewer from "../../components/Viewer";
 import {
@@ -8,10 +9,12 @@ import {
     getNumberCollapsed,
 } from "../../state/selection/selectors";
 import { State } from "../../state/types";
-import { connect } from "react-redux";
-import { changeTime } from "../../state/selection/actions";
+import { changeTime, turnAgentsOn } from "../../state/selection/actions";
 import PlaybackControls from "../../components/PlaybackControls";
-import { ChangeTimeAction } from "../../state/selection/types";
+import {
+    ChangeTimeAction,
+    TurnAgentsOnAction,
+} from "../../state/selection/types";
 import {
     receiveMetadata,
     receiveAgentTypeIds,
@@ -25,6 +28,7 @@ interface ViewerPanelProps {
     time: number;
     numberPanelsCollapsed: number;
     changeTime: ActionCreator<ChangeTimeAction>;
+    turnAgentsOn: ActionCreator<TurnAgentsOnAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
 }
 
@@ -127,9 +131,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleJsonMeshData(jsonData: any) {
-        const { receiveAgentTypeIds } = this.props;
+        const { receiveAgentTypeIds, turnAgentsOn } = this.props;
         const particleTypeIds = Object.keys(jsonData);
-        this.setState({ particleTypeIds });
+        turnAgentsOn(particleTypeIds);
         receiveAgentTypeIds(particleTypeIds);
     }
 
@@ -199,6 +203,7 @@ function mapStateToProps(state: State) {
 const dispatchToPropsMap = {
     changeTime,
     receiveAgentTypeIds,
+    turnAgentsOn,
 };
 
 export default connect(

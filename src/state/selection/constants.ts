@@ -9,3 +9,4 @@ export const SIDE_PANEL_COLLAPSED = makeConstant(
     BRANCH_NAME,
     "change-content-width"
 );
+export const TURN_AGENTS_ON = makeConstant(BRANCH_NAME, "turn-agents-on");

@@ -10,10 +10,11 @@ import {
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
     SIDE_PANEL_COLLAPSED,
+    TURN_AGENTS_ON,
 } from "./constants";
 import {
     DeselectFileAction,
-    SelectFileAction,
+    TurnAgentsOnAction,
     SelectionStateBranch,
     SelectMetadataAction,
     ChangeTimeAction,
@@ -24,6 +25,7 @@ export const initialState = {
     files: [],
     time: 0,
     numberPanelsCollapsed: 0,
+    agentsOn: [],
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -35,13 +37,15 @@ const actionToConfigMap: TypeToDescriptionMap = {
             files: without(state.files, ...castArray(action.payload)),
         }),
     },
-    [SELECT_FILE]: {
-        accepts: (action: AnyAction): action is SelectFileAction =>
-            action.type === SELECT_FILE,
-        perform: (state: SelectionStateBranch, action: SelectFileAction) => ({
-            ...state,
-            files: [...state.files, ...castArray(action.payload)],
-        }),
+    [TURN_AGENTS_ON]: {
+        accepts: (action: AnyAction): action is TurnAgentsOnAction =>
+            action.type === TURN_AGENTS_ON,
+        perform: (state: SelectionStateBranch, action: TurnAgentsOnAction) => {
+            return {
+                ...state,
+                agentsOn: action.payload,
+            };
+        },
     },
 
     [SELECT_METADATA]: {

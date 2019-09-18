@@ -7,11 +7,10 @@ export interface DeselectFileAction {
 
 export interface SelectionStateBranch {
     [key: string]: any;
-    files: string[];
 }
 
-export interface SelectFileAction {
-    payload: string | string[];
+export interface TurnAgentsOnAction {
+    payload: string[];
     type: string;
 }
 
