@@ -7,6 +7,7 @@ interface RadioButtonsProps {
     options: string[];
     value: string;
     onChange: (value: any) => AnyAction;
+    title: string;
 }
 
 export default class RadioButtons extends React.Component<RadioButtonsProps> {
@@ -20,11 +21,11 @@ export default class RadioButtons extends React.Component<RadioButtonsProps> {
 
     handleChange(e: RadioChangeEvent) {
         const { onChange } = this.props;
-        onChange(e.target.value);
+        onChange(e.target.value).toString();
     }
 
     render() {
-        const { options, value } = this.props;
+        const { options, value, title } = this.props;
 
         const radioStyle = {
             display: "block",
@@ -33,13 +34,17 @@ export default class RadioButtons extends React.Component<RadioButtonsProps> {
         };
 
         return (
-            <Radio.Group onChange={this.handleChange} value={value}>
-                {options.map((ele) => (
-                    <Radio style={radioStyle} value={ele} key={ele}>
-                        {ele}
-                    </Radio>
-                ))}
-            </Radio.Group>
+            <div>
+                <h4>{title}</h4>
+
+                <Radio.Group onChange={this.handleChange} value={value}>
+                    {options.map((ele) => (
+                        <Radio style={radioStyle} value={ele} key={ele}>
+                            {ele}
+                        </Radio>
+                    ))}
+                </Radio.Group>
+            </div>
         );
     }
 }

@@ -18,6 +18,8 @@ import {
 } from "../../state/selection/types";
 import RadioButtons from "../../components/RadioButtons";
 
+const styles = require("./style.css");
+
 interface ModelPanelProps {
     agentIds: string[];
     agentsOn: string[];
@@ -42,19 +44,22 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
                 mainTitle="Adjustable Parameters"
                 subTitles={["Adjustable Parameter", "Statistics"]}
                 content={[
-                    <>
+                    <div className={styles.container}>
+                        <h3>Molecules</h3>
                         <CheckBoxes
                             options={agentIds}
                             values={agentsOn}
                             onChange={turnAgentsOn}
                             key="checkbox-group"
+                            title="Turn on/off"
                         />
                         <RadioButtons
                             value={highlightedAgent}
                             options={agentIds}
                             onChange={highlightAgent}
+                            title="Highlight"
                         />
-                    </>,
+                    </div>,
                     null,
                 ]}
             />
