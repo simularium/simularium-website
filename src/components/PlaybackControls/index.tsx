@@ -11,6 +11,7 @@ interface PlayBackProps {
     pauseHandler: () => void;
     prevHandler: () => void;
     nextHandler: () => void;
+    totalTime: number;
     isPlaying: boolean;
     onTimeChange: ActionCreator<ChangeTimeAction>;
 }
@@ -23,13 +24,17 @@ const PlayBackControls = ({
     isPlaying,
     onTimeChange,
     nextHandler,
+    totalTime,
 }: PlayBackProps) => {
     const convertSliderValueToNs = (sliderValue: number): number => {
-        return sliderValue * 10000;
+        const totalNs = totalTime * 10000;
+        return (sliderValue / 100) * totalNs;
     };
 
     const convertTimeToSliderValue = (time: number): number => {
-        return time / 10000;
+        const totalNs = totalTime * 10000;
+
+        return (time / totalNs) * 100;
     };
 
     const handleTimeChange = (sliderValue: number | [number, number]): void => {
@@ -37,9 +42,11 @@ const PlayBackControls = ({
         onTimeChange(time);
     };
 
-    const tipFormatter = (time: number): string => {
-        return `${time / 1000}k ns`;
+    const tipFormatter = (sliderValue: number): string => {
+        const totalNs = totalTime * 10000;
+        return `${((sliderValue / 100) * totalNs) / 1000} ns`;
     };
+
     return (
         <div className={styles.container}>
             <Button

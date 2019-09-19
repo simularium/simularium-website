@@ -6,7 +6,10 @@ import { makeReducer } from "../util";
 import { RECEIVE_METADATA } from "./constants";
 import { MetadataStateBranch, ReceiveAction } from "./types";
 
-export const initialState = {};
+export const initialState = {
+    totalTime: 0,
+    timeStep: 0,
+};
 
 const actionToConfigMap: TypeToDescriptionMap = {
     [RECEIVE_METADATA]: {

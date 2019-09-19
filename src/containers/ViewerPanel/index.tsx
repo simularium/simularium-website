@@ -12,6 +12,12 @@ import { connect } from "react-redux";
 import { changeTime } from "../../state/selection/actions";
 import PlaybackControls from "../../components/PlaybackControls";
 import { ChangeTimeAction } from "../../state/selection/types";
+import { receiveMetadata } from "../../state/metadata/actions";
+import {
+    getTotalTimeOfCachedSimulation,
+    getTimeStepSize,
+} from "../../state/metadata/selectors";
+import { ENGINE_METHOD_DIGESTS } from "constants";
 
 const styles = require("./style.css");
 
@@ -19,6 +25,7 @@ interface ViewerPanelProps {
     time: number;
     numberPanelsCollapsed: number;
     changeTime: ActionCreator<ChangeTimeAction>;
+    timeStep: number;
 }
 
 interface ViewerPanelState {
@@ -28,6 +35,7 @@ interface ViewerPanelState {
     particleTypeIds: string[];
     height: number;
     width: number;
+    stopTime: number;
 }
 
 const netConnectionSettings = {
@@ -38,8 +46,6 @@ const netConnectionSettings = {
 const agentSim = new AgentSimController(netConnectionSettings, {
     trajectoryPlaybackFile: "actin19.h5",
 });
-
-const interval = 500;
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     private animationTimer: number | null;
@@ -55,6 +61,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.pause = this.pause.bind(this);
         this.receiveTimeChange = this.receiveTimeChange.bind(this);
         this.handleJsonMeshData = this.handleJsonMeshData.bind(this);
+        this.onTrajectoryFileInfoChanged = this.onTrajectoryFileInfoChanged.bind(
+            this
+        );
         this.resize = this.resize.bind(this);
         this.state = {
             isPlaying: false,
@@ -63,6 +72,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             particleTypeIds: [],
             height: 0,
             width: 0,
+            stopTime: 0,
         };
     }
 
@@ -74,6 +84,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public componentDidMount() {
         const current = this.centerContent.current;
+        // agentSim.initializeTrajectoryFile();
         if (current) {
             window.addEventListener("resize", () => this.resize(current));
             setTimeout(() => {
@@ -97,14 +108,16 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public playForwardOne() {
-        const { time, changeTime } = this.props;
-        changeTime(time + interval);
+        const { time, changeTime, timeStep } = this.props;
+        agentSim.playFromTime(time + timeStep);
+        this.setState({ stopTime: time + timeStep });
     }
 
     public playBackOne() {
-        const { time, changeTime } = this.props;
-        if (time - interval >= 0) {
-            changeTime(time - interval);
+        const { time, changeTime, timeStep } = this.props;
+        if (time - timeStep >= 0) {
+            agentSim.playFromTime(time - timeStep);
+            this.setState({ stopTime: time - timeStep });
         }
     }
 
@@ -148,13 +161,39 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.setState({ isPlaying: false });
     }
 
+    public onTrajectoryFileInfoChanged(data) {
+        const { receiveMetadata } = this.props;
+        console.log(data);
+        receiveMetadata({
+            totalTime: data.numberOfFrames, //TODO: change this once the backend sends this data
+            timeStepSize: data.timeStepSize,
+        });
+    }
+
     public receiveTimeChange(timeData: any) {
-        const { changeTime } = this.props;
+        const { changeTime, timeStep } = this.props;
+        console.log(timeData.time);
+        if (
+            this.state.stopTime &&
+            Math.abs(timeData.time - this.state.stopTime) <= timeStep
+        ) {
+            console.log("stop");
+            agentSim.pause();
+            this.setState({
+                stopTime: 0,
+                isPlaying: false,
+            });
+        }
         return changeTime(timeData.time);
     }
 
+    public skipToTime(time) {
+        agentSim.pause();
+        agentSim.playFromTime(time);
+    }
+
     public render(): JSX.Element {
-        const { time, changeTime } = this.props;
+        const { time, changeTime, totalTime } = this.props;
         return (
             <div ref={this.centerContent} className={styles.container}>
                 <ThreeDViewer
@@ -165,15 +204,19 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     onTimeChange={this.receiveTimeChange}
                     highlightId={this.state.highlightId}
                     handleJsonMeshData={this.handleJsonMeshData}
+                    onTrajectoryFileInfoChanged={
+                        this.onTrajectoryFileInfoChanged
+                    }
                 />
                 <PlaybackControls
                     playHandler={this.startPlay}
                     time={time}
-                    onTimeChange={changeTime}
+                    onTimeChange={this.skipToTime}
                     pauseHandler={this.pause}
                     prevHandler={this.playBackOne}
                     nextHandler={this.playForwardOne}
                     isPlaying={this.state.isPlaying}
+                    totalTime={totalTime}
                 />
             </div>
         );
@@ -184,11 +227,14 @@ function mapStateToProps(state: State) {
     return {
         time: getCurrentTime(state),
         numberPanelsCollapsed: getNumberCollapsed(state),
+        totalTime: getTotalTimeOfCachedSimulation(state),
+        timeStep: getTimeStepSize(state),
     };
 }
 
 const dispatchToPropsMap = {
     changeTime,
+    receiveMetadata,
 };
 
 export default connect(

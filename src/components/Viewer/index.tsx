@@ -25,6 +25,7 @@ class ThreeDViewer extends React.Component<
             isPlaying: true,
         };
     }
+
     render() {
         const {
             agentSim,
@@ -33,18 +34,24 @@ class ThreeDViewer extends React.Component<
             highlightId,
             width,
             height,
+            onTrajectoryFileInfoChanged,
         } = this.props;
         return (
-            <AgentVizViewer
-                height={height}
-                width={width}
-                devgui={false}
-                loggerLevel="debug"
-                onTimeChange={onTimeChange}
-                agentSimController={agentSim}
-                onJsonDataArrived={handleJsonMeshData}
-                highlightedParticleType={highlightId}
-            />
+            <>
+                {/* <button onClick={() => agentSim.initializeTrajectoryFile()}>init</button> */}
+
+                <AgentVizViewer
+                    height={height}
+                    width={width}
+                    devgui={false}
+                    loggerLevel="debug"
+                    onTimeChange={onTimeChange}
+                    agentSimController={agentSim}
+                    onJsonDataArrived={handleJsonMeshData}
+                    highlightedParticleType={highlightId}
+                    onTrajectoryFileInfoChanged={onTrajectoryFileInfoChanged}
+                />
+            </>
         );
     }
 }
