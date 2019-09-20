@@ -16,11 +16,7 @@ import {
     ChangeTimeAction,
     TurnAgentsOnAction,
 } from "../../state/selection/types";
-import {
-    receiveMetadata,
-    receiveAgentTypeIds,
-} from "../../state/metadata/actions";
-import { getMetadata } from "../../state/metadata/selectors";
+import { receiveAgentTypeIds } from "../../state/metadata/actions";
 import { ReceiveAction } from "../../state/metadata/types";
 
 const styles = require("./style.css");

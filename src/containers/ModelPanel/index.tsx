@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import CollaspableMenu from "../../components/CollapseableMenu";
 import { requestMetadata } from "../../state/metadata/actions";
-import { getMetadata, getAgentIds } from "../../state/metadata/selectors";
+import { getAgentIds } from "../../state/metadata/selectors";
 import { State } from "../../state/types";
 import CheckBoxes from "../../components/CheckBoxes";
 import {
@@ -44,7 +44,7 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
                 mainTitle="Adjustable Parameters"
                 subTitles={["Adjustable Parameter", "Statistics"]}
                 content={[
-                    <div className={styles.container}>
+                    <div className={styles.container} key="molecules">
                         <h3>Molecules</h3>
                         <CheckBoxes
                             options={agentIds}

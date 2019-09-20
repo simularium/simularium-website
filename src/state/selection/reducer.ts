@@ -6,7 +6,6 @@ import { makeReducer } from "../util";
 
 import {
     DESELECT_FILE,
-    SELECT_FILE,
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
     SIDE_PANEL_COLLAPSED,

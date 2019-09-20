@@ -1,5 +1,5 @@
 import * as React from "React";
-import { Radio, Input } from "antd";
+import { Radio } from "antd";
 import { AnyAction } from "redux";
 import { RadioChangeEvent } from "antd/lib/radio";
 

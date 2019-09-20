@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Checkbox } from "antd";
-import { filter, map } from "lodash";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 
 interface CheckBoxesProps {
@@ -24,7 +23,7 @@ export default class CheckBoxes extends React.Component<CheckBoxesProps, {}> {
                 <h4>{title}</h4>
                 <Checkbox.Group value={values} onChange={onChange}>
                     {options.map((ele) => (
-                        <Checkbox style={checkStyle} value={ele}>
+                        <Checkbox style={checkStyle} key={ele} value={ele}>
                             {ele}
                         </Checkbox>
                     ))}
