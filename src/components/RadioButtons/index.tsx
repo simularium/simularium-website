@@ -1,4 +1,4 @@
-import * as React from "React";
+import * as React from "react";
 import { Radio } from "antd";
 import { AnyAction } from "redux";
 import { RadioChangeEvent } from "antd/lib/radio";
@@ -11,9 +11,6 @@ interface RadioButtonsProps {
 }
 
 export default class RadioButtons extends React.Component<RadioButtonsProps> {
-    state = {
-        value: 1,
-    };
     constructor(props: RadioButtonsProps) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
