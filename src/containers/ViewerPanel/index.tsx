@@ -180,7 +180,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 <PlaybackControls
                     playHandler={this.startPlay}
                     time={time}
-                    onTimeChange={changeTime}
                     pauseHandler={this.pause}
                     prevHandler={this.playBackOne}
                     nextHandler={this.playForwardOne}
