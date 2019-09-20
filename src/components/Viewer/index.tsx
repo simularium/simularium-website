@@ -25,6 +25,12 @@ class ThreeDViewer extends React.Component<
             isPlaying: true,
         };
     }
+    // TODO: remove this.
+    // I need to make this an optional prop on the viewer, but for now this handles the type error.
+    handleTrajectoryFileInfoChanged(data: any) {
+        return;
+    }
+
     render() {
         const {
             agentSim,
@@ -44,6 +50,9 @@ class ThreeDViewer extends React.Component<
                 agentSimController={agentSim}
                 onJsonDataArrived={handleJsonMeshData}
                 highlightedParticleType={highlightId}
+                onTrajectoryFileInfoChanged={
+                    this.handleTrajectoryFileInfoChanged
+                }
             />
         );
     }
