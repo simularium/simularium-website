@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Button } from "antd";
 
 const styles = require("./style.css");
