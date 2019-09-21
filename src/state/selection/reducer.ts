@@ -6,24 +6,28 @@ import { makeReducer } from "../util";
 
 import {
     DESELECT_FILE,
-    SELECT_FILE,
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
     SIDE_PANEL_COLLAPSED,
+    TURN_AGENTS_ON,
+    HIGHLIGHT_AGENT,
 } from "./constants";
 import {
     DeselectFileAction,
-    SelectFileAction,
+    TurnAgentsOnAction,
     SelectionStateBranch,
     SelectMetadataAction,
     ChangeTimeAction,
     ChangeNumberCollapsedPanelsAction,
+    HighlightAgentAction,
 } from "./types";
 
 export const initialState = {
     files: [],
     time: 0,
     numberPanelsCollapsed: 0,
+    agentsOn: [],
+    hightlightedId: -1,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -35,13 +39,15 @@ const actionToConfigMap: TypeToDescriptionMap = {
             files: without(state.files, ...castArray(action.payload)),
         }),
     },
-    [SELECT_FILE]: {
-        accepts: (action: AnyAction): action is SelectFileAction =>
-            action.type === SELECT_FILE,
-        perform: (state: SelectionStateBranch, action: SelectFileAction) => ({
-            ...state,
-            files: [...state.files, ...castArray(action.payload)],
-        }),
+    [TURN_AGENTS_ON]: {
+        accepts: (action: AnyAction): action is TurnAgentsOnAction =>
+            action.type === TURN_AGENTS_ON,
+        perform: (state: SelectionStateBranch, action: TurnAgentsOnAction) => {
+            return {
+                ...state,
+                agentsOn: action.payload,
+            };
+        },
     },
 
     [SELECT_METADATA]: {
@@ -74,6 +80,17 @@ const actionToConfigMap: TypeToDescriptionMap = {
         ) => ({
             ...state,
             numberPanelsCollapsed: state.numberPanelsCollapsed + action.payload,
+        }),
+    },
+    [HIGHLIGHT_AGENT]: {
+        accepts: (action: AnyAction): action is HighlightAgentAction =>
+            action.type === HIGHLIGHT_AGENT,
+        perform: (
+            state: SelectionStateBranch,
+            action: HighlightAgentAction
+        ) => ({
+            ...state,
+            hightlightedId: action.payload,
         }),
     },
 };

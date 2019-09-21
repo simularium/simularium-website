@@ -1,17 +1,23 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
 import { AgentSimController } from "agentviz-viewer";
+import { connect } from "react-redux";
 
 import ThreeDViewer from "../../components/Viewer";
 import {
     getCurrentTime,
     getNumberCollapsed,
+    getHightlightedId,
 } from "../../state/selection/selectors";
 import { State } from "../../state/types";
-import { connect } from "react-redux";
-import { changeTime } from "../../state/selection/actions";
+import { changeTime, turnAgentsOn } from "../../state/selection/actions";
 import PlaybackControls from "../../components/PlaybackControls";
-import { ChangeTimeAction } from "../../state/selection/types";
+import {
+    ChangeTimeAction,
+    TurnAgentsOnAction,
+} from "../../state/selection/types";
+import { receiveAgentTypeIds } from "../../state/metadata/actions";
+import { ReceiveAction } from "../../state/metadata/types";
 
 const styles = require("./style.css");
 
@@ -19,6 +25,9 @@ interface ViewerPanelProps {
     time: number;
     numberPanelsCollapsed: number;
     changeTime: ActionCreator<ChangeTimeAction>;
+    turnAgentsOn: ActionCreator<TurnAgentsOnAction>;
+    receiveAgentTypeIds: ActionCreator<ReceiveAction>;
+    highlightedId: string;
 }
 
 interface ViewerPanelState {
@@ -120,8 +129,10 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleJsonMeshData(jsonData: any) {
+        const { receiveAgentTypeIds, turnAgentsOn } = this.props;
         const particleTypeIds = Object.keys(jsonData);
-        this.setState({ particleTypeIds });
+        turnAgentsOn(particleTypeIds);
+        receiveAgentTypeIds(particleTypeIds);
     }
 
     public highlightParticleType(typeId: number) {
@@ -154,7 +165,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public render(): JSX.Element {
-        const { time } = this.props;
+        const { time, changeTime, highlightedId } = this.props;
         return (
             <div ref={this.centerContent} className={styles.container}>
                 <ThreeDViewer
@@ -163,7 +174,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     height={this.state.height}
                     agentSim={agentSim}
                     onTimeChange={this.receiveTimeChange}
-                    highlightId={this.state.highlightId}
+                    highlightId={highlightedId}
                     handleJsonMeshData={this.handleJsonMeshData}
                 />
                 <PlaybackControls
@@ -183,11 +194,14 @@ function mapStateToProps(state: State) {
     return {
         time: getCurrentTime(state),
         numberPanelsCollapsed: getNumberCollapsed(state),
+        highlightedId: getHightlightedId(state),
     };
 }
 
 const dispatchToPropsMap = {
     changeTime,
+    receiveAgentTypeIds,
+    turnAgentsOn,
 };
 
 export default connect(
