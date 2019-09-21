@@ -1,7 +1,5 @@
-import React from "react";
+import * as React from "react";
 import { Button, Slider } from "antd";
-import { ChangeTimeAction } from "../../state/selection/types";
-import { ActionCreator } from "redux";
 
 const styles = require("./style.css");
 
@@ -13,7 +11,6 @@ interface PlayBackProps {
     nextHandler: () => void;
     totalTime: number;
     isPlaying: boolean;
-    onTimeChange: ActionCreator<ChangeTimeAction>;
 }
 
 const PlayBackControls = ({
@@ -22,7 +19,6 @@ const PlayBackControls = ({
     pauseHandler,
     prevHandler,
     isPlaying,
-    onTimeChange,
     nextHandler,
     totalTime,
 }: PlayBackProps) => {

@@ -1,23 +1,18 @@
 import {
     DESELECT_FILE,
-    SELECT_FILE,
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
     SIDE_PANEL_COLLAPSED,
+    TURN_AGENTS_ON,
+    HIGHLIGHT_AGENT,
 } from "./constants";
 import {
     DeselectFileAction,
-    SelectFileAction,
+    TurnAgentsOnAction,
     SelectMetadataAction,
     ChangeTimeAction,
+    HighlightAgentAction,
 } from "./types";
-
-export function selectFile(fileId: string | string[]): SelectFileAction {
-    return {
-        payload: fileId,
-        type: SELECT_FILE,
-    };
-}
 
 export function deselectFile(fileId: string | string[]): DeselectFileAction {
     return {
@@ -37,6 +32,20 @@ export function onSidePanelCollapse(numberCollapsed: number) {
     return {
         payload: numberCollapsed,
         type: SIDE_PANEL_COLLAPSED,
+    };
+}
+
+export function turnAgentsOn(agentIds: string[]): TurnAgentsOnAction {
+    return {
+        payload: agentIds,
+        type: TURN_AGENTS_ON,
+    };
+}
+
+export function highlightAgent(agentIds: string): HighlightAgentAction {
+    return {
+        payload: agentIds,
+        type: HIGHLIGHT_AGENT,
     };
 }
 

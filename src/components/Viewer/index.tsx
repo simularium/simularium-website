@@ -6,7 +6,7 @@ interface ThreeDViewerProps {
     onTimeChange: any;
     time: number;
     handleJsonMeshData: (jsonData: any) => void;
-    highlightId: number;
+    highlightId: string;
     height: number;
     width: number;
 }
@@ -24,6 +24,11 @@ class ThreeDViewer extends React.Component<
         this.state = {
             isPlaying: true,
         };
+    }
+    // TODO: remove this.
+    // I need to make this an optional prop on the viewer, but for now this handles the type error.
+    handleTrajectoryFileInfoChanged(data: any) {
+        return;
     }
 
     render() {

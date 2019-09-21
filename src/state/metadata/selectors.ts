@@ -10,6 +10,7 @@ export const getGraphData = (state: State) => state.metadata.graphData;
 export const getTotalTimeOfCachedSimulation = (state: State) =>
     state.metadata.totalTime;
 export const getTimeStepSize = (state: State) => state.metadata.timeStepSize;
+export const getAgentIds = (state: State) => state.metadata.agentIds;
 // COMPOSED SELECTORS
 export const getKeysOfMetadata = createSelector(
     [getMetadata],
