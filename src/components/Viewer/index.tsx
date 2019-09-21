@@ -38,8 +38,6 @@ class ThreeDViewer extends React.Component<
         } = this.props;
         return (
             <>
-                {/* <button onClick={() => agentSim.initializeTrajectoryFile()}>init</button> */}
-
                 <AgentVizViewer
                     height={height}
                     width={width}

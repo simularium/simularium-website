@@ -50,25 +50,27 @@ const PlayBackControls = ({
     return (
         <div className={styles.container}>
             <Button
-                icon={isPlaying ? "pause" : "caret-right"}
-                onClick={isPlaying ? pauseHandler : playHandler}
-            >
-                {isPlaying ? "Pause" : "Play"}{" "}
-            </Button>
-            <Button
+                className={styles.item}
                 icon="step-backward"
                 onClick={prevHandler}
                 disabled={time === 0}
-            >
-                Back{" "}
-            </Button>
-            <Button icon="step-forward" onClick={nextHandler}>
-                Forward{" "}
-            </Button>
+            />
+
             <Slider
                 value={convertTimeToSliderValue(time)}
                 onChange={handleTimeChange}
                 tipFormatter={tipFormatter}
+                className={[styles.slider, styles.item].join(" ")}
+            />
+            <Button
+                className={styles.item}
+                icon={isPlaying ? "pause" : "caret-right"}
+                onClick={isPlaying ? pauseHandler : playHandler}
+            />
+            <Button
+                className={styles.item}
+                icon="step-forward"
+                onClick={nextHandler}
             />
         </div>
     );
