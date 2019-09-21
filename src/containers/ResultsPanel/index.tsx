@@ -10,7 +10,7 @@ import { changeTime } from "../../state/selection/actions";
 import { ChangeTimeAction } from "../../state/selection/types";
 import { requestMetadata } from "../../state/metadata/actions";
 import { RequestAction } from "../../state/metadata/types";
-import { getMetadata } from "../../state/metadata/selectors";
+import { getGraphData } from "../../state/metadata/selectors";
 
 interface ResultsPanelProps {
     graphData: any;
@@ -48,7 +48,7 @@ class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
 function mapStateToProps(state: State) {
     return {
         time: getCurrentTime(state),
-        graphData: getMetadata(state),
+        graphData: getGraphData(state),
     };
 }
 
