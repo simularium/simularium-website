@@ -35,6 +35,8 @@ interface ViewerPanelProps {
     turnAgentsOn: ActionCreator<TurnAgentsOnAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
     highlightedId: string;
+    totalTime: number;
+    receiveMetadata: ActionCreator<ReceiveAction>;
 }
 
 interface ViewerPanelState {
@@ -176,7 +178,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const { receiveMetadata } = this.props;
         console.log(data);
         receiveMetadata({
-            totalTime: data.numberOfFrames, //TODO: change this once the backend sends this data
+            totalTime: data.totalDuration,
             timeStepSize: data.timeStepSize,
         });
     }
@@ -188,7 +190,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             this.state.stopTime &&
             Math.abs(timeData.time - this.state.stopTime) <= timeStep
         ) {
-            console.log("stop");
             agentSim.pause();
             this.setState({
                 stopTime: 0,
@@ -198,8 +199,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         return changeTime(timeData.time);
     }
 
-    public skipToTime(time) {
+    public skipToTime(time: number) {
         agentSim.pause();
+
         agentSim.playFromTime(time);
     }
 

@@ -1,8 +1,9 @@
 import * as React from "react";
 import { Button, Slider } from "antd";
+import { ChangeTimeAction } from "../../state/selection/types";
+import { ActionCreator } from "redux";
 
 const styles = require("./style.css");
-
 interface PlayBackProps {
     playHandler: () => void;
     time: number;
@@ -11,6 +12,7 @@ interface PlayBackProps {
     nextHandler: () => void;
     totalTime: number;
     isPlaying: boolean;
+    onTimeChange: ActionCreator<ChangeTimeAction>;
 }
 
 const PlayBackControls = ({
@@ -21,16 +23,16 @@ const PlayBackControls = ({
     isPlaying,
     nextHandler,
     totalTime,
+    onTimeChange,
 }: PlayBackProps) => {
+    const SLIDER_MAX = totalTime / 1000;
+
     const convertSliderValueToNs = (sliderValue: number): number => {
-        const totalNs = totalTime * 10000;
-        return (sliderValue / 100) * totalNs;
+        return (sliderValue / SLIDER_MAX) * totalTime;
     };
 
-    const convertTimeToSliderValue = (time: number): number => {
-        const totalNs = totalTime * 10000;
-
-        return (time / totalNs) * 100;
+    const convertTimeToSliderValue = (): number => {
+        return (time / totalTime) * SLIDER_MAX;
     };
 
     const handleTimeChange = (sliderValue: number | [number, number]): void => {
@@ -39,8 +41,7 @@ const PlayBackControls = ({
     };
 
     const tipFormatter = (sliderValue: number): string => {
-        const totalNs = totalTime * 10000;
-        return `${((sliderValue / 100) * totalNs) / 1000} ns`;
+        return `${sliderValue}k ns`;
     };
 
     return (
@@ -53,10 +54,11 @@ const PlayBackControls = ({
             />
 
             <Slider
-                value={convertTimeToSliderValue(time)}
+                value={convertTimeToSliderValue()}
                 onChange={handleTimeChange}
                 tipFormatter={tipFormatter}
                 className={[styles.slider, styles.item].join(" ")}
+                max={SLIDER_MAX}
             />
             <Button
                 className={styles.item}
