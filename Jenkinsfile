@@ -111,12 +111,13 @@ pipeline {
             }
         }
 
-        stage("automated deploy"){
+        stage("automated deploy") {
             when {
                 expression { !IGNORE_AUTHORS.contains(gitAuthor()) }
                 branch "master"
                 equals expected: BUILD_ARTIFACT, actual: params.JOB_TYPE
             }
+            steps {
                 script {
                     DEPLOYMENT_TYPE = STAGING_DEPLOYMENT
                     ARTIFACTORY_REPO = DEPLOYMENT_TARGET_TO_MAVEN_REPO[DEPLOYMENT_TYPE]
@@ -125,6 +126,7 @@ pipeline {
                 GIT_TAG = sh(script: 'git describe --tags --exact-match', returnStdout: true).trim()
                 // Automatically deploy to staging env on changes to master branch
                 sh "${PYTHON} ${VENV_BIN}/deploy_artifact -d --branch=${env.BRANCH_NAME} --deploy-env=${DEPLOYMENT_TYPE} maven-tgz S3 --artifactory-repo=${ARTIFACTORY_REPO} --bucket=${S3_BUCKET} ${GIT_TAG}"
+            }
         }
 
         stage ("deploy") {
