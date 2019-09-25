@@ -1,5 +1,18 @@
 .container {
     position: absolute;
+    display: flex;
     bottom: 0;
-    right: 40%;
+    right: 25%;
+    width: 50%;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+}
+
+.item {
+    margin: auto 2px;
+}
+
+.slider {
+    flex: 3;
+    margin: auto 10px;
 }

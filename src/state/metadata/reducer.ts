@@ -7,6 +7,8 @@ import { RECEIVE_METADATA, RECEIVE_AGENT_IDS } from "./constants";
 import { MetadataStateBranch, ReceiveAction } from "./types";
 
 export const initialState = {
+    totalTime: 0,
+    timeStep: 0,
     agentIds: [],
 };
 

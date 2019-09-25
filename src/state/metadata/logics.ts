@@ -17,7 +17,7 @@ const requestMetadata = createLogic({
         httpClient
             .get(`${baseApiUrl}/metadata.json`)
             .then((metadata: AxiosResponse) => {
-                dispatch(receiveMetadata(metadata.data));
+                dispatch(receiveMetadata({ graphData: metadata.data }));
             })
             .catch((reason) => {
                 console.log(reason);
