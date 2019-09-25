@@ -122,8 +122,8 @@ pipeline {
                     DEPLOYMENT_TYPE = STAGING_DEPLOYMENT
                     ARTIFACTORY_REPO = DEPLOYMENT_TARGET_TO_MAVEN_REPO[DEPLOYMENT_TYPE]
                     S3_BUCKET = DEPLOYMENT_TARGET_TO_S3_BUCKET[DEPLOYMENT_TYPE]
+                    GIT_TAG = sh(script: 'git describe --tags --exact-match', returnStdout: true).trim()
                 }
-                GIT_TAG = sh(script: 'git describe --tags --exact-match', returnStdout: true).trim()
                 // Automatically deploy to staging env on changes to master branch
                 sh "${PYTHON} ${VENV_BIN}/deploy_artifact -d --branch=${env.BRANCH_NAME} --deploy-env=${DEPLOYMENT_TYPE} maven-tgz S3 --artifactory-repo=${ARTIFACTORY_REPO} --bucket=${S3_BUCKET} ${GIT_TAG}"
             }
