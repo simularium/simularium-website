@@ -3,7 +3,7 @@ import { ActionCreator } from "redux";
 import { AgentSimController } from "agentviz-viewer";
 import { connect } from "react-redux";
 
-import ThreeDViewer from "../../components/Viewer";
+import AgentVizViewer from "agentviz-viewer";
 import {
     getCurrentTime,
     getNumberCollapsed,
@@ -94,7 +94,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public componentDidMount() {
         const current = this.centerContent.current;
-        // agentSim.initializeTrajectoryFile();
         if (current) {
             window.addEventListener("resize", () => this.resize(current));
             setTimeout(() => {
@@ -180,7 +179,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 isPlaying: false,
             });
         }
-        return changeTime(timeData.time);
+        changeTime(timeData.time);
     }
 
     public skipToTime(time: number) {
@@ -194,14 +193,15 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const { time, changeTime, totalTime, highlightedId } = this.props;
         return (
             <div ref={this.centerContent} className={styles.container}>
-                <ThreeDViewer
-                    time={time}
-                    width={this.state.width}
+                <AgentVizViewer
                     height={this.state.height}
-                    agentSim={agentSim}
+                    width={this.state.width}
+                    devgui={false}
+                    loggerLevel="off"
                     onTimeChange={this.receiveTimeChange}
-                    highlightId={highlightedId}
-                    handleJsonMeshData={this.handleJsonMeshData}
+                    agentSimController={agentSim}
+                    onJsonDataArrived={this.handleJsonMeshData}
+                    highlightedParticleType={highlightedId}
                     onTrajectoryFileInfoChanged={
                         this.onTrajectoryFileInfoChanged
                     }
