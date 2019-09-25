@@ -17,7 +17,6 @@ import {
     getTotalTimeOfCachedSimulation,
     getTimeStepSize,
 } from "../../state/metadata/selectors";
-import { ENGINE_METHOD_DIGESTS } from "constants";
 import {
     ChangeTimeAction,
     TurnAgentsOnAction,
@@ -67,7 +66,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.animationTimer = null;
         this.playBackOne = this.playBackOne.bind(this);
         this.playForwardOne = this.playForwardOne.bind(this);
-        this.playFoward = this.playFoward.bind(this);
         this.startPlay = this.startPlay.bind(this);
         this.pause = this.pause.bind(this);
         this.receiveTimeChange = this.receiveTimeChange.bind(this);
@@ -75,6 +73,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.onTrajectoryFileInfoChanged = this.onTrajectoryFileInfoChanged.bind(
             this
         );
+        this.skipToTime = this.skipToTime.bind(this);
         this.resize = this.resize.bind(this);
         this.state = {
             isPlaying: false,
@@ -119,27 +118,18 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public playForwardOne() {
-        const { time, changeTime, timeStep } = this.props;
+        const { time, timeStep } = this.props;
+        // TODO: remove this once we have playOneFromTime();
         agentSim.playFromTime(time + timeStep);
         this.setState({ stopTime: time + timeStep });
     }
 
     public playBackOne() {
-        const { time, changeTime, timeStep } = this.props;
+        const { time, timeStep } = this.props;
+        // TODO: remove this once we have playOneFromTime();
         if (time - timeStep >= 0) {
             agentSim.playFromTime(time - timeStep);
             this.setState({ stopTime: time - timeStep });
-        }
-    }
-
-    public playFoward(isInitalPlay: boolean) {
-        if (isInitalPlay || this.state.isPlaying) {
-            this.playForwardOne();
-
-            this.animationTimer = window.setTimeout(
-                () => this.playFoward(false),
-                100
-            );
         }
     }
 
@@ -156,16 +146,11 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public startPlay() {
-        const { time } = this.props;
+        const { time, timeStep } = this.props;
         if (this.state.isPlaying) {
             return;
         }
-        if (this.state.isInitialPlay) {
-            agentSim.start();
-            this.setState({ isInitialPlay: false });
-        } else {
-            agentSim.playFromTime(time);
-        }
+        agentSim.playFromTime(time + timeStep);
         this.setState({ isPlaying: true });
     }
 
@@ -174,9 +159,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.setState({ isPlaying: false });
     }
 
-    public onTrajectoryFileInfoChanged(data) {
+    public onTrajectoryFileInfoChanged(data: any) {
         const { receiveMetadata } = this.props;
-        console.log(data);
         receiveMetadata({
             totalTime: data.totalDuration,
             timeStepSize: data.timeStepSize,
@@ -185,7 +169,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public receiveTimeChange(timeData: any) {
         const { changeTime, timeStep } = this.props;
-        console.log(timeData.time);
+        // TODO: remove this once we have playOneFromTime();
         if (
             this.state.stopTime &&
             Math.abs(timeData.time - this.state.stopTime) <= timeStep
@@ -201,7 +185,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public skipToTime(time: number) {
         agentSim.pause();
-
+        // TODO: remove this once we have playOneFromTime();
+        this.setState({ stopTime: time });
         agentSim.playFromTime(time);
     }
 
