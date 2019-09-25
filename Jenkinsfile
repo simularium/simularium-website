@@ -157,7 +157,11 @@ pipeline {
 
 // the CloudFront distribution should match the S3 bucket name
 def invalidateCache(String bucket) {
-    sh(script: "aws cloudfront list-distributions --output json | jq \'.DistributionList.Items[] | select(.Origins.Items[].Id==\\\"${bucket}\\\") | .Id\'")
+    CLOUDFRONT_ID = sh(
+        returnStdout: true,
+        script: "aws cloudfront list-distributions --output json | jq \'.DistributionList.Items[] | select(.Origins.Items[].Id==\\\"${bucket}\\\") | .Id\'"
+    )
+    sh(script: "aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_ID} --paths \\\"/*\\\"")
 }
 
 def notifyBB(String state) {
