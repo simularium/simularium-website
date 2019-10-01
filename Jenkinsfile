@@ -127,6 +127,7 @@ pipeline {
                 }
                 // Automatically deploy to staging env on changes to master branch
                 sh "${PYTHON} ${VENV_BIN}/deploy_artifact -d --branch=${env.BRANCH_NAME} --deploy-env=${DEPLOYMENT_TYPE} maven-tgz S3 --artifactory-repo=${ARTIFACTORY_REPO} --bucket=${S3_BUCKET} ${GIT_TAG}"
+                invalidateCache(S3_BUCKET)
             }
         }
 
@@ -140,6 +141,7 @@ pipeline {
                     S3_BUCKET = DEPLOYMENT_TARGET_TO_S3_BUCKET[params.DEPLOYMENT_TYPE]
                 }
                 sh "${PYTHON} ${VENV_BIN}/deploy_artifact -d --branch=${env.BRANCH_NAME} --deploy-env=${params.DEPLOYMENT_TYPE} maven-tgz S3 --artifactory-repo=${ARTIFACTORY_REPO} --bucket=${S3_BUCKET} ${params.GIT_TAG}"
+                invalidateCache(S3_BUCKET)
             }
         }
     }
@@ -151,6 +153,15 @@ pipeline {
             deleteDir()
         }
     }
+}
+
+// the CloudFront distribution should match the S3 bucket name
+def invalidateCache(String bucket) {
+    CLOUDFRONT_ID = sh(
+        returnStdout: true,
+        script: "aws cloudfront list-distributions --output json | jq \'.DistributionList.Items[] | select(.Origins.Items[].Id==\\\"${bucket}\\\") | .Id\'"
+    )
+    sh(script: "aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_ID} --paths \\\"/*\\\"")
 }
 
 def notifyBB(String state) {
