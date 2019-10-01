@@ -160,7 +160,7 @@ pipeline {
 }
 
 def invalidateCache(String bucket) {
-    sh(script: "aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_ID} --paths \\\"/*\\\"")
+    sh(script: "aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_ID} --paths \"/*\"")
 }
 
 def notifyBB(String state) {
