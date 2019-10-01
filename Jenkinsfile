@@ -9,6 +9,8 @@ String PRODUCTION_DEPLOYMENT = "production"  // matches value from jenkinstools.
 Map DEPLOYMENT_TARGET_TO_S3_BUCKET = [(STAGING_DEPLOYMENT): "staging.agentviz.allencell.org", (PRODUCTION_DEPLOYMENT): "production.agentviz.allencell.org"]
 Map DEPLOYMENT_TARGET_TO_MAVEN_REPO = [(STAGING_DEPLOYMENT): "maven-snapshot-local", (PRODUCTION_DEPLOYMENT): "maven-release-local"]
 
+Map TARGET_CLOUDFRONT = [(STAGING_DEPLOYMENT): "E33IGZ54Z0HPTE", (PRODUCTION_DEPLOYMENT): "TBD"]
+
 String[] IGNORE_AUTHORS = ["jenkins", "Jenkins User", "Jenkins Builder"]
 
 pipeline {
@@ -120,6 +122,7 @@ pipeline {
             steps {
                 script {
                     DEPLOYMENT_TYPE = STAGING_DEPLOYMENT
+                    CLOUDFRONT_ID = TARGET_CLOUDFRONT[DEPLOYMENT_TYPE]
                     ARTIFACTORY_REPO = DEPLOYMENT_TARGET_TO_MAVEN_REPO[DEPLOYMENT_TYPE]
                     S3_BUCKET = DEPLOYMENT_TARGET_TO_S3_BUCKET[DEPLOYMENT_TYPE]
                     // HACK - switch back to detached commit to get the tag
@@ -127,7 +130,7 @@ pipeline {
                 }
                 // Automatically deploy to staging env on changes to master branch
                 sh "${PYTHON} ${VENV_BIN}/deploy_artifact -d --branch=${env.BRANCH_NAME} --deploy-env=${DEPLOYMENT_TYPE} maven-tgz S3 --artifactory-repo=${ARTIFACTORY_REPO} --bucket=${S3_BUCKET} ${GIT_TAG}"
-                invalidateCache(S3_BUCKET)
+                invalidateCache(CLOUDFRONT_ID)
             }
         }
 
@@ -139,9 +142,10 @@ pipeline {
                 script {
                     ARTIFACTORY_REPO = DEPLOYMENT_TARGET_TO_MAVEN_REPO[params.DEPLOYMENT_TYPE]
                     S3_BUCKET = DEPLOYMENT_TARGET_TO_S3_BUCKET[params.DEPLOYMENT_TYPE]
+                    CLOUDFRONT_ID = TARGET_CLOUDFRONT[DEPLOYMENT_TYPE]
                 }
                 sh "${PYTHON} ${VENV_BIN}/deploy_artifact -d --branch=${env.BRANCH_NAME} --deploy-env=${params.DEPLOYMENT_TYPE} maven-tgz S3 --artifactory-repo=${ARTIFACTORY_REPO} --bucket=${S3_BUCKET} ${params.GIT_TAG}"
-                invalidateCache(S3_BUCKET)
+                invalidateCache(CLOUDFRONT_ID)
             }
         }
     }
@@ -155,12 +159,7 @@ pipeline {
     }
 }
 
-// the CloudFront distribution should match the S3 bucket name
 def invalidateCache(String bucket) {
-    CLOUDFRONT_ID = sh(
-        returnStdout: true,
-        script: "aws cloudfront list-distributions --output json | jq \'.DistributionList.Items[] | select(.Origins.Items[].Id==\\\"${bucket}\\\") | .Id\'"
-    )
     sh(script: "aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_ID} --paths \\\"/*\\\"")
 }
 
