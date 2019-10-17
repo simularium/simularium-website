@@ -19,7 +19,6 @@ module.exports = ({ analyze, env } = {}) => ({
         disableHostCheck: true,
         host: devServer.host,
         port: devServer.port,
-        publicPath: `${devServer.host}:${devServer.port}:/${devServer.path}/`,
         stats,
     },
     entry: {

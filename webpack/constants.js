@@ -1,7 +1,6 @@
 const devServer = {
     host: "0.0.0.0",
     port: 9001,
-    path: "agentviz-ui",
 };
 
 const Env = {
