@@ -49,12 +49,12 @@ interface ViewerPanelState {
 }
 
 const netConnectionSettings = {
-    serverIp: "52.15.70.94",
+    serverIp: "production-node1-agentviz-backend.cellexplore.net",
     serverPort: 9002,
 };
 
 const agentSim = new AgentSimController(netConnectionSettings, {
-    trajectoryPlaybackFile: "actin19.h5",
+    trajectoryPlaybackFile: "actin34_0.h5",
 });
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
