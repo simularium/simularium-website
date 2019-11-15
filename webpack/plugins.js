@@ -33,15 +33,24 @@ const PLUGINS_BY_ENV = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production'),
         }),
-        new webpack.HashedModuleIdsPlugin()
+        new webpack.HashedModuleIdsPlugin(),
+        new webpack.EnvironmentPlugin({
+            BACKEND_SERVER_IP: `production-node1-agentviz-backend.cellexplore.net`
+        })
     ],
     [Env.STAGE]: [
-        new webpack.NamedModulesPlugin()
+        new webpack.NamedModulesPlugin(),
+        new webpack.EnvironmentPlugin({
+            BACKEND_SERVER_IP: `staging-node1-agentviz-backend.cellexplore.net`
+        })
     ],
     [Env.DEVELOPMENT]: [
         new CopyWebpackPlugin([
             { from: 'src/data', to: 'api/v1' }
-        ]), 
+        ]),
+        new webpack.EnvironmentPlugin({
+            BACKEND_SERVER_IP: `dev-node1-agentviz-backend.cellexplore.net`
+        })
     ]
 };
 
