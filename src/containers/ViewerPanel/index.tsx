@@ -49,7 +49,7 @@ interface ViewerPanelState {
 }
 
 const netConnectionSettings = {
-    serverIp: "production-node1-agentviz-backend.cellexplore.net",
+    serverIp: process.env.BACKEND_SERVER_IP,
     serverPort: 9002,
 };
 
