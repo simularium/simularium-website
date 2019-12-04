@@ -5,6 +5,7 @@ import {
     SIDE_PANEL_COLLAPSED,
     TURN_AGENTS_ON,
     HIGHLIGHT_AGENT,
+    TOGGLE_LOAD_FILE_MODAL,
 } from "./constants";
 import {
     DeselectFileAction,
@@ -12,6 +13,7 @@ import {
     SelectMetadataAction,
     ChangeTimeAction,
     HighlightAgentAction,
+    ToggleAction,
 } from "./types";
 
 export function deselectFile(fileId: string | string[]): DeselectFileAction {
@@ -46,6 +48,20 @@ export function highlightAgent(agentIds: string): HighlightAgentAction {
     return {
         payload: agentIds,
         type: HIGHLIGHT_AGENT,
+    };
+}
+
+export function openLoadFileModal(): ToggleAction {
+    return {
+        payload: true,
+        type: TOGGLE_LOAD_FILE_MODAL,
+    };
+}
+
+export function closeLoadFileModal(): ToggleAction {
+    return {
+        payload: false,
+        type: TOGGLE_LOAD_FILE_MODAL,
     };
 }
 

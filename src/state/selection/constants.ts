@@ -11,3 +11,7 @@ export const SIDE_PANEL_COLLAPSED = makeConstant(
 );
 export const TURN_AGENTS_ON = makeConstant(BRANCH_NAME, "turn-agents-on");
 export const HIGHLIGHT_AGENT = makeConstant(BRANCH_NAME, "highlight-agent");
+export const TOGGLE_LOAD_FILE_MODAL = makeConstant(
+    BRANCH_NAME,
+    "toggle-load-file-modal"
+);

@@ -34,3 +34,8 @@ export interface HighlightAgentAction {
     payload: string;
     type: string;
 }
+
+export interface ToggleAction {
+    payload: boolean;
+    type: string;
+}
