@@ -20,7 +20,7 @@ export default class AppHeader extends React.Component<AppHeaderProps, {}> {
                 <Row>
                     <Col>
                         <Button type="primary" onClick={openLoadFileModal}>
-                            Open Modal
+                            Load
                         </Button>
                     </Col>
                     <Col />
