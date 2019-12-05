@@ -20,7 +20,7 @@ class LoadTrajectoryFileModal extends React.Component<
         return (
             <div>
                 <Modal
-                    title="Basic Modal"
+                    title="Choose a trajectory file"
                     visible={visible}
                     onOk={closeModal}
                     onCancel={closeModal}
