@@ -11,6 +11,7 @@ import {
     SIDE_PANEL_COLLAPSED,
     TURN_AGENTS_ON,
     HIGHLIGHT_AGENT,
+    TOGGLE_LOAD_FILE_MODAL,
 } from "./constants";
 import {
     DeselectFileAction,
@@ -20,6 +21,7 @@ import {
     ChangeTimeAction,
     ChangeNumberCollapsedPanelsAction,
     HighlightAgentAction,
+    ToggleAction,
 } from "./types";
 
 export const initialState = {
@@ -28,6 +30,7 @@ export const initialState = {
     numberPanelsCollapsed: 0,
     agentsOn: [],
     hightlightedId: -1,
+    modalOpen: false,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -91,6 +94,17 @@ const actionToConfigMap: TypeToDescriptionMap = {
         ) => ({
             ...state,
             hightlightedId: action.payload,
+        }),
+    },
+    [TOGGLE_LOAD_FILE_MODAL]: {
+        accepts: (action: AnyAction): action is ToggleAction =>
+            action.type === TOGGLE_LOAD_FILE_MODAL,
+        perform: (
+            state: SelectionStateBranch,
+            action: HighlightAgentAction
+        ) => ({
+            ...state,
+            modalOpen: action.payload,
         }),
     },
 };

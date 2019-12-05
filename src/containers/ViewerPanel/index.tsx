@@ -27,6 +27,7 @@ import { ReceiveAction } from "../../state/metadata/types";
 const styles = require("./style.css");
 
 interface ViewerPanelProps {
+    agentSim: AgentSimController;
     time: number;
     numberPanelsCollapsed: number;
     changeTime: ActionCreator<ChangeTimeAction>;
@@ -47,15 +48,6 @@ interface ViewerPanelState {
     width: number;
     stopTime: number;
 }
-
-const netConnectionSettings = {
-    serverIp: process.env.BACKEND_SERVER_IP,
-    serverPort: 9002,
-};
-
-const agentSim = new AgentSimController(netConnectionSettings, {
-    trajectoryPlaybackFile: "actin34_0.h5",
-});
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     private animationTimer: number | null;
@@ -117,14 +109,14 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public playForwardOne() {
-        const { time, timeStep } = this.props;
+        const { time, timeStep, agentSim } = this.props;
         // TODO: remove this once we have playOneFromTime();
         agentSim.playFromTime(time + timeStep);
         this.setState({ stopTime: time + timeStep });
     }
 
     public playBackOne() {
-        const { time, timeStep } = this.props;
+        const { time, timeStep, agentSim } = this.props;
         // TODO: remove this once we have playOneFromTime();
         if (time - timeStep >= 0) {
             agentSim.playFromTime(time - timeStep);
@@ -145,7 +137,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public startPlay() {
-        const { time, timeStep } = this.props;
+        const { time, timeStep, agentSim } = this.props;
         if (this.state.isPlaying) {
             return;
         }
@@ -154,6 +146,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public pause() {
+        const { agentSim } = this.props;
         agentSim.pause();
         this.setState({ isPlaying: false });
     }
@@ -167,7 +160,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public receiveTimeChange(timeData: any) {
-        const { changeTime, timeStep } = this.props;
+        const { changeTime, timeStep, agentSim } = this.props;
         // TODO: remove this once we have playOneFromTime();
         if (
             this.state.stopTime &&
@@ -183,14 +176,20 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public skipToTime(time: number) {
+        const { agentSim } = this.props;
+
         agentSim.pause();
-        // TODO: remove this once we have playOneFromTime();
-        this.setState({ stopTime: time });
         agentSim.playFromTime(time);
     }
 
     public render(): JSX.Element {
-        const { time, changeTime, totalTime, highlightedId } = this.props;
+        const {
+            time,
+            changeTime,
+            totalTime,
+            highlightedId,
+            agentSim,
+        } = this.props;
         return (
             <div ref={this.centerContent} className={styles.container}>
                 <AgentVizViewer
