@@ -38,7 +38,7 @@ class App extends React.Component<AppProps, {}> {
         this.handleSelectFile = this.handleSelectFile.bind(this);
     }
 
-    public handleSelectFile(fileName: String) {
+    public handleSelectFile(fileName: string) {
         if (!this.agentSim) {
             // initial load, user selects a file
             this.agentSim = new AgentSimController(netConnectionSettings, {
