@@ -46,8 +46,7 @@ class App extends React.Component<AppProps, {}> {
             });
         } else {
             // switching files
-            const changeFile = this.agentSim.changeFile.bind(this.agentSim);
-            changeFile(fileName);
+            this.agentSim.changeFile(fileName);
         }
     }
 
