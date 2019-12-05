@@ -24,7 +24,7 @@ const netConnectionSettings = {
 };
 
 export const agentSim = new AgentSimController(netConnectionSettings, {
-    trajectoryPlaybackFile: "actin34_0.h5",
+    trajectoryPlaybackFile: "",
 });
 
 interface AppProps {
