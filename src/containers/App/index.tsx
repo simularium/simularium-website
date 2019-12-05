@@ -23,10 +23,6 @@ const netConnectionSettings = {
     serverPort: 9002,
 };
 
-export const agentSim = new AgentSimController(netConnectionSettings, {
-    trajectoryPlaybackFile: "",
-});
-
 interface AppProps {
     onSidePanelCollapse: (number: number) => void;
     openLoadFileModal: ActionCreator<ToggleAction>;
@@ -35,10 +31,26 @@ interface AppProps {
 }
 
 class App extends React.Component<AppProps, {}> {
+    public agentSim: AgentSimController | undefined;
     constructor(props: AppProps) {
         super(props);
         this.onPanelCollapse = this.onPanelCollapse.bind(this);
+        this.handleSelectFile = this.handleSelectFile.bind(this);
     }
+
+    public handleSelectFile(fileName: String) {
+        if (!this.agentSim) {
+            // initial load, user selects a file
+            this.agentSim = new AgentSimController(netConnectionSettings, {
+                trajectoryPlaybackFile: fileName,
+            });
+        } else {
+            // switching files
+            const changeFile = this.agentSim.changeFile.bind(this.agentSim);
+            changeFile(fileName);
+        }
+    }
+
     public onPanelCollapse(open: boolean) {
         const { onSidePanelCollapse } = this.props;
         const value = open ? 1 : -1;
@@ -60,7 +72,9 @@ class App extends React.Component<AppProps, {}> {
                         <ModelPanel />
                     </SideBar>
                     <Content tagName="main">
-                        <ViewerPanel agentSim={agentSim} />
+                        {this.agentSim && (
+                            <ViewerPanel agentSim={this.agentSim} />
+                        )}
                     </Content>
                     <SideBar onCollapse={this.onPanelCollapse} type="right">
                         <ResultsPanel />
@@ -68,7 +82,7 @@ class App extends React.Component<AppProps, {}> {
                 </Layout>
                 <LoadTrajectoryFileModal
                     visible={modalOpen}
-                    selectFile={agentSim.changeFile.bind(agentSim)}
+                    selectFile={this.handleSelectFile}
                     closeModal={closeLoadFileModal}
                 />
             </Layout>
