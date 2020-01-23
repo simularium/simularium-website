@@ -1,9 +1,9 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
-import { AgentSimController } from "agentviz-viewer";
+import { AgentSimController } from "@aics/agentviz-viewer";
 import { connect } from "react-redux";
 
-import AgentVizViewer from "agentviz-viewer";
+import AgentVizViewer from "@aics/agentviz-viewer";
 import {
     getCurrentTime,
     getNumberCollapsed,

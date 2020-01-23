@@ -2,7 +2,7 @@ import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 import { Layout } from "antd";
-import { AgentSimController } from "agentviz-viewer";
+import { AgentSimController } from "@aics/agentviz-viewer";
 
 import LoadTrajectoryFileModal from "../../components/LoadTrajectoryFileModal";
 import Header from "../../components/Header";
