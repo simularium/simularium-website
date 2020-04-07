@@ -1,3 +1,5 @@
+# DEPRECATED. MOVED TO GITHUB
+
 # Simularium Website
 
 Front end website to create, modify and view simulations
