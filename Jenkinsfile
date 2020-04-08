@@ -88,6 +88,7 @@ pipeline {
             }
             environment {
                 DEPLOYMENT_ENV = "production"
+                GIT_SSH = "${GIT_SSH}"
             }
             steps {
                 sh "${PYTHON} ${VENV_BIN}/manage_version -t gradle -s prepare"
