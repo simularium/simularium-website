@@ -38,14 +38,6 @@ pipeline {
         PYTHON = "${VENV_BIN}/python3"
     }
     stages {
-        stage ("initialize") {
-            steps {
-                this.notifyBB("INPROGRESS")
-                // without credentialsId, the git parameters plugin fails to communicate with the repo
-                git url: "${env.GIT_URL}", branch: "${env.BRANCH_NAME}", credentialsId:"9b2bb39a-1b3e-40cd-b1fd-fee01ebef965"
-            }
-        }
-
         stage ("fail if invalid job parameters") {
             when {
                 expression { !IGNORE_AUTHORS.contains(gitAuthor()) }
@@ -151,7 +143,7 @@ pipeline {
     }
     post {
         always {
-            this.notifyBB(currentBuild.result)
+            this.notifyGH(currentBuild.result)
         }
         cleanup {
             deleteDir()
@@ -161,25 +153,6 @@ pipeline {
 
 def invalidateCache(String bucket) {
     sh(script: "aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_ID} --paths \"/*\"")
-}
-
-def notifyBB(String state) {
-    // on success, result is null
-    state = state ?: "SUCCESS"
-
-    if (state == "SUCCESS" || state == "FAILURE") {
-        currentBuild.result = state
-    }
-
-    notifyBitbucket commitSha1: "${GIT_COMMIT}",
-            credentialsId: "aea50792-dda8-40e4-a683-79e8c83e72a6",
-            disableInprogressNotification: false,
-            considerUnstableAsSuccess: true,
-            ignoreUnverifiedSSLPeer: false,
-            includeBuildNumberInKey: false,
-            prependParentProjectKey: false,
-            projectKey: "SW",
-            stashServerBaseUrl: "https://aicsbitbucket.corp.alleninstitute.org"
 }
 
 def gitAuthor() {
