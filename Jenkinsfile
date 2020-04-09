@@ -142,9 +142,6 @@ pipeline {
         }
     }
     post {
-        always {
-            this.notifyGH(currentBuild.result)
-        }
         cleanup {
             deleteDir()
         }
