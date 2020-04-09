@@ -88,12 +88,11 @@ pipeline {
             }
             environment {
                 DEPLOYMENT_ENV = "production"
-                GIT_SSH = "${env.GIT_SSH}"
             }
             steps {
-                sh "GIT_SSH=\"${env.GIT_SSH}\" ${PYTHON} ${VENV_BIN}/manage_version -t gradle -s prepare"
+                sh "${PYTHON} ${VENV_BIN}/manage_version -t gradle -s prepare"
                 sh "./gradlew -i snapshotPublishTarGzAndDockerImage"
-                sh "GIT_SSH=\"${env.GIT_SSH}\" ${PYTHON} ${VENV_BIN}/manage_version -t gradle -s tag"
+                sh "${PYTHON} ${VENV_BIN}/manage_version -t gradle -s tag"
             }
         }
 
