@@ -91,9 +91,9 @@ pipeline {
                 GIT_SSH = "${env.GIT_SSH}"
             }
             steps {
-                sh "${PYTHON} ${VENV_BIN}/manage_version -t gradle -s prepare"
+                sh "GIT_SSH=\"${env.GIT_SSH}\" ${PYTHON} ${VENV_BIN}/manage_version -t gradle -s prepare"
                 sh "./gradlew -i snapshotPublishTarGzAndDockerImage"
-                sh "${PYTHON} ${VENV_BIN}/manage_version -t gradle -s tag"
+                sh "GIT_SSH=\"${env.GIT_SSH}\" ${PYTHON} ${VENV_BIN}/manage_version -t gradle -s tag"
             }
         }
 
