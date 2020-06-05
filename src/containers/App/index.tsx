@@ -2,7 +2,7 @@ import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 import { Layout } from "antd";
-import { AgentSimController } from "@aics/agentviz-viewer";
+import { SimulariumController } from "@aics/simularium-viewer";
 
 import LoadTrajectoryFileModal from "../../components/LoadTrajectoryFileModal";
 import Header from "../../components/Header";
@@ -31,7 +31,7 @@ interface AppProps {
 }
 
 class App extends React.Component<AppProps, {}> {
-    public agentSim: AgentSimController | undefined;
+    public simulariumController: SimulariumController | undefined;
     constructor(props: AppProps) {
         super(props);
         this.onPanelCollapse = this.onPanelCollapse.bind(this);
@@ -39,14 +39,15 @@ class App extends React.Component<AppProps, {}> {
     }
 
     public handleSelectFile(fileName: string) {
-        if (!this.agentSim) {
+        if (!this.simulariumController) {
             // initial load, user selects a file
-            this.agentSim = new AgentSimController(netConnectionSettings, {
+            this.simulariumController = new SimulariumController({
                 trajectoryPlaybackFile: fileName,
+                netConnectionSettings: netConnectionSettings,
             });
         } else {
             // switching files
-            this.agentSim.changeFile(fileName);
+            this.simulariumController.changeFile(fileName);
         }
     }
 
@@ -71,8 +72,10 @@ class App extends React.Component<AppProps, {}> {
                         <ModelPanel />
                     </SideBar>
                     <Content tagName="main">
-                        {this.agentSim && (
-                            <ViewerPanel agentSim={this.agentSim} />
+                        {this.simulariumController && (
+                            <ViewerPanel
+                                simulariumController={this.simulariumController}
+                            />
                         )}
                     </Content>
                     <SideBar onCollapse={this.onPanelCollapse} type="right">
