@@ -46,7 +46,6 @@ interface ViewerPanelState {
     particleTypeIds: string[];
     height: number;
     width: number;
-    stopTime: number;
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -74,7 +73,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             particleTypeIds: [],
             height: 0,
             width: 0,
-            stopTime: 0,
         };
     }
 
@@ -110,18 +108,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public playForwardOne() {
         const { time, timeStep, simulariumController } = this.props;
-        // TODO: remove this once we have playOneFromTime();
-        simulariumController.playFromTime(time + timeStep);
-        this.setState({ stopTime: time + timeStep });
+        simulariumController.gotoTime(time + timeStep);
     }
 
     public playBackOne() {
         const { time, timeStep, simulariumController } = this.props;
-        // TODO: remove this once we have playOneFromTime();
-        if (time - timeStep >= 0) {
-            simulariumController.playFromTime(time - timeStep);
-            this.setState({ stopTime: time - timeStep });
-        }
+        simulariumController.gotoTime(time - timeStep);
     }
 
     public handleJsonMeshData(jsonData: any) {
@@ -138,10 +130,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public startPlay() {
         const { time, timeStep, simulariumController } = this.props;
-        if (this.state.isPlaying) {
-            return;
-        }
         simulariumController.playFromTime(time + timeStep);
+        simulariumController.resume();
         this.setState({ isPlaying: true });
     }
 
@@ -161,24 +151,11 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public receiveTimeChange(timeData: any) {
         const { changeTime, timeStep, simulariumController } = this.props;
-        // TODO: remove this once we have playOneFromTime();
-        if (
-            this.state.stopTime &&
-            Math.abs(timeData.time - this.state.stopTime) <= timeStep
-        ) {
-            simulariumController.pause();
-            this.setState({
-                stopTime: 0,
-                isPlaying: false,
-            });
-        }
         changeTime(timeData.time);
     }
 
     public skipToTime(time: number) {
         const { simulariumController } = this.props;
-
-        simulariumController.pause();
         simulariumController.playFromTime(time);
     }
 
