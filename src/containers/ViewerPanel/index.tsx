@@ -150,7 +150,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public receiveTimeChange(timeData: any) {
-        const { changeTime, timeStep, simulariumController } = this.props;
+        const { changeTime } = this.props;
         changeTime(timeData.time);
     }
 
@@ -162,7 +162,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     public render(): JSX.Element {
         const {
             time,
-            changeTime,
             totalTime,
             highlightedId,
             simulariumController,
