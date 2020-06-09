@@ -1,9 +1,9 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
-import { AgentSimController } from "@aics/agentviz-viewer";
+import { SimulariumController } from "@aics/simularium-viewer";
 import { connect } from "react-redux";
 
-import AgentVizViewer from "@aics/agentviz-viewer";
+import SimulariumViewer from "@aics/simularium-viewer";
 import {
     getCurrentTime,
     getNumberCollapsed,
@@ -27,7 +27,7 @@ import { ReceiveAction } from "../../state/metadata/types";
 const styles = require("./style.css");
 
 interface ViewerPanelProps {
-    agentSim: AgentSimController;
+    simulariumController: SimulariumController;
     time: number;
     numberPanelsCollapsed: number;
     changeTime: ActionCreator<ChangeTimeAction>;
@@ -46,7 +46,6 @@ interface ViewerPanelState {
     particleTypeIds: string[];
     height: number;
     width: number;
-    stopTime: number;
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -74,7 +73,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             particleTypeIds: [],
             height: 0,
             width: 0,
-            stopTime: 0,
         };
     }
 
@@ -109,19 +107,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public playForwardOne() {
-        const { time, timeStep, agentSim } = this.props;
-        // TODO: remove this once we have playOneFromTime();
-        agentSim.playFromTime(time + timeStep);
-        this.setState({ stopTime: time + timeStep });
+        const { time, timeStep, simulariumController } = this.props;
+        simulariumController.gotoTime(time + timeStep);
     }
 
     public playBackOne() {
-        const { time, timeStep, agentSim } = this.props;
-        // TODO: remove this once we have playOneFromTime();
-        if (time - timeStep >= 0) {
-            agentSim.playFromTime(time - timeStep);
-            this.setState({ stopTime: time - timeStep });
-        }
+        const { time, timeStep, simulariumController } = this.props;
+        simulariumController.gotoTime(time - timeStep);
     }
 
     public handleJsonMeshData(jsonData: any) {
@@ -137,17 +129,15 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public startPlay() {
-        const { time, timeStep, agentSim } = this.props;
-        if (this.state.isPlaying) {
-            return;
-        }
-        agentSim.playFromTime(time + timeStep);
+        const { time, timeStep, simulariumController } = this.props;
+        simulariumController.playFromTime(time + timeStep);
+        simulariumController.resume();
         this.setState({ isPlaying: true });
     }
 
     public pause() {
-        const { agentSim } = this.props;
-        agentSim.pause();
+        const { simulariumController } = this.props;
+        simulariumController.pause();
         this.setState({ isPlaying: false });
     }
 
@@ -160,45 +150,31 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public receiveTimeChange(timeData: any) {
-        const { changeTime, timeStep, agentSim } = this.props;
-        // TODO: remove this once we have playOneFromTime();
-        if (
-            this.state.stopTime &&
-            Math.abs(timeData.time - this.state.stopTime) <= timeStep
-        ) {
-            agentSim.pause();
-            this.setState({
-                stopTime: 0,
-                isPlaying: false,
-            });
-        }
+        const { changeTime } = this.props;
         changeTime(timeData.time);
     }
 
     public skipToTime(time: number) {
-        const { agentSim } = this.props;
-
-        agentSim.pause();
-        agentSim.playFromTime(time);
+        const { simulariumController } = this.props;
+        simulariumController.playFromTime(time);
     }
 
     public render(): JSX.Element {
         const {
             time,
-            changeTime,
             totalTime,
             highlightedId,
-            agentSim,
+            simulariumController,
         } = this.props;
         return (
             <div ref={this.centerContent} className={styles.container}>
-                <AgentVizViewer
+                <SimulariumViewer
                     height={this.state.height}
                     width={this.state.width}
                     devgui={false}
                     loggerLevel="off"
                     onTimeChange={this.receiveTimeChange}
-                    agentSimController={agentSim}
+                    simulariumController={simulariumController}
                     onJsonDataArrived={this.handleJsonMeshData}
                     highlightedParticleType={highlightedId}
                     onTrajectoryFileInfoChanged={
