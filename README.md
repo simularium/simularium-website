@@ -1,5 +1,3 @@
-# DEPRECATED. MOVED TO GITHUB
-
 # Simularium Website
 
 Front end website to create, modify and view simulations
@@ -57,7 +55,7 @@ ___
 
 
 ### Publishing
-By default, Jenkins will build both a gzipped tar archive of all Webpack outputs (e.g., index.html, bundle.js, bundle.css; "build artifacts") 
+By default, Jenkins will build both a gzipped tar archive of all Webpack outputs (e.g., index.html, bundle.js, bundle.css; "build artifacts")
 and a Docker image running an Nginx server, serving those same build artifacts.
 
 ### Docker image configuration
