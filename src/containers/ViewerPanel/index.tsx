@@ -171,7 +171,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 <SimulariumViewer
                     height={this.state.height}
                     width={this.state.width}
-                    devgui={false}
                     loggerLevel="off"
                     onTimeChange={this.receiveTimeChange}
                     simulariumController={simulariumController}
