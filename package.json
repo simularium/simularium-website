@@ -64,6 +64,7 @@
     "webpack-dev-server": "3.1.14"
   },
   "dependencies": {
+    "@aics/simularium-observables-manager": "^0.1.0",
     "@aics/simularium-viewer": "^1.2.5",
     "@types/victory": "^31.0.12",
     "antd": "^3.14.1",
