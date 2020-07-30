@@ -1,4 +1,4 @@
-![Java CI with Gradle](https://github.com/allen-cell-animated/simularium-website/workflows/Java%20CI%20with%20Gradle/badge.svg)
+![Node.js CI](https://github.com/allen-cell-animated/simularium-website/workflows/Node.js%20CI/badge.svg)
 
 # Simularium Website
 
