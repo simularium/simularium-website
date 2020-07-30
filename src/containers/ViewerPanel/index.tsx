@@ -156,7 +156,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public skipToTime(time: number) {
         const { simulariumController } = this.props;
-        simulariumController.playFromTime(time);
+        simulariumController.gotoTime(time);
     }
 
     public render(): JSX.Element {
