@@ -9,6 +9,11 @@
   },
   "author": "",
   "license": "ISC",
+  "scripts": {
+    "lint": "eslint src/**/*.{ts,tsx}",
+    "typeCheck": "tsc -p tsconfig.json --noEmit",
+    "test": "BABEL_ENV=commonjs TS_NODE_FILES=true TS_NODE_PROJECT=tsconfig.commonjs.json NODE_ENV=production mocha --opts mocha.opts src/**/test/*"
+  },
   "devDependencies": {
     "@babel/cli": "7.2.3",
     "@babel/core": "7.3.3",
