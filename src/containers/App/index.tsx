@@ -2,6 +2,7 @@ import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 import { Layout } from "antd";
+import queryString from "query-string";
 import { SimulariumController } from "@aics/simularium-viewer";
 
 import LoadTrajectoryFileModal from "../../components/LoadTrajectoryFileModal";
@@ -14,6 +15,7 @@ import { ToggleAction } from "../../state/selection/types";
 import { State } from "../../state/types";
 
 import selectionStateBranch from "../../state/selection";
+import { TRAJECTORY_FILES, URL_PARAM_KEY_FILE_NAME } from "../../constants";
 const { Content } = Layout;
 
 const styles = require("./style.css");
@@ -36,6 +38,16 @@ class App extends React.Component<AppProps, {}> {
         super(props);
         this.onPanelCollapse = this.onPanelCollapse.bind(this);
         this.handleSelectFile = this.handleSelectFile.bind(this);
+    }
+
+    componentDidMount() {
+        const { closeLoadFileModal } = this.props;
+        const parsed = queryString.parse(location.search);
+        const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
+        if (fileName && TRAJECTORY_FILES.includes(fileName as string)) {
+            this.handleSelectFile(`${fileName}.h5`);
+            closeLoadFileModal();
+        }
     }
 
     public handleSelectFile(fileName: string) {
