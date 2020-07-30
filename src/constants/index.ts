@@ -16,3 +16,5 @@ export const TRAJECTORY_FILES = [
     "ATPsynthase_9",
     "ATPsynthase_10",
 ];
+
+export const URL_PARAM_KEY_FILE_NAME = "trajFileName";
