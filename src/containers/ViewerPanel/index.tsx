@@ -24,6 +24,7 @@ import {
 import { receiveAgentTypeIds } from "../../state/metadata/actions";
 import { ReceiveAction } from "../../state/metadata/types";
 
+import "@aics/simularium-viewer/style/style.css";
 const styles = require("./style.css");
 
 interface ViewerPanelProps {
