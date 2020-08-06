@@ -23,23 +23,21 @@ const PlayBackControls = ({
     totalTime,
     onTimeChange,
 }: PlayBackProps) => {
-    const sliderMax = totalTime / 1000;
-
-    const convertSliderValueToNs = (sliderValue: number): number => {
-        return (sliderValue / sliderMax) * totalTime;
-    };
-
-    const convertTimeToSliderValue = (): number => {
-        return (time / totalTime) * sliderMax;
-    };
-
     const handleTimeChange = (sliderValue: number | [number, number]): void => {
-        const time = convertSliderValueToNs(sliderValue as number);
-        onTimeChange(time);
+        onTimeChange(sliderValue as number); // slider can be a list of numbers, but we're just using a single value
     };
 
     const tipFormatter = (sliderValue: number): string => {
-        return `${sliderValue}k ns`;
+        const formatNumber = (num: number) => Number(num).toPrecision(3);
+        const microSeconds = sliderValue / 1000;
+        if (microSeconds > 1) {
+            const milliseconds = microSeconds / 1000;
+            if (milliseconds > 1) {
+                return `${formatNumber(milliseconds)} ms`;
+            }
+            return `${formatNumber(microSeconds)} \u03BCs`;
+        }
+        return `${formatNumber(sliderValue)} ns`;
     };
 
     return (
@@ -52,11 +50,11 @@ const PlayBackControls = ({
             />
 
             <Slider
-                value={convertTimeToSliderValue()}
+                value={time}
                 onChange={handleTimeChange}
                 tipFormatter={tipFormatter}
                 className={[styles.slider, styles.item].join(" ")}
-                max={sliderMax}
+                max={totalTime}
             />
             <Button
                 className={styles.item}

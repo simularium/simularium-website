@@ -24,6 +24,7 @@ import {
 import { receiveAgentTypeIds } from "../../state/metadata/actions";
 import { ReceiveAction } from "../../state/metadata/types";
 
+import "@aics/simularium-viewer/style/style.css";
 const styles = require("./style.css");
 
 interface ViewerPanelProps {
@@ -156,7 +157,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public skipToTime(time: number) {
         const { simulariumController } = this.props;
-        simulariumController.playFromTime(time);
+        simulariumController.gotoTime(time);
     }
 
     public render(): JSX.Element {
