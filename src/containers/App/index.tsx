@@ -72,18 +72,18 @@ class App extends React.Component<AppProps, {}> {
     public render(): JSX.Element {
         const { openLoadFileModal, modalOpen, closeLoadFileModal } = this.props;
         return (
-            <Layout tagName="main" className={styles.container}>
+            <Layout className={styles.container}>
                 <Header
                     modalOpen={modalOpen}
                     openLoadFileModal={openLoadFileModal}
                 >
                     Header
                 </Header>
-                <Layout tagName="main">
+                <Layout>
                     <SideBar onCollapse={this.onPanelCollapse} type="left">
                         <ModelPanel />
                     </SideBar>
-                    <Content tagName="main">
+                    <Content>
                         {this.simulariumController && (
                             <ViewerPanel
                                 simulariumController={this.simulariumController}
