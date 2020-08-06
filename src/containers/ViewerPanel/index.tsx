@@ -35,7 +35,7 @@ interface ViewerPanelProps {
     timeStep: number;
     turnAgentsOn: ActionCreator<TurnAgentsOnAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
-    highlightedId: string;
+    highlightedId: number;
     totalTime: number;
     receiveMetadata: ActionCreator<ReceiveAction>;
 }
