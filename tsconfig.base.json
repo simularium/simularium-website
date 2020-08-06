@@ -6,6 +6,7 @@
     "jsx": "React",
     "lib": ["DOM", "ES2015", "ES6", "DOM.Iterable", "ScriptHost"],
     "moduleResolution": "Node",
+    "skipLibCheck": true,
     "noEmit": true,
     "preserveConstEnums": true,
     "sourceMap": true,
