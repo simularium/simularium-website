@@ -32,7 +32,11 @@ interface AppProps {
     closeLoadFileModal: ActionCreator<ToggleAction>;
 }
 
-class App extends React.Component<AppProps, {}> {
+interface AppState {
+    simulariumLoaded: boolean;
+}
+
+class App extends React.Component<AppProps, AppState> {
     public simulariumController: SimulariumController | undefined;
     constructor(props: AppProps) {
         super(props);
@@ -45,8 +49,8 @@ class App extends React.Component<AppProps, {}> {
         const parsed = queryString.parse(location.search);
         const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
         if (fileName && TRAJECTORY_FILES.includes(fileName as string)) {
-            this.handleSelectFile(`${fileName}.h5`);
             closeLoadFileModal();
+            this.handleSelectFile(`${fileName}.h5`);
         }
     }
 
@@ -57,6 +61,7 @@ class App extends React.Component<AppProps, {}> {
                 trajectoryPlaybackFile: fileName,
                 netConnectionSettings: netConnectionSettings,
             });
+            this.setState({ simulariumLoaded: true });
         } else {
             // switching files
             this.simulariumController.changeFile(fileName);
