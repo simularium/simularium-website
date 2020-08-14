@@ -25,6 +25,11 @@ import { receiveAgentTypeIds } from "../../state/metadata/actions";
 import { ReceiveAction } from "../../state/metadata/types";
 
 import "@aics/simularium-viewer/style/style.css";
+import {
+    UIDisplayData,
+    SelectionStateInfo,
+} from "@aics/simularium-viewer/type-declarations/simularium";
+
 const styles = require("./style.css");
 
 interface ViewerPanelProps {
@@ -47,6 +52,7 @@ interface ViewerPanelState {
     particleTypeIds: string[];
     height: number;
     width: number;
+    selectionStateInfo: SelectionStateInfo;
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -74,6 +80,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             particleTypeIds: [],
             height: 0,
             width: 0,
+            selectionStateInfo: {
+                highlightedNames: [],
+                highlightedTags: [],
+                hiddenNames: [],
+                hiddenTags: [],
+            },
         };
     }
 
@@ -160,6 +172,10 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         simulariumController.gotoTime(time);
     }
 
+    public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
+        console.log(uiData);
+    };
+
     public render(): JSX.Element {
         const {
             time,
@@ -176,7 +192,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     onTimeChange={this.receiveTimeChange}
                     simulariumController={simulariumController}
                     onJsonDataArrived={this.handleJsonMeshData}
-                    highlightedParticleType={highlightedId}
+                    onUIDisplayDataChanged={this.handleUiDisplayDataChanged}
+                    selectionStateInfo={this.state.selectionStateInfo}
                     onTrajectoryFileInfoChanged={
                         this.onTrajectoryFileInfoChanged
                     }
