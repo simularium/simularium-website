@@ -53,6 +53,7 @@ interface ViewerPanelState {
     height: number;
     width: number;
     selectionStateInfo: SelectionStateInfo;
+    requestingTimeChange: boolean;
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -86,6 +87,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 hiddenNames: [],
                 hiddenTags: [],
             },
+            requestingTimeChange: false,
         };
     }
 
@@ -164,11 +166,17 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public receiveTimeChange(timeData: any) {
         const { changeTime } = this.props;
+        this.setState({ requestingTimeChange: false });
+
         changeTime(timeData.time);
     }
 
     public skipToTime(time: number) {
+        if (this.state.requestingTimeChange) {
+            return;
+        }
         const { simulariumController } = this.props;
+        this.setState({ requestingTimeChange: true });
         simulariumController.gotoTime(time);
     }
 
