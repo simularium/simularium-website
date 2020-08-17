@@ -185,12 +185,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     };
 
     public render(): JSX.Element {
-        const {
-            time,
-            totalTime,
-            highlightedId,
-            simulariumController,
-        } = this.props;
+        const { time, totalTime, simulariumController } = this.props;
         return (
             <div ref={this.centerContent} className={styles.container}>
                 <SimulariumViewer
