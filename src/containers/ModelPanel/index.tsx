@@ -4,40 +4,51 @@ import { connect } from "react-redux";
 
 import CollaspableMenu from "../../components/CollapseableMenu";
 import { requestMetadata } from "../../state/metadata/actions";
-import { getAgentIds } from "../../state/metadata/selectors";
+import {
+    getAgentIds,
+    getUiDisplayDataTree,
+} from "../../state/metadata/selectors";
 import { State } from "../../state/types";
 import CheckBoxes from "../../components/CheckBoxes";
 import {
-    getAgentsOn,
     getHightlightedId,
+    getAgentsOnById,
+    getAgentsOnByName,
 } from "../../state/selection/selectors";
-import { turnAgentsOn, highlightAgent } from "../../state/selection/actions";
+import {
+    turnAgentsOnById,
+    highlightAgent,
+    turnAgentsOnByDisplayName,
+} from "../../state/selection/actions";
 import {
     TurnAgentsOnAction,
     HighlightAgentAction,
 } from "../../state/selection/types";
 import RadioButtons from "../../components/RadioButtons";
-
+import CheckBoxTree from "../../components/CheckBoxTree";
 const styles = require("./style.css");
 
 interface ModelPanelProps {
     agentIds: string[];
-    agentsOn: string[];
-    turnAgentsOn: ActionCreator<TurnAgentsOnAction>;
+    agentDisplayData: any;
+    turnAgentsOnById: ActionCreator<TurnAgentsOnAction>;
     highlightedAgent: string;
     highlightAgent: ActionCreator<HighlightAgentAction>;
+    visibleAgentNames: string[];
+    turnAgentsOnByDisplayName: ActionCreator<TurnAgentsOnAction>;
 }
 
 class ModelPanel extends React.Component<ModelPanelProps, {}> {
     public render(): JSX.Element {
         const {
             agentIds,
-            agentsOn,
-            turnAgentsOn,
+            visibleAgentNames,
+            agentDisplayData,
+            turnAgentsOnById,
+            turnAgentsOnByDisplayName,
             highlightedAgent,
             highlightAgent,
         } = this.props;
-
         return (
             <CollaspableMenu
                 panelKeys={["graphing", "statistics"]}
@@ -46,13 +57,20 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
                 content={[
                     <div className={styles.container} key="molecules">
                         <h3>Molecules</h3>
-                        <CheckBoxes
+                        <CheckBoxTree
+                            treeData={agentDisplayData}
+                            turnAgentsOnByDisplayName={
+                                turnAgentsOnByDisplayName
+                            }
+                            agentsOn={visibleAgentNames}
+                        />
+                        {/* <CheckBoxes
                             options={agentIds}
                             values={agentsOn}
-                            onChange={turnAgentsOn}
+                            onChange={turnAgentsOnById}
                             key="checkbox-group"
                             title="Turn on/off"
-                        />
+                        /> */}
                         <RadioButtons
                             value={highlightedAgent}
                             options={agentIds}
@@ -70,14 +88,16 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
 function mapStateToProps(state: State) {
     return {
         agentIds: getAgentIds(state),
-        agentsOn: getAgentsOn(state),
+        visibleAgentNames: getAgentsOnByName(state),
         highlightedAgent: getHightlightedId(state),
+        agentDisplayData: getUiDisplayDataTree(state),
     };
 }
 
 const dispatchToPropsMap = {
     requestMetadata,
-    turnAgentsOn,
+    turnAgentsOnById,
+    turnAgentsOnByDisplayName,
     highlightAgent,
 };
 

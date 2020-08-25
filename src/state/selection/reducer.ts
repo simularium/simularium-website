@@ -9,9 +9,10 @@ import {
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
     SIDE_PANEL_COLLAPSED,
-    TURN_AGENTS_ON,
+    TURN_AGENTS_ON_BY_ID,
     HIGHLIGHT_AGENT,
     TOGGLE_LOAD_FILE_MODAL,
+    TURN_AGENTS_ON_BY_NAME,
 } from "./constants";
 import {
     DeselectFileAction,
@@ -28,7 +29,8 @@ export const initialState = {
     files: [],
     time: 0,
     numberPanelsCollapsed: 0,
-    agentsOn: [],
+    agentIdsOn: [],
+    agentNamesOn: [],
     hightlightedId: -1,
     modalOpen: false,
 };
@@ -42,13 +44,23 @@ const actionToConfigMap: TypeToDescriptionMap = {
             files: without(state.files, ...castArray(action.payload)),
         }),
     },
-    [TURN_AGENTS_ON]: {
+    [TURN_AGENTS_ON_BY_ID]: {
         accepts: (action: AnyAction): action is TurnAgentsOnAction =>
-            action.type === TURN_AGENTS_ON,
+            action.type === TURN_AGENTS_ON_BY_ID,
         perform: (state: SelectionStateBranch, action: TurnAgentsOnAction) => {
             return {
                 ...state,
-                agentsOn: action.payload,
+                agentIdsOn: action.payload,
+            };
+        },
+    },
+    [TURN_AGENTS_ON_BY_NAME]: {
+        accepts: (action: AnyAction): action is TurnAgentsOnAction =>
+            action.type === TURN_AGENTS_ON_BY_NAME,
+        perform: (state: SelectionStateBranch, action: TurnAgentsOnAction) => {
+            return {
+                ...state,
+                agentNamesOn: action.payload,
             };
         },
     },

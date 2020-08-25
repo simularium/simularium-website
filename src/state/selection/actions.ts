@@ -3,7 +3,8 @@ import {
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
     SIDE_PANEL_COLLAPSED,
-    TURN_AGENTS_ON,
+    TURN_AGENTS_ON_BY_ID,
+    TURN_AGENTS_ON_BY_NAME,
     HIGHLIGHT_AGENT,
     TOGGLE_LOAD_FILE_MODAL,
 } from "./constants";
@@ -37,10 +38,19 @@ export function onSidePanelCollapse(numberCollapsed: number) {
     };
 }
 
-export function turnAgentsOn(agentIds: string[]): TurnAgentsOnAction {
+export function turnAgentsOnById(agentIds: string[]): TurnAgentsOnAction {
     return {
         payload: agentIds,
-        type: TURN_AGENTS_ON,
+        type: TURN_AGENTS_ON_BY_ID,
+    };
+}
+
+export function turnAgentsOnByDisplayName(
+    agentNames: string[]
+): TurnAgentsOnAction {
+    return {
+        payload: agentNames,
+        type: TURN_AGENTS_ON_BY_NAME,
     };
 }
 

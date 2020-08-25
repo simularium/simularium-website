@@ -9,7 +9,14 @@ export const SIDE_PANEL_COLLAPSED = makeConstant(
     BRANCH_NAME,
     "change-content-width"
 );
-export const TURN_AGENTS_ON = makeConstant(BRANCH_NAME, "turn-agents-on");
+export const TURN_AGENTS_ON_BY_ID = makeConstant(
+    BRANCH_NAME,
+    "turn-agents-on-by-id"
+);
+export const TURN_AGENTS_ON_BY_NAME = makeConstant(
+    BRANCH_NAME,
+    "turn-agents-on-by-name"
+);
 export const HIGHLIGHT_AGENT = makeConstant(BRANCH_NAME, "highlight-agent");
 export const TOGGLE_LOAD_FILE_MODAL = makeConstant(
     BRANCH_NAME,
