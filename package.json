@@ -1,5 +1,5 @@
 {
-  "name": "agentviz-ui",
+  "name": "simularium-webapp",
   "version": "0.1.0",
   "description": "",
   "main": "src/index.tsx",
@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
+    "start": "webpack-dev-server --config ./webpack/webpack.config.js",
     "lint": "eslint src/**/*.{ts,tsx}",
     "typeCheck": "tsc -p tsconfig.json --noEmit",
     "test": "BABEL_ENV=commonjs TS_NODE_FILES=true TS_NODE_PROJECT=tsconfig.commonjs.json NODE_ENV=production mocha --opts mocha.opts src/**/test/*"
@@ -70,7 +71,7 @@
   },
   "dependencies": {
     "@aics/simularium-observables-manager": "^0.1.0",
-    "@aics/simularium-viewer": "^1.2.9",
+    "@aics/simularium-viewer": "^2.0.1",
     "@types/react-router-dom": "^5.1.5",
     "@types/victory": "^31.0.12",
     "antd": "^3.14.1",
