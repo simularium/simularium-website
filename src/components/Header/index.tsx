@@ -16,7 +16,7 @@ export default class AppHeader extends React.Component<AppHeaderProps, {}> {
         const { openLoadFileModal } = this.props;
         return (
             <Header className={styles.container}>
-                <div>3D Cell Spatial Simulator</div>
+                <div>Simularium</div>
                 <Row>
                     <Col>
                         <Button type="primary" onClick={openLoadFileModal}>

@@ -30,7 +30,7 @@ export const initialState = {
     numberPanelsCollapsed: 0,
     agentsOn: [],
     hightlightedId: -1,
-    modalOpen: true,
+    modalOpen: false,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {

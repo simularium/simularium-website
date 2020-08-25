@@ -19,6 +19,8 @@ module.exports = ({ analyze, env } = {}) => ({
         disableHostCheck: true,
         host: devServer.host,
         port: devServer.port,
+        publicPath: '/',
+        historyApiFallback: true,
         stats,
     },
     entry: {
@@ -127,7 +129,8 @@ module.exports = ({ analyze, env } = {}) => ({
     },
     output: {
         path: path.resolve(__dirname, "../", "dist"),
-        filename: "[name].[chunkhash].js"
+        filename: "[name].[chunkhash].js",
+        publicPath: '/'
     },
     plugins: getPluginsByEnv(env, analyze),
     resolve: {
