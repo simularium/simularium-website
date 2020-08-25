@@ -72,6 +72,7 @@
   "dependencies": {
     "@aics/simularium-observables-manager": "^0.1.0",
     "@aics/simularium-viewer": "^2.0.1",
+    "@types/react-router-dom": "^5.1.5",
     "@types/victory": "^31.0.12",
     "antd": "^3.14.1",
     "axios": "^0.19.2",
@@ -83,6 +84,7 @@
     "react-dom": "16.8.2",
     "react-player-controls": "^1.1.0",
     "react-redux": "6.0.0",
+    "react-router-dom": "^5.2.0",
     "redux": "4.0.1",
     "redux-logic": "2.1.1",
     "reselect": "4.0.0",
