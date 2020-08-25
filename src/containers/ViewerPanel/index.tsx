@@ -1,9 +1,12 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
-import { SimulariumController } from "@aics/simularium-viewer";
+import SimulariumViewer, {
+    SimulariumController,
+    UIDisplayData,
+    SelectionStateInfo,
+} from "@aics/simularium-viewer";
 import { connect } from "react-redux";
 
-import SimulariumViewer from "@aics/simularium-viewer";
 import {
     getCurrentTime,
     getNumberCollapsed,
@@ -24,11 +27,7 @@ import {
 import { receiveAgentTypeIds } from "../../state/metadata/actions";
 import { ReceiveAction } from "../../state/metadata/types";
 
-import "@aics/simularium-viewer/style/style.css";
-import {
-    UIDisplayData,
-    SelectionStateInfo,
-} from "@aics/simularium-viewer/type-declarations/simularium";
+// import "@aics/simularium-viewer/style/style.css";
 
 const styles = require("./style.css");
 
