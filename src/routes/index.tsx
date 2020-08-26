@@ -6,17 +6,17 @@ import Simularium from "../containers/Simularium";
 
 export default [
     {
-        name: "Tutorial",
-        component: <TutorialPage />,
-        path: "/tutorial",
-    },
-    {
-        name: "Landing Page",
+        name: "Home",
         component: <LandingPage />,
         path: "/",
     },
     {
-        name: "Viewer",
+        name: "Getting Started",
+        component: <TutorialPage />,
+        path: "/tutorial",
+    },
+    {
+        name: "Run Simulations",
         component: <Simularium />,
         path: "/viewer",
     },
