@@ -11,22 +11,31 @@ import { APP_ID } from "./constants";
 
 import { createReduxStore } from "./state";
 import routes from "./routes";
+import { Layout } from "antd";
+import NavBar from "./components/NavBar";
 
+const { Header, Footer } = Layout;
 render(
     <Provider store={createReduxStore()}>
-        <BrowserRouter>
-            <Switch>
-                {routes.map((route) => (
-                    <Route
-                        key={route.path}
-                        exact={route.path === "/"}
-                        path={route.path}
-                    >
-                        {route.component}
-                    </Route>
-                ))}
-            </Switch>
-        </BrowserRouter>
+        <Layout>
+            <BrowserRouter>
+                <Header>
+                    <NavBar />
+                </Header>
+                <Switch>
+                    {routes.map((route) => (
+                        <Route
+                            key={route.path}
+                            exact={route.path === "/"}
+                            path={route.path}
+                        >
+                            {route.component}
+                        </Route>
+                    ))}
+                </Switch>
+            </BrowserRouter>
+            <Footer />
+        </Layout>
     </Provider>,
     document.getElementById(APP_ID)
 );
