@@ -8,20 +8,23 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import { APP_ID } from "./constants";
-import Simularium from "./containers/Simularium";
-import LandingPage from "./containers/LandingPage";
+
 import { createReduxStore } from "./state";
+import routes from "./routes";
 
 render(
     <Provider store={createReduxStore()}>
         <BrowserRouter>
             <Switch>
-                <Route exact path="/">
-                    <LandingPage />
-                </Route>
-                <Route path="/viewer">
-                    <Simularium />
-                </Route>
+                {routes.map((route) => (
+                    <Route
+                        key={route.path}
+                        exact={route.path === "/"}
+                        path={route.path}
+                    >
+                        {route.component}
+                    </Route>
+                ))}
             </Switch>
         </BrowserRouter>
     </Provider>,
