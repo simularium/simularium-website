@@ -1,3 +1,10 @@
 .container :global(.ant-card-body) {
     padding: 0;
 }
+
+.container :global(.ant-collapse-header), 
+.container h3, 
+.container h4,
+.container label {
+    color: #fff!important;
+}
