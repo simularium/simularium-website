@@ -9,7 +9,7 @@ export interface SelectionStateBranch {
     [key: string]: any;
 }
 
-export interface TurnAgentsOnAction {
+export interface ChangeAgentsRenderingStateAction {
     payload: string[];
     type: string;
 }

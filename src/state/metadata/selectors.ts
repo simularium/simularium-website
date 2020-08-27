@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-
+import { uniq } from "lodash";
 import { State } from "../types";
 
 import { MetadataStateBranch } from "./types";
@@ -21,6 +21,26 @@ export const getKeysOfMetadata = createSelector(
 export const getAgentDisplayNamesAndStates = (state: State) =>
     state.metadata.agentUiNames;
 
+export const getAllTags = createSelector(
+    [getAgentDisplayNamesAndStates],
+    (uiDisplayData: UIDisplayData) => {
+        return uniq(
+            uiDisplayData.reduce(
+                (acc, currentAgent) => {
+                    acc = [
+                        ...acc,
+                        ...currentAgent.displayStates.map(
+                            (state) => state.name
+                        ),
+                    ];
+                    return acc;
+                },
+                [] as string[]
+            )
+        );
+    }
+);
+
 export const getUiDisplayDataTree = createSelector(
     [getAgentDisplayNamesAndStates],
     (uiDisplayData: UIDisplayData) => {
@@ -29,7 +49,21 @@ export const getUiDisplayDataTree = createSelector(
             key: agent.name,
             children: agent.displayStates.map((state) => ({
                 title: state.name,
-                key: `${agent.name}-${state.id}`,
+                key: `v-${agent.name}-${state.id}`,
+            })),
+        }));
+    }
+);
+
+export const getUiDisplayDataTreeHighlight = createSelector(
+    [getAgentDisplayNamesAndStates],
+    (uiDisplayData: UIDisplayData) => {
+        return uiDisplayData.map((agent) => ({
+            title: agent.name,
+            key: agent.name,
+            children: agent.displayStates.map((state) => ({
+                title: state.name,
+                key: `hl-${agent.name}-${state.id}`,
             })),
         }));
     }

@@ -26,7 +26,7 @@ import {
 } from "../../state/metadata/selectors";
 import {
     ChangeTimeAction,
-    TurnAgentsOnAction,
+    ChangeAgentsRenderingStateAction,
 } from "../../state/selection/types";
 import {
     receiveAgentTypeIds,
@@ -45,14 +45,14 @@ interface ViewerPanelProps {
     numberPanelsCollapsed: number;
     changeTime: ActionCreator<ChangeTimeAction>;
     timeStep: number;
-    turnAgentsOnById: ActionCreator<TurnAgentsOnAction>;
+    turnAgentsOnById: ActionCreator<ChangeAgentsRenderingStateAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
     highlightedId: number;
     totalTime: number;
     receiveMetadata: ActionCreator<ReceiveAction>;
     receiveAgentNamesAndStates: ActionCreator<ReceiveAction>;
     selectionStateInfoForViewer: SelectionStateInfo;
-    turnAgentsOnByDisplayName: ActionCreator<TurnAgentsOnAction>;
+    turnAgentsOnByDisplayName: ActionCreator<ChangeAgentsRenderingStateAction>;
 }
 
 interface ViewerPanelState {
@@ -184,7 +184,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
-        console.log(uiData);
         const {
             receiveAgentNamesAndStates,
             turnAgentsOnByDisplayName,
@@ -202,7 +201,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             simulariumController,
             selectionStateInfoForViewer,
         } = this.props;
-        console.log(selectionStateInfoForViewer);
+        // console.log(selectionStateInfoForViewer);
         return (
             <div ref={this.centerContent} className={styles.container}>
                 <SimulariumViewer

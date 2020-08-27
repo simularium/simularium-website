@@ -1,25 +1,25 @@
 import React, { useState } from "react";
 import { Tree } from "antd";
 import { ActionCreator } from "redux";
-import { TurnAgentsOnAction } from "../../state/selection/types";
+import { ChangeAgentsRenderingStateAction } from "../../state/selection/types";
 import { TreeProps } from "antd/lib/tree";
 
 interface CheckBoxTreeProps extends TreeProps {
-    agentsOn: string[];
-    turnAgentsOnByDisplayName: ActionCreator<TurnAgentsOnAction>;
+    agentsChecked: string[];
+    handleCheck: ActionCreator<ChangeAgentsRenderingStateAction>;
+    title: string;
 }
 const CheckBoxTree = ({
-    agentsOn,
+    agentsChecked,
     treeData,
-    turnAgentsOnByDisplayName,
+    handleCheck,
+    title,
 }: CheckBoxTreeProps) => {
-    console.log(agentsOn);
-    const [expandedKeys, setExpandedKeys] = useState<string[]>(agentsOn);
-    const [selectedKeys, setSelectedKeys] = useState<string[]>(agentsOn);
+    const [expandedKeys, setExpandedKeys] = useState<string[]>(agentsChecked);
+    const [selectedKeys, setSelectedKeys] = useState<string[]>(agentsChecked);
     const [autoExpandParent, setAutoExpandParent] = useState<boolean>(true);
 
     const onExpand = (expandedKeys: string[]) => {
-        console.log("onExpand", expandedKeys);
         // if not set autoExpandParent to false, if children expanded, parent can not collapse.
         // or, you can remove all expanded children keys.
         setExpandedKeys(expandedKeys);
@@ -31,7 +31,7 @@ const CheckBoxTree = ({
     ) => {
         console.log("onCheck", checkedKeys);
         // setCheckedKeys(checkedKeys);
-        turnAgentsOnByDisplayName(checkedKeys);
+        handleCheck(checkedKeys);
     };
 
     // const onSelect = (selectedKeys: string[], info) => {
@@ -40,17 +40,20 @@ const CheckBoxTree = ({
     // };
 
     return (
-        <Tree
-            checkable
-            onExpand={onExpand}
-            expandedKeys={expandedKeys}
-            autoExpandParent={autoExpandParent}
-            onCheck={onCheck}
-            checkedKeys={agentsOn}
-            // onSelect={onSelect}
-            // selectedKeys={selectedKeys}
-            treeData={treeData}
-        />
+        <>
+            <label>{title}</label>
+            <Tree
+                checkable
+                onExpand={onExpand}
+                expandedKeys={expandedKeys}
+                autoExpandParent={autoExpandParent}
+                onCheck={onCheck}
+                checkedKeys={agentsChecked}
+                // onSelect={onSelect}
+                // selectedKeys={selectedKeys}
+                treeData={treeData}
+            />
+        </>
     );
 };
 

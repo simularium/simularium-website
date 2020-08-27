@@ -13,10 +13,11 @@ import {
     HIGHLIGHT_AGENT,
     TOGGLE_LOAD_FILE_MODAL,
     TURN_AGENTS_ON_BY_NAME,
+    HIGHLIGHT_AGENTS_BY_NAME,
 } from "./constants";
 import {
     DeselectFileAction,
-    TurnAgentsOnAction,
+    ChangeAgentsRenderingStateAction,
     SelectionStateBranch,
     SelectMetadataAction,
     ChangeTimeAction,
@@ -32,6 +33,7 @@ export const initialState = {
     agentIdsOn: [],
     agentNamesOn: [],
     hightlightedId: -1,
+    highlightedAgentNames: [],
     modalOpen: false,
 };
 
@@ -45,9 +47,14 @@ const actionToConfigMap: TypeToDescriptionMap = {
         }),
     },
     [TURN_AGENTS_ON_BY_ID]: {
-        accepts: (action: AnyAction): action is TurnAgentsOnAction =>
+        accepts: (
+            action: AnyAction
+        ): action is ChangeAgentsRenderingStateAction =>
             action.type === TURN_AGENTS_ON_BY_ID,
-        perform: (state: SelectionStateBranch, action: TurnAgentsOnAction) => {
+        perform: (
+            state: SelectionStateBranch,
+            action: ChangeAgentsRenderingStateAction
+        ) => {
             return {
                 ...state,
                 agentIdsOn: action.payload,
@@ -55,9 +62,14 @@ const actionToConfigMap: TypeToDescriptionMap = {
         },
     },
     [TURN_AGENTS_ON_BY_NAME]: {
-        accepts: (action: AnyAction): action is TurnAgentsOnAction =>
+        accepts: (
+            action: AnyAction
+        ): action is ChangeAgentsRenderingStateAction =>
             action.type === TURN_AGENTS_ON_BY_NAME,
-        perform: (state: SelectionStateBranch, action: TurnAgentsOnAction) => {
+        perform: (
+            state: SelectionStateBranch,
+            action: ChangeAgentsRenderingStateAction
+        ) => {
             return {
                 ...state,
                 agentNamesOn: action.payload,
@@ -106,6 +118,19 @@ const actionToConfigMap: TypeToDescriptionMap = {
         ) => ({
             ...state,
             hightlightedId: action.payload,
+        }),
+    },
+    [HIGHLIGHT_AGENTS_BY_NAME]: {
+        accepts: (
+            action: AnyAction
+        ): action is ChangeAgentsRenderingStateAction =>
+            action.type === HIGHLIGHT_AGENTS_BY_NAME,
+        perform: (
+            state: SelectionStateBranch,
+            action: HighlightAgentAction
+        ) => ({
+            ...state,
+            highlightedAgentNames: action.payload,
         }),
     },
     [TOGGLE_LOAD_FILE_MODAL]: {

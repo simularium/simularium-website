@@ -7,21 +7,24 @@ import { requestMetadata } from "../../state/metadata/actions";
 import {
     getAgentIds,
     getUiDisplayDataTree,
+    getUiDisplayDataTreeHighlight,
 } from "../../state/metadata/selectors";
 import { State } from "../../state/types";
 import CheckBoxes from "../../components/CheckBoxes";
 import {
     getHightlightedId,
     getAgentsOnById,
-    getAgentsOnByName,
+    getVisibleAgentsNamesAndTags,
+    getHighlightedAgentsNamesAndTags,
 } from "../../state/selection/selectors";
 import {
     turnAgentsOnById,
     highlightAgent,
     turnAgentsOnByDisplayName,
+    highlightAgentsByDisplayName,
 } from "../../state/selection/actions";
 import {
-    TurnAgentsOnAction,
+    ChangeAgentsRenderingStateAction,
     HighlightAgentAction,
 } from "../../state/selection/types";
 import RadioButtons from "../../components/RadioButtons";
@@ -31,11 +34,16 @@ const styles = require("./style.css");
 interface ModelPanelProps {
     agentIds: string[];
     agentDisplayData: any;
-    turnAgentsOnById: ActionCreator<TurnAgentsOnAction>;
+    turnAgentsOnById: ActionCreator<ChangeAgentsRenderingStateAction>;
     highlightedAgent: string;
     highlightAgent: ActionCreator<HighlightAgentAction>;
+    highlightedAgents: string[];
     visibleAgentNames: string[];
-    turnAgentsOnByDisplayName: ActionCreator<TurnAgentsOnAction>;
+    agentHighlightDisplayData: any;
+    turnAgentsOnByDisplayName: ActionCreator<ChangeAgentsRenderingStateAction>;
+    highlightAgentsByDisplayName: ActionCreator<
+        ChangeAgentsRenderingStateAction
+    >;
 }
 
 class ModelPanel extends React.Component<ModelPanelProps, {}> {
@@ -46,7 +54,9 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
             agentDisplayData,
             turnAgentsOnById,
             turnAgentsOnByDisplayName,
-            highlightedAgent,
+            agentHighlightDisplayData,
+            highlightAgentsByDisplayName,
+            highlightedAgents,
             highlightAgent,
         } = this.props;
         return (
@@ -59,10 +69,15 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
                         <h3>Molecules</h3>
                         <CheckBoxTree
                             treeData={agentDisplayData}
-                            turnAgentsOnByDisplayName={
-                                turnAgentsOnByDisplayName
-                            }
-                            agentsOn={visibleAgentNames}
+                            handleCheck={turnAgentsOnByDisplayName}
+                            agentsChecked={visibleAgentNames}
+                            title="Turn on/off"
+                        />
+                        <CheckBoxTree
+                            treeData={agentHighlightDisplayData}
+                            handleCheck={highlightAgentsByDisplayName}
+                            agentsChecked={highlightedAgents}
+                            title="Highlight"
                         />
                         {/* <CheckBoxes
                             options={agentIds}
@@ -71,12 +86,12 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
                             key="checkbox-group"
                             title="Turn on/off"
                         /> */}
-                        <RadioButtons
+                        {/* <RadioButtons
                             value={highlightedAgent}
                             options={agentIds}
                             onChange={highlightAgent}
                             title="Highlight"
-                        />
+                        /> */}
                     </div>,
                     null,
                 ]}
@@ -88,9 +103,10 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
 function mapStateToProps(state: State) {
     return {
         agentIds: getAgentIds(state),
-        visibleAgentNames: getAgentsOnByName(state),
-        highlightedAgent: getHightlightedId(state),
+        visibleAgentNames: getVisibleAgentsNamesAndTags(state),
+        highlightedAgents: getHighlightedAgentsNamesAndTags(state),
         agentDisplayData: getUiDisplayDataTree(state),
+        agentHighlightDisplayData: getUiDisplayDataTreeHighlight(state),
     };
 }
 
@@ -99,6 +115,7 @@ const dispatchToPropsMap = {
     turnAgentsOnById,
     turnAgentsOnByDisplayName,
     highlightAgent,
+    highlightAgentsByDisplayName,
 };
 
 export default connect(
