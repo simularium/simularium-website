@@ -35,7 +35,6 @@ interface ModelPanelProps {
     agentIds: string[];
     agentDisplayData: any;
     turnAgentsOnById: ActionCreator<ChangeAgentsRenderingStateAction>;
-    highlightedAgent: string;
     highlightAgent: ActionCreator<HighlightAgentAction>;
     highlightedAgents: string[];
     visibleAgentNames: string[];
