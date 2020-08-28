@@ -1,7 +1,12 @@
 import { expect } from "chai";
 import { initialState } from "../../index";
 import { State } from "../../types";
-import { getHightLightedNames, getHightLightedTags } from "../selectors";
+import {
+    getHightLightedNames,
+    getHightLightedTags,
+    getAgentNamesToHide,
+    getAgentTagsToHide,
+} from "../selectors";
 const mockUIDisplayData = [
     {
         name: "agent1",
@@ -63,7 +68,7 @@ describe("selection composed selectors", () => {
         });
     });
     describe("getHightLightedTags", () => {
-        it("returns an array of agent tag ids", () => {
+        it("returns an array of agent tag ids excluding agent names", () => {
             const stateWithSelection = {
                 ...mockState,
                 selection: {
@@ -71,9 +76,37 @@ describe("selection composed selectors", () => {
                     highlightedAgentKeys: ["agent1", "hl-agent2-state2"],
                 },
             };
-            const highlightedNames = getHightLightedTags(stateWithSelection);
-            expect(highlightedNames).to.be.a("array");
-            expect(highlightedNames).to.deep.equal(["state2"]);
+            const highlightedTags = getHightLightedTags(stateWithSelection);
+            expect(highlightedTags).to.be.a("array");
+            expect(highlightedTags).to.deep.equal(["state2"]);
+        });
+    });
+    describe("getAgentNamesToHide", () => {
+        it("returns an array of agent names that are not currently selected", () => {
+            const stateWithSelection = {
+                ...mockState,
+                selection: {
+                    ...mockState.selection,
+                    visibleAgentKeys: ["agent1", "v-agent2-state2"],
+                },
+            };
+            const hiddenNames = getAgentNamesToHide(stateWithSelection);
+            expect(hiddenNames).to.be.a("array");
+            expect(hiddenNames).to.deep.equal(["agent2"]);
+        });
+    });
+    describe("getAgentTagsToHide", () => {
+        it("returns an array of agent tags that are not currently selected", () => {
+            const stateWithSelection = {
+                ...mockState,
+                selection: {
+                    ...mockState.selection,
+                    visibleAgentKeys: ["agent1", "v-agent2-state2"],
+                },
+            };
+            const hiddenTags = getAgentTagsToHide(stateWithSelection);
+            expect(hiddenTags).to.be.a("array");
+            expect(hiddenTags).to.deep.equal(["state1"]);
         });
     });
 });
