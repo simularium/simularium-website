@@ -36,7 +36,7 @@ export function onSidePanelCollapse(numberCollapsed: number) {
     };
 }
 
-export function turnAgentsOnByDisplayName(
+export function turnAgentsOnByDisplayKey(
     agentNames: string[]
 ): ChangeAgentsRenderingStateAction {
     return {
@@ -45,7 +45,7 @@ export function turnAgentsOnByDisplayName(
     };
 }
 
-export function highlightAgentsByDisplayName(
+export function highlightAgentsByDisplayKey(
     agentNames: string[]
 ): ChangeAgentsRenderingStateAction {
     return {

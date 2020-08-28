@@ -14,7 +14,7 @@ import {
 import { State } from "../../state/types";
 import {
     changeTime,
-    turnAgentsOnByDisplayName,
+    turnAgentsOnByDisplayKey,
 } from "../../state/selection/actions";
 import PlaybackControls from "../../components/PlaybackControls";
 import { receiveMetadata } from "../../state/metadata/actions";
@@ -48,7 +48,7 @@ interface ViewerPanelProps {
     receiveMetadata: ActionCreator<ReceiveAction>;
     receiveAgentNamesAndStates: ActionCreator<ReceiveAction>;
     selectionStateInfoForViewer: SelectionStateInfo;
-    turnAgentsOnByDisplayName: ActionCreator<ChangeAgentsRenderingStateAction>;
+    turnAgentsOnByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
 }
 
 interface ViewerPanelState {
@@ -181,13 +181,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
         const {
             receiveAgentNamesAndStates,
-            turnAgentsOnByDisplayName,
+            turnAgentsOnByDisplayKey,
         } = this.props;
         receiveAgentNamesAndStates(uiData);
         console.log(uiData);
         const names = uiData.map((agent) => agent.name);
         console.log(names);
-        turnAgentsOnByDisplayName(names);
+        turnAgentsOnByDisplayKey(names);
     };
 
     public render(): JSX.Element {
@@ -197,7 +197,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             simulariumController,
             selectionStateInfoForViewer,
         } = this.props;
-        // console.log(selectionStateInfoForViewer);
+        console.log(selectionStateInfoForViewer);
         return (
             <div ref={this.centerContent} className={styles.container}>
                 <SimulariumViewer
@@ -243,7 +243,7 @@ const dispatchToPropsMap = {
     receiveMetadata,
     receiveAgentTypeIds,
     receiveAgentNamesAndStates,
-    turnAgentsOnByDisplayName,
+    turnAgentsOnByDisplayKey,
 };
 
 export default connect(

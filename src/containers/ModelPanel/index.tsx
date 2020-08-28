@@ -14,8 +14,8 @@ import {
     getHighlightedAgentsNamesAndTags,
 } from "../../state/selection/selectors";
 import {
-    turnAgentsOnByDisplayName,
-    highlightAgentsByDisplayName,
+    turnAgentsOnByDisplayKey,
+    highlightAgentsByDisplayKey,
 } from "../../state/selection/actions";
 import { ChangeAgentsRenderingStateAction } from "../../state/selection/types";
 import CheckBoxTree from "../../components/CheckBoxTree";
@@ -27,8 +27,8 @@ interface ModelPanelProps {
     highlightedAgentKeys: string[];
     visibleAgentKeys: string[];
     highlightDisplayOptions: TreeNodeNormal[];
-    turnAgentsOnByDisplayName: ActionCreator<ChangeAgentsRenderingStateAction>;
-    highlightAgentsByDisplayName: ActionCreator<
+    turnAgentsOnByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
+    highlightAgentsByDisplayKey: ActionCreator<
         ChangeAgentsRenderingStateAction
     >;
 }
@@ -38,9 +38,9 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
         const {
             visibleAgentKeys,
             visibilityDisplayOptions,
-            turnAgentsOnByDisplayName,
+            turnAgentsOnByDisplayKey,
             highlightDisplayOptions,
-            highlightAgentsByDisplayName,
+            highlightAgentsByDisplayKey,
             highlightedAgentKeys,
         } = this.props;
         return (
@@ -53,13 +53,13 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
                         <h3>Molecules</h3>
                         <CheckBoxTree
                             treeData={visibilityDisplayOptions}
-                            handleCheck={turnAgentsOnByDisplayName}
+                            handleCheck={turnAgentsOnByDisplayKey}
                             agentsChecked={visibleAgentKeys}
                             title="Turn on/off"
                         />
                         <CheckBoxTree
                             treeData={highlightDisplayOptions}
-                            handleCheck={highlightAgentsByDisplayName}
+                            handleCheck={highlightAgentsByDisplayKey}
                             agentsChecked={highlightedAgentKeys}
                             title="Highlight"
                         />
@@ -82,8 +82,8 @@ function mapStateToProps(state: State) {
 
 const dispatchToPropsMap = {
     requestMetadata,
-    turnAgentsOnByDisplayName,
-    highlightAgentsByDisplayName,
+    turnAgentsOnByDisplayKey,
+    highlightAgentsByDisplayKey,
 };
 
 export default connect(
