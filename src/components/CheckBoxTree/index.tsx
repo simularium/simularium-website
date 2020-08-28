@@ -16,7 +16,6 @@ const CheckBoxTree = ({
     title,
 }: CheckBoxTreeProps) => {
     const [expandedKeys, setExpandedKeys] = useState<string[]>(agentsChecked);
-    const [selectedKeys, setSelectedKeys] = useState<string[]>(agentsChecked);
     const [autoExpandParent, setAutoExpandParent] = useState<boolean>(true);
 
     const onExpand = (expandedKeys: string[]) => {
@@ -30,14 +29,8 @@ const CheckBoxTree = ({
         checkedKeys: string[] | { checked: string[]; halfChecked: string[] }
     ) => {
         console.log("onCheck", checkedKeys);
-        // setCheckedKeys(checkedKeys);
         handleCheck(checkedKeys);
     };
-
-    // const onSelect = (selectedKeys: string[], info) => {
-    //     console.log("onSelect", info);
-    //     setSelectedKeys(selectedKeys);
-    // };
 
     return (
         <>
@@ -49,8 +42,6 @@ const CheckBoxTree = ({
                 autoExpandParent={autoExpandParent}
                 onCheck={onCheck}
                 checkedKeys={agentsChecked}
-                // onSelect={onSelect}
-                // selectedKeys={selectedKeys}
                 treeData={treeData}
             />
         </>

@@ -15,7 +15,6 @@ import {
 import { State } from "../../state/types";
 import {
     changeTime,
-    turnAgentsOnById,
     turnAgentsOnByDisplayName,
 } from "../../state/selection/actions";
 import PlaybackControls from "../../components/PlaybackControls";
@@ -45,9 +44,7 @@ interface ViewerPanelProps {
     numberPanelsCollapsed: number;
     changeTime: ActionCreator<ChangeTimeAction>;
     timeStep: number;
-    turnAgentsOnById: ActionCreator<ChangeAgentsRenderingStateAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
-    highlightedId: number;
     totalTime: number;
     receiveMetadata: ActionCreator<ReceiveAction>;
     receiveAgentNamesAndStates: ActionCreator<ReceiveAction>;
@@ -135,9 +132,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleJsonMeshData(jsonData: any) {
-        const { receiveAgentTypeIds, turnAgentsOnById } = this.props;
+        const { receiveAgentTypeIds } = this.props;
         const particleTypeIds = Object.keys(jsonData);
-        turnAgentsOnById(particleTypeIds);
         receiveAgentTypeIds(particleTypeIds);
     }
 
@@ -238,7 +234,6 @@ function mapStateToProps(state: State) {
         numberPanelsCollapsed: getNumberCollapsed(state),
         totalTime: getTotalTimeOfCachedSimulation(state),
         timeStep: getTimeStepSize(state),
-        highlightedId: getHightlightedId(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
     };
 }
@@ -248,7 +243,6 @@ const dispatchToPropsMap = {
     receiveMetadata,
     receiveAgentTypeIds,
     receiveAgentNamesAndStates,
-    turnAgentsOnById,
     turnAgentsOnByDisplayName,
 };
 

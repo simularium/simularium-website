@@ -23,6 +23,9 @@ export const getHightlightedId = (state: State) =>
 export const modalOpen = (state: State) => state.selection.modalOpen;
 // COMPOSED SELECTORS
 
+// key is `${renderType}-${agentName}-${tagId}`
+const parseTagIdFromKey = (key: string) => key.split("-")[2];
+
 export const getHightLightedNames = createSelector(
     [getHighlightedAgentsNamesAndTags, getAgentDisplayNamesAndStates],
     (highlightedAgents, allAgents: UIDisplayData) => {
@@ -37,7 +40,7 @@ export const getHightLightedTags = createSelector(
     (highlightedAgents, allTags) => {
         const allTagsHighlighted = highlightedAgents
             .filter((agentKey: string) => agentKey.split("-").length > 1)
-            .map((key: string) => key.split("-")[2]);
+            .map(parseTagIdFromKey);
 
         return allTags.filter((tag) => allTagsHighlighted.includes(tag));
     }
@@ -56,7 +59,7 @@ export const getAgentTagsToHide = createSelector(
     (currentlyOn, allTags) => {
         const allTagsShowing = currentlyOn
             .filter((agentKey: string) => agentKey.split("-").length > 1)
-            .map((key: string) => key.split("-")[2]);
+            .map(parseTagIdFromKey);
         return allTags.filter((tag) => !allTagsShowing.includes(tag));
     }
 );

@@ -5,40 +5,28 @@ import { connect } from "react-redux";
 import CollaspableMenu from "../../components/CollapseableMenu";
 import { requestMetadata } from "../../state/metadata/actions";
 import {
-    getAgentIds,
-    getUiDisplayDataTree,
+    getUiDisplayDataTreeVisibility,
     getUiDisplayDataTreeHighlight,
 } from "../../state/metadata/selectors";
 import { State } from "../../state/types";
-import CheckBoxes from "../../components/CheckBoxes";
 import {
-    getHightlightedId,
-    getAgentsOnById,
     getVisibleAgentsNamesAndTags,
     getHighlightedAgentsNamesAndTags,
 } from "../../state/selection/selectors";
 import {
-    turnAgentsOnById,
-    highlightAgent,
     turnAgentsOnByDisplayName,
     highlightAgentsByDisplayName,
 } from "../../state/selection/actions";
-import {
-    ChangeAgentsRenderingStateAction,
-    HighlightAgentAction,
-} from "../../state/selection/types";
-import RadioButtons from "../../components/RadioButtons";
+import { ChangeAgentsRenderingStateAction } from "../../state/selection/types";
 import CheckBoxTree from "../../components/CheckBoxTree";
+import { TreeNodeNormal } from "antd/lib/tree/Tree";
 const styles = require("./style.css");
 
 interface ModelPanelProps {
-    agentIds: string[];
-    agentDisplayData: any;
-    turnAgentsOnById: ActionCreator<ChangeAgentsRenderingStateAction>;
-    highlightAgent: ActionCreator<HighlightAgentAction>;
-    highlightedAgents: string[];
-    visibleAgentNames: string[];
-    agentHighlightDisplayData: any;
+    visibilityDisplayOptions: TreeNodeNormal[];
+    highlightedAgentKeys: string[];
+    visibleAgentKeys: string[];
+    highlightDisplayOptions: TreeNodeNormal[];
     turnAgentsOnByDisplayName: ActionCreator<ChangeAgentsRenderingStateAction>;
     highlightAgentsByDisplayName: ActionCreator<
         ChangeAgentsRenderingStateAction
@@ -48,15 +36,12 @@ interface ModelPanelProps {
 class ModelPanel extends React.Component<ModelPanelProps, {}> {
     public render(): JSX.Element {
         const {
-            agentIds,
-            visibleAgentNames,
-            agentDisplayData,
-            turnAgentsOnById,
+            visibleAgentKeys,
+            visibilityDisplayOptions,
             turnAgentsOnByDisplayName,
-            agentHighlightDisplayData,
+            highlightDisplayOptions,
             highlightAgentsByDisplayName,
-            highlightedAgents,
-            highlightAgent,
+            highlightedAgentKeys,
         } = this.props;
         return (
             <CollaspableMenu
@@ -67,30 +52,17 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
                     <div className={styles.container} key="molecules">
                         <h3>Molecules</h3>
                         <CheckBoxTree
-                            treeData={agentDisplayData}
+                            treeData={visibilityDisplayOptions}
                             handleCheck={turnAgentsOnByDisplayName}
-                            agentsChecked={visibleAgentNames}
+                            agentsChecked={visibleAgentKeys}
                             title="Turn on/off"
                         />
                         <CheckBoxTree
-                            treeData={agentHighlightDisplayData}
+                            treeData={highlightDisplayOptions}
                             handleCheck={highlightAgentsByDisplayName}
-                            agentsChecked={highlightedAgents}
+                            agentsChecked={highlightedAgentKeys}
                             title="Highlight"
                         />
-                        {/* <CheckBoxes
-                            options={agentIds}
-                            values={agentsOn}
-                            onChange={turnAgentsOnById}
-                            key="checkbox-group"
-                            title="Turn on/off"
-                        /> */}
-                        {/* <RadioButtons
-                            value={highlightedAgent}
-                            options={agentIds}
-                            onChange={highlightAgent}
-                            title="Highlight"
-                        /> */}
                     </div>,
                     null,
                 ]}
@@ -101,19 +73,16 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
 
 function mapStateToProps(state: State) {
     return {
-        agentIds: getAgentIds(state),
-        visibleAgentNames: getVisibleAgentsNamesAndTags(state),
-        highlightedAgents: getHighlightedAgentsNamesAndTags(state),
-        agentDisplayData: getUiDisplayDataTree(state),
-        agentHighlightDisplayData: getUiDisplayDataTreeHighlight(state),
+        visibleAgentKeys: getVisibleAgentsNamesAndTags(state),
+        highlightedAgentKeys: getHighlightedAgentsNamesAndTags(state),
+        visibilityDisplayOptions: getUiDisplayDataTreeVisibility(state),
+        highlightDisplayOptions: getUiDisplayDataTreeHighlight(state),
     };
 }
 
 const dispatchToPropsMap = {
     requestMetadata,
-    turnAgentsOnById,
     turnAgentsOnByDisplayName,
-    highlightAgent,
     highlightAgentsByDisplayName,
 };
 

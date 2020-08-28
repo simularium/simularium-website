@@ -8,14 +8,12 @@ export const SELECT_FILE = makeSelectConstant("select-file");
 export const SELECT_METADATA = makeSelectConstant("select_metadata");
 export const CHANGE_TIME_HEAD = makeSelectConstant("change-time-head");
 export const SIDE_PANEL_COLLAPSED = makeSelectConstant("change-content-width");
-export const HIGHLIGHT_AGENTS_BY_NAME = makeSelectConstant(
-    "highlight-agents-by-name"
+export const HIGHLIGHT_AGENTS_BY_KEY = makeSelectConstant(
+    "highlight-agents-by-key"
 );
-export const TURN_AGENTS_ON_BY_ID = makeSelectConstant("turn-agents-on-by-id");
-export const TURN_AGENTS_ON_BY_NAME = makeSelectConstant(
+export const TURN_AGENTS_ON_BY_KEY = makeSelectConstant(
     "turn-agents-on-by-name"
 );
-export const HIGHLIGHT_AGENT = makeSelectConstant("highlight-agent");
 export const TOGGLE_LOAD_FILE_MODAL = makeSelectConstant(
     "toggle-load-file-modal"
 );

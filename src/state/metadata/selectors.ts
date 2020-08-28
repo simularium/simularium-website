@@ -4,6 +4,7 @@ import { State } from "../types";
 
 import { MetadataStateBranch } from "./types";
 import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
+import { render } from "enzyme";
 
 // BASIC SELECTORS
 export const getMetadata = (state: State) => state.metadata;
@@ -41,7 +42,10 @@ export const getAllTags = createSelector(
     }
 );
 
-export const getUiDisplayDataTree = createSelector(
+const makeDataTreeKey = (renderType: string, name: string, tagId: string) =>
+    `${renderType}-${name}-${tagId}`;
+
+export const getUiDisplayDataTreeVisibility = createSelector(
     [getAgentDisplayNamesAndStates],
     (uiDisplayData: UIDisplayData) => {
         return uiDisplayData.map((agent) => ({
@@ -49,7 +53,7 @@ export const getUiDisplayDataTree = createSelector(
             key: agent.name,
             children: agent.displayStates.map((state) => ({
                 title: state.name,
-                key: `v-${agent.name}-${state.id}`,
+                key: makeDataTreeKey("v", agent.name, state.id),
             })),
         }));
     }
@@ -63,7 +67,7 @@ export const getUiDisplayDataTreeHighlight = createSelector(
             key: agent.name,
             children: agent.displayStates.map((state) => ({
                 title: state.name,
-                key: `hl-${agent.name}-${state.id}`,
+                key: makeDataTreeKey("hl", agent.name, state.id),
             })),
         }));
     }
