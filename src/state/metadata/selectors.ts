@@ -4,7 +4,7 @@ import { State } from "../types";
 
 import { MetadataStateBranch } from "./types";
 import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
-import { render } from "enzyme";
+import { TreeNodeNormal } from "antd/lib/tree/Tree";
 
 // BASIC SELECTORS
 export const getMetadata = (state: State) => state.metadata;
@@ -47,7 +47,7 @@ const makeDataTreeKey = (renderType: string, name: string, tagId: string) =>
 
 export const getUiDisplayDataTreeVisibility = createSelector(
     [getAgentDisplayNamesAndStates],
-    (uiDisplayData: UIDisplayData) => {
+    (uiDisplayData: UIDisplayData): TreeNodeNormal[] => {
         return uiDisplayData.map((agent) => ({
             title: agent.name,
             key: agent.name,
@@ -61,7 +61,7 @@ export const getUiDisplayDataTreeVisibility = createSelector(
 
 export const getUiDisplayDataTreeHighlight = createSelector(
     [getAgentDisplayNamesAndStates],
-    (uiDisplayData: UIDisplayData) => {
+    (uiDisplayData: UIDisplayData): TreeNodeNormal[] => {
         return uiDisplayData.map((agent) => ({
             title: agent.name,
             key: agent.name,
