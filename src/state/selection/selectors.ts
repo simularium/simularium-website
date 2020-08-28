@@ -12,9 +12,9 @@ export const getSelectedFiles = (state: State) => state.selection.files;
 export const getCurrentTime = (state: State) => state.selection.time;
 export const getAgentsOnById = (state: State) => state.selection.agentIdsOn;
 export const getVisibleAgentsNamesAndTags = (state: State) =>
-    state.selection.agentNamesOn;
+    state.selection.visibleAgentKeys;
 export const getHighlightedAgentsNamesAndTags = (state: State) =>
-    state.selection.highlightedAgentNames;
+    state.selection.highlightedAgentKeys;
 
 export const getNumberCollapsed = (state: State) =>
     state.selection.numberPanelsCollapsed;
@@ -26,7 +26,7 @@ const parseTagIdFromKey = (key: string) => key.split("-")[2];
 
 export const getHightLightedNames = createSelector(
     [getHighlightedAgentsNamesAndTags, getAgentDisplayNamesAndStates],
-    (highlightedAgents, allAgents: UIDisplayData) => {
+    (highlightedAgents, allAgents: UIDisplayData): string[] => {
         return allAgents
             .filter((agent) => highlightedAgents.includes(agent.name))
             .map((agent) => agent.name);
@@ -35,9 +35,9 @@ export const getHightLightedNames = createSelector(
 
 export const getHightLightedTags = createSelector(
     [getHighlightedAgentsNamesAndTags, getAllTags],
-    (highlightedAgents, allTags) => {
+    (highlightedAgents, allTags): string[] => {
         const allTagsHighlighted = highlightedAgents
-            .filter((agentKey: string) => agentKey.split("-").length > 1)
+            .filter((agentKey: string) => agentKey.split("-").length > 2)
             .map(parseTagIdFromKey);
 
         return allTags.filter((tag) => allTagsHighlighted.includes(tag));
@@ -45,7 +45,7 @@ export const getHightLightedTags = createSelector(
 );
 export const getAgentNamesToHide = createSelector(
     [getVisibleAgentsNamesAndTags, getAgentDisplayNamesAndStates],
-    (currentlyOn, allAgents: UIDisplayData) => {
+    (currentlyOn, allAgents: UIDisplayData): string[] => {
         return allAgents
             .filter((agent) => !currentlyOn.includes(agent.name))
             .map((agent) => agent.name);
@@ -54,9 +54,9 @@ export const getAgentNamesToHide = createSelector(
 
 export const getAgentTagsToHide = createSelector(
     [getVisibleAgentsNamesAndTags, getAllTags],
-    (currentlyOn, allTags) => {
+    (currentlyOn, allTags): string[] => {
         const allTagsShowing = currentlyOn
-            .filter((agentKey: string) => agentKey.split("-").length > 1)
+            .filter((agentKey: string) => agentKey.split("-").length > 2)
             .map(parseTagIdFromKey);
         return allTags.filter((tag) => !allTagsShowing.includes(tag));
     }
