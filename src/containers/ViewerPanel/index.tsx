@@ -10,7 +10,6 @@ import { connect } from "react-redux";
 import {
     getCurrentTime,
     getNumberCollapsed,
-    getHightlightedId,
 } from "../../state/selection/selectors";
 import { State } from "../../state/types";
 import {
