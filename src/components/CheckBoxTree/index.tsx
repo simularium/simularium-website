@@ -28,7 +28,6 @@ const CheckBoxTree = ({
     const onCheck = (
         checkedKeys: string[] | { checked: string[]; halfChecked: string[] }
     ) => {
-        console.log("onCheck", checkedKeys);
         handleCheck(checkedKeys);
     };
 
