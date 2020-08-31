@@ -23,7 +23,10 @@ const BASE_PLUGINS = [
     new MiniCssExtractPlugin({ filename: 'style.[contenthash].css' }),
     new HtmlWebpackPlugin({
         template: path.resolve(__dirname, 'index.template.html')
-    })
+    }),
+    new webpack.EnvironmentPlugin({
+        GH_BUILD: !!process.env.GH_BUILD,
+    }),
 ];
 
 const BUNDLE_ANALYZER = [new BundleAnalyzerPlugin({ analyzerMode: 'static' })];

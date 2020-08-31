@@ -14,7 +14,9 @@ import { createReduxStore } from "./state";
 
 render(
     <Provider store={createReduxStore()}>
-        <BrowserRouter>
+        <BrowserRouter
+            basename={process.env.GH_BUILD ? "/simularium-website/" : ""}
+        >
             <Switch>
                 <Route exact path="/">
                     <LandingPage />

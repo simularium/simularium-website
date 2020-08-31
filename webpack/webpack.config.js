@@ -130,7 +130,7 @@ module.exports = ({ analyze, env } = {}) => ({
     output: {
         path: path.resolve(__dirname, "../", "dist"),
         filename: "[name].[chunkhash].js",
-        publicPath: '/'
+        publicPath: process.env.GH_BUILD ? '' : '/'
     },
     plugins: getPluginsByEnv(env, analyze),
     resolve: {
