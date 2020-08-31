@@ -2045,7 +2045,7 @@ console.log(process.env.GH_BUILD);
 Object(react_dom__WEBPACK_IMPORTED_MODULE_4__["render"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](react_redux__WEBPACK_IMPORTED_MODULE_5__["Provider"], {
   store: Object(_state__WEBPACK_IMPORTED_MODULE_10__["createReduxStore"])()
 }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_6__["BrowserRouter"], {
-  basename: process.env.GH_BUILD ? "/simularium-website/" : ""
+  basename: "/simularium-website/"
 }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Route"], {
   exact: true,
   path: "/"
@@ -2761,4 +2761,4 @@ function enableBatching(reducer, initialState) {
 /***/ })
 
 },[["./src/index.tsx","runtime","vendor~app"]]]);
-//# sourceMappingURL=app.ef68bd1b3f1b2e0501aa.js.map
+//# sourceMappingURL=app.3377bc98058d29b87c89.js.map
