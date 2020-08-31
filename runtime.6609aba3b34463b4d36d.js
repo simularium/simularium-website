@@ -136,7 +136,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "simularium-website";
+/******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
 /******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
@@ -151,4 +151,4 @@
 /******/ })
 /************************************************************************/
 /******/ ([]);
-//# sourceMappingURL=runtime.93289219f26934e5fda1.js.map
+//# sourceMappingURL=runtime.6609aba3b34463b4d36d.js.map

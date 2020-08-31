@@ -2014,7 +2014,7 @@ module.exports = {"container":"style__container--qJEJg"};
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var core_js_es6_map__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/es6/map */ "./node_modules/core-js/es6/map.js");
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var core_js_es6_map__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/es6/map */ "./node_modules/core-js/es6/map.js");
 /* harmony import */ var core_js_es6_map__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_es6_map__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var core_js_es6_promise__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/es6/promise */ "./node_modules/core-js/es6/promise.js");
 /* harmony import */ var core_js_es6_promise__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_es6_promise__WEBPACK_IMPORTED_MODULE_1__);
@@ -2043,12 +2043,15 @@ __webpack_require__.r(__webpack_exports__);
 
 Object(react_dom__WEBPACK_IMPORTED_MODULE_4__["render"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](react_redux__WEBPACK_IMPORTED_MODULE_5__["Provider"], {
   store: Object(_state__WEBPACK_IMPORTED_MODULE_10__["createReduxStore"])()
-}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_6__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Route"], {
+}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_6__["BrowserRouter"], {
+  basename: process.env.GH_BUILD ? "/simularium-website/" : ""
+}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Route"], {
   exact: true,
   path: "/"
 }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](_containers_LandingPage__WEBPACK_IMPORTED_MODULE_9__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Route"], {
   path: "/viewer"
 }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](_containers_Simularium__WEBPACK_IMPORTED_MODULE_8__["default"], null))))), document.getElementById(_constants__WEBPACK_IMPORTED_MODULE_7__["APP_ID"]));
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -2757,4 +2760,4 @@ function enableBatching(reducer, initialState) {
 /***/ })
 
 },[["./src/index.tsx","runtime","vendor~app"]]]);
-//# sourceMappingURL=app.4370cae9ac8664fab120.js.map
+//# sourceMappingURL=app.bd74fb17bd2001cf6d56.js.map
