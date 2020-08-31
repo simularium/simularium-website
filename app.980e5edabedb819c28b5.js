@@ -2014,7 +2014,7 @@ module.exports = {"container":"style__container--qJEJg"};
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var core_js_es6_map__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/es6/map */ "./node_modules/core-js/es6/map.js");
+/* harmony import */ var core_js_es6_map__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/es6/map */ "./node_modules/core-js/es6/map.js");
 /* harmony import */ var core_js_es6_map__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_es6_map__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var core_js_es6_promise__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/es6/promise */ "./node_modules/core-js/es6/promise.js");
 /* harmony import */ var core_js_es6_promise__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_es6_promise__WEBPACK_IMPORTED_MODULE_1__);
@@ -2041,7 +2041,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-console.log(process.env.GH_BUILD);
+console.log("true");
 Object(react_dom__WEBPACK_IMPORTED_MODULE_4__["render"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](react_redux__WEBPACK_IMPORTED_MODULE_5__["Provider"], {
   store: Object(_state__WEBPACK_IMPORTED_MODULE_10__["createReduxStore"])()
 }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_6__["BrowserRouter"], {
@@ -2052,7 +2052,6 @@ Object(react_dom__WEBPACK_IMPORTED_MODULE_4__["render"])( /*#__PURE__*/react__WE
 }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](_containers_LandingPage__WEBPACK_IMPORTED_MODULE_9__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Route"], {
   path: "/viewer"
 }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](_containers_Simularium__WEBPACK_IMPORTED_MODULE_8__["default"], null))))), document.getElementById(_constants__WEBPACK_IMPORTED_MODULE_7__["APP_ID"]));
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -2761,4 +2760,4 @@ function enableBatching(reducer, initialState) {
 /***/ })
 
 },[["./src/index.tsx","runtime","vendor~app"]]]);
-//# sourceMappingURL=app.3377bc98058d29b87c89.js.map
+//# sourceMappingURL=app.980e5edabedb819c28b5.js.map
