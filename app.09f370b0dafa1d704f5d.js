@@ -1582,6 +1582,7 @@ var Content = antd_es_layout__WEBPACK_IMPORTED_MODULE_1__["default"].Content;
 
 var styles = __webpack_require__(/*! ./style.css */ "./src/containers/Simularium/style.css");
 
+console.log(process.env.BACKEND_SERVER_IP);
 var netConnectionSettings = {
   serverIp: process.env.BACKEND_SERVER_IP,
   serverPort: 9002
@@ -2045,7 +2046,7 @@ console.log("true");
 Object(react_dom__WEBPACK_IMPORTED_MODULE_4__["render"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](react_redux__WEBPACK_IMPORTED_MODULE_5__["Provider"], {
   store: Object(_state__WEBPACK_IMPORTED_MODULE_10__["createReduxStore"])()
 }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_6__["BrowserRouter"], {
-  basename: "/simularium-website/"
+  basename:  true ? "/simularium-website/" : undefined
 }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Route"], {
   exact: true,
   path: "/"
@@ -2760,4 +2761,4 @@ function enableBatching(reducer, initialState) {
 /***/ })
 
 },[["./src/index.tsx","runtime","vendor~app"]]]);
-//# sourceMappingURL=app.980e5edabedb819c28b5.js.map
+//# sourceMappingURL=app.09f370b0dafa1d704f5d.js.map
