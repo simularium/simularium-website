@@ -16,7 +16,11 @@ export default class ModelPanel extends React.Component<CollapseableMenu, {}> {
     public render(): JSX.Element {
         const { panelKeys, mainTitle, subTitles, content } = this.props;
         return (
-            <Card title={mainTitle} className={styles.container}>
+            <Card
+                title={mainTitle}
+                className={styles.container}
+                bordered={false}
+            >
                 <Collapse defaultActiveKey={panelKeys}>
                     {panelKeys.map((key: string, i: number) => (
                         <Panel
