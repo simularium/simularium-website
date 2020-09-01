@@ -10,10 +10,12 @@ import { connect } from "react-redux";
 import {
     getCurrentTime,
     getNumberCollapsed,
-    getHightlightedId,
 } from "../../state/selection/selectors";
 import { State } from "../../state/types";
-import { changeTime, turnAgentsOn } from "../../state/selection/actions";
+import {
+    changeTime,
+    turnAgentsOnByDisplayKey,
+} from "../../state/selection/actions";
 import PlaybackControls from "../../components/PlaybackControls";
 import { receiveMetadata } from "../../state/metadata/actions";
 import {
@@ -22,12 +24,16 @@ import {
 } from "../../state/metadata/selectors";
 import {
     ChangeTimeAction,
-    TurnAgentsOnAction,
+    ChangeAgentsRenderingStateAction,
 } from "../../state/selection/types";
-import { receiveAgentTypeIds } from "../../state/metadata/actions";
+import {
+    receiveAgentTypeIds,
+    receiveAgentNamesAndStates,
+} from "../../state/metadata/actions";
 import { ReceiveAction } from "../../state/metadata/types";
 
 import "@aics/simularium-viewer/style/style.css";
+import { getSelectionStateInfoForViewer } from "./selectors";
 
 const styles = require("./style.css");
 
@@ -37,11 +43,12 @@ interface ViewerPanelProps {
     numberPanelsCollapsed: number;
     changeTime: ActionCreator<ChangeTimeAction>;
     timeStep: number;
-    turnAgentsOn: ActionCreator<TurnAgentsOnAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
-    highlightedId: number;
     totalTime: number;
     receiveMetadata: ActionCreator<ReceiveAction>;
+    receiveAgentNamesAndStates: ActionCreator<ReceiveAction>;
+    selectionStateInfoForViewer: SelectionStateInfo;
+    turnAgentsOnByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
 }
 
 interface ViewerPanelState {
@@ -51,7 +58,6 @@ interface ViewerPanelState {
     particleTypeIds: string[];
     height: number;
     width: number;
-    selectionStateInfo: SelectionStateInfo;
     requestingTimeChange: boolean;
 }
 
@@ -80,12 +86,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             particleTypeIds: [],
             height: 0,
             width: 0,
-            selectionStateInfo: {
-                highlightedNames: [],
-                highlightedTags: [],
-                hiddenNames: [],
-                hiddenTags: [],
-            },
             requestingTimeChange: false,
         };
     }
@@ -131,9 +131,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleJsonMeshData(jsonData: any) {
-        const { receiveAgentTypeIds, turnAgentsOn } = this.props;
+        const { receiveAgentTypeIds } = this.props;
         const particleTypeIds = Object.keys(jsonData);
-        turnAgentsOn(particleTypeIds);
         receiveAgentTypeIds(particleTypeIds);
     }
 
@@ -180,11 +179,25 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
+        const {
+            receiveAgentNamesAndStates,
+            turnAgentsOnByDisplayKey,
+        } = this.props;
+        receiveAgentNamesAndStates(uiData);
         console.log(uiData);
+        const names = uiData.map((agent) => agent.name);
+        console.log(names);
+        turnAgentsOnByDisplayKey(names);
     };
 
     public render(): JSX.Element {
-        const { time, totalTime, simulariumController } = this.props;
+        const {
+            time,
+            totalTime,
+            simulariumController,
+            selectionStateInfoForViewer,
+        } = this.props;
+        console.log(selectionStateInfoForViewer);
         return (
             <div ref={this.centerContent} className={styles.container}>
                 <SimulariumViewer
@@ -195,7 +208,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     simulariumController={simulariumController}
                     onJsonDataArrived={this.handleJsonMeshData}
                     onUIDisplayDataChanged={this.handleUiDisplayDataChanged}
-                    selectionStateInfo={this.state.selectionStateInfo}
+                    selectionStateInfo={selectionStateInfoForViewer}
                     onTrajectoryFileInfoChanged={
                         this.onTrajectoryFileInfoChanged
                     }
@@ -221,7 +234,7 @@ function mapStateToProps(state: State) {
         numberPanelsCollapsed: getNumberCollapsed(state),
         totalTime: getTotalTimeOfCachedSimulation(state),
         timeStep: getTimeStepSize(state),
-        highlightedId: getHightlightedId(state),
+        selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
     };
 }
 
@@ -229,7 +242,8 @@ const dispatchToPropsMap = {
     changeTime,
     receiveMetadata,
     receiveAgentTypeIds,
-    turnAgentsOn,
+    receiveAgentNamesAndStates,
+    turnAgentsOnByDisplayKey,
 };
 
 export default connect(

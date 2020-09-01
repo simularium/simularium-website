@@ -4,40 +4,45 @@ import { connect } from "react-redux";
 
 import CollaspableMenu from "../../components/CollapseableMenu";
 import { requestMetadata } from "../../state/metadata/actions";
-import { getAgentIds } from "../../state/metadata/selectors";
+import {
+    getUiDisplayDataTreeVisibility,
+    getUiDisplayDataTreeHighlight,
+} from "../../state/metadata/selectors";
 import { State } from "../../state/types";
-import CheckBoxes from "../../components/CheckBoxes";
 import {
-    getAgentsOn,
-    getHightlightedId,
+    getVisibleAgentsNamesAndTags,
+    getHighlightedAgentsNamesAndTags,
 } from "../../state/selection/selectors";
-import { turnAgentsOn, highlightAgent } from "../../state/selection/actions";
 import {
-    TurnAgentsOnAction,
-    HighlightAgentAction,
-} from "../../state/selection/types";
-import RadioButtons from "../../components/RadioButtons";
-
+    turnAgentsOnByDisplayKey,
+    highlightAgentsByDisplayKey,
+} from "../../state/selection/actions";
+import { ChangeAgentsRenderingStateAction } from "../../state/selection/types";
+import CheckBoxTree from "../../components/CheckBoxTree";
+import { TreeNodeNormal } from "antd/lib/tree/Tree";
 const styles = require("./style.css");
 
 interface ModelPanelProps {
-    agentIds: string[];
-    agentsOn: string[];
-    turnAgentsOn: ActionCreator<TurnAgentsOnAction>;
-    highlightedAgent: string;
-    highlightAgent: ActionCreator<HighlightAgentAction>;
+    visibilityDisplayOptions: TreeNodeNormal[];
+    highlightedAgentKeys: string[];
+    visibleAgentKeys: string[];
+    highlightDisplayOptions: TreeNodeNormal[];
+    turnAgentsOnByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
+    highlightAgentsByDisplayKey: ActionCreator<
+        ChangeAgentsRenderingStateAction
+    >;
 }
 
 class ModelPanel extends React.Component<ModelPanelProps, {}> {
     public render(): JSX.Element {
         const {
-            agentIds,
-            agentsOn,
-            turnAgentsOn,
-            highlightedAgent,
-            highlightAgent,
+            visibleAgentKeys,
+            visibilityDisplayOptions,
+            turnAgentsOnByDisplayKey,
+            highlightDisplayOptions,
+            highlightAgentsByDisplayKey,
+            highlightedAgentKeys,
         } = this.props;
-
         return (
             <CollaspableMenu
                 panelKeys={["graphing", "statistics"]}
@@ -46,17 +51,16 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
                 content={[
                     <div className={styles.container} key="molecules">
                         <h3>Molecules</h3>
-                        <CheckBoxes
-                            options={agentIds}
-                            values={agentsOn}
-                            onChange={turnAgentsOn}
-                            key="checkbox-group"
+                        <CheckBoxTree
+                            treeData={visibilityDisplayOptions}
+                            handleCheck={turnAgentsOnByDisplayKey}
+                            agentsChecked={visibleAgentKeys}
                             title="Turn on/off"
                         />
-                        <RadioButtons
-                            value={highlightedAgent}
-                            options={agentIds}
-                            onChange={highlightAgent}
+                        <CheckBoxTree
+                            treeData={highlightDisplayOptions}
+                            handleCheck={highlightAgentsByDisplayKey}
+                            agentsChecked={highlightedAgentKeys}
                             title="Highlight"
                         />
                     </div>,
@@ -69,16 +73,17 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
 
 function mapStateToProps(state: State) {
     return {
-        agentIds: getAgentIds(state),
-        agentsOn: getAgentsOn(state),
-        highlightedAgent: getHightlightedId(state),
+        visibleAgentKeys: getVisibleAgentsNamesAndTags(state),
+        highlightedAgentKeys: getHighlightedAgentsNamesAndTags(state),
+        visibilityDisplayOptions: getUiDisplayDataTreeVisibility(state),
+        highlightDisplayOptions: getUiDisplayDataTreeHighlight(state),
     };
 }
 
 const dispatchToPropsMap = {
     requestMetadata,
-    turnAgentsOn,
-    highlightAgent,
+    turnAgentsOnByDisplayKey,
+    highlightAgentsByDisplayKey,
 };
 
 export default connect(

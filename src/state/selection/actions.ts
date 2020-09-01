@@ -3,16 +3,15 @@ import {
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
     SIDE_PANEL_COLLAPSED,
-    TURN_AGENTS_ON,
-    HIGHLIGHT_AGENT,
+    TURN_AGENTS_ON_BY_KEY,
     TOGGLE_LOAD_FILE_MODAL,
+    HIGHLIGHT_AGENTS_BY_KEY,
 } from "./constants";
 import {
     DeselectFileAction,
-    TurnAgentsOnAction,
+    ChangeAgentsRenderingStateAction,
     SelectMetadataAction,
     ChangeTimeAction,
-    HighlightAgentAction,
     ToggleAction,
 } from "./types";
 
@@ -37,17 +36,21 @@ export function onSidePanelCollapse(numberCollapsed: number) {
     };
 }
 
-export function turnAgentsOn(agentIds: string[]): TurnAgentsOnAction {
+export function turnAgentsOnByDisplayKey(
+    agentNames: string[]
+): ChangeAgentsRenderingStateAction {
     return {
-        payload: agentIds,
-        type: TURN_AGENTS_ON,
+        payload: agentNames,
+        type: TURN_AGENTS_ON_BY_KEY,
     };
 }
 
-export function highlightAgent(agentIds: string): HighlightAgentAction {
+export function highlightAgentsByDisplayKey(
+    agentNames: string[]
+): ChangeAgentsRenderingStateAction {
     return {
-        payload: agentIds,
-        type: HIGHLIGHT_AGENT,
+        payload: agentNames,
+        type: HIGHLIGHT_AGENTS_BY_KEY,
     };
 }
 

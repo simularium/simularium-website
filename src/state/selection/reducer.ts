@@ -9,13 +9,13 @@ import {
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
     SIDE_PANEL_COLLAPSED,
-    TURN_AGENTS_ON,
-    HIGHLIGHT_AGENT,
     TOGGLE_LOAD_FILE_MODAL,
+    TURN_AGENTS_ON_BY_KEY,
+    HIGHLIGHT_AGENTS_BY_KEY,
 } from "./constants";
 import {
     DeselectFileAction,
-    TurnAgentsOnAction,
+    ChangeAgentsRenderingStateAction,
     SelectionStateBranch,
     SelectMetadataAction,
     ChangeTimeAction,
@@ -28,8 +28,8 @@ export const initialState = {
     files: [],
     time: 0,
     numberPanelsCollapsed: 0,
-    agentsOn: [],
-    hightlightedId: -1,
+    visibleAgentKeys: [],
+    highlightedAgentKeys: [],
     modalOpen: false,
 };
 
@@ -42,13 +42,18 @@ const actionToConfigMap: TypeToDescriptionMap = {
             files: without(state.files, ...castArray(action.payload)),
         }),
     },
-    [TURN_AGENTS_ON]: {
-        accepts: (action: AnyAction): action is TurnAgentsOnAction =>
-            action.type === TURN_AGENTS_ON,
-        perform: (state: SelectionStateBranch, action: TurnAgentsOnAction) => {
+    [TURN_AGENTS_ON_BY_KEY]: {
+        accepts: (
+            action: AnyAction
+        ): action is ChangeAgentsRenderingStateAction =>
+            action.type === TURN_AGENTS_ON_BY_KEY,
+        perform: (
+            state: SelectionStateBranch,
+            action: ChangeAgentsRenderingStateAction
+        ) => {
             return {
                 ...state,
-                agentsOn: action.payload,
+                visibleAgentKeys: action.payload,
             };
         },
     },
@@ -85,15 +90,17 @@ const actionToConfigMap: TypeToDescriptionMap = {
             numberPanelsCollapsed: state.numberPanelsCollapsed + action.payload,
         }),
     },
-    [HIGHLIGHT_AGENT]: {
-        accepts: (action: AnyAction): action is HighlightAgentAction =>
-            action.type === HIGHLIGHT_AGENT,
+    [HIGHLIGHT_AGENTS_BY_KEY]: {
+        accepts: (
+            action: AnyAction
+        ): action is ChangeAgentsRenderingStateAction =>
+            action.type === HIGHLIGHT_AGENTS_BY_KEY,
         perform: (
             state: SelectionStateBranch,
             action: HighlightAgentAction
         ) => ({
             ...state,
-            hightlightedId: action.payload,
+            highlightedAgentKeys: action.payload,
         }),
     },
     [TOGGLE_LOAD_FILE_MODAL]: {
