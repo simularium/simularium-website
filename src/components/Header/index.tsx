@@ -3,6 +3,7 @@ import { Layout, Row, Col, Button } from "antd";
 import { ActionCreator } from "redux";
 
 import { ToggleAction } from "../../state/selection/types";
+import FileUpload from "../FileUpload";
 const { Header } = Layout;
 
 const styles = require("./style.css");
@@ -23,8 +24,9 @@ export default class AppHeader extends React.Component<AppHeaderProps, {}> {
                             Load
                         </Button>
                     </Col>
-                    <Col />
-                    <Col />
+                    <Col>
+                        <FileUpload />
+                    </Col>
                     <Col />
                 </Row>
             </Header>
