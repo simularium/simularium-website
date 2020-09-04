@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "start": "webpack-dev-server --config ./webpack/webpack.config.js",
+    "start": "webpack-dev-server --config ./webpack/webpack.config.js --env.env dev",
     "build": "NODE_ENV=production webpack --config ./webpack/webpack.config.js",
     "lint": "eslint src/**/*.{ts,tsx}",
     "typeCheck": "tsc -p tsconfig.json --noEmit",
@@ -72,7 +72,7 @@
   },
   "dependencies": {
     "@aics/simularium-observables-manager": "^0.1.0",
-    "@aics/simularium-viewer": "^2.0.1",
+    "@aics/simularium-viewer": "^2.1.0",
     "@types/react-router-dom": "^5.1.5",
     "@types/victory": "^31.0.12",
     "antd": "^3.14.1",
