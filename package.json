@@ -73,9 +73,10 @@
   "dependencies": {
     "@aics/simularium-observables-manager": "^0.1.0",
     "@aics/simularium-viewer": "^2.1.0",
+    "@ant-design/icons": "^4.2.2",
     "@types/react-router-dom": "^5.1.5",
     "@types/victory": "^31.0.12",
-    "antd": "^3.14.1",
+    "antd": "^4.6.2",
     "axios": "^0.19.2",
     "classnames": "2.2.5",
     "core-js": "2.5.5",
