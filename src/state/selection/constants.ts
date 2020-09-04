@@ -17,3 +17,5 @@ export const TURN_AGENTS_ON_BY_KEY = makeSelectConstant(
 export const TOGGLE_LOAD_FILE_MODAL = makeSelectConstant(
     "toggle-load-file-modal"
 );
+export const DRAG_OVER_VIEWER = makeSelectConstant("drag-over-viewer");
+export const RESET_DRAG_OVER_VIEWER = makeSelectConstant("drag-off-viewer");

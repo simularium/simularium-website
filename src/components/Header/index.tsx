@@ -42,6 +42,7 @@ export default class AppHeader extends React.Component<AppHeaderProps, {}> {
                             loadLocalFile={loadLocalFile}
                             saveLocalSimulariumFile={saveLocalSimulariumFile}
                         />,
+                        ,
                     ]}
                 />
                 <Row>

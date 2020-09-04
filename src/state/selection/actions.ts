@@ -6,6 +6,8 @@ import {
     TURN_AGENTS_ON_BY_KEY,
     TOGGLE_LOAD_FILE_MODAL,
     HIGHLIGHT_AGENTS_BY_KEY,
+    DRAG_OVER_VIEWER,
+    RESET_DRAG_OVER_VIEWER,
 } from "./constants";
 import {
     DeselectFileAction,
@@ -13,6 +15,8 @@ import {
     SelectMetadataAction,
     ChangeTimeAction,
     ToggleAction,
+    DragOverViewerAction,
+    ResetDragOverViewerAction,
 } from "./types";
 
 export function deselectFile(fileId: string | string[]): DeselectFileAction {
@@ -76,5 +80,17 @@ export function selectMetadata(
         key,
         payload,
         type: SELECT_METADATA,
+    };
+}
+
+export function dragOverViewer(): DragOverViewerAction {
+    return {
+        type: DRAG_OVER_VIEWER,
+    };
+}
+
+export function resetDragOverViewer(): ResetDragOverViewerAction {
+    return {
+        type: RESET_DRAG_OVER_VIEWER,
     };
 }

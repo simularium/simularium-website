@@ -57,6 +57,12 @@ class App extends React.Component<AppProps, AppState> {
             closeLoadFileModal();
             this.handleSelectNetworkFile(`${fileName}.h5`);
         }
+        this.simulariumController = new SimulariumController({
+            netConnectionSettings: netConnectionSettings,
+        });
+        this.setState({
+            simulariumLoaded: true,
+        });
     }
 
     public handleSelectNetworkFile(fileName: string) {
@@ -134,6 +140,11 @@ class App extends React.Component<AppProps, AppState> {
                     <Content>
                         {this.simulariumController && (
                             <ViewerPanel
+                                loadLocalFile={this.handleLoadLocalFile}
+                                simulariumFile={simulariumFile}
+                                saveLocalSimulariumFile={
+                                    saveLocalSimulariumFile
+                                }
                                 simulariumController={this.simulariumController}
                             />
                         )}

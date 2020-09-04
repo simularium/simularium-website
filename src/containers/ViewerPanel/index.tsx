@@ -7,34 +7,39 @@ import SimulariumViewer, {
 } from "@aics/simularium-viewer";
 import { connect } from "react-redux";
 
+import { State } from "../../state/types";
 import {
     getCurrentTime,
     getNumberCollapsed,
+    getFileDraggedOverViewer,
 } from "../../state/selection/selectors";
-import { State } from "../../state/types";
 import {
     changeTime,
     turnAgentsOnByDisplayKey,
+    dragOverViewer,
+    resetDragOverViewer,
 } from "../../state/selection/actions";
-import PlaybackControls from "../../components/PlaybackControls";
-import { receiveMetadata } from "../../state/metadata/actions";
-import {
-    getTotalTimeOfCachedSimulation,
-    getTimeStepSize,
-} from "../../state/metadata/selectors";
 import {
     ChangeTimeAction,
     ChangeAgentsRenderingStateAction,
 } from "../../state/selection/types";
 import {
+    getTotalTimeOfCachedSimulation,
+    getTimeStepSize,
+} from "../../state/metadata/selectors";
+import {
     receiveAgentTypeIds,
     receiveAgentNamesAndStates,
+    receiveMetadata,
 } from "../../state/metadata/actions";
 import { ReceiveAction } from "../../state/metadata/types";
 
-import "@aics/simularium-viewer/style/style.css";
 import { getSelectionStateInfoForViewer } from "./selectors";
 
+import PlaybackControls from "../../components/PlaybackControls";
+import DragAndDrop from "../../components/DragAndDrop";
+
+import "@aics/simularium-viewer/style/style.css";
 const styles = require("./style.css");
 
 interface ViewerPanelProps {
@@ -79,6 +84,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         );
         this.skipToTime = this.skipToTime.bind(this);
         this.resize = this.resize.bind(this);
+        this.handleDragOverViewer = this.handleDragOverViewer.bind(this);
         this.state = {
             isPlaying: false,
             isInitialPlay: true,
@@ -98,12 +104,33 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public componentDidMount() {
         const current = this.centerContent.current;
+        const { fileIsDraggedOverViewer, resetDragOverViewer } = this.props;
+        console.log(fileIsDraggedOverViewer);
         if (current) {
             window.addEventListener("resize", () => this.resize(current));
             setTimeout(() => {
                 // wait for panel animation to finish.
                 this.resize(current);
             }, 200);
+            window.addEventListener(
+                "dragover",
+                this.handleDragOverViewer,
+                false
+            );
+            window.addEventListener("ondragleave", () => {
+                console.log("end drag");
+                if (this.props.fileIsDraggedOverViewer) {
+                    // resetDragOverViewer();
+                }
+            });
+        }
+    }
+
+    public handleDragOverViewer() {
+        const { dragOverViewer, fileIsDraggedOverViewer } = this.props;
+        if (!fileIsDraggedOverViewer) {
+            console.log(fileIsDraggedOverViewer, "drag");
+            dragOverViewer();
         }
     }
 
@@ -196,10 +223,24 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             totalTime,
             simulariumController,
             selectionStateInfoForViewer,
+            loadLocalFile,
+            saveLocalSimulariumFile,
+            fileIsDraggedOverViewer,
+            resetDragOverViewer,
+            simulariumFile,
         } = this.props;
-        console.log(selectionStateInfoForViewer);
+        console.log(fileIsDraggedOverViewer);
         return (
             <div ref={this.centerContent} className={styles.container}>
+                {fileIsDraggedOverViewer ? (
+                    <DragAndDrop
+                        key="drop"
+                        loadLocalFile={loadLocalFile}
+                        saveLocalSimulariumFile={saveLocalSimulariumFile}
+                        simulariumFile={simulariumFile}
+                        resetDragOverViewer={resetDragOverViewer}
+                    />
+                ) : null}
                 <SimulariumViewer
                     height={this.state.height}
                     width={this.state.width}
@@ -235,6 +276,7 @@ function mapStateToProps(state: State) {
         totalTime: getTotalTimeOfCachedSimulation(state),
         timeStep: getTimeStepSize(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
+        fileIsDraggedOverViewer: getFileDraggedOverViewer(state),
     };
 }
 
@@ -244,6 +286,8 @@ const dispatchToPropsMap = {
     receiveAgentTypeIds,
     receiveAgentNamesAndStates,
     turnAgentsOnByDisplayKey,
+    dragOverViewer,
+    resetDragOverViewer,
 };
 
 export default connect(

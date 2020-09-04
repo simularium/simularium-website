@@ -12,6 +12,8 @@ import {
     TOGGLE_LOAD_FILE_MODAL,
     TURN_AGENTS_ON_BY_KEY,
     HIGHLIGHT_AGENTS_BY_KEY,
+    DRAG_OVER_VIEWER,
+    RESET_DRAG_OVER_VIEWER,
 } from "./constants";
 import {
     DeselectFileAction,
@@ -22,6 +24,8 @@ import {
     ChangeNumberCollapsedPanelsAction,
     HighlightAgentAction,
     ToggleAction,
+    DragOverViewerAction,
+    ResetDragOverViewerAction,
 } from "./types";
 
 export const initialState = {
@@ -31,6 +35,7 @@ export const initialState = {
     visibleAgentKeys: [],
     highlightedAgentKeys: [],
     modalOpen: false,
+    draggedOverViewer: false,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -106,12 +111,25 @@ const actionToConfigMap: TypeToDescriptionMap = {
     [TOGGLE_LOAD_FILE_MODAL]: {
         accepts: (action: AnyAction): action is ToggleAction =>
             action.type === TOGGLE_LOAD_FILE_MODAL,
-        perform: (
-            state: SelectionStateBranch,
-            action: HighlightAgentAction
-        ) => ({
+        perform: (state: SelectionStateBranch, action: ToggleAction) => ({
             ...state,
             modalOpen: action.payload,
+        }),
+    },
+    [DRAG_OVER_VIEWER]: {
+        accepts: (action: AnyAction): action is DragOverViewerAction =>
+            action.type === DRAG_OVER_VIEWER,
+        perform: (state: SelectionStateBranch) => ({
+            ...state,
+            draggedOverViewer: true,
+        }),
+    },
+    [RESET_DRAG_OVER_VIEWER]: {
+        accepts: (action: AnyAction): action is ResetDragOverViewerAction =>
+            action.type === RESET_DRAG_OVER_VIEWER,
+        perform: (state: SelectionStateBranch) => ({
+            ...state,
+            draggedOverViewer: false,
         }),
     },
 };
