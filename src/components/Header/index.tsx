@@ -1,9 +1,10 @@
 import * as React from "react";
-import { Layout, Row, Col, Button } from "antd";
+import { Layout, Row, Col, Button, PageHeader } from "antd";
 import { ActionCreator } from "redux";
 
 import { ToggleAction } from "../../state/selection/types";
 import FileUpload from "../FileUpload";
+import { MetadataStateBranch } from "../../state/metadata/types";
 const { Header } = Layout;
 
 const styles = require("./style.css");
@@ -11,22 +12,41 @@ const styles = require("./style.css");
 interface AppHeaderProps {
     openLoadFileModal: ActionCreator<ToggleAction>;
     modalOpen: boolean;
+    loadLocalFile: () => void;
+    saveLocalSimulariumFile: ActionCreator<MetadataStateBranch>;
+    simulariumFileName: string;
 }
 export default class AppHeader extends React.Component<AppHeaderProps, {}> {
     public render(): JSX.Element {
-        const { openLoadFileModal } = this.props;
+        const {
+            openLoadFileModal,
+            loadLocalFile,
+            simulariumFileName,
+            saveLocalSimulariumFile,
+        } = this.props;
         return (
             <Header className={styles.container}>
-                <div>Simularium</div>
+                <PageHeader
+                    title="Simularium"
+                    subTitle={simulariumFileName ? simulariumFileName : ""}
+                    extra={[
+                        <Button
+                            key="open"
+                            type="primary"
+                            onClick={openLoadFileModal}
+                        >
+                            Load Existing Simulation
+                        </Button>,
+                        <FileUpload
+                            key="upload"
+                            loadLocalFile={loadLocalFile}
+                            saveLocalSimulariumFile={saveLocalSimulariumFile}
+                        />,
+                    ]}
+                />
                 <Row>
-                    <Col>
-                        <Button type="primary" onClick={openLoadFileModal}>
-                            Load
-                        </Button>
-                    </Col>
-                    <Col>
-                        <FileUpload />
-                    </Col>
+                    <Col />
+                    <Col />
                     <Col />
                 </Row>
             </Header>

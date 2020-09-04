@@ -1,3 +1,5 @@
+import { SimulariumFileFormat } from "@aics/simularium-viewer/type-declarations";
+
 export interface MetadataStateBranch {
     [key: string]: any;
 }
@@ -9,4 +11,9 @@ export interface ReceiveAction {
 
 export interface RequestAction {
     type: string;
+}
+
+export interface LocalSimFile {
+    name: string;
+    data: SimulariumFileFormat;
 }

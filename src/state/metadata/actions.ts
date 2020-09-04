@@ -3,8 +3,10 @@ import {
     REQUEST_METADATA,
     RECEIVE_AGENT_IDS,
     RECEIVE_AGENT_NAMES,
+    RECEIVE_SIMULARIUM_FILE,
 } from "./constants";
 import { MetadataStateBranch, ReceiveAction, RequestAction } from "./types";
+import { SimulariumFileFormat } from "@aics/simularium-viewer/type-declarations";
 
 export function receiveMetadata(payload: MetadataStateBranch): ReceiveAction {
     return {
@@ -34,5 +36,15 @@ export function receiveAgentNamesAndStates(
     return {
         payload,
         type: RECEIVE_AGENT_NAMES,
+    };
+}
+
+export function receiveSimulariumFile(payload: {
+    data: SimulariumFileFormat;
+    name: string;
+}): ReceiveAction {
+    return {
+        payload,
+        type: RECEIVE_SIMULARIUM_FILE,
     };
 }

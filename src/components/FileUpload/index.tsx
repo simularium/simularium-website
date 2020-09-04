@@ -1,17 +1,26 @@
 import React, { useState } from "react";
 import { Upload, message, Button, Icon } from "antd";
+import { ActionCreator } from "redux";
+import { MetadataStateBranch } from "../../state/metadata/types";
+import { UploadChangeParam } from "antd/lib/upload";
 
-const FileUpload = (props) => {
-    const [fileData, setFileData] = useState<{ [key: string]: any }>({});
-    const onChange = (info) => {
-        if (info.file.status !== "uploading") {
-            console.log(info.file, info.fileList);
+interface FIleUploadProps {
+    loadLocalFile: () => void;
+    saveLocalSimulariumFile: ActionCreator<MetadataStateBranch>;
+}
+const FileUpload = ({
+    loadLocalFile,
+    saveLocalSimulariumFile,
+}: FIleUploadProps) => {
+    const onChange = ({ file, fileList }: UploadChangeParam) => {
+        if (file.status !== "uploading") {
+            console.log(file, fileList);
         }
-        if (info.file.status === "done") {
-            message.success(`${info.file.name} file uploaded successfully`);
-            console.log(fileData);
-        } else if (info.file.status === "error") {
-            message.error(`${info.file.name} file upload failed.`);
+        if (file.status === "done") {
+            message.success(`${file.name} file uploaded successfully`);
+            loadLocalFile();
+        } else if (file.status === "error") {
+            message.error(`${file.name} file upload failed.`);
         }
     };
     return (
@@ -21,7 +30,7 @@ const FileUpload = (props) => {
                 file.text()
                     .then((text) => JSON.parse(text))
                     .then((data) => {
-                        setFileData(data);
+                        saveLocalSimulariumFile({ name: file.name, data });
                     })
                     .then(() =>
                         onSuccess(
@@ -34,12 +43,13 @@ const FileUpload = (props) => {
                         )
                     )
                     .catch((error) => {
+                        console.log(error);
                         onError(error);
                     });
             }}
         >
             <Button>
-                <Icon type="upload" /> Click to Upload
+                <Icon type="upload" /> Upload Simularium File
             </Button>
         </Upload>
     );

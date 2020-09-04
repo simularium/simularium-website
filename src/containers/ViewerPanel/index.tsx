@@ -184,7 +184,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             turnAgentsOnByDisplayKey,
         } = this.props;
         receiveAgentNamesAndStates(uiData);
-        console.log(uiData);
+        console.log("UI DATA", uiData);
         const names = uiData.map((agent) => agent.name);
         console.log(names);
         turnAgentsOnByDisplayKey(names);

@@ -7,6 +7,7 @@ import {
     RECEIVE_METADATA,
     RECEIVE_AGENT_IDS,
     RECEIVE_AGENT_NAMES,
+    RECEIVE_SIMULARIUM_FILE,
 } from "./constants";
 import { MetadataStateBranch, ReceiveAction } from "./types";
 
@@ -15,6 +16,10 @@ export const initialState = {
     timeStep: 0,
     agentIds: [],
     agentUiNames: [],
+    simulariumFile: {
+        name: "",
+        data: null,
+    },
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -40,6 +45,14 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: MetadataStateBranch, action: ReceiveAction) => ({
             ...state,
             agentUiNames: action.payload,
+        }),
+    },
+    [RECEIVE_SIMULARIUM_FILE]: {
+        accepts: (action: AnyAction): action is ReceiveAction =>
+            action.type === RECEIVE_SIMULARIUM_FILE,
+        perform: (state: MetadataStateBranch, action: ReceiveAction) => ({
+            ...state,
+            simulariumFile: action.payload,
         }),
     },
 };

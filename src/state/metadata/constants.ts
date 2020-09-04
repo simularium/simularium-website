@@ -7,3 +7,6 @@ export const RECEIVE_METADATA = makeMetadataConstant("receive");
 export const REQUEST_METADATA = makeMetadataConstant("request");
 export const RECEIVE_AGENT_IDS = makeMetadataConstant("receive-ids");
 export const RECEIVE_AGENT_NAMES = makeMetadataConstant("receive-agent-names");
+export const RECEIVE_SIMULARIUM_FILE = makeMetadataConstant(
+    "receive-simularium-file"
+);
