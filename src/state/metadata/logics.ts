@@ -29,11 +29,7 @@ const requestMetadata = createLogic({
 });
 
 const loadLocalFile = createLogic({
-    process(
-        deps: ReduxLogicDeps,
-        dispatch: (action: ReceiveAction) => void,
-        done: () => void
-    ) {
+    process(deps: ReduxLogicDeps) {
         const { action, getState } = deps;
         const simulariumController = getSimulariumController(getState());
         const simulariumFile = action.payload;
@@ -42,10 +38,7 @@ const loadLocalFile = createLogic({
             true,
             simulariumFile.data
         );
-        // .catch((reason) => {
-        //     console.log(reason);
-        // })
-        // .then(done);
+
         receiveSimulariumFile(simulariumFile);
     },
     type: LOAD_LOCAL_FILE_IN_VIEWER,

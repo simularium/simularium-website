@@ -34,7 +34,7 @@ import {
     receiveAgentNamesAndStates,
     receiveMetadata,
 } from "../../state/metadata/actions";
-import { ReceiveAction, LocalSimFile } from "../../state/metadata/types";
+import { ReceiveAction } from "../../state/metadata/types";
 
 import { getSelectionStateInfoForViewer } from "./selectors";
 

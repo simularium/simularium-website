@@ -1,5 +1,5 @@
 import React from "react";
-import { Upload, message, Button } from "antd";
+import { Upload, message } from "antd";
 import { ActionCreator } from "redux";
 import { ReceiveAction } from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
