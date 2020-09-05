@@ -15,6 +15,8 @@ export const getTimeStepSize = (state: State) => state.metadata.timeStepSize;
 export const getAgentIds = (state: State) => state.metadata.agentIds;
 export const getSimulariumFile = (state: State) =>
     state.metadata.simulariumFile;
+export const getSimulariumController = (state: State) =>
+    state.metadata.simulariumController;
 // COMPOSED SELECTORS
 export const getKeysOfMetadata = createSelector(
     [getMetadata],

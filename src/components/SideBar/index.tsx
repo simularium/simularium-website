@@ -1,6 +1,7 @@
 import * as React from "react";
-import { Icon, Layout } from "antd";
+import { Layout } from "antd";
 
+import Icons from "../Icons";
 const { Sider } = Layout;
 
 const styles = require("./style.css");
@@ -18,7 +19,7 @@ export default class SideBar extends React.Component<SiderProps, {}> {
                 className={[styles.sider, styles[type]].join(" ")}
                 collapsible={true}
                 collapsedWidth={0}
-                trigger={<Icon type="pause" />}
+                trigger={Icons.Pause}
                 reverseArrow={type === "right"}
                 width={400}
                 onCollapse={onCollapse}

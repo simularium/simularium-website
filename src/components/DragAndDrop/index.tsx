@@ -1,7 +1,7 @@
 import React from "react";
 import { Upload, message, Button } from "antd";
 import { ActionCreator } from "redux";
-import { MetadataStateBranch } from "../../state/metadata/types";
+import { ReceiveAction } from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
 import { ResetDragOverViewerAction } from "../../state/selection/types";
 
@@ -9,17 +9,16 @@ const { Dragger } = Upload;
 
 interface FIleUploadProps {
     loadLocalFile: () => void;
-    saveLocalSimulariumFile: ActionCreator<MetadataStateBranch>;
+    changeLocalSimulariumFile: ActionCreator<ReceiveAction>;
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
 }
 const FileUpload = ({
-    simulariumFile,
     loadLocalFile,
-    saveLocalSimulariumFile,
+    changeLocalSimulariumFile,
     resetDragOverViewer,
 }: FIleUploadProps) => {
-    const onChange = ({ file, fileList }: UploadChangeParam) => {
-        console.log(file.status, simulariumFile);
+    const onChange = ({ file }: UploadChangeParam) => {
+        console.log(file.status);
         if (file.status === "uploading") {
             resetDragOverViewer();
         }
@@ -39,7 +38,10 @@ const FileUpload = ({
                 file.text()
                     .then((text) => JSON.parse(text))
                     .then((data) => {
-                        saveLocalSimulariumFile({ name: file.name, data });
+                        changeLocalSimulariumFile({
+                            name: file.name,
+                            data,
+                        });
                     })
                     .then(() =>
                         onSuccess(

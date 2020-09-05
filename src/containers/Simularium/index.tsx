@@ -17,7 +17,12 @@ import { State } from "../../state/types";
 import metadataStateBranch from "../../state/metadata";
 import selectionStateBranch from "../../state/selection";
 import { TRAJECTORY_FILES, URL_PARAM_KEY_FILE_NAME } from "../../constants";
-import { MetadataStateBranch, LocalSimFile } from "../../state/metadata/types";
+import {
+    MetadataStateBranch,
+    LocalSimFile,
+    SetSimulariumControllerAction,
+    ReceiveAction,
+} from "../../state/metadata/types";
 const { Content } = Layout;
 
 const styles = require("./style.css");
@@ -32,8 +37,10 @@ interface AppProps {
     openLoadFileModal: ActionCreator<ToggleAction>;
     modalOpen: boolean;
     closeLoadFileModal: ActionCreator<ToggleAction>;
-    saveLocalSimulariumFile: ActionCreator<MetadataStateBranch>;
     simulariumFile: LocalSimFile;
+    setSimulariumController: ActionCreator<SetSimulariumControllerAction>;
+    simulariumController: SimulariumController;
+    changeLocalSimulariumFile: ActionCreator<ReceiveAction>;
 }
 
 interface AppState {
@@ -50,62 +57,37 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     componentDidMount() {
-        const { closeLoadFileModal } = this.props;
+        const { closeLoadFileModal, setSimulariumController } = this.props;
         const parsed = queryString.parse(location.search);
         const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
         if (fileName && TRAJECTORY_FILES.includes(fileName as string)) {
             closeLoadFileModal();
             this.handleSelectNetworkFile(`${fileName}.h5`);
         }
-        this.simulariumController = new SimulariumController({
-            netConnectionSettings: netConnectionSettings,
-        });
-        this.setState({
-            simulariumLoaded: true,
-        });
+        setSimulariumController(
+            new SimulariumController({
+                netConnectionSettings: netConnectionSettings,
+            })
+        );
     }
 
     public handleSelectNetworkFile(fileName: string) {
+        const { simulariumController } = this.props;
         if (!this.simulariumController) {
             // initial load, user selects a file
-            this.simulariumController = new SimulariumController({
-                trajectoryPlaybackFile: fileName,
-                netConnectionSettings: netConnectionSettings,
-            });
-            this.setState({ simulariumLoaded: true });
+            console.log("no controller");
         } else {
             // switching files
-            this.simulariumController.changeFile(fileName);
+            simulariumController.changeFile(fileName);
         }
     }
 
     public handleLoadLocalFile() {
-        const { simulariumFile } = this.props;
-        console.log("GOT FILEDATA", simulariumFile);
+        const { simulariumFile, changeLocalSimulariumFile } = this.props;
         if (!simulariumFile.name || !simulariumFile.data) {
             return;
         }
-        if (!this.simulariumController) {
-            console.log("make new controller");
-            // initial load, user selects a file
-            this.simulariumController = new SimulariumController({
-                netConnectionSettings: netConnectionSettings,
-            });
-            this.simulariumController.changeFile(
-                simulariumFile.name,
-                true,
-                simulariumFile.data
-            );
-
-            this.setState({ simulariumLoaded: true });
-        } else {
-            // switching files
-            this.simulariumController.changeFile(
-                simulariumFile.name,
-                true,
-                simulariumFile.data
-            );
-        }
+        changeLocalSimulariumFile(simulariumFile);
     }
 
     public onPanelCollapse(open: boolean) {
@@ -119,8 +101,9 @@ class App extends React.Component<AppProps, AppState> {
             openLoadFileModal,
             modalOpen,
             closeLoadFileModal,
-            saveLocalSimulariumFile,
+            changeLocalSimulariumFile,
             simulariumFile,
+            simulariumController,
         } = this.props;
         return (
             <Layout className={styles.container}>
@@ -128,7 +111,7 @@ class App extends React.Component<AppProps, AppState> {
                     modalOpen={modalOpen}
                     openLoadFileModal={openLoadFileModal}
                     loadLocalFile={this.handleLoadLocalFile}
-                    saveLocalSimulariumFile={saveLocalSimulariumFile}
+                    changeLocalSimulariumFile={changeLocalSimulariumFile}
                     simulariumFileName={simulariumFile.name}
                 >
                     Header
@@ -138,14 +121,13 @@ class App extends React.Component<AppProps, AppState> {
                         <ModelPanel />
                     </SideBar>
                     <Content>
-                        {this.simulariumController && (
+                        {simulariumController && (
                             <ViewerPanel
                                 loadLocalFile={this.handleLoadLocalFile}
-                                simulariumFile={simulariumFile}
-                                saveLocalSimulariumFile={
-                                    saveLocalSimulariumFile
+                                changeLocalSimulariumFile={
+                                    changeLocalSimulariumFile
                                 }
-                                simulariumController={this.simulariumController}
+                                simulariumController={simulariumController}
                             />
                         )}
                     </Content>
@@ -167,6 +149,9 @@ function mapStateToProps(state: State) {
     return {
         modalOpen: selectionStateBranch.selectors.modalOpen(state),
         simulariumFile: metadataStateBranch.selectors.getSimulariumFile(state),
+        simulariumController: metadataStateBranch.selectors.getSimulariumController(
+            state
+        ),
     };
 }
 
@@ -174,7 +159,10 @@ const dispatchToPropsMap = {
     onSidePanelCollapse: selectionStateBranch.actions.onSidePanelCollapse,
     openLoadFileModal: selectionStateBranch.actions.openLoadFileModal,
     closeLoadFileModal: selectionStateBranch.actions.closeLoadFileModal,
-    saveLocalSimulariumFile: metadataStateBranch.actions.receiveSimulariumFile,
+    changeLocalSimulariumFile:
+        metadataStateBranch.actions.changeLocalSimulariumFile,
+    setSimulariumController:
+        metadataStateBranch.actions.setSimulariumController,
 };
 
 export default connect(

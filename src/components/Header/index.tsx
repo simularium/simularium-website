@@ -13,7 +13,7 @@ interface AppHeaderProps {
     openLoadFileModal: ActionCreator<ToggleAction>;
     modalOpen: boolean;
     loadLocalFile: () => void;
-    saveLocalSimulariumFile: ActionCreator<MetadataStateBranch>;
+    changeLocalSimulariumFile: ActionCreator<MetadataStateBranch>;
     simulariumFileName: string;
 }
 export default class AppHeader extends React.Component<AppHeaderProps, {}> {
@@ -22,7 +22,7 @@ export default class AppHeader extends React.Component<AppHeaderProps, {}> {
             openLoadFileModal,
             loadLocalFile,
             simulariumFileName,
-            saveLocalSimulariumFile,
+            changeLocalSimulariumFile,
         } = this.props;
         return (
             <Header className={styles.container}>
@@ -40,7 +40,9 @@ export default class AppHeader extends React.Component<AppHeaderProps, {}> {
                         <FileUpload
                             key="upload"
                             loadLocalFile={loadLocalFile}
-                            saveLocalSimulariumFile={saveLocalSimulariumFile}
+                            changeLocalSimulariumFile={
+                                changeLocalSimulariumFile
+                            }
                         />,
                         ,
                     ]}

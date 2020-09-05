@@ -22,6 +22,8 @@ import {
 import {
     ChangeTimeAction,
     ChangeAgentsRenderingStateAction,
+    ResetDragOverViewerAction,
+    DragOverViewerAction,
 } from "../../state/selection/types";
 import {
     getTotalTimeOfCachedSimulation,
@@ -32,7 +34,7 @@ import {
     receiveAgentNamesAndStates,
     receiveMetadata,
 } from "../../state/metadata/actions";
-import { ReceiveAction } from "../../state/metadata/types";
+import { ReceiveAction, LocalSimFile } from "../../state/metadata/types";
 
 import { getSelectionStateInfoForViewer } from "./selectors";
 
@@ -54,6 +56,11 @@ interface ViewerPanelProps {
     receiveAgentNamesAndStates: ActionCreator<ReceiveAction>;
     selectionStateInfoForViewer: SelectionStateInfo;
     turnAgentsOnByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
+    loadLocalFile: () => void;
+    changeLocalSimulariumFile: ActionCreator<ReceiveAction>;
+    fileIsDraggedOverViewer: boolean;
+    dragOverViewer: ActionCreator<DragOverViewerAction>;
+    resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
 }
 
 interface ViewerPanelState {
@@ -82,6 +89,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.onTrajectoryFileInfoChanged = this.onTrajectoryFileInfoChanged.bind(
             this
         );
+        this.handleEndDrag = this.handleEndDrag.bind(this);
         this.skipToTime = this.skipToTime.bind(this);
         this.resize = this.resize.bind(this);
         this.handleDragOverViewer = this.handleDragOverViewer.bind(this);
@@ -104,8 +112,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public componentDidMount() {
         const current = this.centerContent.current;
-        const { fileIsDraggedOverViewer, resetDragOverViewer } = this.props;
-        console.log(fileIsDraggedOverViewer);
         if (current) {
             window.addEventListener("resize", () => this.resize(current));
             setTimeout(() => {
@@ -117,20 +123,21 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 this.handleDragOverViewer,
                 false
             );
-            window.addEventListener("ondragleave", () => {
-                console.log("end drag");
-                if (this.props.fileIsDraggedOverViewer) {
-                    // resetDragOverViewer();
-                }
-            });
+            window.addEventListener("ondragleave", this.handleEndDrag, false);
         }
     }
 
     public handleDragOverViewer() {
         const { dragOverViewer, fileIsDraggedOverViewer } = this.props;
         if (!fileIsDraggedOverViewer) {
-            console.log(fileIsDraggedOverViewer, "drag");
             dragOverViewer();
+        }
+    }
+
+    public handleEndDrag() {
+        const { resetDragOverViewer, fileIsDraggedOverViewer } = this.props;
+        if (fileIsDraggedOverViewer) {
+            resetDragOverViewer();
         }
     }
 
@@ -224,10 +231,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             simulariumController,
             selectionStateInfoForViewer,
             loadLocalFile,
-            saveLocalSimulariumFile,
+            changeLocalSimulariumFile,
             fileIsDraggedOverViewer,
             resetDragOverViewer,
-            simulariumFile,
         } = this.props;
         console.log(fileIsDraggedOverViewer);
         return (
@@ -236,8 +242,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     <DragAndDrop
                         key="drop"
                         loadLocalFile={loadLocalFile}
-                        saveLocalSimulariumFile={saveLocalSimulariumFile}
-                        simulariumFile={simulariumFile}
+                        changeLocalSimulariumFile={changeLocalSimulariumFile}
                         resetDragOverViewer={resetDragOverViewer}
                     />
                 ) : null}

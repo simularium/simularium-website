@@ -1,19 +1,20 @@
-import React, { useState } from "react";
-import { Upload, message, Button, Icon } from "antd";
+import React from "react";
+import { Upload, message, Button } from "antd";
 import { ActionCreator } from "redux";
 import { MetadataStateBranch } from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
 
 import Icons from "../Icons";
+import { RcCustomRequestOptions } from "antd/lib/upload/interface";
 
-interface FIleUploadProps {
+interface FileUploadProps {
     loadLocalFile: () => void;
-    saveLocalSimulariumFile: ActionCreator<MetadataStateBranch>;
+    changeLocalSimulariumFile: ActionCreator<MetadataStateBranch>;
 }
 const FileUpload = ({
     loadLocalFile,
-    saveLocalSimulariumFile,
-}: FIleUploadProps) => {
+    changeLocalSimulariumFile,
+}: FileUploadProps) => {
     const onChange = ({ file, fileList }: UploadChangeParam) => {
         if (file.status !== "uploading") {
             console.log(file, fileList);
@@ -28,11 +29,18 @@ const FileUpload = ({
     return (
         <Upload
             onChange={onChange}
-            customRequest={({ file, onSuccess, onError }) => {
+            customRequest={({
+                file,
+                onSuccess,
+                onError,
+            }: RcCustomRequestOptions) => {
                 file.text()
                     .then((text) => JSON.parse(text))
                     .then((data) => {
-                        saveLocalSimulariumFile({ name: file.name, data });
+                        changeLocalSimulariumFile({
+                            name: file.name,
+                            data,
+                        });
                     })
                     .then(() =>
                         onSuccess(

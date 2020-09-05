@@ -1,4 +1,7 @@
-import { SimulariumFileFormat } from "@aics/simularium-viewer/type-declarations";
+import {
+    SimulariumFileFormat,
+    SimulariumController,
+} from "@aics/simularium-viewer/type-declarations";
 
 export interface MetadataStateBranch {
     [key: string]: any;
@@ -16,4 +19,9 @@ export interface RequestAction {
 export interface LocalSimFile {
     name: string;
     data: SimulariumFileFormat;
+}
+
+export interface SetSimulariumControllerAction {
+    payload: SimulariumController;
+    type: string;
 }

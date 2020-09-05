@@ -30,6 +30,9 @@ const PlayBackControls = ({
     };
 
     const tipFormatter = (sliderValue: number): string => {
+        if (!sliderValue) {
+            return "";
+        }
         const formatNumber = (num: number) => Number(num).toPrecision(3);
         const microSeconds = sliderValue / 1000;
         if (microSeconds > 1) {

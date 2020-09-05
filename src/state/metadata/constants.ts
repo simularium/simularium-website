@@ -10,3 +10,9 @@ export const RECEIVE_AGENT_NAMES = makeMetadataConstant("receive-agent-names");
 export const RECEIVE_SIMULARIUM_FILE = makeMetadataConstant(
     "receive-simularium-file"
 );
+export const LOAD_LOCAL_FILE_IN_VIEWER = makeMetadataConstant(
+    "load-local-file"
+);
+export const SET_SIMULARIUM_CONTROLLER = makeMetadataConstant(
+    "set-sim-controller"
+);
