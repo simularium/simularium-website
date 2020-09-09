@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { Upload, message } from "antd";
 import { ActionCreator } from "redux";
-import {
-    SetViewerStatusAction,
-    LocalSimFile,
-} from "../../state/metadata/types";
+import { LocalSimFile } from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
 import { ResetDragOverViewerAction } from "../../state/selection/types";
 import { Loading } from "../Icons";

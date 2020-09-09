@@ -21,7 +21,6 @@ import {
     LocalSimFile,
     SetSimulariumControllerAction,
     ReceiveAction,
-    SetViewerStatusAction,
 } from "../../state/metadata/types";
 const { Content } = Layout;
 
