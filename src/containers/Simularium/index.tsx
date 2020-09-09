@@ -41,7 +41,6 @@ interface AppProps {
     setSimulariumController: ActionCreator<SetSimulariumControllerAction>;
     simulariumController: SimulariumController;
     changeLocalSimulariumFile: ActionCreator<ReceiveAction>;
-    setViewerStatus: ActionCreator<SetViewerStatusAction>;
 }
 
 interface AppState {
@@ -102,7 +101,6 @@ class App extends React.Component<AppProps, AppState> {
             openLoadFileModal,
             modalOpen,
             closeLoadFileModal,
-            setViewerStatus,
             simulariumFile,
             simulariumController,
         } = this.props;
@@ -113,7 +111,6 @@ class App extends React.Component<AppProps, AppState> {
                     openLoadFileModal={openLoadFileModal}
                     loadLocalFile={this.handleLoadLocalFile}
                     simulariumFileName={simulariumFile.name}
-                    setViewerStatus={setViewerStatus}
                 >
                     Header
                 </Header>
@@ -126,7 +123,6 @@ class App extends React.Component<AppProps, AppState> {
                             <ViewerPanel
                                 loadLocalFile={this.handleLoadLocalFile}
                                 simulariumController={simulariumController}
-                                setViewerStatus={setViewerStatus}
                             />
                         )}
                     </Content>
@@ -162,7 +158,6 @@ const dispatchToPropsMap = {
         metadataStateBranch.actions.changeLocalSimulariumFile,
     setSimulariumController:
         metadataStateBranch.actions.setSimulariumController,
-    setViewerStatus: metadataStateBranch.actions.setViewerStatus,
 };
 
 export default connect(

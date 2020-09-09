@@ -1,16 +1,13 @@
 import React from "react";
 import { Upload, message, Button } from "antd";
-import { ActionCreator } from "redux";
 import { LocalSimFile } from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
 
 import Icons from "../Icons";
 import { RcCustomRequestOptions } from "antd/lib/upload/interface";
-import { SetViewerStatusAction } from "../../state/metadata/types";
 
 interface FileUploadProps {
     loadLocalFile: (simulariumFile: LocalSimFile) => void;
-    setViewerStatus: ActionCreator<SetViewerStatusAction>;
 }
 const FileUpload = ({ loadLocalFile }: FileUploadProps) => {
     const onChange = ({ file }: UploadChangeParam) => {

@@ -7,7 +7,6 @@ import {
 } from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
 import { ResetDragOverViewerAction } from "../../state/selection/types";
-import { VIEWER_SUCCESS } from "../../state/metadata/constants";
 import { Loading } from "../Icons";
 
 const { Dragger } = Upload;
@@ -15,7 +14,6 @@ const { Dragger } = Upload;
 interface ViewerOverlayTargetProps {
     loadLocalFile: (localFile: LocalSimFile) => void;
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
-    setViewerStatus: ActionCreator<SetViewerStatusAction>;
     isLoading: boolean;
     fileIsDraggedOverViewer: boolean;
 }
@@ -43,7 +41,6 @@ const ViewerOverlayTarget = ({
         if (file.status === "done") {
             // message.success(`${file.name} file uploaded successfully`);
             resetDragOverViewer();
-            // setViewerStatus({ status: VIEWER_SUCCESS });
             setVisibility(false);
         } else if (file.status === "error") {
             message.error(`${file.name} file upload failed.`);

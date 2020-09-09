@@ -19,11 +19,7 @@ import {
     DragOverViewerAction,
 } from "../../state/selection/types";
 
-import {
-    ReceiveAction,
-    LocalSimFile,
-    SetViewerStatusAction,
-} from "../../state/metadata/types";
+import { ReceiveAction, LocalSimFile } from "../../state/metadata/types";
 
 import { getSelectionStateInfoForViewer } from "./selectors";
 
@@ -50,7 +46,6 @@ interface ViewerPanelProps {
     fileIsDraggedOverViewer: boolean;
     dragOverViewer: ActionCreator<DragOverViewerAction>;
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
-    setViewerStatus: ActionCreator<SetViewerStatusAction>;
     viewerStatus: string;
 }
 
@@ -223,7 +218,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             selectionStateInfoForViewer,
             loadLocalFile,
             resetDragOverViewer,
-            setViewerStatus,
             viewerStatus,
             fileIsDraggedOverViewer,
         } = this.props;
@@ -235,7 +229,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     loadLocalFile={loadLocalFile}
                     isLoading={viewerStatus === VIEWER_LOADING}
                     resetDragOverViewer={resetDragOverViewer}
-                    setViewerStatus={setViewerStatus}
                     fileIsDraggedOverViewer={fileIsDraggedOverViewer}
                 />
                 <SimulariumViewer
