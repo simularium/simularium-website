@@ -7,20 +7,15 @@ import { UploadChangeParam } from "antd/lib/upload";
 import Icons from "../Icons";
 import { RcCustomRequestOptions } from "antd/lib/upload/interface";
 import { SetViewerStatusAction } from "../../state/metadata/types";
-import { VIEWER_SUCCESS } from "../../state/metadata/constants";
 
 interface FileUploadProps {
     loadLocalFile: (simulariumFile: LocalSimFile) => void;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
 }
-const FileUpload = ({ loadLocalFile, setViewerStatus }: FileUploadProps) => {
-    const onChange = ({ file, fileList }: UploadChangeParam) => {
-        if (file.status !== "uploading") {
-            console.log(file, fileList);
-        }
+const FileUpload = ({ loadLocalFile }: FileUploadProps) => {
+    const onChange = ({ file }: UploadChangeParam) => {
         if (file.status === "done") {
             message.success(`${file.name} file uploaded successfully`);
-            setViewerStatus({ status: VIEWER_SUCCESS });
         } else if (file.status === "error") {
             message.error(`${file.name} file upload failed.`);
         }
@@ -36,6 +31,7 @@ const FileUpload = ({ loadLocalFile, setViewerStatus }: FileUploadProps) => {
                 file.text()
                     .then((text) => JSON.parse(text))
                     .then((data) => {
+                        console.log(file.lastModified);
                         loadLocalFile({
                             name: file.name,
                             data,

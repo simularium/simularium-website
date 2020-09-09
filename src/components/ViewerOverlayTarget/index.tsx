@@ -22,7 +22,6 @@ interface ViewerOverlayTargetProps {
 const ViewerOverlayTarget = ({
     resetDragOverViewer,
     loadLocalFile,
-    setViewerStatus,
     isLoading,
     fileIsDraggedOverViewer,
 }: ViewerOverlayTargetProps) => {
@@ -31,18 +30,20 @@ const ViewerOverlayTarget = ({
         setVisibility(true);
     }
     if (isLoading && !showTarget) {
-        console.log("isLoading");
         setVisibility(true);
+    }
+    //
+    if (!isLoading && !fileIsDraggedOverViewer && showTarget) {
+        setVisibility(false);
     }
     const onChange = ({ file }: UploadChangeParam) => {
         if (file.status === "uploading") {
-            resetDragOverViewer();
             setVisibility(true);
         }
         if (file.status === "done") {
             // message.success(`${file.name} file uploaded successfully`);
             resetDragOverViewer();
-            setViewerStatus({ status: VIEWER_SUCCESS });
+            // setViewerStatus({ status: VIEWER_SUCCESS });
             setVisibility(false);
         } else if (file.status === "error") {
             message.error(`${file.name} file upload failed.`);

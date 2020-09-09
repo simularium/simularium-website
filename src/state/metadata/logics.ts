@@ -9,6 +9,7 @@ import {
     REQUEST_METADATA,
     LOAD_LOCAL_FILE_IN_VIEWER,
     VIEWER_LOADING,
+    VIEWER_SUCCESS,
 } from "./constants";
 import { ReceiveAction } from "./types";
 import { VIEWER_ERROR } from "./constants";
@@ -40,6 +41,7 @@ const loadLocalFile = createLogic({
         const simulariumController = getSimulariumController(getState());
         const simulariumFile = action.payload;
         dispatch(setViewerStatus({ status: VIEWER_LOADING }));
+
         try {
             simulariumController.changeFile(
                 simulariumFile.name,
@@ -47,6 +49,12 @@ const loadLocalFile = createLogic({
                 simulariumFile.data
             );
             dispatch(receiveSimulariumFile(simulariumFile));
+            dispatch(
+                setViewerStatus({
+                    status: VIEWER_SUCCESS,
+                })
+            );
+
             done();
         } catch (error) {
             dispatch(
