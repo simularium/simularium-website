@@ -14,6 +14,7 @@
     "build": "NODE_ENV=production webpack --config ./webpack/webpack.config.js",
     "lint": "eslint src/**/*.{ts,tsx}",
     "typeCheck": "tsc -p tsconfig.json --noEmit",
+    "update-viewer": "npm i @aics/simularium-viewer@latest",
     "test": "BABEL_ENV=commonjs TS_NODE_FILES=true TS_NODE_PROJECT=tsconfig.commonjs.json NODE_ENV=production mocha --opts mocha.opts src/**/*.test.ts"
   },
   "devDependencies": {
@@ -72,7 +73,7 @@
   },
   "dependencies": {
     "@aics/simularium-observables-manager": "^0.1.0",
-    "@aics/simularium-viewer": "^2.1.1",
+    "@aics/simularium-viewer": "^2.1.2",
     "@ant-design/icons": "^4.0.6",
     "@types/react-router-dom": "^5.1.5",
     "@types/victory": "^31.0.12",
