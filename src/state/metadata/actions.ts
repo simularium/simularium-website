@@ -6,12 +6,14 @@ import {
     RECEIVE_SIMULARIUM_FILE,
     SET_SIMULARIUM_CONTROLLER,
     LOAD_LOCAL_FILE_IN_VIEWER,
+    SET_VIEWER_STATUS,
 } from "./constants";
 import {
     MetadataStateBranch,
     ReceiveAction,
     RequestAction,
     SetSimulariumControllerAction,
+    VIEWER_STATUS,
 } from "./types";
 import {
     SimulariumFileFormat,
@@ -75,5 +77,15 @@ export function receiveSimulariumFile(payload: {
     return {
         payload,
         type: RECEIVE_SIMULARIUM_FILE,
+    };
+}
+
+export function setViewerStatus(payload: {
+    status: VIEWER_STATUS;
+    errorMessage?: string;
+}) {
+    return {
+        payload,
+        type: SET_VIEWER_STATUS,
     };
 }

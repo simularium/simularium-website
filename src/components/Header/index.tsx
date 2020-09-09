@@ -4,7 +4,10 @@ import { ActionCreator } from "redux";
 
 import { ToggleAction } from "../../state/selection/types";
 import FileUpload from "../FileUpload";
-import { MetadataStateBranch } from "../../state/metadata/types";
+import {
+    SetViewerStatusAction,
+    LocalSimFile,
+} from "../../state/metadata/types";
 const { Header } = Layout;
 
 const styles = require("./style.css");
@@ -12,8 +15,8 @@ const styles = require("./style.css");
 interface AppHeaderProps {
     openLoadFileModal: ActionCreator<ToggleAction>;
     modalOpen: boolean;
-    loadLocalFile: () => void;
-    changeLocalSimulariumFile: ActionCreator<MetadataStateBranch>;
+    loadLocalFile: (simFile: LocalSimFile) => void;
+    setViewerStatus: ActionCreator<SetViewerStatusAction>;
     simulariumFileName: string;
 }
 export default class AppHeader extends React.Component<AppHeaderProps, {}> {
@@ -22,7 +25,7 @@ export default class AppHeader extends React.Component<AppHeaderProps, {}> {
             openLoadFileModal,
             loadLocalFile,
             simulariumFileName,
-            changeLocalSimulariumFile,
+            setViewerStatus,
         } = this.props;
         return (
             <Header className={styles.container}>
@@ -40,9 +43,7 @@ export default class AppHeader extends React.Component<AppHeaderProps, {}> {
                         <FileUpload
                             key="upload"
                             loadLocalFile={loadLocalFile}
-                            changeLocalSimulariumFile={
-                                changeLocalSimulariumFile
-                            }
+                            setViewerStatus={setViewerStatus}
                         />,
                         ,
                     ]}

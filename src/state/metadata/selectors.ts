@@ -17,6 +17,8 @@ export const getSimulariumFile = (state: State) =>
     state.metadata.simulariumFile;
 export const getSimulariumController = (state: State) =>
     state.metadata.simulariumController;
+export const getViewerStatus = (state: State) => state.metadata.viewerStatus;
+
 // COMPOSED SELECTORS
 export const getKeysOfMetadata = createSelector(
     [getMetadata],

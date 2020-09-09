@@ -21,6 +21,7 @@ import {
     LocalSimFile,
     SetSimulariumControllerAction,
     ReceiveAction,
+    SetViewerStatusAction,
 } from "../../state/metadata/types";
 const { Content } = Layout;
 
@@ -40,6 +41,7 @@ interface AppProps {
     setSimulariumController: ActionCreator<SetSimulariumControllerAction>;
     simulariumController: SimulariumController;
     changeLocalSimulariumFile: ActionCreator<ReceiveAction>;
+    setViewerStatus: ActionCreator<SetViewerStatusAction>;
 }
 
 interface AppState {
@@ -81,8 +83,8 @@ class App extends React.Component<AppProps, AppState> {
         }
     }
 
-    public handleLoadLocalFile() {
-        const { simulariumFile, changeLocalSimulariumFile } = this.props;
+    public handleLoadLocalFile(simulariumFile: LocalSimFile) {
+        const { changeLocalSimulariumFile } = this.props;
         if (!simulariumFile.name || !simulariumFile.data) {
             return;
         }
@@ -100,7 +102,7 @@ class App extends React.Component<AppProps, AppState> {
             openLoadFileModal,
             modalOpen,
             closeLoadFileModal,
-            changeLocalSimulariumFile,
+            setViewerStatus,
             simulariumFile,
             simulariumController,
         } = this.props;
@@ -110,8 +112,8 @@ class App extends React.Component<AppProps, AppState> {
                     modalOpen={modalOpen}
                     openLoadFileModal={openLoadFileModal}
                     loadLocalFile={this.handleLoadLocalFile}
-                    changeLocalSimulariumFile={changeLocalSimulariumFile}
                     simulariumFileName={simulariumFile.name}
+                    setViewerStatus={setViewerStatus}
                 >
                     Header
                 </Header>
@@ -123,10 +125,8 @@ class App extends React.Component<AppProps, AppState> {
                         {simulariumController && (
                             <ViewerPanel
                                 loadLocalFile={this.handleLoadLocalFile}
-                                changeLocalSimulariumFile={
-                                    changeLocalSimulariumFile
-                                }
                                 simulariumController={simulariumController}
+                                setViewerStatus={setViewerStatus}
                             />
                         )}
                     </Content>
@@ -162,6 +162,7 @@ const dispatchToPropsMap = {
         metadataStateBranch.actions.changeLocalSimulariumFile,
     setSimulariumController:
         metadataStateBranch.actions.setSimulariumController,
+    setViewerStatus: metadataStateBranch.actions.setViewerStatus,
 };
 
 export default connect(

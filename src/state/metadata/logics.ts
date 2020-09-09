@@ -5,8 +5,14 @@ import { ReduxLogicDeps } from "../types";
 
 import { getSimulariumController } from "./selectors";
 import { receiveMetadata, receiveSimulariumFile } from "./actions";
-import { REQUEST_METADATA, LOAD_LOCAL_FILE_IN_VIEWER } from "./constants";
+import {
+    REQUEST_METADATA,
+    LOAD_LOCAL_FILE_IN_VIEWER,
+    VIEWER_LOADING,
+} from "./constants";
 import { ReceiveAction } from "./types";
+import { VIEWER_ERROR } from "./constants";
+import { setViewerStatus } from "../metadata/actions";
 
 const requestMetadata = createLogic({
     process(
@@ -29,17 +35,25 @@ const requestMetadata = createLogic({
 });
 
 const loadLocalFile = createLogic({
-    process(deps: ReduxLogicDeps) {
+    process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
         const simulariumController = getSimulariumController(getState());
         const simulariumFile = action.payload;
-        simulariumController.changeFile(
-            simulariumFile.name,
-            true,
-            simulariumFile.data
-        );
-
-        receiveSimulariumFile(simulariumFile);
+        dispatch(setViewerStatus({ status: VIEWER_LOADING }));
+        try {
+            simulariumController.changeFile(
+                simulariumFile.name,
+                true,
+                simulariumFile.data
+            );
+            dispatch(receiveSimulariumFile(simulariumFile));
+            done();
+        } catch (error) {
+            dispatch(
+                setViewerStatus({ status: VIEWER_ERROR, errorMessage: error })
+            );
+            done();
+        }
     },
     type: LOAD_LOCAL_FILE_IN_VIEWER,
 });

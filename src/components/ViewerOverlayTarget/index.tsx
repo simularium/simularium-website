@@ -1,36 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import { Upload, message } from "antd";
 import { ActionCreator } from "redux";
-import { ReceiveAction } from "../../state/metadata/types";
+import {
+    SetViewerStatusAction,
+    LocalSimFile,
+} from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
 import { ResetDragOverViewerAction } from "../../state/selection/types";
+import { VIEWER_SUCCESS } from "../../state/metadata/constants";
+import { Loading } from "../Icons";
 
 const { Dragger } = Upload;
 
-interface FIleUploadProps {
-    loadLocalFile: () => void;
-    changeLocalSimulariumFile: ActionCreator<ReceiveAction>;
+interface ViewerOverlayTargetProps {
+    loadLocalFile: (localFile: LocalSimFile) => void;
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
+    setViewerStatus: ActionCreator<SetViewerStatusAction>;
+    isLoading: boolean;
+    fileIsDraggedOverViewer: boolean;
 }
-const FileUpload = ({
-    loadLocalFile,
-    changeLocalSimulariumFile,
+const ViewerOverlayTarget = ({
     resetDragOverViewer,
-}: FIleUploadProps) => {
+    loadLocalFile,
+    setViewerStatus,
+    isLoading,
+    fileIsDraggedOverViewer,
+}: ViewerOverlayTargetProps) => {
+    const [showTarget, setVisibility] = useState(false);
+    if (fileIsDraggedOverViewer && !showTarget) {
+        setVisibility(true);
+    }
+    if (isLoading && !showTarget) {
+        console.log("isLoading");
+        setVisibility(true);
+    }
     const onChange = ({ file }: UploadChangeParam) => {
-        console.log(file.status);
         if (file.status === "uploading") {
             resetDragOverViewer();
+            setVisibility(true);
         }
         if (file.status === "done") {
-            message.success(`${file.name} file uploaded successfully`);
+            // message.success(`${file.name} file uploaded successfully`);
             resetDragOverViewer();
-            loadLocalFile();
+            setViewerStatus({ status: VIEWER_SUCCESS });
+            setVisibility(false);
         } else if (file.status === "error") {
             message.error(`${file.name} file upload failed.`);
+            setVisibility(false);
         }
     };
-    return (
+    return showTarget ? (
         <Dragger
             onChange={onChange}
             openFileDialogOnClick={false}
@@ -38,7 +57,7 @@ const FileUpload = ({
                 file.text()
                     .then((text) => JSON.parse(text))
                     .then((data) => {
-                        changeLocalSimulariumFile({
+                        loadLocalFile({
                             name: file.name,
                             data,
                         });
@@ -59,17 +78,17 @@ const FileUpload = ({
                     });
             }}
         >
-            {/* <p className="ant-upload-drag-icon">
-            </p>
+            <p className="ant-upload-drag-icon">{isLoading ? Loading : null}</p>
             <p className="ant-upload-text">
-                Click or drag file to this area to upload
+                {isLoading
+                    ? "Loading Simularium File"
+                    : "Drag file to this area to upload"}
             </p>
             <p className="ant-upload-hint">
-                Support for a single or bulk upload. Strictly prohibit from
-                uploading company data or other band files
-            </p> */}
+                Support for a single Simularium File.
+            </p>
         </Dragger>
-    );
+    ) : null;
 };
 
-export default FileUpload;
+export default ViewerOverlayTarget;

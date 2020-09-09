@@ -9,8 +9,15 @@ import {
     RECEIVE_AGENT_NAMES,
     RECEIVE_SIMULARIUM_FILE,
     SET_SIMULARIUM_CONTROLLER,
+    SET_VIEWER_STATUS,
+    VIEWER_ERROR,
+    VIEWER_EMPTY,
 } from "./constants";
-import { MetadataStateBranch, ReceiveAction } from "./types";
+import {
+    MetadataStateBranch,
+    ReceiveAction,
+    SetViewerStatusAction,
+} from "./types";
 
 export const initialState = {
     totalTime: 0,
@@ -22,6 +29,8 @@ export const initialState = {
         data: null,
     },
     simulariumController: null,
+    viewerStatus: VIEWER_EMPTY,
+    viewerError: null,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -63,6 +72,21 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: MetadataStateBranch, action: ReceiveAction) => ({
             ...state,
             simulariumController: action.payload,
+        }),
+    },
+    [SET_VIEWER_STATUS]: {
+        accepts: (action: AnyAction): action is SetViewerStatusAction =>
+            action.type === SET_VIEWER_STATUS,
+        perform: (
+            state: MetadataStateBranch,
+            action: SetViewerStatusAction
+        ) => ({
+            ...state,
+            viewerStatus: action.payload.status,
+            viewerError:
+                action.payload.status === VIEWER_ERROR
+                    ? action.payload.errorMessage
+                    : "",
         }),
     },
 };

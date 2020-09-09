@@ -1,27 +1,26 @@
 import React from "react";
 import { Upload, message, Button } from "antd";
 import { ActionCreator } from "redux";
-import { MetadataStateBranch } from "../../state/metadata/types";
+import { LocalSimFile } from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
 
 import Icons from "../Icons";
 import { RcCustomRequestOptions } from "antd/lib/upload/interface";
+import { SetViewerStatusAction } from "../../state/metadata/types";
+import { VIEWER_SUCCESS } from "../../state/metadata/constants";
 
 interface FileUploadProps {
-    loadLocalFile: () => void;
-    changeLocalSimulariumFile: ActionCreator<MetadataStateBranch>;
+    loadLocalFile: (simulariumFile: LocalSimFile) => void;
+    setViewerStatus: ActionCreator<SetViewerStatusAction>;
 }
-const FileUpload = ({
-    loadLocalFile,
-    changeLocalSimulariumFile,
-}: FileUploadProps) => {
+const FileUpload = ({ loadLocalFile, setViewerStatus }: FileUploadProps) => {
     const onChange = ({ file, fileList }: UploadChangeParam) => {
         if (file.status !== "uploading") {
             console.log(file, fileList);
         }
         if (file.status === "done") {
             message.success(`${file.name} file uploaded successfully`);
-            loadLocalFile();
+            setViewerStatus({ status: VIEWER_SUCCESS });
         } else if (file.status === "error") {
             message.error(`${file.name} file upload failed.`);
         }
@@ -37,7 +36,7 @@ const FileUpload = ({
                 file.text()
                     .then((text) => JSON.parse(text))
                     .then((data) => {
-                        changeLocalSimulariumFile({
+                        loadLocalFile({
                             name: file.name,
                             data,
                         });
