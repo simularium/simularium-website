@@ -72,8 +72,7 @@ class App extends React.Component<AppProps, AppState> {
 
     public handleSelectNetworkFile(fileName: string) {
         const { simulariumController } = this.props;
-        if (!this.simulariumController) {
-            // initial load, user selects a file
+        if (!simulariumController) {
             console.log("no controller");
         } else {
             // switching files
@@ -110,6 +109,7 @@ class App extends React.Component<AppProps, AppState> {
                     openLoadFileModal={openLoadFileModal}
                     loadLocalFile={this.handleLoadLocalFile}
                     simulariumFileName={simulariumFile.name}
+                    lastModified={simulariumFile.lastModified}
                 >
                     Header
                 </Header>

@@ -41,27 +41,27 @@ const loadLocalFile = createLogic({
         const simulariumController = getSimulariumController(getState());
         const simulariumFile = action.payload;
         dispatch(setViewerStatus({ status: VIEWER_LOADING }));
-
-        try {
-            simulariumController.changeFile(
-                simulariumFile.name,
-                true,
-                simulariumFile.data
-            );
-            dispatch(receiveSimulariumFile(simulariumFile));
-            dispatch(
-                setViewerStatus({
-                    status: VIEWER_SUCCESS,
-                })
-            );
-
-            done();
-        } catch (error) {
-            dispatch(
-                setViewerStatus({ status: VIEWER_ERROR, errorMessage: error })
-            );
-            done();
-        }
+        simulariumController
+            .changeFile(simulariumFile.name, true, simulariumFile.data)
+            .then(() => {
+                dispatch(receiveSimulariumFile(simulariumFile));
+            })
+            .then(() => {
+                dispatch(
+                    setViewerStatus({
+                        status: VIEWER_SUCCESS,
+                    })
+                );
+            })
+            .then(done)
+            .catch((error: Error) => {
+                dispatch(
+                    setViewerStatus({
+                        status: VIEWER_ERROR,
+                        errorMessage: error.message,
+                    })
+                );
+            });
     },
     type: LOAD_LOCAL_FILE_IN_VIEWER,
 });

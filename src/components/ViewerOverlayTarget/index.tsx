@@ -3,8 +3,10 @@ import { Upload, message } from "antd";
 import { ActionCreator } from "redux";
 import { LocalSimFile } from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
+
 import { ResetDragOverViewerAction } from "../../state/selection/types";
 import { Loading } from "../Icons";
+import customRequest from "../FileUpload/custom-request-upload";
 
 const { Dragger } = Upload;
 
@@ -24,19 +26,9 @@ const ViewerOverlayTarget = ({
     if (fileIsDraggedOverViewer && !showTarget) {
         setVisibility(true);
     }
-    if (isLoading && !showTarget) {
-        setVisibility(true);
-    }
-    //
-    if (!isLoading && !fileIsDraggedOverViewer && showTarget) {
-        setVisibility(false);
-    }
     const onChange = ({ file }: UploadChangeParam) => {
-        if (file.status === "uploading") {
-            setVisibility(true);
-        }
         if (file.status === "done") {
-            // message.success(`${file.name} file uploaded successfully`);
+            message.success(`${file.name} file uploaded successfully`);
             resetDragOverViewer();
             setVisibility(false);
         } else if (file.status === "error") {
@@ -48,30 +40,7 @@ const ViewerOverlayTarget = ({
         <Dragger
             onChange={onChange}
             openFileDialogOnClick={false}
-            customRequest={({ file, onSuccess, onError }) => {
-                file.text()
-                    .then((text) => JSON.parse(text))
-                    .then((data) => {
-                        loadLocalFile({
-                            name: file.name,
-                            data,
-                        });
-                    })
-                    .then(() =>
-                        onSuccess(
-                            {
-                                name: file.name,
-                                status: "done",
-                                url: "",
-                            },
-                            file
-                        )
-                    )
-                    .catch((error) => {
-                        console.log(error);
-                        onError(error);
-                    });
-            }}
+            customRequest={(options) => customRequest(options, loadLocalFile)}
         >
             <p className="ant-upload-drag-icon">{isLoading ? Loading : null}</p>
             <p className="ant-upload-text">

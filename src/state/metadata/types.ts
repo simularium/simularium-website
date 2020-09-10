@@ -25,6 +25,7 @@ export interface RequestAction {
 export interface LocalSimFile {
     name: string;
     data: SimulariumFileFormat;
+    lastModified: number;
 }
 
 export interface SetSimulariumControllerAction {

@@ -27,6 +27,7 @@ export const initialState = {
     simulariumFile: {
         name: "",
         data: null,
+        lastModified: null,
     },
     simulariumController: null,
     viewerStatus: VIEWER_EMPTY,

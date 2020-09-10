@@ -4,8 +4,8 @@ import { LocalSimFile } from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
 
 import Icons from "../Icons";
-import { RcCustomRequestOptions } from "antd/lib/upload/interface";
 
+import customRequest from "./custom-request-upload";
 interface FileUploadProps {
     loadLocalFile: (simulariumFile: LocalSimFile) => void;
 }
@@ -20,35 +20,7 @@ const FileUpload = ({ loadLocalFile }: FileUploadProps) => {
     return (
         <Upload
             onChange={onChange}
-            customRequest={({
-                file,
-                onSuccess,
-                onError,
-            }: RcCustomRequestOptions) => {
-                file.text()
-                    .then((text) => JSON.parse(text))
-                    .then((data) => {
-                        console.log(file.lastModified);
-                        loadLocalFile({
-                            name: file.name,
-                            data,
-                        });
-                    })
-                    .then(() =>
-                        onSuccess(
-                            {
-                                name: file.name,
-                                status: "done",
-                                url: "",
-                            },
-                            file
-                        )
-                    )
-                    .catch((error) => {
-                        console.log(error);
-                        onError(error);
-                    });
-            }}
+            customRequest={(options) => customRequest(options, loadLocalFile)}
         >
             <Button>{Icons.UploadFile} Upload Simularium File</Button>
         </Upload>
