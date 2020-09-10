@@ -7,6 +7,7 @@ import {
     SET_SIMULARIUM_CONTROLLER,
     LOAD_LOCAL_FILE_IN_VIEWER,
     SET_VIEWER_STATUS,
+    LOAD_NETWORKED_FILE_IN_VIEWER,
 } from "./constants";
 import {
     MetadataStateBranch,
@@ -14,6 +15,9 @@ import {
     RequestAction,
     SetSimulariumControllerAction,
     VIEWER_STATUS,
+    LocalSimFile,
+    NetworkedSimFile,
+    RequestFileAction,
 } from "./types";
 import {
     SimulariumFileFormat,
@@ -60,20 +64,28 @@ export function receiveAgentNamesAndStates(
     };
 }
 
-export function changeLocalSimulariumFile(payload: {
+export function changeToLocalSimulariumFile(payload: {
     data: SimulariumFileFormat;
     name: string;
-}): ReceiveAction {
+}): RequestFileAction {
     return {
         payload,
         type: LOAD_LOCAL_FILE_IN_VIEWER,
     };
 }
 
-export function receiveSimulariumFile(payload: {
-    data: SimulariumFileFormat;
-    name: string;
-}): ReceiveAction {
+export function changeToNetworkedFile(
+    payload: NetworkedSimFile
+): RequestFileAction {
+    return {
+        payload,
+        type: LOAD_NETWORKED_FILE_IN_VIEWER,
+    };
+}
+
+export function receiveSimulariumFile(
+    payload: LocalSimFile | NetworkedSimFile
+): ReceiveAction {
     return {
         payload,
         type: RECEIVE_SIMULARIUM_FILE,

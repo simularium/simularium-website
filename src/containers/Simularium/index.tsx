@@ -20,7 +20,7 @@ import { TRAJECTORY_FILES, URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import {
     LocalSimFile,
     SetSimulariumControllerAction,
-    ReceiveAction,
+    RequestFileAction,
 } from "../../state/metadata/types";
 const { Content } = Layout;
 
@@ -39,7 +39,8 @@ interface AppProps {
     simulariumFile: LocalSimFile;
     setSimulariumController: ActionCreator<SetSimulariumControllerAction>;
     simulariumController: SimulariumController;
-    changeLocalSimulariumFile: ActionCreator<ReceiveAction>;
+    changeToLocalSimulariumFile: ActionCreator<RequestFileAction>;
+    changeToNetworkedFile: ActionCreator<RequestFileAction>;
 }
 
 interface AppState {
@@ -51,41 +52,29 @@ class App extends React.Component<AppProps, AppState> {
     constructor(props: AppProps) {
         super(props);
         this.onPanelCollapse = this.onPanelCollapse.bind(this);
-        this.handleSelectNetworkFile = this.handleSelectNetworkFile.bind(this);
-        this.handleLoadLocalFile = this.handleLoadLocalFile.bind(this);
     }
 
     componentDidMount() {
-        const { closeLoadFileModal, setSimulariumController } = this.props;
+        const {
+            closeLoadFileModal,
+            setSimulariumController,
+            changeToNetworkedFile,
+        } = this.props;
         const parsed = queryString.parse(location.search);
         const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
         if (fileName && TRAJECTORY_FILES.includes(fileName as string)) {
             closeLoadFileModal();
-            this.handleSelectNetworkFile(`${fileName}.h5`);
+            changeToNetworkedFile({
+                name: `${fileName}.h5`,
+                data: null,
+                dateModified: null,
+            });
         }
         setSimulariumController(
             new SimulariumController({
                 netConnectionSettings: netConnectionSettings,
             })
         );
-    }
-
-    public handleSelectNetworkFile(fileName: string) {
-        const { simulariumController } = this.props;
-        if (!simulariumController) {
-            console.log("no controller");
-        } else {
-            // switching files
-            simulariumController.changeFile(fileName);
-        }
-    }
-
-    public handleLoadLocalFile(simulariumFile: LocalSimFile) {
-        const { changeLocalSimulariumFile } = this.props;
-        if (!simulariumFile.name || !simulariumFile.data) {
-            return;
-        }
-        changeLocalSimulariumFile(simulariumFile);
     }
 
     public onPanelCollapse(open: boolean) {
@@ -101,13 +90,15 @@ class App extends React.Component<AppProps, AppState> {
             closeLoadFileModal,
             simulariumFile,
             simulariumController,
+            changeToLocalSimulariumFile,
+            changeToNetworkedFile,
         } = this.props;
         return (
             <Layout className={styles.container}>
                 <Header
                     modalOpen={modalOpen}
                     openLoadFileModal={openLoadFileModal}
-                    loadLocalFile={this.handleLoadLocalFile}
+                    loadLocalFile={changeToLocalSimulariumFile}
                     simulariumFileName={simulariumFile.name}
                     lastModified={simulariumFile.lastModified}
                 >
@@ -120,7 +111,7 @@ class App extends React.Component<AppProps, AppState> {
                     <Content>
                         {simulariumController && (
                             <ViewerPanel
-                                loadLocalFile={this.handleLoadLocalFile}
+                                loadLocalFile={changeToLocalSimulariumFile}
                                 simulariumController={simulariumController}
                             />
                         )}
@@ -131,7 +122,7 @@ class App extends React.Component<AppProps, AppState> {
                 </Layout>
                 <LoadTrajectoryFileModal
                     visible={modalOpen}
-                    selectFile={this.handleSelectNetworkFile}
+                    selectFile={changeToNetworkedFile}
                     closeModal={closeLoadFileModal}
                 />
             </Layout>
@@ -153,10 +144,11 @@ const dispatchToPropsMap = {
     onSidePanelCollapse: selectionStateBranch.actions.onSidePanelCollapse,
     openLoadFileModal: selectionStateBranch.actions.openLoadFileModal,
     closeLoadFileModal: selectionStateBranch.actions.closeLoadFileModal,
-    changeLocalSimulariumFile:
-        metadataStateBranch.actions.changeLocalSimulariumFile,
+    changeToLocalSimulariumFile:
+        metadataStateBranch.actions.changeToLocalSimulariumFile,
     setSimulariumController:
         metadataStateBranch.actions.setSimulariumController,
+    changeToNetworkedFile: metadataStateBranch.actions.changeToNetworkedFile,
 };
 
 export default connect(

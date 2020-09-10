@@ -22,10 +22,19 @@ export interface RequestAction {
     type: string;
 }
 
+export interface RequestFileAction {
+    payload: LocalSimFile | NetworkedSimFile;
+    type: string;
+}
+
 export interface LocalSimFile {
     name: string;
     data: SimulariumFileFormat;
     lastModified: number;
+}
+
+export interface NetworkedSimFile {
+    name: string;
 }
 
 export interface SetSimulariumControllerAction {

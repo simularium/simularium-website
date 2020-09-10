@@ -4,10 +4,11 @@ import { Modal, Button } from "antd";
 
 import { TRAJECTORY_FILES } from "../../constants";
 import { ToggleAction } from "../../state/selection/types";
+import { RequestFileAction } from "../../state/metadata/types";
 
 interface LoadTrajectoryFileModalProps {
     visible: boolean;
-    selectFile: (newFile: string) => void;
+    selectFile: ActionCreator<RequestFileAction>;
     closeModal: ActionCreator<ToggleAction>;
 }
 
@@ -28,7 +29,13 @@ class LoadTrajectoryFileModal extends React.Component<
                     {TRAJECTORY_FILES.map((fileName) => (
                         <Button
                             key={fileName}
-                            onClick={() => selectFile(`${fileName}.h5`)}
+                            onClick={() =>
+                                selectFile({
+                                    name: `${fileName}.h5`,
+                                    data: null,
+                                    dateModified: null,
+                                })
+                            }
                         >
                             {fileName}
                         </Button>
