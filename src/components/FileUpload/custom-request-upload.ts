@@ -10,7 +10,7 @@ export default (
         .then((data) => {
             loadFunction({
                 lastModified: file.lastModified,
-                name: `${file.name}@${file.lastModified}`,
+                name: file.name,
                 data,
             });
         })
