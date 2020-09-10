@@ -3,8 +3,6 @@ import { Card } from "antd";
 
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 
-const { Meta } = Card;
-
 const styles = require("./style.css");
 
 interface ModelCardProps {
@@ -14,10 +12,18 @@ interface ModelCardProps {
 class ModelCard extends React.Component<ModelCardProps, {}> {
     public render(): JSX.Element {
         const { trajectory } = this.props;
+        const {
+            title,
+            totalSimulatedTime,
+            authors,
+            publication,
+            description,
+        } = trajectory;
         return (
             <Card
                 style={{
                     width: 300,
+                    padding: 10,
                 }}
                 cover={
                     <img
@@ -26,11 +32,14 @@ class ModelCard extends React.Component<ModelCardProps, {}> {
                     />
                 }
             >
-                <span>{trajectory.totalSimulatedTime}</span>
-                <Meta
-                    title={trajectory.title}
-                    description={trajectory.description}
-                />
+                {/* TODO: add class name and styling to this div */}
+                <div>
+                    <p>{totalSimulatedTime}</p>
+                    <p>{title.toUpperCase()}</p>
+                    <p>{authors}</p>
+                    <p>{publication.title}</p>
+                    <p>{description}</p>
+                </div>
             </Card>
         );
     }
