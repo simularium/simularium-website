@@ -1,10 +1,12 @@
 import * as React from "react";
-import { Layout, Card, Avatar } from "antd";
-import { TRAJECTORY_FILES, URL_PARAM_KEY_FILE_NAME } from "../../constants";
+import { Layout } from "antd";
 import { Link } from "react-router-dom";
 
+import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
+import trajectories from "../../constants/networked-trajectories";
+import ModelCard from "../ModelCard";
+
 const { Content } = Layout;
-const { Meta } = Card;
 
 const styles = require("./style.css");
 
@@ -12,34 +14,18 @@ class LandingPage extends React.Component<{}, {}> {
     public render(): JSX.Element {
         return (
             <Content className={styles.content}>
-                {TRAJECTORY_FILES.map((file) => {
+                {trajectories.map((trajectory) => {
                     return (
                         <Link
-                            key={file}
+                            key={trajectory.id}
                             to={{
                                 pathname: "/viewer",
-                                search: `?${URL_PARAM_KEY_FILE_NAME}=${file}`,
+                                search: `?${URL_PARAM_KEY_FILE_NAME}=${
+                                    trajectory.id
+                                }`,
                             }}
                         >
-                            <Card
-                                style={{
-                                    width: 300,
-                                }}
-                                cover={
-                                    <img
-                                        alt="example"
-                                        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                                    />
-                                }
-                            >
-                                <Meta
-                                    avatar={
-                                        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                                    }
-                                    title={file}
-                                    description="This is the description"
-                                />
-                            </Card>
+                            <ModelCard trajectory={trajectory} />
                         </Link>
                     );
                 })}
