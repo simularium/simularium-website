@@ -3,24 +3,23 @@ import { Layout, Row, Col, Button, PageHeader, Tag } from "antd";
 import { ActionCreator } from "redux";
 import moment from "moment";
 
-import { ToggleAction } from "../../state/selection/types";
 import FileUpload from "../FileUpload";
-import { LocalSimFile } from "../../state/metadata/types";
+import { LocalSimFile, RequestFileAction } from "../../state/metadata/types";
+import NetworkFileMenu from "../NetworkFileMenu";
 const { Header } = Layout;
 
 const styles = require("./style.css");
 
 interface AppHeaderProps {
-    openLoadFileModal: ActionCreator<ToggleAction>;
-    modalOpen: boolean;
     loadLocalFile: (simFile: LocalSimFile) => void;
     simulariumFileName: string;
     lastModified: number;
+    loadNetworkFile: ActionCreator<RequestFileAction>;
 }
 export default class AppHeader extends React.Component<AppHeaderProps, {}> {
     public render(): JSX.Element {
         const {
-            openLoadFileModal,
+            loadNetworkFile,
             loadLocalFile,
             simulariumFileName,
             lastModified,
@@ -29,11 +28,7 @@ export default class AppHeader extends React.Component<AppHeaderProps, {}> {
             <Header className={styles.container}>
                 <PageHeader
                     title="Simularium"
-                    subTitle={
-                        simulariumFileName
-                            ? simulariumFileName.split("@")[0]
-                            : ""
-                    } // removing appended date stamp
+                    subTitle={simulariumFileName ? simulariumFileName : ""}
                     tags={
                         lastModified ? (
                             <Tag color="blue">
@@ -44,13 +39,10 @@ export default class AppHeader extends React.Component<AppHeaderProps, {}> {
                         )
                     }
                     extra={[
-                        <Button
-                            key="open"
-                            type="primary"
-                            onClick={openLoadFileModal}
-                        >
-                            Load Existing Simulation
-                        </Button>,
+                        <NetworkFileMenu
+                            key="select"
+                            selectFile={loadNetworkFile}
+                        />,
                         <FileUpload
                             key="upload"
                             loadLocalFile={loadLocalFile}

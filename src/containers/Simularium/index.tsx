@@ -5,13 +5,11 @@ import { Layout } from "antd";
 import queryString from "query-string";
 import { SimulariumController } from "@aics/simularium-viewer";
 
-import LoadTrajectoryFileModal from "../../components/LoadTrajectoryFileModal";
 import Header from "../../components/Header";
 import SideBar from "../../components/SideBar";
 import ResultsPanel from "../ResultsPanel";
 import ModelPanel from "../ModelPanel";
 import ViewerPanel from "../ViewerPanel";
-import { ToggleAction } from "../../state/selection/types";
 import { State } from "../../state/types";
 
 import metadataStateBranch from "../../state/metadata";
@@ -33,9 +31,6 @@ const netConnectionSettings = {
 
 interface AppProps {
     onSidePanelCollapse: (number: number) => void;
-    openLoadFileModal: ActionCreator<ToggleAction>;
-    modalOpen: boolean;
-    closeLoadFileModal: ActionCreator<ToggleAction>;
     simulariumFile: LocalSimFile;
     setSimulariumController: ActionCreator<SetSimulariumControllerAction>;
     simulariumController: SimulariumController;
@@ -55,15 +50,10 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     componentDidMount() {
-        const {
-            closeLoadFileModal,
-            setSimulariumController,
-            changeToNetworkedFile,
-        } = this.props;
+        const { setSimulariumController, changeToNetworkedFile } = this.props;
         const parsed = queryString.parse(location.search);
         const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
         if (fileName && TRAJECTORY_FILES.includes(fileName as string)) {
-            closeLoadFileModal();
             changeToNetworkedFile({
                 name: `${fileName}.h5`,
                 data: null,
@@ -85,9 +75,6 @@ class App extends React.Component<AppProps, AppState> {
 
     public render(): JSX.Element {
         const {
-            openLoadFileModal,
-            modalOpen,
-            closeLoadFileModal,
             simulariumFile,
             simulariumController,
             changeToLocalSimulariumFile,
@@ -96,11 +83,10 @@ class App extends React.Component<AppProps, AppState> {
         return (
             <Layout className={styles.container}>
                 <Header
-                    modalOpen={modalOpen}
-                    openLoadFileModal={openLoadFileModal}
                     loadLocalFile={changeToLocalSimulariumFile}
                     simulariumFileName={simulariumFile.name}
                     lastModified={simulariumFile.lastModified}
+                    loadNetworkFile={changeToNetworkedFile}
                 >
                     Header
                 </Header>
@@ -120,11 +106,6 @@ class App extends React.Component<AppProps, AppState> {
                         <ResultsPanel />
                     </SideBar>
                 </Layout>
-                <LoadTrajectoryFileModal
-                    visible={modalOpen}
-                    selectFile={changeToNetworkedFile}
-                    closeModal={closeLoadFileModal}
-                />
             </Layout>
         );
     }
@@ -132,7 +113,6 @@ class App extends React.Component<AppProps, AppState> {
 
 function mapStateToProps(state: State) {
     return {
-        modalOpen: selectionStateBranch.selectors.modalOpen(state),
         simulariumFile: metadataStateBranch.selectors.getSimulariumFile(state),
         simulariumController: metadataStateBranch.selectors.getSimulariumController(
             state
@@ -142,8 +122,6 @@ function mapStateToProps(state: State) {
 
 const dispatchToPropsMap = {
     onSidePanelCollapse: selectionStateBranch.actions.onSidePanelCollapse,
-    openLoadFileModal: selectionStateBranch.actions.openLoadFileModal,
-    closeLoadFileModal: selectionStateBranch.actions.closeLoadFileModal,
     changeToLocalSimulariumFile:
         metadataStateBranch.actions.changeToLocalSimulariumFile,
     setSimulariumController:

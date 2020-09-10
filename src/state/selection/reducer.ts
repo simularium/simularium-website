@@ -9,7 +9,6 @@ import {
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
     SIDE_PANEL_COLLAPSED,
-    TOGGLE_LOAD_FILE_MODAL,
     TURN_AGENTS_ON_BY_KEY,
     HIGHLIGHT_AGENTS_BY_KEY,
     DRAG_OVER_VIEWER,
@@ -23,7 +22,6 @@ import {
     ChangeTimeAction,
     ChangeNumberCollapsedPanelsAction,
     HighlightAgentAction,
-    ToggleAction,
     DragOverViewerAction,
     ResetDragOverViewerAction,
 } from "./types";
@@ -34,7 +32,6 @@ export const initialState = {
     numberPanelsCollapsed: 0,
     visibleAgentKeys: [],
     highlightedAgentKeys: [],
-    modalOpen: false,
     draggedOverViewer: false,
 };
 
@@ -106,14 +103,6 @@ const actionToConfigMap: TypeToDescriptionMap = {
         ) => ({
             ...state,
             highlightedAgentKeys: action.payload,
-        }),
-    },
-    [TOGGLE_LOAD_FILE_MODAL]: {
-        accepts: (action: AnyAction): action is ToggleAction =>
-            action.type === TOGGLE_LOAD_FILE_MODAL,
-        perform: (state: SelectionStateBranch, action: ToggleAction) => ({
-            ...state,
-            modalOpen: action.payload,
         }),
     },
     [DRAG_OVER_VIEWER]: {

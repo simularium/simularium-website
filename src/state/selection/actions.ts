@@ -4,7 +4,6 @@ import {
     CHANGE_TIME_HEAD,
     SIDE_PANEL_COLLAPSED,
     TURN_AGENTS_ON_BY_KEY,
-    TOGGLE_LOAD_FILE_MODAL,
     HIGHLIGHT_AGENTS_BY_KEY,
     DRAG_OVER_VIEWER,
     RESET_DRAG_OVER_VIEWER,
@@ -14,7 +13,6 @@ import {
     ChangeAgentsRenderingStateAction,
     SelectMetadataAction,
     ChangeTimeAction,
-    ToggleAction,
     DragOverViewerAction,
     ResetDragOverViewerAction,
 } from "./types";
@@ -55,20 +53,6 @@ export function highlightAgentsByDisplayKey(
     return {
         payload: agentNames,
         type: HIGHLIGHT_AGENTS_BY_KEY,
-    };
-}
-
-export function openLoadFileModal(): ToggleAction {
-    return {
-        payload: true,
-        type: TOGGLE_LOAD_FILE_MODAL,
-    };
-}
-
-export function closeLoadFileModal(): ToggleAction {
-    return {
-        payload: false,
-        type: TOGGLE_LOAD_FILE_MODAL,
     };
 }
 
