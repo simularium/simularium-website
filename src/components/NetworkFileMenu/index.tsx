@@ -19,7 +19,7 @@ const NetworkFileMenu = ({ selectFile }: NetworkFileMenuProps) => {
                     key={fileName}
                     onClick={() =>
                         selectFile({
-                            name: `${fileName}.h5`,
+                            name: `${fileName}`,
                             data: null,
                             dateModified: null,
                         })
