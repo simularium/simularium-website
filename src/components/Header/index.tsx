@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Layout, Row, Col, Button, PageHeader, Tag } from "antd";
+import { Layout, Row, Col, PageHeader, Tag } from "antd";
 import { ActionCreator } from "redux";
 import moment from "moment";
 
