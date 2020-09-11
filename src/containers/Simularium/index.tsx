@@ -15,7 +15,8 @@ import { ToggleAction } from "../../state/selection/types";
 import { State } from "../../state/types";
 
 import selectionStateBranch from "../../state/selection";
-import { TRAJECTORY_FILES, URL_PARAM_KEY_FILE_NAME } from "../../constants";
+import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
+import TRAJECTORIES from "../../constants/networked-trajectories";
 const { Content } = Layout;
 
 const styles = require("./style.css");
@@ -48,7 +49,8 @@ class App extends React.Component<AppProps, AppState> {
         const { closeLoadFileModal } = this.props;
         const parsed = queryString.parse(location.search);
         const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
-        if (fileName && TRAJECTORY_FILES.includes(fileName as string)) {
+        const trajectoryIds = TRAJECTORIES.map((trajectory) => trajectory.id);
+        if (fileName && trajectoryIds.includes(fileName as string)) {
             closeLoadFileModal();
             this.handleSelectFile(`${fileName}.h5`);
         }

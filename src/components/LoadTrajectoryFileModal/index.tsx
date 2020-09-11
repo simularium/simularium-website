@@ -2,7 +2,7 @@ import * as React from "react";
 import { ActionCreator } from "redux";
 import { Modal, Button } from "antd";
 
-import { TRAJECTORY_FILES } from "../../constants";
+import TRAJECTORIES from "../../constants/networked-trajectories";
 import { ToggleAction } from "../../state/selection/types";
 
 interface LoadTrajectoryFileModalProps {
@@ -25,12 +25,12 @@ class LoadTrajectoryFileModal extends React.Component<
                     onOk={closeModal}
                     onCancel={closeModal}
                 >
-                    {TRAJECTORY_FILES.map((fileName) => (
+                    {TRAJECTORIES.map((trajectory) => (
                         <Button
-                            key={fileName}
-                            onClick={() => selectFile(`${fileName}.h5`)}
+                            key={trajectory.id}
+                            onClick={() => selectFile(`${trajectory.id}.h5`)}
                         >
-                            {fileName}
+                            {trajectory.id}
                         </Button>
                     ))}
                 </Modal>
