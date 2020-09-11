@@ -25,12 +25,12 @@ class LoadTrajectoryFileModal extends React.Component<
                     onOk={closeModal}
                     onCancel={closeModal}
                 >
-                    {TRAJECTORY_FILES.map((filename) => (
+                    {TRAJECTORY_FILES.map((fileName) => (
                         <Button
-                            key={filename}
-                            onClick={() => selectFile(`${filename}.h5`)}
+                            key={fileName}
+                            onClick={() => selectFile(`${fileName}.h5`)}
                         >
-                            {filename}
+                            {fileName}
                         </Button>
                     ))}
                 </Modal>
