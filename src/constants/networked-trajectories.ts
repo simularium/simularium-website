@@ -1,4 +1,6 @@
-export default [
+import { TrajectoryDisplayData } from "./interfaces";
+
+const TRAJECTORIES: TrajectoryDisplayData[] = [
     {
         modelName: "Actin-based Listeria Propulsion",
         id: "listeria_normal",
@@ -58,3 +60,5 @@ export default [
             "A structural model of a diffusing SARS-CoV-2 virus particle.",
     },
 ];
+
+export default TRAJECTORIES;
