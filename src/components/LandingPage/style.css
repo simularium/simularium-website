@@ -5,13 +5,18 @@
 }
 
 .text {
-    background-color: #f7f7f7;
+    background-color: var(--landing-pg-panel-light-gray);
     padding-left: 50px;
     padding-right: 50px;
     padding-top: 1em;
     padding-bottom: 20px;
     font-size: 20px;
-    color: #4a4a4a;
+}
+
+.text > *, .trajectories {
+    width: 1010px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 h1, h2 {
@@ -19,6 +24,7 @@ h1, h2 {
     font-weight: 400;
     margin-top: 0px;
     margin-bottom: 0px;
+    color: var(--landing-pg-header-gray);
 }
 
 h1 {
@@ -45,7 +51,7 @@ h2 {
 }
 
 .flowchart {
-    width: 75%;
+    width: 50%;
     display: block;
     margin-left: auto;
     margin-right: auto;

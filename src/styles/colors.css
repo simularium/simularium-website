@@ -1,11 +1,16 @@
 :root {
     --background-dark-gray: #131313;
     --background-dim-gray: #383838;
-    --purple: #8048f3;
+    --medium-gray: #4a4a4a;
+    --purple: #b59ff6;
     --dimgray: #6e6e6e;
     --highlight-green: #b2d030;
     --text-gray: #a0a0a0;
     --header-gray: #4b4b4b;
-    --light-gray: #aeacae;
+    --landing-pg-header-gray: var(--medium-gray);
+    --light-gray: #e7e7e7;
+    --light-gray-alt: #f7f7f7;
     --border-gray: var(--light-gray);
+    --landing-pg-panel-light-gray: var(--light-gray-alt);
+    --landing-pg-card-light-gray: var(--light-gray-alt);
 }
