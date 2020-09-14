@@ -4,7 +4,7 @@
     margin: auto;
 }
 
-.intro {
+.text {
     background-color: #f7f7f7;
     padding-left: 50px;
     padding-right: 50px;
@@ -29,7 +29,7 @@ h2 {
     font-size: 24px;
 }
 
-.library .intro {
+.library .text {
     background-color: inherit;
 }
 
@@ -37,4 +37,18 @@ h2 {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
+    align-items: stretch;
+}
+
+.trajectories > * {
+    margin-bottom: 50px;
+}
+
+.flowchart {
+    width: 75%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
