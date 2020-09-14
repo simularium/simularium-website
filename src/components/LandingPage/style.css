@@ -14,7 +14,7 @@
 }
 
 .text > *, .trajectories {
-    width: 1010px;
+    max-width: 1010px;
     margin-left: auto;
     margin-right: auto;
 }
