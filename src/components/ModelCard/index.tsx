@@ -21,10 +21,7 @@ class ModelCard extends React.Component<ModelCardProps, {}> {
         } = trajectory;
         return (
             <Card
-                style={{
-                    width: 300,
-                    padding: 10,
-                }}
+                className={styles.card}
                 cover={
                     <img
                         alt="example"
