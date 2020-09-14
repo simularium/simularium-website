@@ -13,6 +13,12 @@ export const getTotalTimeOfCachedSimulation = (state: State) =>
     state.metadata.totalTime;
 export const getTimeStepSize = (state: State) => state.metadata.timeStepSize;
 export const getAgentIds = (state: State) => state.metadata.agentIds;
+export const getSimulariumFile = (state: State) =>
+    state.metadata.simulariumFile;
+export const getSimulariumController = (state: State) =>
+    state.metadata.simulariumController;
+export const getViewerStatus = (state: State) => state.metadata.viewerStatus;
+
 // COMPOSED SELECTORS
 export const getKeysOfMetadata = createSelector(
     [getMetadata],

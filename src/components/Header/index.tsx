@@ -1,28 +1,56 @@
 import * as React from "react";
-import { Layout, Row, Col, Button } from "antd";
+import { Layout, Row, Col, PageHeader, Tag } from "antd";
 import { ActionCreator } from "redux";
+import moment from "moment";
 
-import { ToggleAction } from "../../state/selection/types";
+import FileUpload from "../FileUpload";
+import { LocalSimFile, RequestFileAction } from "../../state/metadata/types";
+import NetworkFileMenu from "../NetworkFileMenu";
 const { Header } = Layout;
 
 const styles = require("./style.css");
 
 interface AppHeaderProps {
-    openLoadFileModal: ActionCreator<ToggleAction>;
-    modalOpen: boolean;
+    loadLocalFile: (simFile: LocalSimFile) => void;
+    simulariumFileName: string;
+    lastModified: number;
+    loadNetworkFile: ActionCreator<RequestFileAction>;
 }
 export default class AppHeader extends React.Component<AppHeaderProps, {}> {
     public render(): JSX.Element {
-        const { openLoadFileModal } = this.props;
+        const {
+            loadNetworkFile,
+            loadLocalFile,
+            simulariumFileName,
+            lastModified,
+        } = this.props;
         return (
             <Header className={styles.container}>
-                <div>Simularium</div>
+                <PageHeader
+                    title="Simularium"
+                    subTitle={simulariumFileName ? simulariumFileName : ""}
+                    tags={
+                        lastModified ? (
+                            <Tag color="blue">
+                                {moment(lastModified).format()}
+                            </Tag>
+                        ) : (
+                            []
+                        )
+                    }
+                    extra={[
+                        <NetworkFileMenu
+                            key="select"
+                            selectFile={loadNetworkFile}
+                        />,
+                        <FileUpload
+                            key="upload"
+                            loadLocalFile={loadLocalFile}
+                        />,
+                        ,
+                    ]}
+                />
                 <Row>
-                    <Col>
-                        <Button type="primary" onClick={openLoadFileModal}>
-                            Load
-                        </Button>
-                    </Col>
                     <Col />
                     <Col />
                     <Col />
