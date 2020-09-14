@@ -9,37 +9,35 @@ interface ModelCardProps {
     trajectory: TrajectoryDisplayData;
 }
 
-class ModelCard extends React.Component<ModelCardProps, {}> {
-    public render(): JSX.Element {
-        const { trajectory } = this.props;
-        const {
-            title,
-            totalSimulatedTime,
-            authors,
-            publication,
-            description,
-        } = trajectory;
-        return (
-            <Card
-                className={styles.card}
-                cover={
-                    <img
-                        alt="example"
-                        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                    />
-                }
-            >
-                {/* TODO: add class name and styling to this div */}
-                <div>
-                    <p>{totalSimulatedTime}</p>
-                    <p>{title.toUpperCase()}</p>
-                    <p>{authors}</p>
-                    <p>{publication.title}</p>
-                    <p>{description}</p>
-                </div>
-            </Card>
-        );
-    }
-}
+const ModelCard: React.FunctionComponent<ModelCardProps> = (
+    props: ModelCardProps
+) => {
+    const {
+        title,
+        totalSimulatedTime,
+        authors,
+        publication,
+        description,
+    } = props.trajectory;
+    return (
+        <Card
+            className={styles.card}
+            cover={
+                <img
+                    alt="example"
+                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                />
+            }
+        >
+            <div>
+                <p>{totalSimulatedTime}</p>
+                <p>{title.toUpperCase()}</p>
+                <p>{authors}</p>
+                <p>{publication.title}</p>
+                <p>{description}</p>
+            </div>
+        </Card>
+    );
+};
 
 export default ModelCard;
