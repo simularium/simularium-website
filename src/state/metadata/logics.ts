@@ -26,7 +26,7 @@ const requestMetadata = createLogic({
         httpClient
             .get(`${baseApiUrl}/metadata.json`)
             .then((metadata: AxiosResponse) => {
-                dispatch(receiveMetadata({ graphData: metadata.data }));
+                dispatch(receiveMetadata({ plotData: metadata.data }));
             })
             .catch((reason) => {
                 console.log(reason);
@@ -62,6 +62,13 @@ const loadNetworkedFile = createLogic({
             .changeFile(simulariumFile.name)
             .then(() => {
                 dispatch(receiveSimulariumFile(simulariumFile));
+            })
+            .then(() => {
+                dispatch(
+                    receiveMetadata({
+                        plotData: simulariumFile.data.plotData.data,
+                    })
+                );
             })
             .then(() => {
                 dispatch(
