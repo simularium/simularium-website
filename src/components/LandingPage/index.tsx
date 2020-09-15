@@ -2,7 +2,6 @@ import * as React from "react";
 import { Layout } from "antd";
 import { Link } from "react-router-dom";
 
-import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import ModelCard from "../ModelCard";
 
@@ -45,17 +44,10 @@ class LandingPage extends React.Component<{}, {}> {
                     <div className={styles.trajectories}>
                         {TRAJECTORIES.map((trajectory) => {
                             return (
-                                <Link
+                                <ModelCard
                                     key={trajectory.id}
-                                    to={{
-                                        pathname: "/viewer",
-                                        search: `?${URL_PARAM_KEY_FILE_NAME}=${
-                                            trajectory.id
-                                        }`,
-                                    }}
-                                >
-                                    <ModelCard trajectory={trajectory} />
-                                </Link>
+                                    trajectory={trajectory}
+                                />
                             );
                         })}
                     </div>

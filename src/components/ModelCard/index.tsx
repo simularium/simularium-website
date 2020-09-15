@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Card } from "antd";
+import { Link } from "react-router-dom";
 
+import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 
 const styles = require("./style.css");
@@ -13,6 +15,7 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
     props: ModelCardProps
 ) => {
     const {
+        id,
         title,
         totalSimulatedTime,
         authors,
@@ -23,17 +26,33 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
         <Card
             className={styles.card}
             cover={
-                <img
-                    alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                />
+                <Link
+                    to={{
+                        pathname: "/viewer",
+                        search: `?${URL_PARAM_KEY_FILE_NAME}=${id}`,
+                    }}
+                >
+                    <img
+                        alt="example"
+                        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                    />
+                </Link>
             }
         >
-            <div>
-                <p>{totalSimulatedTime}</p>
-                <p>{title.toUpperCase()}</p>
+            <div className={styles.cardText}>
+                <p className={styles.simulatedTime}>{totalSimulatedTime}</p>
+                <Link
+                    to={{
+                        pathname: "/viewer",
+                        search: `?${URL_PARAM_KEY_FILE_NAME}=${id}`,
+                    }}
+                >
+                    <p className={styles.cardTitle}>{title.toUpperCase()}</p>
+                </Link>
                 <p>{authors}</p>
-                <p>{publication.title}</p>
+                <a href={publication.url}>
+                    <p>{publication.title}</p>
+                </a>
                 <p>{description}</p>
             </div>
         </Card>
