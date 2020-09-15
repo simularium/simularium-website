@@ -18,7 +18,8 @@ export const getHighlightedAgentsNamesAndTags = (state: State) =>
 
 export const getNumberCollapsed = (state: State) =>
     state.selection.numberPanelsCollapsed;
-export const modalOpen = (state: State) => state.selection.modalOpen;
+export const getFileDraggedOverViewer = (state: State) =>
+    state.selection.draggedOverViewer;
 // COMPOSED SELECTORS
 
 // key is `${renderType}-${agentName}-${tagId}`

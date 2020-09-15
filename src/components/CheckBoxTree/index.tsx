@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Key } from "react";
 import { Tree } from "antd";
 import { ActionCreator } from "redux";
 import { ChangeAgentsRenderingStateAction } from "../../state/selection/types";
@@ -18,15 +18,15 @@ const CheckBoxTree = ({
     const [expandedKeys, setExpandedKeys] = useState<string[]>(agentsChecked);
     const [autoExpandParent, setAutoExpandParent] = useState<boolean>(true);
 
-    const onExpand = (expandedKeys: string[]) => {
+    const onExpand = (expandedKeys: (string | number)[]) => {
         // if not set autoExpandParent to false, if children expanded, parent can not collapse.
         // or, you can remove all expanded children keys.
-        setExpandedKeys(expandedKeys);
+        setExpandedKeys(expandedKeys as string[]);
         setAutoExpandParent(false);
     };
 
     const onCheck = (
-        checkedKeys: string[] | { checked: string[]; halfChecked: string[] }
+        checkedKeys: Key[] | { checked: Key[]; halfChecked: Key[] }
     ) => {
         handleCheck(checkedKeys);
     };

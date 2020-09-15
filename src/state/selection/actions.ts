@@ -4,15 +4,17 @@ import {
     CHANGE_TIME_HEAD,
     SIDE_PANEL_COLLAPSED,
     TURN_AGENTS_ON_BY_KEY,
-    TOGGLE_LOAD_FILE_MODAL,
     HIGHLIGHT_AGENTS_BY_KEY,
+    DRAG_OVER_VIEWER,
+    RESET_DRAG_OVER_VIEWER,
 } from "./constants";
 import {
     DeselectFileAction,
     ChangeAgentsRenderingStateAction,
     SelectMetadataAction,
     ChangeTimeAction,
-    ToggleAction,
+    DragOverViewerAction,
+    ResetDragOverViewerAction,
 } from "./types";
 
 export function deselectFile(fileId: string | string[]): DeselectFileAction {
@@ -54,20 +56,6 @@ export function highlightAgentsByDisplayKey(
     };
 }
 
-export function openLoadFileModal(): ToggleAction {
-    return {
-        payload: true,
-        type: TOGGLE_LOAD_FILE_MODAL,
-    };
-}
-
-export function closeLoadFileModal(): ToggleAction {
-    return {
-        payload: false,
-        type: TOGGLE_LOAD_FILE_MODAL,
-    };
-}
-
 export function selectMetadata(
     key: string,
     payload: string | number
@@ -76,5 +64,17 @@ export function selectMetadata(
         key,
         payload,
         type: SELECT_METADATA,
+    };
+}
+
+export function dragOverViewer(): DragOverViewerAction {
+    return {
+        type: DRAG_OVER_VIEWER,
+    };
+}
+
+export function resetDragOverViewer(): ResetDragOverViewerAction {
+    return {
+        type: RESET_DRAG_OVER_VIEWER,
     };
 }
