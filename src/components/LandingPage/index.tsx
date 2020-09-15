@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Layout } from "antd";
-import { Link } from "react-router-dom";
+import { Button, Layout } from "antd";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import ModelCard from "../ModelCard";
@@ -113,6 +112,18 @@ class LandingPage extends React.Component<{}, {}> {
                         these activities could also be published alongside news
                         articles for the general public to explore.
                     </p>
+                </div>
+                <div className={styles.signUpPanel}>
+                    <h1>Connect with us</h1>
+                    <h2>
+                        Receive updates on releases and/or collaborate on your
+                        project by signing up.
+                    </h2>
+                    <Button type="primary">
+                        <a href="https://www.allencell.org/simularium-sign-up.html">
+                            Sign up
+                        </a>
+                    </Button>
                 </div>
             </Content>
         );

@@ -3,14 +3,19 @@
     --background-dim-gray: #383838;
     --medium-gray: #4a4a4a;
     --purple: #b59ff6;
+    --gray-purple: #bab5c9;
+    --landing-pg-background-purple: var(--gray-purple);
+    --dark-purple: #3b3649;
+    --landing-pg-button-purple: var(--dark-purple);
     --dimgray: #6e6e6e;
     --highlight-green: #b2d030;
     --text-gray: #a0a0a0;
     --header-gray: #4b4b4b;
     --landing-pg-header-gray: var(--medium-gray);
-    --light-gray: #e7e7e7;
-    --light-gray-alt: #f7f7f7;
-    --border-gray: var(--light-gray);
-    --landing-pg-panel-light-gray: var(--light-gray-alt);
     --landing-pg-card-link-gray: var(--medium-gray);
+    --light-gray: #e7e7e7;
+    --border-gray: var(--light-gray);
+    --light-gray-alt: #f7f7f7;
+    --landing-pg-panel-light-gray: var(--light-gray-alt);
+    --landing-pg-button-light-gray: var(--light-gray-alt);
 }

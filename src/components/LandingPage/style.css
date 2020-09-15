@@ -58,3 +58,30 @@ h2 {
     margin-top: 1em;
     margin-bottom: 1em;
 }
+
+.signUpPanel {
+    padding-top: 3em;
+    padding-bottom: 1.5em;
+    background-color: var(--landing-pg-background-purple);
+}
+
+.signUpPanel button {
+    background-color: var(--landing-pg-button-purple);
+    color: var(--landing-pg-button-light-gray);
+    border: none;
+    width: 280px;
+    height: 70px;
+    font-size: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+    margin-bottom: 2.5em;
+    transition: 0.3s;
+}
+
+.signUpPanel :global(.ant-btn-primary:hover) {
+    background-color: var(--landing-pg-button-purple);
+    opacity: 0.9;
+    color: var(--landing-pg-button-light-gray);
+}
