@@ -22,6 +22,11 @@ export interface RequestAction {
     type: string;
 }
 
+export interface RequestCachedPlotAction {
+    payload: { url: string };
+    type: string;
+}
+
 export interface RequestFileAction {
     payload: LocalSimFile | NetworkedSimFile;
     type: string;

@@ -4,27 +4,31 @@ import { createLogic } from "redux-logic";
 import { ReduxLogicDeps } from "../types";
 
 import { getSimulariumController, getSimulariumFile } from "./selectors";
-import { receiveMetadata, receiveSimulariumFile } from "./actions";
 import {
-    REQUEST_METADATA,
+    receiveMetadata,
+    receiveSimulariumFile,
+    requestCachedPlotData,
+} from "./actions";
+import {
     LOAD_LOCAL_FILE_IN_VIEWER,
     VIEWER_LOADING,
     VIEWER_SUCCESS,
     LOAD_NETWORKED_FILE_IN_VIEWER,
+    REQUEST_PLOT_DATA,
 } from "./constants";
 import { ReceiveAction, LocalSimFile, NetworkedSimFile } from "./types";
 import { VIEWER_ERROR } from "./constants";
 import { setViewerStatus } from "../metadata/actions";
 
-const requestMetadata = createLogic({
+const requestPlotDataLogic = createLogic({
     process(
         deps: ReduxLogicDeps,
         dispatch: (action: ReceiveAction) => void,
         done: () => void
     ) {
-        const { baseApiUrl, httpClient } = deps;
+        const { baseApiUrl, httpClient, action } = deps;
         httpClient
-            .get(`${baseApiUrl}/metadata.json`)
+            .get(`${baseApiUrl}/${action.payload.url}`)
             .then((metadata: AxiosResponse) => {
                 dispatch(receiveMetadata({ plotData: metadata.data }));
             })
@@ -33,7 +37,7 @@ const requestMetadata = createLogic({
             })
             .then(done);
     },
-    type: REQUEST_METADATA,
+    type: REQUEST_PLOT_DATA,
 });
 
 const loadNetworkedFile = createLogic({
@@ -65,8 +69,8 @@ const loadNetworkedFile = createLogic({
             })
             .then(() => {
                 dispatch(
-                    receiveMetadata({
-                        plotData: simulariumFile.data.plotData.data,
+                    requestCachedPlotData({
+                        url: `${simulariumFile.name}/plot-data.json`,
                     })
                 );
             })
@@ -115,6 +119,14 @@ const loadLocalFile = createLogic({
                 dispatch(receiveSimulariumFile(simulariumFile));
             })
             .then(() => {
+                console.log(simulariumFile.data.plotData);
+                dispatch(
+                    receiveMetadata({
+                        plotData: simulariumFile.data.plotData.data,
+                    })
+                );
+            })
+            .then(() => {
                 dispatch(
                     setViewerStatus({
                         status: VIEWER_SUCCESS,
@@ -134,4 +146,4 @@ const loadLocalFile = createLogic({
     type: LOAD_LOCAL_FILE_IN_VIEWER,
 });
 
-export default [requestMetadata, loadLocalFile, loadNetworkedFile];
+export default [requestPlotDataLogic, loadLocalFile, loadNetworkedFile];
