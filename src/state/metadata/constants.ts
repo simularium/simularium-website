@@ -20,6 +20,7 @@ export const SET_VIEWER_STATUS = makeMetadataConstant("set-viewer-status");
 export const LOAD_NETWORKED_FILE_IN_VIEWER = makeMetadataConstant(
     "load-networked-file"
 );
+export const REQUEST_PLOT_DATA = makeMetadataConstant("request-plot-data");
 
 export const VIEWER_EMPTY = "empty";
 export const VIEWER_LOADING = "loading";

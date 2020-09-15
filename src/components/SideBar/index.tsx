@@ -21,7 +21,7 @@ export default class SideBar extends React.Component<SiderProps, {}> {
                 collapsedWidth={0}
                 trigger={Icons.Pause}
                 reverseArrow={type === "right"}
-                width={400}
+                width={280}
                 onCollapse={onCollapse}
             >
                 {children}

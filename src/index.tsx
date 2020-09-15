@@ -20,7 +20,7 @@ render(
         <Layout>
             <BrowserRouter
                 basename={process.env.GH_BUILD ? "/simularium-website/" : ""}
-              >
+            >
                 <Header>
                     <NavBar />
                 </Header>

@@ -12,6 +12,10 @@
     left: inherit;
 }
 
+.sider.right :global(.ant-collapse-content-box) {
+    padding: 0;
+}
+
 .sider :global(.ant-layout-sider-children) {
     overflow: scroll;
 }
