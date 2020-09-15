@@ -3,10 +3,23 @@ import { Button, Layout } from "antd";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import ModelCard from "../ModelCard";
+import overviewImg from "../../assets/overview-image.png";
+import cardImg1 from "../../assets/card-image-1.png";
+import cardImg2 from "../../assets/card-image-2.png";
+import cardImg3 from "../../assets/card-image-3.png";
+import cardImg4 from "../../assets/card-image-4.png";
 
 const { Content } = Layout;
 
 const styles = require("./style.css");
+
+// This object allows the LandingPage component to pass down the correct imported image to each ModelCard component as a prop. There has got to be a better way to do this, but it seems kind of tricky with local files. Easiest way I think would be to host the image files somewhere and just use those URLs as src attributes.
+const cardImages: Record<string, string> = {
+    "card-image-1": cardImg1,
+    "card-image-2": cardImg2,
+    "card-image-3": cardImg3,
+    "card-image-4": cardImg4,
+};
 
 class LandingPage extends React.Component<{}, {}> {
     public render(): JSX.Element {
@@ -46,16 +59,17 @@ class LandingPage extends React.Component<{}, {}> {
                                 <ModelCard
                                     key={trajectory.id}
                                     trajectory={trajectory}
+                                    image={cardImages[trajectory.imageFile]}
                                 />
                             );
                         })}
                     </div>
                 </div>
-                <div className={styles.text}>
+                <div className={styles.aboutSimulariumPanel}>
                     <img
                         className={styles.flowchart}
                         alt="A flowchart describing Simularium use"
-                        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                        src={overviewImg}
                     />
                     <p>
                         We have begun by building initial models for nucleating

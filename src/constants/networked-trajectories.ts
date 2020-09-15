@@ -15,6 +15,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A model of Listeria monocytogenes propulsion that explicitly simulates monomer-scale biochemical and mechanical interactions. This run has a normal ActA distribution on the bacterial surface.",
+        imageFile: "card-image-1",
     },
     {
         modelName: "Actin-based Listeria Propulsion",
@@ -30,6 +31,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A model of Listeria monocytogenes propulsion that explicitly simulates monomer-scale biochemical and mechanical interactions. This run has an ultrapolar ActA distribution on the bacterial surface.",
+        imageFile: "card-image-2",
     },
     {
         modelName: "Actin in Clathrin-mediated Endocytosis",
@@ -44,6 +46,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A CytoSim model of a branched actin network internalizing an endocytic pit against membrane tension.",
+        imageFile: "card-image-3",
     },
     {
         modelName: "Covid Virion",
@@ -58,6 +61,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A structural model of a diffusing SARS-CoV-2 virus particle.",
+        imageFile: "card-image-4",
     },
 ];
 

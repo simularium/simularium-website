@@ -19,6 +19,11 @@
     margin-right: auto;
 }
 
+.aboutSimulariumPanel {
+    composes: text;
+    background-color: #ffffff;
+}
+
 h1, h2 {
     text-align: center;
     font-weight: 400;
@@ -51,7 +56,8 @@ h2 {
 }
 
 .flowchart {
-    width: 50%;
+    width: 60%;
+    min-width: 600px;
     display: block;
     margin-left: auto;
     margin-right: auto;

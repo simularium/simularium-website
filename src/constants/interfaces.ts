@@ -9,4 +9,5 @@ export interface TrajectoryDisplayData {
         url: string;
     };
     description: string;
+    imageFile: string; // PNG file name without extension
 }
