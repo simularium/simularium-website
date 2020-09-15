@@ -70,7 +70,7 @@ const loadNetworkedFile = createLogic({
             .then(() => {
                 dispatch(
                     requestCachedPlotData({
-                        url: `${simulariumFile.name}/plot-data.json`,
+                        url: `${simulariumFile.name}/plot-data.json`, // placeholder for however we organize this data in s3
                     })
                 );
             })
