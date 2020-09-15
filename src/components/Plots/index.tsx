@@ -1,6 +1,6 @@
 import * as React from "react";
 import Plot from "react-plotly.js";
-import { map, min, max } from "lodash";
+import { map } from "lodash";
 import { ActionCreator } from "redux";
 
 import { ChangeTimeAction } from "../../state/selection/types.js";
@@ -30,8 +30,7 @@ const PLOT_STYLE = {
 
 export default class Plots extends React.Component<PlotsProps, {}> {
     public render(): JSX.Element {
-        const { changeTime, time, plotData } = this.props;
-        console.log(plotData);
+        const { plotData } = this.props;
         return (
             <div className={styles.container}>
                 {map(plotData, (plot: PlotInterface) => {
