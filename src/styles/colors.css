@@ -1,11 +1,19 @@
 :root {
-    --background-dark-gray: #131313;
-    --background-dim-gray: #383838;
-    --purple: #8048f3;
-    --dimgray: #6e6e6e;
+    --black: #000000;
+    --dark-gray: #25222e;
+    --dim-gray: #383838;
+    --purple-gray: #2f2a3c;
+    --purple: #b59ff6;
+    --light-gray: #6e6e6e;
     --highlight-green: #b2d030;
     --text-gray: #a0a0a0;
     --header-gray: #4b4b4b;
     --light-gray: #aeacae;
+    --off-white: #f8f8f8;
     --border-gray: var(--light-gray);
+    --dark-theme-primary-color: var(--purple);
+    --dark-theme-body-bg: var(--black);
+    --dark-theme-header-bg: var(--dark-gray);
+    --dark-theme-component-bg: var(--purple-gray);
+    --dark-theme-text-color: var(--off-white);
 }

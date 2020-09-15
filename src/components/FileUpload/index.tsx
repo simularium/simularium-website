@@ -22,7 +22,9 @@ const FileUpload = ({ loadLocalFile }: FileUploadProps) => {
             onChange={onChange}
             customRequest={(options) => customRequest(options, loadLocalFile)}
         >
-            <Button>{Icons.UploadFile} Upload Simularium File</Button>
+            <Button type="ghost">
+                {Icons.UploadFile} Upload Simularium File
+            </Button>
         </Upload>
     );
 };

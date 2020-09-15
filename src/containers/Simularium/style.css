@@ -7,6 +7,8 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    background: var(--dark-theme-body-bg);
+    color: var(--dark-theme-text-color);
 }
 .container :global(.ant-layout-content) {
     margin: 0 30px;
@@ -17,4 +19,9 @@
     position: relative;
     height: 100%;
 
+}
+
+.container :global(.ant-btn-ghost) {
+    color: var(--dark-theme-primary-color);
+    border-color: var(--dark-theme-primary-color);
 }

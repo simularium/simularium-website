@@ -1,11 +1,12 @@
 import * as React from "react";
-import { Layout, Row, Col, PageHeader, Tag } from "antd";
+import { Layout, Row, Col, PageHeader, Tag, Button } from "antd";
 import { ActionCreator } from "redux";
 import moment from "moment";
 
 import FileUpload from "../FileUpload";
 import { LocalSimFile, RequestFileAction } from "../../state/metadata/types";
 import NetworkFileMenu from "../NetworkFileMenu";
+import { Link, NavLink } from "react-router-dom";
 const { Header } = Layout;
 
 const styles = require("./style.css");
@@ -27,13 +28,13 @@ export default class AppHeader extends React.Component<AppHeaderProps, {}> {
         return (
             <Header className={styles.container}>
                 <PageHeader
-                    title="Simularium"
-                    subTitle={simulariumFileName ? simulariumFileName : ""}
+                    title={simulariumFileName ? simulariumFileName : ""}
+                    className={styles.pageHeader}
+                    onBack={() => null}
+                    backIcon={<NavLink to="/">Simularium</NavLink>}
                     tags={
                         lastModified ? (
-                            <Tag color="blue">
-                                {moment(lastModified).format()}
-                            </Tag>
+                            <Tag>{moment(lastModified).format()}</Tag>
                         ) : (
                             []
                         )
@@ -49,12 +50,12 @@ export default class AppHeader extends React.Component<AppHeaderProps, {}> {
                         />,
                         ,
                     ]}
+                    footer={
+                        <Button type="ghost" href="tutorial">
+                            Getting Started
+                        </Button>
+                    }
                 />
-                <Row>
-                    <Col />
-                    <Col />
-                    <Col />
-                </Row>
             </Header>
         );
     }

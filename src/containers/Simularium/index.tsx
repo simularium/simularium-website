@@ -108,8 +108,8 @@ class App extends React.Component<AppProps, AppState> {
             changeToLocalSimulariumFile,
             changeToNetworkedFile,
             resetDragOverViewer,
-            fileIsDraggedOverViewer,
             viewerStatus,
+            fileIsDraggedOverViewer,
         } = this.props;
         return (
             <Layout className={styles.container}>
@@ -127,7 +127,7 @@ class App extends React.Component<AppProps, AppState> {
                         loadLocalFile={changeToLocalSimulariumFile}
                         isLoading={viewerStatus === VIEWER_LOADING}
                         resetDragOverViewer={resetDragOverViewer}
-                        fileIsDraggedOverViewer={true}
+                        fileIsDraggedOverViewer={fileIsDraggedOverViewer}
                     />
                     <SideBar onCollapse={this.onPanelCollapse} type="left">
                         <ModelPanel />

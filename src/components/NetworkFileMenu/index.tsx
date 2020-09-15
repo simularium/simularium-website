@@ -35,7 +35,7 @@ const NetworkFileMenu = ({ selectFile }: NetworkFileMenuProps) => {
             <Button
                 className="ant-dropdown-link"
                 onClick={(e) => e.preventDefault()}
-                type="primary"
+                type="ghost"
             >
                 Load Existing Simularium Model {DownArrow}
             </Button>
