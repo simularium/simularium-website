@@ -12,6 +12,5 @@
     --light-gray-alt: #f7f7f7;
     --border-gray: var(--light-gray);
     --landing-pg-panel-light-gray: var(--light-gray-alt);
-    --landing-pg-card-light-gray: var(--light-gray-alt);
     --landing-pg-card-link-gray: var(--medium-gray);
 }

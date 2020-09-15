@@ -1,8 +1,6 @@
 .card {
     width: 400px;
-    height: 100%;
     padding: 15px 15px 5px 15px;
-    background-color: var(--landing-pg-card-light-gray);
 }
 
 a, a :hover {
