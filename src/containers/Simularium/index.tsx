@@ -20,6 +20,12 @@ import {
     SetSimulariumControllerAction,
     RequestFileAction,
 } from "../../state/metadata/types";
+import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
+import {
+    DragOverViewerAction,
+    ResetDragOverViewerAction,
+} from "../../state/selection/types";
+import { VIEWER_LOADING } from "../../state/metadata/constants";
 const { Content } = Layout;
 
 const styles = require("./style.css");
@@ -36,6 +42,10 @@ interface AppProps {
     simulariumController: SimulariumController;
     changeToLocalSimulariumFile: ActionCreator<RequestFileAction>;
     changeToNetworkedFile: ActionCreator<RequestFileAction>;
+    fileIsDraggedOverViewer: boolean;
+    dragOverViewer: ActionCreator<DragOverViewerAction>;
+    resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
+    viewerStatus: string;
 }
 
 interface AppState {
@@ -47,6 +57,8 @@ class App extends React.Component<AppProps, AppState> {
     constructor(props: AppProps) {
         super(props);
         this.onPanelCollapse = this.onPanelCollapse.bind(this);
+        this.handleDragOverViewer = this.handleDragOverViewer.bind(this);
+        this.handleEndDrag = this.handleEndDrag.bind(this);
     }
 
     componentDidMount() {
@@ -65,6 +77,8 @@ class App extends React.Component<AppProps, AppState> {
                 netConnectionSettings: netConnectionSettings,
             })
         );
+        window.addEventListener("dragover", this.handleDragOverViewer, false);
+        window.addEventListener("ondragleave", this.handleEndDrag, false);
     }
 
     public onPanelCollapse(open: boolean) {
@@ -73,12 +87,29 @@ class App extends React.Component<AppProps, AppState> {
         onSidePanelCollapse(value);
     }
 
+    public handleDragOverViewer() {
+        const { dragOverViewer, fileIsDraggedOverViewer } = this.props;
+        if (!fileIsDraggedOverViewer) {
+            dragOverViewer();
+        }
+    }
+
+    public handleEndDrag() {
+        const { resetDragOverViewer, fileIsDraggedOverViewer } = this.props;
+        if (fileIsDraggedOverViewer) {
+            resetDragOverViewer();
+        }
+    }
+
     public render(): JSX.Element {
         const {
             simulariumFile,
             simulariumController,
             changeToLocalSimulariumFile,
             changeToNetworkedFile,
+            resetDragOverViewer,
+            fileIsDraggedOverViewer,
+            viewerStatus,
         } = this.props;
         return (
             <Layout className={styles.container}>
@@ -90,7 +121,14 @@ class App extends React.Component<AppProps, AppState> {
                 >
                     Header
                 </Header>
-                <Layout>
+                <Layout className={styles.content}>
+                    <ViewerOverlayTarget
+                        key="drop"
+                        loadLocalFile={changeToLocalSimulariumFile}
+                        isLoading={viewerStatus === VIEWER_LOADING}
+                        resetDragOverViewer={resetDragOverViewer}
+                        fileIsDraggedOverViewer={true}
+                    />
                     <SideBar onCollapse={this.onPanelCollapse} type="left">
                         <ModelPanel />
                     </SideBar>
@@ -117,6 +155,10 @@ function mapStateToProps(state: State) {
         simulariumController: metadataStateBranch.selectors.getSimulariumController(
             state
         ),
+        fileIsDraggedOverViewer: selectionStateBranch.selectors.getFileDraggedOverViewer(
+            state
+        ),
+        viewerStatus: metadataStateBranch.selectors.getViewerStatus(state),
     };
 }
 
@@ -127,6 +169,8 @@ const dispatchToPropsMap = {
     setSimulariumController:
         metadataStateBranch.actions.setSimulariumController,
     changeToNetworkedFile: metadataStateBranch.actions.changeToNetworkedFile,
+    resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
+    dragOverViewer: selectionStateBranch.actions.dragOverViewer,
 };
 
 export default connect(

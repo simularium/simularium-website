@@ -12,3 +12,9 @@
     margin: 0 30px;
     height: calc(100vh - var(--header-height));
 }
+
+.content {
+    position: relative;
+    height: 100%;
+
+}
