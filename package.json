@@ -11,6 +11,9 @@
   "license": "ISC",
   "scripts": {
     "start": "webpack-dev-server --config ./webpack/webpack.config.js --env.env dev",
+    "gh-build": "GH_BUILD=true webpack --config ./webpack/webpack.config.js --env.env production",
+    "pregh-deploy": "npm run gh-build",
+    "gh-deploy": "gh-pages -d dist",
     "build": "NODE_ENV=production webpack --config ./webpack/webpack.config.js",
     "lint": "eslint src/**/*.{ts,tsx}",
     "typeCheck": "tsc -p tsconfig.json --noEmit",
@@ -48,6 +51,7 @@
     "eslint-config-prettier": "4.0.0",
     "eslint-plugin-react": "7.12.4",
     "fork-ts-checker-webpack-plugin": "0.5.2",
+    "gh-pages": "^3.1.0",
     "html-webpack-plugin": "3.2.0",
     "husky": "1.3.1",
     "jsdom": "13.1.0",

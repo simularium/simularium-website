@@ -18,7 +18,9 @@ const { Header, Footer } = Layout;
 render(
     <Provider store={createReduxStore()}>
         <Layout>
-            <BrowserRouter>
+            <BrowserRouter
+                basename={process.env.GH_BUILD ? "/simularium-website/" : ""}
+            >
                 <Header>
                     <NavBar />
                 </Header>
