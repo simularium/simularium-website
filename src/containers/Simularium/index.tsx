@@ -55,7 +55,7 @@ class App extends React.Component<AppProps, AppState> {
         const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
         if (fileName && TRAJECTORY_FILES.includes(fileName as string)) {
             changeToNetworkedFile({
-                name: `${fileName}.h5`,
+                name: `${fileName}`,
                 data: null,
                 dateModified: null,
             });
