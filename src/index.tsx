@@ -12,18 +12,14 @@ import { APP_ID } from "./constants";
 import { createReduxStore } from "./state";
 import routes from "./routes";
 import { Layout } from "antd";
-import NavBar from "./components/NavBar";
 
-const { Header, Footer } = Layout;
+const { Footer } = Layout;
 render(
     <Provider store={createReduxStore()}>
         <Layout>
             <BrowserRouter
                 basename={process.env.GH_BUILD ? "/simularium-website/" : ""}
-              >
-                <Header>
-                    <NavBar />
-                </Header>
+            >
                 <Switch>
                     {routes.map((route) => (
                         <Route
