@@ -8,11 +8,7 @@ Front end website to create, modify and view simulations
 
 ## Description
 
-Main features in a brief descriptive text.
-
-## Installation
-
-Describe how to obtain the software and get it ready to run
+​This project aims to involve the wider biology community, especially wet lab biologists, in building and analyzing spatial mechanistic simulations at different levels of scale and connecting them in the context of whole cells. Our goal is to facilitate collaboration between experimental and computational biologists by building software tools and infrastructure to allow easy access to software packages written by computational biologists and easy visualization and sharing of results.
 
 ## Documentation
 
@@ -39,6 +35,7 @@ ___
 2. Push changes to that branch
 3. Make sure `npm run typeCheck`, `npm run test` and `npm run lint` all exit without errors. 
 4. Make a PR back to master using template, include screen shots for visual changes. Request reviews from Megan, Dan, Eric, Blair. If your change is implementing a design add Lisa S too. 
+5. Merge after at least 1 approval, but for complex changes, ideally 2.
 
 
 ### Structure
