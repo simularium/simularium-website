@@ -17,6 +17,7 @@ const styles = require("./style.css");
 
 const PLOT_STYLE = {
     backgroundColor: "#1e1b25",
+    backgroundTransparentColor: "#14121987",
     textColor: "#d3d3d3",
     borderColor: "#737373",
     fontSize: 11,
@@ -48,7 +49,7 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                             automargin: true,
                         },
                         legend: {
-                            bgcolor: "#14121987",
+                            bgcolor: PLOT_STYLE.backgroundTransparentColor,
                             font: {
                                 color: PLOT_STYLE.textColor,
                                 size: PLOT_STYLE.fontSize,
