@@ -8,7 +8,7 @@ import { TreeNodeNormal } from "antd/lib/tree/Tree";
 
 // BASIC SELECTORS
 export const getMetadata = (state: State) => state.metadata;
-export const getGraphData = (state: State) => state.metadata.graphData;
+export const getPlotData = (state: State) => state.metadata.plotData;
 export const getTotalTimeOfCachedSimulation = (state: State) =>
     state.metadata.totalTime;
 export const getTimeStepSize = (state: State) => state.metadata.timeStepSize;

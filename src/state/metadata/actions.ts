@@ -8,6 +8,7 @@ import {
     LOAD_LOCAL_FILE_IN_VIEWER,
     SET_VIEWER_STATUS,
     LOAD_NETWORKED_FILE_IN_VIEWER,
+    REQUEST_PLOT_DATA,
 } from "./constants";
 import {
     MetadataStateBranch,
@@ -18,6 +19,7 @@ import {
     LocalSimFile,
     NetworkedSimFile,
     RequestFileAction,
+    RequestCachedPlotAction,
 } from "./types";
 import {
     SimulariumFileFormat,
@@ -34,6 +36,15 @@ export function receiveMetadata(payload: MetadataStateBranch): ReceiveAction {
 export function requestMetadata(): RequestAction {
     return {
         type: REQUEST_METADATA,
+    };
+}
+
+export function requestCachedPlotData(payload: {
+    url: string;
+}): RequestCachedPlotAction {
+    return {
+        payload,
+        type: REQUEST_PLOT_DATA,
     };
 }
 
