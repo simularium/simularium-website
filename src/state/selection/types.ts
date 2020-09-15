@@ -9,7 +9,15 @@ export interface SelectionStateBranch {
     [key: string]: any;
 }
 
-export interface TurnAgentsOnAction {
+export interface DragOverViewerAction {
+    type: string;
+}
+
+export interface ResetDragOverViewerAction {
+    type: string;
+}
+
+export interface ChangeAgentsRenderingStateAction {
     payload: string[];
     type: string;
 }

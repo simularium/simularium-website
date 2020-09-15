@@ -21,13 +21,25 @@ For full package documentation please visit
 [organization.github.io/projectname](https://organization.github.io/projectname/index.html).
 
 ## Quick Start
+To run this application in development: 
+#### With Gradle
+1. `$ ./gradlew start`
 
-To run this application in development, run `$ ./gradlew start`. This will start `webpack-dev-server`, running by default
-on the port specified in `webpack/constants.js`. To view, visit `http://localhost:{PORT}`. Webpack-dev-server will watch all relevant project files, and reload the browser
-automatically when those files change.
+#### With npm
+1. `npm i` to install dependencies 
+2. `npm start`
+
+This will start `webpack-dev-server`, running by default
+on the port specified in `webpack/constants.js`. To view, visit `http://localhost:{PORT}`. Webpack-dev-server will watch all relevant project files, and reload the browser automatically when those files change.
 ___
 
 ## Development
+
+1. Checkout a branch named for an issue/bug
+2. Push changes to that branch
+3. Make sure `npm run typeCheck`, `npm run test` and `npm run lint` all exit without errors. 
+4. Make a PR back to master using template, include screen shots for visual changes. Request reviews from Megan, Dan, Eric, Blair. If your change is implementing a design add Lisa S too. 
+
 
 ### Structure
 src/<br/>

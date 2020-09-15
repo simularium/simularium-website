@@ -3,17 +3,18 @@ import {
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
     SIDE_PANEL_COLLAPSED,
-    TURN_AGENTS_ON,
-    HIGHLIGHT_AGENT,
-    TOGGLE_LOAD_FILE_MODAL,
+    TURN_AGENTS_ON_BY_KEY,
+    HIGHLIGHT_AGENTS_BY_KEY,
+    DRAG_OVER_VIEWER,
+    RESET_DRAG_OVER_VIEWER,
 } from "./constants";
 import {
     DeselectFileAction,
-    TurnAgentsOnAction,
+    ChangeAgentsRenderingStateAction,
     SelectMetadataAction,
     ChangeTimeAction,
-    HighlightAgentAction,
-    ToggleAction,
+    DragOverViewerAction,
+    ResetDragOverViewerAction,
 } from "./types";
 
 export function deselectFile(fileId: string | string[]): DeselectFileAction {
@@ -37,31 +38,21 @@ export function onSidePanelCollapse(numberCollapsed: number) {
     };
 }
 
-export function turnAgentsOn(agentIds: string[]): TurnAgentsOnAction {
+export function turnAgentsOnByDisplayKey(
+    agentNames: string[]
+): ChangeAgentsRenderingStateAction {
     return {
-        payload: agentIds,
-        type: TURN_AGENTS_ON,
+        payload: agentNames,
+        type: TURN_AGENTS_ON_BY_KEY,
     };
 }
 
-export function highlightAgent(agentIds: string): HighlightAgentAction {
+export function highlightAgentsByDisplayKey(
+    agentNames: string[]
+): ChangeAgentsRenderingStateAction {
     return {
-        payload: agentIds,
-        type: HIGHLIGHT_AGENT,
-    };
-}
-
-export function openLoadFileModal(): ToggleAction {
-    return {
-        payload: true,
-        type: TOGGLE_LOAD_FILE_MODAL,
-    };
-}
-
-export function closeLoadFileModal(): ToggleAction {
-    return {
-        payload: false,
-        type: TOGGLE_LOAD_FILE_MODAL,
+        payload: agentNames,
+        type: HIGHLIGHT_AGENTS_BY_KEY,
     };
 }
 
@@ -73,5 +64,17 @@ export function selectMetadata(
         key,
         payload,
         type: SELECT_METADATA,
+    };
+}
+
+export function dragOverViewer(): DragOverViewerAction {
+    return {
+        type: DRAG_OVER_VIEWER,
+    };
+}
+
+export function resetDragOverViewer(): ResetDragOverViewerAction {
+    return {
+        type: RESET_DRAG_OVER_VIEWER,
     };
 }

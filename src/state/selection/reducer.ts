@@ -9,28 +9,30 @@ import {
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
     SIDE_PANEL_COLLAPSED,
-    TURN_AGENTS_ON,
-    HIGHLIGHT_AGENT,
-    TOGGLE_LOAD_FILE_MODAL,
+    TURN_AGENTS_ON_BY_KEY,
+    HIGHLIGHT_AGENTS_BY_KEY,
+    DRAG_OVER_VIEWER,
+    RESET_DRAG_OVER_VIEWER,
 } from "./constants";
 import {
     DeselectFileAction,
-    TurnAgentsOnAction,
+    ChangeAgentsRenderingStateAction,
     SelectionStateBranch,
     SelectMetadataAction,
     ChangeTimeAction,
     ChangeNumberCollapsedPanelsAction,
     HighlightAgentAction,
-    ToggleAction,
+    DragOverViewerAction,
+    ResetDragOverViewerAction,
 } from "./types";
 
 export const initialState = {
     files: [],
     time: 0,
     numberPanelsCollapsed: 0,
-    agentsOn: [],
-    hightlightedId: -1,
-    modalOpen: false,
+    visibleAgentKeys: [],
+    highlightedAgentKeys: [],
+    draggedOverViewer: false,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -42,13 +44,18 @@ const actionToConfigMap: TypeToDescriptionMap = {
             files: without(state.files, ...castArray(action.payload)),
         }),
     },
-    [TURN_AGENTS_ON]: {
-        accepts: (action: AnyAction): action is TurnAgentsOnAction =>
-            action.type === TURN_AGENTS_ON,
-        perform: (state: SelectionStateBranch, action: TurnAgentsOnAction) => {
+    [TURN_AGENTS_ON_BY_KEY]: {
+        accepts: (
+            action: AnyAction
+        ): action is ChangeAgentsRenderingStateAction =>
+            action.type === TURN_AGENTS_ON_BY_KEY,
+        perform: (
+            state: SelectionStateBranch,
+            action: ChangeAgentsRenderingStateAction
+        ) => {
             return {
                 ...state,
-                agentsOn: action.payload,
+                visibleAgentKeys: action.payload,
             };
         },
     },
@@ -85,26 +92,33 @@ const actionToConfigMap: TypeToDescriptionMap = {
             numberPanelsCollapsed: state.numberPanelsCollapsed + action.payload,
         }),
     },
-    [HIGHLIGHT_AGENT]: {
-        accepts: (action: AnyAction): action is HighlightAgentAction =>
-            action.type === HIGHLIGHT_AGENT,
+    [HIGHLIGHT_AGENTS_BY_KEY]: {
+        accepts: (
+            action: AnyAction
+        ): action is ChangeAgentsRenderingStateAction =>
+            action.type === HIGHLIGHT_AGENTS_BY_KEY,
         perform: (
             state: SelectionStateBranch,
             action: HighlightAgentAction
         ) => ({
             ...state,
-            hightlightedId: action.payload,
+            highlightedAgentKeys: action.payload,
         }),
     },
-    [TOGGLE_LOAD_FILE_MODAL]: {
-        accepts: (action: AnyAction): action is ToggleAction =>
-            action.type === TOGGLE_LOAD_FILE_MODAL,
-        perform: (
-            state: SelectionStateBranch,
-            action: HighlightAgentAction
-        ) => ({
+    [DRAG_OVER_VIEWER]: {
+        accepts: (action: AnyAction): action is DragOverViewerAction =>
+            action.type === DRAG_OVER_VIEWER,
+        perform: (state: SelectionStateBranch) => ({
             ...state,
-            modalOpen: action.payload,
+            draggedOverViewer: true,
+        }),
+    },
+    [RESET_DRAG_OVER_VIEWER]: {
+        accepts: (action: AnyAction): action is ResetDragOverViewerAction =>
+            action.type === RESET_DRAG_OVER_VIEWER,
+        perform: (state: SelectionStateBranch) => ({
+            ...state,
+            draggedOverViewer: false,
         }),
     },
 };

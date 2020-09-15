@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Button, Slider } from "antd";
 
+import Icons from "../Icons";
+
 const styles = require("./style.css");
 interface PlayBackProps {
     playHandler: () => void;
@@ -28,6 +30,9 @@ const PlayBackControls = ({
     };
 
     const tipFormatter = (sliderValue: number): string => {
+        if (!sliderValue) {
+            return "";
+        }
         const formatNumber = (num: number) => Number(num).toPrecision(3);
         const microSeconds = sliderValue / 1000;
         if (microSeconds > 1) {
@@ -44,7 +49,7 @@ const PlayBackControls = ({
         <div className={styles.container}>
             <Button
                 className={styles.item}
-                icon="step-backward"
+                icon={Icons.StepBack}
                 onClick={prevHandler}
                 disabled={time === 0}
             />
@@ -58,12 +63,12 @@ const PlayBackControls = ({
             />
             <Button
                 className={styles.item}
-                icon={isPlaying ? "pause" : "caret-right"}
+                icon={isPlaying ? Icons.Pause : Icons.Play}
                 onClick={isPlaying ? pauseHandler : playHandler}
             />
             <Button
                 className={styles.item}
-                icon="step-forward"
+                icon={Icons.StepForward}
                 onClick={nextHandler}
             />
         </div>
