@@ -1,14 +1,18 @@
 import React from "react";
 import { Upload, message, Button } from "antd";
-import { LocalSimFile } from "../../state/metadata/types";
+import { LocalSimFile, RequestFileAction } from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
 
 import Icons from "../Icons";
 
 import customRequest from "./custom-request-upload";
+import { ActionCreator } from "redux";
 interface FileUploadProps {
-    loadLocalFile: (simulariumFile: LocalSimFile) => void;
+    loadLocalFile: ActionCreator<RequestFileAction>;
 }
+
+const styles = require("./style.css");
+
 const FileUpload = ({ loadLocalFile }: FileUploadProps) => {
     const onChange = ({ file }: UploadChangeParam) => {
         if (file.status === "done") {
@@ -20,9 +24,10 @@ const FileUpload = ({ loadLocalFile }: FileUploadProps) => {
     return (
         <Upload
             onChange={onChange}
+            showUploadList={false}
             customRequest={(options) => customRequest(options, loadLocalFile)}
         >
-            <Button type="ghost">
+            <Button type="ghost" className={styles.uploadButton}>
                 {Icons.UploadFile} Upload Simularium File
             </Button>
         </Upload>

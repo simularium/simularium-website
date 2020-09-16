@@ -3,9 +3,9 @@ import { Layout, PageHeader, Tag, Button } from "antd";
 import { ActionCreator } from "redux";
 import moment from "moment";
 
-import FileUpload from "../FileUpload";
+import FileUpload from "../LocalFileUpload";
 import { LocalSimFile, RequestFileAction } from "../../state/metadata/types";
-import NetworkFileMenu from "../NetworkFileMenu";
+import NetworkFileMenu from "../LoadFileMenu";
 import { NavLink } from "react-router-dom";
 import { GoBack } from "../Icons";
 
@@ -33,10 +33,12 @@ export default class AppHeader extends React.Component<AppHeaderProps, {}> {
                     title={simulariumFileName ? simulariumFileName : ""}
                     className={styles.pageHeader}
                     onBack={() => null}
-                    backIcon={<NavLink to="/">{GoBack} Simularium</NavLink>}
+                    backIcon={<NavLink to="/">{GoBack} Home</NavLink>}
                     tags={
                         lastModified ? (
-                            <Tag>{moment(lastModified).format()}</Tag>
+                            <Tag className={styles.tag}>
+                                {moment(lastModified).format()}
+                            </Tag>
                         ) : (
                             []
                         )
@@ -45,12 +47,8 @@ export default class AppHeader extends React.Component<AppHeaderProps, {}> {
                         <NetworkFileMenu
                             key="select"
                             selectFile={loadNetworkFile}
-                        />,
-                        <FileUpload
-                            key="upload"
                             loadLocalFile={loadLocalFile}
                         />,
-                        ,
                     ]}
                     footer={
                         <Button type="ghost" href="tutorial">
