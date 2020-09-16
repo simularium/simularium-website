@@ -3,16 +3,11 @@
     padding: 15px 15px 5px 15px;
 }
 
-a, a :hover {
-    color: var(--landing-pg-card-link-gray);
-    transition: none;
-}
-
 .card :global(.ant-card-body) {
     padding: 0px;
 }
 
-.card img {
+img {
     width: 100%;
 }
 
@@ -20,7 +15,7 @@ a, a :hover {
     font-size: 18px;
 }
 
-.cardText p {
+p {
     margin-bottom: 0.5em;
 }
 
@@ -32,4 +27,9 @@ a, a :hover {
 
 .cardTitle {
     font-weight: 600;
+}
+
+a, a :hover {
+    color: var(--landing-pg-card-link-gray);
+    transition: none;
 }

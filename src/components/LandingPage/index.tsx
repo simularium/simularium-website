@@ -60,7 +60,7 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                             <ModelCard
                                 key={trajectory.id}
                                 trajectory={trajectory}
-                                image={cardImages[trajectory.imageFile]}
+                                imageSource={cardImages[trajectory.imageFile]}
                             />
                         );
                     })}
