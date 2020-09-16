@@ -55,13 +55,9 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
                             treeData={visibilityDisplayOptions}
                             handleCheck={turnAgentsOnByDisplayKey}
                             agentsChecked={visibleAgentKeys}
+                            handleHighlight={highlightAgentsByDisplayKey}
+                            agentsHighlighted={highlightedAgentKeys}
                             title="Turn on/off"
-                        />
-                        <CheckBoxTree
-                            treeData={highlightDisplayOptions}
-                            handleCheck={highlightAgentsByDisplayKey}
-                            agentsChecked={highlightedAgentKeys}
-                            title="Highlight"
                         />
                     </div>,
                     null,

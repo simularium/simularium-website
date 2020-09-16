@@ -1,10 +1,14 @@
 import React, { useState, Key } from "react";
-import { Tree } from "antd";
+import { Checkbox, Collapse, Tree } from "antd";
 import { ActionCreator } from "redux";
 import { ChangeAgentsRenderingStateAction } from "../../state/selection/types";
 import { TreeProps } from "antd/lib/tree";
+const { Panel } = Collapse;
 
-interface CheckBoxTreeProps extends TreeProps {
+const { TreeNode } = Tree;
+
+interface CheckBoxTreeProps {
+    treeData: any[];
     agentsChecked: string[];
     handleCheck: ActionCreator<ChangeAgentsRenderingStateAction>;
     title: string;
@@ -31,19 +35,23 @@ const CheckBoxTree = ({
         handleCheck(checkedKeys);
     };
 
-    return (
+    console.log(title, treeData);
+    return treeData.length > 0 ? (
         <>
             <label>{title}</label>
-            <Tree
-                checkable
-                onExpand={onExpand}
-                expandedKeys={expandedKeys}
-                autoExpandParent={autoExpandParent}
-                onCheck={onCheck}
-                checkedKeys={agentsChecked}
-                treeData={treeData}
-            />
+            <Collapse defaultActiveKey={expandedKeys}>
+                {treeData.map((data) => (
+                    <Panel header={data.title} key={data.key}>
+                        {data.children &&
+                            data.children.map((child) => {
+                                <Checkbox>{child.title}</Checkbox>;
+                            })}
+                    </Panel>
+                ))}
+            </Collapse>
         </>
+    ) : (
+        "Load file"
     );
 };
 

@@ -53,7 +53,10 @@ const makeDataTreeKey = (renderType: string, name: string, tagId: string) =>
 
 export const getUiDisplayDataTreeVisibility = createSelector(
     [getAgentDisplayNamesAndStates],
-    (uiDisplayData: UIDisplayData): TreeNodeNormal[] => {
+    (uiDisplayData: UIDisplayData) => {
+        if (!uiDisplayData.length) {
+            return [];
+        }
         return uiDisplayData.map((agent) => ({
             title: agent.name,
             key: agent.name,

@@ -9,26 +9,51 @@ interface CheckBoxesProps {
     title: string;
 }
 
-export default class CheckBoxes extends React.Component<CheckBoxesProps, {}> {
-    public render(): JSX.Element {
-        const { options, onChange, values, title } = this.props;
-        const checkStyle = {
-            display: "block",
-            height: "30px",
-            lineHeight: "30px",
-            marginLeft: 0,
+import React from "react";
+import { Checkbox } from "antd";
+
+export default class SharedCheckbox extends React.Component {
+    constructor(props) {
+        super(props);
+        this.onCheckAllChange = this.onCheckAllChange.bind(this);
+        this.state = {
+            checkedList: props.checkedList,
+            indeterminate: true,
+            checkAll: false,
         };
+    }
+
+    componentWillReceiveProps(newProps) {
+        const { checkedList, allOptions } = newProps;
+        this.setState({
+            checkedList,
+            indeterminate:
+                !!checkedList.length && checkedList.length < allOptions.length,
+            checkAll: checkedList.length === allOptions.length,
+        });
+    }
+
+    onCheckAllChange({ target }) {
+        const { allOptions, onChecked, onUnchecekd } = this.props;
+        target.checked ? onChecked(allOptions) : onUnchecekd(allOptions);
+        this.setState({
+            checkedList: target.checked ? allOptions : [],
+            indeterminate: false,
+            checkAll: target.checked,
+        });
+    }
+
+    render() {
+        const { label } = this.props;
         return (
-            <div>
-                <h4>{title}</h4>
-                <Checkbox.Group value={values} onChange={onChange}>
-                    {options.map((ele) => (
-                        <Checkbox style={checkStyle} key={ele} value={ele}>
-                            {ele}
-                        </Checkbox>
-                    ))}
-                </Checkbox.Group>
-            </div>
+            <Checkbox
+                indeterminate={this.state.indeterminate}
+                onChange={this.onCheckAllChange}
+                checked={this.state.checkAll}
+                style={{ margin: "auto", width: 120 }}
+            >
+                {label}
+            </Checkbox>
         );
     }
 }
