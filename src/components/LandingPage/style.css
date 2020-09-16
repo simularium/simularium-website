@@ -4,7 +4,7 @@
     margin: auto;
 }
 
-.text {
+.panel {
     background-color: var(--landing-pg-panel-light-gray);
     padding-left: 50px;
     padding-right: 50px;
@@ -13,15 +13,10 @@
     font-size: 20px;
 }
 
-.text > *, .trajectories {
+.panel > *, .cards {
     max-width: 1010px;
     margin-left: auto;
     margin-right: auto;
-}
-
-.aboutSimulariumPanel {
-    composes: text;
-    background-color: #ffffff;
 }
 
 h1, h2 {
@@ -40,21 +35,27 @@ h2 {
     font-size: 24px;
 }
 
-.library .text {
+.libraryPanel .panel {
     background-color: inherit;
 }
 
-.trajectories {
+.cards {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
     align-items: stretch;
 }
 
-.trajectories > * {
+.cards > * {
     margin-bottom: 50px;
 }
 
+.aboutSimulariumPanel {
+    composes: panel;
+    background-color: #ffffff;
+}
+
+/* Simularium overview flowchart image */
 .flowchart {
     width: 60%;
     min-width: 600px;

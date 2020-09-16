@@ -3,7 +3,7 @@ import { Button, Layout } from "antd";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import ModelCard from "../ModelCard";
-import overviewImg from "../../assets/overview-image.png";
+import flowchartImg from "../../assets/overview-image.png";
 import cardImg1 from "../../assets/card-image-1.png";
 import cardImg2 from "../../assets/card-image-2.png";
 import cardImg3 from "../../assets/card-image-3.png";
@@ -29,7 +29,7 @@ const cardImages: Record<string, string> = {
 const LandingPage: React.FunctionComponent<{}> = () => {
     return (
         <Content className={styles.content}>
-            <div className={styles.text}>
+            <div className={styles.panel}>
                 <h1>Simularium</h1>
                 <h2 className={styles.subheader}>
                     Create, visualize, and share biological simulations
@@ -47,8 +47,8 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                     and sharing of results.
                 </p>
             </div>
-            <div className={styles.library}>
-                <div className={styles.text}>
+            <div className={styles.libraryPanel}>
+                <div className={styles.panel}>
                     <h2>Simulation Trajectory Library</h2>
                     <br />
                     <p>
@@ -56,7 +56,7 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         simulation trajectories below.
                     </p>
                 </div>
-                <div className={styles.trajectories}>
+                <div className={styles.cards}>
                     {TRAJECTORIES.map((trajectory) => {
                         return (
                             <ModelCard
@@ -72,7 +72,7 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                 <img
                     className={styles.flowchart}
                     alt="A flowchart describing Simularium use"
-                    src={overviewImg}
+                    src={flowchartImg}
                 />
                 <p>
                     We have begun by building initial models for nucleating
