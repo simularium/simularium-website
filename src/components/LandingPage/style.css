@@ -13,6 +13,7 @@
     font-size: 20px;
 }
 
+/* Prevents content from horizontally spreading too much when browser window is very wide */
 .panel > *, .cards {
     max-width: 1010px;
     margin-left: auto;
@@ -35,7 +36,8 @@ h2 {
     font-size: 24px;
 }
 
-.libraryPanel .panel {
+.libraryPanel {
+    composes: panel;
     background-color: inherit;
 }
 
@@ -52,7 +54,7 @@ h2 {
 
 .aboutSimulariumPanel {
     composes: panel;
-    background-color: #ffffff;
+    background-color: white;
 }
 
 /* Simularium overview flowchart image */
