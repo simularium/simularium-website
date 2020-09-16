@@ -1,3 +1,8 @@
+import listeriaNormalImage from "../assets/card-image-1.png";
+import listeriaUltrapolarImage from "../assets/card-image-2.png";
+import endocytosisImage from "../assets/card-image-3.png";
+import covid19Image from "../assets/card-image-4.png";
+
 import { TrajectoryDisplayData } from "./interfaces";
 
 const TRAJECTORIES: TrajectoryDisplayData[] = [
@@ -15,7 +20,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A model of Listeria monocytogenes propulsion that explicitly simulates monomer-scale biochemical and mechanical interactions. This run has a normal ActA distribution on the bacterial surface.",
-        imageFile: "card-image-1",
+        imageFile: listeriaNormalImage,
     },
     {
         modelName: "Actin-based Listeria Propulsion",
@@ -31,7 +36,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A model of Listeria monocytogenes propulsion that explicitly simulates monomer-scale biochemical and mechanical interactions. This run has an ultrapolar ActA distribution on the bacterial surface.",
-        imageFile: "card-image-2",
+        imageFile: listeriaUltrapolarImage,
     },
     {
         modelName: "Actin in Clathrin-mediated Endocytosis",
@@ -46,7 +51,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A CytoSim model of a branched actin network internalizing an endocytic pit against membrane tension.",
-        imageFile: "card-image-3",
+        imageFile: endocytosisImage,
     },
     {
         modelName: "Covid Virion",
@@ -61,7 +66,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A structural model of a diffusing SARS-CoV-2 virus particle.",
-        imageFile: "card-image-4",
+        imageFile: covid19Image,
     },
 ];
 

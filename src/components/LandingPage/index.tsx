@@ -4,27 +4,10 @@ import { Button, Layout } from "antd";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import ModelCard from "../ModelCard";
 import flowchartImg from "../../assets/overview-image.png";
-import cardImg1 from "../../assets/card-image-1.png";
-import cardImg2 from "../../assets/card-image-2.png";
-import cardImg3 from "../../assets/card-image-3.png";
-import cardImg4 from "../../assets/card-image-4.png";
 
 const { Content } = Layout;
 
 const styles = require("./style.css");
-
-/* 
-This object allows the LandingPage component to pass down the correct imported
-image to each ModelCard component as a prop. There has got to be a better way to
-do this, but it seems kind of tricky with local files. Easiest way I think would
-be to host the image files somewhere and just use those URLs as src attributes.
-*/
-const cardImages: Record<string, string> = {
-    "card-image-1": cardImg1,
-    "card-image-2": cardImg2,
-    "card-image-3": cardImg3,
-    "card-image-4": cardImg4,
-};
 
 const LandingPage: React.FunctionComponent<{}> = () => {
     return (
@@ -60,7 +43,6 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                             <ModelCard
                                 key={trajectory.id}
                                 trajectory={trajectory}
-                                imageSource={cardImages[trajectory.imageFile]}
                             />
                         );
                     })}

@@ -9,7 +9,6 @@ const styles = require("./style.css");
 
 interface ModelCardProps {
     trajectory: TrajectoryDisplayData;
-    imageSource: string;
 }
 
 const ModelCard: React.FunctionComponent<ModelCardProps> = (
@@ -22,6 +21,7 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
         authors,
         publication,
         description,
+        imageFile,
     } = props.trajectory;
     return (
         <Card
@@ -33,7 +33,10 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                         search: `?${URL_PARAM_KEY_FILE_NAME}=${id}`,
                     }}
                 >
-                    <img alt="example" src={props.imageSource} />
+                    <img
+                        alt={`Snapshot of simulation for ${title}`}
+                        src={imageFile}
+                    />
                 </Link>
             }
         >
