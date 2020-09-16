@@ -1,6 +1,6 @@
 import React from "react";
 import { Upload, message, Button } from "antd";
-import { LocalSimFile, RequestFileAction } from "../../state/metadata/types";
+import { RequestFileAction } from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
 
 import Icons from "../Icons";

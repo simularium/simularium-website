@@ -3,8 +3,7 @@ import { Layout, PageHeader, Tag, Button } from "antd";
 import { ActionCreator } from "redux";
 import moment from "moment";
 
-import FileUpload from "../LocalFileUpload";
-import { LocalSimFile, RequestFileAction } from "../../state/metadata/types";
+import { RequestFileAction } from "../../state/metadata/types";
 import NetworkFileMenu from "../LoadFileMenu";
 import { NavLink } from "react-router-dom";
 import { GoBack } from "../Icons";
@@ -14,7 +13,7 @@ const { Header } = Layout;
 const styles = require("./style.css");
 
 interface AppHeaderProps {
-    loadLocalFile: (simFile: LocalSimFile) => void;
+    loadLocalFile: ActionCreator<RequestFileAction>;
     simulariumFileName: string;
     lastModified: number;
     loadNetworkFile: ActionCreator<RequestFileAction>;
