@@ -1,6 +1,96 @@
 .content {
+    display: block;
+    width: 100%;
+    margin: auto;
+}
+
+.panel {
+    background-color: var(--landing-pg-panel-light-gray);
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 1em;
+    padding-bottom: 20px;
+    font-size: 20px;
+}
+
+/* Prevents content from horizontally spreading too much when browser window is very wide */
+.panel > *, .cards {
+    max-width: 1010px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1, h2 {
+    text-align: center;
+    font-weight: 400;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    color: var(--landing-pg-header-gray);
+}
+
+h1 {
+    font-size: 36px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+.libraryPanel {
+    composes: panel;
+    background-color: inherit;
+}
+
+.cards {
     display: flex;
     flex-flow: row wrap;
-    width: 100%;
-    justify-content: space-evenly;
+    justify-content: space-around;
+    align-items: stretch;
+}
+
+.cards > * {
+    margin-bottom: 50px;
+}
+
+.aboutSimulariumPanel {
+    composes: panel;
+    background-color: white;
+}
+
+/* Simularium overview flowchart image */
+.flowchart {
+    width: 60%;
+    min-width: 600px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.signUpPanel {
+    padding-top: 3em;
+    padding-bottom: 1.5em;
+    background-color: var(--landing-pg-background-purple);
+}
+
+.signUpPanel button {
+    background-color: var(--landing-pg-button-purple);
+    color: var(--landing-pg-button-light-gray);
+    border: none;
+    width: 280px;
+    height: 70px;
+    font-size: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+    margin-bottom: 2.5em;
+    transition: 0.3s;
+}
+
+.signUpPanel :global(.ant-btn-primary:hover) {
+    background-color: var(--landing-pg-button-purple);
+    opacity: 0.9;
+    color: var(--landing-pg-button-light-gray);
 }
