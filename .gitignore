@@ -9,4 +9,4 @@ build/
 .project
 .settings/
 .env
-.vscode/launch.json
+.vscode/
