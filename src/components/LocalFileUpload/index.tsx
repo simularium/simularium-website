@@ -13,7 +13,7 @@ interface FileUploadProps {
 
 const styles = require("./style.css");
 
-const FileUpload = ({ loadLocalFile }: FileUploadProps) => {
+const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
     const onChange = ({ file }: UploadChangeParam) => {
         if (file.status === "done") {
             message.success(`${file.name} file uploaded successfully`);
@@ -34,4 +34,4 @@ const FileUpload = ({ loadLocalFile }: FileUploadProps) => {
     );
 };
 
-export default FileUpload;
+export default LocalFileUpload;
