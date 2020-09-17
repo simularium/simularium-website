@@ -14,7 +14,6 @@ import metadataStateBranch from "../../state/metadata";
 
 import {
     ChangeTimeAction,
-    ChangeAgentsRenderingStateAction,
     ResetDragOverViewerAction,
     DragOverViewerAction,
     SetVisibleAction,

@@ -1,23 +1,33 @@
-import React, { useState, Key } from "react";
+import React, { useState } from "react";
 import { Checkbox, Collapse, Col } from "antd";
 import { ActionCreator } from "redux";
+import { CheckboxChangeEvent, CheckboxOptionType } from "antd/lib/checkbox";
+import { map } from "lodash";
+
 import {
     ChangeAgentsRenderingStateAction,
     VisibilitySelectionMap,
 } from "../../state/selection/types";
-import { TreeProps } from "antd/lib/tree";
 import SharedCheckbox from "../SharedCheckbox";
-import { CheckboxChangeEvent } from "antd/lib/checkbox";
 const { Panel } = Collapse;
 
 const CheckboxGroup = Checkbox.Group;
 
+export interface AgentDisplayNode {
+    title: string;
+    key: string;
+    children: CheckboxOptionType[];
+}
+
 interface CheckBoxTreeProps {
-    treeData: any[];
+    treeData: AgentDisplayNode[];
     agentsChecked: VisibilitySelectionMap;
+    agentsHighlighted: VisibilitySelectionMap;
     handleAgentCheck: ActionCreator<ChangeAgentsRenderingStateAction>;
+    handleHighlight: ActionCreator<ChangeAgentsRenderingStateAction>;
     title: string;
 }
+
 const CheckBoxTree = ({
     agentsChecked,
     treeData,
@@ -59,19 +69,16 @@ const CheckBoxTree = ({
             <label>{title}</label>
             <Collapse defaultActiveKey={expandedKeys}>
                 {treeData.map((data) => {
-                    const options = [
-                        data.title,
-                        ...data.children.map((state) => state.title),
-                    ];
-                    if (data.children.length) {
-                    }
                     return (
                         <Panel
                             header={
                                 data.children.length ? (
                                     <SharedCheckbox
                                         title={data.title}
-                                        options={options}
+                                        options={map(
+                                            data.children,
+                                            "value" as string
+                                        )}
                                         onTopLevelCheck={onTopLevelCheck}
                                         checkedList={
                                             agentsChecked[data.title] || []
@@ -94,7 +101,7 @@ const CheckBoxTree = ({
                         >
                             <Col>
                                 <CheckboxGroup
-                                    options={options}
+                                    options={data.children}
                                     value={agentsChecked[data.title] || []}
                                     onChange={(values) =>
                                         onSubCheckboxChange(
@@ -106,7 +113,7 @@ const CheckBoxTree = ({
                             </Col>
                             <Col>
                                 <CheckboxGroup
-                                    options={options}
+                                    options={data.children}
                                     value={agentsChecked[data.title] || []}
                                     onChange={(values) =>
                                         onSubCheckboxChange(
@@ -122,7 +129,7 @@ const CheckBoxTree = ({
             </Collapse>
         </>
     ) : (
-        "Load file"
+        <div>Load file</div>
     );
 };
 

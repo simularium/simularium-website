@@ -24,25 +24,25 @@ export const getFileDraggedOverViewer = (state: State) =>
     state.selection.draggedOverViewer;
 // COMPOSED SELECTORS
 
-// key is `${renderType}-${agentName}-${tagId}`
-const parseTagIdFromKey = (key: string) => key.split("-")[2];
-
 export const getHightLightedNames = createSelector(
     [getHighlightedAgentsNamesAndTags, getAgentDisplayNamesAndStates],
-    (highlightedAgents, allAgents: UIDisplayData): string[] => {
+    (
+        highlightedAgents: VisibilitySelectionMap,
+        allAgents: UIDisplayData
+    ): string[] => {
+        const highlightedNames = flatMap(highlightedAgents).filter(
+            (key: string) => Object.keys(highlightedAgents).includes(key)
+        );
         return allAgents
-            .filter((agent) => highlightedAgents.includes(agent.name))
+            .filter((agent) => highlightedNames.includes(agent.name))
             .map((agent) => agent.name);
     }
 );
 
 export const getHightLightedTags = createSelector(
     [getHighlightedAgentsNamesAndTags, getAllTags],
-    (highlightedAgents, allTags): string[] => {
-        const allTagsHighlighted = highlightedAgents
-            .filter((agentKey: string) => agentKey.split("-").length > 2)
-            .map(parseTagIdFromKey);
-
+    (highlightedAgents: VisibilitySelectionMap, allTags): string[] => {
+        const allTagsHighlighted = flatMap(highlightedAgents);
         return allTags.filter((tag) => allTagsHighlighted.includes(tag));
     }
 );

@@ -51,7 +51,7 @@ export function setAgentsVisible(
 }
 
 export function turnAgentsOnByDisplayKey(
-    agentNames: string[]
+    agentNames: VisibilitySelectionMap
 ): ChangeAgentsRenderingStateAction {
     return {
         payload: agentNames,
@@ -60,7 +60,7 @@ export function turnAgentsOnByDisplayKey(
 }
 
 export function highlightAgentsByDisplayKey(
-    agentNames: string[]
+    agentNames: VisibilitySelectionMap
 ): ChangeAgentsRenderingStateAction {
     return {
         payload: agentNames,

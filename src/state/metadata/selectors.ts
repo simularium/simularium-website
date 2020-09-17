@@ -4,7 +4,6 @@ import { State } from "../types";
 
 import { MetadataStateBranch } from "./types";
 import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
-import { TreeNodeNormal } from "antd/lib/tree/Tree";
 
 // BASIC SELECTORS
 export const getMetadata = (state: State) => state.metadata;
@@ -48,10 +47,7 @@ export const getAllTags = createSelector(
     }
 );
 
-const makeDataTreeKey = (renderType: string, name: string, tagId: string) =>
-    `${renderType}-${name}-${tagId}`;
-
-export const getUiDisplayDataTreeVisibility = createSelector(
+export const getUiDisplayDataTree = createSelector(
     [getAgentDisplayNamesAndStates],
     (uiDisplayData: UIDisplayData) => {
         if (!uiDisplayData.length) {
@@ -60,24 +56,16 @@ export const getUiDisplayDataTreeVisibility = createSelector(
         return uiDisplayData.map((agent) => ({
             title: agent.name,
             key: agent.name,
-            children: agent.displayStates.map((state) => ({
-                title: state.name,
-                key: makeDataTreeKey("v", agent.name, state.id),
-            })),
-        }));
-    }
-);
-
-export const getUiDisplayDataTreeHighlight = createSelector(
-    [getAgentDisplayNamesAndStates],
-    (uiDisplayData: UIDisplayData): TreeNodeNormal[] => {
-        return uiDisplayData.map((agent) => ({
-            title: agent.name,
-            key: agent.name,
-            children: agent.displayStates.map((state) => ({
-                title: state.name,
-                key: makeDataTreeKey("hl", agent.name, state.id),
-            })),
+            children: [
+                {
+                    label: agent.name,
+                    value: agent.name,
+                },
+                ...agent.displayStates.map((state) => ({
+                    label: state.name,
+                    value: state.id,
+                })),
+            ],
         }));
     }
 );

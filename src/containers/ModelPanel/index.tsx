@@ -4,10 +4,7 @@ import { connect } from "react-redux";
 
 import CollaspableMenu from "../../components/CollapseableMenu";
 import { requestMetadata } from "../../state/metadata/actions";
-import {
-    getUiDisplayDataTreeVisibility,
-    getUiDisplayDataTreeHighlight,
-} from "../../state/metadata/selectors";
+import { getUiDisplayDataTree } from "../../state/metadata/selectors";
 import { State } from "../../state/types";
 import {
     getVisibleAgentsNamesAndTags,
@@ -21,15 +18,14 @@ import {
     ChangeAgentsRenderingStateAction,
     VisibilitySelectionMap,
 } from "../../state/selection/types";
-import CheckBoxTree from "../../components/CheckBoxTree";
-import { TreeNodeNormal } from "antd/lib/tree/Tree";
+import CheckBoxTree, { AgentDisplayNode } from "../../components/CheckBoxTree";
+
 const styles = require("./style.css");
 
 interface ModelPanelProps {
-    visibilityDisplayOptions: TreeNodeNormal[];
-    highlightedAgentKeys: string[];
+    uiDisplayDataTree: AgentDisplayNode[];
+    highlightedAgentKeys: VisibilitySelectionMap;
     visibleAgentKeys: VisibilitySelectionMap;
-    highlightDisplayOptions: TreeNodeNormal[];
     turnAgentsOnByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
     highlightAgentsByDisplayKey: ActionCreator<
         ChangeAgentsRenderingStateAction
@@ -40,7 +36,7 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
     public render(): JSX.Element {
         const {
             visibleAgentKeys,
-            visibilityDisplayOptions,
+            uiDisplayDataTree,
             turnAgentsOnByDisplayKey,
             highlightAgentsByDisplayKey,
             highlightedAgentKeys,
@@ -53,9 +49,8 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
                 subTitles={["Adjustable Parameter", "Statistics"]}
                 content={[
                     <div className={styles.container} key="molecules">
-                        <h3>Molecules</h3>
                         <CheckBoxTree
-                            treeData={visibilityDisplayOptions}
+                            treeData={uiDisplayDataTree}
                             handleAgentCheck={turnAgentsOnByDisplayKey}
                             agentsChecked={visibleAgentKeys}
                             handleHighlight={highlightAgentsByDisplayKey}
@@ -74,7 +69,7 @@ function mapStateToProps(state: State) {
     return {
         visibleAgentKeys: getVisibleAgentsNamesAndTags(state),
         highlightedAgentKeys: getHighlightedAgentsNamesAndTags(state),
-        visibilityDisplayOptions: getUiDisplayDataTreeVisibility(state),
+        uiDisplayDataTree: getUiDisplayDataTree(state),
     };
 }
 

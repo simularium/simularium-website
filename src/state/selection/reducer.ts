@@ -22,7 +22,6 @@ import {
     SelectMetadataAction,
     ChangeTimeAction,
     ChangeNumberCollapsedPanelsAction,
-    HighlightAgentAction,
     DragOverViewerAction,
     ResetDragOverViewerAction,
     SetVisibleAction,
