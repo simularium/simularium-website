@@ -10,10 +10,13 @@
     --header-gray: #4b4b4b;
     --light-gray: #aeacae;
     --off-white: #f8f8f8;
+    --transparent-white: rgba(255, 255, 255, 0.65);
     --border-gray: var(--light-gray);
     --dark-theme-primary-color: var(--purple);
     --dark-theme-body-bg: var(--black);
     --dark-theme-header-bg: var(--dark-gray);
     --dark-theme-component-bg: var(--purple-gray);
     --dark-theme-text-color: var(--off-white);
+    --dark-theme-menu-text-color: var(--transparent-white);
+
 }
