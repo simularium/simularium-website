@@ -25,8 +25,13 @@ const ViewerOverlayTarget = ({
     fileIsDraggedOverViewer,
 }: ViewerOverlayTargetProps) => {
     const [showTarget, setVisibility] = useState(false);
+
     if (fileIsDraggedOverViewer && !showTarget) {
         setVisibility(true);
+    }
+
+    if (!fileIsDraggedOverViewer && showTarget) {
+        setVisibility(false);
     }
     const onChange = ({ file }: UploadChangeParam) => {
         if (file.status === "done") {

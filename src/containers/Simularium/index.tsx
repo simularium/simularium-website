@@ -54,6 +54,8 @@ interface AppState {
 
 class App extends React.Component<AppProps, AppState> {
     public simulariumController: SimulariumController | undefined;
+    private interactiveContent = React.createRef<HTMLDivElement>();
+    private endDragover: number = 0;
     constructor(props: AppProps) {
         super(props);
         this.onPanelCollapse = this.onPanelCollapse.bind(this);
@@ -63,6 +65,8 @@ class App extends React.Component<AppProps, AppState> {
 
     componentDidMount() {
         const { setSimulariumController, changeToNetworkedFile } = this.props;
+        const current = this.interactiveContent.current;
+
         const parsed = queryString.parse(location.search);
         const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
         if (fileName && TRAJECTORY_FILES.includes(fileName as string)) {
@@ -77,8 +81,14 @@ class App extends React.Component<AppProps, AppState> {
                 netConnectionSettings: netConnectionSettings,
             })
         );
-        window.addEventListener("dragover", this.handleDragOverViewer, false);
-        window.addEventListener("ondragleave", this.handleEndDrag, false);
+        if (current) {
+            current.addEventListener(
+                "dragover",
+                this.handleDragOverViewer,
+                false
+            );
+            current.addEventListener("dragleave", this.handleEndDrag, false);
+        }
     }
 
     public onPanelCollapse(open: boolean) {
@@ -87,8 +97,10 @@ class App extends React.Component<AppProps, AppState> {
         onSidePanelCollapse(value);
     }
 
-    public handleDragOverViewer() {
+    public handleDragOverViewer(event: DragEvent) {
         const { dragOverViewer, fileIsDraggedOverViewer } = this.props;
+        event.preventDefault();
+        clearTimeout(this.endDragover);
         if (!fileIsDraggedOverViewer) {
             dragOverViewer();
         }
@@ -97,7 +109,11 @@ class App extends React.Component<AppProps, AppState> {
     public handleEndDrag() {
         const { resetDragOverViewer, fileIsDraggedOverViewer } = this.props;
         if (fileIsDraggedOverViewer) {
-            resetDragOverViewer();
+            // holding the mouse still registers as a "dragleave"
+            // setting timeout to keep the overlay from flickering
+            this.endDragover = window.setTimeout(() => {
+                resetDragOverViewer();
+            }, 300);
         }
     }
 
@@ -121,29 +137,31 @@ class App extends React.Component<AppProps, AppState> {
                 >
                     Header
                 </Header>
-                <Layout className={styles.content}>
-                    <ViewerOverlayTarget
-                        key="drop"
-                        loadLocalFile={changeToLocalSimulariumFile}
-                        isLoading={viewerStatus === VIEWER_LOADING}
-                        resetDragOverViewer={resetDragOverViewer}
-                        fileIsDraggedOverViewer={fileIsDraggedOverViewer}
-                    />
-                    <SideBar onCollapse={this.onPanelCollapse} type="left">
-                        <ModelPanel />
-                    </SideBar>
-                    <Content>
-                        {simulariumController && (
-                            <ViewerPanel
-                                loadLocalFile={changeToLocalSimulariumFile}
-                                simulariumController={simulariumController}
-                            />
-                        )}
-                    </Content>
-                    <SideBar onCollapse={this.onPanelCollapse} type="right">
-                        <ResultsPanel />
-                    </SideBar>
-                </Layout>
+                <div ref={this.interactiveContent}>
+                    <Layout className={styles.content}>
+                        <ViewerOverlayTarget
+                            key="drop"
+                            loadLocalFile={changeToLocalSimulariumFile}
+                            isLoading={viewerStatus === VIEWER_LOADING}
+                            resetDragOverViewer={resetDragOverViewer}
+                            fileIsDraggedOverViewer={fileIsDraggedOverViewer}
+                        />
+                        <SideBar onCollapse={this.onPanelCollapse} type="left">
+                            <ModelPanel />
+                        </SideBar>
+                        <Content>
+                            {simulariumController && (
+                                <ViewerPanel
+                                    loadLocalFile={changeToLocalSimulariumFile}
+                                    simulariumController={simulariumController}
+                                />
+                            )}
+                        </Content>
+                        <SideBar onCollapse={this.onPanelCollapse} type="right">
+                            <ResultsPanel />
+                        </SideBar>
+                    </Layout>
+                </div>
             </Layout>
         );
     }
