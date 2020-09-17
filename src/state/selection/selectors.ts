@@ -6,7 +6,7 @@ import {
     getAllTags,
 } from "../metadata/selectors";
 import { flatMap } from "lodash";
-import { SetVisibleAction, VisibilitySelectionMap } from "./types";
+import { VisibilitySelectionMap } from "./types";
 
 // BASIC SELECTORS
 export const getSelections = (state: State) => state.selection;
