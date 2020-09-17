@@ -104,6 +104,18 @@ const CheckBoxTree = ({
                                     }
                                 />
                             </Col>
+                            <Col>
+                                <CheckboxGroup
+                                    options={options}
+                                    value={agentsChecked[data.title] || []}
+                                    onChange={(values) =>
+                                        onSubCheckboxChange(
+                                            data.title,
+                                            values as string[]
+                                        )
+                                    }
+                                />
+                            </Col>
                         </Panel>
                     );
                 })}
