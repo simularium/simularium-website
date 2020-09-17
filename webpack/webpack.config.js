@@ -113,6 +113,12 @@ module.exports = ({ analyze, env } = {}) => ({
                         }
                     ]
             },
+            {
+                test: /\.(png|jpg|gif)$/i,
+                use: [
+                    "file-loader",
+                ],
+            },
         ]
     },
     optimization: {
