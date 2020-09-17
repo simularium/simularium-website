@@ -4,7 +4,7 @@ import { ActionCreator } from "redux";
 import moment from "moment";
 
 import { RequestFileAction } from "../../state/metadata/types";
-import NetworkFileMenu from "../LoadFileMenu";
+import LoadFileMenu from "../LoadFileMenu";
 import { NavLink } from "react-router-dom";
 import { GoBack } from "../Icons";
 
@@ -43,7 +43,7 @@ export default class AppHeader extends React.Component<AppHeaderProps, {}> {
                         )
                     }
                     extra={[
-                        <NetworkFileMenu
+                        <LoadFileMenu
                             key="select"
                             selectFile={loadNetworkFile}
                             loadLocalFile={loadLocalFile}

@@ -6,21 +6,18 @@ import { TRAJECTORY_FILES } from "../../constants";
 import { RequestFileAction } from "../../state/metadata/types";
 
 import { DownArrow } from "../Icons";
-import FileUpload from "../LocalFileUpload";
+import LocalFileUpload from "../LocalFileUpload";
 
 interface NetworkFileMenuProps {
     selectFile: ActionCreator<RequestFileAction>;
     loadLocalFile: ActionCreator<RequestFileAction>;
 }
 
-const NetworkFileMenu = ({
-    selectFile,
-    loadLocalFile,
-}: NetworkFileMenuProps) => {
+const LoadFileMenu = ({ selectFile, loadLocalFile }: NetworkFileMenuProps) => {
     const menu = (
         <Menu theme="dark">
             <Menu.Item>
-                <FileUpload loadLocalFile={loadLocalFile} />
+                <LocalFileUpload loadLocalFile={loadLocalFile} />
             </Menu.Item>
             <Menu.SubMenu title="Load existing model">
                 {TRAJECTORY_FILES.map((fileName) => (
@@ -53,4 +50,4 @@ const NetworkFileMenu = ({
     );
 };
 
-export default NetworkFileMenu;
+export default LoadFileMenu;
