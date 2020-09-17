@@ -33,7 +33,7 @@ export const initialState = {
     time: 0,
     numberPanelsCollapsed: 0,
     visibleAgentKeys: {},
-    highlightedAgentKeys: [],
+    highlightedAgentKeys: {},
     draggedOverViewer: false,
 };
 
@@ -117,10 +117,13 @@ const actionToConfigMap: TypeToDescriptionMap = {
             action.type === HIGHLIGHT_AGENTS_BY_KEY,
         perform: (
             state: SelectionStateBranch,
-            action: HighlightAgentAction
+            action: ChangeAgentsRenderingStateAction
         ) => ({
             ...state,
-            highlightedAgentKeys: action.payload,
+            highlightedAgentKeys: {
+                ...state.highlightedAgentKeys,
+                ...action.payload,
+            },
         }),
     },
     [DRAG_OVER_VIEWER]: {

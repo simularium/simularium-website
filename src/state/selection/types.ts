@@ -18,7 +18,7 @@ export interface ResetDragOverViewerAction {
 }
 
 export interface ChangeAgentsRenderingStateAction {
-    payload: string[];
+    payload: { [key: string]: string[] };
     type: string;
 }
 
