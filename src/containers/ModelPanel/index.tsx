@@ -17,7 +17,10 @@ import {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
 } from "../../state/selection/actions";
-import { ChangeAgentsRenderingStateAction } from "../../state/selection/types";
+import {
+    ChangeAgentsRenderingStateAction,
+    VisibilitySelectionMap,
+} from "../../state/selection/types";
 import CheckBoxTree from "../../components/CheckBoxTree";
 import { TreeNodeNormal } from "antd/lib/tree/Tree";
 const styles = require("./style.css");
@@ -25,7 +28,7 @@ const styles = require("./style.css");
 interface ModelPanelProps {
     visibilityDisplayOptions: TreeNodeNormal[];
     highlightedAgentKeys: string[];
-    visibleAgentKeys: string[];
+    visibleAgentKeys: VisibilitySelectionMap;
     highlightDisplayOptions: TreeNodeNormal[];
     turnAgentsOnByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
     highlightAgentsByDisplayKey: ActionCreator<
@@ -39,10 +42,10 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
             visibleAgentKeys,
             visibilityDisplayOptions,
             turnAgentsOnByDisplayKey,
-            highlightDisplayOptions,
             highlightAgentsByDisplayKey,
             highlightedAgentKeys,
         } = this.props;
+        console.log(visibleAgentKeys);
         return (
             <CollaspableMenu
                 panelKeys={["graphing", "statistics"]}
@@ -53,7 +56,7 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
                         <h3>Molecules</h3>
                         <CheckBoxTree
                             treeData={visibilityDisplayOptions}
-                            handleCheck={turnAgentsOnByDisplayKey}
+                            handleAgentCheck={turnAgentsOnByDisplayKey}
                             agentsChecked={visibleAgentKeys}
                             handleHighlight={highlightAgentsByDisplayKey}
                             agentsHighlighted={highlightedAgentKeys}
@@ -72,7 +75,6 @@ function mapStateToProps(state: State) {
         visibleAgentKeys: getVisibleAgentsNamesAndTags(state),
         highlightedAgentKeys: getHighlightedAgentsNamesAndTags(state),
         visibilityDisplayOptions: getUiDisplayDataTreeVisibility(state),
-        highlightDisplayOptions: getUiDisplayDataTreeHighlight(state),
     };
 }
 

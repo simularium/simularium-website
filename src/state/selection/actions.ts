@@ -7,6 +7,7 @@ import {
     HIGHLIGHT_AGENTS_BY_KEY,
     DRAG_OVER_VIEWER,
     RESET_DRAG_OVER_VIEWER,
+    SET_AGENTS_VISIBLE,
 } from "./constants";
 import {
     DeselectFileAction,
@@ -15,6 +16,8 @@ import {
     ChangeTimeAction,
     DragOverViewerAction,
     ResetDragOverViewerAction,
+    SetVisibleAction,
+    VisibilitySelectionMap,
 } from "./types";
 
 export function deselectFile(fileId: string | string[]): DeselectFileAction {
@@ -35,6 +38,15 @@ export function onSidePanelCollapse(numberCollapsed: number) {
     return {
         payload: numberCollapsed,
         type: SIDE_PANEL_COLLAPSED,
+    };
+}
+
+export function setAgentsVisible(
+    agentNames: VisibilitySelectionMap
+): SetVisibleAction {
+    return {
+        payload: agentNames,
+        type: SET_AGENTS_VISIBLE,
     };
 }
 

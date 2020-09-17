@@ -47,3 +47,12 @@ export interface ToggleAction {
     payload: boolean;
     type: string;
 }
+
+export interface VisibilitySelectionMap {
+    [key: string]: string[];
+}
+
+export interface SetVisibleAction {
+    payload: VisibilitySelectionMap;
+    type: string;
+}

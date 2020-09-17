@@ -5,6 +5,8 @@ import {
     getAgentDisplayNamesAndStates,
     getAllTags,
 } from "../metadata/selectors";
+import { flatMap } from "lodash";
+import { SetVisibleAction, VisibilitySelectionMap } from "./types";
 
 // BASIC SELECTORS
 export const getSelections = (state: State) => state.selection;
@@ -46,9 +48,15 @@ export const getHightLightedTags = createSelector(
 );
 export const getAgentNamesToHide = createSelector(
     [getVisibleAgentsNamesAndTags, getAgentDisplayNamesAndStates],
-    (currentlyOn, allAgents: UIDisplayData): string[] => {
+    (
+        currentlyOn: VisibilitySelectionMap,
+        allAgents: UIDisplayData
+    ): string[] => {
+        const visibleNames = flatMap(currentlyOn).filter((key: string) =>
+            Object.keys(currentlyOn).includes(key)
+        );
         return allAgents
-            .filter((agent) => !currentlyOn.includes(agent.name))
+            .filter((agent) => !visibleNames.includes(agent.name))
             .map((agent) => agent.name);
     }
 );
@@ -56,9 +64,8 @@ export const getAgentNamesToHide = createSelector(
 export const getAgentTagsToHide = createSelector(
     [getVisibleAgentsNamesAndTags, getAllTags],
     (currentlyOn, allTags): string[] => {
-        const allTagsShowing = currentlyOn
-            .filter((agentKey: string) => agentKey.split("-").length > 2)
-            .map(parseTagIdFromKey);
+        const allTagsShowing = flatMap(currentlyOn);
+        console.log(allTagsShowing);
         return allTags.filter((tag) => !allTagsShowing.includes(tag));
     }
 );

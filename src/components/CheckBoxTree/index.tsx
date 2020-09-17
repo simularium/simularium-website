@@ -1,25 +1,30 @@
 import React, { useState, Key } from "react";
-import { Checkbox, Collapse, Tree } from "antd";
+import { Checkbox, Collapse, Col } from "antd";
 import { ActionCreator } from "redux";
-import { ChangeAgentsRenderingStateAction } from "../../state/selection/types";
+import {
+    ChangeAgentsRenderingStateAction,
+    VisibilitySelectionMap,
+} from "../../state/selection/types";
 import { TreeProps } from "antd/lib/tree";
+import SharedCheckbox from "../SharedCheckbox";
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
 const { Panel } = Collapse;
 
-const { TreeNode } = Tree;
+const CheckboxGroup = Checkbox.Group;
 
 interface CheckBoxTreeProps {
     treeData: any[];
-    agentsChecked: string[];
-    handleCheck: ActionCreator<ChangeAgentsRenderingStateAction>;
+    agentsChecked: VisibilitySelectionMap;
+    handleAgentCheck: ActionCreator<ChangeAgentsRenderingStateAction>;
     title: string;
 }
 const CheckBoxTree = ({
     agentsChecked,
     treeData,
-    handleCheck,
+    handleAgentCheck,
     title,
 }: CheckBoxTreeProps) => {
-    const [expandedKeys, setExpandedKeys] = useState<string[]>(agentsChecked);
+    const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
     const [autoExpandParent, setAutoExpandParent] = useState<boolean>(true);
 
     const onExpand = (expandedKeys: (string | number)[]) => {
@@ -29,25 +34,79 @@ const CheckBoxTree = ({
         setAutoExpandParent(false);
     };
 
-    const onCheck = (
-        checkedKeys: Key[] | { checked: Key[]; halfChecked: Key[] }
-    ) => {
-        handleCheck(checkedKeys);
+    const onSubCheckboxChange = (key: string, values: string[]) => {
+        handleAgentCheck({ [key]: values });
     };
 
-    console.log(title, treeData);
+    const onTopLevelCheck = (checkedKeys: { [key: string]: string[] }) => {
+        handleAgentCheck(checkedKeys);
+    };
+
+    const onAgentWithNoTagsChange = (
+        event: CheckboxChangeEvent,
+        title: string
+    ) => {
+        event.preventDefault();
+        if (event.target.checked) {
+            onSubCheckboxChange(title, [title]);
+        } else {
+            onSubCheckboxChange(title, []);
+        }
+    };
+    console.log("AGENTS CHECKED", agentsChecked);
     return treeData.length > 0 ? (
         <>
             <label>{title}</label>
             <Collapse defaultActiveKey={expandedKeys}>
-                {treeData.map((data) => (
-                    <Panel header={data.title} key={data.key}>
-                        {data.children &&
-                            data.children.map((child) => {
-                                <Checkbox>{child.title}</Checkbox>;
-                            })}
-                    </Panel>
-                ))}
+                {treeData.map((data) => {
+                    const options = [
+                        data.title,
+                        ...data.children.map((state) => state.title),
+                    ];
+                    if (data.children.length) {
+                    }
+                    return (
+                        <Panel
+                            header={
+                                data.children.length ? (
+                                    <SharedCheckbox
+                                        title={data.title}
+                                        options={options}
+                                        onTopLevelCheck={onTopLevelCheck}
+                                        checkedList={
+                                            agentsChecked[data.title] || []
+                                        }
+                                    />
+                                ) : (
+                                    <Checkbox
+                                        onChange={(event) =>
+                                            onAgentWithNoTagsChange(
+                                                event,
+                                                data.title
+                                            )
+                                        }
+                                    >
+                                        {data.title}
+                                    </Checkbox>
+                                )
+                            }
+                            key={data.key}
+                        >
+                            <Col>
+                                <CheckboxGroup
+                                    options={options}
+                                    value={agentsChecked[data.title] || []}
+                                    onChange={(values) =>
+                                        onSubCheckboxChange(
+                                            data.title,
+                                            values as string[]
+                                        )
+                                    }
+                                />
+                            </Col>
+                        </Panel>
+                    );
+                })}
             </Collapse>
         </>
     ) : (
