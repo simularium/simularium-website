@@ -1,15 +1,20 @@
 :root {
     --black: #000000;
     --dark-gray: #25222e;
+    --dark-purple: #3b3649;
     --dim-gray: #383838;
+    --dimgray: #6e6e6e;
     --purple-gray: #2f2a3c;
     --purple: #b59ff6;
+    --gray-purple: #bab5c9;
     --light-gray: #6e6e6e;
     --highlight-green: #b2d030;
     --text-gray: #a0a0a0;
     --header-gray: #4b4b4b;
     --light-gray: #aeacae;
     --off-white: #f8f8f8;
+    --medium-gray: #4a4a4a;
+    --light-gray-alt: #f7f7f7;
     --transparent-white: rgba(255, 255, 255, 0.65);
     --border-gray: var(--light-gray);
     --dark-theme-primary-color: var(--purple);
@@ -18,5 +23,12 @@
     --dark-theme-component-bg: var(--purple-gray);
     --dark-theme-text-color: var(--off-white);
     --dark-theme-menu-text-color: var(--transparent-white);
-
+    --background-dark-gray: #131313;
+    --background-dim-gray: #383838;
+    --landing-pg-background-purple: var(--gray-purple);
+    --landing-pg-button-purple: var(--dark-purple);
+    --landing-pg-header-gray: var(--medium-gray);
+    --landing-pg-card-link-gray: var(--medium-gray);
+    --landing-pg-panel-light-gray: var(--light-gray-alt);
+    --landing-pg-button-light-gray: var(--light-gray-alt);
 }
