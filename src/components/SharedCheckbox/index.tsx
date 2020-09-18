@@ -7,6 +7,7 @@ interface SharedCheckboxProps {
     onTopLevelCheck: any;
     title: string;
     checkedList: string[];
+    showLabel: boolean;
 }
 
 export default class SharedCheckbox extends React.Component<
@@ -18,11 +19,10 @@ export default class SharedCheckbox extends React.Component<
         this.onCheckAllChange = this.onCheckAllChange.bind(this);
     }
 
-    onCheckAllChange(Event: CheckboxChangeEvent) {
+    onCheckAllChange(event: CheckboxChangeEvent) {
         const { options, onTopLevelCheck, title } = this.props;
-        console.log(options);
-        Event.preventDefault();
-        Event.target.checked
+        event.preventDefault();
+        event.target.checked
             ? onTopLevelCheck({
                   [title]: options,
               })
@@ -32,7 +32,7 @@ export default class SharedCheckbox extends React.Component<
     }
 
     render() {
-        const { title, checkedList, options } = this.props;
+        const { showLabel, title, checkedList, options } = this.props;
         return (
             <Checkbox
                 indeterminate={
@@ -45,7 +45,7 @@ export default class SharedCheckbox extends React.Component<
                     width: 120,
                 }}
             >
-                {title}
+                {showLabel ? title : ""}
             </Checkbox>
         );
     }
