@@ -15,6 +15,11 @@ import { Layout } from "antd";
 import NavBar from "./components/NavBar";
 
 const { Header, Footer } = Layout;
+
+// Although the styles const is not explicitly used, this require statement
+// appears necessary.
+const styles = require("./style.css");
+
 render(
     <Provider store={createReduxStore()}>
         <Layout>
