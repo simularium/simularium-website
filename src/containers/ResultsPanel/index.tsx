@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
-import CollaspableMenu from "../../components/CollapseableMenu";
+import CollaspableMenu from "../../components/NestedMenus";
 
 import Graphing from "../../components/Plots";
 import { getCurrentTime } from "../../state/selection/selectors";
