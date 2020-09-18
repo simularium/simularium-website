@@ -13,7 +13,7 @@
     --light-purple-gray: #bab5c9;
     --highlight-green: #b2d030;
     --text-gray: #a0a0a0;
-    --light-blue: #8dd6fc;
+    --blue: #137CBD;
     --background-dark-gray: #131313;
     --background-dim-gray: var(--dim-gray);
     --header-gray: var(--medium-gray);
@@ -24,7 +24,7 @@
     --dark-theme-component-bg: var(--dark-purple-gray);
     --dark-theme-text-color: var(--off-white);
     --dark-theme-menu-text-color: var(--transparent-white);
-    --light-theme-link-blue: var(--light-blue);
+    --light-theme-link-blue: var(--blue);
     --light-theme-background-purple: var(--light-purple-gray);
     --light-theme-button-purple: var(--dark-purple);
     --light-theme-header-gray: var(--medium-gray);
