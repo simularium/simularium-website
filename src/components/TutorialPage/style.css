@@ -1,0 +1,17 @@
+.container {
+    display: block;
+    margin: auto;
+    font-size: 18px;
+}
+
+.dragDropImage {
+    width: 400px;
+    border-width: 0.5px;
+    border-style: solid;
+    margin: 0.5em;
+}
+
+:global(.ant-typography code) {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
