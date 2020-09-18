@@ -2,7 +2,7 @@ import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 
-import CollaspableMenu from "../../components/CollapseableMenu";
+import NestedMenus from "../../components/NestedMenus";
 import { requestMetadata } from "../../state/metadata/actions";
 import { getUiDisplayDataTree } from "../../state/metadata/selectors";
 import { State } from "../../state/types";
@@ -43,10 +43,10 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
         } = this.props;
         console.log(visibleAgentKeys);
         return (
-            <CollaspableMenu
+            <NestedMenus
                 panelKeys={["graphing", "statistics"]}
-                mainTitle="Adjustable Parameters"
-                subTitles={["Adjustable Parameter", "Statistics"]}
+                mainTitle="Inputs"
+                subTitles={["Agents"]}
                 content={[
                     <div className={styles.container} key="molecules">
                         <CheckBoxTree
@@ -55,7 +55,6 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
                             agentsChecked={visibleAgentKeys}
                             handleHighlight={highlightAgentsByDisplayKey}
                             agentsHighlighted={highlightedAgentKeys}
-                            title="Turn on/off"
                         />
                     </div>,
                     null,
