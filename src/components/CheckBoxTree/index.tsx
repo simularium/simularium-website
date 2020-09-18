@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Checkbox, Collapse, Col } from "antd";
+import { Checkbox, Collapse, Col, Row } from "antd";
 import { ActionCreator } from "redux";
 import { CheckboxChangeEvent, CheckboxOptionType } from "antd/lib/checkbox";
 import { map } from "lodash";
@@ -30,8 +30,10 @@ interface CheckBoxTreeProps {
 
 const CheckBoxTree = ({
     agentsChecked,
+    agentsHighlighted,
     treeData,
     handleAgentCheck,
+    handleHighlight,
     title,
 }: CheckBoxTreeProps) => {
     const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
@@ -48,8 +50,18 @@ const CheckBoxTree = ({
         handleAgentCheck({ [key]: values });
     };
 
+    const onSubHighlightChange = (key: string, values: string[]) => {
+        handleHighlight({ [key]: values });
+    };
+
     const onTopLevelCheck = (checkedKeys: { [key: string]: string[] }) => {
         handleAgentCheck(checkedKeys);
+    };
+
+    const onTopLevelHighlightChange = (checkedKeys: {
+        [key: string]: string[];
+    }) => {
+        handleHighlight(checkedKeys);
     };
 
     const onAgentWithNoTagsChange = (
@@ -73,17 +85,33 @@ const CheckBoxTree = ({
                         <Panel
                             header={
                                 data.children.length ? (
-                                    <SharedCheckbox
-                                        title={data.title}
-                                        options={map(
-                                            data.children,
-                                            "value" as string
-                                        )}
-                                        onTopLevelCheck={onTopLevelCheck}
-                                        checkedList={
-                                            agentsChecked[data.title] || []
-                                        }
-                                    />
+                                    <>
+                                        <SharedCheckbox
+                                            title={data.title}
+                                            options={map(
+                                                data.children,
+                                                "value" as string
+                                            )}
+                                            onTopLevelCheck={
+                                                onTopLevelHighlightChange
+                                            }
+                                            checkedList={
+                                                agentsHighlighted[data.title] ||
+                                                []
+                                            }
+                                        />
+                                        <SharedCheckbox
+                                            title={data.title}
+                                            options={map(
+                                                data.children,
+                                                "value" as string
+                                            )}
+                                            onTopLevelCheck={onTopLevelCheck}
+                                            checkedList={
+                                                agentsChecked[data.title] || []
+                                            }
+                                        />
+                                    </>
                                 ) : (
                                     <Checkbox
                                         onChange={(event) =>
@@ -99,30 +127,34 @@ const CheckBoxTree = ({
                             }
                             key={data.key}
                         >
-                            <Col>
-                                <CheckboxGroup
-                                    options={data.children}
-                                    value={agentsChecked[data.title] || []}
-                                    onChange={(values) =>
-                                        onSubCheckboxChange(
-                                            data.title,
-                                            values as string[]
-                                        )
-                                    }
-                                />
-                            </Col>
-                            <Col>
-                                <CheckboxGroup
-                                    options={data.children}
-                                    value={agentsChecked[data.title] || []}
-                                    onChange={(values) =>
-                                        onSubCheckboxChange(
-                                            data.title,
-                                            values as string[]
-                                        )
-                                    }
-                                />
-                            </Col>
+                            <Row>
+                                <Col>
+                                    <CheckboxGroup
+                                        options={data.children}
+                                        value={agentsChecked[data.title] || []}
+                                        onChange={(values) =>
+                                            onSubCheckboxChange(
+                                                data.title,
+                                                values as string[]
+                                            )
+                                        }
+                                    />
+                                </Col>
+                                <Col>
+                                    <CheckboxGroup
+                                        options={data.children}
+                                        value={
+                                            agentsHighlighted[data.title] || []
+                                        }
+                                        onChange={(values) =>
+                                            onSubHighlightChange(
+                                                data.title,
+                                                values as string[]
+                                            )
+                                        }
+                                    />
+                                </Col>
+                            </Row>
                         </Panel>
                     );
                 })}
