@@ -38,15 +38,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                         </li>
                         <li>
                             In a web browser (Chrome or Firefox), navigate to
-                            the{" "}
-                            <Link
-                                to="/viewer"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Simularium viewer
-                            </Link>
-                            .
+                            the <Link to="/viewer">Simularium viewer</Link>.
                         </li>
                         <li>
                             Drag one of the downloaded files from your file
@@ -167,15 +159,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                         </li>
                         <li>
                             In a web browser (Chrome or Firefox), navigate to
-                            the{" "}
-                            <Link
-                                to="/viewer"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Simularium viewer
-                            </Link>
-                            .
+                            the <Link to="/viewer">Simularium viewer</Link>.
                         </li>
                         <li>
                             Drag the resulting file from your file browser onto
