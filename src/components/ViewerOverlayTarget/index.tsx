@@ -5,10 +5,12 @@ import { LocalSimFile } from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
 
 import { ResetDragOverViewerAction } from "../../state/selection/types";
-import { Loading } from "../Icons";
-import customRequest from "../FileUpload/custom-request-upload";
+import { Loading, UploadFile } from "../Icons";
+import customRequest from "../LocalFileUpload/custom-request-upload";
 
 const { Dragger } = Upload;
+
+const styles = require("./style.css");
 
 interface ViewerOverlayTargetProps {
     loadLocalFile: (localFile: LocalSimFile) => void;
@@ -23,8 +25,13 @@ const ViewerOverlayTarget = ({
     fileIsDraggedOverViewer,
 }: ViewerOverlayTargetProps) => {
     const [showTarget, setVisibility] = useState(false);
+
     if (fileIsDraggedOverViewer && !showTarget) {
         setVisibility(true);
+    }
+
+    if (!fileIsDraggedOverViewer && showTarget) {
+        setVisibility(false);
     }
     const onChange = ({ file }: UploadChangeParam) => {
         if (file.status === "done") {
@@ -38,18 +45,22 @@ const ViewerOverlayTarget = ({
     };
     return showTarget ? (
         <Dragger
+            className={styles.container}
             onChange={onChange}
+            showUploadList={false}
             openFileDialogOnClick={false}
             customRequest={(options) => customRequest(options, loadLocalFile)}
         >
-            <p className="ant-upload-drag-icon">{isLoading ? Loading : null}</p>
+            <p className="ant-upload-drag-icon">
+                {isLoading ? Loading : UploadFile}
+            </p>
             <p className="ant-upload-text">
                 {isLoading
-                    ? "Loading Simularium File"
-                    : "Drag file to this area to upload"}
+                    ? "Loading Simularium file"
+                    : "Drag your trajectory here"}
             </p>
             <p className="ant-upload-hint">
-                Support for a single Simularium File.
+                Support for a single Simularium file
             </p>
         </Dragger>
     ) : null;

@@ -3,3 +3,47 @@
 .container {
     height: var(--header-height);
 }
+
+.container:global(.ant-layout-header) {
+    background-color: var(--dark-theme-header-background);
+    color: var(--dark-theme-text-color);
+}
+
+.page-header {
+    display: flex;
+}
+
+.page-header :global(.ant-page-header-footer) {
+    margin: 0;
+}
+
+.page-header :global(.ant-page-header-back-button) a {
+    color: var(--dark-theme-text-color);
+}
+
+.page-header :global(.ant-page-header-heading-extra) {
+    order: 1;
+}
+.page-header :global(.ant-page-header-heading-title) {
+    color: var(--dark-theme-text-color);
+    margin-left: 25%;
+    order: 2
+}
+
+.page-header :global(.ant-page-header-heading-sub-title) {
+    color: var(--dark-theme-text-color);
+    order: 3;
+}
+
+.page-header :global(.ant-page-header-heading-tags) {
+    order: 4;
+}
+
+.page-header :global(.ant-page-header-heading) {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.tag {
+    color: var(--dark-theme-text-color);
+}
