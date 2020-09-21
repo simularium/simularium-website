@@ -13,12 +13,19 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
     return (
         <Layout className={styles.container}>
             <Content className={styles.content}>
-                <br />
                 <h1>Getting Started with Simularium</h1>
+                <br />
+                <p className={styles.intro}>
+                    There are two ways to try out Simularium. Simply drag and
+                    drop our example data, or convert your own data into
+                    Simularium format and upload it.
+                </p>
                 <br />
                 <ul>
                     <li>
-                        Drag and drop example data
+                        <span className={styles.listHeader}>
+                            Drag and drop example data
+                        </span>
                         <br />
                         <img
                             className={styles.dragDropImage}
@@ -31,9 +38,14 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                             <a href="https://#">[URL]</a>.
                         </li>
                         <li>
-                            In a web browser (Chrome or Firefox), navigate to{" "}
-                            <a href="http://simularium.allencell.org/viewer">
-                                http://simularium.allencell.org/viewer
+                            In a web browser (Chrome or Firefox), navigate to
+                            the{" "}
+                            <a
+                                href="http://simularium.allencell.org/viewer"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Simularium viewer
                             </a>
                             .
                         </li>
@@ -43,14 +55,24 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                         </li>
                     </ol>
                 </ul>
+                <br />
                 <ul>
-                    <li>Convert your data into Simularium format</li>
+                    <li>
+                        <span className={styles.listHeader}>
+                            Convert your data into Simularium format
+                        </span>
+                    </li>
                     <ol>
                         <li>
-                            Install Anaconda if you have not already:{" "}
-                            <a href="https://docs.conda.io/en/latest/miniconda.html">
-                                https://docs.conda.io/en/latest/miniconda.html
-                            </a>
+                            Install{" "}
+                            <a
+                                href="https://docs.conda.io/en/latest/miniconda.html"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Anaconda
+                            </a>{" "}
+                            if you have not already.
                         </li>
                         <li>
                             In a terminal window, create and activate a new
@@ -91,25 +113,31 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                                 <li>We support the following simulators:</li>
                                 <ul>
                                     <li>
-                                        ReaDDy (
-                                        <a href="https://readdy.github.io/">
-                                            https://readdy.github.io/
+                                        <a
+                                            href="https://readdy.github.io/"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            ReaDDy
                                         </a>
-                                        )
                                     </li>
                                     <li>
-                                        PhysiCell (
-                                        <a href="http://physicell.org/">
-                                            http://physicell.org/
+                                        <a
+                                            href="http://physicell.org/"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            PhysiCell
                                         </a>
-                                        )
                                     </li>
                                     <li>
-                                        CytoSim (
-                                        <a href="https://gitlab.com/f.nedelec/cytosim">
-                                            https://gitlab.com/f.nedelec/cytosim
+                                        <a
+                                            href="https://gitlab.com/f.nedelec/cytosim"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            CytoSim
                                         </a>
-                                        )
                                     </li>
                                 </ul>
                             </ul>
@@ -125,7 +153,11 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                         </li>
                         <li>
                             These{" "}
-                            <a href="https://github.com/allen-cell-animated/simulariumio/blob/feature/convert-custom-data/simulariumio/bin/Tutorial.ipynb">
+                            <a
+                                href="https://github.com/allen-cell-animated/simulariumio/blob/feature/convert-custom-data/simulariumio/bin/Tutorial.ipynb"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 Jupyter notebooks
                             </a>{" "}
                             provide examples of saving data from different
@@ -136,9 +168,14 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                             at the output path you provided.
                         </li>
                         <li>
-                            In a web browser (Chrome or Firefox), navigate to{" "}
-                            <a href="http://simularium.allencell.org/viewer">
-                                http://simularium.allencell.org/viewer
+                            In a web browser (Chrome or Firefox), navigate to
+                            the{" "}
+                            <a
+                                href="http://simularium.allencell.org/viewer"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Simularium viewer
                             </a>
                             .
                         </li>

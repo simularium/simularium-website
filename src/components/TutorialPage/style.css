@@ -1,7 +1,17 @@
 .container {
     display: block;
     margin: auto;
+    padding: 2em;
+    max-width: 1010px;
     font-size: 18px;
+}
+
+.intro {
+    font-size: 20px;
+}
+
+.listHeader {
+    font-size: 20px;
 }
 
 .dragDropImage {
