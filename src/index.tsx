@@ -16,8 +16,6 @@ import NavBar from "./components/NavBar";
 
 const { Header, Footer } = Layout;
 
-// Although the styles const is not explicitly used, this require statement
-// appears necessary.
 require("./style.css");
 
 render(
