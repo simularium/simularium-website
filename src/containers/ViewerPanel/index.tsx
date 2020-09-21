@@ -24,10 +24,8 @@ import { ReceiveAction, LocalSimFile } from "../../state/metadata/types";
 import { getSelectionStateInfoForViewer } from "./selectors";
 
 import PlaybackControls from "../../components/PlaybackControls";
-import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
 
 import "@aics/simularium-viewer/style/style.css";
-import { VIEWER_LOADING } from "../../state/metadata/constants";
 const styles = require("./style.css");
 
 interface ViewerPanelProps {
@@ -75,10 +73,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.onTrajectoryFileInfoChanged = this.onTrajectoryFileInfoChanged.bind(
             this
         );
-        this.handleEndDrag = this.handleEndDrag.bind(this);
         this.skipToTime = this.skipToTime.bind(this);
         this.resize = this.resize.bind(this);
-        this.handleDragOverViewer = this.handleDragOverViewer.bind(this);
         this.state = {
             isPlaying: false,
             isInitialPlay: true,
@@ -104,26 +100,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 // wait for panel animation to finish.
                 this.resize(current);
             }, 200);
-            window.addEventListener(
-                "dragover",
-                this.handleDragOverViewer,
-                false
-            );
-            window.addEventListener("ondragleave", this.handleEndDrag, false);
-        }
-    }
-
-    public handleDragOverViewer() {
-        const { dragOverViewer, fileIsDraggedOverViewer } = this.props;
-        if (!fileIsDraggedOverViewer) {
-            dragOverViewer();
-        }
-    }
-
-    public handleEndDrag() {
-        const { resetDragOverViewer, fileIsDraggedOverViewer } = this.props;
-        if (fileIsDraggedOverViewer) {
-            resetDragOverViewer();
         }
     }
 
@@ -216,21 +192,10 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             totalTime,
             simulariumController,
             selectionStateInfoForViewer,
-            loadLocalFile,
-            resetDragOverViewer,
-            viewerStatus,
-            fileIsDraggedOverViewer,
         } = this.props;
 
         return (
             <div ref={this.centerContent} className={styles.container}>
-                <ViewerOverlayTarget
-                    key="drop"
-                    loadLocalFile={loadLocalFile}
-                    isLoading={viewerStatus === VIEWER_LOADING}
-                    resetDragOverViewer={resetDragOverViewer}
-                    fileIsDraggedOverViewer={fileIsDraggedOverViewer}
-                />
                 <SimulariumViewer
                     height={this.state.height}
                     width={this.state.width}
