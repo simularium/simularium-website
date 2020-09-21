@@ -1,9 +1,11 @@
 @dark-gray: #25222e;
 @purple: #b59ff6;
+@purple-gray: #2f2a3c;
 @light-gray: #e7e7e7;
 @medium-gray: #4a4a4a;
 @bright-green: #b2d030;
 @black: #141219;
+
 // -------- Colors -----------
 @primary-color : @purple;
 @success-color          : @bright-green;
@@ -58,7 +60,7 @@
 @layout-header-background        : @background-color;
 @layout-footer-background       : darken(@dark-gray, 10%);
 //@layout-header-height           : 64px;
-//@layout-header-padding          : 0 50px;
+@layout-header-padding          : 0;
 //@layout-footer-padding          : 24px 50px;
 @layout-sider-background: @black;
 //@layout-trigger-height          : 48px;
@@ -70,6 +72,13 @@
 @layout-sider-background-light  : #fff;
 @layout-trigger-background-light: #fff;
 @layout-trigger-color-light     : @text-color;
+
+//Dropdown
+@dropdown-menu-bg: @purple-gray;
+@dropdown-vertical-padding: 5px;
+@dropdown-edge-child-vertical-padding: 4px;
+@dropdown-font-size: @font-size-base;
+@dropdown-line-height: 22px;
 
 // Buttons
 @btn-font-weight        : 400;
@@ -90,6 +99,10 @@
 @btn-disable-color      : @disabled-color;
 @btn-disable-bg         : @disabled-bg;
 @btn-disable-border     : @border-color-base;
+
+@btn-default-ghost-color: @primary-color;
+@btn-default-ghost-bg: transparent;
+@btn-default-ghost-border: @primary-color;
 
 @btn-padding-base       : 0 @padding-md - 1px;
 @btn-font-size-lg       : @font-size-lg;
@@ -162,3 +175,16 @@
 @slider-dot-border-color-active:      tint(@primary-color, 50%);
 @slider-disabled-color:               @disabled-color;
 @slider-disabled-background-color:    @component-background;
+
+// dark theme
+@menu-dark-color: @text-color-secondary-dark;
+@menu-dark-danger-color: @error-color;
+@menu-dark-bg: @purple-gray;
+@menu-dark-arrow-color: #fff;
+@menu-dark-submenu-bg: #000c17;
+@menu-dark-highlight-color: #fff;
+@menu-dark-item-active-bg: @primary-color;
+@menu-dark-item-active-danger-bg: @error-color;
+@menu-dark-selected-item-icon-color: @white;
+@menu-dark-selected-item-text-color: @white;
+@menu-dark-item-hover-bg: transparent;

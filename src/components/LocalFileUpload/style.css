@@ -1,0 +1,5 @@
+.upload-button {
+    border: none;
+    color: var(--dark-theme-menu-text-color);
+    padding: 0;
+}
