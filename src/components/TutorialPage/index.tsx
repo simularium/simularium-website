@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import { Layout, Typography } from "antd";
 
 import dragDropImage from "../../assets/drag-drop.gif";
@@ -40,13 +41,13 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                         <li>
                             In a web browser (Chrome or Firefox), navigate to
                             the{" "}
-                            <a
-                                href="http://simularium.allencell.org/viewer"
+                            <Link
+                                to="/viewer"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 Simularium viewer
-                            </a>
+                            </Link>
                             .
                         </li>
                         <li>
@@ -170,13 +171,13 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                         <li>
                             In a web browser (Chrome or Firefox), navigate to
                             the{" "}
-                            <a
-                                href="http://simularium.allencell.org/viewer"
+                            <Link
+                                to="/viewer"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 Simularium viewer
-                            </a>
+                            </Link>
                             .
                         </li>
                         <li>
