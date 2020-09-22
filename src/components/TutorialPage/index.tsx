@@ -144,7 +144,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                         <li>
                             These{" "}
                             <a
-                                href="https://github.com/allen-cell-animated/simulariumio/blob/feature/convert-custom-data/simulariumio/bin/Tutorial.ipynb"
+                                href="https://github.com/allen-cell-animated/simulariumio/tree/master/examples"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
