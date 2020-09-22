@@ -1,17 +1,19 @@
 import * as React from "react";
-import { Layout, Row, Col, PageHeader, Tag } from "antd";
+import { Layout, PageHeader, Tag, Button } from "antd";
 import { ActionCreator } from "redux";
 import moment from "moment";
 
-import FileUpload from "../FileUpload";
-import { LocalSimFile, RequestFileAction } from "../../state/metadata/types";
-import NetworkFileMenu from "../NetworkFileMenu";
+import { RequestFileAction } from "../../state/metadata/types";
+import LoadFileMenu from "../LoadFileMenu";
+import { NavLink } from "react-router-dom";
+import { GoBack } from "../Icons";
+
 const { Header } = Layout;
 
 const styles = require("./style.css");
 
 interface AppHeaderProps {
-    loadLocalFile: (simFile: LocalSimFile) => void;
+    loadLocalFile: ActionCreator<RequestFileAction>;
     simulariumFileName: string;
     lastModified: number;
     loadNetworkFile: ActionCreator<RequestFileAction>;
@@ -27,11 +29,13 @@ export default class AppHeader extends React.Component<AppHeaderProps, {}> {
         return (
             <Header className={styles.container}>
                 <PageHeader
-                    title="Simularium"
-                    subTitle={simulariumFileName ? simulariumFileName : ""}
+                    title={simulariumFileName ? simulariumFileName : ""}
+                    className={styles.pageHeader}
+                    onBack={() => null}
+                    backIcon={<NavLink to="/">{GoBack} Home</NavLink>}
                     tags={
                         lastModified ? (
-                            <Tag color="blue">
+                            <Tag className={styles.tag}>
                                 {moment(lastModified).format()}
                             </Tag>
                         ) : (
@@ -39,22 +43,18 @@ export default class AppHeader extends React.Component<AppHeaderProps, {}> {
                         )
                     }
                     extra={[
-                        <NetworkFileMenu
+                        <LoadFileMenu
                             key="select"
                             selectFile={loadNetworkFile}
-                        />,
-                        <FileUpload
-                            key="upload"
                             loadLocalFile={loadLocalFile}
                         />,
-                        ,
                     ]}
+                    footer={
+                        <Button type="ghost" href="tutorial">
+                            Getting Started
+                        </Button>
+                    }
                 />
-                <Row>
-                    <Col />
-                    <Col />
-                    <Col />
-                </Row>
             </Header>
         );
     }

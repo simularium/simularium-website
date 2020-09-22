@@ -7,6 +7,7 @@ import {
     UploadOutlined,
     LoadingOutlined,
     DownOutlined,
+    ArrowLeftOutlined,
 } from "@ant-design/icons";
 
 export const Loading = <LoadingOutlined style={{ fontSize: 40 }} spin />;
@@ -17,6 +18,7 @@ export const StepForward = <StepForwardOutlined />;
 export const UploadFile = <UploadOutlined />;
 export const DownArrow = <DownOutlined />;
 export const CaretRight = <CaretRightOutlined />;
+export const GoBack = <ArrowLeftOutlined />;
 
 export default {
     StepBack,
@@ -27,4 +29,5 @@ export default {
     Loading,
     DownArrow,
     CaretRight,
+    ArrowLeftOutlined,
 };
