@@ -29,6 +29,14 @@ p {
     font-weight: 600;
 }
 
+.publication {
+    font-size: 14px;
+}
+
+.journal {
+    font-style: italic;
+}
+
 a, a :hover {
     color: var(--landing-pg-card-link-gray);
     transition: none;
