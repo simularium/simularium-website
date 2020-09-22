@@ -15,9 +15,11 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
             <Content className={styles.content}>
                 <h1>Getting Started with Simularium</h1>
                 <p className={styles.intro}>
-                    There are two ways to try out Simularium. Simply drag and
-                    drop our example data, or convert your own data into
-                    Simularium format and upload it.
+                    To try out the Simularium Viewer, either{" "}
+                    <a href="#">download</a> our example data or{" "}
+                    <a href="#convert-your-data">convert</a> your own data, then
+                    drag and drop it onto the <Link to="/viewer">viewer</Link>.
+                    More details below:
                 </p>
                 <ul className={styles.approachBlock}>
                     <li>
@@ -47,7 +49,10 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                 </ul>
                 <ul className={styles.approachBlock}>
                     <li>
-                        <span className={styles.listHeader}>
+                        <span
+                            id="convert-your-data"
+                            className={styles.listHeader}
+                        >
                             Convert your data into Simularium format
                         </span>
                     </li>
