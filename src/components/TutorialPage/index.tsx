@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Layout, Typography } from "antd";
 
 import dragDropImage from "../../assets/drag-drop.gif";
-import { UploadFile } from "../Icons";
 
 const { Content } = Layout;
 const { Text } = Typography;
@@ -42,7 +41,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                         </li>
                         <li>
                             Drag one of the downloaded files from your file
-                            browser onto the the data input icon {UploadFile}.
+                            browser onto the the window.
                         </li>
                     </ol>
                 </ul>
@@ -163,8 +162,8 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                         </li>
                         <li>
                             Drag the resulting file from your file browser onto
-                            the the data input icon {UploadFile} or use the file
-                            upload dialogue to choose your file.
+                            the window or use the file upload dialogue to choose
+                            your file.
                         </li>
                     </ol>
                 </ul>
