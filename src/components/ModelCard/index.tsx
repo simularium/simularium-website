@@ -51,8 +51,18 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                     <p className={styles.cardTitle}>{title.toUpperCase()}</p>
                 </Link>
                 <p>{authors}</p>
-                <a href={publication.url}>
-                    <p>{publication.title}</p>
+                <a
+                    href={publication.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <p className={styles.publication}>
+                        {publication.title}.{" "}
+                        <span className={styles.journal}>
+                            {publication.journal}{" "}
+                        </span>
+                        ({publication.year})
+                    </p>
                 </a>
                 <p>{description}</p>
             </div>

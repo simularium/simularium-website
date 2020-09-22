@@ -14,7 +14,9 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         authors: "Jonathan Alberts et al",
         publication: {
             title:
-                "In Silico Reconstitution of Listeria Propulsion Exhibits Nano-Saltation. PLoS Biology 2004.",
+                "In Silico Reconstitution of Listeria Propulsion Exhibits Nano-Saltation",
+            journal: "PLoS Biology",
+            year: 2004,
             url:
                 "https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.0020412",
         },
@@ -30,7 +32,9 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         authors: "Susanne Rafelski et al",
         publication: {
             title:
-                "An Experimental and Computational Study of the Effect of ActA Polarity on the Speed of Listeria monocytogenes Actin-based Motility. PLoS Comp. Biology 2009.",
+                "An Experimental and Computational Study of the Effect of ActA Polarity on the Speed of Listeria monocytogenes Actin-based Motility",
+            journal: "PLoS Comp. Biology",
+            year: 2009,
             url:
                 "https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000434",
         },
@@ -46,7 +50,9 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         authors: "Matthew Akamatsu et al",
         publication: {
             title:
-                "Principles of self-organization and load adaptation by the actin cytoskeleton during clathrin-mediated endocytosis. eLife 2020.",
+                "Principles of self-organization and load adaptation by the actin cytoskeleton during clathrin-mediated endocytosis",
+            journal: "eLife",
+            year: 2020,
             url: "https://elifesciences.org/articles/49840",
         },
         description:
@@ -61,7 +67,9 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         authors: "Ngan Nguyen et al",
         publication: {
             title:
-                "Modeling in the Time of COVID-19: Statistical and Rule-based Mesoscale Models. arXiv 2020.",
+                "Modeling in the Time of COVID-19: Statistical and Rule-based Mesoscale Models",
+            journal: "arXiv",
+            year: 2020,
             url: "https://arxiv.org/abs/2005.01804",
         },
         description:
