@@ -6,6 +6,8 @@ export interface TrajectoryDisplayData {
     authors: string;
     publication: {
         title: string;
+        journal: string;
+        year: number;
         url: string;
     };
     description: string;

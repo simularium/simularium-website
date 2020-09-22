@@ -20,3 +20,11 @@
 .cardTitle {
     font-weight: 600;
 }
+
+.publication {
+    font-size: 14px;
+}
+
+.journal {
+    font-style: italic;
+}
