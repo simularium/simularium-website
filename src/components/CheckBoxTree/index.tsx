@@ -38,16 +38,6 @@ const CheckBoxTree = ({
     handleAgentCheck,
     handleHighlight,
 }: CheckBoxTreeProps) => {
-    const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
-    const [autoExpandParent, setAutoExpandParent] = useState<boolean>(true);
-
-    const onExpand = (expandedKeys: (string | number)[]) => {
-        // if not set autoExpandParent to false, if children expanded, parent can not collapse.
-        // or, you can remove all expanded children keys.
-        setExpandedKeys(expandedKeys as string[]);
-        setAutoExpandParent(false);
-    };
-
     const onSubCheckboxChange = (key: string, values: string[]) => {
         handleAgentCheck({ [key]: values });
     };

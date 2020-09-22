@@ -1,21 +1,37 @@
 import React, { ReactNode, useState } from "react";
 import { Button } from "antd";
+import { noop } from "lodash";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
+import classNames from "classnames";
+
+import { CaretRight } from "../Icons";
+
+import collapseAnimation from "./collapseMotion";
 
 interface TreeNodeProps extends React.PropsWithChildren<any> {
     actions?: ReactNode[];
     headerContent: (values: CheckboxValueType[]) => void;
 }
-// const styles = require("./style.css");
+const styles = require("./style.css");
 
 const TreeNode = ({ children, actions = [], headerContent }: TreeNodeProps) => {
     const [isExpanded, setExpanded] = useState<boolean>(false);
-
+    const ref = React.createRef<HTMLDivElement>();
     const onToggle = () => {
-        // if not set autoExpandParent to false, if children expanded, parent can not collapse.
-        // or, you can remove all expanded children keys.
+        const isOpening = !isExpanded;
         setExpanded(!isExpanded);
+        if (isOpening && ref.current) {
+            collapseAnimation.enter(ref.current, () => noop);
+        } else if (ref.current) {
+            collapseAnimation.leave(ref.current, () => noop);
+        }
     };
+    const buttonClassNames = classNames(styles.toggleButton, {
+        [styles.active]: isExpanded,
+    });
+    const panelClassNames = classNames(styles.panel, {
+        [styles.active]: isExpanded,
+    });
     return (
         <div>
             <header>
@@ -23,10 +39,18 @@ const TreeNode = ({ children, actions = [], headerContent }: TreeNodeProps) => {
                     actions.map((button) => (
                         <div key={button.key}>{button}</div>
                     ))}
-                <Button onClick={onToggle}>toggle</Button>
+                <Button
+                    className={buttonClassNames}
+                    ghost
+                    shape="circle"
+                    icon={CaretRight}
+                    onClick={onToggle}
+                />
                 {headerContent}
             </header>
-            {isExpanded && <div className="panel">{children}</div>}
+            <div ref={ref} className={panelClassNames}>
+                {children}
+            </div>
         </div>
     );
 };

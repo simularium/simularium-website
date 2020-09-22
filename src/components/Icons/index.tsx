@@ -16,6 +16,7 @@ export const Pause = <PauseOutlined />;
 export const StepForward = <StepForwardOutlined />;
 export const UploadFile = <UploadOutlined />;
 export const DownArrow = <DownOutlined />;
+export const CaretRight = <CaretRightOutlined />;
 
 export default {
     StepBack,
@@ -25,4 +26,5 @@ export default {
     UploadFile,
     Loading,
     DownArrow,
+    CaretRight,
 };

@@ -1,0 +1,10 @@
+.toggle-button.active {
+    transform: rotate(90deg);
+}
+.panel {
+    display: none;
+    transition: all .3s;
+}
+.panel.active {
+    display: block;
+}
