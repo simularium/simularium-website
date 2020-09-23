@@ -5,7 +5,7 @@
 }
 
 .panel {
-    background-color: var(--landing-pg-panel-light-gray);
+    background-color: var(--light-theme-panel-light-gray);
     padding-left: 50px;
     padding-right: 50px;
     padding-top: 1em;
@@ -18,22 +18,6 @@
     max-width: 1010px;
     margin-left: auto;
     margin-right: auto;
-}
-
-h1, h2 {
-    text-align: center;
-    font-weight: 400;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    color: var(--landing-pg-header-gray);
-}
-
-h1 {
-    font-size: 36px;
-}
-
-h2 {
-    font-size: 24px;
 }
 
 .libraryPanel {
@@ -71,12 +55,12 @@ h2 {
 .signUpPanel {
     padding-top: 3em;
     padding-bottom: 1.5em;
-    background-color: var(--landing-pg-background-purple);
+    background-color: var(--light-theme-background-purple);
 }
 
 .signUpPanel button {
-    background-color: var(--landing-pg-button-purple);
-    color: var(--landing-pg-button-light-gray);
+    background-color: var(--light-theme-button-purple);
+    color: var(--light-theme-button-light-gray);
     border: none;
     width: 280px;
     height: 70px;
@@ -90,7 +74,7 @@ h2 {
 }
 
 .signUpPanel :global(.ant-btn-primary:hover) {
-    background-color: var(--landing-pg-button-purple);
+    background-color: var(--light-theme-button-purple);
     opacity: 0.9;
-    color: var(--landing-pg-button-light-gray);
+    color: var(--light-theme-button-light-gray);
 }

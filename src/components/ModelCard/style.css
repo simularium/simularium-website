@@ -7,16 +7,8 @@
     padding: 0px;
 }
 
-img {
-    width: 100%;
-}
-
 .cardText {
     font-size: 18px;
-}
-
-p {
-    margin-bottom: 0.5em;
 }
 
 .simulatedTime {
@@ -35,9 +27,4 @@ p {
 
 .journal {
     font-style: italic;
-}
-
-a, a :hover {
-    color: var(--landing-pg-card-link-gray);
-    transition: none;
 }

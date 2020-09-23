@@ -23,10 +23,10 @@
     --dark-theme-component-bg: var(--dark-purple-gray);
     --dark-theme-text-color: var(--off-white);
     --dark-theme-menu-text-color: var(--transparent-white);
-    --landing-pg-background-purple: var(--light-purple-gray);
-    --landing-pg-button-purple: var(--dark-purple);
-    --landing-pg-header-gray: var(--medium-gray);
-    --landing-pg-card-link-gray: var(--medium-gray);
-    --landing-pg-panel-light-gray: var(--light-gray-alt);
-    --landing-pg-button-light-gray: var(--light-gray-alt);
+    --light-theme-background-purple: var(--light-purple-gray);
+    --light-theme-button-purple: var(--dark-purple);
+    --light-theme-header-gray: var(--medium-gray);
+    --light-theme-panel-light-gray: var(--light-gray-alt);
+    --light-theme-button-light-gray: var(--light-gray-alt);
 }
+
