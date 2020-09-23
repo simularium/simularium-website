@@ -10,11 +10,15 @@ import collapseAnimation from "./collapseMotion";
 
 interface TreeNodeProps extends React.PropsWithChildren<any> {
     actions?: ReactNode[];
-    headerContent: (values: CheckboxValueType[]) => void;
+    headerContent: ReactNode;
 }
 const styles = require("./style.css");
 
-const TreeNode = ({ children, actions = [], headerContent }: TreeNodeProps) => {
+const TreeNode = ({
+    children,
+    actions = [],
+    headerContent,
+}: TreeNodeProps): JSX.Element => {
     const [isExpanded, setExpanded] = useState<boolean>(false);
     const ref = React.createRef<HTMLDivElement>();
     const onToggle = () => {
@@ -35,10 +39,7 @@ const TreeNode = ({ children, actions = [], headerContent }: TreeNodeProps) => {
     return (
         <div>
             <header>
-                {actions.length > 0 &&
-                    actions.map((button) => (
-                        <div key={button.key}>{button}</div>
-                    ))}
+                {actions.length > 0 && actions.map((button) => button)}
                 <Button
                     className={buttonClassNames}
                     ghost
