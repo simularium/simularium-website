@@ -16,10 +16,12 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                 <h1>Getting Started with Simularium</h1>
                 <p className={styles.intro}>
                     To try out the Simularium Viewer, either{" "}
-                    <a href="#">download</a> our example data or{" "}
-                    <a href="#convert-your-data">convert</a> your own data, then
-                    drag and drop it onto the <Link to="/viewer">viewer</Link>.
-                    More details below:
+                    <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/akamatsu_0020.simularium">
+                        download
+                    </a>{" "}
+                    our example data or <a href="#convert-your-data">convert</a>{" "}
+                    your own data, then drag and drop it onto the{" "}
+                    <Link to="/viewer">viewer</Link>. More details below:
                 </p>
                 <ul className={styles.approachBlock}>
                     <li>
@@ -34,8 +36,11 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                     </li>
                     <ol>
                         <li>
-                            Download example trajectories from{" "}
-                            <a href="https://#">[URL]</a>.
+                            Download the example data{" "}
+                            <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/akamatsu_0020.simularium">
+                                here
+                            </a>
+                            .
                         </li>
                         <li>
                             In a web browser (Chrome or Firefox), navigate to
