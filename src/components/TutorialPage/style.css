@@ -1,0 +1,33 @@
+.container {
+    display: block;
+    margin: auto;
+    padding: 2em;
+    max-width: 1010px;
+    font-size: 18px;
+}
+
+.intro {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    font-size: 20px;
+}
+
+.listHeader {
+    font-size: 20px;
+}
+
+.dragDropImage {
+    width: 400px;
+    border-width: 0.5px;
+    border-style: solid;
+    margin: 0.5em;
+}
+
+.approachBlock {
+    margin-bottom: 2em;
+}
+
+:global(.ant-typography code) {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
