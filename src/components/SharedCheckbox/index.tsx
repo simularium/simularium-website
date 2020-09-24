@@ -42,7 +42,6 @@ export default class SharedCheckbox extends React.Component<
                 checked={checkedList.length === options.length}
                 style={{
                     margin: "auto",
-                    width: 120,
                 }}
             >
                 {showLabel ? title : ""}

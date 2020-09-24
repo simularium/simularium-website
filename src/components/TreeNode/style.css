@@ -1,10 +1,29 @@
+.container {
+    background-color: var(--dark-purple-gray);
+    margin-bottom: 3px;
+    padding: 0 12px;
+}
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.toggle-button {
+    border: none;
+    color: var(--warm-gray-three)
+}
 .toggle-button.active {
     transform: rotate(90deg);
 }
 .panel {
     display: none;
     transition: all .3s;
+    padding-top: 10px;
 }
 .panel.active {
     display: block;
+}
+
+.header :global(.ant-checkbox) {
+    top: 9px;
 }

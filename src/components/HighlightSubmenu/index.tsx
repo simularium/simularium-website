@@ -23,7 +23,7 @@ const HighlightSubmenu = ({
             onChange={onChange}
         >
             {options.map(({ value }) => (
-                <Checkbox key={value} value={value} />
+                <Checkbox key={value as string} value={value} />
             ))}
         </CheckboxGroup>
     );

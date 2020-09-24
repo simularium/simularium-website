@@ -11,7 +11,6 @@ import {
 import SharedCheckbox from "../SharedCheckbox";
 import HighlightSubmenu from "../HighlightSubmenu";
 import TreeNode from "../TreeNode";
-const { Panel } = Collapse;
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -37,7 +36,7 @@ const CheckBoxTree = ({
     treeData,
     handleAgentCheck,
     handleHighlight,
-}: CheckBoxTreeProps) => {
+}: CheckBoxTreeProps): JSX.Element => {
     const onSubCheckboxChange = (key: string, values: string[]) => {
         handleAgentCheck({ [key]: values });
     };
@@ -69,86 +68,182 @@ const CheckBoxTree = ({
     };
     console.log("AGENTS CHECKED", agentsChecked);
     return treeData.length > 0 ? (
-        treeData.map((data) => {
-            return (
-                <TreeNode
-                    headerContent={
-                        data.children.length ? (
-                            <Row>
-                                <Col span={3}>
-                                    <SharedCheckbox
-                                        title={data.title}
-                                        showLabel={false}
-                                        options={map(
-                                            data.children,
-                                            "value" as string
-                                        )}
-                                        onTopLevelCheck={
-                                            onTopLevelHighlightChange
-                                        }
-                                        checkedList={
-                                            agentsHighlighted[data.title] || []
-                                        }
-                                    />
-                                </Col>
-                                <Col span={14}>
-                                    <SharedCheckbox
-                                        title={data.title}
-                                        showLabel
-                                        options={map(
-                                            data.children,
-                                            "value" as string
-                                        )}
-                                        onTopLevelCheck={onTopLevelCheck}
-                                        checkedList={
-                                            agentsChecked[data.title] || []
-                                        }
-                                    />
-                                </Col>
-                            </Row>
-                        ) : (
-                            <Checkbox
-                                onChange={(event) =>
-                                    onAgentWithNoTagsChange(event, data.title)
-                                }
-                            >
-                                {data.title}
-                            </Checkbox>
-                        )
-                    }
-                    key={data.key}
-                >
-                    <Row className={styles.subMenu}>
-                        <Col span={3}>
-                            <HighlightSubmenu
+        <div className={styles.container}>
+            {treeData.map((data) => {
+                return (
+                    <TreeNode
+                        actions={
+                            data.children.length
+                                ? [
+                                      <Row key="actions">
+                                          <Col flex={1}>
+                                              <SharedCheckbox
+                                                  title={data.title}
+                                                  showLabel={false}
+                                                  options={map(
+                                                      data.children,
+                                                      "value" as string
+                                                  )}
+                                                  onTopLevelCheck={
+                                                      onTopLevelHighlightChange
+                                                  }
+                                                  checkedList={
+                                                      agentsHighlighted[
+                                                          data.title
+                                                      ] || []
+                                                  }
+                                              />
+                                          </Col>
+                                          <Col flex={1}>
+                                              <SharedCheckbox
+                                                  title={data.title}
+                                                  showLabel={false}
+                                                  options={map(
+                                                      data.children,
+                                                      "value" as string
+                                                  )}
+                                                  onTopLevelCheck={
+                                                      onTopLevelCheck
+                                                  }
+                                                  checkedList={
+                                                      agentsChecked[
+                                                          data.title
+                                                      ] || []
+                                                  }
+                                              />
+                                          </Col>
+                                      </Row>,
+                                  ]
+                                : [
+                                      <Checkbox
+                                          key={data.title}
+                                          onChange={(event) =>
+                                              onAgentWithNoTagsChange(
+                                                  event,
+                                                  data.title
+                                              )
+                                          }
+                                      >
+                                          {data.title}
+                                      </Checkbox>,
+                                  ]
+                        }
+                        headerContent={<label>{data.title}</label>}
+                        // headerContent={
+                        //     data.children.length ? (
+                        //         <Row>
+                        //             <Col span={3}>
+                        //                 <SharedCheckbox
+                        //                     title={data.title}
+                        //                     showLabel={false}
+                        //                     options={map(
+                        //                         data.children,
+                        //                         "value" as string
+                        //                     )}
+                        //                     onTopLevelCheck={
+                        //                         onTopLevelHighlightChange
+                        //                     }
+                        //                     checkedList={
+                        //                         agentsHighlighted[
+                        //                             data.title
+                        //                         ] || []
+                        //                     }
+                        //                 />
+                        //             </Col>
+                        //             <Col span={20}>
+                        //                 <SharedCheckbox
+                        //                     title={data.title}
+                        //                     showLabel
+                        //                     options={map(
+                        //                         data.children,
+                        //                         "value" as string
+                        //                     )}
+                        //                     onTopLevelCheck={
+                        //                         onTopLevelCheck
+                        //                     }
+                        //                     checkedList={
+                        //                         agentsChecked[
+                        //                             data.title
+                        //                         ] || []
+                        //                     }
+                        //                 />
+                        //             </Col>
+                        //         </Row>
+                        //     ) : (
+                        //         <Checkbox
+                        //             onChange={(event) =>
+                        //                 onAgentWithNoTagsChange(
+                        //                     event,
+                        //                     data.title
+                        //                 )
+                        //             }
+                        //         >
+                        //             {data.title}
+                        //         </Checkbox>
+                        //     )
+                        // }
+                        key={data.key}
+                    >
+                        <Row className={styles.subMenu}>
+                            <Col span={2}>
+                                <HighlightSubmenu
+                                    options={data.children}
+                                    agentsHighlighted={
+                                        agentsHighlighted[data.title] || []
+                                    }
+                                    onChange={(values) =>
+                                        onSubHighlightChange(
+                                            data.title,
+                                            values as string[]
+                                        )
+                                    }
+                                />
+                            </Col>
+                            <Col span={2}>
+                                <HighlightSubmenu
+                                    options={data.children}
+                                    agentsHighlighted={
+                                        agentsChecked[data.title] || []
+                                    }
+                                    onChange={(values) =>
+                                        onSubCheckboxChange(
+                                            data.title,
+                                            values as string[]
+                                        )
+                                    }
+                                />
+
+                                {/* <CheckboxGroup
+                                className={styles.visibilityMenu}
                                 options={data.children}
-                                agentsHighlighted={
-                                    agentsHighlighted[data.title] || []
+                                value={
+                                    agentsChecked[data.title] || []
                                 }
-                                onChange={(values) =>
-                                    onSubHighlightChange(
-                                        data.title,
-                                        values as string[]
-                                    )
-                                }
-                            />
-                        </Col>
-                        <Col span={14}>
-                            <CheckboxGroup
-                                options={data.children}
-                                value={agentsChecked[data.title] || []}
                                 onChange={(values) =>
                                     onSubCheckboxChange(
                                         data.title,
                                         values as string[]
                                     )
                                 }
-                            />
-                        </Col>
-                    </Row>
-                </TreeNode>
-            );
-        })
+                            /> */}
+                            </Col>
+                            <Col span={5} offset={5} className={styles.label}>
+                                {data.children.map((value) => {
+                                    return (
+                                        <label
+                                            className={styles.rowLabel}
+                                            key={value.value}
+                                        >
+                                            {value.label}
+                                        </label>
+                                    );
+                                })}
+                            </Col>
+                        </Row>
+                    </TreeNode>
+                );
+            })}
+        </div>
     ) : (
         <div>Load file</div>
     );

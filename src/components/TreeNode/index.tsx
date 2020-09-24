@@ -1,7 +1,6 @@
 import React, { ReactNode, useState } from "react";
 import { Button } from "antd";
 import { noop } from "lodash";
-import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import classNames from "classnames";
 
 import { CaretRight } from "../Icons";
@@ -25,9 +24,9 @@ const TreeNode = ({
         const isOpening = !isExpanded;
         setExpanded(!isExpanded);
         if (isOpening && ref.current) {
-            collapseAnimation.enter(ref.current, () => noop);
+            collapseAnimation.enter(ref.current, noop);
         } else if (ref.current) {
-            collapseAnimation.leave(ref.current, () => noop);
+            collapseAnimation.leave(ref.current, noop);
         }
     };
     const buttonClassNames = classNames(styles.toggleButton, {
@@ -37,8 +36,8 @@ const TreeNode = ({
         [styles.active]: isExpanded,
     });
     return (
-        <div>
-            <header>
+        <div className={styles.container}>
+            <header className={styles.header}>
                 {actions.length > 0 && actions.map((button) => button)}
                 <Button
                     className={buttonClassNames}
