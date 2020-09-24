@@ -1,7 +1,8 @@
 import * as React from "react";
 import { Layout } from "antd";
 
-import Icons from "../Icons";
+import arrowImage from "../../assets/open-arrow.svg";
+
 const { Sider } = Layout;
 
 const styles = require("./style.css");
@@ -37,7 +38,7 @@ export default class SideBar extends React.Component<SiderProps, {}> {
                 onCollapse={onCollapse}
             >
                 <div className={styles.trigger} onClick={this.toggle}>
-                    {Icons.Pause}
+                    <img src={arrowImage} />
                 </div>
                 {children}
             </Sider>
