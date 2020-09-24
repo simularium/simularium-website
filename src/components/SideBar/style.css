@@ -41,6 +41,7 @@
     z-index: 1000;
     font-size: 36px;
     background-color: yellow;
+    cursor: pointer;
 }
 
 /* Seems like class .ant-layout-sider-trigger doesn't exist in the DOM
