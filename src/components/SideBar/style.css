@@ -35,7 +35,7 @@
 
 .trigger {
     position: absolute;
-    top: 10px;
+    top: 23px;
     right: -20px;
     z-index: 500;
     width: 44px;
@@ -43,7 +43,7 @@
     border-radius: 50%;
     background-color: var(--dark-purple-gray);
     cursor: pointer;
-    box-shadow: 2px 2px 5px gray;
+    box-shadow: 2px 2px 5px black;
     display: flex;
     align-items: center;
     justify-content: center;
