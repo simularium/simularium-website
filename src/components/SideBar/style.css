@@ -51,23 +51,15 @@
 
 .trigger img {
     height: 20px;
+}
+
+.notCollapsed.left img, .collapsed.right img {
     transform: rotate(180deg);
 }
 
-/* Seems like class .ant-layout-sider-trigger doesn't exist in the DOM
-/* .sider :global(.ant-layout-sider-trigger) {
-    position: inherit;
-} */
-
-/* .sider :global(.ant-layout-sider-zero-width-trigger) {
-    position: absolute;
-    top: 0px;
-    border:none;
+.collapsed.left img, .notCollapsed.right img {
+    transform: rotate(0deg);
 }
-
-.sider.left :global(.ant-layout-sider-zero-width-trigger) {
-    right: -30px;
-} */
 
 .sider i {
     position: absolute;

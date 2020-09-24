@@ -12,12 +12,16 @@ interface SiderProps {
     onCollapse: (open: boolean) => void;
 }
 
-export default class SideBar extends React.Component<SiderProps, {}> {
+interface SiderState {
+    collapsed: boolean;
+}
+
+export default class SideBar extends React.Component<SiderProps, SiderState> {
     state = {
         collapsed: false,
     };
 
-    toggle = () => {
+    toggleCollapse = () => {
         this.setState({
             collapsed: !this.state.collapsed,
         });
@@ -25,19 +29,21 @@ export default class SideBar extends React.Component<SiderProps, {}> {
 
     public render(): JSX.Element {
         const { type, children, onCollapse } = this.props;
+        let triggerClassName: string = styles.trigger + " " + styles[type];
+        triggerClassName = this.state.collapsed
+            ? triggerClassName + " " + styles.collapsed
+            : triggerClassName + " " + styles.notCollapsed;
+
         return (
             <Sider
-                // className={[styles.sider, styles[type]].join(" ")}
                 collapsed={this.state.collapsed}
                 collapsible={true}
                 collapsedWidth={0}
-                // zeroWidthTriggerStyle={ {width: "50px"} }
                 trigger={null}
-                // reverseArrow={type === "right"}
                 width={280}
                 onCollapse={onCollapse}
             >
-                <div className={styles.trigger} onClick={this.toggle}>
+                <div className={triggerClassName} onClick={this.toggleCollapse}>
                     <img src={arrowImage} />
                 </div>
                 {children}
