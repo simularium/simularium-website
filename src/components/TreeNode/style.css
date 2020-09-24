@@ -8,6 +8,9 @@
     align-items: center;
     justify-content: flex-start;
 }
+.header label {
+    font-weight: 600;
+}
 .toggle-button {
     border: none;
     color: var(--warm-gray-three)

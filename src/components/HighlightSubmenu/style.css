@@ -1,7 +1,3 @@
-.container span{
-    /* display: none; */
-}
-
 .container :global(.ant-checkbox-wrapper) {
     margin-left: 0;
 }
