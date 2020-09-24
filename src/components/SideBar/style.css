@@ -32,23 +32,34 @@
     border-top: 0;
     border-left: 0;
 }
-.sider :global(.ant-layout-sider-trigger) {
-    position: inherit;
+
+.trigger {
+    color: red;
+    position: absolute;
+    top: 10px;
+    right: -20px;
+    z-index: 1000;
+    font-size: 36px;
+    background-color: yellow;
 }
 
-.sider :global(.ant-layout-sider-zero-width-trigger) {
+/* Seems like class .ant-layout-sider-trigger doesn't exist in the DOM
+/* .sider :global(.ant-layout-sider-trigger) {
+    position: inherit;
+} */
+
+/* .sider :global(.ant-layout-sider-zero-width-trigger) {
     position: absolute;
     top: 0px;
     border:none;
-
 }
 
 .sider.left :global(.ant-layout-sider-zero-width-trigger) {
     right: -30px;
-}
+} */
 
 .sider i {
     position: absolute;
     top: 50%;
     left: 3.5px;
-}
+} 

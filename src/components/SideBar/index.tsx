@@ -12,18 +12,33 @@ interface SiderProps {
 }
 
 export default class SideBar extends React.Component<SiderProps, {}> {
+    state = {
+        collapsed: false,
+    };
+
+    toggle = () => {
+        this.setState({
+            collapsed: !this.state.collapsed,
+        });
+    };
+
     public render(): JSX.Element {
         const { type, children, onCollapse } = this.props;
         return (
             <Sider
-                className={[styles.sider, styles[type]].join(" ")}
+                // className={[styles.sider, styles[type]].join(" ")}
+                collapsed={this.state.collapsed}
                 collapsible={true}
                 collapsedWidth={0}
-                trigger={Icons.Pause}
-                reverseArrow={type === "right"}
+                // zeroWidthTriggerStyle={ {width: "50px"} }
+                trigger={null}
+                // reverseArrow={type === "right"}
                 width={280}
                 onCollapse={onCollapse}
             >
+                <div className={styles.trigger} onClick={this.toggle}>
+                    {Icons.Pause}
+                </div>
                 {children}
             </Sider>
         );
