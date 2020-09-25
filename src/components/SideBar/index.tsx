@@ -27,6 +27,9 @@ export default class SideBar extends React.Component<SiderProps, SiderState> {
         this.setState({
             collapsed: !this.state.collapsed,
         });
+
+        // Trigger redux action to adjust the viewer width, depending on the
+        // number of sidebars that are now collapsed
         onCollapse(this.state.collapsed);
     };
 
@@ -43,11 +46,11 @@ export default class SideBar extends React.Component<SiderProps, SiderState> {
 
         return (
             <Sider
-                collapsed={this.state.collapsed}
+                width={280}
                 collapsible={true}
+                collapsed={this.state.collapsed}
                 collapsedWidth={0}
                 trigger={null}
-                width={280}
             >
                 <div className={triggerClass} onClick={this.handleTriggerClick}>
                     <img src={arrowImage} />
