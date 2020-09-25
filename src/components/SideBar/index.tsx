@@ -41,7 +41,6 @@ export default class SideBar extends React.Component<SiderProps, SiderState> {
             [styles.trigger]: true,
             [styles[type]]: true,
             [styles.collapsed]: this.state.collapsed,
-            [styles.notCollapsed]: !this.state.collapsed,
         });
 
         return (
