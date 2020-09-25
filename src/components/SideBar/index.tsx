@@ -33,6 +33,10 @@ export default class SideBar extends React.Component<SiderProps, SiderState> {
         triggerClassName = this.state.collapsed
             ? triggerClassName + " " + styles.collapsed
             : triggerClassName + " " + styles.notCollapsed;
+        const handleTriggerClick = () => {
+            this.toggleCollapse();
+            onCollapse(this.state.collapsed);
+        };
 
         return (
             <Sider
@@ -41,9 +45,8 @@ export default class SideBar extends React.Component<SiderProps, SiderState> {
                 collapsedWidth={0}
                 trigger={null}
                 width={280}
-                onCollapse={onCollapse}
             >
-                <div className={triggerClassName} onClick={this.toggleCollapse}>
+                <div className={triggerClassName} onClick={handleTriggerClick}>
                     <img src={arrowImage} />
                 </div>
                 {children}
