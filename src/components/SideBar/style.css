@@ -61,7 +61,7 @@
     left: -32px;
 }
 
-.not-collapsed.left img, .collapsed.right img {
+.left img, .collapsed.right img {
     transform: rotate(180deg);
 }
 
