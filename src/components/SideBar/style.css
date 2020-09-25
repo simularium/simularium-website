@@ -42,7 +42,7 @@
     border-radius: 50%;
     background-color: var(--dark-purple-gray);
     cursor: pointer;
-    box-shadow: 2px 2px 5px black;
+    box-shadow: 0 1px 3px black;
     display: flex;
     align-items: center;
     justify-content: center;
