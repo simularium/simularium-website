@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Layout } from "antd";
+import classNames from "classnames";
 
 import arrowImage from "../../assets/open-arrow.svg";
 
@@ -41,10 +42,12 @@ export default class SideBar extends React.Component<SiderProps, SiderState> {
 
     public render(): JSX.Element {
         const { type, children } = this.props;
-        let triggerClassName: string = styles.trigger + " " + styles[type];
-        triggerClassName = this.state.collapsed
-            ? triggerClassName + " " + styles.collapsed
-            : triggerClassName + " " + styles.notCollapsed;
+        let triggerClass: string = classNames({
+            [styles.trigger]: true,
+            [styles[type]]: true,
+            [styles.collapsed]: this.state.collapsed,
+            [styles.notCollapsed]: !this.state.collapsed,
+        });
 
         return (
             <Sider
@@ -54,10 +57,7 @@ export default class SideBar extends React.Component<SiderProps, SiderState> {
                 trigger={null}
                 width={280}
             >
-                <div
-                    className={triggerClassName}
-                    onClick={this.handleTriggerClick}
-                >
+                <div className={triggerClass} onClick={this.handleTriggerClick}>
                     <img src={arrowImage} />
                 </div>
                 {children}
