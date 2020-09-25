@@ -61,11 +61,11 @@
     left: -32px;
 }
 
-.notCollapsed.left img, .collapsed.right img {
+.not-collapsed.left img, .collapsed.right img {
     transform: rotate(180deg);
 }
 
-.collapsed.left img, .notCollapsed.right img {
+.collapsed.left img, .not-collapsed.right img {
     transform: rotate(0deg);
 }
 
