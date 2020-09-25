@@ -17,6 +17,16 @@ interface SiderState {
 }
 
 export default class SideBar extends React.Component<SiderProps, SiderState> {
+    /* 
+    This local state and the following method connect the custom trigger
+    button to the sidebar so that it collapses on click. This would be
+    automatically handled by the antd Sider component if we were not using
+    a custom trigger. 
+    
+    The local state is also used for styling the trigger button based on
+    whether the associated sidebar is collapsed or not (i.e., flipping the arrow).
+    */
+
     state = {
         collapsed: false,
     };
