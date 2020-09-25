@@ -2,7 +2,7 @@ import * as React from "react";
 import { Layout } from "antd";
 import classNames from "classnames";
 
-import arrowImage from "../../assets/open-arrow.svg";
+import { PurpleArrow } from "../Icons";
 
 const { Sider } = Layout;
 
@@ -53,7 +53,7 @@ export default class SideBar extends React.Component<SiderProps, SiderState> {
                 trigger={null}
             >
                 <div className={triggerClass} onClick={this.handleTriggerClick}>
-                    <img src={arrowImage} />
+                    {PurpleArrow}
                 </div>
                 {children}
             </Sider>

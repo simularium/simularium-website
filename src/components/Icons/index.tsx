@@ -10,6 +10,8 @@ import {
     ArrowLeftOutlined,
 } from "@ant-design/icons";
 
+import PurpleArrowPointingRight from "../../assets/open-arrow.svg";
+
 export const Loading = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 export const StepBack = <StepBackwardOutlined />;
 export const Play = <CaretRightOutlined />;
@@ -18,6 +20,7 @@ export const StepForward = <StepForwardOutlined />;
 export const UploadFile = <UploadOutlined />;
 export const DownArrow = <DownOutlined />;
 export const GoBack = <ArrowLeftOutlined />;
+export const PurpleArrow = <img src={PurpleArrowPointingRight} />;
 export default {
     StepBack,
     Play,
@@ -26,5 +29,6 @@ export default {
     UploadFile,
     Loading,
     DownArrow,
-    ArrowLeftOutlined,
+    GoBack,
+    PurpleArrow,
 };
