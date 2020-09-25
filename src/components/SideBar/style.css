@@ -62,10 +62,12 @@
 
 .notCollapsed.left img, .collapsed.right img {
     transform: rotate(180deg);
+    transition: all 0.3s;
 }
 
 .collapsed.left img, .notCollapsed.right img {
     transform: rotate(0deg);
+    transition: all 0.3s;
 }
 
 .sider i {
