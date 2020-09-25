@@ -1,5 +1,6 @@
 :root {
     --black: #000000;
+    --darkest-gray: #141219;
     --dark-gray: #25222e;
     --dim-gray: #383838;
     --medium-gray: #4a4a4a;
@@ -23,6 +24,7 @@
     --dark-theme-component-bg: var(--dark-purple-gray);
     --dark-theme-text-color: var(--off-white);
     --dark-theme-menu-text-color: var(--transparent-white);
+    --dark-theme-sidebar-bg: var(--darkest-gray);
     --light-theme-background-purple: var(--light-purple-gray);
     --light-theme-button-purple: var(--dark-purple);
     --light-theme-header-gray: var(--medium-gray);

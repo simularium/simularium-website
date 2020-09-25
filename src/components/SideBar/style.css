@@ -35,7 +35,7 @@
 
 .trigger {
     position: absolute;
-    top: 23px;
+    top: 3px;
     z-index: 500;
     width: 44px;
     height: 44px;
@@ -53,11 +53,11 @@
 }
 
 .trigger.left {
-    right: -20px;
+    right: -35px;
 }
 
 .trigger.right {
-    left: -20px;
+    left: -35px;
 }
 
 .notCollapsed.left img, .collapsed.right img {
