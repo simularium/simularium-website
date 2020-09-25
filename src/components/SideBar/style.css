@@ -36,7 +36,7 @@
 .trigger {
     position: absolute;
     top: 3px;
-    z-index: 500;
+    z-index: 200;
     width: 44px;
     height: 44px;
     border-radius: 50%;
@@ -49,19 +49,16 @@
 }
 
 .trigger img {
-    height: 20px;
+    height: 22px;
+    transition: all 0.4s;
 }
 
 .trigger.left {
-    right: -35px;
+    right: -32px;
 }
 
 .trigger.right {
-    left: -35px;
-}
-
-.collapsed img, .notCollapsed img {
-    transition: all 0.4s;
+    left: -32px;
 }
 
 .notCollapsed.left img, .collapsed.right img {
