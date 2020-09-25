@@ -65,7 +65,7 @@
     transform: rotate(180deg);
 }
 
-.collapsed.left img, .not-collapsed.right img {
+.collapsed.left img, .right img {
     transform: rotate(0deg);
 }
 
