@@ -36,6 +36,12 @@ export default class SideBar extends React.Component<SiderProps, SiderState> {
     public render(): JSX.Element {
         const { type, children } = this.props;
 
+        // Ex) class="style__sider--30dA5 style__left--1KLfS"
+        let siderClass: string = classNames({
+            [styles.sider]: true,
+            [styles[type]]: true,
+        });
+
         // Ex) class="style__trigger--30dA5 style__left--1KLfS style__collapsed--ncLRy"
         let triggerClass: string = classNames({
             [styles.trigger]: true,
@@ -45,6 +51,7 @@ export default class SideBar extends React.Component<SiderProps, SiderState> {
 
         return (
             <Sider
+                className={siderClass}
                 width={280}
                 collapsible={true}
                 collapsed={this.state.collapsed}

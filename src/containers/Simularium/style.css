@@ -10,9 +10,9 @@
     color: var(--dark-theme-text-color);
 }
 .container :global(.ant-layout-content) {
-    background-color: var(--dark-theme-sidebar-bg);
-    padding: 0 10px;
     height: calc(100vh - var(--header-height));
+    /* Prevents a light gray background from flashing upon collapsing the right sidebar */
+    background: var(--dark-theme-body-bg);
 }
 
 .content {
