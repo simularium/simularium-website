@@ -21,6 +21,11 @@
 
 .container :global(.ant-checkbox-inner) {
     border-color: var(--warm-gray-three);
+}
+
+.container :global(.ant-checkbox-indeterminate .ant-checkbox-inner::after) {
+    background-color: var(--dark-gray);
+    height: 2px;
 
 }
 
