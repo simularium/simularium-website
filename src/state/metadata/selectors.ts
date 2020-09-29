@@ -58,7 +58,7 @@ export const getUiDisplayDataTree = createSelector(
             key: agent.name,
             children: [
                 {
-                    label: agent.name,
+                    label: "<unmodified>",
                     value: agent.name,
                 },
                 ...agent.displayStates.map((state) => ({
