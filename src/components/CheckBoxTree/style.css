@@ -20,7 +20,7 @@
 }
 
 .container :global(.ant-checkbox-inner) {
-    border-color: var(--warm-gray-three);
+    border-color: var(--warm-gray);
 }
 
 .container :global(.ant-checkbox-indeterminate .ant-checkbox-inner::after) {
