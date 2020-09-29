@@ -191,7 +191,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             simulariumController,
             selectionStateInfoForViewer,
         } = this.props;
-        console.log(selectionStateInfoForViewer);
+        // console.log(selectionStateInfoForViewer);
         return (
             <div ref={this.centerContent} className={styles.container}>
                 <SimulariumViewer

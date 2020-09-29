@@ -65,7 +65,6 @@ export const getAgentTagsToHide = createSelector(
     [getVisibleAgentsNamesAndTags, getAllTags],
     (currentlyOn, allTags): string[] => {
         const allTagsShowing = flatMap(currentlyOn);
-        console.log(allTagsShowing);
         return allTags.filter((tag) => !allTagsShowing.includes(tag));
     }
 );
