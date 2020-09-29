@@ -45,7 +45,9 @@ module.exports = ({ analyze, env } = {}) => ({
             {
                 test: /\.css/,
                 include: [
-                    path.resolve(__dirname, "../", "src")
+                    path.resolve(__dirname, "../", "src/components"),
+                    path.resolve(__dirname, "../", "src/containers")
+
                 ],
                 use: [
                     {
@@ -84,6 +86,7 @@ module.exports = ({ analyze, env } = {}) => ({
             {
                 test: /\.css/,
                 include: [
+                    path.resolve(__dirname, "../src", "style.css"),
                     path.resolve(__dirname, "../", "node_modules")
                 ],
                 use: [
@@ -112,6 +115,15 @@ module.exports = ({ analyze, env } = {}) => ({
                             }
                         }
                     ]
+            },
+            {
+                test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/,
+                loader: "url-loader",
+                options: {
+                    name: '[name].[ext]',
+                    esModule: false
+
+                }
             },
             {
                 test: /\.(png|jpg|gif)$/i,

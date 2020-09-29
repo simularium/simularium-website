@@ -103,6 +103,7 @@
     "redux": "4.0.1",
     "redux-logic": "^2.1.1",
     "reselect": "4.0.0",
+    "url-loader": "^4.1.0",
     "victory": "^32.0.0"
   }
 }
