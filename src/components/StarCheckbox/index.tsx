@@ -1,24 +1,23 @@
-import * as React from "react";
+import React, { ChangeEvent } from "react";
 import classNames from "classnames";
+import { CheckboxChangeEvent, CheckboxProps } from "antd/lib/checkbox";
 
 const styles = require("./style.css");
 
-const StarCheckbox: React.FunctionComponent = ({
+interface StarCheckbox extends CheckboxProps {
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+const StarCheckbox: React.FunctionComponent<CheckboxProps> = ({
     checked,
     indeterminate,
     onChange,
-}) => {
+    value,
+}: CheckboxProps) => {
     const checkboxClassNames = classNames(["icon-moon", styles.checkbox], {
         [styles.checked]: checked,
         [styles.indeterminate]: indeterminate,
     });
-    const handleChange = (event) => {
-        console.log("changed", event.target);
-    };
 
-    const onClick = (event) => {
-        console.log("click", event.target);
-    };
     return (
         <div className={styles.wrapper}>
             <div className={styles.container}>
@@ -26,7 +25,7 @@ const StarCheckbox: React.FunctionComponent = ({
                     checked={checked}
                     type="checkbox"
                     onChange={onChange}
-                    onClick={onClick}
+                    value={value}
                 />
                 <span className={checkboxClassNames} />
             </div>

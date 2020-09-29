@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Checkbox } from "antd";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
-import StarCheckbox from "../StarCheckbox";
+import Checkbox from "../Checkbox";
 
 interface SharedCheckboxProps {
     options: string[];
@@ -9,6 +8,7 @@ interface SharedCheckboxProps {
     title: string;
     checkedList: string[];
     showLabel: boolean;
+    checkboxType?: string;
 }
 
 export default class SharedCheckbox extends React.Component<
@@ -27,9 +27,15 @@ export default class SharedCheckbox extends React.Component<
     }
 
     render() {
-        const { showLabel, title, checkedList, options } = this.props;
+        const {
+            showLabel,
+            title,
+            checkedList,
+            options,
+            checkboxType,
+        } = this.props;
         return (
-            <StarCheckbox
+            <Checkbox
                 indeterminate={
                     !!checkedList.length && checkedList.length < options.length
                 }
@@ -38,9 +44,10 @@ export default class SharedCheckbox extends React.Component<
                 style={{
                     margin: "auto",
                 }}
+                checkboxType={checkboxType}
             >
                 {showLabel ? title : ""}
-            </StarCheckbox>
+            </Checkbox>
         );
     }
 }

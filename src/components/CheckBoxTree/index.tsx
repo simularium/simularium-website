@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Checkbox, Collapse, Col, Row } from "antd";
+import { Col, Row } from "antd";
 import { ActionCreator } from "redux";
 import { CheckboxChangeEvent, CheckboxOptionType } from "antd/lib/checkbox";
 import { map } from "lodash";
@@ -11,8 +11,7 @@ import {
 import SharedCheckbox from "../SharedCheckbox";
 import CheckboxTreeSubmenu from "../CheckboxTreeSubmenu";
 import TreeNode from "../TreeNode";
-
-const CheckboxGroup = Checkbox.Group;
+import Checkbox from "../Checkbox";
 
 export interface AgentDisplayNode {
     title: string;
@@ -74,6 +73,7 @@ const CheckBoxTree = ({
                     <SharedCheckbox
                         title={nodeData.title}
                         showLabel={false}
+                        checkboxType="star"
                         options={map(nodeData.children, "value" as string)}
                         onTopLevelCheck={onTopLevelHighlightChange}
                         checkedList={agentsHighlighted[nodeData.title] || []}
@@ -100,7 +100,6 @@ const CheckBoxTree = ({
             </Checkbox>
         );
 
-    console.log("AGENTS CHECKED", agentsChecked);
     return treeData.length > 0 ? (
         <div className={styles.container}>
             <Row className={styles.colLabels}>
@@ -132,6 +131,7 @@ const CheckBoxTree = ({
                                     agentsHighlighted={
                                         agentsHighlighted[nodeData.title] || []
                                     }
+                                    checkboxType="star"
                                     onChange={(values) =>
                                         onSubHighlightChange(
                                             nodeData.title,
