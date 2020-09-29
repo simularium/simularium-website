@@ -20,7 +20,7 @@
     margin-right: auto;
 }
 
-.libraryPanel {
+.library-panel {
     composes: panel;
     background-color: inherit;
 }
@@ -36,7 +36,7 @@
     margin-bottom: 50px;
 }
 
-.aboutSimulariumPanel {
+.about-simularium-panel {
     composes: panel;
     background-color: white;
 }
@@ -52,13 +52,13 @@
     margin-bottom: 1em;
 }
 
-.signUpPanel {
+.sign-up-panel {
     padding-top: 3em;
     padding-bottom: 1.5em;
     background-color: var(--light-theme-background-purple);
 }
 
-.signUpPanel button {
+.sign-up-panel button {
     background-color: var(--light-theme-button-purple);
     color: var(--light-theme-button-light-gray);
     border: none;
@@ -73,7 +73,7 @@
     transition: 0.3s;
 }
 
-.signUpPanel :global(.ant-btn-primary:hover) {
+.sign-up-panel :global(.ant-btn-primary:hover) {
     background-color: var(--light-theme-button-purple);
     opacity: 0.9;
     color: var(--light-theme-button-light-gray);

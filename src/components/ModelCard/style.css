@@ -7,17 +7,17 @@
     padding: 0px;
 }
 
-.cardText {
+.card-text {
     font-size: 18px;
 }
 
-.simulatedTime {
+.simulated-time {
     margin-top: 4px;
     text-align: right;
     font-size: 16px;
 }
 
-.cardTitle {
+.card-title {
     font-weight: 600;
 }
 
