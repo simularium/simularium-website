@@ -6,12 +6,13 @@ import { CheckboxValueType } from "antd/lib/checkbox/Group";
 const CheckboxGroup = AntdCheckbox.Group;
 
 import Checkbox from "../Checkbox";
+import { CHECKBOX_TYPE_STAR } from "../../constants";
 
 interface CheckboxTreeSubmenuProps {
     agentsHighlighted: string[];
     options: CheckboxOptionType[];
     onChange: (values: CheckboxValueType[]) => void;
-    checkboxType?: string;
+    checkboxType?: CHECKBOX_TYPE_STAR;
 }
 const styles = require("./style.css");
 
@@ -31,9 +32,7 @@ const CheckboxTreeSubmenu = ({
         } else {
             value.splice(optionIndex, 1);
         }
-        // if (!("value" in this.props)) {
-        //     this.setState({ value });
-        // }
+
         console.log(value);
         const newValue = value
             .filter((val) => allowedValues.indexOf(val) !== -1)

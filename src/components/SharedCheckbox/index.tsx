@@ -1,6 +1,7 @@
 import * as React from "react";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import Checkbox from "../Checkbox";
+import { CHECKBOX_TYPE_STAR } from "../../constants";
 
 const styles = require("./style.css");
 
@@ -10,7 +11,7 @@ interface SharedCheckboxProps {
     title: string;
     checkedList: string[];
     showLabel: boolean;
-    checkboxType?: string;
+    checkboxType?: CHECKBOX_TYPE_STAR;
 }
 
 export default class SharedCheckbox extends React.Component<

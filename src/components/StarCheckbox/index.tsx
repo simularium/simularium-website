@@ -1,12 +1,9 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
 import classNames from "classnames";
 import { CheckboxChangeEvent, CheckboxProps } from "antd/lib/checkbox";
 
 const styles = require("./style.css");
 
-interface StarCheckbox extends CheckboxProps {
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-}
 const StarCheckbox: React.FunctionComponent<CheckboxProps> = ({
     checked,
     indeterminate,
@@ -20,14 +17,22 @@ const StarCheckbox: React.FunctionComponent<CheckboxProps> = ({
         [styles.checked]: checked,
         [styles.indeterminate]: indeterminate,
     });
-    console.log(className);
+    const handleCheckboxChange = (event: any) => {
+        /* typescript compatibility issue between ChangeEvent<HTMLInput>
+         * and CheckboxChangeEvent.
+         * This solves the issue, but there is probably a better way
+         */
+        if (onChange) {
+            onChange(event as CheckboxChangeEvent);
+        }
+    };
     return (
         <label className={wrapperClassnames}>
             <span className={styles.container}>
                 <input
                     checked={checked}
                     type="checkbox"
-                    onChange={onChange}
+                    onChange={handleCheckboxChange}
                     value={value}
                 />
                 <span className={checkboxClassNames} />
