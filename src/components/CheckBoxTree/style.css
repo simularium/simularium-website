@@ -23,3 +23,8 @@
     border-color: var(--warm-gray-three);
 
 }
+
+.container .col-labels label {
+    font-size: 10px;
+    text-transform: uppercase;
+}

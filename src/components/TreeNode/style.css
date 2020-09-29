@@ -9,7 +9,7 @@
     justify-content: flex-start;
 }
 .header label {
-    font-weight: 600;
+    margin-left: 17px;
 }
 .toggle-button {
     border: none;

@@ -41,10 +41,9 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
             highlightAgentsByDisplayKey,
             highlightedAgentKeys,
         } = this.props;
-        console.log(visibleAgentKeys);
         return (
             <NestedMenus
-                panelKeys={["graphing", "statistics"]}
+                panelKeys={["Agents"]}
                 mainTitle="Inputs"
                 subTitles={["Agents"]}
                 content={[
