@@ -21,14 +21,8 @@ export default class SharedCheckbox extends React.Component<
 
     onCheckAllChange(event: CheckboxChangeEvent) {
         const { options, onTopLevelCheck, title } = this.props;
-        event.preventDefault();
-        event.target.checked
-            ? onTopLevelCheck({
-                  [title]: options,
-              })
-            : onTopLevelCheck({
-                  [title]: [],
-              });
+        const newCheckedList = event.target.checked ? options : [];
+        onTopLevelCheck({ [title]: newCheckedList });
     }
 
     render() {
