@@ -66,9 +66,9 @@ class App extends React.Component<AppProps, AppState> {
     componentDidMount() {
         if (window.matchMedia("(max-width: 900px)").matches) {
             Modal.warning({
-                title: "Mobile devices are not supported",
+                title: "Small screens are not supported",
                 content:
-                    "The Simularium Viewer does not support mobile devices at this time. Please try on a computer for the best experience.",
+                    "The Simularium Viewer does not support small screens at this time. Please use a larger screen for the best experience.",
             });
         }
 
