@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
-import { Layout } from "antd";
+import { Layout, Modal } from "antd";
 import queryString from "query-string";
 import { SimulariumController } from "@aics/simularium-viewer";
 
@@ -64,6 +64,12 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     componentDidMount() {
+        Modal.warning({
+            title: "Mobile devices are not supported",
+            content:
+                "The Simularium Viewer does not support mobile devices at this time. Please try on a desktop.",
+        });
+
         const { setSimulariumController, changeToNetworkedFile } = this.props;
         const current = this.interactiveContent.current;
 
