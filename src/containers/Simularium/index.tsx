@@ -64,11 +64,13 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     componentDidMount() {
-        Modal.warning({
-            title: "Mobile devices are not supported",
-            content:
-                "The Simularium Viewer does not support mobile devices at this time. Please try on a desktop.",
-        });
+        if (window.matchMedia("(max-width: 900px)").matches) {
+            Modal.warning({
+                title: "Mobile devices are not supported",
+                content:
+                    "The Simularium Viewer does not support mobile devices at this time. Please try on a computer for the best experience.",
+            });
+        }
 
         const { setSimulariumController, changeToNetworkedFile } = this.props;
         const current = this.interactiveContent.current;
