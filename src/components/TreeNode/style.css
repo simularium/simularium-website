@@ -8,9 +8,6 @@
     align-items: center;
     justify-content: flex-start;
 }
-.header label {
-    margin-left: 17px;
-}
 .toggle-button {
     border: none;
     color: var(--warm-gray)
@@ -27,6 +24,3 @@
     display: block;
 }
 
-.header :global(.ant-checkbox) {
-    top: 9px;
-}

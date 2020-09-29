@@ -12,6 +12,8 @@
     display: inline-block;
     line-height: unset;
     cursor: pointer;
+    width: 22px;
+    height: 40px;
 }
 .container {
     box-sizing: border-box;
@@ -31,6 +33,10 @@
     vertical-align: middle;
     outline: none;
     cursor: pointer;
+}
+
+:global(.header-checkbox) .container {
+    top: 9px;
 }
 .container input {
     position: absolute;
@@ -78,5 +84,4 @@
 .checked:after {
     content: "\e902";
     color: var(--white-two);
-
 }

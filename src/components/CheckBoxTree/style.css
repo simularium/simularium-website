@@ -2,8 +2,8 @@
     flex-flow: row;
 }
 
-.visibility-menu {
-
+.header-label {
+    margin-left: 1px;
 }
 
 .row-label {
@@ -14,8 +14,13 @@
     font-weight: 200;
 }
 
+.container .col-labels label {
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
 .container :global(.ant-checkbox-wrapper) {
-    width: 22px;
+    width: 37px;
     height: 40px;
 }
 
@@ -29,7 +34,7 @@
 
 }
 
-.container .col-labels label {
-    font-size: 10px;
-    text-transform: uppercase;
+.star-icon::after {
+    content: "\e902";
+    color: var(--white-two);
 }

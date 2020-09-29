@@ -2,6 +2,8 @@ import * as React from "react";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import Checkbox from "../Checkbox";
 
+const styles = require("./style.css");
+
 interface SharedCheckboxProps {
     options: string[];
     onTopLevelCheck: any;
@@ -44,6 +46,7 @@ export default class SharedCheckbox extends React.Component<
                 style={{
                     margin: "auto",
                 }}
+                className={[styles.container, "header-checkbox"].join(" ")}
                 checkboxType={checkboxType}
             >
                 {showLabel ? title : ""}

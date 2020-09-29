@@ -12,15 +12,18 @@ const StarCheckbox: React.FunctionComponent<CheckboxProps> = ({
     indeterminate,
     onChange,
     value,
+    className,
 }: CheckboxProps) => {
+    const parentClassnames = className ? className.split(" ") : [];
+    const wrapperClassnames = classNames([...parentClassnames, styles.wrapper]);
     const checkboxClassNames = classNames(["icon-moon", styles.checkbox], {
         [styles.checked]: checked,
         [styles.indeterminate]: indeterminate,
     });
-
+    console.log(className);
     return (
-        <div className={styles.wrapper}>
-            <div className={styles.container}>
+        <label className={wrapperClassnames}>
+            <span className={styles.container}>
                 <input
                     checked={checked}
                     type="checkbox"
@@ -28,8 +31,8 @@ const StarCheckbox: React.FunctionComponent<CheckboxProps> = ({
                     value={value}
                 />
                 <span className={checkboxClassNames} />
-            </div>
-        </div>
+            </span>
+        </label>
     );
 };
 

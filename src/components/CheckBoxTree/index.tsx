@@ -3,6 +3,7 @@ import { Col, Row } from "antd";
 import { ActionCreator } from "redux";
 import { CheckboxChangeEvent, CheckboxOptionType } from "antd/lib/checkbox";
 import { map } from "lodash";
+import classNames from "classnames";
 
 import {
     ChangeAgentsRenderingStateAction,
@@ -69,7 +70,7 @@ const CheckBoxTree = ({
     const renderSharedCheckboxes = (nodeData: AgentDisplayNode) =>
         nodeData.children.length ? (
             <Row key="actions">
-                <Col flex={1}>
+                <Col span={12}>
                     <SharedCheckbox
                         title={nodeData.title}
                         showLabel={false}
@@ -79,7 +80,7 @@ const CheckBoxTree = ({
                         checkedList={agentsHighlighted[nodeData.title] || []}
                     />
                 </Col>
-                <Col flex={1}>
+                <Col span={12}>
                     <SharedCheckbox
                         title={nodeData.title}
                         showLabel={false}
@@ -103,8 +104,10 @@ const CheckBoxTree = ({
     return treeData.length > 0 ? (
         <div className={styles.container}>
             <Row className={styles.colLabels}>
-                <Col span={3} offset={3}>
-                    <label>star</label>
+                <Col span={2} offset={4}>
+                    <label
+                        className={classNames(["icon-moon", styles.starIcon])}
+                    />
                 </Col>
                 <Col span={3}>
                     <label>show</label>
@@ -119,7 +122,9 @@ const CheckBoxTree = ({
                         headerContent={
                             <>
                                 {renderSharedCheckboxes(nodeData)}{" "}
-                                <label>{nodeData.title}</label>
+                                <label className={styles.headerLabel}>
+                                    {nodeData.title}
+                                </label>
                             </>
                         }
                         key={nodeData.key}
@@ -154,7 +159,7 @@ const CheckBoxTree = ({
                                     }
                                 />
                             </Col>
-                            <Col span={5} offset={5} className={styles.label}>
+                            <Col span={5} offset={4} className={styles.label}>
                                 {nodeData.children.map((value) => {
                                     return (
                                         <label
