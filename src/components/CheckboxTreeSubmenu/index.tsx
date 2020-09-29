@@ -4,18 +4,18 @@ import { CheckboxOptionType } from "antd/lib/checkbox";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 const CheckboxGroup = Checkbox.Group;
 
-interface HighlightSubmenuProps {
+interface CheckboxTreeSubmenuProps {
     agentsHighlighted: string[];
     options: CheckboxOptionType[];
     onChange: (values: CheckboxValueType[]) => void;
 }
 const styles = require("./style.css");
 
-const HighlightSubmenu = ({
+const CheckboxTreeSubmenu = ({
     agentsHighlighted,
     options,
     onChange,
-}: HighlightSubmenuProps) => {
+}: CheckboxTreeSubmenuProps) => {
     return (
         <CheckboxGroup
             className={styles.container}
@@ -29,4 +29,4 @@ const HighlightSubmenu = ({
     );
 };
 
-export default HighlightSubmenu;
+export default CheckboxTreeSubmenu;

@@ -9,7 +9,7 @@ import {
     VisibilitySelectionMap,
 } from "../../state/selection/types";
 import SharedCheckbox from "../SharedCheckbox";
-import HighlightSubmenu from "../HighlightSubmenu";
+import CheckboxTreeSubmenu from "../CheckboxTreeSubmenu";
 import TreeNode from "../TreeNode";
 
 const CheckboxGroup = Checkbox.Group;
@@ -127,7 +127,7 @@ const CheckBoxTree = ({
                     >
                         <Row className={styles.subMenu}>
                             <Col span={2} offset={3}>
-                                <HighlightSubmenu
+                                <CheckboxTreeSubmenu
                                     options={nodeData.children}
                                     agentsHighlighted={
                                         agentsHighlighted[nodeData.title] || []
@@ -141,7 +141,7 @@ const CheckBoxTree = ({
                                 />
                             </Col>
                             <Col span={2}>
-                                <HighlightSubmenu
+                                <CheckboxTreeSubmenu
                                     options={nodeData.children}
                                     agentsHighlighted={
                                         agentsChecked[nodeData.title] || []
