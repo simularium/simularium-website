@@ -10,14 +10,14 @@
     color: var(--dark-theme-text-color);
 }
 .container :global(.ant-layout-content) {
-    margin: 0 30px;
     height: calc(100vh - var(--header-height));
+    /* Prevents a light gray background from flashing upon collapsing the right sidebar */
+    background: var(--dark-theme-body-bg);
 }
 
 .content {
     position: relative;
     height: 100%;
-
 }
 
 .container :global(.ant-btn-ghost) {

@@ -12,18 +12,18 @@
     font-size: 20px;
 }
 
-.listHeader {
+.list-header {
     font-size: 20px;
 }
 
-.dragDropImage {
+.drag-drop-image {
     width: 400px;
     border-width: 0.5px;
     border-style: solid;
     margin: 0.5em;
 }
 
-.approachBlock {
+.approach-block {
     margin-bottom: 2em;
 }
 

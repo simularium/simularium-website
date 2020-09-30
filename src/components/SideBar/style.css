@@ -6,7 +6,10 @@
     left: 0;
     z-index: 100;
     padding-bottom: 0;
+    background-color: var(--dark-theme-sidebar-bg);
+    padding: 0 5px;
 }
+
 .sider.right {
     right: 0;
     left: inherit;
@@ -20,7 +23,7 @@
 }
 
 .sider :global(.ant-layout-sider-children) {
-    overflow: scroll;
+    overflow: auto;
 }
 
 :global(.ant-collapse),
@@ -35,23 +38,45 @@
     border-top: 0;
     border-left: 0;
 }
-.sider :global(.ant-layout-sider-trigger) {
-    position: inherit;
-}
-
-.sider :global(.ant-layout-sider-zero-width-trigger) {
-    position: absolute;
-    top: 0px;
-    border:none;
-
-}
-
-.sider.left :global(.ant-layout-sider-zero-width-trigger) {
-    right: -30px;
-}
 
 .sider i {
     position: absolute;
     top: 50%;
     left: 3.5px;
+} 
+
+.trigger {
+    position: absolute;
+    top: 3px;
+    z-index: 200;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--dark-purple-gray);
+    cursor: pointer;
+    box-shadow: 0 1px 3px black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trigger img {
+    height: 22px;
+    transition: all 0.4s;
+}
+
+.trigger.left {
+    right: -22px;
+}
+
+.trigger.right {
+    left: -22px;
+}
+
+.left img, .collapsed.right img {
+    transform: rotate(180deg);
+}
+
+.collapsed.left img, .right img {
+    transform: rotate(0deg);
 }
