@@ -43,9 +43,8 @@
 }
 
 /* Simularium overview flowchart image */
+
 .flowchart {
-    width: 60%;
-    min-width: 600px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -58,6 +57,13 @@
     padding-bottom: 3.5em;
     background-color: var(--light-theme-background-purple);
     text-align: center;
+}
+
+@media screen and (min-width: 600px) {
+    .flowchart {
+        width: 60%;
+        min-width: 600px;
+    }
 }
 
 .call-to-action-panel :global(.ant-btn) {
