@@ -33,7 +33,7 @@ interface CheckBoxTreeProps {
     payloadForSelectNone: VisibilitySelectionMap;
     checkAllIsIntermediate: boolean;
 }
-
+const CHECKBOX_SPAN_NO = 2;
 const styles = require("./style.css");
 
 const CheckBoxTree = ({
@@ -148,12 +148,12 @@ const CheckBoxTree = ({
     return treeData.length > 0 ? (
         <div className={styles.container}>
             <Row className={styles.colLabels}>
-                <Col span={2} offset={4}>
+                <Col span={CHECKBOX_SPAN_NO} offset={4}>
                     <label
                         className={classNames(["icon-moon", styles.starIcon])}
                     />
                 </Col>
-                <Col span={2}>
+                <Col span={CHECKBOX_SPAN_NO}>
                     <label>show</label>
                 </Col>
                 <Col flex={5} offset={1}>
@@ -175,7 +175,7 @@ const CheckBoxTree = ({
                         key={nodeData.key}
                     >
                         <Row className={styles.subMenu}>
-                            <Col span={2} offset={3}>
+                            <Col span={CHECKBOX_SPAN_NO} offset={3}>
                                 <CheckboxTreeSubmenu
                                     options={nodeData.children}
                                     checkedAgents={
@@ -190,7 +190,7 @@ const CheckBoxTree = ({
                                     }
                                 />
                             </Col>
-                            <Col span={2}>
+                            <Col span={CHECKBOX_SPAN_NO}>
                                 <CheckboxTreeSubmenu
                                     options={nodeData.children}
                                     checkedAgents={
