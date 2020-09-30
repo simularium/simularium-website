@@ -178,7 +178,7 @@ const CheckBoxTree = ({
                             <Col span={2} offset={3}>
                                 <CheckboxTreeSubmenu
                                     options={nodeData.children}
-                                    agentsHighlighted={
+                                    checkedAgents={
                                         agentsHighlighted[nodeData.title] || []
                                     }
                                     checkboxType={CHECKBOX_TYPE_STAR}
@@ -193,7 +193,7 @@ const CheckBoxTree = ({
                             <Col span={2}>
                                 <CheckboxTreeSubmenu
                                     options={nodeData.children}
-                                    agentsHighlighted={
+                                    checkedAgents={
                                         agentsChecked[nodeData.title] || []
                                     }
                                     onChange={(values) =>

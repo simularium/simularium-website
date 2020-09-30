@@ -9,7 +9,7 @@ import Checkbox from "../Checkbox";
 import { CHECKBOX_TYPE_STAR } from "../../constants";
 
 interface CheckboxTreeSubmenuProps {
-    agentsHighlighted: string[];
+    checkedAgents: string[];
     options: CheckboxOptionType[];
     onChange: (values: CheckboxValueType[]) => void;
     checkboxType?: CHECKBOX_TYPE_STAR;
@@ -17,15 +17,15 @@ interface CheckboxTreeSubmenuProps {
 const styles = require("./style.css");
 
 const CheckboxTreeSubmenu = ({
-    agentsHighlighted,
+    checkedAgents,
     options,
     onChange,
     checkboxType,
 }: CheckboxTreeSubmenuProps) => {
     const onCheckboxChange = ({ target }: CheckboxChangeEvent) => {
         const allowedValues = map(options, "value");
-        const optionIndex = agentsHighlighted.indexOf(target.value);
-        const value = [...agentsHighlighted];
+        const optionIndex = checkedAgents.indexOf(target.value);
+        const value = [...checkedAgents];
         if (optionIndex === -1) {
             value.push(target.value);
         } else {
@@ -44,7 +44,7 @@ const CheckboxTreeSubmenu = ({
     return (
         <CheckboxGroup
             className={styles.container}
-            value={agentsHighlighted || []}
+            value={checkedAgents || []}
             onChange={onChange}
         >
             {options.map(({ value }) => (
@@ -52,7 +52,7 @@ const CheckboxTreeSubmenu = ({
                     key={value as string}
                     value={value}
                     checkboxType={checkboxType}
-                    checked={agentsHighlighted.includes(value as string)}
+                    checked={checkedAgents.includes(value as string)}
                     onChange={checkboxType ? onCheckboxChange : noop}
                 />
             ))}
