@@ -25,7 +25,6 @@ const CheckboxTreeSubmenu = ({
     const onCheckboxChange = ({ target }: CheckboxChangeEvent) => {
         const allowedValues = map(options, "value");
         const optionIndex = agentsHighlighted.indexOf(target.value);
-        console.log(optionIndex);
         const value = [...agentsHighlighted];
         if (optionIndex === -1) {
             value.push(target.value);
@@ -33,7 +32,6 @@ const CheckboxTreeSubmenu = ({
             value.splice(optionIndex, 1);
         }
 
-        console.log(value);
         const newValue = value
             .filter((val) => allowedValues.indexOf(val) !== -1)
             .sort((a, b) => {
@@ -41,7 +39,6 @@ const CheckboxTreeSubmenu = ({
                 const indexB = options.findIndex((opt) => opt.value === b);
                 return indexA - indexB;
             });
-        console.log(newValue);
         onChange(newValue);
     };
     return (
@@ -50,7 +47,7 @@ const CheckboxTreeSubmenu = ({
             value={agentsHighlighted || []}
             onChange={onChange}
         >
-            {options.map(({ value, label }) => (
+            {options.map(({ value }) => (
                 <Checkbox
                     key={value as string}
                     value={value}

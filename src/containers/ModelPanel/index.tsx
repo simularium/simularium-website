@@ -13,12 +13,19 @@ import {
 import {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
+    setAgentsVisible,
 } from "../../state/selection/actions";
 import {
     ChangeAgentsRenderingStateAction,
+    SetVisibleAction,
     VisibilitySelectionMap,
 } from "../../state/selection/types";
 import CheckBoxTree, { AgentDisplayNode } from "../../components/CheckBoxTree";
+import {
+    convertUITreeDataToSelectAll,
+    convertUITreeDataToSelectNone,
+    getCheckboxAllIsIntermediate,
+} from "./selectors";
 
 const styles = require("./style.css");
 
@@ -30,6 +37,10 @@ interface ModelPanelProps {
     highlightAgentsByDisplayKey: ActionCreator<
         ChangeAgentsRenderingStateAction
     >;
+    setAgentsVisible: ActionCreator<SetVisibleAction>;
+    payloadForSelectAll: VisibilitySelectionMap;
+    payloadForSelectNone: VisibilitySelectionMap;
+    checkAllIsIntermediate: boolean;
 }
 
 class ModelPanel extends React.Component<ModelPanelProps, {}> {
@@ -40,6 +51,10 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
             turnAgentsOnByDisplayKey,
             highlightAgentsByDisplayKey,
             highlightedAgentKeys,
+            setAgentsVisible,
+            payloadForSelectAll,
+            payloadForSelectNone,
+            checkAllIsIntermediate,
         } = this.props;
         return (
             <NestedMenus
@@ -54,6 +69,10 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
                             agentsChecked={visibleAgentKeys}
                             handleHighlight={highlightAgentsByDisplayKey}
                             agentsHighlighted={highlightedAgentKeys}
+                            setAgentsVisible={setAgentsVisible}
+                            payloadForSelectAll={payloadForSelectAll}
+                            payloadForSelectNone={payloadForSelectNone}
+                            checkAllIsIntermediate={checkAllIsIntermediate}
                         />
                     </div>,
                     null,
@@ -68,6 +87,9 @@ function mapStateToProps(state: State) {
         visibleAgentKeys: getVisibleAgentsNamesAndTags(state),
         highlightedAgentKeys: getHighlightedAgentsNamesAndTags(state),
         uiDisplayDataTree: getUiDisplayDataTree(state),
+        payloadForSelectAll: convertUITreeDataToSelectAll(state),
+        payloadForSelectNone: convertUITreeDataToSelectNone(state),
+        checkAllIsIntermediate: getCheckboxAllIsIntermediate(state),
     };
 }
 
@@ -75,6 +97,7 @@ const dispatchToPropsMap = {
     requestMetadata,
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
+    setAgentsVisible,
 };
 
 export default connect(

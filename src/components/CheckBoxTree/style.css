@@ -3,7 +3,7 @@
 }
 
 .header-label {
-    margin-left: 1px;
+    margin-left: 8px;
 }
 
 .row-label {
@@ -19,11 +19,6 @@
     text-transform: uppercase;
 }
 
-.container :global(.ant-checkbox-wrapper) {
-    width: 37px;
-    height: 40px;
-}
-
 .container :global(.ant-checkbox-inner) {
     border-color: var(--warm-gray);
 }
@@ -32,6 +27,16 @@
     background-color: var(--dark-gray);
     height: 2px;
 
+}
+
+.check-all-checkbox {
+    width: 100%;
+    margin-left: 60px;
+    padding: 10px 0;
+}
+
+.check-all-checkbox :global(.ant-checkbox) {
+    margin-right: 12px;
 }
 
 .star-icon::after {

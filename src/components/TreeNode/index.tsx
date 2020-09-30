@@ -39,13 +39,15 @@ const TreeNode = ({
         <div className={styles.container}>
             <header className={styles.header}>
                 {actions.length > 0 && actions.map((button) => button)}
-                <Button
-                    className={buttonClassNames}
-                    ghost
-                    shape="circle"
-                    icon={CaretRight}
-                    onClick={onToggle}
-                />
+                {children && (
+                    <Button
+                        className={buttonClassNames}
+                        ghost
+                        shape="circle"
+                        icon={CaretRight}
+                        onClick={onToggle}
+                    />
+                )}
                 {headerContent}
             </header>
             <div ref={ref} className={panelClassNames}>

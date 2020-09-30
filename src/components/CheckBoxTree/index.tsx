@@ -2,11 +2,12 @@ import React from "react";
 import { Col, Row } from "antd";
 import { ActionCreator } from "redux";
 import { CheckboxChangeEvent, CheckboxOptionType } from "antd/lib/checkbox";
-import { map } from "lodash";
+import { map, filter } from "lodash";
 import classNames from "classnames";
 
 import {
     ChangeAgentsRenderingStateAction,
+    SetVisibleAction,
     VisibilitySelectionMap,
 } from "../../state/selection/types";
 import SharedCheckbox from "../SharedCheckbox";
@@ -27,6 +28,10 @@ interface CheckBoxTreeProps {
     agentsHighlighted: VisibilitySelectionMap;
     handleAgentCheck: ActionCreator<ChangeAgentsRenderingStateAction>;
     handleHighlight: ActionCreator<ChangeAgentsRenderingStateAction>;
+    setAgentsVisible: ActionCreator<SetVisibleAction>;
+    payloadForSelectAll: VisibilitySelectionMap;
+    payloadForSelectNone: VisibilitySelectionMap;
+    checkAllIsIntermediate: boolean;
 }
 
 const styles = require("./style.css");
@@ -37,6 +42,10 @@ const CheckBoxTree = ({
     treeData,
     handleAgentCheck,
     handleHighlight,
+    setAgentsVisible,
+    payloadForSelectAll,
+    payloadForSelectNone,
+    checkAllIsIntermediate,
 }: CheckBoxTreeProps): JSX.Element => {
     const onSubCheckboxChange = (key: string, values: string[]) => {
         handleAgentCheck({ [key]: values });
@@ -48,6 +57,15 @@ const CheckBoxTree = ({
 
     const onTopLevelCheck = (checkedKeys: { [key: string]: string[] }) => {
         handleAgentCheck(checkedKeys);
+    };
+
+    const toggleAllOnOff = (checkedKeys: { [key: string]: string[] }) => {
+        if (!checkedKeys.All.length) {
+            setAgentsVisible(payloadForSelectNone);
+        } else {
+            console.log("PAYLOAD FOR SELECT ALL", payloadForSelectAll);
+            setAgentsVisible(payloadForSelectAll);
+        }
     };
 
     const onTopLevelHighlightChange = (checkedKeys: {
@@ -68,6 +86,29 @@ const CheckBoxTree = ({
         }
     };
 
+    const renderCheckAllButton = () => {
+        const checkedList = filter(
+            map(
+                agentsChecked,
+                (value, key): string => (value.length ? key : "")
+            )
+        );
+
+        return (
+            <div className={styles.checkAllCheckbox}>
+                <SharedCheckbox
+                    title="All"
+                    showLabel={true}
+                    options={map(treeData, "key" as string)}
+                    onTopLevelCheck={toggleAllOnOff}
+                    indeterminate={checkAllIsIntermediate}
+                    checkedList={checkedList}
+                    isHeader={false}
+                />
+            </div>
+        );
+    };
+
     const renderSharedCheckboxes = (nodeData: AgentDisplayNode) =>
         nodeData.children.length ? (
             <Row key="actions">
@@ -79,6 +120,7 @@ const CheckBoxTree = ({
                         options={map(nodeData.children, "value" as string)}
                         onTopLevelCheck={onTopLevelHighlightChange}
                         checkedList={agentsHighlighted[nodeData.title] || []}
+                        isHeader={true}
                     />
                 </Col>
                 <Col span={12}>
@@ -88,6 +130,7 @@ const CheckBoxTree = ({
                         options={map(nodeData.children, "value" as string)}
                         onTopLevelCheck={onTopLevelCheck}
                         checkedList={agentsChecked[nodeData.title] || []}
+                        isHeader={true}
                     />
                 </Col>
             </Row>
@@ -110,13 +153,14 @@ const CheckBoxTree = ({
                         className={classNames(["icon-moon", styles.starIcon])}
                     />
                 </Col>
-                <Col span={3}>
+                <Col span={2}>
                     <label>show</label>
                 </Col>
-                <Col flex={5}>
+                <Col flex={5} offset={1}>
                     <label>type</label>
                 </Col>
             </Row>
+            <TreeNode headerContent={renderCheckAllButton()} />
             {treeData.map((nodeData) => {
                 return (
                     <TreeNode
