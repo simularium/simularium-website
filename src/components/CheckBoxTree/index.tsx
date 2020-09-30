@@ -34,6 +34,7 @@ interface CheckBoxTreeProps {
     checkAllIsIntermediate: boolean;
 }
 const CHECKBOX_SPAN_NO = 2;
+const LABEL_SPAN_NO = 5;
 const styles = require("./style.css");
 
 class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
@@ -158,7 +159,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                     <Col span={CHECKBOX_SPAN_NO}>
                         <label>show</label>
                     </Col>
-                    <Col flex={5} offset={1}>
+                    <Col flex={LABEL_SPAN_NO} offset={1}>
                         <label>type</label>
                     </Col>
                 </Row>
@@ -208,7 +209,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                     />
                                 </Col>
                                 <Col
-                                    span={5}
+                                    span={LABEL_SPAN_NO}
                                     offset={4}
                                     className={styles.label}
                                 >
