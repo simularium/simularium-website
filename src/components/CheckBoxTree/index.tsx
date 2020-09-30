@@ -36,57 +36,51 @@ interface CheckBoxTreeProps {
 const CHECKBOX_SPAN_NO = 2;
 const styles = require("./style.css");
 
-const CheckBoxTree = ({
-    agentsChecked,
-    agentsHighlighted,
-    treeData,
-    handleAgentCheck,
-    handleHighlight,
-    setAgentsVisible,
-    payloadForSelectAll,
-    payloadForSelectNone,
-    checkAllIsIntermediate,
-}: CheckBoxTreeProps): JSX.Element => {
-    const onSubCheckboxChange = (key: string, values: string[]) => {
+class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
+    onSubCheckboxChange = (key: string, values: string[]) => {
+        const { handleAgentCheck } = this.props;
         handleAgentCheck({ [key]: values });
     };
 
-    const onSubHighlightChange = (key: string, values: string[]) => {
+    onSubHighlightChange = (key: string, values: string[]) => {
+        const { handleHighlight } = this.props;
         handleHighlight({ [key]: values });
     };
 
-    const onTopLevelCheck = (checkedKeys: { [key: string]: string[] }) => {
+    onTopLevelCheck = (checkedKeys: { [key: string]: string[] }) => {
+        const { handleAgentCheck } = this.props;
         handleAgentCheck(checkedKeys);
     };
 
-    const toggleAllOnOff = (checkedKeys: { [key: string]: string[] }) => {
+    toggleAllOnOff = (checkedKeys: { [key: string]: string[] }) => {
+        const {
+            setAgentsVisible,
+            payloadForSelectNone,
+            payloadForSelectAll,
+        } = this.props;
         if (!checkedKeys.All.length) {
             setAgentsVisible(payloadForSelectNone);
         } else {
-            console.log("PAYLOAD FOR SELECT ALL", payloadForSelectAll);
             setAgentsVisible(payloadForSelectAll);
         }
     };
 
-    const onTopLevelHighlightChange = (checkedKeys: {
-        [key: string]: string[];
-    }) => {
+    onTopLevelHighlightChange = (checkedKeys: { [key: string]: string[] }) => {
+        const { handleHighlight } = this.props;
         handleHighlight(checkedKeys);
     };
 
-    const onAgentWithNoTagsChange = (
-        event: CheckboxChangeEvent,
-        title: string
-    ) => {
+    onAgentWithNoTagsChange = (event: CheckboxChangeEvent, title: string) => {
         event.preventDefault();
         if (event.target.checked) {
-            onSubCheckboxChange(title, [title]);
+            this.onSubCheckboxChange(title, [title]);
         } else {
-            onSubCheckboxChange(title, []);
+            this.onSubCheckboxChange(title, []);
         }
     };
 
-    const renderCheckAllButton = () => {
+    renderCheckAllButton = () => {
+        const { agentsChecked, treeData, checkAllIsIntermediate } = this.props;
         const checkedList = filter(
             map(
                 agentsChecked,
@@ -100,7 +94,7 @@ const CheckBoxTree = ({
                     title="All"
                     showLabel={true}
                     options={map(treeData, "key" as string)}
-                    onTopLevelCheck={toggleAllOnOff}
+                    onTopLevelCheck={this.toggleAllOnOff}
                     indeterminate={checkAllIsIntermediate}
                     checkedList={checkedList}
                     isHeader={false}
@@ -109,7 +103,7 @@ const CheckBoxTree = ({
         );
     };
 
-    const renderSharedCheckboxes = (nodeData: AgentDisplayNode) =>
+    renderSharedCheckboxes = (nodeData: AgentDisplayNode) =>
         nodeData.children.length ? (
             <Row key="actions">
                 <Col span={12}>
@@ -118,8 +112,10 @@ const CheckBoxTree = ({
                         showLabel={false}
                         checkboxType={CHECKBOX_TYPE_STAR}
                         options={map(nodeData.children, "value" as string)}
-                        onTopLevelCheck={onTopLevelHighlightChange}
-                        checkedList={agentsHighlighted[nodeData.title] || []}
+                        onTopLevelCheck={this.onTopLevelHighlightChange}
+                        checkedList={
+                            this.props.agentsHighlighted[nodeData.title] || []
+                        }
                         isHeader={true}
                     />
                 </Col>
@@ -128,8 +124,10 @@ const CheckBoxTree = ({
                         title={nodeData.title}
                         showLabel={false}
                         options={map(nodeData.children, "value" as string)}
-                        onTopLevelCheck={onTopLevelCheck}
-                        checkedList={agentsChecked[nodeData.title] || []}
+                        onTopLevelCheck={this.onTopLevelCheck}
+                        checkedList={
+                            this.props.agentsChecked[nodeData.title] || []
+                        }
                         isHeader={true}
                     />
                 </Col>
@@ -138,92 +136,102 @@ const CheckBoxTree = ({
             <Checkbox
                 key={nodeData.title}
                 onChange={(event) =>
-                    onAgentWithNoTagsChange(event, nodeData.title)
+                    this.onAgentWithNoTagsChange(event, nodeData.title)
                 }
             >
                 {nodeData.title}
             </Checkbox>
         );
-
-    return treeData.length > 0 ? (
-        <div className={styles.container}>
-            <Row className={styles.colLabels}>
-                <Col span={CHECKBOX_SPAN_NO} offset={4}>
-                    <label
-                        className={classNames(["icon-moon", styles.starIcon])}
-                    />
-                </Col>
-                <Col span={CHECKBOX_SPAN_NO}>
-                    <label>show</label>
-                </Col>
-                <Col flex={5} offset={1}>
-                    <label>type</label>
-                </Col>
-            </Row>
-            <TreeNode headerContent={renderCheckAllButton()} />
-            {treeData.map((nodeData) => {
-                return (
-                    <TreeNode
-                        headerContent={
-                            <>
-                                {renderSharedCheckboxes(nodeData)}{" "}
-                                <label className={styles.headerLabel}>
-                                    {nodeData.title}
-                                </label>
-                            </>
-                        }
-                        key={nodeData.key}
-                    >
-                        <Row className={styles.subMenu}>
-                            <Col span={CHECKBOX_SPAN_NO} offset={3}>
-                                <CheckboxTreeSubmenu
-                                    options={nodeData.children}
-                                    checkedAgents={
-                                        agentsHighlighted[nodeData.title] || []
-                                    }
-                                    checkboxType={CHECKBOX_TYPE_STAR}
-                                    onChange={(values) =>
-                                        onSubHighlightChange(
-                                            nodeData.title,
-                                            values as string[]
-                                        )
-                                    }
-                                />
-                            </Col>
-                            <Col span={CHECKBOX_SPAN_NO}>
-                                <CheckboxTreeSubmenu
-                                    options={nodeData.children}
-                                    checkedAgents={
-                                        agentsChecked[nodeData.title] || []
-                                    }
-                                    onChange={(values) =>
-                                        onSubCheckboxChange(
-                                            nodeData.title,
-                                            values as string[]
-                                        )
-                                    }
-                                />
-                            </Col>
-                            <Col span={5} offset={4} className={styles.label}>
-                                {nodeData.children.map((value) => {
-                                    return (
-                                        <label
-                                            className={styles.rowLabel}
-                                            key={value.value as string}
-                                        >
-                                            {value.label}
-                                        </label>
-                                    );
-                                })}
-                            </Col>
-                        </Row>
-                    </TreeNode>
-                );
-            })}
-        </div>
-    ) : (
-        <div>Load file</div>
-    );
-};
+    render() {
+        const { agentsHighlighted, treeData, agentsChecked } = this.props;
+        return treeData.length > 0 ? (
+            <div className={styles.container}>
+                <Row className={styles.colLabels}>
+                    <Col span={CHECKBOX_SPAN_NO} offset={4}>
+                        <label
+                            className={classNames([
+                                "icon-moon",
+                                styles.starIcon,
+                            ])}
+                        />
+                    </Col>
+                    <Col span={CHECKBOX_SPAN_NO}>
+                        <label>show</label>
+                    </Col>
+                    <Col flex={5} offset={1}>
+                        <label>type</label>
+                    </Col>
+                </Row>
+                <TreeNode headerContent={this.renderCheckAllButton()} />
+                {treeData.map((nodeData) => {
+                    return (
+                        <TreeNode
+                            headerContent={
+                                <>
+                                    {this.renderSharedCheckboxes(nodeData)}{" "}
+                                    <label className={styles.headerLabel}>
+                                        {nodeData.title}
+                                    </label>
+                                </>
+                            }
+                            key={nodeData.key}
+                        >
+                            <Row className={styles.subMenu}>
+                                <Col span={CHECKBOX_SPAN_NO} offset={3}>
+                                    <CheckboxTreeSubmenu
+                                        options={nodeData.children}
+                                        checkedAgents={
+                                            agentsHighlighted[nodeData.title] ||
+                                            []
+                                        }
+                                        checkboxType={CHECKBOX_TYPE_STAR}
+                                        onChange={(values) =>
+                                            this.onSubHighlightChange(
+                                                nodeData.title,
+                                                values as string[]
+                                            )
+                                        }
+                                    />
+                                </Col>
+                                <Col span={CHECKBOX_SPAN_NO}>
+                                    <CheckboxTreeSubmenu
+                                        options={nodeData.children}
+                                        checkedAgents={
+                                            agentsChecked[nodeData.title] || []
+                                        }
+                                        onChange={(values) =>
+                                            this.onSubCheckboxChange(
+                                                nodeData.title,
+                                                values as string[]
+                                            )
+                                        }
+                                    />
+                                </Col>
+                                <Col
+                                    span={5}
+                                    offset={4}
+                                    className={styles.label}
+                                >
+                                    {nodeData.children.map((value) => {
+                                        return (
+                                            <label
+                                                className={styles.rowLabel}
+                                                key={value.value as string}
+                                            >
+                                                {value.label}
+                                            </label>
+                                        );
+                                    })}
+                                </Col>
+                            </Row>
+                        </TreeNode>
+                    );
+                })}
+            </div>
+        ) : (
+            <div>Load file</div>
+        );
+    }
+}
 
 export default CheckBoxTree;
