@@ -11,6 +11,7 @@ import {
 } from "@ant-design/icons";
 
 import PurpleArrowPointingRight from "../../assets/open-arrow.svg";
+import AicsLogoWhite from "../../assets/AICS-logo-white.svg";
 
 export const Loading = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 export const StepBack = <StepBackwardOutlined />;
@@ -21,6 +22,7 @@ export const UploadFile = <UploadOutlined />;
 export const DownArrow = <DownOutlined />;
 export const GoBack = <ArrowLeftOutlined />;
 export const PurpleArrow = <img src={PurpleArrowPointingRight} />;
+export const AicsLogo = <img src={AicsLogoWhite} />;
 export default {
     StepBack,
     Play,
@@ -31,4 +33,5 @@ export default {
     DownArrow,
     GoBack,
     PurpleArrow,
+    AicsLogo,
 };
