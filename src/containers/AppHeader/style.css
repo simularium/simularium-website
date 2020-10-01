@@ -3,6 +3,7 @@
 .page-header:global(.ant-page-header) {
     background-color: var(--dark-theme-header-bg);
     color: var(--dark-theme-text-color);
+    font-size: 12px;
     justify-content: space-between;
     box-shadow: 0px 3px 5px black;
 }
