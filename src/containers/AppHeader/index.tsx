@@ -2,16 +2,14 @@ import * as React from "react";
 import { NavLink } from "react-router-dom";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
-import { Layout, PageHeader, Tag, Button } from "antd";
+import { PageHeader, Tag } from "antd";
 import moment from "moment";
 
 import { LocalSimFile, RequestFileAction } from "../../state/metadata/types";
 import LoadFileMenu from "../../components/LoadFileMenu";
-import { GoBack } from "../../components/Icons";
+import { AicsLogo } from "../../components/Icons";
 import { State } from "../../state/types";
 import metadataStateBranch from "../../state/metadata";
-
-const { Header } = Layout;
 
 const styles = require("./style.css");
 
@@ -31,35 +29,32 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
         const { name: simulariumFileName, lastModified } = simulariumFile;
 
         return (
-            <Header className={styles.container}>
-                <PageHeader
-                    title={simulariumFileName ? simulariumFileName : ""}
-                    className={styles.pageHeader}
-                    onBack={() => null}
-                    backIcon={<NavLink to="/">{GoBack} Home</NavLink>}
-                    tags={
-                        lastModified ? (
-                            <Tag className={styles.tag}>
-                                {moment(lastModified).format()}
-                            </Tag>
-                        ) : (
-                            []
-                        )
-                    }
-                    extra={[
-                        <LoadFileMenu
-                            key="select"
-                            selectFile={loadNetworkFile}
-                            loadLocalFile={loadLocalFile}
-                        />,
-                    ]}
-                    footer={
-                        <Button type="ghost" href="tutorial">
-                            Getting Started
-                        </Button>
-                    }
-                />
-            </Header>
+            <PageHeader
+                title={simulariumFileName ? simulariumFileName : ""}
+                className={styles.pageHeader}
+                onBack={() => null}
+                backIcon={<a href="https://allencell.org">{AicsLogo}</a>}
+                tags={
+                    lastModified ? (
+                        <Tag className={styles.tag}>
+                            {moment(lastModified).format()}
+                        </Tag>
+                    ) : (
+                        []
+                    )
+                }
+                extra={[
+                    <span key="home" className={styles.home}>
+                        <NavLink to="/">SIMULARIUM HOME</NavLink>
+                    </span>,
+                    <LoadFileMenu
+                        key="select"
+                        selectFile={loadNetworkFile}
+                        loadLocalFile={loadLocalFile}
+                    />,
+                ]}
+                footer={<NavLink to="/tutorial">GETTING STARTED</NavLink>}
+            />
         );
     }
 }

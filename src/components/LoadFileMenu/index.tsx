@@ -5,7 +5,6 @@ import { Menu, Dropdown, Button } from "antd";
 import { TRAJECTORY_FILES } from "../../constants";
 import { RequestFileAction } from "../../state/metadata/types";
 
-import { DownArrow } from "../Icons";
 import LocalFileUpload from "../LocalFileUpload";
 
 interface NetworkFileMenuProps {
@@ -44,7 +43,7 @@ const LoadFileMenu = ({ selectFile, loadLocalFile }: NetworkFileMenuProps) => {
                 onClick={(e) => e.preventDefault()}
                 type="ghost"
             >
-                Load {DownArrow}
+                Load model
             </Button>
         </Dropdown>
     );

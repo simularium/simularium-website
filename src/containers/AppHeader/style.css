@@ -1,29 +1,39 @@
 @import '../../styles/constants.css';
 
-.container {
-    height: var(--header-height);
-}
-
-.container:global(.ant-layout-header) {
+.page-header:global(.ant-page-header) {
     background-color: var(--dark-theme-header-bg);
     color: var(--dark-theme-text-color);
+    justify-content: space-between;
 }
 
 .page-header {
+    height: var(--header-height);
     display: flex;
+    padding: 0px;
+}
+
+.page-header a {
+    color: var(--dark-theme-primary-color);
+}
+
+.page-header :global(.ant-page-header-heading) {
+    display: flex;
+    justify-content: flex-start;
+    width: 70%;
 }
 
 .page-header :global(.ant-page-header-footer) {
     margin: 0;
 }
 
-.page-header :global(.ant-page-header-back-button) a {
-    color: var(--dark-theme-text-color);
+.page-header :global(.ant-page-header-back-button) img {
+    width: 40px;
 }
 
 .page-header :global(.ant-page-header-heading-extra) {
     order: 1;
 }
+
 .page-header :global(.ant-page-header-heading-title) {
     color: var(--dark-theme-text-color);
     margin-left: 25%;
@@ -37,11 +47,6 @@
 
 .page-header :global(.ant-page-header-heading-tags) {
     order: 4;
-}
-
-.page-header :global(.ant-page-header-heading) {
-    display: flex;
-    justify-content: flex-start;
 }
 
 .tag {

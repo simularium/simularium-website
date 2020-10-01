@@ -14,7 +14,7 @@ import { createReduxStore } from "./state";
 import routes from "./routes";
 import AppHeader from "./containers/AppHeader";
 
-const { Footer } = Layout;
+const { Header, Footer } = Layout;
 
 require("./style.css");
 
@@ -24,7 +24,9 @@ render(
             <BrowserRouter
                 basename={process.env.GH_BUILD ? "/simularium-website/" : ""}
             >
-                <AppHeader />
+                <Header>
+                    <AppHeader />
+                </Header>
                 <Switch>
                     {routes.map((route) => (
                         <Route
