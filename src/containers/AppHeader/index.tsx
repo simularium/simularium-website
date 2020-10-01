@@ -1,31 +1,35 @@
 import * as React from "react";
-import { Layout, PageHeader, Tag, Button } from "antd";
+import { NavLink } from "react-router-dom";
 import { ActionCreator } from "redux";
+import { connect } from "react-redux";
+import { Layout, PageHeader, Tag, Button } from "antd";
 import moment from "moment";
 
-import { RequestFileAction } from "../../state/metadata/types";
-import LoadFileMenu from "../LoadFileMenu";
-import { NavLink } from "react-router-dom";
-import { GoBack } from "../Icons";
+import { LocalSimFile, RequestFileAction } from "../../state/metadata/types";
+import LoadFileMenu from "../../components/LoadFileMenu";
+import { GoBack } from "../../components/Icons";
+import { State } from "../../state/types";
+import metadataStateBranch from "../../state/metadata";
 
 const { Header } = Layout;
 
 const styles = require("./style.css");
 
 interface AppHeaderProps {
-    loadLocalFile: ActionCreator<RequestFileAction>;
-    simulariumFileName: string;
-    lastModified: number;
-    loadNetworkFile: ActionCreator<RequestFileAction>;
+    simulariumFile: LocalSimFile;
+    changeToLocalSimulariumFile: ActionCreator<RequestFileAction>;
+    changeToNetworkedFile: ActionCreator<RequestFileAction>;
 }
-export default class AppHeader extends React.Component<AppHeaderProps, {}> {
+
+class AppHeader extends React.Component<AppHeaderProps, {}> {
     public render(): JSX.Element {
         const {
-            loadNetworkFile,
-            loadLocalFile,
-            simulariumFileName,
-            lastModified,
+            simulariumFile,
+            changeToLocalSimulariumFile: loadLocalFile,
+            changeToNetworkedFile: loadNetworkFile,
         } = this.props;
+        const { name: simulariumFileName, lastModified } = simulariumFile;
+
         return (
             <Header className={styles.container}>
                 <PageHeader
@@ -59,3 +63,20 @@ export default class AppHeader extends React.Component<AppHeaderProps, {}> {
         );
     }
 }
+
+function mapStateToProps(state: State) {
+    return {
+        simulariumFile: metadataStateBranch.selectors.getSimulariumFile(state),
+    };
+}
+
+const dispatchToPropsMap = {
+    changeToLocalSimulariumFile:
+        metadataStateBranch.actions.changeToLocalSimulariumFile,
+    changeToNetworkedFile: metadataStateBranch.actions.changeToNetworkedFile,
+};
+
+export default connect(
+    mapStateToProps,
+    dispatchToPropsMap
+)(AppHeader);
