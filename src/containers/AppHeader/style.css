@@ -5,7 +5,7 @@
 }
 
 .container:global(.ant-layout-header) {
-    background-color: var(--dark-theme-header-background);
+    background-color: var(--dark-theme-header-bg);
     color: var(--dark-theme-text-color);
 }
 
