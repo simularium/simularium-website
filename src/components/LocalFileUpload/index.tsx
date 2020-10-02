@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { Upload, message, Button } from "antd";
 import { RequestFileAction } from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
@@ -14,7 +15,9 @@ interface FileUploadProps {
 const styles = require("./style.css");
 
 const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
+    const history = useHistory();
     const onChange = ({ file }: UploadChangeParam) => {
+        history.push("/viewer");
         if (file.status === "done") {
             message.success(`${file.name} file uploaded successfully`);
         } else if (file.status === "error") {
