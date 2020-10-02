@@ -8,6 +8,8 @@ import { RequestFileAction } from "../../state/metadata/types";
 
 import LocalFileUpload from "../LocalFileUpload";
 
+const styles = require("./style.css");
+
 interface NetworkFileMenuProps {
     selectFile: ActionCreator<RequestFileAction>;
     loadLocalFile: ActionCreator<RequestFileAction>;
@@ -16,7 +18,7 @@ interface NetworkFileMenuProps {
 const LoadFileMenu = ({ selectFile, loadLocalFile }: NetworkFileMenuProps) => {
     const history = useHistory();
     const menu = (
-        <Menu theme="dark">
+        <Menu theme="dark" className={styles.menu}>
             <Menu.Item>
                 <LocalFileUpload loadLocalFile={loadLocalFile} />
             </Menu.Item>

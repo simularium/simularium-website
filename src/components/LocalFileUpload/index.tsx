@@ -4,8 +4,6 @@ import { Upload, message, Button } from "antd";
 import { RequestFileAction } from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
 
-import Icons from "../Icons";
-
 import customRequest from "./custom-request-upload";
 import { ActionCreator } from "redux";
 interface FileUploadProps {
@@ -31,7 +29,7 @@ const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
             customRequest={(options) => customRequest(options, loadLocalFile)}
         >
             <Button type="ghost" className={styles.uploadButton}>
-                {Icons.UploadFile} Upload Simularium File
+                Import Simularium file...
             </Button>
         </Upload>
     );
