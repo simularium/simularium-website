@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useHistory } from "react-router-dom";
 import { ActionCreator } from "redux";
 import { Menu, Dropdown, Button } from "antd";
 
@@ -13,6 +14,7 @@ interface NetworkFileMenuProps {
 }
 
 const LoadFileMenu = ({ selectFile, loadLocalFile }: NetworkFileMenuProps) => {
+    const history = useHistory();
     const menu = (
         <Menu theme="dark">
             <Menu.Item>
@@ -22,13 +24,14 @@ const LoadFileMenu = ({ selectFile, loadLocalFile }: NetworkFileMenuProps) => {
                 {TRAJECTORY_FILES.map((fileName) => (
                     <Menu.Item
                         key={fileName}
-                        onClick={() =>
+                        onClick={() => {
+                            history.push("/viewer");
                             selectFile({
                                 name: `${fileName}`,
                                 data: null,
                                 dateModified: null,
-                            })
-                        }
+                            });
+                        }}
                     >
                         {fileName}
                     </Menu.Item>
