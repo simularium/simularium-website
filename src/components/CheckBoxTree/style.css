@@ -6,6 +6,11 @@
     margin-left: 8px;
 }
 
+.container .checkbox-labels {
+    display: flex;
+    flex-direction: column;
+}
+
 .row-label {
     width: 100%;
     display: inline-block;

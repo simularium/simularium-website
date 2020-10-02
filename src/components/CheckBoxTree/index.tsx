@@ -211,7 +211,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                 <Col
                                     span={LABEL_SPAN_NO}
                                     offset={4}
-                                    className={styles.label}
+                                    className={styles.checkboxLabels}
                                 >
                                     {nodeData.children.map((value) => {
                                         return (
