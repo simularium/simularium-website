@@ -7,6 +7,7 @@ import moment from "moment";
 
 import { LocalSimFile, RequestFileAction } from "../../state/metadata/types";
 import LoadFileMenu from "../../components/LoadFileMenu";
+import HeaderTitle from "../../components/HeaderTitle";
 import { AicsLogo } from "../../components/Icons";
 import { State } from "../../state/types";
 import metadataStateBranch from "../../state/metadata";
@@ -30,7 +31,7 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
 
         return (
             <PageHeader
-                title={simulariumFileName ? simulariumFileName : ""}
+                title={<HeaderTitle simulariumFileName={simulariumFileName} />}
                 className={styles.pageHeader}
                 onBack={() => null}
                 backIcon={<a href="https://allencell.org">{AicsLogo}</a>}
