@@ -49,8 +49,7 @@ export default class SharedCheckbox extends React.Component<
             : !!checkedList.length && checkedList.length < options.length;
         const checkboxClassNames = classNames([
             styles.container,
-            "header-checkbox",
-            { [styles.header]: isHeader },
+            { [styles.header]: isHeader, ["header-checkbox"]: isHeader },
         ]);
         return (
             <Checkbox

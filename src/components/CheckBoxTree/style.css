@@ -40,6 +40,16 @@
     padding: 10px 0;
 }
 
+.no-children-row {
+    margin-left: 30px;
+
+}
+
+.no-children-row :global(.ant-checkbox-wrapper) {
+    width: 37px;
+    height: 40px;
+}
+
 .check-all-checkbox :global(.ant-checkbox) {
     margin-right: 12px;
 }

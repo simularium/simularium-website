@@ -35,9 +35,11 @@
     cursor: pointer;
 }
 
-:global(.header-checkbox) .container {
+:global(.header-checkbox) .container,
+:global(.header-checkbox) :global(.ant-checkbox) {
     top: 9px;
 }
+
 .container input {
     position: absolute;
     top: 0;
