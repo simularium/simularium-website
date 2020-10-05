@@ -1,4 +1,3 @@
-import { stubTrue } from "lodash";
 import { createSelector } from "reselect";
 import { AgentDisplayNode } from "../../components/CheckBoxTree";
 import { getUiDisplayDataTree } from "../../state/metadata/selectors";
