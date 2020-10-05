@@ -86,7 +86,6 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
         event: CheckboxChangeEvent,
         title: string
     ) => {
-        console.log("clicked checkbox");
         if (event.target.checked) {
             this.onSubCheckboxChange(title, [title]);
         } else {
@@ -120,7 +119,6 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
 
     renderRowWithNoChildren = (nodeData: AgentDisplayNode) => {
         const { agentsChecked, agentsHighlighted } = this.props;
-        // console.log(agentsHighlighted, agentsChecked);
         const isHighlighted =
             isEmpty(agentsHighlighted) || !agentsHighlighted[nodeData.title]
                 ? false
