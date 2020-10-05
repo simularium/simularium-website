@@ -41,6 +41,7 @@
 
 .page-header :global(.ant-page-header-heading-title) {
     color: var(--dark-theme-text-color);
+    flex-grow: 3;
     padding-left: 12px;
     order: 2
 }
