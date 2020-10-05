@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Row } from "antd";
 import { ActionCreator } from "redux";
 import { CheckboxChangeEvent, CheckboxOptionType } from "antd/lib/checkbox";
-import { map, filter } from "lodash";
+import { map, filter, isEmpty } from "lodash";
 import classNames from "classnames";
 
 import {
@@ -71,8 +71,22 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
         handleHighlight(checkedKeys);
     };
 
-    onAgentWithNoTagsChange = (event: CheckboxChangeEvent, title: string) => {
-        event.preventDefault();
+    onAgentWithNoTagsChangeHighlight = (
+        event: CheckboxChangeEvent,
+        title: string
+    ) => {
+        if (event.target.checked) {
+            this.onSubHighlightChange(title, [title]);
+        } else {
+            this.onSubHighlightChange(title, []);
+        }
+    };
+
+    onAgentWithNoTagsChangeVisible = (
+        event: CheckboxChangeEvent,
+        title: string
+    ) => {
+        console.log("clicked checkbox");
         if (event.target.checked) {
             this.onSubCheckboxChange(title, [title]);
         } else {
@@ -104,45 +118,80 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
         );
     };
 
-    renderSharedCheckboxes = (nodeData: AgentDisplayNode) =>
-        nodeData.children.length ? (
-            <Row key="actions">
+    renderRowWithNoChildren = (nodeData: AgentDisplayNode) => {
+        const { agentsChecked, agentsHighlighted } = this.props;
+        // console.log(agentsHighlighted, agentsChecked);
+        const isHighlighted =
+            isEmpty(agentsHighlighted) || !agentsHighlighted[nodeData.title]
+                ? false
+                : agentsHighlighted[nodeData.title].includes(nodeData.title);
+        const isVisible =
+            isEmpty(agentsChecked) || !agentsChecked[nodeData.title]
+                ? false
+                : agentsChecked[nodeData.title].includes(nodeData.title);
+
+        return (
+            <Row className={styles.noChildrenRow}>
                 <Col span={12}>
-                    <SharedCheckbox
-                        title={nodeData.title}
-                        showLabel={false}
+                    <Checkbox
+                        className={"header-checkbox"}
+                        key={`${nodeData.title}-highlight`}
                         checkboxType={CHECKBOX_TYPE_STAR}
-                        options={map(nodeData.children, "value" as string)}
-                        onTopLevelCheck={this.onTopLevelHighlightChange}
-                        checkedList={
-                            this.props.agentsHighlighted[nodeData.title] || []
+                        value={nodeData.title}
+                        checked={isHighlighted}
+                        onChange={(event) =>
+                            this.onAgentWithNoTagsChangeHighlight(
+                                event,
+                                nodeData.title
+                            )
                         }
-                        isHeader={true}
                     />
                 </Col>
                 <Col span={12}>
-                    <SharedCheckbox
-                        title={nodeData.title}
-                        showLabel={false}
-                        options={map(nodeData.children, "value" as string)}
-                        onTopLevelCheck={this.onTopLevelCheck}
-                        checkedList={
-                            this.props.agentsChecked[nodeData.title] || []
+                    <Checkbox
+                        className={"header-checkbox"}
+                        key={`${nodeData.title}-onoff`}
+                        checked={isVisible}
+                        value={nodeData.title}
+                        onChange={(event) =>
+                            this.onAgentWithNoTagsChangeVisible(
+                                event,
+                                nodeData.title
+                            )
                         }
-                        isHeader={true}
                     />
                 </Col>
             </Row>
-        ) : (
-            <Checkbox
-                key={nodeData.title}
-                onChange={(event) =>
-                    this.onAgentWithNoTagsChange(event, nodeData.title)
-                }
-            >
-                {nodeData.title}
-            </Checkbox>
         );
+    };
+
+    renderSharedCheckboxes = (nodeData: AgentDisplayNode) => (
+        <Row key="actions">
+            <Col span={12}>
+                <SharedCheckbox
+                    title={nodeData.title}
+                    showLabel={false}
+                    checkboxType={CHECKBOX_TYPE_STAR}
+                    options={map(nodeData.children, "value" as string)}
+                    onTopLevelCheck={this.onTopLevelHighlightChange}
+                    checkedList={
+                        this.props.agentsHighlighted[nodeData.title] || []
+                    }
+                    isHeader={true}
+                />
+            </Col>
+            <Col span={12}>
+                <SharedCheckbox
+                    title={nodeData.title}
+                    showLabel={false}
+                    options={map(nodeData.children, "value" as string)}
+                    onTopLevelCheck={this.onTopLevelCheck}
+                    checkedList={this.props.agentsChecked[nodeData.title] || []}
+                    isHeader={true}
+                />
+            </Col>
+        </Row>
+    );
     render() {
         const { agentsHighlighted, treeData, agentsChecked } = this.props;
         return treeData.length > 0 ? (
@@ -169,7 +218,11 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                         <TreeNode
                             headerContent={
                                 <>
-                                    {this.renderSharedCheckboxes(nodeData)}{" "}
+                                    {nodeData.children.length
+                                        ? this.renderSharedCheckboxes(nodeData)
+                                        : this.renderRowWithNoChildren(
+                                              nodeData
+                                          )}{" "}
                                     <label className={styles.headerLabel}>
                                         {nodeData.title}
                                     </label>
@@ -177,54 +230,58 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                             }
                             key={nodeData.key}
                         >
-                            <Row className={styles.subMenu}>
-                                <Col span={CHECKBOX_SPAN_NO} offset={3}>
-                                    <CheckboxTreeSubmenu
-                                        options={nodeData.children}
-                                        checkedAgents={
-                                            agentsHighlighted[nodeData.title] ||
-                                            []
-                                        }
-                                        checkboxType={CHECKBOX_TYPE_STAR}
-                                        onChange={(values) =>
-                                            this.onSubHighlightChange(
-                                                nodeData.title,
-                                                values as string[]
-                                            )
-                                        }
-                                    />
-                                </Col>
-                                <Col span={CHECKBOX_SPAN_NO}>
-                                    <CheckboxTreeSubmenu
-                                        options={nodeData.children}
-                                        checkedAgents={
-                                            agentsChecked[nodeData.title] || []
-                                        }
-                                        onChange={(values) =>
-                                            this.onSubCheckboxChange(
-                                                nodeData.title,
-                                                values as string[]
-                                            )
-                                        }
-                                    />
-                                </Col>
-                                <Col
-                                    span={LABEL_SPAN_NO}
-                                    offset={4}
-                                    className={styles.checkboxLabels}
-                                >
-                                    {nodeData.children.map((value) => {
-                                        return (
-                                            <label
-                                                className={styles.rowLabel}
-                                                key={value.value as string}
-                                            >
-                                                {value.label}
-                                            </label>
-                                        );
-                                    })}
-                                </Col>
-                            </Row>
+                            {nodeData.children.length > 0 && (
+                                <Row className={styles.subMenu}>
+                                    <Col span={CHECKBOX_SPAN_NO} offset={3}>
+                                        <CheckboxTreeSubmenu
+                                            options={nodeData.children}
+                                            checkedAgents={
+                                                agentsHighlighted[
+                                                    nodeData.title
+                                                ] || []
+                                            }
+                                            checkboxType={CHECKBOX_TYPE_STAR}
+                                            onChange={(values) =>
+                                                this.onSubHighlightChange(
+                                                    nodeData.title,
+                                                    values as string[]
+                                                )
+                                            }
+                                        />
+                                    </Col>
+                                    <Col span={CHECKBOX_SPAN_NO}>
+                                        <CheckboxTreeSubmenu
+                                            options={nodeData.children}
+                                            checkedAgents={
+                                                agentsChecked[nodeData.title] ||
+                                                []
+                                            }
+                                            onChange={(values) =>
+                                                this.onSubCheckboxChange(
+                                                    nodeData.title,
+                                                    values as string[]
+                                                )
+                                            }
+                                        />
+                                    </Col>
+                                    <Col
+                                        span={LABEL_SPAN_NO}
+                                        offset={4}
+                                        className={styles.checkboxLabels}
+                                    >
+                                        {nodeData.children.map((value) => {
+                                            return (
+                                                <label
+                                                    className={styles.rowLabel}
+                                                    key={value.value as string}
+                                                >
+                                                    {value.label}
+                                                </label>
+                                            );
+                                        })}
+                                    </Col>
+                                </Row>
+                            )}
                         </TreeNode>
                     );
                 })}
