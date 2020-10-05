@@ -2,8 +2,7 @@ import * as React from "react";
 import { NavLink } from "react-router-dom";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
-import { PageHeader, Tag } from "antd";
-import moment from "moment";
+import { PageHeader } from "antd";
 
 import { LocalSimFile, RequestFileAction } from "../../state/metadata/types";
 import LoadFileMenu from "../../components/LoadFileMenu";
@@ -31,19 +30,15 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
 
         return (
             <PageHeader
-                title={<HeaderTitle simulariumFileName={simulariumFileName} />}
+                title={
+                    <HeaderTitle
+                        simulariumFileName={simulariumFileName}
+                        lastModified={lastModified}
+                    />
+                }
                 className={styles.pageHeader}
                 onBack={() => null}
                 backIcon={<a href="https://allencell.org">{AicsLogo}</a>}
-                tags={
-                    lastModified ? (
-                        <Tag className={styles.tag}>
-                            {moment(lastModified).format()}
-                        </Tag>
-                    ) : (
-                        []
-                    )
-                }
                 extra={[
                     <span key="home" className={styles.home}>
                         <NavLink to="/">SIMULARIUM HOME</NavLink>

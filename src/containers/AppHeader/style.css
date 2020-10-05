@@ -60,10 +60,6 @@
     border-radius: 3px;
 }
 
-.tag {
-    color: var(--dark-theme-text-color);
-}
-
 .home {
     margin-left: 20px;
     margin-right: 20px;
