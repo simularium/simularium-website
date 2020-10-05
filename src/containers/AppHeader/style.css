@@ -23,7 +23,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    width: 70%;
+    width: 80%;
 }
 
 .page-header :global(.ant-page-header-footer) {
@@ -41,7 +41,7 @@
 
 .page-header :global(.ant-page-header-heading-title) {
     color: var(--dark-theme-text-color);
-    margin-left: 25%;
+    padding-left: 12px;
     order: 2
 }
 

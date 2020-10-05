@@ -16,9 +16,11 @@ const HeaderTitle: React.FunctionComponent<HeaderTitleProps> = (
     const { simulariumFileName, lastModified } = props;
     const location = useLocation();
     const title =
-        location.pathname.startsWith("/viewer") && simulariumFileName
-            ? simulariumFileName
-            : "";
+        location.pathname.startsWith("/viewer") && simulariumFileName ? (
+            <span>{simulariumFileName}</span>
+        ) : (
+            <span />
+        );
     const tag =
         location.pathname.startsWith("/viewer") && lastModified ? (
             <Tag className={styles.tag}>{moment(lastModified).format()}</Tag>
@@ -27,10 +29,9 @@ const HeaderTitle: React.FunctionComponent<HeaderTitleProps> = (
         );
 
     return (
-        <span>
-            {title}
-            {tag}
-        </span>
+        <div className={styles.container}>
+            {title} {tag}
+        </div>
     );
 };
 
