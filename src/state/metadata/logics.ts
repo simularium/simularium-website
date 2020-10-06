@@ -125,7 +125,6 @@ const loadLocalFile = createLogic({
                 dispatch(receiveSimulariumFile(simulariumFile));
             })
             .then(() => {
-                console.log(simulariumFile.data.plotData);
                 dispatch(
                     receiveMetadata({
                         plotData: simulariumFile.data.plotData.data,

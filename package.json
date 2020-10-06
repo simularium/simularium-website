@@ -78,7 +78,8 @@
   },
   "dependencies": {
     "@aics/simularium-observables-manager": "^0.1.0",
-    "@aics/simularium-viewer": "^2.1.2",
+    "@aics/simularium-viewer": "^2.2.0",
+    "@ant-design/css-animation": "^1.7.3",
     "@ant-design/icons": "^4.0.6",
     "@types/react-plotly.js": "^2.2.4",
     "@types/react-router-dom": "^5.1.5",
@@ -91,6 +92,8 @@
     "momentjs": "^2.0.0",
     "plotly.js": "^1.55.2",
     "query-string": "^6.13.1",
+    "raf": "^3.4.1",
+    "rc-motion": "^2.0.1",
     "react": "16.8.2",
     "react-dom": "16.8.2",
     "react-player-controls": "^1.1.0",
@@ -100,6 +103,7 @@
     "redux": "4.0.1",
     "redux-logic": "^2.1.1",
     "reselect": "4.0.0",
+    "url-loader": "^4.1.0",
     "victory": "^32.0.0"
   }
 }

@@ -4,7 +4,10 @@
 @light-gray: #e7e7e7;
 @medium-gray: #4a4a4a;
 @bright-green: #b2d030;
+@dark-two: #1e1b25;
 @black: #141219;
+@warm-gray: #979797;
+@white-two: #d3d3d3;
 @blue: #137CBD;
 
 // -------- Colors -----------
@@ -122,9 +125,12 @@
 @btn-group-border       : @primary-5;
 
 // Checkbox
-@checkbox-size          : 16px;
-@checkbox-color         : #d3d3d3;
-@checkbox-check-color   : @dark-gray;
+@checkbox-size: 16px;
+@checkbox-color: @light-gray;
+@checkbox-check-color: @dark-gray;
+@checkbox-check-bg: @light-gray;
+@checkbox-border-width: @border-width-base;
+@checkbox-group-item-margin-right: 8px;
 
 // Radio buttons
 @radio-button-bg           : @btn-default-bg;
@@ -155,10 +161,13 @@
 
 // Collapse
 // ---
-@collapse-header-padding:             12px 0 12px 40px;
-@collapse-header-bg:                  @dark-gray;
-@collapse-content-padding:            30px;
-@collapse-content-bg:                 @black;
+@collapse-header-padding: @padding-sm @padding-md;
+@collapse-header-padding-extra: 40px;
+@collapse-header-bg: @dark-gray;
+@collapse-content-padding: @padding-md;
+@collapse-content-bg: @dark-two;
+@collapse-header-arrow-left: 16px;
+
 
 // Slider
 // ---

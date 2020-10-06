@@ -1,0 +1,8 @@
+.container :global(.ant-checkbox-wrapper) {
+    margin-left: 8px;
+}
+
+.container :global(.ant-checkbox-wrapper) {
+    width: 37px;
+    height: 40px;
+}
