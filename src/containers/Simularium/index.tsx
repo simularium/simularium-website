@@ -30,11 +30,6 @@ const { Content } = Layout;
 
 const styles = require("./style.css");
 
-const netConnectionSettings = {
-    serverIp: process.env.BACKEND_SERVER_IP,
-    serverPort: 9002,
-};
-
 interface AppProps {
     onSidePanelCollapse: (number: number) => void;
     simulariumFile: LocalSimFile;
@@ -84,11 +79,7 @@ class App extends React.Component<AppProps, AppState> {
                 dateModified: null,
             });
         }
-        setSimulariumController(
-            new SimulariumController({
-                netConnectionSettings: netConnectionSettings,
-            })
-        );
+        setSimulariumController(new SimulariumController({}));
         if (current) {
             current.addEventListener(
                 "dragover",
