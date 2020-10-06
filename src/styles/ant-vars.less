@@ -1,24 +1,24 @@
-@dark-gray: #25222e;
-@purple: #b59ff6;
+@dark: #141219;
+@dark-three: #25222e;
+@dark-four: #2f2a3c;
+@white-six: #e7e7e7;
+@baby-purple: #b59ff6;
 @dark-purple: #3b3649;
-@purple-gray: #2f2a3c;
-@light-gray: #e7e7e7;
-@medium-gray: #4a4a4a;
-@bright-green: #b2d030;
-@black: #141219;
+@greyish-brown: #4a4a4a;
+@highlight-green: #b2d030;
 @blue: #137CBD;
 
 // -------- Colors -----------
-@primary-color : @purple;
-@success-color          : @bright-green;
-@highlight-color        : @purple;
+@primary-color : @baby-purple;
+@success-color          : @highlight-green;
+@highlight-color        : @baby-purple;
 @warning-color          : @gold-6;
 @normal-color           : #d9d9d9;
-@background-color       : @light-gray;
-@disabled-color         : fade(@light-gray, 10%);
+@background-color       : @white-six;
+@disabled-color         : fade(@white-six, 10%);
 @disabled-bg            : @background-color;
 // Border color
-@border-color-base      :  @dark-gray;  // base border outline a component
+@border-color-base      :  @dark-three;  // base border outline a component
 
 @border-radius-base : 0;
 
@@ -33,22 +33,22 @@
 @body-background        : #f7f7f7;
 //// Base background color for most components
 @component-background   : #f7f7f7;
-// @heading-color          : @dark-gray;
+// @heading-color          : @dark-three;
 @font-family: 'Overpass', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
   'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
   'Noto Color Emoji';
-@text-color             : @medium-gray;
+@text-color             : @greyish-brown;
 //@text-color-secondary   : darken(#fff, 40%);
 
-@background-color-light : lighten(@dark-gray, 10%);  // background of header and selected item
+@background-color-light : lighten(@dark-three, 10%);  // background of header and selected item
 //@background-color-base  : hsv(0, 0, 96%);  // Default grey background color
 
 // The background colors for active and hover states for things like
 // list items or table cells.
-//@item-active-bg         : @purple;
+//@item-active-bg         : @baby-purple;
 //@item-hover-bg          : @primary-5;
 
-// @card-actions-background: @dark-gray;
+// @card-actions-background: @dark-three;
 
 // LINK
 @link-color : @blue;
@@ -60,14 +60,14 @@
 // Layout
 @layout-body-background         : @background-color;
 @layout-header-background        : @background-color;
-@layout-footer-background       : darken(@dark-gray, 10%);
+@layout-footer-background       : darken(@dark-three, 10%);
 //@layout-header-height           : 64px;
 @layout-header-padding          : 0;
 //@layout-footer-padding          : 24px 50px;
-@layout-sider-background: @black;
+@layout-sider-background: @dark;
 //@layout-trigger-height          : 48px;
-@layout-trigger-background      : @black;
-@layout-trigger-color           : @purple;
+@layout-trigger-background      : @dark;
+@layout-trigger-color           : @baby-purple;
 @layout-zero-trigger-width      : 30px;
 @layout-zero-trigger-height     : 100%;
 //// Layout light theme
@@ -76,7 +76,7 @@
 @layout-trigger-color-light     : @text-color;
 
 //Dropdown
-@dropdown-menu-bg: @purple-gray;
+@dropdown-menu-bg: @dark-four;
 @dropdown-vertical-padding: 5px;
 @dropdown-edge-child-vertical-padding: 4px;
 @dropdown-font-size: @font-size-base;
@@ -125,7 +125,7 @@
 // Checkbox
 @checkbox-size          : 16px;
 @checkbox-color         : #d3d3d3;
-@checkbox-check-color   : @dark-gray;
+@checkbox-check-color   : @dark-three;
 
 // Radio buttons
 @radio-button-bg           : @btn-default-bg;
@@ -148,7 +148,7 @@
 //@input-placeholder-color     : hsv(0, 0, 75%);
 //@input-color                 : @primary-color;
 //@input-border-color          : @border-color-base;
-//@input-bg                    : @light-gray;
+//@input-bg                    : @white-six;
 //@input-addon-bg              : @background-color-light;
 //@input-hover-border-color    : @primary-color;
 //@input-disabled-bg           : @disabled-bg;
@@ -157,9 +157,9 @@
 // Collapse
 // ---
 @collapse-header-padding:             12px 0 12px 40px;
-@collapse-header-bg:                  @dark-gray;
+@collapse-header-bg:                  @dark-three;
 @collapse-content-padding:            30px;
-@collapse-content-bg:                 @black;
+@collapse-content-bg:                 @dark;
 
 // Slider
 // ---
@@ -181,7 +181,7 @@
 // dark theme
 @menu-dark-color: @text-color-secondary-dark;
 @menu-dark-danger-color: @error-color;
-@menu-dark-bg: @purple-gray;
+@menu-dark-bg: @dark-four;
 @menu-dark-arrow-color: #fff;
 @menu-dark-submenu-bg: #000c17;
 @menu-dark-highlight-color: #fff;
