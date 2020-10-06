@@ -4,6 +4,11 @@
     margin: auto;
 }
 
+.content h1, h2 {
+    margin-top: -0.3em;
+    margin-bottom: 0px;
+}
+
 .panel {
     background-color: var(--light-theme-panel-light-gray);
     padding-left: 50px;
