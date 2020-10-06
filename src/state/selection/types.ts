@@ -61,3 +61,11 @@ export interface ToggleAllVisibleAction {
     payload: boolean;
     type: string;
 }
+
+/**
+ * TODO: export this from the viewer
+ */
+export interface SelectionEntry {
+    name: string;
+    tags: string[];
+}
