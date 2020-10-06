@@ -8,8 +8,8 @@
     background-color: var(--light-theme-panel-light-gray);
     padding-left: 50px;
     padding-right: 50px;
-    padding-top: 1em;
-    padding-bottom: 20px;
+    padding-top: 3em;
+    padding-bottom: 2em;
     font-size: 20px;
 }
 
@@ -22,7 +22,6 @@
 
 .library-panel {
     composes: panel;
-    background-color: inherit;
 }
 
 .cards {
@@ -30,6 +29,7 @@
     flex-flow: row wrap;
     justify-content: space-around;
     align-items: stretch;
+    margin-top: 2.5em;
 }
 
 .cards > * {
@@ -53,8 +53,8 @@
 }
 
 .call-to-action-panel {
-    padding-top: 3em;
-    padding-bottom: 1.5em;
+    padding-top: 3.5em;
+    padding-bottom: 3.5em;
     background-color: var(--light-theme-background-purple);
     text-align: center;
 }
@@ -66,8 +66,8 @@
     width: 130px;
     height: 30px;
     font-size: 14px;
-    margin-top: 2em;
-    margin-bottom: 2.5em;
+    margin-top: 3em;
+    margin-bottom: 0.5em;
     margin-left: 1em;
     margin-right: 1em;
     transition: 0.3s;

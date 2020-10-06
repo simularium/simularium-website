@@ -42,12 +42,11 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                 </Button>
             </div>
             <div className={styles.libraryPanel}>
-                <h2>Simulation Trajectory Library</h2>
-                <br />
-                <p>
+                <h1>Simulation Trajectory Library</h1>
+                <h2>
                     Try Simularium for yourself by selecting from the simulation
-                    trajectories below.
-                </p>
+                    trajectories below
+                </h2>
                 <div className={styles.cards}>
                     {TRAJECTORIES.map((trajectory) => {
                         return (
