@@ -34,14 +34,14 @@ const LandingPage: React.FunctionComponent<{}> = () => {
             <div className={styles.callToActionPanel}>
                 <h1>Visualize your own custom data</h1>
                 <h2>View your own model in the Simularium viewer</h2>
-                <Button type="ghost">
-                    <Link to="/tutorial">Getting started</Link>
+                <Button type="ghost" href="/tutorial">
+                    Getting started
                 </Button>
-                <Button type="primary">
-                    <Link to="/viewer">Launch viewer</Link>
+                <Button type="primary" href="/viewer">
+                    Launch viewer
                 </Button>
             </div>
-            <div className={styles.libraryPanel}>
+            <div className={styles.panel}>
                 <h1>Simulation Trajectory Library</h1>
                 <h2>
                     Try Simularium for yourself by selecting from the simulation
@@ -123,10 +123,11 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                     Receive updates and/or collaborate on your project by
                     signing up
                 </h2>
-                <Button type="primary">
-                    <a href="https://www.allencell.org/simularium-sign-up.html">
-                        Sign up
-                    </a>
+                <Button
+                    type="primary"
+                    href="https://www.allencell.org/simularium-sign-up.html"
+                >
+                    Sign up
                 </Button>
             </div>
         </Content>
