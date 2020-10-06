@@ -29,9 +29,8 @@
 }
 
 .container :global(.ant-checkbox-indeterminate .ant-checkbox-inner::after) {
-    background-color: var(--dark-gray);
+    background-color: var(--dark-theme-header-bg);
     height: 2px;
-
 }
 
 .check-all-checkbox {
