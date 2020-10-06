@@ -47,7 +47,9 @@ describe("selection composed selectors", () => {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
-                    highlightedAgentKeys: ["agent1", "hl-agent2-state2"],
+                    highlightedAgentKeys: {
+                        agent1: ["agent1", "hl-agent2-state2"],
+                    },
                 },
             };
             const highlightedNames = getHightLightedNames(stateWithSelection);
@@ -59,7 +61,7 @@ describe("selection composed selectors", () => {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
-                    highlightedAgentKeys: ["blah"],
+                    highlightedAgentKeys: { agent1: ["blah"] },
                 },
             };
             const highlightedNames = getHightLightedNames(stateWithSelection);
@@ -73,7 +75,9 @@ describe("selection composed selectors", () => {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
-                    highlightedAgentKeys: ["agent1", "hl-agent2-state2"],
+                    highlightedAgentKeys: {
+                        agent1: ["agent1", "state2"],
+                    },
                 },
             };
             const highlightedTags = getHightLightedTags(stateWithSelection);
@@ -87,7 +91,7 @@ describe("selection composed selectors", () => {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
-                    visibleAgentKeys: ["agent1", "v-agent2-state2"],
+                    visibleAgentKeys: { agent1: ["agent1", "v-agent2-state2"] },
                 },
             };
             const hiddenNames = getAgentNamesToHide(stateWithSelection);
@@ -101,12 +105,15 @@ describe("selection composed selectors", () => {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
-                    visibleAgentKeys: ["agent1", "v-agent2-state2"],
+                    visibleAgentKeys: {
+                        agent1: ["agent1"],
+                        agent2: ["v-agent2-state2"],
+                    },
                 },
             };
             const hiddenTags = getAgentTagsToHide(stateWithSelection);
             expect(hiddenTags).to.be.a("array");
-            expect(hiddenTags).to.deep.equal(["state1"]);
+            expect(hiddenTags).to.deep.equal(["state1", "state2"]);
         });
     });
 });

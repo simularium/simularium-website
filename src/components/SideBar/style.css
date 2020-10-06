@@ -15,6 +15,9 @@
     left: inherit;
 }
 
+.sider :global(.ant-collapse-content-box) {
+    padding: 3px 0;
+}
 .sider.right :global(.ant-collapse-content-box) {
     padding: 0;
 }
