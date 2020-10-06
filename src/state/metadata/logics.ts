@@ -1,5 +1,6 @@
 import { AxiosResponse } from "axios";
 import { createLogic } from "redux-logic";
+import queryString from "query-string";
 
 import { ReduxLogicDeps } from "../types";
 
@@ -112,6 +113,11 @@ const loadLocalFile = createLogic({
                 return;
             }
         }
+        const stringified = queryString.stringify({
+            URL_PARAM_KEY_FILE_NAME: "",
+        });
+
+        location.search = stringified;
         dispatch(setViewerStatus({ status: VIEWER_LOADING }));
         simulariumController
             .changeFile(simulariumFile.name, true, simulariumFile.data)
