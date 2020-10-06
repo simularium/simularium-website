@@ -5,14 +5,14 @@ const { Panel } = Collapse;
 
 const styles = require("./style.css");
 
-interface CollapseableMenu {
+interface NestedMenusProps {
     panelKeys: string[];
     mainTitle: string;
     subTitles: string[];
     content: (JSX.Element | null)[];
 }
 
-export default class ModelPanel extends React.Component<CollapseableMenu, {}> {
+export default class NestedMenus extends React.Component<NestedMenusProps, {}> {
     public render(): JSX.Element {
         const { panelKeys, mainTitle, subTitles, content } = this.props;
         return (

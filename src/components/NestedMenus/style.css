@@ -6,5 +6,5 @@
 .container h3, 
 .container h4,
 .container label {
-    color: #fff!important;
+    color: var(--white-two)!important;
 }

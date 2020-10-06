@@ -16,7 +16,7 @@ import NavBar from "./components/NavBar";
 
 const { Header, Footer } = Layout;
 
-require("./style.css");
+import "./style.css";
 
 render(
     <Provider store={createReduxStore()}>
