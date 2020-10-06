@@ -52,28 +52,29 @@
     margin-bottom: 1em;
 }
 
-.sign-up-panel {
+.call-to-action-panel {
     padding-top: 3em;
     padding-bottom: 1.5em;
     background-color: var(--light-theme-background-purple);
+    text-align: center;
 }
 
-.sign-up-panel button {
+.call-to-action-panel button {
     background-color: var(--light-theme-button-purple);
     color: var(--light-theme-button-light-gray);
     border: none;
-    width: 280px;
-    height: 70px;
-    font-size: 30px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    width: 130px;
+    height: 30px;
+    font-size: 14px;
     margin-top: 2em;
     margin-bottom: 2.5em;
+    margin-left: 1em;
+    margin-right: 1em;
     transition: 0.3s;
+    border-radius: 3px;
 }
 
-.sign-up-panel :global(.ant-btn-primary:hover) {
+.call-to-action-panel :global(.ant-btn-primary:hover) {
     background-color: var(--light-theme-button-purple);
     opacity: 0.9;
     color: var(--light-theme-button-light-gray);

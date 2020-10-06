@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import { Button, Layout } from "antd";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
@@ -29,6 +30,16 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                     written by computational biologists and easy visualization
                     and sharing of results.
                 </p>
+            </div>
+            <div className={styles.callToActionPanel}>
+                <h1>Visualize your own custom data</h1>
+                <h2>View your own model in the Simularium viewer</h2>
+                <Button type="ghost">
+                    <Link to="/tutorial">Getting started</Link>
+                </Button>
+                <Button type="primary">
+                    <Link to="/viewer">Launch viewer</Link>
+                </Button>
             </div>
             <div className={styles.libraryPanel}>
                 <h2>Simulation Trajectory Library</h2>
@@ -107,11 +118,11 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                     for the general public to explore.
                 </p>
             </div>
-            <div className={styles.signUpPanel}>
+            <div className={styles.callToActionPanel}>
                 <h1>Connect with us</h1>
                 <h2>
-                    Receive updates on releases and/or collaborate on your
-                    project by signing up.
+                    Receive updates and/or collaborate on your project by
+                    signing up
                 </h2>
                 <Button type="primary">
                     <a href="https://www.allencell.org/simularium-sign-up.html">
