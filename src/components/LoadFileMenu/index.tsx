@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ActionCreator } from "redux";
 import { Menu, Dropdown, Button } from "antd";
 
@@ -16,7 +16,6 @@ interface NetworkFileMenuProps {
 }
 
 const LoadFileMenu = ({ selectFile, loadLocalFile }: NetworkFileMenuProps) => {
-    const history = useHistory();
     const menu = (
         <Menu theme="dark" className={styles.menu}>
             <Menu.Item>
@@ -27,7 +26,6 @@ const LoadFileMenu = ({ selectFile, loadLocalFile }: NetworkFileMenuProps) => {
                     <Menu.Item
                         key={fileName}
                         onClick={() => {
-                            history.push("/viewer");
                             selectFile({
                                 name: `${fileName}`,
                                 data: null,
@@ -35,7 +33,7 @@ const LoadFileMenu = ({ selectFile, loadLocalFile }: NetworkFileMenuProps) => {
                             });
                         }}
                     >
-                        {fileName}
+                        <Link to="/viewer">{fileName}</Link>
                     </Menu.Item>
                 ))}
             </Menu.SubMenu>
