@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
-import CollaspableMenu from "../../components/NestedMenus";
+import NestedMenus from "../../components/NestedMenus";
 
 import Graphing from "../../components/Plots";
 import { getCurrentTime } from "../../state/selection/selectors";
@@ -20,7 +20,7 @@ class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
     public render(): JSX.Element {
         const { changeTime, time, plotData } = this.props;
         return (
-            <CollaspableMenu
+            <NestedMenus
                 panelKeys={["graphing", "statistics"]}
                 mainTitle="Analysis"
                 subTitles={["Graphing", "Statistics"]}
