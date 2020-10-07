@@ -20,10 +20,11 @@ class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
     public render(): JSX.Element {
         const { changeTime, time, plotData } = this.props;
         return (
+            // Uncomment below when we want multiple collapsible sections
             <NestedMenus
-                panelKeys={["graphing", "statistics"]}
-                mainTitle="Analysis"
-                subTitles={["Graphing", "Statistics"]}
+                // panelKeys={["graphing", "statistics"]}
+                mainTitle="Plots"
+                // subTitles={["Graphing", "Statistics"]}
                 content={[
                     <Graphing
                         time={time}

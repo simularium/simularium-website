@@ -57,10 +57,11 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
             checkAllIsIntermediate,
         } = this.props;
         return (
+            // Uncomment below when we want multiple collapsible sections
             <NestedMenus
-                panelKeys={["Agents"]}
-                mainTitle="Inputs"
-                subTitles={["Agents"]}
+                // panelKeys={["Agents"]}
+                mainTitle="Agents"
+                // subTitles={["Agents"]}
                 content={[
                     <div className={styles.container} key="molecules">
                         <CheckBoxTree
