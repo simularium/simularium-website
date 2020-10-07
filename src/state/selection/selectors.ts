@@ -48,6 +48,10 @@ export const getHightLightedAgents = createSelector(
                             highlightedAgents[agent.name].includes(tag.id)
                         )
                         .map((displayState) => displayState.id);
+                    // include unmodified tag if present
+                    if (highlightedAgents[agent.name].includes("")) {
+                        highLightedTags.push("");
+                    }
                     if (highLightedTags.length) {
                         acc.push({
                             name: agent.name,
@@ -90,6 +94,11 @@ export const getAgentsToHide = createSelector(
                             (tag) => !currentlyOn[agent.name].includes(tag.id)
                         )
                         .map((displayState) => displayState.id);
+                    // if unmodified state isnt checked, add to hidden tags
+                    if (!currentlyOn[agent.name].includes("")) {
+                        hiddenTags.push("");
+                    }
+                    console.log(hiddenTags);
                     if (hiddenTags.length) {
                         acc.push({
                             name: agent.name,
