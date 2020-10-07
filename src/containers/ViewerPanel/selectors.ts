@@ -20,11 +20,13 @@ export const convertUIDataToSelectionData = (
     const returnData: VisibilitySelectionMap = {};
     return uiData.reduce((acc, agent) => {
         acc[agent.name] = [];
-        if (agent.displayStates) {
+        if (agent.displayStates && agent.displayStates.length > 0) {
             acc[agent.name] = [
                 "", // unmodified state
                 ...agent.displayStates.map((state) => state.name),
             ];
+        } else {
+            acc[agent.name] = [agent.name];
         }
         return acc;
     }, returnData);
