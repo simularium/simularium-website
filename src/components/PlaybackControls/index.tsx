@@ -29,7 +29,7 @@ const PlayBackControls = ({
         onTimeChange(sliderValue as number); // slider can be a list of numbers, but we're just using a single value
     };
 
-    const tipFormatter = (sliderValue: number): string => {
+    const tipFormatter = (sliderValue?: number): string => {
         if (!sliderValue) {
             return "";
         }
