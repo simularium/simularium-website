@@ -29,6 +29,7 @@ import {
 import PlaybackControls from "../../components/PlaybackControls";
 
 import "@aics/simularium-viewer/style/style.css";
+import { AGENT_COLORS } from "./constants";
 const styles = require("./style.css");
 
 interface ViewerPanelProps {
@@ -203,6 +204,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     onJsonDataArrived={this.handleJsonMeshData}
                     onUIDisplayDataChanged={this.handleUiDisplayDataChanged}
                     selectionStateInfo={selectionStateInfoForViewer}
+                    colors={AGENT_COLORS}
                     onTrajectoryFileInfoChanged={
                         this.onTrajectoryFileInfoChanged
                     }
