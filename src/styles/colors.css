@@ -28,6 +28,9 @@
     --dark-theme-text-color: var(--off-white);
     --dark-theme-menu-text-color: var(--transparent-white);
     --dark-theme-sidebar-bg: var(--dark);
+    --dark-theme-sidebar-header-bg: var(--dark-three);
+    --dark-theme-sidebar-item-bg: var(--dark-two);
+    --dark-theme-sidebar-text: var(--white-two);
     --light-theme-background-purple: var(--pale-grey);
     --light-theme-button-purple: var(--dark-blue-grey);
     --light-theme-heading1-gray: var(--dark-three);

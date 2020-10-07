@@ -57,28 +57,30 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
             checkAllIsIntermediate,
         } = this.props;
         return (
-            // Uncomment below when we want multiple collapsible sections
-            <NestedMenus
-                // panelKeys={["Agents"]}
-                mainTitle="Agents"
-                // subTitles={["Agents"]}
-                content={[
-                    <div className={styles.container} key="molecules">
-                        <CheckBoxTree
-                            treeData={uiDisplayDataTree}
-                            handleAgentCheck={turnAgentsOnByDisplayKey}
-                            agentsChecked={visibleAgentKeys}
-                            handleHighlight={highlightAgentsByDisplayKey}
-                            agentsHighlighted={highlightedAgentKeys}
-                            setAgentsVisible={setAgentsVisible}
-                            payloadForSelectAll={payloadForSelectAll}
-                            payloadForSelectNone={payloadForSelectNone}
-                            checkAllIsIntermediate={checkAllIsIntermediate}
-                        />
-                    </div>,
-                    null,
-                ]}
-            />
+            <div className={styles.container}>
+                <NestedMenus
+                    // Uncomment below when we want multiple collapsible sections
+                    // panelKeys={["Agents"]}
+                    mainTitle="Agents"
+                    // subTitles={["Agents"]}
+                    content={[
+                        <div className={styles.container} key="molecules">
+                            <CheckBoxTree
+                                treeData={uiDisplayDataTree}
+                                handleAgentCheck={turnAgentsOnByDisplayKey}
+                                agentsChecked={visibleAgentKeys}
+                                handleHighlight={highlightAgentsByDisplayKey}
+                                agentsHighlighted={highlightedAgentKeys}
+                                setAgentsVisible={setAgentsVisible}
+                                payloadForSelectAll={payloadForSelectAll}
+                                payloadForSelectNone={payloadForSelectNone}
+                                checkAllIsIntermediate={checkAllIsIntermediate}
+                            />
+                        </div>,
+                        null,
+                    ]}
+                />
+            </div>
         );
     }
 }

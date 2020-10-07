@@ -1,3 +1,7 @@
+.container {
+    background-color: var(--dark);
+}
+
 .sub-menu {
     flex-flow: row;
 }
@@ -17,6 +21,11 @@
     margin-left: 100;
     height: 40px;
     font-weight: 200;
+}
+
+.container .col-labels {
+    background-color: var(--dark-theme-sidebar-item-bg);
+    margin-bottom: 3px;
 }
 
 .container .col-labels label {

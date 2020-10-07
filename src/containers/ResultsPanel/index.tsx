@@ -10,6 +10,8 @@ import { changeTime } from "../../state/selection/actions";
 import { ChangeTimeAction } from "../../state/selection/types";
 import { getPlotData } from "../../state/metadata/selectors";
 
+const styles = require("./style.css");
+
 interface ResultsPanelProps {
     plotData: any;
     time: number;
@@ -20,21 +22,23 @@ class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
     public render(): JSX.Element {
         const { changeTime, time, plotData } = this.props;
         return (
-            // Uncomment below when we want multiple collapsible sections
-            <NestedMenus
-                // panelKeys={["graphing", "statistics"]}
-                mainTitle="Plots"
-                // subTitles={["Graphing", "Statistics"]}
-                content={[
-                    <Graphing
-                        time={time}
-                        key="graph"
-                        changeTime={changeTime}
-                        plotData={plotData}
-                    />,
-                    null,
-                ]}
-            />
+            <div className={styles.container}>
+                <NestedMenus
+                    // Uncomment below when we want multiple collapsible sections
+                    // panelKeys={["graphing", "statistics"]}
+                    mainTitle="Plots"
+                    // subTitles={["Graphing", "Statistics"]}
+                    content={[
+                        <Graphing
+                            time={time}
+                            key="graph"
+                            changeTime={changeTime}
+                            plotData={plotData}
+                        />,
+                        null,
+                    ]}
+                />
+            </div>
         );
     }
 }

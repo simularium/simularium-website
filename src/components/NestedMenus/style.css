@@ -1,10 +1,23 @@
 .container :global(.ant-card-body) {
-    padding: 0;
+    background: var(--dark-theme-sidebar-bg);
+}
+
+.container :global(.ant-card-head) {
+    background-color: var(--dark-theme-sidebar-header-bg);
+    height: 44px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    border: none;
+}
+
+.container :global(.ant-card-head-title) {
+    color: var(--dark-theme-sidebar-text);
 }
 
 .container :global(.ant-collapse-header), 
 .container h3, 
 .container h4,
 .container label {
-    color: var(--white-two)!important;
+    color: var(--dark-theme-sidebar-text)!important;
 }
