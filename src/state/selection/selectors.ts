@@ -2,8 +2,10 @@ import { State } from "../types";
 import { createSelector } from "reselect";
 import { reduce } from "lodash";
 import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
+import { SelectionEntry } from "@aics/simularium-viewer/type-declarations/simularium/SelectionInterface";
+
 import { getAgentDisplayNamesAndStates } from "../metadata/selectors";
-import { SelectionEntry, VisibilitySelectionMap } from "./types";
+import { VisibilitySelectionMap } from "./types";
 
 // BASIC SELECTORS
 export const getSelections = (state: State) => state.selection;
