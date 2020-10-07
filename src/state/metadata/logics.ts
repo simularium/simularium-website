@@ -66,7 +66,9 @@ const loadNetworkedFile = createLogic({
                 return done();
             }
         }
-        simulariumController.configureNetwork(netConnectionSettings);
+        if (!simulariumController.netConnection) {
+            simulariumController.configureNetwork(netConnectionSettings);
+        }
 
         dispatch(setViewerStatus({ status: VIEWER_LOADING }));
         simulariumController
