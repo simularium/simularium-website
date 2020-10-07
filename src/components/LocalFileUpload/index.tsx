@@ -15,7 +15,9 @@ const styles = require("./style.css");
 const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
     const history = useHistory();
     const onChange = ({ file }: UploadChangeParam) => {
-        history.push("/viewer");
+        if (!history.location.pathname.startsWith("/viewer")) {
+            history.push("/viewer");
+        }
         if (file.status === "done") {
             message.success(`${file.name} file uploaded successfully`);
         } else if (file.status === "error") {
