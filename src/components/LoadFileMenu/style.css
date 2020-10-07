@@ -1,0 +1,8 @@
+.menu, :global(.ant-dropdown-menu-submenu-popup) {
+    width: 230px;
+    box-shadow: 0 1px 3px black;
+}
+
+.menu svg {
+    fill: var(--dark-theme-menu-text-color);
+}

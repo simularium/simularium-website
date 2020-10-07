@@ -1,0 +1,8 @@
+.container {
+    text-align: center;
+}
+
+.tag {
+    margin-left: 10px;
+    color: var(--dark-theme-text-color);
+}

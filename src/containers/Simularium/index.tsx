@@ -5,7 +5,6 @@ import { Layout, Modal } from "antd";
 import queryString from "query-string";
 import { SimulariumController } from "@aics/simularium-viewer";
 
-import Header from "../../components/Header";
 import SideBar from "../../components/SideBar";
 import ResultsPanel from "../ResultsPanel";
 import ModelPanel from "../ModelPanel";
@@ -118,24 +117,14 @@ class App extends React.Component<AppProps, AppState> {
 
     public render(): JSX.Element {
         const {
-            simulariumFile,
             simulariumController,
             changeToLocalSimulariumFile,
-            changeToNetworkedFile,
             resetDragOverViewer,
             viewerStatus,
             fileIsDraggedOverViewer,
         } = this.props;
         return (
             <Layout className={styles.container}>
-                <Header
-                    loadLocalFile={changeToLocalSimulariumFile}
-                    simulariumFileName={simulariumFile.name}
-                    lastModified={simulariumFile.lastModified}
-                    loadNetworkFile={changeToNetworkedFile}
-                >
-                    Header
-                </Header>
                 <div ref={this.interactiveContent}>
                     <Layout className={styles.content}>
                         <ViewerOverlayTarget
