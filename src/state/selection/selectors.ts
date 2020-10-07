@@ -100,7 +100,6 @@ export const getAgentsToHide = createSelector(
                     if (!currentlyOn[agent.name].includes("")) {
                         hiddenTags.push("");
                     }
-                    console.log(hiddenTags);
                     if (hiddenTags.length) {
                         acc.push({
                             name: agent.name,
