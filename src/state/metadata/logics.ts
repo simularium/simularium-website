@@ -20,6 +20,11 @@ import { ReceiveAction, LocalSimFile, NetworkedSimFile } from "./types";
 import { VIEWER_ERROR } from "./constants";
 import { setViewerStatus } from "../metadata/actions";
 
+const netConnectionSettings = {
+    serverIp: process.env.BACKEND_SERVER_IP,
+    serverPort: 9002,
+};
+
 const requestPlotDataLogic = createLogic({
     process(
         deps: ReduxLogicDeps,
@@ -61,6 +66,10 @@ const loadNetworkedFile = createLogic({
                 return done();
             }
         }
+        if (!simulariumController.netConnection) {
+            simulariumController.configureNetwork(netConnectionSettings);
+        }
+
         dispatch(setViewerStatus({ status: VIEWER_LOADING }));
         simulariumController
             .changeFile(simulariumFile.name)

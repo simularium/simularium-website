@@ -1,25 +1,16 @@
 import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
 import { createSelector } from "reselect";
 import {
-    getAgentNamesToHide,
-    getHightLightedNames,
-    getHightLightedTags,
-    getAgentTagsToHide,
+    getAgentsToHide,
+    getHightLightedAgents,
 } from "../../state/selection/selectors";
 import { VisibilitySelectionMap } from "../../state/selection/types";
 
 export const getSelectionStateInfoForViewer = createSelector(
-    [
-        getHightLightedNames,
-        getHightLightedTags,
-        getAgentNamesToHide,
-        getAgentTagsToHide,
-    ],
-    (highlightedNames, highlightedTags, hiddenNames, hiddenTags) => ({
-        highlightedNames,
-        highlightedTags,
-        hiddenNames,
-        hiddenTags,
+    [getHightLightedAgents, getAgentsToHide],
+    (highlightedAgents, hiddenAgents) => ({
+        highlightedAgents,
+        hiddenAgents,
     })
 );
 
