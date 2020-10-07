@@ -8,6 +8,8 @@ import {
     DRAG_OVER_VIEWER,
     RESET_DRAG_OVER_VIEWER,
     SET_AGENTS_VISIBLE,
+    SET_ALL_AGENT_COLORS,
+    CHANGE_AGENT_COLOR,
 } from "./constants";
 import {
     DeselectFileAction,
@@ -18,6 +20,8 @@ import {
     ResetDragOverViewerAction,
     SetVisibleAction,
     VisibilitySelectionMap,
+    AgentColorMap,
+    SetAllColorsAction,
 } from "./types";
 
 export function deselectFile(fileId: string | string[]): DeselectFileAction {
@@ -65,6 +69,24 @@ export function highlightAgentsByDisplayKey(
     return {
         payload: agentNames,
         type: HIGHLIGHT_AGENTS_BY_KEY,
+    };
+}
+
+export function setAllAgentColors(
+    agentColorMap: AgentColorMap
+): SetAllColorsAction {
+    return {
+        payload: agentColorMap,
+        type: SET_ALL_AGENT_COLORS,
+    };
+}
+
+export function changeAgentColor(
+    agentColorMap: AgentColorMap
+): SetAllColorsAction {
+    return {
+        payload: agentColorMap,
+        type: CHANGE_AGENT_COLOR,
     };
 }
 
