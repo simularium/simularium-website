@@ -2,12 +2,9 @@ import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 
-import CollaspableMenu from "../../components/CollapseableMenu";
+import NestedMenus from "../../components/NestedMenus";
 import { requestMetadata } from "../../state/metadata/actions";
-import {
-    getUiDisplayDataTreeVisibility,
-    getUiDisplayDataTreeHighlight,
-} from "../../state/metadata/selectors";
+import { getUiDisplayDataTree } from "../../state/metadata/selectors";
 import { State } from "../../state/types";
 import {
     getVisibleAgentsNamesAndTags,
@@ -16,52 +13,66 @@ import {
 import {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
+    setAgentsVisible,
 } from "../../state/selection/actions";
-import { ChangeAgentsRenderingStateAction } from "../../state/selection/types";
-import CheckBoxTree from "../../components/CheckBoxTree";
-import { TreeNodeNormal } from "antd/lib/tree/Tree";
+import {
+    ChangeAgentsRenderingStateAction,
+    SetVisibleAction,
+    VisibilitySelectionMap,
+} from "../../state/selection/types";
+import CheckBoxTree, { AgentDisplayNode } from "../../components/CheckBoxTree";
+import {
+    convertUITreeDataToSelectAll,
+    convertUITreeDataToSelectNone,
+    getCheckboxAllIsIntermediate,
+} from "./selectors";
+
 const styles = require("./style.css");
 
 interface ModelPanelProps {
-    visibilityDisplayOptions: TreeNodeNormal[];
-    highlightedAgentKeys: string[];
-    visibleAgentKeys: string[];
-    highlightDisplayOptions: TreeNodeNormal[];
+    uiDisplayDataTree: AgentDisplayNode[];
+    highlightedAgentKeys: VisibilitySelectionMap;
+    visibleAgentKeys: VisibilitySelectionMap;
     turnAgentsOnByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
     highlightAgentsByDisplayKey: ActionCreator<
         ChangeAgentsRenderingStateAction
     >;
+    setAgentsVisible: ActionCreator<SetVisibleAction>;
+    payloadForSelectAll: VisibilitySelectionMap;
+    payloadForSelectNone: VisibilitySelectionMap;
+    checkAllIsIntermediate: boolean;
 }
 
 class ModelPanel extends React.Component<ModelPanelProps, {}> {
     public render(): JSX.Element {
         const {
             visibleAgentKeys,
-            visibilityDisplayOptions,
+            uiDisplayDataTree,
             turnAgentsOnByDisplayKey,
-            highlightDisplayOptions,
             highlightAgentsByDisplayKey,
             highlightedAgentKeys,
+            setAgentsVisible,
+            payloadForSelectAll,
+            payloadForSelectNone,
+            checkAllIsIntermediate,
         } = this.props;
         return (
-            <CollaspableMenu
-                panelKeys={["graphing", "statistics"]}
-                mainTitle="Adjustable Parameters"
-                subTitles={["Adjustable Parameter", "Statistics"]}
+            <NestedMenus
+                panelKeys={["Agents"]}
+                mainTitle="Inputs"
+                subTitles={["Agents"]}
                 content={[
                     <div className={styles.container} key="molecules">
-                        <h3>Molecules</h3>
                         <CheckBoxTree
-                            treeData={visibilityDisplayOptions}
-                            handleCheck={turnAgentsOnByDisplayKey}
+                            treeData={uiDisplayDataTree}
+                            handleAgentCheck={turnAgentsOnByDisplayKey}
                             agentsChecked={visibleAgentKeys}
-                            title="Turn on/off"
-                        />
-                        <CheckBoxTree
-                            treeData={highlightDisplayOptions}
-                            handleCheck={highlightAgentsByDisplayKey}
-                            agentsChecked={highlightedAgentKeys}
-                            title="Highlight"
+                            handleHighlight={highlightAgentsByDisplayKey}
+                            agentsHighlighted={highlightedAgentKeys}
+                            setAgentsVisible={setAgentsVisible}
+                            payloadForSelectAll={payloadForSelectAll}
+                            payloadForSelectNone={payloadForSelectNone}
+                            checkAllIsIntermediate={checkAllIsIntermediate}
                         />
                     </div>,
                     null,
@@ -75,8 +86,10 @@ function mapStateToProps(state: State) {
     return {
         visibleAgentKeys: getVisibleAgentsNamesAndTags(state),
         highlightedAgentKeys: getHighlightedAgentsNamesAndTags(state),
-        visibilityDisplayOptions: getUiDisplayDataTreeVisibility(state),
-        highlightDisplayOptions: getUiDisplayDataTreeHighlight(state),
+        uiDisplayDataTree: getUiDisplayDataTree(state),
+        payloadForSelectAll: convertUITreeDataToSelectAll(state),
+        payloadForSelectNone: convertUITreeDataToSelectNone(state),
+        checkAllIsIntermediate: getCheckboxAllIsIntermediate(state),
     };
 }
 
@@ -84,6 +97,7 @@ const dispatchToPropsMap = {
     requestMetadata,
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
+    setAgentsVisible,
 };
 
 export default connect(

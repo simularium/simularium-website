@@ -20,7 +20,9 @@ export const Pause = <PauseOutlined />;
 export const StepForward = <StepForwardOutlined />;
 export const UploadFile = <UploadOutlined />;
 export const DownArrow = <DownOutlined />;
+export const CaretRight = <CaretRightOutlined />;
 export const GoBack = <ArrowLeftOutlined />;
+
 export const PurpleArrow = <img src={PurpleArrowPointingRight} />;
 export const AicsLogo = <img src={AicsLogoWhite} />;
 export default {
@@ -31,6 +33,8 @@ export default {
     UploadFile,
     Loading,
     DownArrow,
+    CaretRight,
+    ArrowLeftOutlined,
     GoBack,
     PurpleArrow,
     AicsLogo,

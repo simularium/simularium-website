@@ -14,14 +14,17 @@ import metadataStateBranch from "../../state/metadata";
 
 import {
     ChangeTimeAction,
-    ChangeAgentsRenderingStateAction,
     ResetDragOverViewerAction,
     DragOverViewerAction,
+    SetVisibleAction,
 } from "../../state/selection/types";
 
 import { ReceiveAction, LocalSimFile } from "../../state/metadata/types";
 
-import { getSelectionStateInfoForViewer } from "./selectors";
+import {
+    convertUIDataToSelectionData,
+    getSelectionStateInfoForViewer,
+} from "./selectors";
 
 import PlaybackControls from "../../components/PlaybackControls";
 
@@ -39,12 +42,12 @@ interface ViewerPanelProps {
     receiveMetadata: ActionCreator<ReceiveAction>;
     receiveAgentNamesAndStates: ActionCreator<ReceiveAction>;
     selectionStateInfoForViewer: SelectionStateInfo;
-    turnAgentsOnByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
     loadLocalFile: (localSimFile: LocalSimFile) => void;
     fileIsDraggedOverViewer: boolean;
     dragOverViewer: ActionCreator<DragOverViewerAction>;
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
     viewerStatus: string;
+    setAgentsVisible: ActionCreator<SetVisibleAction>;
 }
 
 interface ViewerPanelState {
@@ -175,15 +178,10 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
-        const {
-            receiveAgentNamesAndStates,
-            turnAgentsOnByDisplayKey,
-        } = this.props;
+        const { receiveAgentNamesAndStates, setAgentsVisible } = this.props;
         receiveAgentNamesAndStates(uiData);
-        console.log("UI DATA", uiData);
-        const names = uiData.map((agent) => agent.name);
-        console.log(names);
-        turnAgentsOnByDisplayKey(names);
+        const selectedAgents = convertUIDataToSelectionData(uiData);
+        setAgentsVisible(selectedAgents);
     };
 
     public render(): JSX.Element {
@@ -193,7 +191,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             simulariumController,
             selectionStateInfoForViewer,
         } = this.props;
-
+        // console.log(selectionStateInfoForViewer);
         return (
             <div ref={this.centerContent} className={styles.container}>
                 <SimulariumViewer
@@ -248,8 +246,7 @@ const dispatchToPropsMap = {
     receiveAgentTypeIds: metadataStateBranch.actions.receiveAgentTypeIds,
     receiveAgentNamesAndStates:
         metadataStateBranch.actions.receiveAgentNamesAndStates,
-    turnAgentsOnByDisplayKey:
-        selectionStateBranch.actions.turnAgentsOnByDisplayKey,
+    setAgentsVisible: selectionStateBranch.actions.setAgentsVisible,
     dragOverViewer: selectionStateBranch.actions.dragOverViewer,
     resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
 };

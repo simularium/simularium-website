@@ -16,7 +16,7 @@ import AppHeader from "./containers/AppHeader";
 
 const { Header, Footer } = Layout;
 
-require("./style.css");
+import "./style.css";
 
 render(
     <Provider store={createReduxStore()}>

@@ -15,6 +15,9 @@
     left: inherit;
 }
 
+.sider :global(.ant-collapse-content-box) {
+    padding: 3px 0;
+}
 .sider.right :global(.ant-collapse-content-box) {
     padding: 0;
 }
@@ -49,7 +52,7 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background-color: var(--dark-purple-gray);
+    background-color: var(--dark-theme-component-bg);
     cursor: pointer;
     box-shadow: 0 1px 3px black;
     display: flex;

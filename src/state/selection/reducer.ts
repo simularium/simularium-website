@@ -13,6 +13,7 @@ import {
     HIGHLIGHT_AGENTS_BY_KEY,
     DRAG_OVER_VIEWER,
     RESET_DRAG_OVER_VIEWER,
+    SET_AGENTS_VISIBLE,
 } from "./constants";
 import {
     DeselectFileAction,
@@ -21,17 +22,17 @@ import {
     SelectMetadataAction,
     ChangeTimeAction,
     ChangeNumberCollapsedPanelsAction,
-    HighlightAgentAction,
     DragOverViewerAction,
     ResetDragOverViewerAction,
+    SetVisibleAction,
 } from "./types";
 
 export const initialState = {
     files: [],
     time: 0,
     numberPanelsCollapsed: 0,
-    visibleAgentKeys: [],
-    highlightedAgentKeys: [],
+    visibleAgentKeys: {},
+    highlightedAgentKeys: {},
     draggedOverViewer: false,
 };
 
@@ -44,6 +45,19 @@ const actionToConfigMap: TypeToDescriptionMap = {
             files: without(state.files, ...castArray(action.payload)),
         }),
     },
+    [SET_AGENTS_VISIBLE]: {
+        accepts: (action: AnyAction): action is SetVisibleAction =>
+            action.type === SET_AGENTS_VISIBLE,
+        perform: (
+            state: SelectionStateBranch,
+            action: ChangeAgentsRenderingStateAction
+        ) => {
+            return {
+                ...state,
+                visibleAgentKeys: action.payload,
+            };
+        },
+    },
     [TURN_AGENTS_ON_BY_KEY]: {
         accepts: (
             action: AnyAction
@@ -55,7 +69,10 @@ const actionToConfigMap: TypeToDescriptionMap = {
         ) => {
             return {
                 ...state,
-                visibleAgentKeys: action.payload,
+                visibleAgentKeys: {
+                    ...state.visibleAgentKeys,
+                    ...action.payload,
+                },
             };
         },
     },
@@ -99,10 +116,13 @@ const actionToConfigMap: TypeToDescriptionMap = {
             action.type === HIGHLIGHT_AGENTS_BY_KEY,
         perform: (
             state: SelectionStateBranch,
-            action: HighlightAgentAction
+            action: ChangeAgentsRenderingStateAction
         ) => ({
             ...state,
-            highlightedAgentKeys: action.payload,
+            highlightedAgentKeys: {
+                ...state.highlightedAgentKeys,
+                ...action.payload,
+            },
         }),
     },
     [DRAG_OVER_VIEWER]: {

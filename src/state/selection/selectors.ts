@@ -1,10 +1,9 @@
 import { State } from "../types";
 import { createSelector } from "reselect";
+import { reduce } from "lodash";
 import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
-import {
-    getAgentDisplayNamesAndStates,
-    getAllTags,
-} from "../metadata/selectors";
+import { getAgentDisplayNamesAndStates } from "../metadata/selectors";
+import { SelectionEntry, VisibilitySelectionMap } from "./types";
 
 // BASIC SELECTORS
 export const getSelections = (state: State) => state.selection;
@@ -22,43 +21,86 @@ export const getFileDraggedOverViewer = (state: State) =>
     state.selection.draggedOverViewer;
 // COMPOSED SELECTORS
 
-// key is `${renderType}-${agentName}-${tagId}`
-const parseTagIdFromKey = (key: string) => key.split("-")[2];
-
-export const getHightLightedNames = createSelector(
+export const getHightLightedAgents = createSelector(
     [getHighlightedAgentsNamesAndTags, getAgentDisplayNamesAndStates],
-    (highlightedAgents, allAgents: UIDisplayData): string[] => {
-        return allAgents
-            .filter((agent) => highlightedAgents.includes(agent.name))
-            .map((agent) => agent.name);
+    (
+        highlightedAgents: VisibilitySelectionMap,
+        allAgents: UIDisplayData
+    ): SelectionEntry[] => {
+        const init: SelectionEntry[] = [];
+        return reduce(
+            allAgents,
+            (acc, agent) => {
+                if (!highlightedAgents[agent.name]) {
+                    return acc;
+                }
+                if (!agent.displayStates.length) {
+                    // if no displayStates, but agent is highlighted, highlight agent
+                    if (highlightedAgents[agent.name].length) {
+                        acc.push({
+                            name: agent.name,
+                            tags: [],
+                        });
+                    }
+                } else {
+                    const highLightedTags = agent.displayStates
+                        .filter((tag) =>
+                            highlightedAgents[agent.name].includes(tag.id)
+                        )
+                        .map((displayState) => displayState.id);
+                    if (highLightedTags.length) {
+                        acc.push({
+                            name: agent.name,
+                            tags: highLightedTags,
+                        });
+                    }
+                }
+
+                return acc;
+            },
+            init
+        );
     }
 );
 
-export const getHightLightedTags = createSelector(
-    [getHighlightedAgentsNamesAndTags, getAllTags],
-    (highlightedAgents, allTags): string[] => {
-        const allTagsHighlighted = highlightedAgents
-            .filter((agentKey: string) => agentKey.split("-").length > 2)
-            .map(parseTagIdFromKey);
-
-        return allTags.filter((tag) => allTagsHighlighted.includes(tag));
-    }
-);
-export const getAgentNamesToHide = createSelector(
+export const getAgentsToHide = createSelector(
     [getVisibleAgentsNamesAndTags, getAgentDisplayNamesAndStates],
-    (currentlyOn, allAgents: UIDisplayData): string[] => {
-        return allAgents
-            .filter((agent) => !currentlyOn.includes(agent.name))
-            .map((agent) => agent.name);
-    }
-);
+    (
+        currentlyOn: VisibilitySelectionMap,
+        allAgents: UIDisplayData
+    ): SelectionEntry[] => {
+        const init: SelectionEntry[] = [];
+        return reduce(
+            allAgents,
+            (acc, agent) => {
+                if (!currentlyOn[agent.name]) {
+                    return acc;
+                }
+                if (!agent.displayStates.length) {
+                    // if no tags and nothing is on, include agent name
+                    if (!currentlyOn[agent.name].length) {
+                        acc.push({
+                            name: agent.name,
+                            tags: [],
+                        });
+                    }
+                } else {
+                    const hiddenTags = agent.displayStates
+                        .filter(
+                            (tag) => !currentlyOn[agent.name].includes(tag.id)
+                        )
+                        .map((displayState) => displayState.id);
+                    if (hiddenTags.length) {
+                        acc.push({
+                            name: agent.name,
+                            tags: hiddenTags,
+                        });
+                    }
+                }
 
-export const getAgentTagsToHide = createSelector(
-    [getVisibleAgentsNamesAndTags, getAllTags],
-    (currentlyOn, allTags): string[] => {
-        const allTagsShowing = currentlyOn
-            .filter((agentKey: string) => agentKey.split("-").length > 2)
-            .map(parseTagIdFromKey);
-        return allTags.filter((tag) => !allTagsShowing.includes(tag));
+                return acc;
+            },
+            init
+        );
     }
 );

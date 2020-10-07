@@ -18,7 +18,7 @@ export interface ResetDragOverViewerAction {
 }
 
 export interface ChangeAgentsRenderingStateAction {
-    payload: string[];
+    payload: { [key: string]: string[] };
     type: string;
 }
 
@@ -46,4 +46,26 @@ export interface HighlightAgentAction {
 export interface ToggleAction {
     payload: boolean;
     type: string;
+}
+
+export interface VisibilitySelectionMap {
+    [key: string]: string[];
+}
+
+export interface SetVisibleAction {
+    payload: VisibilitySelectionMap;
+    type: string;
+}
+
+export interface ToggleAllVisibleAction {
+    payload: boolean;
+    type: string;
+}
+
+/**
+ * TODO: export this from the viewer
+ */
+export interface SelectionEntry {
+    name: string;
+    tags: string[];
 }
