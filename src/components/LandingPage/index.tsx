@@ -30,13 +30,22 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                     and sharing of results.
                 </p>
             </div>
-            <div className={styles.libraryPanel}>
-                <h2>Simulation Trajectory Library</h2>
-                <br />
-                <p>
+            <div className={styles.callToActionPanel}>
+                <h1>Visualize your own custom data</h1>
+                <h2>View your own model in the Simularium viewer</h2>
+                <Button type="ghost" href="/tutorial">
+                    Getting started
+                </Button>
+                <Button type="primary" href="/viewer">
+                    Launch viewer
+                </Button>
+            </div>
+            <div className={styles.panel}>
+                <h1>Simulation Trajectory Library</h1>
+                <h2>
                     Try Simularium for yourself by selecting from the simulation
-                    trajectories below.
-                </p>
+                    trajectories below
+                </h2>
                 <div className={styles.cards}>
                     {TRAJECTORIES.map((trajectory) => {
                         return (
@@ -107,16 +116,17 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                     for the general public to explore.
                 </p>
             </div>
-            <div className={styles.signUpPanel}>
+            <div className={styles.callToActionPanel}>
                 <h1>Connect with us</h1>
                 <h2>
-                    Receive updates on releases and/or collaborate on your
-                    project by signing up.
+                    Receive updates and/or collaborate on your project by
+                    signing up
                 </h2>
-                <Button type="primary">
-                    <a href="https://www.allencell.org/simularium-sign-up.html">
-                        Sign up
-                    </a>
+                <Button
+                    type="primary"
+                    href="https://www.allencell.org/simularium-sign-up.html"
+                >
+                    Sign up
                 </Button>
             </div>
         </Content>
