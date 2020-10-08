@@ -1,12 +1,14 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import { ActionCreator } from "redux";
 import { Menu, Dropdown, Button } from "antd";
 
 import { TRAJECTORY_FILES } from "../../constants";
 import { RequestFileAction } from "../../state/metadata/types";
 
-import { DownArrow } from "../Icons";
 import LocalFileUpload from "../LocalFileUpload";
+
+const styles = require("./style.css");
 
 interface NetworkFileMenuProps {
     selectFile: ActionCreator<RequestFileAction>;
@@ -15,7 +17,7 @@ interface NetworkFileMenuProps {
 
 const LoadFileMenu = ({ selectFile, loadLocalFile }: NetworkFileMenuProps) => {
     const menu = (
-        <Menu theme="dark">
+        <Menu theme="dark" className={styles.menu}>
             <Menu.Item>
                 <LocalFileUpload loadLocalFile={loadLocalFile} />
             </Menu.Item>
@@ -23,15 +25,15 @@ const LoadFileMenu = ({ selectFile, loadLocalFile }: NetworkFileMenuProps) => {
                 {TRAJECTORY_FILES.map((fileName) => (
                     <Menu.Item
                         key={fileName}
-                        onClick={() =>
+                        onClick={() => {
                             selectFile({
                                 name: `${fileName}`,
                                 data: null,
                                 dateModified: null,
-                            })
-                        }
+                            });
+                        }}
                     >
-                        {fileName}
+                        <Link to="/viewer">{fileName}</Link>
                     </Menu.Item>
                 ))}
             </Menu.SubMenu>
@@ -44,7 +46,7 @@ const LoadFileMenu = ({ selectFile, loadLocalFile }: NetworkFileMenuProps) => {
                 onClick={(e) => e.preventDefault()}
                 type="ghost"
             >
-                Load {DownArrow}
+                Load model
             </Button>
         </Dropdown>
     );
