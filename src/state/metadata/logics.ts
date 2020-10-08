@@ -1,5 +1,6 @@
 import { AxiosResponse } from "axios";
 import { createLogic } from "redux-logic";
+import queryString from "query-string";
 
 import { ReduxLogicDeps } from "../types";
 
@@ -19,6 +20,7 @@ import {
 import { ReceiveAction, LocalSimFile, NetworkedSimFile } from "./types";
 import { VIEWER_ERROR } from "./constants";
 import { setViewerStatus } from "../metadata/actions";
+import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 
 const netConnectionSettings = {
     serverIp: process.env.BACKEND_SERVER_IP,
@@ -103,6 +105,16 @@ const loadNetworkedFile = createLogic({
     type: LOAD_NETWORKED_FILE_IN_VIEWER,
 });
 
+const clearOutFileTrajectoryUrlParam = () => {
+    const parsed = queryString.parse(location.search);
+    if (parsed[URL_PARAM_KEY_FILE_NAME]) {
+        const url = new URL(location.href); // no IE support
+        history.pushState(null, ""); // save current state so back button works
+        url.searchParams.delete(URL_PARAM_KEY_FILE_NAME);
+        history.replaceState(null, "", url.href);
+    }
+};
+
 const loadLocalFile = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
@@ -121,6 +133,9 @@ const loadLocalFile = createLogic({
                 return;
             }
         }
+
+        clearOutFileTrajectoryUrlParam();
+
         dispatch(setViewerStatus({ status: VIEWER_LOADING }));
         simulariumController
             .changeFile(simulariumFile.name, true, simulariumFile.data)

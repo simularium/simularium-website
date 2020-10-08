@@ -12,7 +12,7 @@ import { APP_ID } from "./constants";
 
 import { createReduxStore } from "./state";
 import routes from "./routes";
-import NavBar from "./components/NavBar";
+import AppHeader from "./containers/AppHeader";
 
 const { Header, Footer } = Layout;
 
@@ -25,7 +25,7 @@ render(
                 basename={process.env.GH_BUILD ? "/simularium-website/" : ""}
             >
                 <Header>
-                    <NavBar />
+                    <AppHeader />
                 </Header>
                 <Switch>
                     {routes.map((route) => (
