@@ -15,12 +15,19 @@
     flex-direction: column;
 }
 
-.row-label {
-    width: 100%;
+.row-label-container {
     display: inline-block;
-    margin-left: 100;
     height: 40px;
+    padding: 2px 0;
+}
+
+.row-label {
+    margin-left: 8px;
     font-weight: 200;
+    vertical-align: text-top;
+    display: inline-block;
+    height: 16px;
+    line-height: 1;
 }
 
 .container .col-labels label {

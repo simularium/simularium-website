@@ -37,7 +37,7 @@ interface CheckBoxTreeProps {
     agentColors: AgentColorMap;
 }
 const CHECKBOX_SPAN_NO = 2;
-const LABEL_SPAN_NO = 5;
+const LABEL_SPAN_NO = 6;
 const styles = require("./style.css");
 
 class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
@@ -276,18 +276,37 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                         />
                                     </Col>
                                     <Col
-                                        span={LABEL_SPAN_NO}
                                         offset={4}
                                         className={styles.checkboxLabels}
                                     >
                                         {nodeData.children.map((value) => {
                                             return (
-                                                <label
-                                                    className={styles.rowLabel}
-                                                    key={value.value as string}
+                                                <div
+                                                    key={`label-${
+                                                        nodeData.title
+                                                    }-${value.value}`}
+                                                    className={
+                                                        styles.rowLabelContainer
+                                                    }
                                                 >
-                                                    {value.label}
-                                                </label>
+                                                    <ColorSwatch
+                                                        color={
+                                                            agentColors[
+                                                                nodeData.title
+                                                            ]
+                                                        }
+                                                    />
+                                                    <label
+                                                        className={
+                                                            styles.rowLabel
+                                                        }
+                                                        key={
+                                                            value.value as string
+                                                        }
+                                                    >
+                                                        {value.label}
+                                                    </label>
+                                                </div>
                                             );
                                         })}
                                     </Col>
