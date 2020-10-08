@@ -12,7 +12,27 @@
     margin: auto 2px;
 }
 
+.btn {
+    background-color: var(--dark-three);
+    color: var(--white-three);
+    border-radius: 3px!important;
+}
+
+.btn[disabled] {
+    background-color: var(--dark-two);
+    color: rgb(231 231 231 / 32%);
+
+}
 .slider {
     flex: 3;
     margin: auto 10px;
+}
+
+.slider :global(.ant-slider-track) {
+    background-color: var(--white-three);
+}
+
+.slider :global(.ant-slider-track),
+.slider :global(.ant-slider-rail) {
+    border-radius: 3px;
 }
