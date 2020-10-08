@@ -1,0 +1,17 @@
+.container {
+    margin: 1em;
+}
+
+.container p, h3 {
+    color: var(--dark-theme-sidebar-text);
+    margin-bottom: 1.5em;
+    font-size: 16px;
+}
+
+.container h3 {
+    font-weight: 600;
+}
+
+.container p {
+    font-weight: 200;
+}
