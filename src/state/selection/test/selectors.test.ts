@@ -78,7 +78,7 @@ describe("selection composed selectors", () => {
             const hiddenNames = getAgentsToHide(stateWithSelection);
             expect(hiddenNames).to.be.a("array");
             expect(hiddenNames).to.deep.equal([
-                { name: "agent1", tags: ["state1"] },
+                { name: "agent1", tags: ["state1", ""] },
             ]);
         });
     });

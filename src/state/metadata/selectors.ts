@@ -60,7 +60,7 @@ export const getUiDisplayDataTree = createSelector(
                 ? [
                       {
                           label: "<unmodified>",
-                          value: agent.name,
+                          value: "",
                       },
                       ...agent.displayStates.map((state) => ({
                           label: state.name,

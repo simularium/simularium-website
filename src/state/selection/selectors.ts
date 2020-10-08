@@ -2,8 +2,10 @@ import { State } from "../types";
 import { createSelector } from "reselect";
 import { reduce } from "lodash";
 import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
+import { SelectionEntry } from "@aics/simularium-viewer/type-declarations/simularium/SelectionInterface";
+
 import { getAgentDisplayNamesAndStates } from "../metadata/selectors";
-import { SelectionEntry, VisibilitySelectionMap } from "./types";
+import { VisibilitySelectionMap } from "./types";
 
 // BASIC SELECTORS
 export const getSelections = (state: State) => state.selection;
@@ -48,6 +50,10 @@ export const getHightLightedAgents = createSelector(
                             highlightedAgents[agent.name].includes(tag.id)
                         )
                         .map((displayState) => displayState.id);
+                    // include unmodified tag if present
+                    if (highlightedAgents[agent.name].includes("")) {
+                        highLightedTags.push("");
+                    }
                     if (highLightedTags.length) {
                         acc.push({
                             name: agent.name,
@@ -90,6 +96,10 @@ export const getAgentsToHide = createSelector(
                             (tag) => !currentlyOn[agent.name].includes(tag.id)
                         )
                         .map((displayState) => displayState.id);
+                    // if unmodified state isnt checked, add to hidden tags
+                    if (!currentlyOn[agent.name].includes("")) {
+                        hiddenTags.push("");
+                    }
                     if (hiddenTags.length) {
                         acc.push({
                             name: agent.name,
