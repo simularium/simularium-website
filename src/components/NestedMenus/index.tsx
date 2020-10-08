@@ -1,3 +1,5 @@
+// This component is currently unused
+
 import * as React from "react";
 import { Card, Collapse } from "antd";
 

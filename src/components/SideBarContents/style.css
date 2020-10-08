@@ -1,0 +1,20 @@
+.container :global(.ant-card-body) {
+    background: var(--dark-theme-sidebar-bg);
+}
+
+.container :global(.ant-card-head) {
+    background-color: var(--dark-theme-sidebar-header-bg);
+    height: 44px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    border: none;
+}
+
+.container :global(.ant-card-head-title) {
+    color: var(--dark-theme-sidebar-text);
+}
+
+.container label {
+    color: var(--dark-theme-sidebar-text)!important;
+}
