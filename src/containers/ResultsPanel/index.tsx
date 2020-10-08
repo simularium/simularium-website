@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
-import NestedMenus from "../../components/NestedMenus";
+import SideBarContents from "../../components/SideBarContents";
 
 import Graphing from "../../components/Plots";
 import { getCurrentTime } from "../../state/selection/selectors";
@@ -23,11 +23,8 @@ class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
         const { changeTime, time, plotData } = this.props;
         return (
             <div className={styles.container}>
-                <NestedMenus
-                    // Uncomment below when we want multiple collapsible sections
-                    // panelKeys={["graphing", "statistics"]}
+                <SideBarContents
                     mainTitle="Plots"
-                    // subTitles={["Graphing", "Statistics"]}
                     content={[
                         <Graphing
                             time={time}
