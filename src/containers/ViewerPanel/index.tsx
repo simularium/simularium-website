@@ -22,6 +22,7 @@ import {
 import { ReceiveAction, LocalSimFile } from "../../state/metadata/types";
 
 import {
+    convertUIDataToColorMap,
     convertUIDataToSelectionData,
     getSelectionStateInfoForViewer,
 } from "./selectors";
@@ -179,9 +180,15 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
-        const { receiveAgentNamesAndStates, setAgentsVisible } = this.props;
+        const {
+            receiveAgentNamesAndStates,
+            setAgentsVisible,
+            setAllAgentColors,
+        } = this.props;
         receiveAgentNamesAndStates(uiData);
         const selectedAgents = convertUIDataToSelectionData(uiData);
+        const agentColors = convertUIDataToColorMap(uiData);
+        setAllAgentColors(agentColors);
         setAgentsVisible(selectedAgents);
     };
 
@@ -251,6 +258,7 @@ const dispatchToPropsMap = {
     setAgentsVisible: selectionStateBranch.actions.setAgentsVisible,
     dragOverViewer: selectionStateBranch.actions.dragOverViewer,
     resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
+    setAllAgentColors: selectionStateBranch.actions.setAllAgentColors,
 };
 
 export default connect(

@@ -6,6 +6,10 @@
     margin-left: 8px;
 }
 
+.checkbox-set {
+    width: 53px;
+}
+
 .container .checkbox-labels {
     display: flex;
     flex-direction: column;
@@ -40,12 +44,11 @@
 }
 
 .no-children-row {
-    margin-left: 30px;
-
+    margin-left: 32px;
 }
 
 .no-children-row :global(.ant-checkbox-wrapper) {
-    width: 37px;
+    width: 30px;
     height: 40px;
 }
 

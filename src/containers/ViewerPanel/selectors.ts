@@ -4,7 +4,10 @@ import {
     getAgentsToHide,
     getHightLightedAgents,
 } from "../../state/selection/selectors";
-import { VisibilitySelectionMap } from "../../state/selection/types";
+import {
+    AgentColorMap,
+    VisibilitySelectionMap,
+} from "../../state/selection/types";
 
 export const getSelectionStateInfoForViewer = createSelector(
     [getHightLightedAgents, getAgentsToHide],
@@ -28,6 +31,16 @@ export const convertUIDataToSelectionData = (
         } else {
             acc[agent.name] = [agent.name];
         }
+        return acc;
+    }, returnData);
+};
+
+export const convertUIDataToColorMap = (
+    uiData: UIDisplayData
+): AgentColorMap => {
+    const returnData: AgentColorMap = {};
+    return uiData.reduce((acc, agent) => {
+        acc[agent.name] = agent.color;
         return acc;
     }, returnData);
 };
