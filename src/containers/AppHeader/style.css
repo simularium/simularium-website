@@ -35,20 +35,15 @@
     width: 40px;
 }
 
-.page-header :global(.ant-page-header-heading-extra) {
+.page-header :global(.ant-page-header-heading-title) {
     order: 1;
 }
 
-.page-header :global(.ant-page-header-heading-title) {
+.page-header :global(.ant-page-header-heading-extra) {
     color: var(--dark-theme-text-color);
     flex-grow: 3;
     padding-left: 12px;
     order: 2
-}
-
-.page-header :global(.ant-page-header-heading-sub-title) {
-    color: var(--dark-theme-text-color);
-    order: 3;
 }
 
 .page-header :global(.ant-page-header-heading-tags) {
@@ -62,6 +57,7 @@
 }
 
 .home {
-    margin-left: 20px;
+    margin-left: 5px;
     margin-right: 20px;
+    font-size: 12px;
 }
