@@ -8,7 +8,7 @@ const NoTrajectoriesText: React.FunctionComponent<{}> = () => {
         <div className={styles.container}>
             <h3>No trajectories loaded</h3>
             <p>
-                To try out the Simularium Viewer, either{" "}
+                To view a simulation, either{" "}
                 <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/akamatsu_0020.simularium">
                     download
                 </a>{" "}
