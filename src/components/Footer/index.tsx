@@ -13,16 +13,32 @@ const Footer: React.FunctionComponent<{}> = () => {
                 <div>
                     <Link to="/">Simularium Home</Link>
                 </div>
-                <div>Terms of Use</div>
-                <div>Citation Policy</div>
-                <div>Privacy Policy</div>
-                <div>Forum</div>
+                <div>
+                    <a href="https://www.allencell.org/terms-of-use.html">
+                        Terms of Use
+                    </a>
+                </div>
+                <div>
+                    <a href="https://www.allencell.org/citation-policy.html">
+                        Citation Policy
+                    </a>
+                </div>
+                <div>
+                    <a href="https://www.allencell.org/privacy-policy.html">
+                        Privacy Policy
+                    </a>
+                </div>
+                <div>
+                    <a href="#">Forum</a>
+                </div>
             </Row>
             <Row justify="space-around">
                 <div>
                     Copyright © 2020 Allen Institute. All Rights Reserved.
                 </div>
-                <div>allencell.org</div>
+                <div>
+                    <a href="https://www.allencell.org">allencell.org</a>
+                </div>
             </Row>
         </AntdFooter>
     );
