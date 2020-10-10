@@ -14,7 +14,7 @@ import { createReduxStore } from "./state";
 import routes from "./routes";
 import AppHeader from "./containers/AppHeader";
 
-const { Header, Footer } = Layout;
+const { Header } = Layout;
 
 import "./style.css";
 
@@ -39,7 +39,6 @@ render(
                     ))}
                 </Switch>
             </BrowserRouter>
-            <Footer />
         </Layout>
     </Provider>,
     document.getElementById(APP_ID)
