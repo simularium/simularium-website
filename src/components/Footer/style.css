@@ -1,0 +1,14 @@
+.container {
+    display: block;
+}
+
+:global(.ant-row) {
+    width: 1000px;
+    margin: auto;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.top-row {
+    display: flex;
+}

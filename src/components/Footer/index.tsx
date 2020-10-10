@@ -8,7 +8,7 @@ const styles = require("./style.css");
 const Footer: React.FunctionComponent<{}> = () => {
     return (
         <AntdFooter className={styles.container}>
-            <Row>
+            <Row className={styles.topRow}>
                 <Col>Simularium Home</Col>
                 <Col>Terms of Use</Col>
                 <Col>Citation Policy</Col>
