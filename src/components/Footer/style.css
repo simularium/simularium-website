@@ -1,14 +1,22 @@
 .container {
     display: block;
+    background-color: var(--footer-bg);
+    padding-top: 1.5em;
+    padding-bottom: 1em;
 }
 
 :global(.ant-row) {
-    width: 1000px;
-    margin: auto;
+    width: 800px;
+    margin: 0 auto 1.5em auto;
     display: flex;
-    justify-content: space-evenly;
+    font-weight: 200;
+    color: var(--footer-text);
 }
 
-.top-row {
-    display: flex;
+.top-row div {
+    text-align: center;
+    flex-grow: 1;
+    margin: 0 1em;
+    border-bottom: 1px solid var(--footer-text-border-bottom);
+    padding: 1em;
 }

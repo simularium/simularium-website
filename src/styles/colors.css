@@ -21,6 +21,9 @@
     --baby-purple: #b59ff6;
     --background-dim-gray: var(--dim-gray);
     --border-gray: var(--white-six);
+    --footer-bg: var(--dark-three);
+    --footer-text: var(--warm-gray);
+    --footer-text-border-bottom: var(--greyish-brown);
     --dark-theme-primary-color: var(--baby-purple);
     --dark-theme-body-bg: var(--black);
     --dark-theme-header-bg: var(--dark-three);

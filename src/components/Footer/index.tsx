@@ -8,18 +8,18 @@ const styles = require("./style.css");
 const Footer: React.FunctionComponent<{}> = () => {
     return (
         <AntdFooter className={styles.container}>
-            <Row className={styles.topRow}>
-                <Col>Simularium Home</Col>
-                <Col>Terms of Use</Col>
-                <Col>Citation Policy</Col>
-                <Col>Privacy Policy</Col>
-                <Col>Forum</Col>
+            <Row className={styles.topRow} justify="space-around">
+                <div>Simularium Home</div>
+                <div>Terms of Use</div>
+                <div>Citation Policy</div>
+                <div>Privacy Policy</div>
+                <div>Forum</div>
             </Row>
-            <Row>
-                <Col>
+            <Row justify="space-around">
+                <div>
                     Copyright © 2020 Allen Institute. All Rights Reserved.
-                </Col>
-                <Col>allencell.org</Col>
+                </div>
+                <div>allencell.org</div>
             </Row>
         </AntdFooter>
     );
