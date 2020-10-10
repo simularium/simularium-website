@@ -428,6 +428,23 @@
 }
 
 
+.style__container--Jj3Sj {
+    margin: 1em;
+}
+
+.style__container--Jj3Sj p, h3 {
+    color: var(--dark-theme-sidebar-text);
+    margin-bottom: 1.5em;
+    font-size: 16px;
+}
+
+.style__container--Jj3Sj h3 {
+    font-weight: 600;
+}
+
+.style__container--Jj3Sj p {
+    font-weight: 200;
+}
 .style__container--SrsUo {
     background-color: var(--dark);
 }
@@ -567,13 +584,13 @@
 .style__menu--3fUNO svg {
     fill: var(--dark-theme-menu-text-color);
 }
-.style__container--2dwMB {
+.style__container--3Savx {
     text-align: center;
     font-size: 16px;
     font-weight: 400;
 }
 
-.style__tag--wyyZQ {
+.style__tag--2-pB8 {
     margin-left: 10px;
     color: var(--dark-theme-text-color);
 }
@@ -612,20 +629,15 @@
     width: 40px;
 }
 
-.style__page-header--18F6z .ant-page-header-heading-extra {
+.style__page-header--18F6z .ant-page-header-heading-title {
     order: 1;
 }
 
-.style__page-header--18F6z .ant-page-header-heading-title {
+.style__page-header--18F6z .ant-page-header-heading-extra {
     color: var(--dark-theme-text-color);
     flex-grow: 3;
     padding-left: 12px;
     order: 2
-}
-
-.style__page-header--18F6z .ant-page-header-heading-sub-title {
-    color: var(--dark-theme-text-color);
-    order: 3;
 }
 
 .style__page-header--18F6z .ant-page-header-heading-tags {
@@ -639,8 +651,9 @@
 }
 
 .style__home--3Sd_4 {
-    margin-left: 20px;
+    margin-left: 5px;
     margin-right: 20px;
+    font-size: 12px;
 }
 /* global styles
 css modules not applied */
