@@ -29,7 +29,7 @@ const Footer: React.FunctionComponent<{}> = () => {
                     </a>
                 </div>
                 <div>
-                    // TODO: Put in link to real forum when available
+                    {/* TODO: Put in link to real forum when available */}
                     <a href="#">Forum</a>
                 </div>
             </Row>
