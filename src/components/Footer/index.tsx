@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Layout, Row, Col } from "antd";
+import { Link } from "react-router-dom";
+import { Layout, Row } from "antd";
 
 const { Footer: AntdFooter } = Layout;
 
@@ -9,7 +10,9 @@ const Footer: React.FunctionComponent<{}> = () => {
     return (
         <AntdFooter className={styles.container}>
             <Row className={styles.topRow} justify="space-around">
-                <div>Simularium Home</div>
+                <div>
+                    <Link to="/">Simularium Home</Link>
+                </div>
                 <div>Terms of Use</div>
                 <div>Citation Policy</div>
                 <div>Privacy Policy</div>
