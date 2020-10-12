@@ -13,7 +13,7 @@
     color: var(--footer-text);
 }
 
-.top-row div {
+.link-column {
     text-align: center;
     flex-grow: 1;
     margin: 0 1em;

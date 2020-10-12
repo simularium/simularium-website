@@ -9,26 +9,26 @@ const styles = require("./style.css");
 const Footer: React.FunctionComponent<{}> = () => {
     return (
         <AntdFooter className={styles.container}>
-            <Row className={styles.topRow} justify="space-around">
-                <div>
+            <Row justify="space-around">
+                <div className={styles.linkColumn}>
                     <Link to="/">Simularium Home</Link>
                 </div>
-                <div>
+                <div className={styles.linkColumn}>
                     <a href="https://www.allencell.org/terms-of-use.html">
                         Terms of Use
                     </a>
                 </div>
-                <div>
+                <div className={styles.linkColumn}>
                     <a href="https://www.allencell.org/citation-policy.html">
                         Citation Policy
                     </a>
                 </div>
-                <div>
+                <div className={styles.linkColumn}>
                     <a href="https://www.allencell.org/privacy-policy.html">
                         Privacy Policy
                     </a>
                 </div>
-                <div>
+                <div className={styles.linkColumn}>
                     {/* TODO: Put in link to real forum when available */}
                     <a href="#">Forum</a>
                 </div>
