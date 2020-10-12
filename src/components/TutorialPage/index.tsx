@@ -12,7 +12,7 @@ const styles = require("./style.css");
 
 const TutorialPage: React.FunctionComponent<{}> = () => {
     return (
-        <React.Fragment>
+        <>
             <Content className={styles.content}>
                 <h1>Getting Started with Simularium</h1>
                 <p className={styles.intro}>
@@ -180,7 +180,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                 </ul>
             </Content>
             <Footer />
-        </React.Fragment>
+        </>
     );
 };
 
