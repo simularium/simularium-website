@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Layout, Modal } from "antd";
 import queryString from "query-string";
 import { SimulariumController } from "@aics/simularium-viewer";
+import { find } from "lodash";
 
 import SideBar from "../../components/SideBar";
 import ResultsPanel from "../ResultsPanel";
@@ -25,6 +26,7 @@ import {
     ResetDragOverViewerAction,
 } from "../../state/selection/types";
 import { VIEWER_LOADING } from "../../state/metadata/constants";
+import TRAJECTORIES from "../../constants/networked-trajectories";
 const { Content } = Layout;
 
 const styles = require("./style.css");
@@ -71,14 +73,16 @@ class App extends React.Component<AppProps, AppState> {
 
         const parsed = queryString.parse(location.search);
         const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
-        if (fileName && TRAJECTORY_FILES.includes(fileName as string)) {
+        if (fileName && find(TRAJECTORIES, { id: fileName })) {
+            // simularium controller will get initialize in the change file logic
             changeToNetworkedFile({
                 name: `${fileName}`,
                 data: null,
                 dateModified: null,
             });
+        } else {
+            setSimulariumController(new SimulariumController({}));
         }
-        setSimulariumController(new SimulariumController({}));
         if (current) {
             current.addEventListener(
                 "dragover",
