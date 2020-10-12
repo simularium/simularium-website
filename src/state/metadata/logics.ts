@@ -28,7 +28,6 @@ const netConnectionSettings = {
     serverIp: process.env.BACKEND_SERVER_IP,
     serverPort: 9002,
 };
-console.log(netConnectionSettings);
 const requestPlotDataLogic = createLogic({
     process(
         deps: ReduxLogicDeps,
