@@ -45,7 +45,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
     {
         modelName: "Actin in Clathrin-mediated Endocytosis",
         id: "endocytosis",
-        title: "Actin-based Listeria Propulsion: Ultrapolar ActA Distribution",
+        title: "Actin in Clathrin-mediated Endocytosis",
         totalSimulatedTime: "15s",
         authors: "Matthew Akamatsu et al",
         publication: {
