@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Button, Slider } from "antd";
+import classNames from "classnames";
 
 import Icons from "../Icons";
 
@@ -44,11 +45,13 @@ const PlayBackControls = ({
         }
         return `${formatNumber(sliderValue)} ns`;
     };
+    const btnClassNames = classNames([styles.item, styles.btn]);
 
     return (
         <div className={styles.container}>
             <Button
-                className={styles.item}
+                className={btnClassNames}
+                size="small"
                 icon={Icons.StepBack}
                 onClick={prevHandler}
                 disabled={time === 0}
@@ -62,12 +65,14 @@ const PlayBackControls = ({
                 max={totalTime}
             />
             <Button
-                className={styles.item}
+                className={btnClassNames}
+                size="small"
                 icon={isPlaying ? Icons.Pause : Icons.Play}
                 onClick={isPlaying ? pauseHandler : playHandler}
             />
             <Button
-                className={styles.item}
+                className={btnClassNames}
+                size="small"
                 icon={Icons.StepForward}
                 onClick={nextHandler}
             />
