@@ -5,3 +5,14 @@
     z-index: 300;
     background-color: rgba(181, 159, 246, 0.7);
 }
+
+.container .loading-icon, .container.loading-text {
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}

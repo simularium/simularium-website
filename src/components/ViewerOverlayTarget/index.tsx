@@ -23,7 +23,7 @@ const ViewerOverlayTarget = ({
     loadLocalFile,
     isLoading,
     fileIsDraggedOverViewer,
-}: ViewerOverlayTargetProps) => {
+}: ViewerOverlayTargetProps): JSX.Element | null => {
     const [showTarget, setVisibility] = useState(false);
     if (fileIsDraggedOverViewer && !showTarget) {
         setVisibility(true);
@@ -41,38 +41,40 @@ const ViewerOverlayTarget = ({
     };
     const loadingOverlay = (
         <div className={styles.container}>
-            <p className="ant-upload-drag-icon">{Loading}</p>
-            <p className="ant-upload-text">Loading Simularium file</p>
+            <p className="loading-icon">{Loading}</p>
+            <p className="loading-text">Loading Simularium Model</p>
         </div>
     );
-    console.log(isLoading);
-    return isLoading
-        ? loadingOverlay
-        : showTarget && (
-              <Dragger
-                  className={styles.container}
-                  onChange={onChange}
-                  showUploadList={false}
-                  openFileDialogOnClick={false}
-                  customRequest={(options) =>
-                      customRequest(options, loadLocalFile)
-                  }
-              >
-                  <p className="ant-upload-drag-icon">
-                      {isLoading ? Loading : UploadFile}
-                  </p>
-                  <p className="ant-upload-text">
-                      {isLoading
-                          ? "Loading Simularium file"
-                          : "Drag your trajectory here"}
-                  </p>
-                  {isLoading && (
-                      <p className="ant-upload-hint">
-                          Support for a single Simularium file
-                      </p>
-                  )}
-              </Dragger>
-          );
+    const dragAndDropOverlay = (
+        <Dragger
+            className={styles.container}
+            onChange={onChange}
+            showUploadList={false}
+            openFileDialogOnClick={false}
+            customRequest={(options) => customRequest(options, loadLocalFile)}
+        >
+            <p className="ant-upload-drag-icon">
+                {isLoading ? Loading : UploadFile}
+            </p>
+            <p className="ant-upload-text">
+                {isLoading
+                    ? "Loading Simularium file"
+                    : "Drag your trajectory here"}
+            </p>
+            {isLoading && (
+                <p className="ant-upload-hint">
+                    Support for a single Simularium file
+                </p>
+            )}
+        </Dragger>
+    );
+    if (showTarget) {
+        return dragAndDropOverlay;
+    } else if (isLoading) {
+        return loadingOverlay;
+    } else {
+        return null;
+    }
 };
 
 export default ViewerOverlayTarget;
