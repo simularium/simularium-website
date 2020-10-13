@@ -12,7 +12,51 @@
     margin: auto 2px;
 }
 
+.btn {
+    background-color: var(--dark-theme-btn-bg);
+    color: var(--dark-theme-btn-color);
+    border-radius: 3px!important;
+}
+
+.btn:hover, .btn:active {
+    color: var(--dark-theme-btn-color);
+    background-color: var(--dark-theme-btn-hover-bg);
+}
+
+
+.btn:focus {
+    background-color: var(--dark-theme-btn-b);
+    color: var(--dark-theme-btn-color);
+}
+
+ 
+.btn[disabled] {
+    background-color: var(--dark-theme-btn-disabled-bg);
+    color: var(--dark-theme-btn-disabled-color);
+
+}
 .slider {
     flex: 3;
     margin: auto 10px;
+}
+
+.slider :global(.ant-slider-track) {
+    background-color: var(--dark-theme-slider-color);
+}
+
+.slider :global(.ant-slider-track),
+.slider :global(.ant-slider-rail) {
+    border-radius: 3px;
+}
+
+.slider :global(.ant-slider-handle) {
+    background-color: var(--dark-theme-slider-color);
+    border: none;
+    height: 10px;
+    width: 10px;
+    margin-top: -3.5px
+}
+
+.slider :global(.ant-slider-handle):focus {
+    box-shadow: none;
 }

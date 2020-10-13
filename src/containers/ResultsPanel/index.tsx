@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
-import NestedMenus from "../../components/NestedMenus";
+import SideBarContents from "../../components/SideBarContents";
 
 import Graphing from "../../components/Plots";
 import { getCurrentTime } from "../../state/selection/selectors";
@@ -9,6 +9,8 @@ import { connect } from "react-redux";
 import { changeTime } from "../../state/selection/actions";
 import { ChangeTimeAction } from "../../state/selection/types";
 import { getPlotData } from "../../state/metadata/selectors";
+
+const styles = require("./style.css");
 
 interface ResultsPanelProps {
     plotData: any;
@@ -20,20 +22,20 @@ class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
     public render(): JSX.Element {
         const { changeTime, time, plotData } = this.props;
         return (
-            <NestedMenus
-                panelKeys={["graphing", "statistics"]}
-                mainTitle="Analysis"
-                subTitles={["Graphing", "Statistics"]}
-                content={[
-                    <Graphing
-                        time={time}
-                        key="graph"
-                        changeTime={changeTime}
-                        plotData={plotData}
-                    />,
-                    null,
-                ]}
-            />
+            <div className={styles.container}>
+                <SideBarContents
+                    mainTitle="Plots"
+                    content={[
+                        <Graphing
+                            time={time}
+                            key="graph"
+                            changeTime={changeTime}
+                            plotData={plotData}
+                        />,
+                        null,
+                    ]}
+                />
+            </div>
         );
     }
 }

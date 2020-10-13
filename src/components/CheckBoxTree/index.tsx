@@ -15,6 +15,7 @@ import SharedCheckbox from "../SharedCheckbox";
 import CheckboxTreeSubmenu from "../CheckboxTreeSubmenu";
 import TreeNode from "../TreeNode";
 import Checkbox from "../Checkbox";
+import NoTrajectoriesText from "../NoTrajectoriesText";
 import { CHECKBOX_TYPE_STAR } from "../../constants";
 import ColorSwatch from "../ColorSwatch";
 
@@ -317,7 +318,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                 })}
             </div>
         ) : (
-            <div>Load file</div>
+            <NoTrajectoriesText />
         );
     }
 }

@@ -6,7 +6,7 @@ import { PageHeader } from "antd";
 
 import { LocalSimFile, RequestFileAction } from "../../state/metadata/types";
 import LoadFileMenu from "../../components/LoadFileMenu";
-import HeaderTitle from "../../components/HeaderTitle";
+import HeaderExtra from "../../components/HeaderExtra";
 import { AicsLogo } from "../../components/Icons";
 import { State } from "../../state/types";
 import metadataStateBranch from "../../state/metadata";
@@ -31,24 +31,26 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
         return (
             <PageHeader
                 title={
-                    <HeaderTitle
-                        simulariumFileName={simulariumFileName}
-                        lastModified={lastModified}
-                    />
+                    <div>
+                        <span key="home" className={styles.home}>
+                            <NavLink to="/">SIMULARIUM HOME</NavLink>
+                        </span>
+                        <LoadFileMenu
+                            key="select"
+                            selectFile={loadNetworkFile}
+                            loadLocalFile={loadLocalFile}
+                        />
+                    </div>
                 }
                 className={styles.pageHeader}
                 onBack={() => null}
                 backIcon={<a href="https://allencell.org">{AicsLogo}</a>}
-                extra={[
-                    <span key="home" className={styles.home}>
-                        <NavLink to="/">SIMULARIUM HOME</NavLink>
-                    </span>,
-                    <LoadFileMenu
-                        key="select"
-                        selectFile={loadNetworkFile}
-                        loadLocalFile={loadLocalFile}
-                    />,
-                ]}
+                extra={
+                    <HeaderExtra
+                        simulariumFileName={simulariumFileName}
+                        lastModified={lastModified}
+                    />
+                }
                 footer={<NavLink to="/tutorial">GETTING STARTED</NavLink>}
             />
         );

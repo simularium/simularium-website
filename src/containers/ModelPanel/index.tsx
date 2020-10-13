@@ -2,7 +2,7 @@ import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 
-import NestedMenus from "../../components/NestedMenus";
+import SideBarContents from "../../components/SideBarContents";
 import { requestMetadata } from "../../state/metadata/actions";
 import { getUiDisplayDataTree } from "../../state/metadata/selectors";
 import { State } from "../../state/types";
@@ -61,28 +61,28 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
             agentColors,
         } = this.props;
         return (
-            <NestedMenus
-                panelKeys={["Agents"]}
-                mainTitle="Inputs"
-                subTitles={["Agents"]}
-                content={[
-                    <div className={styles.container} key="molecules">
-                        <CheckBoxTree
-                            treeData={uiDisplayDataTree}
-                            handleAgentCheck={turnAgentsOnByDisplayKey}
-                            agentsChecked={visibleAgentKeys}
-                            handleHighlight={highlightAgentsByDisplayKey}
-                            agentsHighlighted={highlightedAgentKeys}
-                            setAgentsVisible={setAgentsVisible}
-                            payloadForSelectAll={payloadForSelectAll}
-                            payloadForSelectNone={payloadForSelectNone}
-                            checkAllIsIntermediate={checkAllIsIntermediate}
-                            agentColors={agentColors}
-                        />
-                    </div>,
-                    null,
-                ]}
-            />
+            <div className={styles.container}>
+                <SideBarContents
+                    mainTitle="Agents"
+                    content={[
+                        <div className={styles.container} key="molecules">
+                            <CheckBoxTree
+                                treeData={uiDisplayDataTree}
+                                handleAgentCheck={turnAgentsOnByDisplayKey}
+                                agentsChecked={visibleAgentKeys}
+                                handleHighlight={highlightAgentsByDisplayKey}
+                                agentsHighlighted={highlightedAgentKeys}
+                                setAgentsVisible={setAgentsVisible}
+                                payloadForSelectAll={payloadForSelectAll}
+                                payloadForSelectNone={payloadForSelectNone}
+                                checkAllIsIntermediate={checkAllIsIntermediate}
+                                agentColors={agentColors}
+                            />
+                        </div>,
+                        null,
+                    ]}
+                />
+            </div>
         );
     }
 }

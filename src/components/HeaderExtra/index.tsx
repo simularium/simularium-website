@@ -5,13 +5,13 @@ import moment from "moment";
 
 const styles = require("./style.css");
 
-interface HeaderTitleProps {
+interface HeaderExtraProps {
     simulariumFileName: string;
     lastModified?: number;
 }
 
-const HeaderTitle: React.FunctionComponent<HeaderTitleProps> = (
-    props: HeaderTitleProps
+const HeaderExtra: React.FunctionComponent<HeaderExtraProps> = (
+    props: HeaderExtraProps
 ) => {
     const { simulariumFileName, lastModified } = props;
     const location = useLocation();
@@ -35,4 +35,4 @@ const HeaderTitle: React.FunctionComponent<HeaderTitleProps> = (
     );
 };
 
-export default HeaderTitle;
+export default HeaderExtra;

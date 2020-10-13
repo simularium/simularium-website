@@ -12,9 +12,10 @@ import { APP_ID } from "./constants";
 
 import { createReduxStore } from "./state";
 import routes from "./routes";
+import ScrollToTop from "./components/ScrollToTop";
 import AppHeader from "./containers/AppHeader";
 
-const { Header, Footer } = Layout;
+const { Header } = Layout;
 
 import "./style.css";
 
@@ -24,6 +25,7 @@ render(
             <BrowserRouter
                 basename={process.env.GH_BUILD ? "/simularium-website/" : ""}
             >
+                <ScrollToTop />
                 <Header>
                     <AppHeader />
                 </Header>
@@ -39,7 +41,6 @@ render(
                     ))}
                 </Switch>
             </BrowserRouter>
-            <Footer />
         </Layout>
     </Provider>,
     document.getElementById(APP_ID)

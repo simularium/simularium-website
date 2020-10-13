@@ -1,3 +1,7 @@
+.container {
+    background-color: var(--dark);
+}
+
 .sub-menu {
     flex-flow: row;
 }
@@ -28,6 +32,11 @@
     display: inline-block;
     height: 16px;
     line-height: 1;
+}
+
+.container .col-labels {
+    background-color: var(--dark-theme-sidebar-item-bg);
+    margin-bottom: 3px;
 }
 
 .container .col-labels label {
