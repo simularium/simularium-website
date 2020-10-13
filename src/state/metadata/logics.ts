@@ -82,7 +82,7 @@ const loadNetworkedFile = createLogic({
         simulariumController
             .changeFile(simulariumFile.name)
             .then(() => {
-                dispatch(receiveSimulariumFile(simulariumFile));
+                return dispatch(receiveSimulariumFile(simulariumFile));
             })
             .then(() => {
                 return dispatch(
