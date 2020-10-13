@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 import { createLogic } from "redux-logic";
 import queryString from "query-string";
+import { SimulariumController } from "@aics/simularium-viewer";
 
 import { ReduxLogicDeps } from "../types";
 
@@ -9,6 +10,7 @@ import {
     receiveMetadata,
     receiveSimulariumFile,
     requestCachedPlotData,
+    setSimulariumController,
 } from "./actions";
 import {
     LOAD_LOCAL_FILE_IN_VIEWER,
@@ -26,16 +28,15 @@ const netConnectionSettings = {
     serverIp: process.env.BACKEND_SERVER_IP,
     serverPort: 9002,
 };
-
 const requestPlotDataLogic = createLogic({
     process(
         deps: ReduxLogicDeps,
         dispatch: (action: ReceiveAction) => void,
         done: () => void
     ) {
-        const { baseApiUrl, httpClient, action } = deps;
+        const { baseApiUrl, plotDataUrl, httpClient, action } = deps;
         httpClient
-            .get(`${baseApiUrl}/${action.payload.url}`)
+            .get(`${plotDataUrl}${baseApiUrl}/${action.payload.url}`)
             .then((metadata: AxiosResponse) => {
                 dispatch(receiveMetadata({ plotData: metadata.data }));
             })
@@ -51,10 +52,7 @@ const loadNetworkedFile = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
         const currentState = getState();
-        const simulariumController = getSimulariumController(currentState);
-        if (!simulariumController) {
-            console.log("no controller");
-        }
+
         const lastSimulariumFile:
             | LocalSimFile
             | NetworkedSimFile = getSimulariumFile(currentState);
@@ -67,6 +65,11 @@ const loadNetworkedFile = createLogic({
                 // exact same file loaded again, dont need to reload anything
                 return done();
             }
+        }
+        let simulariumController = getSimulariumController(currentState);
+        if (!simulariumController) {
+            simulariumController = new SimulariumController({});
+            setSimulariumController(simulariumController);
         }
         if (!simulariumController.netConnection) {
             simulariumController.configureNetwork(netConnectionSettings);

@@ -1,7 +1,7 @@
 import listeriaNormalImage from "../assets/card-image-1.png";
-import listeriaUltrapolarImage from "../assets/card-image-2.png";
+// import listeriaUltrapolarImage from "../assets/card-image-2.png";
 import endocytosisImage from "../assets/card-image-3.png";
-import covid19Image from "../assets/card-image-4.png";
+// import covid19Image from "../assets/card-image-4.png";
 
 import { TrajectoryDisplayData } from "./interfaces";
 
@@ -24,6 +24,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
             "A model of Listeria monocytogenes propulsion that explicitly simulates monomer-scale biochemical and mechanical interactions. This run has a normal ActA distribution on the bacterial surface.",
         imageFile: listeriaNormalImage,
     },
+    /* Not ready yet
     {
         modelName: "Actin-based Listeria Propulsion",
         id: "listeria_ultrapolar",
@@ -42,10 +43,11 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
             "A model of Listeria monocytogenes propulsion that explicitly simulates monomer-scale biochemical and mechanical interactions. This run has an ultrapolar ActA distribution on the bacterial surface.",
         imageFile: listeriaUltrapolarImage,
     },
+    */
     {
         modelName: "Actin in Clathrin-mediated Endocytosis",
         id: "endocytosis",
-        title: "Actin-based Listeria Propulsion: Ultrapolar ActA Distribution",
+        title: "Actin in Clathrin-mediated Endocytosis",
         totalSimulatedTime: "15s",
         authors: "Matthew Akamatsu et al",
         publication: {
@@ -59,6 +61,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
             "A CytoSim model of a branched actin network internalizing an endocytic pit against membrane tension.",
         imageFile: endocytosisImage,
     },
+    /* Not ready yet
     {
         modelName: "Covid Virion",
         id: "covid19",
@@ -76,6 +79,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
             "A structural model of a diffusing SARS-CoV-2 virus particle.",
         imageFile: covid19Image,
     },
+    */
 ];
 
 export default TRAJECTORIES;

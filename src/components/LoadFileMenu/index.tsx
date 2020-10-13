@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { ActionCreator } from "redux";
 import { Menu, Dropdown, Button } from "antd";
 
-import { TRAJECTORY_FILES } from "../../constants";
+import TRAJECTORIES from "../../constants/networked-trajectories";
+import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import { RequestFileAction } from "../../state/metadata/types";
 
 import LocalFileUpload from "../LocalFileUpload";
@@ -22,18 +23,27 @@ const LoadFileMenu = ({ selectFile, loadLocalFile }: NetworkFileMenuProps) => {
                 <LocalFileUpload loadLocalFile={loadLocalFile} />
             </Menu.Item>
             <Menu.SubMenu title="Load existing model">
-                {TRAJECTORY_FILES.map((fileName) => (
+                {TRAJECTORIES.map((trajectory) => (
                     <Menu.Item
-                        key={fileName}
+                        key={trajectory.id}
                         onClick={() => {
                             selectFile({
-                                name: `${fileName}`,
+                                name: `${trajectory.id}`,
                                 data: null,
                                 dateModified: null,
                             });
                         }}
                     >
-                        <Link to="/viewer">{fileName}</Link>
+                        <Link
+                            to={{
+                                pathname: "/viewer",
+                                search: `?${URL_PARAM_KEY_FILE_NAME}=${
+                                    trajectory.id
+                                }`,
+                            }}
+                        >
+                            {trajectory.title}
+                        </Link>
                     </Menu.Item>
                 ))}
             </Menu.SubMenu>
