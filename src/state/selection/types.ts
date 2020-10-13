@@ -61,3 +61,12 @@ export interface ToggleAllVisibleAction {
     payload: boolean;
     type: string;
 }
+
+export interface AgentColorMap {
+    [key: string]: string;
+}
+
+export interface SetAllColorsAction {
+    payload: AgentColorMap;
+    type: string;
+}

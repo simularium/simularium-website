@@ -14,6 +14,8 @@ import {
     DRAG_OVER_VIEWER,
     RESET_DRAG_OVER_VIEWER,
     SET_AGENTS_VISIBLE,
+    SET_ALL_AGENT_COLORS,
+    CHANGE_AGENT_COLOR,
 } from "./constants";
 import {
     DeselectFileAction,
@@ -25,6 +27,7 @@ import {
     DragOverViewerAction,
     ResetDragOverViewerAction,
     SetVisibleAction,
+    SetAllColorsAction,
 } from "./types";
 
 export const initialState = {
@@ -34,6 +37,7 @@ export const initialState = {
     visibleAgentKeys: {},
     highlightedAgentKeys: {},
     draggedOverViewer: false,
+    agentColors: {},
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -121,6 +125,25 @@ const actionToConfigMap: TypeToDescriptionMap = {
             ...state,
             highlightedAgentKeys: {
                 ...state.highlightedAgentKeys,
+                ...action.payload,
+            },
+        }),
+    },
+    [SET_ALL_AGENT_COLORS]: {
+        accepts: (action: AnyAction): action is SetAllColorsAction =>
+            action.type === SET_ALL_AGENT_COLORS,
+        perform: (state: SelectionStateBranch, action: SetAllColorsAction) => ({
+            ...state,
+            agentColors: action.payload,
+        }),
+    },
+    [CHANGE_AGENT_COLOR]: {
+        accepts: (action: AnyAction): action is SetAllColorsAction =>
+            action.type === CHANGE_AGENT_COLOR,
+        perform: (state: SelectionStateBranch, action: SetAllColorsAction) => ({
+            ...state,
+            agentColors: {
+                ...state.agentColors,
                 ...action.payload,
             },
         }),
