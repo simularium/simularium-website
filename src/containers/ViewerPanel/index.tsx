@@ -19,7 +19,11 @@ import {
     SetVisibleAction,
 } from "../../state/selection/types";
 
-import { ReceiveAction, LocalSimFile } from "../../state/metadata/types";
+import {
+    ReceiveAction,
+    LocalSimFile,
+    SetViewerStatusAction,
+} from "../../state/metadata/types";
 
 import {
     convertUIDataToSelectionData,
@@ -29,6 +33,7 @@ import {
 import PlaybackControls from "../../components/PlaybackControls";
 
 import "@aics/simularium-viewer/style/style.css";
+import { VIEWER_SUCCESS } from "../../state/metadata/constants";
 const styles = require("./style.css");
 
 interface ViewerPanelProps {
@@ -48,6 +53,7 @@ interface ViewerPanelProps {
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
     viewerStatus: string;
     setAgentsVisible: ActionCreator<SetVisibleAction>;
+    setViewerStatus: ActionCreator<SetViewerStatusAction>;
 }
 
 interface ViewerPanelState {
@@ -130,6 +136,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleJsonMeshData(jsonData: any) {
+        console.log("GOT JSON");
         const { receiveAgentTypeIds } = this.props;
         const particleTypeIds = Object.keys(jsonData);
         receiveAgentTypeIds(particleTypeIds);
@@ -162,9 +169,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public receiveTimeChange(timeData: any) {
+        const { setViewerStatus, viewerStatus } = this.props;
         const { changeTime } = this.props;
         this.setState({ requestingTimeChange: false });
-
+        if (viewerStatus !== VIEWER_SUCCESS) {
+            setViewerStatus(VIEWER_SUCCESS);
+        }
         changeTime(timeData.time);
     }
 
@@ -249,6 +259,7 @@ const dispatchToPropsMap = {
     setAgentsVisible: selectionStateBranch.actions.setAgentsVisible,
     dragOverViewer: selectionStateBranch.actions.dragOverViewer,
     resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
+    setViewerStatus: metadataStateBranch.actions.setViewerStatus,
 };
 
 export default connect(
