@@ -9,6 +9,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
     {
         modelName: "Actin-based Listeria Propulsion",
         id: "listeria_normal",
+        extension: "simularium",
         title: "Actin-based Listeria Propulsion: Normal ActA Distribution",
         totalSimulatedTime: "60s",
         authors: "Jonathan Alberts et al",
@@ -47,6 +48,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
     {
         modelName: "Actin in Clathrin-mediated Endocytosis",
         id: "endocytosis",
+        extension: "simularium",
         title: "Actin in Clathrin-mediated Endocytosis",
         totalSimulatedTime: "15s",
         authors: "Matthew Akamatsu et al",

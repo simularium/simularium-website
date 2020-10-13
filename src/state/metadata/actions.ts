@@ -86,10 +86,12 @@ export function changeToLocalSimulariumFile(payload: {
 }
 
 export function changeToNetworkedFile(
-    payload: NetworkedSimFile
+    payload: NetworkedSimFile,
+    controller?: SimulariumController
 ): RequestFileAction {
     return {
         payload,
+        controller,
         type: LOAD_NETWORKED_FILE_IN_VIEWER,
     };
 }
