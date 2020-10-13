@@ -5,13 +5,12 @@ import SimulariumViewer, {
     UIDisplayData,
     SelectionStateInfo,
 } from "@aics/simularium-viewer";
+import "@aics/simularium-viewer/style/style.css";
 import { connect } from "react-redux";
 
 import { State } from "../../state/types";
-
 import selectionStateBranch from "../../state/selection";
 import metadataStateBranch from "../../state/metadata";
-
 import {
     ChangeTimeAction,
     ResetDragOverViewerAction,
@@ -19,19 +18,16 @@ import {
     SetVisibleAction,
     SetAllColorsAction,
 } from "../../state/selection/types";
-
 import { ReceiveAction, LocalSimFile } from "../../state/metadata/types";
+import PlaybackControls from "../../components/PlaybackControls";
 
 import {
     convertUIDataToColorMap,
     convertUIDataToSelectionData,
     getSelectionStateInfoForViewer,
 } from "./selectors";
-
-import PlaybackControls from "../../components/PlaybackControls";
-
-import "@aics/simularium-viewer/style/style.css";
 import { AGENT_COLORS } from "./constants";
+
 const styles = require("./style.css");
 
 interface ViewerPanelProps {
