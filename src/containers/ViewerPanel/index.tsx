@@ -17,6 +17,7 @@ import {
     ResetDragOverViewerAction,
     DragOverViewerAction,
     SetVisibleAction,
+    SetAllColorsAction,
 } from "../../state/selection/types";
 
 import { ReceiveAction, LocalSimFile } from "../../state/metadata/types";
@@ -50,6 +51,7 @@ interface ViewerPanelProps {
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
     viewerStatus: string;
     setAgentsVisible: ActionCreator<SetVisibleAction>;
+    setAllAgentColors: ActionCreator<SetAllColorsAction>;
 }
 
 interface ViewerPanelState {

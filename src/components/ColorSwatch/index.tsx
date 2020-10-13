@@ -8,10 +8,7 @@ interface ColorSwatchProps {
 
 const ColorSwatch = ({ color }: ColorSwatchProps) => {
     return (
-        <div
-            className={styles.container}
-            style={{ backgroundColor: "#418463" }}
-        />
+        <div className={styles.container} style={{ backgroundColor: color }} />
     );
 };
 
