@@ -4,6 +4,7 @@ import { Layout, Typography } from "antd";
 
 import dragDropImage from "../../assets/drag-drop.gif";
 import { VIEWER_PATHNAME } from "../../routes";
+import Footer from "../Footer";
 
 const { Content } = Layout;
 const { Text } = Typography;
@@ -12,7 +13,7 @@ const styles = require("./style.css");
 
 const TutorialPage: React.FunctionComponent<{}> = () => {
     return (
-        <Layout className={styles.container}>
+        <>
             <Content className={styles.content}>
                 <h1>Getting Started with Simularium</h1>
                 <p className={styles.intro}>
@@ -182,7 +183,8 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                     </ol>
                 </ul>
             </Content>
-        </Layout>
+            <Footer />
+        </>
     );
 };
 

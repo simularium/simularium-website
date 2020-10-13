@@ -24,6 +24,8 @@ const LoadFileMenu = ({ loadLocalFile, selectFile }: NetworkFileMenuProps) => {
         if (location.pathname === VIEWER_PATHNAME) {
             selectFile({
                 name: `${trajectoryData.id}.${trajectoryData.extension}`,
+                data: null,
+                dateModified: null,
             });
         }
     };
