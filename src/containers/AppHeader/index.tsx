@@ -4,7 +4,12 @@ import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 import { PageHeader } from "antd";
 
-import { LocalSimFile, RequestFileAction } from "../../state/metadata/types";
+import {
+    LocalSimFile,
+    NetworkedSimFile,
+    RequestLocalFileAction,
+    RequestNetworkFileAction,
+} from "../../state/metadata/types";
 import LoadFileMenu from "../../components/LoadFileMenu";
 import HeaderExtra from "../../components/HeaderExtra";
 import { AicsLogo } from "../../components/Icons";
@@ -15,9 +20,9 @@ import { TUTORIAL_PATHNAME } from "../../routes";
 const styles = require("./style.css");
 
 interface AppHeaderProps {
-    simulariumFile: LocalSimFile;
-    changeToLocalSimulariumFile: ActionCreator<RequestFileAction>;
-    changeToNetworkedFile: ActionCreator<RequestFileAction>;
+    simulariumFile: LocalSimFile | NetworkedSimFile;
+    changeToLocalSimulariumFile: ActionCreator<RequestLocalFileAction>;
+    changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
 }
 
 class AppHeader extends React.Component<AppHeaderProps, {}> {
@@ -27,7 +32,19 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
             changeToLocalSimulariumFile: loadLocalFile,
             changeToNetworkedFile: loadNetworkFile,
         } = this.props;
-        const { name: simulariumFileName, lastModified } = simulariumFile;
+        let lastModified = 0;
+        let displayName = "";
+        const isLocalSimFile = (file: any): file is LocalSimFile =>
+            !!file.lastModified;
+        const isNetworkedFile = (file: any): file is NetworkedSimFile =>
+            !!file.modelName;
+
+        if (isLocalSimFile(simulariumFile)) {
+            displayName = simulariumFile.name;
+            lastModified = simulariumFile.lastModified;
+        } else if (isNetworkedFile(simulariumFile)) {
+            displayName = simulariumFile.modelName;
+        }
 
         return (
             <PageHeader
@@ -48,7 +65,7 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
                 backIcon={<a href="https://allencell.org">{AicsLogo}</a>}
                 extra={
                     <HeaderExtra
-                        simulariumFileName={simulariumFileName}
+                        simulariumFileName={displayName}
                         lastModified={lastModified}
                     />
                 }

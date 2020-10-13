@@ -5,7 +5,10 @@ import { Menu, Dropdown, Button } from "antd";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
-import { RequestFileAction } from "../../state/metadata/types";
+import {
+    RequestLocalFileAction,
+    RequestNetworkFileAction,
+} from "../../state/metadata/types";
 
 import LocalFileUpload from "../LocalFileUpload";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
@@ -14,8 +17,8 @@ import { VIEWER_PATHNAME } from "../../routes";
 const styles = require("./style.css");
 
 interface NetworkFileMenuProps {
-    selectFile: ActionCreator<RequestFileAction>;
-    loadLocalFile: ActionCreator<RequestFileAction>;
+    selectFile: ActionCreator<RequestNetworkFileAction>;
+    loadLocalFile: ActionCreator<RequestLocalFileAction>;
 }
 
 const LoadFileMenu = ({ loadLocalFile, selectFile }: NetworkFileMenuProps) => {
@@ -24,6 +27,7 @@ const LoadFileMenu = ({ loadLocalFile, selectFile }: NetworkFileMenuProps) => {
         if (location.pathname === VIEWER_PATHNAME) {
             selectFile({
                 name: `${trajectoryData.id}.${trajectoryData.extension}`,
+                modelName: trajectoryData.modelName,
             });
         }
     };
