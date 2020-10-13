@@ -9,6 +9,7 @@ import { State } from "../../state/types";
 import {
     getVisibleAgentsNamesAndTags,
     getHighlightedAgentsNamesAndTags,
+    getAgentColors,
 } from "../../state/selection/selectors";
 import {
     turnAgentsOnByDisplayKey,
@@ -16,6 +17,7 @@ import {
     setAgentsVisible,
 } from "../../state/selection/actions";
 import {
+    AgentColorMap,
     ChangeAgentsRenderingStateAction,
     SetVisibleAction,
     VisibilitySelectionMap,
@@ -41,6 +43,7 @@ interface ModelPanelProps {
     payloadForSelectAll: VisibilitySelectionMap;
     payloadForSelectNone: VisibilitySelectionMap;
     checkAllIsIntermediate: boolean;
+    agentColors: AgentColorMap;
 }
 
 class ModelPanel extends React.Component<ModelPanelProps, {}> {
@@ -55,6 +58,7 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
             payloadForSelectAll,
             payloadForSelectNone,
             checkAllIsIntermediate,
+            agentColors,
         } = this.props;
         return (
             <div className={styles.container}>
@@ -72,6 +76,7 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
                                 payloadForSelectAll={payloadForSelectAll}
                                 payloadForSelectNone={payloadForSelectNone}
                                 checkAllIsIntermediate={checkAllIsIntermediate}
+                                agentColors={agentColors}
                             />
                         </div>,
                         null,
@@ -90,6 +95,7 @@ function mapStateToProps(state: State) {
         payloadForSelectAll: convertUITreeDataToSelectAll(state),
         payloadForSelectNone: convertUITreeDataToSelectNone(state),
         checkAllIsIntermediate: getCheckboxAllIsIntermediate(state),
+        agentColors: getAgentColors(state),
     };
 }
 

@@ -5,18 +5,18 @@ import SimulariumViewer, {
     UIDisplayData,
     SelectionStateInfo,
 } from "@aics/simularium-viewer";
+import "@aics/simularium-viewer/style/style.css";
 import { connect } from "react-redux";
 
 import { State } from "../../state/types";
-
 import selectionStateBranch from "../../state/selection";
 import metadataStateBranch from "../../state/metadata";
-
 import {
     ChangeTimeAction,
     ResetDragOverViewerAction,
     DragOverViewerAction,
     SetVisibleAction,
+    SetAllColorsAction,
 } from "../../state/selection/types";
 
 import {
@@ -24,15 +24,16 @@ import {
     LocalSimFile,
     SetViewerStatusAction,
 } from "../../state/metadata/types";
+import { ReceiveAction, LocalSimFile } from "../../state/metadata/types";
+import PlaybackControls from "../../components/PlaybackControls";
 
 import {
+    convertUIDataToColorMap,
     convertUIDataToSelectionData,
     getSelectionStateInfoForViewer,
 } from "./selectors";
+import { AGENT_COLORS } from "./constants";
 
-import PlaybackControls from "../../components/PlaybackControls";
-
-import "@aics/simularium-viewer/style/style.css";
 import { VIEWER_SUCCESS } from "../../state/metadata/constants";
 const styles = require("./style.css");
 
@@ -54,6 +55,7 @@ interface ViewerPanelProps {
     viewerStatus: string;
     setAgentsVisible: ActionCreator<SetVisibleAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
+    setAllAgentColors: ActionCreator<SetAllColorsAction>;
 }
 
 interface ViewerPanelState {
@@ -189,14 +191,17 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const {
             receiveAgentNamesAndStates,
             setAgentsVisible,
+            setAllAgentColors,
             setViewerStatus,
             viewerStatus,
         } = this.props;
-        receiveAgentNamesAndStates(uiData);
-        const selectedAgents = convertUIDataToSelectionData(uiData);
         if (viewerStatus !== VIEWER_SUCCESS) {
             setViewerStatus(VIEWER_SUCCESS);
         }
+        const selectedAgents = convertUIDataToSelectionData(uiData);
+        const agentColors = convertUIDataToColorMap(uiData);
+        receiveAgentNamesAndStates(uiData);
+        setAllAgentColors(agentColors);
         setAgentsVisible(selectedAgents);
     };
 
@@ -218,6 +223,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     onJsonDataArrived={this.handleJsonMeshData}
                     onUIDisplayDataChanged={this.handleUiDisplayDataChanged}
                     selectionStateInfo={selectionStateInfoForViewer}
+                    agentColors={AGENT_COLORS}
                     onTrajectoryFileInfoChanged={
                         this.onTrajectoryFileInfoChanged
                     }
@@ -266,6 +272,7 @@ const dispatchToPropsMap = {
     dragOverViewer: selectionStateBranch.actions.dragOverViewer,
     resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
     setViewerStatus: metadataStateBranch.actions.setViewerStatus,
+    setAllAgentColors: selectionStateBranch.actions.setAllAgentColors,
 };
 
 export default connect(

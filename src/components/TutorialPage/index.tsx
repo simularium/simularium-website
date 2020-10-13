@@ -22,7 +22,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                         download
                     </a>{" "}
                     our example data or <a href="#convert-your-data">convert</a>{" "}
-                    your own data, then drag and drop it onto the{" "}
+                    your own data, and drag and drop it onto the{" "}
                     <Link to={VIEWER_PATHNAME}>viewer</Link>. More details
                     below:
                 </p>
@@ -103,58 +103,6 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                             </p>
                         </li>
                         <li>
-                            If you used one of our supported simulators to
-                            generate your data, you can use the conversion
-                            function:
-                            <p>
-                                <Text code>
-                                    Converter(example_data,
-                                    &apos;cytosim&apos;).write_JSON(output_path)
-                                </Text>
-                            </p>
-                            <ul>
-                                <li>We support the following simulators:</li>
-                                <ul>
-                                    <li>
-                                        <a
-                                            href="https://readdy.github.io/"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
-                                            ReaDDy
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="http://physicell.org/"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
-                                            PhysiCell
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="https://gitlab.com/f.nedelec/cytosim"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
-                                            CytoSim
-                                        </a>
-                                    </li>
-                                </ul>
-                            </ul>
-                        </li>
-                        <li>
-                            If you used another simulator to generate your data,
-                            you can use the generic conversion function:
-                            <p>
-                                <Text code>
-                                    Converter(example_data).write_JSON(output_path)
-                                </Text>
-                            </p>
-                        </li>
-                        <li>
                             These{" "}
                             <a
                                 href="https://github.com/allen-cell-animated/simulariumio/tree/master/examples"
@@ -165,6 +113,56 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                             </a>{" "}
                             provide examples of saving data from different
                             sources in Simularium’s input format.
+                            <ul>
+                                <li>
+                                    If you used one of our supported simulators
+                                    to generate your data, choose the notebook
+                                    for that simulator. We support the following
+                                    simulators:
+                                    <ul>
+                                        <li>
+                                            <a
+                                                href="https://readdy.github.io/"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                ReaDDy
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="http://physicell.org/"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                PhysiCell
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="https://gitlab.com/f.nedelec/cytosim"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                CytoSim
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    If you used another simulator to generate
+                                    your data, choose the notebook for
+                                    converting{" "}
+                                    <a
+                                        href="https://github.com/allen-cell-animated/simulariumio/blob/master/examples/Tutorial_custom.ipynb"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        custom data
+                                    </a>
+                                    .
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             Run your Python script and notice a file generated
