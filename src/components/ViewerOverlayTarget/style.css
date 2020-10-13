@@ -1,4 +1,4 @@
-.container:global(.ant-upload.ant-upload-drag){
+.container, .container:global(.ant-upload.ant-upload-drag){
     position: absolute;
     height: 100%;
     width: 100%;
