@@ -3,10 +3,6 @@
     box-shadow: 0 1px 3px black;
 }
 
-:global(.ant-dropdown-menu-submenu-popup) {
-    box-shadow: 0 1px 3px black;
-}
-
 .menu svg {
     fill: var(--dark-theme-menu-text-color);
 }
