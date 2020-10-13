@@ -5,6 +5,7 @@ import SideBarContents from "../../components/SideBarContents";
 import Plots from "../../components/Plots";
 import { getCurrentTime } from "../../state/selection/selectors";
 import { State } from "../../state/types";
+import { PlotData } from "../../components/Plots/types";
 import { connect } from "react-redux";
 import { changeTime } from "../../state/selection/actions";
 import { ChangeTimeAction } from "../../state/selection/types";
@@ -13,7 +14,7 @@ import { getPlotData } from "../../state/metadata/selectors";
 const styles = require("./style.css");
 
 interface ResultsPanelProps {
-    plotData: any;
+    plotData: PlotData;
     time: number;
     changeTime: ActionCreator<ChangeTimeAction>;
 }
@@ -23,18 +24,20 @@ class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
         const { changeTime, time, plotData } = this.props;
         return (
             <div className={styles.container}>
-                <SideBarContents
-                    mainTitle="Plots"
-                    content={[
-                        <Plots
-                            time={time}
-                            key="graph"
-                            changeTime={changeTime}
-                            plotData={plotData}
-                        />,
-                        null,
-                    ]}
-                />
+                {plotData && (
+                    <SideBarContents
+                        mainTitle="Plots"
+                        content={[
+                            <Plots
+                                time={time}
+                                key="graph"
+                                changeTime={changeTime}
+                                plotData={plotData}
+                            />,
+                            null,
+                        ]}
+                    />
+                )}
             </div>
         );
     }
