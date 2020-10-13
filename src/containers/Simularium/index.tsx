@@ -88,8 +88,6 @@ class App extends React.Component<AppProps, AppState> {
                 {
                     name: fileData.id,
                     modelName: fileData.modelName,
-                    data: null,
-                    dateModified: null,
                 },
                 controller
             );
