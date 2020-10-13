@@ -1,14 +1,13 @@
 import * as React from "react";
 import Plot from "react-plotly.js";
-import { map } from "lodash";
 import { ActionCreator } from "redux";
 
 import { ChangeTimeAction } from "../../state/selection/types.js";
 
-import { PlotInterface } from "./types";
+import { PlotData, PlotInterface } from "./types";
 
 interface PlotsProps {
-    plotData: any;
+    plotData: PlotData;
     time: number;
     changeTime: ActionCreator<ChangeTimeAction>;
 }
@@ -34,7 +33,7 @@ export default class Plots extends React.Component<PlotsProps, {}> {
         const { plotData } = this.props;
         return (
             <div className={styles.container}>
-                {map(plotData, (plot: PlotInterface) => {
+                {plotData.data.map((plot: PlotInterface) => {
                     const layout = {
                         ...plot.layout,
                         autosize: true,
@@ -79,6 +78,7 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                     };
                     return (
                         <Plot
+                            key={plot.layout.title}
                             data={plot.data}
                             useResizeHandler={true}
                             layout={layout}
