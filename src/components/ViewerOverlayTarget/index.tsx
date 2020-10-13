@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Upload, message } from "antd";
+import { Upload } from "antd";
 import { ActionCreator } from "redux";
 import { LocalSimFile } from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
