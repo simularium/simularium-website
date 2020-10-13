@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 
+import { TUTORIAL_PATHNAME } from "../../routes";
+
 const styles = require("./style.css");
 
 const NoTrajectoriesText: React.FunctionComponent<{}> = () => {
@@ -13,11 +15,11 @@ const NoTrajectoriesText: React.FunctionComponent<{}> = () => {
                     download
                 </a>{" "}
                 our example data or{" "}
-                <a href="/tutorial#convert-your-data">convert</a> your own data,
-                then drag and drop it onto this window.
+                <a href={`${TUTORIAL_PATHNAME}#convert-your-data`}>convert</a>{" "}
+                your own data, then drag and drop it onto this window.
             </p>
             <p>
-                <Link to="/tutorial">Get started here.</Link>
+                <Link to={TUTORIAL_PATHNAME}>Get started here.</Link>
             </p>
         </div>
     );
