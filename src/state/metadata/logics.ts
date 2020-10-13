@@ -34,9 +34,9 @@ const requestPlotDataLogic = createLogic({
         dispatch: (action: ReceiveAction) => void,
         done: () => void
     ) {
-        const { baseApiUrl, httpClient, action } = deps;
+        const { baseApiUrl, plotDataUrl, httpClient, action } = deps;
         httpClient
-            .get(`${baseApiUrl}/${action.payload.url}`)
+            .get(`${plotDataUrl}${baseApiUrl}/${action.payload.url}`)
             .then((metadata: AxiosResponse) => {
                 dispatch(receiveMetadata({ plotData: metadata.data }));
             })
