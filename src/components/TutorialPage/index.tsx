@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { Layout, Typography } from "antd";
 
 import dragDropImage from "../../assets/drag-drop.gif";
-import Footer from "../Footer";
 import { VIEWER_PATHNAME } from "../../routes";
+import Footer from "../Footer";
 
 const { Content } = Layout;
 const { Text } = Typography;

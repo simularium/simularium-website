@@ -28,6 +28,8 @@ const LoadFileMenu = ({ loadLocalFile, selectFile }: NetworkFileMenuProps) => {
             selectFile({
                 name: `${trajectoryData.id}.${trajectoryData.extension}`,
                 modelName: trajectoryData.modelName,
+                data: null,
+                dateModified: null,
             });
         }
     };

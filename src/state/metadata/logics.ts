@@ -1,7 +1,8 @@
 import { AxiosResponse } from "axios";
 import { createLogic } from "redux-logic";
 import queryString from "query-string";
-import { SimulariumController } from "@aics/simularium-viewer";
+// NOTE: importing @aics/simularium-viewer here currently breaks ability to compile in testing setup
+// TODO: work on test babel setup, or switch to jest?
 
 import { ReduxLogicDeps } from "../types";
 
