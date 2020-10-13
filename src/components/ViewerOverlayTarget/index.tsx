@@ -25,21 +25,19 @@ const ViewerOverlayTarget = ({
     fileIsDraggedOverViewer,
 }: ViewerOverlayTargetProps) => {
     const [showTarget, setVisibility] = useState(false);
-
-    if (fileIsDraggedOverViewer && !showTarget) {
+    if (isLoading && !showTarget) {
         setVisibility(true);
-    }
-
-    if (!fileIsDraggedOverViewer && showTarget) {
+    } else if (fileIsDraggedOverViewer && !showTarget) {
+        setVisibility(true);
+    } else if (!fileIsDraggedOverViewer && showTarget && !isLoading) {
         setVisibility(false);
     }
+
     const onChange = ({ file }: UploadChangeParam) => {
         if (file.status === "done") {
-            message.success(`${file.name} file uploaded successfully`);
             resetDragOverViewer();
             setVisibility(false);
         } else if (file.status === "error") {
-            message.error(`${file.name} file upload failed.`);
             setVisibility(false);
         }
     };
@@ -59,9 +57,11 @@ const ViewerOverlayTarget = ({
                     ? "Loading Simularium file"
                     : "Drag your trajectory here"}
             </p>
-            <p className="ant-upload-hint">
-                Support for a single Simularium file
-            </p>
+            {isLoading && (
+                <p className="ant-upload-hint">
+                    Support for a single Simularium file
+                </p>
+            )}
         </Dragger>
     ) : null;
 };
