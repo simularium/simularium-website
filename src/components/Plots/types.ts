@@ -24,4 +24,7 @@ export interface PlotInterface {
     layout: Layout;
 }
 
-export type PlotData = PlotInterface[];
+export interface PlotData {
+    version: number;
+    data: PlotInterface[];
+}

@@ -1,4 +1,4 @@
-.menu, :global(.ant-dropdown-menu-submenu-popup) {
+.menu {
     width: 230px;
     box-shadow: 0 1px 3px black;
 }

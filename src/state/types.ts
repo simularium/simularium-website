@@ -18,6 +18,7 @@ export interface BatchedAction {
 export interface ReduxLogicDeps {
     action: AnyAction;
     baseApiUrl: string;
+    plotDataUrl: string;
     httpClient: AxiosInstance;
     getState: () => State;
     ctx?: any;
