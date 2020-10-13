@@ -87,7 +87,9 @@ const loadNetworkedFile = createLogic({
             .then(() => {
                 return dispatch(
                     requestCachedPlotData({
-                        url: `${simulariumFile.name}/plot-data.json`, // placeholder for however we organize this data in s3
+                        url: `${
+                            simulariumFile.name.split(".")[0]
+                        }/plot-data.json`, // placeholder for however we organize this data in s3
                     })
                 );
             })
@@ -151,7 +153,7 @@ const loadLocalFile = createLogic({
             .then(() => {
                 dispatch(
                     receiveMetadata({
-                        plotData: simulariumFile.data.plotData.data,
+                        plotData: simulariumFile.data.plotData,
                     })
                 );
             })

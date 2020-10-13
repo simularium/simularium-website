@@ -26,7 +26,7 @@ const LoadFileMenu = ({ loadLocalFile, selectFile }: NetworkFileMenuProps) => {
     const onClick = (trajectoryData: TrajectoryDisplayData) => {
         if (location.pathname === VIEWER_PATHNAME) {
             selectFile({
-                name: `${trajectoryData.id}.${trajectoryData.extension}`,
+                name: trajectoryData.id,
                 modelName: trajectoryData.modelName,
                 data: null,
                 dateModified: null,

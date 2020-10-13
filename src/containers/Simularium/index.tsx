@@ -86,7 +86,7 @@ class App extends React.Component<AppProps, AppState> {
             // simularium controller will get initialize in the change file logic
             changeToNetworkedFile(
                 {
-                    name: `${fileData.id}.${fileData.extension}`,
+                    name: fileData.id,
                     modelName: fileData.modelName,
                     data: null,
                     dateModified: null,
