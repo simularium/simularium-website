@@ -66,9 +66,13 @@ const loadNetworkedFile = createLogic({
             }
         }
         let simulariumController = getSimulariumController(currentState);
-        if (!simulariumController && action.payload.controller) {
-            simulariumController = action.payload.controller;
-            setSimulariumController(simulariumController);
+        if (!simulariumController) {
+            if (action.controller) {
+                simulariumController = action.controller;
+                dispatch(setSimulariumController(simulariumController));
+            } else {
+                console.log("no controller");
+            }
         }
         if (!simulariumController.netConnection) {
             simulariumController.configureNetwork(netConnectionSettings);
