@@ -169,12 +169,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public receiveTimeChange(timeData: any) {
-        const { setViewerStatus, viewerStatus } = this.props;
         const { changeTime } = this.props;
         this.setState({ requestingTimeChange: false });
-        if (viewerStatus !== VIEWER_SUCCESS) {
-            setViewerStatus(VIEWER_SUCCESS);
-        }
+
         changeTime(timeData.time);
     }
 
@@ -188,9 +185,17 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
-        const { receiveAgentNamesAndStates, setAgentsVisible } = this.props;
+        const {
+            receiveAgentNamesAndStates,
+            setAgentsVisible,
+            setViewerStatus,
+            viewerStatus,
+        } = this.props;
         receiveAgentNamesAndStates(uiData);
         const selectedAgents = convertUIDataToSelectionData(uiData);
+        if (viewerStatus !== VIEWER_SUCCESS) {
+            setViewerStatus(VIEWER_SUCCESS);
+        }
         setAgentsVisible(selectedAgents);
     };
 
@@ -201,7 +206,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             simulariumController,
             selectionStateInfoForViewer,
         } = this.props;
-        // console.log(selectionStateInfoForViewer);
         return (
             <div ref={this.centerContent} className={styles.container}>
                 <SimulariumViewer
