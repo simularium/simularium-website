@@ -14,6 +14,7 @@ interface PlayBackProps {
     totalTime: number;
     isPlaying: boolean;
     onTimeChange: (time: number) => void;
+    loading: boolean;
 }
 
 const PlayBackControls = ({
@@ -25,6 +26,7 @@ const PlayBackControls = ({
     nextHandler,
     totalTime,
     onTimeChange,
+    loading,
 }: PlayBackProps) => {
     const handleTimeChange = (sliderValue: number | [number, number]): void => {
         onTimeChange(sliderValue as number); // slider can be a list of numbers, but we're just using a single value
@@ -54,7 +56,8 @@ const PlayBackControls = ({
                 size="small"
                 icon={Icons.StepBack}
                 onClick={prevHandler}
-                disabled={time === 0}
+                disabled={time === 0 || loading}
+                loading={loading}
             />
 
             <Slider
@@ -63,18 +66,22 @@ const PlayBackControls = ({
                 tipFormatter={tipFormatter}
                 className={[styles.slider, styles.item].join(" ")}
                 max={totalTime}
+                disabled={loading}
             />
             <Button
                 className={btnClassNames}
                 size="small"
                 icon={isPlaying ? Icons.Pause : Icons.Play}
                 onClick={isPlaying ? pauseHandler : playHandler}
+                loading={loading}
             />
             <Button
                 className={btnClassNames}
                 size="small"
                 icon={Icons.StepForward}
                 onClick={nextHandler}
+                disabled={time === totalTime || loading}
+                loading={loading}
             />
         </div>
     );

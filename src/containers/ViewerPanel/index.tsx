@@ -179,6 +179,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         if (this.state.requestingTimeChange) {
             return;
         }
+        console.log(time);
         const { simulariumController } = this.props;
         this.setState({ requestingTimeChange: true });
         simulariumController.gotoTime(time);
@@ -230,6 +231,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     nextHandler={this.playForwardOne}
                     isPlaying={this.state.isPlaying}
                     totalTime={totalTime}
+                    loading={this.state.requestingTimeChange}
                 />
             </div>
         );
