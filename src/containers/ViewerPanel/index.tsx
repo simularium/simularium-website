@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import { State } from "../../state/types";
 import selectionStateBranch from "../../state/selection";
 import metadataStateBranch from "../../state/metadata";
+import { VIEWER_SUCCESS } from "../../state/metadata/constants";
 import {
     ChangeTimeAction,
     ResetDragOverViewerAction,
@@ -24,7 +25,6 @@ import {
     LocalSimFile,
     SetViewerStatusAction,
 } from "../../state/metadata/types";
-import { ReceiveAction, LocalSimFile } from "../../state/metadata/types";
 import PlaybackControls from "../../components/PlaybackControls";
 
 import {
@@ -34,7 +34,6 @@ import {
 } from "./selectors";
 import { AGENT_COLORS } from "./constants";
 
-import { VIEWER_SUCCESS } from "../../state/metadata/constants";
 const styles = require("./style.css");
 
 interface ViewerPanelProps {
