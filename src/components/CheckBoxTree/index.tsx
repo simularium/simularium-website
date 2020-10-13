@@ -122,7 +122,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
     };
 
     renderRowWithNoChildren = (nodeData: AgentDisplayNode) => {
-        const { agentsChecked, agentsHighlighted, agentColors } = this.props;
+        const { agentsChecked, agentsHighlighted } = this.props;
         const isHighlighted =
             isEmpty(agentsHighlighted) || !agentsHighlighted[nodeData.title]
                 ? false
