@@ -69,22 +69,30 @@ class App extends React.Component<AppProps, AppState> {
             });
         }
 
-        const { setSimulariumController, changeToNetworkedFile } = this.props;
+        const {
+            setSimulariumController,
+            changeToNetworkedFile,
+            simulariumController,
+        } = this.props;
         const current = this.interactiveContent.current;
 
         const parsed = queryString.parse(location.search);
         const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
         const file = find(TRAJECTORIES, { id: fileName });
+        const controller = simulariumController || new SimulariumController({});
         if (fileName && file) {
             const fileData = file as TrajectoryDisplayData;
             // simularium controller will get initialize in the change file logic
-            changeToNetworkedFile({
-                name: `${fileData.id}.${fileData.extension}`,
-                data: null,
-                dateModified: null,
-            });
+            changeToNetworkedFile(
+                {
+                    name: `${fileData.id}.${fileData.extension}`,
+                    data: null,
+                    dateModified: null,
+                },
+                controller
+            );
         } else {
-            setSimulariumController(new SimulariumController({}));
+            setSimulariumController(controller);
         }
         if (current) {
             current.addEventListener(

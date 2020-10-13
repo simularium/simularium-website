@@ -1,7 +1,6 @@
 import { AxiosResponse } from "axios";
 import { createLogic } from "redux-logic";
 import queryString from "query-string";
-import { SimulariumController } from "@aics/simularium-viewer";
 
 import { ReduxLogicDeps } from "../types";
 
@@ -67,8 +66,8 @@ const loadNetworkedFile = createLogic({
             }
         }
         let simulariumController = getSimulariumController(currentState);
-        if (!simulariumController) {
-            simulariumController = new SimulariumController({});
+        if (!simulariumController && action.payload.controller) {
+            simulariumController = action.payload.controller;
             setSimulariumController(simulariumController);
         }
         if (!simulariumController.netConnection) {
