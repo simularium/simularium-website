@@ -35,7 +35,7 @@ const requestPlotDataLogic = createLogic({
         done: () => void
     ) {
         const { baseApiUrl, httpClient, action } = deps;
-        httpClient
+        return httpClient
             .get(`${baseApiUrl}/${action.payload.url}`)
             .then((metadata: AxiosResponse) => {
                 dispatch(receiveMetadata({ plotData: metadata.data }));
@@ -82,14 +82,14 @@ const loadNetworkedFile = createLogic({
                 dispatch(receiveSimulariumFile(simulariumFile));
             })
             .then(() => {
-                dispatch(
+                return dispatch(
                     requestCachedPlotData({
                         url: `${simulariumFile.name}/plot-data.json`, // placeholder for however we organize this data in s3
                     })
                 );
             })
             .then(() => {
-                dispatch(
+                return dispatch(
                     setViewerStatus({
                         status: VIEWER_SUCCESS,
                     })

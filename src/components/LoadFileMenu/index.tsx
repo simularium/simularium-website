@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ActionCreator } from "redux";
 import { Menu, Dropdown, Button } from "antd";
 
@@ -8,6 +8,7 @@ import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import { RequestFileAction } from "../../state/metadata/types";
 
 import LocalFileUpload from "../LocalFileUpload";
+import { TrajectoryDisplayData } from "../../constants/interfaces";
 
 const styles = require("./style.css");
 
@@ -16,7 +17,16 @@ interface NetworkFileMenuProps {
     loadLocalFile: ActionCreator<RequestFileAction>;
 }
 
-const LoadFileMenu = ({ loadLocalFile }: NetworkFileMenuProps) => {
+const LoadFileMenu = ({ loadLocalFile, selectFile }: NetworkFileMenuProps) => {
+    const location = useLocation();
+    const onClick = (trajectoryData: TrajectoryDisplayData) => {
+        console.log(location);
+        if (location.pathname === "/viewer") {
+            selectFile({
+                name: `${trajectoryData.id}.${trajectoryData.extension}`,
+            });
+        }
+    };
     const menu = (
         <Menu theme="dark" className={styles.menu}>
             <Menu.Item>
@@ -26,6 +36,7 @@ const LoadFileMenu = ({ loadLocalFile }: NetworkFileMenuProps) => {
                 {TRAJECTORIES.map((trajectory) => (
                     <Menu.Item key={trajectory.id}>
                         <Link
+                            onClick={() => onClick(trajectory)}
                             to={{
                                 pathname: "/viewer",
                                 search: `?${URL_PARAM_KEY_FILE_NAME}=${

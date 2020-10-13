@@ -27,6 +27,8 @@ import {
 } from "../../state/selection/types";
 import { VIEWER_LOADING } from "../../state/metadata/constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
+import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/simularium";
+import { TrajectoryDisplayData } from "../../constants/interfaces";
 const { Content } = Layout;
 
 const styles = require("./style.css");
@@ -73,10 +75,12 @@ class App extends React.Component<AppProps, AppState> {
 
         const parsed = queryString.parse(location.search);
         const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
-        if (fileName && find(TRAJECTORIES, { id: fileName })) {
+        const file = find(TRAJECTORIES, { id: fileName });
+        if (fileName && file) {
+            const fileData = file as TrajectoryDisplayData;
             // simularium controller will get initialize in the change file logic
             changeToNetworkedFile({
-                name: `${fileName}`,
+                name: `${fileData.id}.${fileData.extension}`,
                 data: null,
                 dateModified: null,
             });
@@ -91,6 +95,10 @@ class App extends React.Component<AppProps, AppState> {
             );
             current.addEventListener("dragleave", this.handleEndDrag, false);
         }
+    }
+
+    public componentDidUpdate() {
+        console.log("update");
     }
 
     public onPanelCollapse(open: boolean) {
