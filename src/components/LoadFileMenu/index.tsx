@@ -16,7 +16,7 @@ interface NetworkFileMenuProps {
     loadLocalFile: ActionCreator<RequestFileAction>;
 }
 
-const LoadFileMenu = ({ loadLocalFile }: NetworkFileMenuProps) => {
+const LoadFileMenu = ({ selectFile, loadLocalFile }: NetworkFileMenuProps) => {
     const menu = (
         <Menu theme="dark" className={styles.menu}>
             <Menu.Item>
@@ -24,7 +24,16 @@ const LoadFileMenu = ({ loadLocalFile }: NetworkFileMenuProps) => {
             </Menu.Item>
             <Menu.SubMenu title="Load existing model">
                 {TRAJECTORIES.map((trajectory) => (
-                    <Menu.Item key={trajectory.id}>
+                    <Menu.Item
+                        key={trajectory.id}
+                        onClick={() => {
+                            selectFile({
+                                name: `${trajectory.id}`,
+                                data: null,
+                                dateModified: null,
+                            });
+                        }}
+                    >
                         <Link
                             to={{
                                 pathname: "/viewer",
