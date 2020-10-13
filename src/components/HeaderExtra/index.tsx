@@ -2,6 +2,7 @@ import * as React from "react";
 import { useLocation } from "react-router-dom";
 import { Tag } from "antd";
 import moment from "moment";
+import { VIEWER_PATHNAME } from "../../routes";
 
 const styles = require("./style.css");
 
@@ -16,13 +17,13 @@ const HeaderExtra: React.FunctionComponent<HeaderExtraProps> = (
     const { simulariumFileName, lastModified } = props;
     const location = useLocation();
     const title =
-        location.pathname.startsWith("/viewer") && simulariumFileName ? (
+        location.pathname.startsWith(VIEWER_PATHNAME) && simulariumFileName ? (
             <span>{simulariumFileName}</span>
         ) : (
             <span />
         );
     const tag =
-        location.pathname.startsWith("/viewer") && lastModified ? (
+        location.pathname.startsWith(VIEWER_PATHNAME) && lastModified ? (
             <Tag className={styles.tag}>{moment(lastModified).format()}</Tag>
         ) : (
             <span />

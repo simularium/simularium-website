@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Layout, Typography } from "antd";
 
 import dragDropImage from "../../assets/drag-drop.gif";
+import { VIEWER_PATHNAME } from "../../routes";
 
 const { Content } = Layout;
 const { Text } = Typography;
@@ -21,7 +22,8 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                     </a>{" "}
                     our example data or <a href="#convert-your-data">convert</a>{" "}
                     your own data, then drag and drop it onto the{" "}
-                    <Link to="/viewer">viewer</Link>. More details below:
+                    <Link to={VIEWER_PATHNAME}>viewer</Link>. More details
+                    below:
                 </p>
                 <ul className={styles.approachBlock}>
                     <li>
@@ -44,7 +46,8 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                         </li>
                         <li>
                             In a web browser (Chrome or Firefox), navigate to
-                            the <Link to="/viewer">Simularium viewer</Link>.
+                            the{" "}
+                            <Link to={VIEWER_PATHNAME}>Simularium viewer</Link>.
                         </li>
                         <li>
                             Drag one of the downloaded files from your file
@@ -168,7 +171,8 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                         </li>
                         <li>
                             In a web browser (Chrome or Firefox), navigate to
-                            the <Link to="/viewer">Simularium viewer</Link>.
+                            the{" "}
+                            <Link to={VIEWER_PATHNAME}>Simularium viewer</Link>.
                         </li>
                         <li>
                             Drag the resulting file from your file browser onto

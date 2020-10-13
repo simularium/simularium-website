@@ -10,6 +10,7 @@ import HeaderExtra from "../../components/HeaderExtra";
 import { AicsLogo } from "../../components/Icons";
 import { State } from "../../state/types";
 import metadataStateBranch from "../../state/metadata";
+import { TUTORIAL_PATHNAME } from "../../routes";
 
 const styles = require("./style.css");
 
@@ -51,7 +52,9 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
                         lastModified={lastModified}
                     />
                 }
-                footer={<NavLink to="/tutorial">GETTING STARTED</NavLink>}
+                footer={
+                    <NavLink to={TUTORIAL_PATHNAME}>GETTING STARTED</NavLink>
+                }
             />
         );
     }

@@ -6,6 +6,7 @@ import { UploadChangeParam } from "antd/lib/upload";
 
 import customRequest from "./custom-request-upload";
 import { ActionCreator } from "redux";
+import { VIEWER_PATHNAME } from "../../routes";
 interface FileUploadProps {
     loadLocalFile: ActionCreator<RequestFileAction>;
 }
@@ -15,8 +16,8 @@ const styles = require("./style.css");
 const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
     const history = useHistory();
     const onChange = ({ file }: UploadChangeParam) => {
-        if (!history.location.pathname.startsWith("/viewer")) {
-            history.push("/viewer");
+        if (!history.location.pathname.startsWith(VIEWER_PATHNAME)) {
+            history.push(VIEWER_PATHNAME);
         }
         if (file.status === "done") {
             message.success(`${file.name} file uploaded successfully`);

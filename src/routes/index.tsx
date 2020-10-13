@@ -4,6 +4,9 @@ import TutorialPage from "../components/TutorialPage";
 import LandingPage from "../components/LandingPage";
 import Simularium from "../containers/Simularium";
 
+export const VIEWER_PATHNAME = "/viewer";
+export const TUTORIAL_PATHNAME = "/tutorial";
+
 export default [
     {
         name: "Home",
@@ -13,11 +16,11 @@ export default [
     {
         name: "Getting Started",
         component: <TutorialPage />,
-        path: "/tutorial",
+        path: TUTORIAL_PATHNAME,
     },
     {
         name: "Run Simulations",
         component: <Simularium />,
-        path: "/viewer",
+        path: VIEWER_PATHNAME,
     },
 ];

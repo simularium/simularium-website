@@ -14,7 +14,7 @@ import { State } from "../../state/types";
 
 import metadataStateBranch from "../../state/metadata";
 import selectionStateBranch from "../../state/selection";
-import { TRAJECTORY_FILES, URL_PARAM_KEY_FILE_NAME } from "../../constants";
+import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import {
     LocalSimFile,
     SetSimulariumControllerAction,
@@ -27,7 +27,6 @@ import {
 } from "../../state/selection/types";
 import { VIEWER_LOADING } from "../../state/metadata/constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
-import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/simularium";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 const { Content } = Layout;
 
@@ -95,10 +94,6 @@ class App extends React.Component<AppProps, AppState> {
             );
             current.addEventListener("dragleave", this.handleEndDrag, false);
         }
-    }
-
-    public componentDidUpdate() {
-        console.log("update");
     }
 
     public onPanelCollapse(open: boolean) {

@@ -9,6 +9,7 @@ import { RequestFileAction } from "../../state/metadata/types";
 
 import LocalFileUpload from "../LocalFileUpload";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
+import { VIEWER_PATHNAME } from "../../routes";
 
 const styles = require("./style.css");
 
@@ -20,8 +21,7 @@ interface NetworkFileMenuProps {
 const LoadFileMenu = ({ loadLocalFile, selectFile }: NetworkFileMenuProps) => {
     const location = useLocation();
     const onClick = (trajectoryData: TrajectoryDisplayData) => {
-        console.log(location);
-        if (location.pathname === "/viewer") {
+        if (location.pathname === VIEWER_PATHNAME) {
             selectFile({
                 name: `${trajectoryData.id}.${trajectoryData.extension}`,
             });
@@ -38,7 +38,7 @@ const LoadFileMenu = ({ loadLocalFile, selectFile }: NetworkFileMenuProps) => {
                         <Link
                             onClick={() => onClick(trajectory)}
                             to={{
-                                pathname: "/viewer",
+                                pathname: VIEWER_PATHNAME,
                                 search: `?${URL_PARAM_KEY_FILE_NAME}=${
                                     trajectory.id
                                 }`,
