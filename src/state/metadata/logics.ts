@@ -1,7 +1,8 @@
 import { AxiosResponse } from "axios";
 import { createLogic } from "redux-logic";
 import queryString from "query-string";
-import { SimulariumController } from "@aics/simularium-viewer";
+// NOTE: importing @aics/simularium-viewer here currently breaks ability to compile in testing setup
+// TODO: work on test babel setup, or switch to jest?
 
 import { ReduxLogicDeps } from "../types";
 
@@ -68,8 +69,10 @@ const loadNetworkedFile = createLogic({
         }
         let simulariumController = getSimulariumController(currentState);
         if (!simulariumController) {
-            simulariumController = new SimulariumController({});
-            setSimulariumController(simulariumController);
+            if (action.controller) {
+                simulariumController = action.controller;
+                dispatch(setSimulariumController(simulariumController));
+            }
         }
         if (!simulariumController.netConnection) {
             simulariumController.configureNetwork(netConnectionSettings);
@@ -82,14 +85,14 @@ const loadNetworkedFile = createLogic({
                 dispatch(receiveSimulariumFile(simulariumFile));
             })
             .then(() => {
-                dispatch(
+                return dispatch(
                     requestCachedPlotData({
                         url: `${simulariumFile.name}/plot-data.json`, // placeholder for however we organize this data in s3
                     })
                 );
             })
             .then(() => {
-                dispatch(
+                return dispatch(
                     setViewerStatus({
                         status: VIEWER_SUCCESS,
                     })

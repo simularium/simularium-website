@@ -5,6 +5,7 @@ import TRAJECTORIES from "../../constants/networked-trajectories";
 import ModelCard from "../ModelCard";
 import Footer from "../Footer";
 import flowchartImg from "../../assets/overview-image.png";
+import { TUTORIAL_PATHNAME, VIEWER_PATHNAME } from "../../routes";
 
 const { Content } = Layout;
 
@@ -36,10 +37,10 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                 <div className={styles.callToActionPanel}>
                     <h1>Visualize your own custom data</h1>
                     <h2>View your own model in the Simularium viewer</h2>
-                    <Button type="ghost" href="/tutorial">
+                    <Button type="ghost" href={TUTORIAL_PATHNAME}>
                         Getting started
                     </Button>
-                    <Button type="primary" href="/viewer">
+                    <Button type="primary" href={VIEWER_PATHNAME}>
                         Launch viewer
                     </Button>
                 </div>

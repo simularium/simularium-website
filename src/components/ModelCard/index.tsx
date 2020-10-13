@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
+import { VIEWER_PATHNAME } from "../../routes";
 
 const styles = require("./style.css");
 
@@ -29,7 +30,7 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
             cover={
                 <Link
                     to={{
-                        pathname: "/viewer",
+                        pathname: VIEWER_PATHNAME,
                         search: `?${URL_PARAM_KEY_FILE_NAME}=${id}`,
                     }}
                 >
@@ -44,7 +45,7 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                 <p className={styles.simulatedTime}>{totalSimulatedTime}</p>
                 <Link
                     to={{
-                        pathname: "/viewer",
+                        pathname: VIEWER_PATHNAME,
                         search: `?${URL_PARAM_KEY_FILE_NAME}=${id}`,
                     }}
                 >

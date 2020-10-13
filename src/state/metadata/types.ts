@@ -30,6 +30,7 @@ export interface RequestCachedPlotAction {
 export interface RequestFileAction {
     payload: LocalSimFile | NetworkedSimFile;
     type: string;
+    controller?: SimulariumController;
 }
 
 export interface LocalSimFile {
