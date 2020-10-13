@@ -33,7 +33,7 @@ export default class Plots extends React.Component<PlotsProps, {}> {
         const { plotData } = this.props;
         return (
             <div className={styles.container}>
-                {plotData["data"].map((plot: PlotInterface) => {
+                {plotData.data.map((plot: PlotInterface) => {
                     const layout = {
                         ...plot.layout,
                         autosize: true,
