@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Layout, Modal } from "antd";
 import queryString from "query-string";
 import { SimulariumController } from "@aics/simularium-viewer";
+import { find } from "lodash";
 
 import SideBar from "../../components/SideBar";
 import ResultsPanel from "../ResultsPanel";
@@ -13,7 +14,7 @@ import { State } from "../../state/types";
 
 import metadataStateBranch from "../../state/metadata";
 import selectionStateBranch from "../../state/selection";
-import { TRAJECTORY_FILES, URL_PARAM_KEY_FILE_NAME } from "../../constants";
+import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import {
     LocalSimFile,
     SetSimulariumControllerAction,
@@ -25,6 +26,8 @@ import {
     ResetDragOverViewerAction,
 } from "../../state/selection/types";
 import { VIEWER_LOADING } from "../../state/metadata/constants";
+import TRAJECTORIES from "../../constants/networked-trajectories";
+import { TrajectoryDisplayData } from "../../constants/interfaces";
 const { Content } = Layout;
 
 const styles = require("./style.css");
@@ -71,14 +74,22 @@ class App extends React.Component<AppProps, AppState> {
 
         const parsed = queryString.parse(location.search);
         const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
-        if (fileName && TRAJECTORY_FILES.includes(fileName as string)) {
-            changeToNetworkedFile({
-                name: `${fileName}`,
-                data: null,
-                dateModified: null,
-            });
+        const file = find(TRAJECTORIES, { id: fileName });
+        const controller = new SimulariumController({});
+        if (fileName && file) {
+            const fileData = file as TrajectoryDisplayData;
+            // simularium controller will get initialize in the change file logic
+            changeToNetworkedFile(
+                {
+                    name: `${fileData.id}.${fileData.extension}`,
+                    data: null,
+                    dateModified: null,
+                },
+                controller
+            );
+        } else {
+            setSimulariumController(controller);
         }
-        setSimulariumController(new SimulariumController({}));
         if (current) {
             current.addEventListener(
                 "dragover",

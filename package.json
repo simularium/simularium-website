@@ -81,6 +81,7 @@
     "@aics/simularium-viewer": "^2.3.2",
     "@ant-design/css-animation": "^1.7.3",
     "@ant-design/icons": "^4.0.6",
+    "@babel/register": "^7.11.5",
     "@types/react-plotly.js": "^2.2.4",
     "@types/react-router-dom": "^5.1.5",
     "@types/victory": "^31.0.12",

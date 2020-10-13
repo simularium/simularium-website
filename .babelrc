@@ -5,7 +5,7 @@
       "camel2DashComponentName": false,
       "libraryDirectory": "",
       "libraryName": "lodash"
-    }, "lodash",
+    }, "lodash"
     ],
     ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": true }, "ant"],
     ["import", { "libraryName": "antd-mobile", "libraryDirectory": "lib"}, "antd-mobile"]

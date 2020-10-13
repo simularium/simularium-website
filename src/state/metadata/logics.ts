@@ -9,6 +9,7 @@ import {
     receiveMetadata,
     receiveSimulariumFile,
     requestCachedPlotData,
+    setSimulariumController,
 } from "./actions";
 import {
     LOAD_LOCAL_FILE_IN_VIEWER,
@@ -26,7 +27,6 @@ const netConnectionSettings = {
     serverIp: process.env.BACKEND_SERVER_IP,
     serverPort: 9002,
 };
-
 const requestPlotDataLogic = createLogic({
     process(
         deps: ReduxLogicDeps,
@@ -34,7 +34,7 @@ const requestPlotDataLogic = createLogic({
         done: () => void
     ) {
         const { baseApiUrl, httpClient, action } = deps;
-        httpClient
+        return httpClient
             .get(`${baseApiUrl}/${action.payload.url}`)
             .then((metadata: AxiosResponse) => {
                 dispatch(receiveMetadata({ plotData: metadata.data }));
@@ -51,10 +51,7 @@ const loadNetworkedFile = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
         const currentState = getState();
-        const simulariumController = getSimulariumController(currentState);
-        if (!simulariumController) {
-            console.log("no controller");
-        }
+
         const lastSimulariumFile:
             | LocalSimFile
             | NetworkedSimFile = getSimulariumFile(currentState);
@@ -68,6 +65,15 @@ const loadNetworkedFile = createLogic({
                 return done();
             }
         }
+        let simulariumController = getSimulariumController(currentState);
+        if (!simulariumController) {
+            if (action.controller) {
+                simulariumController = action.controller;
+                dispatch(setSimulariumController(simulariumController));
+            } else {
+                console.log("no controller");
+            }
+        }
         if (!simulariumController.netConnection) {
             simulariumController.configureNetwork(netConnectionSettings);
         }
@@ -79,14 +85,14 @@ const loadNetworkedFile = createLogic({
                 dispatch(receiveSimulariumFile(simulariumFile));
             })
             .then(() => {
-                dispatch(
+                return dispatch(
                     requestCachedPlotData({
                         url: `${simulariumFile.name}/plot-data.json`, // placeholder for however we organize this data in s3
                     })
                 );
             })
             .then(() => {
-                dispatch(
+                return dispatch(
                     setViewerStatus({
                         status: VIEWER_SUCCESS,
                     })
