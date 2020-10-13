@@ -2,7 +2,7 @@ import * as React from "react";
 import { ActionCreator } from "redux";
 import SideBarContents from "../../components/SideBarContents";
 
-import Graphing from "../../components/Plots";
+import Plots from "../../components/Plots";
 import { getCurrentTime } from "../../state/selection/selectors";
 import { State } from "../../state/types";
 import { connect } from "react-redux";
@@ -26,7 +26,7 @@ class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
                 <SideBarContents
                     mainTitle="Plots"
                     content={[
-                        <Graphing
+                        <Plots
                             time={time}
                             key="graph"
                             changeTime={changeTime}
