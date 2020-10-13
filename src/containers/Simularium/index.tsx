@@ -14,7 +14,7 @@ import { State } from "../../state/types";
 
 import metadataStateBranch from "../../state/metadata";
 import selectionStateBranch from "../../state/selection";
-import { TRAJECTORY_FILES, URL_PARAM_KEY_FILE_NAME } from "../../constants";
+import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import {
     LocalSimFile,
     SetSimulariumControllerAction,
