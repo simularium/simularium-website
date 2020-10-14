@@ -17,15 +17,13 @@ import {
     SetSimulariumControllerAction,
     LocalSimFile,
     NetworkedSimFile,
-    RequestFileAction,
     RequestCachedPlotAction,
     ViewerStatusInfo,
     SetViewerStatusAction,
+    RequestNetworkFileAction,
+    RequestLocalFileAction,
 } from "./types";
-import {
-    SimulariumFileFormat,
-    SimulariumController,
-} from "@aics/simularium-viewer/type-declarations";
+import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
 
 export function receiveMetadata(payload: MetadataStateBranch): ReceiveAction {
     return {
@@ -76,10 +74,9 @@ export function receiveAgentNamesAndStates(
     };
 }
 
-export function changeToLocalSimulariumFile(payload: {
-    data: SimulariumFileFormat;
-    name: string;
-}): RequestFileAction {
+export function changeToLocalSimulariumFile(
+    payload: LocalSimFile
+): RequestLocalFileAction {
     return {
         payload,
         type: LOAD_LOCAL_FILE_IN_VIEWER,
@@ -89,7 +86,7 @@ export function changeToLocalSimulariumFile(payload: {
 export function changeToNetworkedFile(
     payload: NetworkedSimFile,
     controller?: SimulariumController
-): RequestFileAction {
+): RequestNetworkFileAction {
     return {
         payload,
         controller,

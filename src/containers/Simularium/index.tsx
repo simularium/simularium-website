@@ -17,8 +17,9 @@ import selectionStateBranch from "../../state/selection";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import {
     LocalSimFile,
+    RequestLocalFileAction,
+    RequestNetworkFileAction,
     SetSimulariumControllerAction,
-    RequestFileAction,
 } from "../../state/metadata/types";
 import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
 import {
@@ -37,8 +38,8 @@ interface AppProps {
     simulariumFile: LocalSimFile;
     setSimulariumController: ActionCreator<SetSimulariumControllerAction>;
     simulariumController: SimulariumController;
-    changeToLocalSimulariumFile: ActionCreator<RequestFileAction>;
-    changeToNetworkedFile: ActionCreator<RequestFileAction>;
+    changeToLocalSimulariumFile: ActionCreator<RequestLocalFileAction>;
+    changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
     fileIsDraggedOverViewer: boolean;
     dragOverViewer: ActionCreator<DragOverViewerAction>;
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
@@ -85,9 +86,8 @@ class App extends React.Component<AppProps, AppState> {
             // simularium controller will get initialize in the change file logic
             changeToNetworkedFile(
                 {
-                    name: `${fileData.id}.${fileData.extension}`,
-                    data: null,
-                    dateModified: null,
+                    name: fileData.id,
+                    title: fileData.title,
                 },
                 controller
             );
