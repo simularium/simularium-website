@@ -1,14 +1,14 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Upload, message, Button } from "antd";
-import { RequestFileAction } from "../../state/metadata/types";
+import { RequestLocalFileAction } from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
 
 import customRequest from "./custom-request-upload";
 import { ActionCreator } from "redux";
 import { VIEWER_PATHNAME } from "../../routes";
 interface FileUploadProps {
-    loadLocalFile: ActionCreator<RequestFileAction>;
+    loadLocalFile: ActionCreator<RequestLocalFileAction>;
 }
 
 const styles = require("./style.css");
