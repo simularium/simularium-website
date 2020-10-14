@@ -203,7 +203,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
             agentsChecked,
             agentColors,
         } = this.props;
-        return treeData.length > 0 ? (
+        return (
             <div className={styles.container}>
                 <Row className={styles.colLabels}>
                     <Col span={CHECKBOX_SPAN_NO} offset={4}>
@@ -317,8 +317,6 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                     );
                 })}
             </div>
-        ) : (
-            <NoTrajectoriesText />
         );
     }
 }
