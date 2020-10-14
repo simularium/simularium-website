@@ -8,6 +8,7 @@ import { ReduxLogicDeps } from "../types";
 
 import { getSimulariumController, getSimulariumFile } from "./selectors";
 import {
+    receiveAgentNamesAndStates,
     receiveMetadata,
     receiveSimulariumFile,
     requestCachedPlotData,
@@ -29,6 +30,7 @@ import {
 import { VIEWER_ERROR } from "./constants";
 import { setViewerStatus } from "../metadata/actions";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
+import { batchActions } from "../util";
 
 const netConnectionSettings = {
     serverIp: process.env.BACKEND_SERVER_IP,
@@ -72,6 +74,11 @@ const loadNetworkedFile = createLogic({
                 return done();
             }
         }
+
+        // batchActions([setViewerStatus({ status: VIEWER_LOADING }), receiveAgentNamesAndStates([])]);
+        const resetAgentNames = receiveAgentNamesAndStates([]);
+        const setViewerLoading = setViewerStatus({ status: VIEWER_LOADING });
+        batchActions([resetAgentNames, setViewerLoading]);
         let simulariumController = getSimulariumController(currentState);
         if (!simulariumController) {
             if (action.controller) {
@@ -83,7 +90,6 @@ const loadNetworkedFile = createLogic({
             simulariumController.configureNetwork(netConnectionSettings);
         }
 
-        dispatch(setViewerStatus({ status: VIEWER_LOADING }));
         simulariumController
             .changeFile(simulariumFile.name)
             .then(() => {
@@ -146,8 +152,9 @@ const loadLocalFile = createLogic({
         }
 
         clearOutFileTrajectoryUrlParam();
-
-        dispatch(setViewerStatus({ status: VIEWER_LOADING }));
+        const resetAgentNames = receiveAgentNamesAndStates([]);
+        const setViewerLoading = setViewerStatus({ status: VIEWER_LOADING });
+        batchActions([resetAgentNames, setViewerLoading]);
         simulariumController
             .changeFile(simulariumFile.name, true, simulariumFile.data)
             .then(() => {
