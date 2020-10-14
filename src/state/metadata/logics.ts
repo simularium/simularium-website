@@ -151,7 +151,6 @@ const loadLocalFile = createLogic({
                     })
                 );
             })
-
             .then(done)
             .catch((error: Error) => {
                 dispatch(
