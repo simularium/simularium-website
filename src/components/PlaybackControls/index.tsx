@@ -15,6 +15,7 @@ interface PlayBackProps {
     isPlaying: boolean;
     onTimeChange: (time: number) => void;
     loading: boolean;
+    timeStep: number;
 }
 
 const PlayBackControls = ({
@@ -27,6 +28,7 @@ const PlayBackControls = ({
     totalTime,
     onTimeChange,
     loading,
+    timeStep,
 }: PlayBackProps) => {
     const handleTimeChange = (sliderValue: number | [number, number]): void => {
         onTimeChange(sliderValue as number); // slider can be a list of numbers, but we're just using a single value
@@ -65,6 +67,7 @@ const PlayBackControls = ({
                 onChange={handleTimeChange}
                 tipFormatter={tipFormatter}
                 className={[styles.slider, styles.item].join(" ")}
+                step={timeStep}
                 max={totalTime}
                 disabled={loading}
             />

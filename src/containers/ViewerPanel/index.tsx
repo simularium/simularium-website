@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ActionCreator } from "redux";
+import { ActionCreator, AnyAction } from "redux";
 import SimulariumViewer, {
     SimulariumController,
     UIDisplayData,
@@ -33,6 +33,7 @@ import {
     getSelectionStateInfoForViewer,
 } from "./selectors";
 import { AGENT_COLORS } from "./constants";
+import { batchActions } from "../../state/util";
 
 const styles = require("./style.css");
 
@@ -137,7 +138,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleJsonMeshData(jsonData: any) {
-        console.log("GOT JSON");
         const { receiveAgentTypeIds } = this.props;
         const particleTypeIds = Object.keys(jsonData);
         receiveAgentTypeIds(particleTypeIds);
@@ -164,24 +164,31 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     public onTrajectoryFileInfoChanged(data: any) {
         const { receiveMetadata } = this.props;
         receiveMetadata({
-            totalTime: data.totalDuration,
+            totalTime: data.totalSteps * data.timeStepSize,
             timeStepSize: data.timeStepSize,
         });
     }
 
     public receiveTimeChange(timeData: any) {
-        const { changeTime } = this.props;
+        const { changeTime, setViewerStatus, viewerStatus } = this.props;
         this.setState({ requestingTimeChange: false });
+        const actions: AnyAction[] = [changeTime(timeData.time)];
 
-        changeTime(timeData.time);
+        if (viewerStatus !== VIEWER_SUCCESS) {
+            actions.push(setViewerStatus(VIEWER_SUCCESS));
+        }
+        batchActions(actions);
     }
 
     public skipToTime(time: number) {
+        const { simulariumController, totalTime } = this.props;
         if (this.state.requestingTimeChange) {
             return;
         }
-        console.log(time);
-        const { simulariumController } = this.props;
+        if (time >= totalTime) {
+            return;
+        }
+
         this.setState({ requestingTimeChange: true });
         simulariumController.gotoTime(time);
     }
@@ -191,17 +198,16 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             receiveAgentNamesAndStates,
             setAgentsVisible,
             setAllAgentColors,
-            setViewerStatus,
-            viewerStatus,
         } = this.props;
-        if (viewerStatus !== VIEWER_SUCCESS) {
-            setViewerStatus(VIEWER_SUCCESS);
-        }
+
         const selectedAgents = convertUIDataToSelectionData(uiData);
         const agentColors = convertUIDataToColorMap(uiData);
-        receiveAgentNamesAndStates(uiData);
-        setAllAgentColors(agentColors);
-        setAgentsVisible(selectedAgents);
+        const actions = [
+            receiveAgentNamesAndStates(uiData),
+            setAllAgentColors(agentColors),
+            setAgentsVisible(selectedAgents),
+        ];
+        batchActions(actions);
     };
 
     public render(): JSX.Element {
@@ -210,6 +216,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             totalTime,
             simulariumController,
             selectionStateInfoForViewer,
+            timeStep,
         } = this.props;
         return (
             <div ref={this.centerContent} className={styles.container}>
@@ -230,6 +237,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 <PlaybackControls
                     playHandler={this.startPlay}
                     time={time}
+                    timeStep={timeStep}
                     onTimeChange={this.skipToTime}
                     pauseHandler={this.pause}
                     prevHandler={this.playBackOne}
