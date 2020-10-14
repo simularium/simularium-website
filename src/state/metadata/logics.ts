@@ -16,7 +16,6 @@ import {
 import {
     LOAD_LOCAL_FILE_IN_VIEWER,
     VIEWER_LOADING,
-    VIEWER_SUCCESS,
     LOAD_NETWORKED_FILE_IN_VIEWER,
     REQUEST_PLOT_DATA,
 } from "./constants";
@@ -77,6 +76,8 @@ const loadNetworkedFile = createLogic({
         if (!simulariumController.netConnection) {
             simulariumController.configureNetwork(netConnectionSettings);
         }
+        // if requested while playing, just pause sim until done loading
+        simulariumController.pause();
 
         dispatch(setViewerStatus({ status: VIEWER_LOADING }));
         simulariumController
@@ -90,13 +91,6 @@ const loadNetworkedFile = createLogic({
                         url: `${
                             simulariumFile.name.split(".")[0]
                         }/plot-data.json`, // placeholder for however we organize this data in s3
-                    })
-                );
-            })
-            .then(() => {
-                return dispatch(
-                    setViewerStatus({
-                        status: VIEWER_SUCCESS,
                     })
                 );
             })
@@ -143,6 +137,8 @@ const loadLocalFile = createLogic({
         }
 
         clearOutFileTrajectoryUrlParam();
+        // if requested while playing, just pause sim until done loading
+        simulariumController.pause();
 
         dispatch(setViewerStatus({ status: VIEWER_LOADING }));
         simulariumController
@@ -154,13 +150,6 @@ const loadLocalFile = createLogic({
                 dispatch(
                     receiveMetadata({
                         plotData: simulariumFile.data.plotData,
-                    })
-                );
-            })
-            .then(() => {
-                dispatch(
-                    setViewerStatus({
-                        status: VIEWER_SUCCESS,
                     })
                 );
             })

@@ -19,9 +19,7 @@ const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
         if (!history.location.pathname.startsWith(VIEWER_PATHNAME)) {
             history.push(VIEWER_PATHNAME);
         }
-        if (file.status === "done") {
-            message.success(`${file.name} file uploaded successfully`);
-        } else if (file.status === "error") {
+        if (file.status === "error") {
             message.error(`${file.name} file upload failed.`);
         }
     };
