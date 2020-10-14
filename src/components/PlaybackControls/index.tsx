@@ -83,7 +83,7 @@ const PlayBackControls = ({
                 size="small"
                 icon={Icons.StepForward}
                 onClick={nextHandler}
-                disabled={time === totalTime || loading}
+                disabled={time + timeStep >= totalTime || loading}
                 loading={loading}
             />
         </div>
