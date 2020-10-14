@@ -75,10 +75,10 @@ const loadNetworkedFile = createLogic({
             }
         }
 
-        // batchActions([setViewerStatus({ status: VIEWER_LOADING }), receiveAgentNamesAndStates([])]);
         const resetAgentNames = receiveAgentNamesAndStates([]);
         const setViewerLoading = setViewerStatus({ status: VIEWER_LOADING });
         batchActions([resetAgentNames, setViewerLoading]);
+
         let simulariumController = getSimulariumController(currentState);
         if (!simulariumController) {
             if (action.controller) {
@@ -155,6 +155,7 @@ const loadLocalFile = createLogic({
         const resetAgentNames = receiveAgentNamesAndStates([]);
         const setViewerLoading = setViewerStatus({ status: VIEWER_LOADING });
         batchActions([resetAgentNames, setViewerLoading]);
+
         simulariumController
             .changeFile(simulariumFile.name, true, simulariumFile.data)
             .then(() => {
