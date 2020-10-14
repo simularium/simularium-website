@@ -24,7 +24,9 @@ const HeaderExtra: React.FunctionComponent<HeaderExtraProps> = (
         );
     const tag =
         location.pathname.startsWith(VIEWER_PATHNAME) && lastModified ? (
-            <Tag className={styles.tag}>{moment(lastModified).format()}</Tag>
+            <Tag className={styles.tag}>
+                modified: {moment(lastModified).format("YYYY-MM-DD, h:m A")}
+            </Tag>
         ) : (
             <span />
         );
