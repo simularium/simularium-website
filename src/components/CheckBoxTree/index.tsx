@@ -15,9 +15,9 @@ import SharedCheckbox from "../SharedCheckbox";
 import CheckboxTreeSubmenu from "../CheckboxTreeSubmenu";
 import TreeNode from "../TreeNode";
 import Checkbox from "../Checkbox";
-import NoTrajectoriesText from "../NoTrajectoriesText";
 import { CHECKBOX_TYPE_STAR } from "../../constants";
 import ColorSwatch from "../ColorSwatch";
+import NoTypeMappingText from "../NoTypeMappingText";
 
 export interface AgentDisplayNode {
     title: string;
@@ -318,7 +318,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                 })}
             </div>
         ) : (
-            <NoTrajectoriesText />
+            <NoTypeMappingText />
         );
     }
 }
