@@ -86,7 +86,10 @@ const actionToConfigMap: TypeToDescriptionMap = {
             viewerStatus: action.payload.status,
             viewerError:
                 action.payload.status === VIEWER_ERROR
-                    ? action.payload.errorMessage
+                    ? {
+                          message: action.payload.errorMessage,
+                          htmlData: action.payload.htmlData,
+                      }
                     : "",
         }),
     },

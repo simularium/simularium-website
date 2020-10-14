@@ -7,6 +7,7 @@ import SimulariumViewer, {
 } from "@aics/simularium-viewer";
 import "@aics/simularium-viewer/style/style.css";
 import { connect } from "react-redux";
+import { notification } from "antd";
 
 import { State } from "../../state/types";
 import selectionStateBranch from "../../state/selection";
@@ -18,7 +19,11 @@ import {
     SetVisibleAction,
     SetAllColorsAction,
 } from "../../state/selection/types";
-import { ReceiveAction, LocalSimFile } from "../../state/metadata/types";
+import {
+    ReceiveAction,
+    LocalSimFile,
+    SetViewerStatusAction,
+} from "../../state/metadata/types";
 import PlaybackControls from "../../components/PlaybackControls";
 
 import {
@@ -27,6 +32,7 @@ import {
     getSelectionStateInfoForViewer,
 } from "./selectors";
 import { AGENT_COLORS } from "./constants";
+import { VIEWER_ERROR } from "../../state/metadata/constants";
 
 const styles = require("./style.css");
 
@@ -48,6 +54,8 @@ interface ViewerPanelProps {
     viewerStatus: string;
     setAgentsVisible: ActionCreator<SetVisibleAction>;
     setAllAgentColors: ActionCreator<SetAllColorsAction>;
+    setViewerStatus: ActionCreator<SetViewerStatusAction>;
+    viewerError: any;
 }
 
 interface ViewerPanelState {
@@ -107,7 +115,26 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public componentDidUpdate(prevProps: ViewerPanelProps) {
+        const { viewerStatus, viewerError } = this.props;
         const current = this.centerContent.current;
+        if (
+            viewerStatus === VIEWER_ERROR &&
+            prevProps.viewerStatus !== VIEWER_ERROR
+        ) {
+            console.log(viewerError);
+            notification.error({
+                message: viewerError.message,
+                description:
+                    (
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: viewerError.htmlData as string,
+                            }}
+                        />
+                    ) || "",
+                duration: viewerError.htmlData ? 0 : 4.5,
+            });
+        }
         if (
             current &&
             this.props.numberPanelsCollapsed !== prevProps.numberPanelsCollapsed
@@ -196,8 +223,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             totalTime,
             simulariumController,
             selectionStateInfoForViewer,
+            setViewerStatus,
         } = this.props;
-        // console.log(selectionStateInfoForViewer);
         return (
             <div ref={this.centerContent} className={styles.container}>
                 <SimulariumViewer
@@ -210,6 +237,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     onUIDisplayDataChanged={this.handleUiDisplayDataChanged}
                     selectionStateInfo={selectionStateInfoForViewer}
                     agentColors={AGENT_COLORS}
+                    onError={(error) => {
+                        setViewerStatus({
+                            status: VIEWER_ERROR,
+                            errorMessage: error,
+                        });
+                    }}
                     onTrajectoryFileInfoChanged={
                         this.onTrajectoryFileInfoChanged
                     }
@@ -241,6 +274,7 @@ function mapStateToProps(state: State) {
         timeStep: metadataStateBranch.selectors.getTimeStepSize(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
         viewerStatus: metadataStateBranch.selectors.getViewerStatus(state),
+        viewerError: metadataStateBranch.selectors.getViewerError(state),
         fileIsDraggedOverViewer: selectionStateBranch.selectors.getFileDraggedOverViewer(
             state
         ),
@@ -254,6 +288,7 @@ const dispatchToPropsMap = {
     receiveAgentNamesAndStates:
         metadataStateBranch.actions.receiveAgentNamesAndStates,
     setAgentsVisible: selectionStateBranch.actions.setAgentsVisible,
+    setViewerStatus: metadataStateBranch.actions.setViewerStatus,
     dragOverViewer: selectionStateBranch.actions.dragOverViewer,
     resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
     setAllAgentColors: selectionStateBranch.actions.setAllAgentColors,

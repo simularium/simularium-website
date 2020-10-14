@@ -15,11 +15,12 @@ import {
     ReceiveAction,
     RequestAction,
     SetSimulariumControllerAction,
-    VIEWER_STATUS,
     LocalSimFile,
     NetworkedSimFile,
     RequestFileAction,
     RequestCachedPlotAction,
+    ViewerStatusInfo,
+    SetViewerStatusAction,
 } from "./types";
 import {
     SimulariumFileFormat,
@@ -105,10 +106,9 @@ export function receiveSimulariumFile(
     };
 }
 
-export function setViewerStatus(payload: {
-    status: VIEWER_STATUS;
-    errorMessage?: string;
-}) {
+export function setViewerStatus(
+    payload: ViewerStatusInfo
+): SetViewerStatusAction {
     return {
         payload,
         type: SET_VIEWER_STATUS,

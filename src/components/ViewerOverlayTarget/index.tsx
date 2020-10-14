@@ -35,7 +35,6 @@ const ViewerOverlayTarget = ({
     }
     const onChange = ({ file }: UploadChangeParam) => {
         if (file.status === "done") {
-            message.success(`${file.name} file uploaded successfully`);
             resetDragOverViewer();
             setVisibility(false);
         } else if (file.status === "error") {

@@ -59,9 +59,16 @@ export type VIEWER_STATUS =
     | VIEWER_SUCCESS;
 
 export interface SetViewerStatusAction {
-    payload: {
-        errorMessage?: string;
-        status: VIEWER_STATUS;
-    };
+    payload: ViewerStatusInfo;
     type: string;
+}
+
+export interface ViewerStatusInfo {
+    htmlData?: string;
+    errorMessage?: string;
+    status: VIEWER_STATUS;
+}
+
+export interface FrontEndError extends Error {
+    htmlData?: string;
 }

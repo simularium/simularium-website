@@ -20,7 +20,12 @@ import {
     LOAD_NETWORKED_FILE_IN_VIEWER,
     REQUEST_PLOT_DATA,
 } from "./constants";
-import { ReceiveAction, LocalSimFile, NetworkedSimFile } from "./types";
+import {
+    ReceiveAction,
+    LocalSimFile,
+    NetworkedSimFile,
+    FrontEndError,
+} from "./types";
 import { VIEWER_ERROR } from "./constants";
 import { setViewerStatus } from "../metadata/actions";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
@@ -151,7 +156,7 @@ const loadLocalFile = createLogic({
             .then(() => {
                 dispatch(
                     receiveMetadata({
-                        plotData: simulariumFile.data.plotData.data,
+                        plotData: simulariumFile.data.plotData,
                     })
                 );
             })
@@ -163,13 +168,15 @@ const loadLocalFile = createLogic({
                 );
             })
             .then(done)
-            .catch((error: Error) => {
+            .catch((error: FrontEndError) => {
                 dispatch(
                     setViewerStatus({
                         status: VIEWER_ERROR,
                         errorMessage: error.message,
+                        htmlData: error.htmlData || "",
                     })
                 );
+                done();
             });
     },
     type: LOAD_LOCAL_FILE_IN_VIEWER,
