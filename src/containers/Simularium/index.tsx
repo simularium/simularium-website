@@ -87,7 +87,7 @@ class App extends React.Component<AppProps, AppState> {
             changeToNetworkedFile(
                 {
                     name: fileData.id,
-                    modelName: fileData.modelName,
+                    title: fileData.title,
                 },
                 controller
             );

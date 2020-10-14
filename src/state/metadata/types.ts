@@ -46,7 +46,7 @@ export interface LocalSimFile {
 
 export interface NetworkedSimFile {
     name: string;
-    modelName: string;
+    title: string;
 }
 
 export interface SetSimulariumControllerAction {

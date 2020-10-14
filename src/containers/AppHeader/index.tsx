@@ -37,13 +37,13 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
         const isLocalSimFile = (file: any): file is LocalSimFile =>
             !!file.lastModified;
         const isNetworkedFile = (file: any): file is NetworkedSimFile =>
-            !!file.modelName;
+            !!file.title;
 
         if (isLocalSimFile(simulariumFile)) {
             displayName = simulariumFile.name;
             lastModified = simulariumFile.lastModified;
         } else if (isNetworkedFile(simulariumFile)) {
-            displayName = simulariumFile.modelName;
+            displayName = simulariumFile.title;
         }
 
         return (

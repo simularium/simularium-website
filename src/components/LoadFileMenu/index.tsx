@@ -27,7 +27,7 @@ const LoadFileMenu = ({ loadLocalFile, selectFile }: NetworkFileMenuProps) => {
         if (location.pathname === VIEWER_PATHNAME) {
             selectFile({
                 name: trajectoryData.id,
-                modelName: trajectoryData.modelName,
+                title: trajectoryData.title,
             });
         }
     };
