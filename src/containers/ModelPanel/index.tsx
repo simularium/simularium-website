@@ -92,23 +92,17 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
         const contentMap = {
             [VIEWER_SUCCESS]: checkboxTree,
             [VIEWER_EMPTY]: <NoTrajectoriesText />,
-            // needed to include these for typescript
-            [VIEWER_LOADING]: undefined,
-            [VIEWER_ERROR]: undefined,
+            [VIEWER_LOADING]: <div />,
+            [VIEWER_ERROR]: <NoTypeMappingText />,
         };
-        let content: JSX.Element | undefined = contentMap[viewerStatus];
-        if (!content && isEmpty(uiDisplayDataTree)) {
-            content = <NoTypeMappingText />;
-        } else if (!isEmpty(uiDisplayDataTree)) {
-            content = checkboxTree;
-        }
+
         return (
             <div className={styles.container}>
                 <SideBarContents
                     mainTitle="Agents"
                     content={[
                         <div className={styles.container} key="molecules">
-                            {content}
+                            {contentMap[viewerStatus]}
                         </div>,
                         null,
                     ]}
