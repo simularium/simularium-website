@@ -121,7 +121,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             viewerStatus === VIEWER_ERROR &&
             prevProps.viewerStatus !== VIEWER_ERROR
         ) {
-            console.log(viewerError);
             notification.error({
                 message: viewerError.message,
                 description:
