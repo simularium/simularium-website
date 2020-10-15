@@ -197,7 +197,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const actions: AnyAction[] = [changeTime(timeData.time)];
 
         if (viewerStatus !== VIEWER_SUCCESS) {
-            actions.push(setViewerStatus(VIEWER_SUCCESS));
+            actions.push(setViewerStatus({ status: VIEWER_SUCCESS }));
         }
         batchActions(actions);
     }
