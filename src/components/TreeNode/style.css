@@ -1,5 +1,5 @@
 .container {
-    background-color: var(--dark-two);
+    background-color: var(--dark-theme-sidebar-item-bg);
     margin-bottom: 3px;
     padding: 0 12px;
 }
@@ -11,16 +11,16 @@
 }
 
 .header :global(.ant-btn:hover) {
-    color: var(--pure-white);
+    color: var(--dark-theme-agent-dropdown-toggle-hover);
 }
 
 .header :global(.ant-btn:active), :global(.ant-btn:focus) {
-    color: var(--warm-gray);
+    color: var(--dark-theme-agent-dropdown-toggle);
 }
 
 .toggle-button {
     border: none;
-    color: var(--warm-gray);
+    color: var(--dark-theme-agent-dropdown-toggle);
 }
 
 .toggle-button.active {

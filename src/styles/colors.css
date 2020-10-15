@@ -32,6 +32,8 @@
     --dark-theme-text-color: var(--off-white);
     --dark-theme-menu-text-color: var(--transparent-white);
     --dark-theme-menu-text-hover: var(--pure-white);
+    --dark-theme-agent-dropdown-toggle: var(--warm-gray);
+    --dark-theme-agent-dropdown-toggle-hover: var(--pure-white);
     --dark-theme-sidebar-bg: var(--dark);
     --dark-theme-sidebar-header-bg: var(--dark-three);
     --dark-theme-sidebar-item-bg: var(--dark-two);
