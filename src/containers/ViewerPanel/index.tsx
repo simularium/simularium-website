@@ -26,6 +26,8 @@ import {
     ViewerError,
 } from "../../state/metadata/types";
 import PlaybackControls from "../../components/PlaybackControls";
+import { VIEWER_ERROR } from "../../state/metadata/constants";
+import { convertToSentenceCase } from "../../util";
 
 import {
     convertUIDataToColorMap,
@@ -33,7 +35,6 @@ import {
     getSelectionStateInfoForViewer,
 } from "./selectors";
 import { AGENT_COLORS } from "./constants";
-import { VIEWER_ERROR } from "../../state/metadata/constants";
 
 const styles = require("./style.css");
 
@@ -123,7 +124,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             prevProps.viewerStatus !== VIEWER_ERROR
         ) {
             notification.error({
-                message: viewerError.message,
+                message: convertToSentenceCase(viewerError.message),
                 description:
                     (
                         <div
