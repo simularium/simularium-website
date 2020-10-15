@@ -632,12 +632,23 @@
     overflow: hidden;
 }
 
-.style__container--26N9a.ant-upload.ant-upload-drag{
+.style__container--26N9a, .style__container--26N9a.ant-upload.ant-upload-drag{
     position: absolute;
     height: 100%;
     width: 100%;
     z-index: 300;
     background-color: rgba(181, 159, 246, 0.7);
+}
+
+.style__container--26N9a .style__loading-icon--2tOQw, .style__container--26N9a.style__loading-text--1B5Ws {
+    text-align: center;
+}
+
+.style__container--26N9a {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
 }
 .style__container--3YhJ6 {
     width: 100%;
