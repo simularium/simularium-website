@@ -8,6 +8,7 @@ import { ReduxLogicDeps } from "../types";
 
 import { getSimulariumController, getSimulariumFile } from "./selectors";
 import {
+    receiveAgentNamesAndStates,
     receiveMetadata,
     receiveSimulariumFile,
     requestCachedPlotData,
@@ -19,10 +20,16 @@ import {
     LOAD_NETWORKED_FILE_IN_VIEWER,
     REQUEST_PLOT_DATA,
 } from "./constants";
-import { ReceiveAction, LocalSimFile, NetworkedSimFile } from "./types";
+import {
+    ReceiveAction,
+    LocalSimFile,
+    NetworkedSimFile,
+    FrontEndError,
+} from "./types";
 import { VIEWER_ERROR } from "./constants";
 import { setViewerStatus } from "../metadata/actions";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
+import { batchActions } from "../util";
 
 const netConnectionSettings = {
     serverIp: process.env.BACKEND_SERVER_IP,
@@ -66,6 +73,11 @@ const loadNetworkedFile = createLogic({
                 return done();
             }
         }
+
+        const resetAgentNames = receiveAgentNamesAndStates([]);
+        const setViewerLoading = setViewerStatus({ status: VIEWER_LOADING });
+        batchActions([resetAgentNames, setViewerLoading]);
+
         let simulariumController = getSimulariumController(currentState);
         if (!simulariumController) {
             if (action.controller) {
@@ -79,7 +91,6 @@ const loadNetworkedFile = createLogic({
         // if requested while playing, just pause sim until done loading
         simulariumController.pause();
 
-        dispatch(setViewerStatus({ status: VIEWER_LOADING }));
         simulariumController
             .changeFile(simulariumFile.name)
             .then(() => {
@@ -137,10 +148,12 @@ const loadLocalFile = createLogic({
         }
 
         clearOutFileTrajectoryUrlParam();
+        const resetAgentNames = receiveAgentNamesAndStates([]);
+        const setViewerLoading = setViewerStatus({ status: VIEWER_LOADING });
+        batchActions([resetAgentNames, setViewerLoading]);
         // if requested while playing, just pause sim until done loading
         simulariumController.pause();
 
-        dispatch(setViewerStatus({ status: VIEWER_LOADING }));
         simulariumController
             .changeFile(simulariumFile.name, true, simulariumFile.data)
             .then(() => {
@@ -154,13 +167,15 @@ const loadLocalFile = createLogic({
                 );
             })
             .then(done)
-            .catch((error: Error) => {
+            .catch((error: FrontEndError) => {
                 dispatch(
                     setViewerStatus({
                         status: VIEWER_ERROR,
                         errorMessage: error.message,
+                        htmlData: error.htmlData || "",
                     })
                 );
+                done();
             });
     },
     type: LOAD_LOCAL_FILE_IN_VIEWER,

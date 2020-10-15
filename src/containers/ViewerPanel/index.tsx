@@ -7,6 +7,7 @@ import SimulariumViewer, {
 } from "@aics/simularium-viewer";
 import "@aics/simularium-viewer/style/style.css";
 import { connect } from "react-redux";
+import { notification } from "antd";
 
 import { State } from "../../state/types";
 import selectionStateBranch from "../../state/selection";
@@ -19,13 +20,15 @@ import {
     SetVisibleAction,
     SetAllColorsAction,
 } from "../../state/selection/types";
-
 import {
     ReceiveAction,
     LocalSimFile,
     SetViewerStatusAction,
+    ViewerError,
 } from "../../state/metadata/types";
 import PlaybackControls from "../../components/PlaybackControls";
+import { VIEWER_ERROR } from "../../state/metadata/constants";
+import { convertToSentenceCase } from "../../util";
 
 import {
     convertUIDataToColorMap,
@@ -56,6 +59,7 @@ interface ViewerPanelProps {
     setAgentsVisible: ActionCreator<SetVisibleAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setAllAgentColors: ActionCreator<SetAllColorsAction>;
+    viewerError: ViewerError;
 }
 
 interface ViewerPanelState {
@@ -115,7 +119,25 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public componentDidUpdate(prevProps: ViewerPanelProps) {
+        const { viewerStatus, viewerError } = this.props;
         const current = this.centerContent.current;
+        if (
+            viewerStatus === VIEWER_ERROR &&
+            prevProps.viewerStatus !== VIEWER_ERROR
+        ) {
+            notification.error({
+                message: convertToSentenceCase(viewerError.message),
+                description:
+                    (
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: viewerError.htmlData as string,
+                            }}
+                        />
+                    ) || "",
+                duration: viewerError.htmlData ? 0 : 4.5,
+            });
+        }
         if (
             current &&
             this.props.numberPanelsCollapsed !== prevProps.numberPanelsCollapsed
@@ -216,6 +238,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             totalTime,
             simulariumController,
             selectionStateInfoForViewer,
+            setViewerStatus,
             timeStep,
         } = this.props;
         return (
@@ -230,6 +253,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     onUIDisplayDataChanged={this.handleUiDisplayDataChanged}
                     selectionStateInfo={selectionStateInfoForViewer}
                     agentColors={AGENT_COLORS}
+                    onError={(error) => {
+                        setViewerStatus({
+                            status: VIEWER_ERROR,
+                            errorMessage: error,
+                        });
+                    }}
                     onTrajectoryFileInfoChanged={
                         this.onTrajectoryFileInfoChanged
                     }
@@ -263,6 +292,7 @@ function mapStateToProps(state: State) {
         timeStep: metadataStateBranch.selectors.getTimeStepSize(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
         viewerStatus: metadataStateBranch.selectors.getViewerStatus(state),
+        viewerError: metadataStateBranch.selectors.getViewerError(state),
         fileIsDraggedOverViewer: selectionStateBranch.selectors.getFileDraggedOverViewer(
             state
         ),
@@ -276,9 +306,9 @@ const dispatchToPropsMap = {
     receiveAgentNamesAndStates:
         metadataStateBranch.actions.receiveAgentNamesAndStates,
     setAgentsVisible: selectionStateBranch.actions.setAgentsVisible,
+    setViewerStatus: metadataStateBranch.actions.setViewerStatus,
     dragOverViewer: selectionStateBranch.actions.dragOverViewer,
     resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
-    setViewerStatus: metadataStateBranch.actions.setViewerStatus,
     setAllAgentColors: selectionStateBranch.actions.setAllAgentColors,
 };
 

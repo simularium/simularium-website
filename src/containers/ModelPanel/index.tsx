@@ -4,7 +4,10 @@ import { connect } from "react-redux";
 
 import SideBarContents from "../../components/SideBarContents";
 import { requestMetadata } from "../../state/metadata/actions";
-import { getUiDisplayDataTree } from "../../state/metadata/selectors";
+import {
+    getUiDisplayDataTree,
+    getViewerStatus,
+} from "../../state/metadata/selectors";
 import { State } from "../../state/types";
 import {
     getVisibleAgentsNamesAndTags,
@@ -28,6 +31,15 @@ import {
     convertUITreeDataToSelectNone,
     getCheckboxAllIsIntermediate,
 } from "./selectors";
+import {
+    VIEWER_EMPTY,
+    VIEWER_ERROR,
+    VIEWER_LOADING,
+    VIEWER_SUCCESS,
+} from "../../state/metadata/constants";
+import NoTrajectoriesText from "../../components/NoTrajectoriesText";
+import NoTypeMappingText from "../../components/NoTypeMappingText";
+import { ViewerStatus } from "../../state/metadata/types";
 
 const styles = require("./style.css");
 
@@ -44,6 +56,7 @@ interface ModelPanelProps {
     payloadForSelectNone: VisibilitySelectionMap;
     checkAllIsIntermediate: boolean;
     agentColors: AgentColorMap;
+    viewerStatus: ViewerStatus;
 }
 
 class ModelPanel extends React.Component<ModelPanelProps, {}> {
@@ -59,25 +72,36 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
             payloadForSelectNone,
             checkAllIsIntermediate,
             agentColors,
+            viewerStatus,
         } = this.props;
+        const checkboxTree = (
+            <CheckBoxTree
+                treeData={uiDisplayDataTree}
+                handleAgentCheck={turnAgentsOnByDisplayKey}
+                agentsChecked={visibleAgentKeys}
+                handleHighlight={highlightAgentsByDisplayKey}
+                agentsHighlighted={highlightedAgentKeys}
+                setAgentsVisible={setAgentsVisible}
+                payloadForSelectAll={payloadForSelectAll}
+                payloadForSelectNone={payloadForSelectNone}
+                checkAllIsIntermediate={checkAllIsIntermediate}
+                agentColors={agentColors}
+            />
+        );
+        const contentMap = {
+            [VIEWER_SUCCESS]: checkboxTree,
+            [VIEWER_EMPTY]: <NoTrajectoriesText />,
+            [VIEWER_LOADING]: <div />,
+            [VIEWER_ERROR]: <NoTypeMappingText />,
+        };
+
         return (
             <div className={styles.container}>
                 <SideBarContents
                     mainTitle="Agents"
                     content={[
                         <div className={styles.container} key="molecules">
-                            <CheckBoxTree
-                                treeData={uiDisplayDataTree}
-                                handleAgentCheck={turnAgentsOnByDisplayKey}
-                                agentsChecked={visibleAgentKeys}
-                                handleHighlight={highlightAgentsByDisplayKey}
-                                agentsHighlighted={highlightedAgentKeys}
-                                setAgentsVisible={setAgentsVisible}
-                                payloadForSelectAll={payloadForSelectAll}
-                                payloadForSelectNone={payloadForSelectNone}
-                                checkAllIsIntermediate={checkAllIsIntermediate}
-                                agentColors={agentColors}
-                            />
+                            {contentMap[viewerStatus]}
                         </div>,
                         null,
                     ]}
@@ -96,6 +120,7 @@ function mapStateToProps(state: State) {
         payloadForSelectNone: convertUITreeDataToSelectNone(state),
         checkAllIsIntermediate: getCheckboxAllIsIntermediate(state),
         agentColors: getAgentColors(state),
+        viewerStatus: getViewerStatus(state),
     };
 }
 

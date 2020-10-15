@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import * as React from "react";
 
-import { bindAll } from "../";
+import { bindAll, convertToSentenceCase } from "../";
 
 describe("General utilities", () => {
     describe("bindAll", () => {
@@ -47,6 +47,26 @@ describe("General utilities", () => {
 
             expect(foo.baz()).to.equal("Hello from Foo");
             expect(baz).to.throw(TypeError);
+        });
+    });
+    describe("toSentenceCase", () => {
+        it("takes a string and converts it to sentence case", () => {
+            const startingString = "all lowercase. all lowercase";
+            expect(convertToSentenceCase(startingString)).to.equal(
+                "All lowercase. All lowercase"
+            );
+        });
+        it("ignores camelcase", () => {
+            const startingString = "all lowercase. has camelCase";
+            expect(convertToSentenceCase(startingString)).to.equal(
+                "All lowercase. Has camelCase"
+            );
+        });
+        it("fixes mid sentence caps", () => {
+            const startingString = "all lowercase. has Mid sentence cap";
+            expect(convertToSentenceCase(startingString)).to.equal(
+                "All lowercase. Has mid sentence cap"
+            );
         });
     });
 });

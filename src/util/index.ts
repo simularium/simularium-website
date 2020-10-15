@@ -15,3 +15,13 @@ export function bindAll<T extends React.Component>(
         }
     });
 }
+
+export function convertToSentenceCase(string: string): string {
+    return string
+        .replace(/\s\w/g, function(c) {
+            return c.toLowerCase();
+        })
+        .replace(/(^\s*\w|[\.\!\?]\s*\w)/g, function(c) {
+            return c.toUpperCase();
+        });
+}
