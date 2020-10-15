@@ -59,7 +59,6 @@ interface ViewerPanelProps {
     setAgentsVisible: ActionCreator<SetVisibleAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setAllAgentColors: ActionCreator<SetAllColorsAction>;
-    setViewerStatus: ActionCreator<SetViewerStatusAction>;
     viewerError: ViewerError;
 }
 
