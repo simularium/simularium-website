@@ -76,7 +76,7 @@ const loadNetworkedFile = createLogic({
 
         const resetAgentNames = receiveAgentNamesAndStates([]);
         const setViewerLoading = setViewerStatus({ status: VIEWER_LOADING });
-        batchActions([resetAgentNames, setViewerLoading]);
+        dispatch(batchActions([resetAgentNames, setViewerLoading]));
 
         let simulariumController = getSimulariumController(currentState);
         if (!simulariumController) {
@@ -150,7 +150,7 @@ const loadLocalFile = createLogic({
         clearOutFileTrajectoryUrlParam();
         const resetAgentNames = receiveAgentNamesAndStates([]);
         const setViewerLoading = setViewerStatus({ status: VIEWER_LOADING });
-        batchActions([resetAgentNames, setViewerLoading]);
+        dispatch(batchActions([resetAgentNames, setViewerLoading]));
         // if requested while playing, just pause sim until done loading
         simulariumController.pause();
 
