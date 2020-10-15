@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { TUTORIAL_PATHNAME } from "../../routes";
 
-const styles = require("./style.css");
+const styles = require("../NoTrajectoriesText/style.css");
 
 const NoTypeMappingText: React.FunctionComponent<{}> = () => {
     return (
