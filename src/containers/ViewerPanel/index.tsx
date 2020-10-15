@@ -309,7 +309,6 @@ const dispatchToPropsMap = {
     setViewerStatus: metadataStateBranch.actions.setViewerStatus,
     dragOverViewer: selectionStateBranch.actions.dragOverViewer,
     resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
-    setViewerStatus: metadataStateBranch.actions.setViewerStatus,
     setAllAgentColors: selectionStateBranch.actions.setAllAgentColors,
 };
 
