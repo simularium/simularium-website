@@ -1,5 +1,9 @@
-.upload-button {
+.container :global(.ant-btn-ghost) {
     border: none;
     color: var(--dark-theme-menu-text-color);
     padding: 0;
+}
+
+.container :global(.ant-btn-ghost:hover) {
+    color: var(--dark-theme-menu-text-hover);
 }
