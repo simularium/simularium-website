@@ -1,7 +1,6 @@
 export interface TrajectoryDisplayData {
     modelName: string;
     id: string;
-    extension: string;
     title: string;
     totalSimulatedTime: string;
     authors: string;
