@@ -1,25 +1,38 @@
 .container {
-    background-color: var(--dark-two);
+    background-color: var(--dark-theme-sidebar-item-bg);
     margin-bottom: 3px;
     padding: 0 12px;
 }
+
 .header {
     display: flex;
     align-items: center;
     justify-content: flex-start;
 }
+
+.header :global(.ant-btn:hover) {
+    color: var(--dark-theme-agent-dropdown-toggle-hover);
+}
+
+.header :global(.ant-btn:active), :global(.ant-btn:focus) {
+    color: var(--dark-theme-agent-dropdown-toggle);
+}
+
 .toggle-button {
     border: none;
-    color: var(--warm-gray)
+    color: var(--dark-theme-agent-dropdown-toggle);
 }
+
 .toggle-button.active {
     transform: rotate(90deg);
 }
+
 .panel {
     display: none;
     transition: all .3s;
     padding-top: 10px;
 }
+
 .panel.active {
     display: block;
 }

@@ -28,10 +28,9 @@ const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
             onChange={onChange}
             showUploadList={false}
             customRequest={(options) => customRequest(options, loadLocalFile)}
+            className={styles.container}
         >
-            <Button type="ghost" className={styles.uploadButton}>
-                Import Simularium file...
-            </Button>
+            <Button type="ghost">Import Simularium file...</Button>
         </Upload>
     );
 };
