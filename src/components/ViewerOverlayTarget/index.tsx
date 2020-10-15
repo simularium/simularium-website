@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Upload, message } from "antd";
+import { Upload } from "antd";
 import { ActionCreator } from "redux";
 import { LocalSimFile } from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
@@ -23,26 +23,29 @@ const ViewerOverlayTarget = ({
     loadLocalFile,
     isLoading,
     fileIsDraggedOverViewer,
-}: ViewerOverlayTargetProps) => {
+}: ViewerOverlayTargetProps): JSX.Element | null => {
     const [showTarget, setVisibility] = useState(false);
-
     if (fileIsDraggedOverViewer && !showTarget) {
         setVisibility(true);
-    }
-
-    if (!fileIsDraggedOverViewer && showTarget) {
+    } else if (!fileIsDraggedOverViewer && showTarget) {
         setVisibility(false);
     }
+
     const onChange = ({ file }: UploadChangeParam) => {
         if (file.status === "done") {
             resetDragOverViewer();
             setVisibility(false);
         } else if (file.status === "error") {
-            message.error(`${file.name} file upload failed.`);
             setVisibility(false);
         }
     };
-    return showTarget ? (
+    const loadingOverlay = (
+        <div className={styles.container}>
+            <p className="loading-icon">{Loading}</p>
+            <p className="loading-text">Loading Simularium Model</p>
+        </div>
+    );
+    const dragAndDropOverlay = (
         <Dragger
             className={styles.container}
             onChange={onChange}
@@ -58,11 +61,20 @@ const ViewerOverlayTarget = ({
                     ? "Loading Simularium file"
                     : "Drag your trajectory here"}
             </p>
-            <p className="ant-upload-hint">
-                Support for a single Simularium file
-            </p>
+            {!isLoading && (
+                <p className="ant-upload-hint">
+                    Support for a single Simularium file
+                </p>
+            )}
         </Dragger>
-    ) : null;
+    );
+    if (showTarget) {
+        return dragAndDropOverlay;
+    } else if (isLoading) {
+        return loadingOverlay;
+    } else {
+        return null;
+    }
 };
 
 export default ViewerOverlayTarget;

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ActionCreator } from "redux";
+import { ActionCreator, AnyAction } from "redux";
 import SimulariumViewer, {
     SimulariumController,
     UIDisplayData,
@@ -12,6 +12,7 @@ import { notification } from "antd";
 import { State } from "../../state/types";
 import selectionStateBranch from "../../state/selection";
 import metadataStateBranch from "../../state/metadata";
+import { VIEWER_SUCCESS } from "../../state/metadata/constants";
 import {
     ChangeTimeAction,
     ResetDragOverViewerAction,
@@ -35,6 +36,7 @@ import {
     getSelectionStateInfoForViewer,
 } from "./selectors";
 import { AGENT_COLORS } from "./constants";
+import { batchActions } from "../../state/util";
 
 const styles = require("./style.css");
 
@@ -55,6 +57,7 @@ interface ViewerPanelProps {
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
     viewerStatus: string;
     setAgentsVisible: ActionCreator<SetVisibleAction>;
+    setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setAllAgentColors: ActionCreator<SetAllColorsAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     viewerError: ViewerError;
@@ -184,23 +187,31 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     public onTrajectoryFileInfoChanged(data: any) {
         const { receiveMetadata } = this.props;
         receiveMetadata({
-            totalTime: data.totalDuration,
+            totalTime: data.totalSteps * data.timeStepSize,
             timeStepSize: data.timeStepSize,
         });
     }
 
     public receiveTimeChange(timeData: any) {
-        const { changeTime } = this.props;
+        const { changeTime, setViewerStatus, viewerStatus } = this.props;
         this.setState({ requestingTimeChange: false });
+        const actions: AnyAction[] = [changeTime(timeData.time)];
 
-        changeTime(timeData.time);
+        if (viewerStatus !== VIEWER_SUCCESS) {
+            actions.push(setViewerStatus(VIEWER_SUCCESS));
+        }
+        batchActions(actions);
     }
 
     public skipToTime(time: number) {
+        const { simulariumController, totalTime } = this.props;
         if (this.state.requestingTimeChange) {
             return;
         }
-        const { simulariumController } = this.props;
+        if (time >= totalTime) {
+            return;
+        }
+
         this.setState({ requestingTimeChange: true });
         simulariumController.gotoTime(time);
     }
@@ -211,11 +222,15 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setAgentsVisible,
             setAllAgentColors,
         } = this.props;
-        receiveAgentNamesAndStates(uiData);
+
         const selectedAgents = convertUIDataToSelectionData(uiData);
         const agentColors = convertUIDataToColorMap(uiData);
-        setAllAgentColors(agentColors);
-        setAgentsVisible(selectedAgents);
+        const actions = [
+            receiveAgentNamesAndStates(uiData),
+            setAllAgentColors(agentColors),
+            setAgentsVisible(selectedAgents),
+        ];
+        batchActions(actions);
     };
 
     public render(): JSX.Element {
@@ -225,6 +240,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             simulariumController,
             selectionStateInfoForViewer,
             setViewerStatus,
+            timeStep,
         } = this.props;
         return (
             <div ref={this.centerContent} className={styles.container}>
@@ -251,12 +267,14 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 <PlaybackControls
                     playHandler={this.startPlay}
                     time={time}
+                    timeStep={timeStep}
                     onTimeChange={this.skipToTime}
                     pauseHandler={this.pause}
                     prevHandler={this.playBackOne}
                     nextHandler={this.playForwardOne}
                     isPlaying={this.state.isPlaying}
                     totalTime={totalTime}
+                    loading={this.state.requestingTimeChange}
                 />
             </div>
         );
@@ -292,6 +310,7 @@ const dispatchToPropsMap = {
     setViewerStatus: metadataStateBranch.actions.setViewerStatus,
     dragOverViewer: selectionStateBranch.actions.dragOverViewer,
     resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
+    setViewerStatus: metadataStateBranch.actions.setViewerStatus,
     setAllAgentColors: selectionStateBranch.actions.setAllAgentColors,
 };
 
