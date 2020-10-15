@@ -69,6 +69,11 @@ export interface ViewerStatusInfo {
     status: ViewerStatus;
 }
 
+export interface ViewerError {
+    htmlData?: string;
+    message: string;
+}
+
 export interface FrontEndError extends Error {
     htmlData?: string;
 }

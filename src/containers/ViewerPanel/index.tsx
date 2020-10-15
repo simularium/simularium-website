@@ -23,6 +23,7 @@ import {
     ReceiveAction,
     LocalSimFile,
     SetViewerStatusAction,
+    ViewerError,
 } from "../../state/metadata/types";
 import PlaybackControls from "../../components/PlaybackControls";
 
@@ -55,7 +56,7 @@ interface ViewerPanelProps {
     setAgentsVisible: ActionCreator<SetVisibleAction>;
     setAllAgentColors: ActionCreator<SetAllColorsAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
-    viewerError: any;
+    viewerError: ViewerError;
 }
 
 interface ViewerPanelState {
