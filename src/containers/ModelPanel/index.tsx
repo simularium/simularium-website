@@ -38,9 +38,8 @@ import {
     VIEWER_SUCCESS,
 } from "../../state/metadata/constants";
 import NoTrajectoriesText from "../../components/NoTrajectoriesText";
-import { isEmpty } from "lodash";
 import NoTypeMappingText from "../../components/NoTypeMappingText";
-import { VIEWER_STATUS } from "../../state/metadata/types";
+import { ViewerStatus } from "../../state/metadata/types";
 
 const styles = require("./style.css");
 
@@ -57,7 +56,7 @@ interface ModelPanelProps {
     payloadForSelectNone: VisibilitySelectionMap;
     checkAllIsIntermediate: boolean;
     agentColors: AgentColorMap;
-    viewerStatus: VIEWER_STATUS;
+    viewerStatus: ViewerStatus;
 }
 
 class ModelPanel extends React.Component<ModelPanelProps, {}> {

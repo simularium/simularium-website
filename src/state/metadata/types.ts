@@ -52,7 +52,7 @@ type VIEWER_LOADING = typeof VIEWER_LOADING;
 type VIEWER_ERROR = typeof VIEWER_ERROR;
 type VIEWER_EMPTY = typeof VIEWER_EMPTY;
 type VIEWER_SUCCESS = typeof VIEWER_SUCCESS;
-export type VIEWER_STATUS =
+export type ViewerStatus =
     | VIEWER_LOADING
     | VIEWER_ERROR
     | VIEWER_EMPTY
@@ -66,7 +66,7 @@ export interface SetViewerStatusAction {
 export interface ViewerStatusInfo {
     htmlData?: string;
     errorMessage?: string;
-    status: VIEWER_STATUS;
+    status: ViewerStatus;
 }
 
 export interface FrontEndError extends Error {
