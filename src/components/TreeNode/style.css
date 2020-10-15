@@ -3,23 +3,36 @@
     margin-bottom: 3px;
     padding: 0 12px;
 }
+
 .header {
     display: flex;
     align-items: center;
     justify-content: flex-start;
 }
+
+.header :global(.ant-btn:hover) {
+    color: var(--pure-white);
+}
+
+.header :global(.ant-btn:active), :global(.ant-btn:focus) {
+    color: var(--warm-gray);
+}
+
 .toggle-button {
     border: none;
-    color: var(--warm-gray)
+    color: var(--warm-gray);
 }
+
 .toggle-button.active {
     transform: rotate(90deg);
 }
+
 .panel {
     display: none;
     transition: all .3s;
     padding-top: 10px;
 }
+
 .panel.active {
     display: block;
 }
