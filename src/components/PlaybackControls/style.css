@@ -25,7 +25,7 @@
 
 
 .btn:focus {
-    background-color: var(--dark-theme-btn-b);
+    background-color: var(--dark-theme-btn-bg);
     color: var(--dark-theme-btn-color);
 }
 
