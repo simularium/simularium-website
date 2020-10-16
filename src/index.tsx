@@ -18,30 +18,41 @@ import AppHeader from "./containers/AppHeader";
 const { Header } = Layout;
 
 import "./style.css";
+const renderApp = () => {
+    // 1. Set up the browser history with the updated location
+    // (minus the # sign)
+    const path = (/#!(\/.*)$/.exec(location.hash) || [])[1];
+    if (path) {
+        history.replaceState(null, "", path);
+    }
+    render(
+        <Provider store={createReduxStore()}>
+            <Layout>
+                <BrowserRouter
+                    basename={
+                        process.env.GH_BUILD ? "/simularium-website/" : ""
+                    }
+                >
+                    <ScrollToTop />
+                    <Header>
+                        <AppHeader />
+                    </Header>
+                    <Switch>
+                        {routes.map((route) => (
+                            <Route
+                                key={route.path}
+                                exact={route.path === "/"}
+                                path={route.path}
+                            >
+                                {route.component}
+                            </Route>
+                        ))}
+                    </Switch>
+                </BrowserRouter>
+            </Layout>
+        </Provider>,
+        document.getElementById(APP_ID)
+    );
+};
 
-render(
-    <Provider store={createReduxStore()}>
-        <Layout>
-            <BrowserRouter
-                basename={process.env.GH_BUILD ? "/simularium-website/" : ""}
-            >
-                <ScrollToTop />
-                <Header>
-                    <AppHeader />
-                </Header>
-                <Switch>
-                    {routes.map((route) => (
-                        <Route
-                            key={route.path}
-                            exact={route.path === "/"}
-                            path={route.path}
-                        >
-                            {route.component}
-                        </Route>
-                    ))}
-                </Switch>
-            </BrowserRouter>
-        </Layout>
-    </Provider>,
-    document.getElementById(APP_ID)
-);
+renderApp();
