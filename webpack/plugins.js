@@ -22,7 +22,7 @@ const BASE_PLUGINS = [
     }),
     new MiniCssExtractPlugin({ filename: 'style.[contenthash].css' }),
     new HtmlWebpackPlugin({
-        favicon: "./src/assets/AICS-logo.svg",
+        favicon: './src/assets/AICS-logo.svg',
         template: path.resolve(__dirname, 'index.template.html')
     }),
     new webpack.EnvironmentPlugin({
