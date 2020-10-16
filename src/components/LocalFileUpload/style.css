@@ -2,6 +2,8 @@
     border: none;
     color: var(--dark-theme-menu-text-color);
     padding: 0;
+    width: calc(var(--dropdown-menu-width) - 20px);
+    text-align: left;
 }
 
 .container :global(.ant-btn-ghost:hover) {
