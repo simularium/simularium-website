@@ -1,0 +1,31 @@
+.container {
+    position: absolute;
+    display: flex;
+    bottom: 0;
+    right: 20px;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+}
+
+.btn {
+    background-color: var(--dark-theme-btn-bg);
+    color: var(--dark-theme-btn-color);
+    border-radius: 3px!important;
+}
+
+.btn:hover, .btn:active {
+    color: var(--dark-theme-btn-color);
+    background-color: var(--dark-theme-btn-hover-bg);
+}
+
+.btn:focus {
+    background-color: var(--dark-theme-btn-bg);
+    color: var(--dark-theme-btn-color);
+}
+
+ 
+.btn[disabled] {
+    background-color: var(--dark-theme-btn-disabled-bg);
+    color: var(--dark-theme-btn-disabled-color);
+
+}
