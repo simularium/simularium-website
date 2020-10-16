@@ -79,10 +79,10 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                         </li>
                         <li>
                             In a terminal window, create and activate a new
-                            conda environment:
+                            conda environment using either Python 3.7 or 3.8:
                             <p>
                                 <Text code>
-                                    conda create -n simularium python=3
+                                    conda create -n simularium python=3.8
                                 </Text>
                                 <br />
                                 <Text code>conda activate simularium</Text>
@@ -95,34 +95,76 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                             </p>
                         </li>
                         <li>
-                            In your Python script, import simulariumio:
+                            In your Python script, import the converter and data
+                            you need from simulariumio, e.g. for data generated
+                            by an engine not specifically supported by
+                            simulariumio:
                             <p>
                                 <Text code>
-                                    from simulariumio import Converter
+                                    from simulariumio import CustomConverter,
+                                    CustomData, AgentData
                                 </Text>
                             </p>
-                        </li>
-                        <li>
-                            These{" "}
-                            <a
-                                href="https://github.com/allen-cell-animated/simulariumio/tree/master/examples"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Jupyter notebooks
-                            </a>{" "}
-                            provide examples of saving data from different
-                            sources in Simularium’s input format.
                             <ul>
+                                <li>
+                                    These{" "}
+                                    <a
+                                        href="https://github.com/allen-cell-animated/simulariumio/tree/master/examples"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Jupyter notebooks
+                                    </a>{" "}
+                                    provide examples of saving data from
+                                    different sources in Simularium’s input
+                                    format.
+                                </li>
+                                <li>
+                                    We support the following simulators:
+                                    <ul>
+                                        <li>
+                                            ReaDDy (
+                                            <a
+                                                href="https://readdy.github.io/"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                https://readdy.github.io/
+                                            </a>
+                                            )
+                                        </li>
+                                        <li>
+                                            PhysiCell (
+                                            <a
+                                                href="http://physicell.org/"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                http://physicell.org/
+                                            </a>
+                                            )
+                                        </li>
+                                        <li>
+                                            CytoSim (
+                                            <a
+                                                href="https://gitlab.com/f.nedelec/cytosim"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                https://gitlab.com/f.nedelec/cytosim
+                                            </a>
+                                            )
+                                        </li>
+                                    </ul>
+                                </li>
                                 <li>
                                     If you used one of our supported simulators
                                     to generate your data, choose the notebook
-                                    for that simulator. We support the following
-                                    simulators:
+                                    for that simulator:
                                     <ul>
                                         <li>
                                             <a
-                                                href="https://readdy.github.io/"
+                                                href="https://github.com/allen-cell-animated/simulariumio/blob/master/examples/Tutorial_readdy.ipynb"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                             >
@@ -131,7 +173,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                                         </li>
                                         <li>
                                             <a
-                                                href="http://physicell.org/"
+                                                href="https://github.com/allen-cell-animated/simulariumio/blob/master/examples/Tutorial_physicell.ipynb"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                             >
@@ -140,7 +182,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                                         </li>
                                         <li>
                                             <a
-                                                href="https://gitlab.com/f.nedelec/cytosim"
+                                                href="https://github.com/allen-cell-animated/simulariumio/blob/master/examples/Tutorial_cytosim.ipynb"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                             >
