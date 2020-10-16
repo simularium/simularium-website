@@ -1,6 +1,6 @@
-import listeriaNormalImage from "../assets/card-image-1.png";
+import listeriaNormalImage from "../assets/listeria-normal.png";
 // import listeriaUltrapolarImage from "../assets/card-image-2.png";
-import endocytosisImage from "../assets/card-image-3.png";
+import endocytosisImage from "../assets/endocytosis.png";
 // import covid19Image from "../assets/card-image-4.png";
 
 import { TrajectoryDisplayData } from "./interfaces";
