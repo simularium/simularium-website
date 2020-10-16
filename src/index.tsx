@@ -19,8 +19,12 @@ const { Header } = Layout;
 
 import "./style.css";
 const renderApp = () => {
-    // 1. Set up the browser history with the updated location
-    // (minus the # sign)
+    /**
+     * For SPA routing on AWS:
+     * https://via.studio/journal/hosting-a-reactjs-app-with-routing-on-aws-s3
+     * using /#! to avoid 404 on AWS, and then setting the browser history with the updated location
+     * without the /#!
+     */
     const path = (/#!(\/.*)$/.exec(location.hash) || [])[1];
     if (path) {
         history.replaceState(null, "", path);
