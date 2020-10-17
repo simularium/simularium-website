@@ -8,10 +8,13 @@ import {
     LoadingOutlined,
     DownOutlined,
     ArrowLeftOutlined,
+    SyncOutlined,
 } from "@ant-design/icons";
 
 import PurpleArrowPointingRight from "../../assets/open-arrow.svg";
 import AicsLogoWhite from "../../assets/AICS-logo-white.svg";
+
+const styles = require("./style.css");
 
 export const Loading = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 export const StepBack = <StepBackwardOutlined />;
@@ -22,6 +25,7 @@ export const UploadFile = <UploadOutlined />;
 export const DownArrow = <DownOutlined />;
 export const CaretRight = <CaretRightOutlined />;
 export const GoBack = <ArrowLeftOutlined />;
+export const Reset = <SyncOutlined className={styles.flipH} />;
 
 export const PurpleArrow = <img src={PurpleArrowPointingRight} />;
 export const AicsLogo = <img src={AicsLogoWhite} />;
@@ -38,4 +42,5 @@ export default {
     GoBack,
     PurpleArrow,
     AicsLogo,
+    Reset,
 };

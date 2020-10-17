@@ -37,6 +37,7 @@ import {
 } from "./selectors";
 import { AGENT_COLORS } from "./constants";
 import { batchActions } from "../../state/util";
+import CameraControls from "../../components/CameraControls";
 
 const styles = require("./style.css");
 
@@ -252,6 +253,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     onJsonDataArrived={this.handleJsonMeshData}
                     onUIDisplayDataChanged={this.handleUiDisplayDataChanged}
                     selectionStateInfo={selectionStateInfoForViewer}
+                    showCameraControls={false}
                     agentColors={AGENT_COLORS}
                     onError={(error) => {
                         setViewerStatus({
@@ -274,6 +276,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     isPlaying={this.state.isPlaying}
                     totalTime={totalTime}
                     loading={this.state.requestingTimeChange}
+                />
+                <CameraControls
+                    resetCamera={simulariumController.resetCamera}
                 />
             </div>
         );
