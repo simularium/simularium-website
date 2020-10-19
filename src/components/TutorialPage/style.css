@@ -6,6 +6,17 @@
     font-size: 18px;
 }
 
+@media screen and (max-width: 400px) {
+    .approach-block {
+        font-size: 0.7rem;
+        padding: 0;
+    }
+
+    .approach-block .list-header {
+        font-size: 0.8rem;
+    }
+}
+
 .intro {
     margin-top: 1.5em;
     margin-bottom: 1.5em;
