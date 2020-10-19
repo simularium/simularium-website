@@ -256,6 +256,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     selectionStateInfo={selectionStateInfoForViewer}
                     showCameraControls={false}
                     agentColors={AGENT_COLORS}
+                    loadInitialData={false}
                     onError={(error) => {
                         setViewerStatus({
                             status: VIEWER_ERROR,
