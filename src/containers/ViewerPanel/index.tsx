@@ -124,7 +124,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const current = this.centerContent.current;
         if (
             viewerStatus === VIEWER_ERROR &&
-            prevProps.viewerStatus !== VIEWER_ERROR
+            prevProps.viewerStatus !== VIEWER_ERROR &&
+            viewerError.message
         ) {
             notification.error({
                 message: convertToSentenceCase(viewerError.message),
@@ -255,6 +256,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     selectionStateInfo={selectionStateInfoForViewer}
                     showCameraControls={false}
                     agentColors={AGENT_COLORS}
+                    loadInitialData={false}
                     onError={(error) => {
                         setViewerStatus({
                             status: VIEWER_ERROR,
