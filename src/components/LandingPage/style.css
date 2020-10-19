@@ -59,7 +59,7 @@
     margin-bottom: 1em;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 700px) {
     .flowchart {
         width: 60%;
         min-width: 600px;
