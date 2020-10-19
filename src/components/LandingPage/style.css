@@ -50,7 +50,6 @@
 }
 
 /* Simularium overview flowchart image */
-
 .flowchart {
     display: block;
     margin-left: auto;
@@ -59,6 +58,8 @@
     margin-bottom: 1em;
 }
 
+/* On larger screens, the flowchart width is 60% of parent div or 600px, whichever is larger.
+On smaller screens the width is 100% of parent div. */
 @media screen and (min-width: 700px) {
     .flowchart {
         width: 60%;
