@@ -124,8 +124,10 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const current = this.centerContent.current;
         if (
             viewerStatus === VIEWER_ERROR &&
-            prevProps.viewerStatus !== VIEWER_ERROR
+            prevProps.viewerStatus !== VIEWER_ERROR &&
+            viewerError.message
         ) {
+            console.log(viewerStatus);
             notification.error({
                 message: convertToSentenceCase(viewerError.message),
                 description:

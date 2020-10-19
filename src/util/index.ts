@@ -17,6 +17,9 @@ export function bindAll<T extends React.Component>(
 }
 
 export function convertToSentenceCase(string: string): string {
+    if (!string) {
+        return "";
+    }
     return string
         .replace(/\s\w/g, function(c) {
             return c.toLowerCase();
