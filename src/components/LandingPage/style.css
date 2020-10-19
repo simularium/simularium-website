@@ -9,6 +9,13 @@
     margin-bottom: 0px;
 }
 
+/* Makes font size smaller for paragraph blocks on mobile */
+@media screen and (max-width: 400px) {
+    .content p {
+        font-size: 0.8rem;
+    }
+}
+
 .panel {
     background-color: var(--light-theme-panel-light-gray);
     padding-left: 50px;
