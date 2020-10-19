@@ -52,18 +52,18 @@
     margin-bottom: 1em;
 }
 
-.call-to-action-panel {
-    padding-top: 3.5em;
-    padding-bottom: 3.5em;
-    background-color: var(--light-theme-background-purple);
-    text-align: center;
-}
-
 @media screen and (min-width: 600px) {
     .flowchart {
         width: 60%;
         min-width: 600px;
     }
+}
+
+.call-to-action-panel {
+    padding-top: 3.5em;
+    padding-bottom: 3.5em;
+    background-color: var(--light-theme-background-purple);
+    text-align: center;
 }
 
 .call-to-action-panel :global(.ant-btn) {

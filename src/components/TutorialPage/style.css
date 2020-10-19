@@ -17,10 +17,16 @@
 }
 
 .drag-drop-image {
-    width: 400px;
     border-width: 0.5px;
     border-style: solid;
     margin: 0.5em;
+}
+
+/* Prevent image from being huge on larger screens */
+@media screen and (min-width: 600px) {
+    .drag-drop-image {
+        width: 400px;
+    }
 }
 
 .approach-block {
