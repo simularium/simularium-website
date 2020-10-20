@@ -79,15 +79,33 @@ pipeline {
                 sh "./gradlew -i snapshotPublishTarGzAndDockerImage"
             }
         }
-
-        stage ("build and push: master branch") {
+        // TODO: Combine these and paramaterize DEPLOYMENT_ENV such that
+        // on auto-deploy builds DEPLOYMENT_ENV = "staging" and on user trigger it equals the user
+        // chosen param
+        stage ("auto build staging and push: master branch") {
             when {
                 expression { !IGNORE_AUTHORS.contains(gitAuthor()) }
                 branch "master"
                 equals expected: BUILD_ARTIFACT, actual: params.JOB_TYPE
             }
             environment {
-                DEPLOYMENT_ENV = "production"
+                DEPLOYMENT_ENV = STAGING_DEPLOYMENT
+            }
+            steps {
+                sh "${PYTHON} ${VENV_BIN}/manage_version -t gradle -s prepare"
+                sh "./gradlew -i snapshotPublishTarGzAndDockerImage"
+                sh "${PYTHON} ${VENV_BIN}/manage_version -t gradle -s tag"
+            }
+        }
+
+        // I want this to run when a user triggers a "deploy" through the Jenkins interface
+        // Defaults to production, but can be switched to staging if user selects
+        stage ("build production and push: user trigger") {
+            when {
+                equals expected: DEPLOY_ARTIFACT, actual: params.JOB_TYPE
+            }
+            environment {
+                DEPLOYMENT_ENV = params.DEPLOYMENT_TYPE || PRODUCTION_DEPLOYMENT
             }
             steps {
                 sh "${PYTHON} ${VENV_BIN}/manage_version -t gradle -s prepare"
@@ -111,9 +129,7 @@ pipeline {
                 branch "master"
                 equals expected: BUILD_ARTIFACT, actual: params.JOB_TYPE
             }
-            environment {
-                DEPLOYMENT_ENV = "staging"
-            }
+
             steps {
                 script {
                     DEPLOYMENT_TYPE = STAGING_DEPLOYMENT
@@ -123,6 +139,7 @@ pipeline {
                     // HACK - switch back to detached commit to get the tag
                     GIT_TAG = sh(script: 'git checkout - && git describe --tags --exact-match', returnStdout: true).trim()
                 }
+                
                 // Automatically deploy to staging env on changes to master branch
                 sh "${PYTHON} ${VENV_BIN}/deploy_artifact -d --branch=${env.BRANCH_NAME} --deploy-env=${DEPLOYMENT_TYPE} maven-tgz S3 --artifactory-repo=${ARTIFACTORY_REPO} --bucket=${S3_BUCKET} ${GIT_TAG}"
                 invalidateCache(CLOUDFRONT_ID)
@@ -135,10 +152,12 @@ pipeline {
             }
             steps {
                 script {
-                    ARTIFACTORY_REPO = DEPLOYMENT_TARGET_TO_MAVEN_REPO[params.DEPLOYMENT_TYPE]
-                    S3_BUCKET = DEPLOYMENT_TARGET_TO_S3_BUCKET[params.DEPLOYMENT_TYPE]
+                    DEPLOYMENT_TYPE = params.DEPLOYMENT_TYPE
                     CLOUDFRONT_ID = TARGET_CLOUDFRONT[DEPLOYMENT_TYPE]
+                    ARTIFACTORY_REPO = DEPLOYMENT_TARGET_TO_MAVEN_REPO[DEPLOYMENT_TYPE]
+                    S3_BUCKET = DEPLOYMENT_TARGET_TO_S3_BUCKET[DEPLOYMENT_TYPE]
                 }
+
                 sh "${PYTHON} ${VENV_BIN}/deploy_artifact -d --branch=${env.BRANCH_NAME} --deploy-env=${params.DEPLOYMENT_TYPE} maven-tgz S3 --artifactory-repo=${ARTIFACTORY_REPO} --bucket=${S3_BUCKET} ${params.GIT_TAG}"
                 invalidateCache(CLOUDFRONT_ID)
             }
