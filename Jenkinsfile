@@ -73,7 +73,7 @@ pipeline {
                 equals expected: BUILD_ARTIFACT, actual: params.JOB_TYPE
             }
             environment {
-                DEPLOYMENT_ENV = "staging"
+                DEPLOYMENT_ENV = STAGING_DEPLOYMENT
             }
             steps {
                 sh "./gradlew -i snapshotPublishTarGzAndDockerImage"
