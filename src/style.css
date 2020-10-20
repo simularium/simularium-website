@@ -28,6 +28,10 @@ p {
     margin-bottom: 0.5em;
 }
 
+canvas:focus {
+    outline: none;
+}
+
 @font-face {
     font-family: 'icomoon';
     src: url('./assets/fonts/icomoon.eot?ls9a6n');
