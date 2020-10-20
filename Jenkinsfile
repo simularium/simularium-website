@@ -111,6 +111,9 @@ pipeline {
                 branch "master"
                 equals expected: BUILD_ARTIFACT, actual: params.JOB_TYPE
             }
+            environment {
+                DEPLOYMENT_ENV = "staging"
+            }
             steps {
                 script {
                     DEPLOYMENT_TYPE = STAGING_DEPLOYMENT
