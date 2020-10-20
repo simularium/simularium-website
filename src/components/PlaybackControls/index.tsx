@@ -43,6 +43,10 @@ const PlayBackControls = ({
         if (microSeconds > 1) {
             const milliseconds = microSeconds / 1000;
             if (milliseconds > 1) {
+                const seconds = milliseconds / 1000;
+                if (seconds > 1) {
+                    return `${formatNumber(seconds)} s`;
+                }
                 return `${formatNumber(milliseconds)} ms`;
             }
             return `${formatNumber(microSeconds)} \u03BCs`;
