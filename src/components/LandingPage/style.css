@@ -10,9 +10,10 @@
 }
 
 /* Makes font size smaller for paragraph blocks on mobile */
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 500px) {
     .content p {
         font-size: 0.8rem;
+        margin-bottom: 1em;
     }
 }
 
