@@ -37,11 +37,21 @@ export default class Plots extends React.Component<PlotsProps, {}> {
         return (
             <div className={styles.container}>
                 {plotData.data.map((plot: PlotInterface) => {
+                    console.log(plot.layout);
                     const layout = {
                         ...plot.layout,
                         autosize: true,
                         height: PLOT_STYLE.height,
                         width: PLOT_STYLE.width,
+                        title: {
+                            text: plot.layout.title,
+                            font: {
+                                family: "Overpass",
+                                size: 16,
+                            },
+                            x: 0.05,
+                            y: 0.95,
+                        },
                         xaxis: {
                             ...plot.layout.xaxis,
                             automargin: true,
