@@ -19,6 +19,7 @@ const PLOT_STYLE = {
     backgroundTransparentColor: "#14121987",
     textColor: "#d3d3d3",
     borderColor: "#737373",
+    fontFamily: "Overpass",
     fontSize: 11,
     marginAxis: 60,
     marginTop: 60,
@@ -47,7 +48,6 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                         title: {
                             text: plot.layout.title,
                             font: {
-                                family: "Overpass",
                                 size: 16,
                             },
                             x: 0.05,
@@ -81,6 +81,7 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                             r: PLOT_STYLE.marginDefault,
                         },
                         font: {
+                            family: PLOT_STYLE.fontFamily,
                             color: PLOT_STYLE.textColor,
                             size: PLOT_STYLE.fontSize,
                         },
