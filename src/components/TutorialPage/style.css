@@ -40,6 +40,10 @@
         padding: 0;
     }
 
+    .approach-block ol, ul {
+        padding-left: 1em;
+    }
+
     .approach-block .list-header {
         font-size: 0.8rem;
     }
