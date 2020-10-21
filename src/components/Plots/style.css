@@ -3,6 +3,10 @@
     text-align: center;
 }
 
-.container :global(.ytitle[style]), :global(.xtitle[style]) {
+.container :global(.xtitle[style]), :global(.ytitle[style]) {
+    font-weight: 200 !important;
+}
+
+.container :global(.xtick), :global(.ytick) {
     font-weight: 200 !important;
 }
