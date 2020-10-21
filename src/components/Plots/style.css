@@ -10,3 +10,7 @@
 .container :global(.xtick), :global(.ytick) {
     font-weight: 200 !important;
 }
+
+.container :global(.js-plotly-plot) {
+    margin-bottom: 5px;
+}

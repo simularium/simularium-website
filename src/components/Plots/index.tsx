@@ -15,15 +15,18 @@ interface PlotsProps {
 const styles = require("./style.css");
 
 const PLOT_STYLE = {
+    axisTitleSize: 12,
+    axisTitleStandoff: 3,
     backgroundColor: "#1e1b25",
     backgroundTransparentColor: "#14121987",
     textColor: "#d3d3d3",
     borderColor: "#737373",
     fontFamily: "Overpass",
     fontSize: 11,
-    marginAxis: 60,
-    marginTop: 60,
-    marginDefault: 10,
+    marginTop: 40,
+    marginLeft: 50,
+    marginBottom: 30,
+    marginRight: 5,
     colorway: ["#c9e358", "#12e9ff", "#005097"],
     height: 300,
     width: 260,
@@ -50,20 +53,22 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                             font: {
                                 size: 16,
                             },
-                            x: 0.05,
-                            y: 0.95,
+                            x: 0.03,
+                            y: 0.97,
                         },
                         xaxis: {
                             title: {
                                 text: plot.layout.xaxis.title,
-                                size: 12,
+                                size: PLOT_STYLE.axisTitleSize,
+                                standoff: PLOT_STYLE.axisTitleStandoff,
                             },
                             automargin: true,
                         },
                         yaxis: {
                             title: {
                                 text: plot.layout.yaxis.title,
-                                size: 12,
+                                size: PLOT_STYLE.axisTitleSize,
+                                standoff: PLOT_STYLE.axisTitleStandoff,
                             },
                             automargin: true,
                         },
@@ -81,10 +86,10 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                             y: 1,
                         },
                         margin: {
-                            t: PLOT_STYLE.marginAxis,
-                            l: PLOT_STYLE.marginAxis,
-                            b: PLOT_STYLE.marginAxis,
-                            r: PLOT_STYLE.marginDefault,
+                            t: PLOT_STYLE.marginTop,
+                            l: PLOT_STYLE.marginLeft,
+                            b: PLOT_STYLE.marginBottom,
+                            r: PLOT_STYLE.marginRight,
                         },
                         font: {
                             family: PLOT_STYLE.fontFamily,
