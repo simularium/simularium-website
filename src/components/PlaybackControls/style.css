@@ -29,11 +29,9 @@
     color: var(--dark-theme-btn-color);
 }
 
- 
 .btn[disabled] {
-    background-color: var(--dark-theme-btn-disabled-bg);
-    color: var(--dark-theme-btn-disabled-color);
-
+    background-color: var(--dark-theme-btn-disabled-bg)!important;
+    color: var(--dark-theme-btn-disabled-color)!important;
 }
 .slider {
     flex: 3;

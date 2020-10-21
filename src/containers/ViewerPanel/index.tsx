@@ -173,8 +173,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public startPlay() {
-        const { time, timeStep, simulariumController } = this.props;
-        simulariumController.playFromTime(time + timeStep);
+        const { time, timeStep, simulariumController, totalTime } = this.props;
+        let newTime = time + timeStep;
+        if (newTime >= totalTime) {
+            newTime = 0;
+        }
+        simulariumController.playFromTime(newTime);
         simulariumController.resume();
         this.setState({ isPlaying: true });
     }
@@ -194,12 +198,21 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public receiveTimeChange(timeData: any) {
-        const { changeTime, setViewerStatus, viewerStatus } = this.props;
+        const {
+            changeTime,
+            setViewerStatus,
+            viewerStatus,
+            totalTime,
+            timeStep,
+        } = this.props;
         this.setState({ requestingTimeChange: false });
         const actions: AnyAction[] = [changeTime(timeData.time)];
 
         if (viewerStatus !== VIEWER_SUCCESS) {
             actions.push(setViewerStatus({ status: VIEWER_SUCCESS }));
+        }
+        if (timeData.time + timeStep >= totalTime) {
+            this.pause();
         }
         batchActions(actions);
     }
