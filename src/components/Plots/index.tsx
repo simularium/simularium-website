@@ -39,6 +39,7 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                 {plotData.data.map((plot: PlotInterface) => {
                     console.log(plot.layout);
                     const layout = {
+                        /* cSpell:disable */
                         ...plot.layout,
                         autosize: true,
                         height: PLOT_STYLE.height,
@@ -88,6 +89,7 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                         paper_bgcolor: PLOT_STYLE.backgroundColor,
                         // eslint-disable-next-line @typescript-eslint/camelcase
                         plot_bgcolor: PLOT_STYLE.backgroundColor,
+                        /* cSpell:enable */
                     };
                     return (
                         <Plot
