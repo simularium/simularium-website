@@ -24,7 +24,7 @@ class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
         const { changeTime, time, plotData } = this.props;
         return (
             <div className={styles.container}>
-                {plotData && (
+                {plotData ? (
                     <SideBarContents
                         mainTitle="Plots"
                         content={[
@@ -34,9 +34,10 @@ class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
                                 changeTime={changeTime}
                                 plotData={plotData}
                             />,
-                            null,
                         ]}
                     />
+                ) : (
+                    <SideBarContents mainTitle="Plots" content={[null]} />
                 )}
             </div>
         );
