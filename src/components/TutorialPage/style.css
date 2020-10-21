@@ -34,7 +34,7 @@
 }
 
 /* Makes font size smaller and reduces whitespace on mobile */
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 500px) {
     .approach-block {
         font-size: 0.7rem;
         padding: 0;
