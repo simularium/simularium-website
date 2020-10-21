@@ -2,3 +2,7 @@
     margin: auto;
     text-align: center;
 }
+
+.container :global(.ytitle[style]), :global(.xtitle[style]) {
+    font-weight: 200 !important;
+}

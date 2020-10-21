@@ -54,11 +54,17 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                             y: 0.95,
                         },
                         xaxis: {
-                            ...plot.layout.xaxis,
+                            title: {
+                                text: plot.layout.xaxis.title,
+                                size: 12,
+                            },
                             automargin: true,
                         },
                         yaxis: {
-                            ...plot.layout.yaxis,
+                            title: {
+                                text: plot.layout.yaxis.title,
+                                size: 12,
+                            },
                             automargin: true,
                         },
                         legend: {
