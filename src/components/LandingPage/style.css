@@ -5,8 +5,13 @@
 }
 
 .content h1, h2 {
-    margin-top: -0.3em;
     margin-bottom: 0px;
+}
+
+@media screen and (min-width: 600px) {
+    .content h1, h2 {
+        margin-top: -0.3em;
+    }
 }
 
 /* Makes font size smaller for paragraph blocks on mobile */
@@ -69,8 +74,7 @@ On smaller screens the width is 100% of parent div. */
 }
 
 .call-to-action-panel {
-    padding-top: 3.5em;
-    padding-bottom: 3.5em;
+    padding: 3.5em;
     background-color: var(--light-theme-background-purple);
     text-align: center;
 }
