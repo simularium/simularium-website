@@ -44,7 +44,7 @@ export default class Plots extends React.Component<PlotsProps, {}> {
         return (
             <div className={styles.container}>
                 {plotData.data.map((plot: PlotInterface) => {
-                    // Give plots with a legend (multi-curve plots) more vertical room
+                    // Give plots with a legend (multi-trace plots) more vertical room
                     const plotHeight =
                         plot.data.length === 1
                             ? PLOT_STYLE.height
@@ -120,9 +120,9 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                         plot_bgcolor: PLOT_STYLE.backgroundColor,
                     };
 
-                    const data = plot.data.map((curveData) => {
+                    const data = plot.data.map((traceData) => {
                         return {
-                            ...curveData,
+                            ...traceData,
                             line: {
                                 width: 1,
                             },
