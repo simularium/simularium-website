@@ -59,6 +59,11 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                             x: 0.03,
                             y: 0.97,
                         },
+                        hoverlabel: {
+                            font: {
+                                family: PLOT_STYLE.fontFamily,
+                            },
+                        },
                         xaxis: {
                             showline: true,
                             linecolor: PLOT_STYLE.axisColor,
@@ -70,6 +75,7 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                             automargin: true,
                             showgrid: false,
                             zeroline: false,
+                            hoverformat: ".1f",
                         },
                         yaxis: {
                             showline: true,
@@ -82,6 +88,7 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                             automargin: true,
                             showgrid: false,
                             zeroline: false,
+                            hoverformat: ".2f",
                         },
                         legend: {
                             bgcolor: PLOT_STYLE.backgroundTransparentColor,
