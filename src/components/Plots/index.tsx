@@ -47,9 +47,9 @@ export default class Plots extends React.Component<PlotsProps, {}> {
         return (
             <div className={styles.container}>
                 {plotData.data.map((plot: PlotInterface) => {
-                    console.log(plot.layout);
+                    console.log(plot.data);
+                    /* cSpell:disable */
                     const layout = {
-                        /* cSpell:disable */
                         ...plot.layout,
                         autosize: true,
                         height: PLOT_STYLE.height,
@@ -71,6 +71,8 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                                 standoff: PLOT_STYLE.axisTitleStandoff,
                             },
                             automargin: true,
+                            showgrid: false,
+                            zeroline: false,
                         },
                         yaxis: {
                             showline: true,
@@ -81,6 +83,8 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                                 standoff: PLOT_STYLE.axisTitleStandoff,
                             },
                             automargin: true,
+                            showgrid: false,
+                            zeroline: false,
                         },
                         legend: {
                             bgcolor: PLOT_STYLE.backgroundTransparentColor,
@@ -111,12 +115,26 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                         paper_bgcolor: PLOT_STYLE.backgroundColor,
                         // eslint-disable-next-line @typescript-eslint/camelcase
                         plot_bgcolor: PLOT_STYLE.backgroundColor,
-                        /* cSpell:enable */
                     };
+
+                    const formattedData = plot.data.map((unformattedPlot) => {
+                        return {
+                            ...unformattedPlot,
+                            line: {
+                                width: 1,
+                            },
+                            marker: {
+                                size: 2,
+                            },
+                        };
+                    });
+                    /* cSpell:enable */
+
+                    console.log(formattedData);
                     return (
                         <Plot
                             key={plot.layout.title}
-                            data={plot.data}
+                            data={formattedData}
                             useResizeHandler={true}
                             layout={layout}
                             config={{ displayModeBar: false }}
