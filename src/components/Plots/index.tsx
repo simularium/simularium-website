@@ -95,7 +95,7 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                                 ...AXIS_ATTRIBUTES.title,
                                 text: plot.layout.xaxis.title,
                             },
-                            hoverformat: ".1f",
+                            hoverformat: ".1f", // Show 1 decimal place
                         },
                         yaxis: {
                             ...AXIS_ATTRIBUTES,
@@ -103,7 +103,7 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                                 ...AXIS_ATTRIBUTES.title,
                                 text: plot.layout.yaxis.title,
                             },
-                            hoverformat: ".2f",
+                            hoverformat: ".2f", // Show 2 decimal places
                         },
                         legend: {
                             xanchor: "left" as "left",
@@ -130,6 +130,7 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                         /* cSpell:enable */
                     };
 
+                    // Add line and marker styling to data
                     const data = plot.data.map((traceData) => {
                         return {
                             ...traceData,

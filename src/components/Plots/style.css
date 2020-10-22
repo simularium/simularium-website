@@ -3,7 +3,8 @@
     text-align: center;
 }
 
-.container :global(.xtitle[style]), :global(.ytitle[style]), :global(.xtick), :global(.ytick) {
+/* cspell:disable-next-line */
+.container :global(.xtitle), :global(.ytitle), :global(.xtick), :global(.ytick) {
     font-weight: 200 !important;
 }
 
