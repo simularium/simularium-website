@@ -69,9 +69,9 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                             ? PLOT_STYLE.height + 80
                             : PLOT_STYLE.height;
 
-                    /* cSpell:disable */
                     const layout = {
                         ...plot.layout,
+                        /* cSpell:disable */
                         autosize: true,
                         height: plotHeight,
                         width: PLOT_STYLE.width,
@@ -127,6 +127,7 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                         paper_bgcolor: PLOT_STYLE.backgroundColor,
                         // eslint-disable-next-line @typescript-eslint/camelcase
                         plot_bgcolor: PLOT_STYLE.backgroundColor,
+                        /* cSpell:enable */
                     };
 
                     const data = plot.data.map((traceData) => {
@@ -144,7 +145,6 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                             },
                         };
                     });
-                    /* cSpell:enable */
 
                     return (
                         <Plot
