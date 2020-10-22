@@ -615,11 +615,9 @@
     color: var(--dark-theme-btn-color);
 }
 
- 
 .style__btn--1jmhT[disabled] {
-    background-color: var(--dark-theme-btn-disabled-bg);
-    color: var(--dark-theme-btn-disabled-color);
-
+    background-color: var(--dark-theme-btn-disabled-bg)!important;
+    color: var(--dark-theme-btn-disabled-color)!important;
 }
 .style__slider--2wO3I {
     flex: 3 1;
