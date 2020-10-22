@@ -117,9 +117,9 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                         plot_bgcolor: PLOT_STYLE.backgroundColor,
                     };
 
-                    const formattedData = plot.data.map((unformattedPlot) => {
+                    const data = plot.data.map((curveData) => {
                         return {
-                            ...unformattedPlot,
+                            ...curveData,
                             line: {
                                 width: 1,
                             },
@@ -130,11 +130,11 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                     });
                     /* cSpell:enable */
 
-                    console.log(formattedData);
+                    console.log(data);
                     return (
                         <Plot
                             key={plot.layout.title}
-                            data={formattedData}
+                            data={data}
                             useResizeHandler={true}
                             layout={layout}
                             config={{ displayModeBar: false }}
