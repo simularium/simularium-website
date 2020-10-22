@@ -17,6 +17,7 @@ const styles = require("./style.css");
 const COLORS = {
     darkTwo: "#1e1b25",
     whiteTwo: "#d3d3d3",
+    babyPurple: "#b59ff6",
 };
 
 const PLOT_STYLE = {
@@ -33,7 +34,13 @@ const PLOT_STYLE = {
     marginLeft: 50,
     marginBottom: 30,
     marginRight: 5,
-    colorway: ["#c9e358", "#12e9ff", "#005097"],
+    colorway: [
+        "#c9e358",
+        "#12e9ff",
+        "#005097",
+        COLORS.babyPurple,
+        COLORS.whiteTwo,
+    ],
     height: 260,
     width: 260,
 };
