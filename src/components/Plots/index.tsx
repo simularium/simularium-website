@@ -14,12 +14,18 @@ interface PlotsProps {
 
 const styles = require("./style.css");
 
+const COLORS = {
+    darkTwo: "#1e1b25",
+    whiteTwo: "#d3d3d3",
+};
+
 const PLOT_STYLE = {
+    axisColor: COLORS.whiteTwo,
     axisTitleSize: 12,
     axisTitleStandoff: 3,
-    backgroundColor: "#1e1b25",
+    backgroundColor: COLORS.darkTwo,
     backgroundTransparentColor: "#14121987",
-    textColor: "#d3d3d3",
+    textColor: COLORS.whiteTwo,
     borderColor: "#737373",
     fontFamily: "Overpass",
     fontSize: 11,
@@ -57,6 +63,8 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                             y: 0.97,
                         },
                         xaxis: {
+                            showline: true,
+                            linecolor: PLOT_STYLE.axisColor,
                             title: {
                                 text: plot.layout.xaxis.title,
                                 size: PLOT_STYLE.axisTitleSize,
@@ -65,6 +73,8 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                             automargin: true,
                         },
                         yaxis: {
+                            showline: true,
+                            linecolor: PLOT_STYLE.axisColor,
                             title: {
                                 text: plot.layout.yaxis.title,
                                 size: PLOT_STYLE.axisTitleSize,
