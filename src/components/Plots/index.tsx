@@ -76,6 +76,7 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                             font: {
                                 family: PLOT_STYLE.fontFamily,
                             },
+                            namelength: 0,
                         },
                         xaxis: {
                             showline: true,
@@ -134,7 +135,11 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                                 width: 1,
                             },
                             marker: {
-                                size: 2,
+                                size: 3,
+                                line: {
+                                    color: PLOT_STYLE.backgroundColor,
+                                    width: 0.5,
+                                },
                             },
                         };
                     });
