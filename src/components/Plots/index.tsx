@@ -53,11 +53,10 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                 {plotData.data.map((plot: PlotInterface) => {
                     // Give plots with a legend (multi-trace plots) more vertical room
                     const plotHeight =
-                        plot.data.length === 1
-                            ? PLOT_STYLE.height
-                            : PLOT_STYLE.height + 80;
+                        plot.data.length > 1
+                            ? PLOT_STYLE.height + 80
+                            : PLOT_STYLE.height;
 
-                    console.log(plot.data);
                     /* cSpell:disable */
                     const layout = {
                         ...plot.layout,
@@ -145,7 +144,6 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                     });
                     /* cSpell:enable */
 
-                    console.log(data);
                     return (
                         <Plot
                             key={plot.layout.title}
