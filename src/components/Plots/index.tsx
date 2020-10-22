@@ -34,7 +34,7 @@ const PLOT_STYLE = {
     marginBottom: 30,
     marginRight: 5,
     colorway: ["#c9e358", "#12e9ff", "#005097"],
-    height: 300,
+    height: 260,
     width: 260,
 };
 
@@ -44,12 +44,18 @@ export default class Plots extends React.Component<PlotsProps, {}> {
         return (
             <div className={styles.container}>
                 {plotData.data.map((plot: PlotInterface) => {
+                    // Give plots with a legend (multi-curve plots) more vertical room
+                    const plotHeight =
+                        plot.data.length === 1
+                            ? PLOT_STYLE.height
+                            : PLOT_STYLE.height + 80;
+
                     console.log(plot.data);
                     /* cSpell:disable */
                     const layout = {
                         ...plot.layout,
                         autosize: true,
-                        height: PLOT_STYLE.height,
+                        height: plotHeight,
                         width: PLOT_STYLE.width,
                         title: {
                             text: plot.layout.title,
@@ -92,8 +98,9 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                         },
                         legend: {
                             xanchor: "left" as "left",
+                            yanchor: "top" as "top",
                             x: 0,
-                            y: -0.6,
+                            y: -0.2,
                         },
                         margin: {
                             t: PLOT_STYLE.marginTop,
