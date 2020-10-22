@@ -21,9 +21,6 @@ const COLORS = {
 };
 
 const PLOT_STYLE = {
-    axisColor: COLORS.whiteTwo,
-    axisTitleSize: 12,
-    axisTitleStandoff: 3,
     backgroundColor: COLORS.darkTwo,
     backgroundTransparentColor: "#14121987",
     textColor: COLORS.whiteTwo,
@@ -43,6 +40,21 @@ const PLOT_STYLE = {
     ],
     height: 260,
     width: 260,
+};
+
+// Shared between x-axis and y-axis
+const AXIS_ATTRIBUTES = {
+    /* cSpell:disable */
+    showline: true,
+    linecolor: COLORS.whiteTwo,
+    title: {
+        size: 12,
+        standoff: 3,
+    },
+    automargin: true,
+    showgrid: false,
+    zeroline: false,
+    /* cSpell:enable */
 };
 
 export default class Plots extends React.Component<PlotsProps, {}> {
@@ -78,29 +90,19 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                             namelength: 0,
                         },
                         xaxis: {
-                            showline: true,
-                            linecolor: PLOT_STYLE.axisColor,
+                            ...AXIS_ATTRIBUTES,
                             title: {
+                                ...AXIS_ATTRIBUTES.title,
                                 text: plot.layout.xaxis.title,
-                                size: PLOT_STYLE.axisTitleSize,
-                                standoff: PLOT_STYLE.axisTitleStandoff,
                             },
-                            automargin: true,
-                            showgrid: false,
-                            zeroline: false,
                             hoverformat: ".1f",
                         },
                         yaxis: {
-                            showline: true,
-                            linecolor: PLOT_STYLE.axisColor,
+                            ...AXIS_ATTRIBUTES,
                             title: {
+                                ...AXIS_ATTRIBUTES.title,
                                 text: plot.layout.yaxis.title,
-                                size: PLOT_STYLE.axisTitleSize,
-                                standoff: PLOT_STYLE.axisTitleStandoff,
                             },
-                            automargin: true,
-                            showgrid: false,
-                            zeroline: false,
                             hoverformat: ".2f",
                         },
                         legend: {
