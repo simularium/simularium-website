@@ -91,17 +91,9 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                             hoverformat: ".2f",
                         },
                         legend: {
-                            bgcolor: PLOT_STYLE.backgroundTransparentColor,
-                            font: {
-                                color: PLOT_STYLE.textColor,
-                                size: PLOT_STYLE.fontSize,
-                            },
-                            // orientation: "h" as "h",
-                            bordercolor: PLOT_STYLE.borderColor,
-                            borderwidth: 0.5,
-                            xanchor: "right" as "right",
-                            x: 1,
-                            y: 1,
+                            xanchor: "left" as "left",
+                            x: 0,
+                            y: -0.6,
                         },
                         margin: {
                             t: PLOT_STYLE.marginTop,
