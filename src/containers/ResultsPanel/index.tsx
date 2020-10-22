@@ -24,7 +24,7 @@ class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
         const { changeTime, time, plotData } = this.props;
         return (
             <div className={styles.container}>
-                {plotData ? (
+                {plotData && plotData.data ? (
                     <SideBarContents
                         mainTitle="Plots"
                         content={[

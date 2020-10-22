@@ -41,9 +41,6 @@ const PLOT_STYLE = {
 export default class Plots extends React.Component<PlotsProps, {}> {
     public render(): JSX.Element | null {
         const { plotData } = this.props;
-        if (!plotData.data) {
-            return null;
-        }
         return (
             <div className={styles.container}>
                 {plotData.data.map((plot: PlotInterface) => {
