@@ -4,8 +4,13 @@
 }
 
 /* cspell:disable-next-line */
-.container :global(.xtitle), :global(.ytitle), :global(.xtick), :global(.ytick) {
+.container :global(.xtitle), :global(.ytitle) {
     font-weight: 200 !important;
+}
+
+/* cspell:disable-next-line */
+.container :global(.legendtext), :global(.xtick), :global(.ytick) {
+    font-weight: 200;
 }
 
 .container :global(.js-plotly-plot) {
