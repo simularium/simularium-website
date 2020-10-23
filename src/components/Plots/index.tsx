@@ -27,6 +27,7 @@ const PLOT_STYLE = {
     borderColor: "#737373",
     fontFamily: "Overpass",
     fontSize: 11,
+    legendItemHeight: 19, // Dependent on fontSize
     marginTop: 40,
     marginLeft: 50,
     marginBottom: 30,
@@ -38,7 +39,7 @@ const PLOT_STYLE = {
         COLORS.babyPurple,
         COLORS.whiteTwo,
     ],
-    height: 260,
+    height: 240,
     width: 260,
 };
 
@@ -63,10 +64,12 @@ export default class Plots extends React.Component<PlotsProps, {}> {
         return (
             <div className={styles.container}>
                 {plotData.map((plot: PlotInterface) => {
-                    // Give plots with a legend (multi-trace plots) more vertical room
+                    // Give plots with a legend (multi-trace plots) more vertical room.
+                    const numTraces = plot.data.length;
                     const plotHeight =
-                        plot.data.length > 1
-                            ? PLOT_STYLE.height + 80
+                        numTraces > 1
+                            ? PLOT_STYLE.height +
+                              PLOT_STYLE.legendItemHeight * numTraces
                             : PLOT_STYLE.height;
 
                     const layout = {
