@@ -29,8 +29,9 @@ const Footer: React.FunctionComponent<{}> = () => {
                     </a>
                 </div>
                 <div className={styles.linkColumn}>
-                    {/* TODO: Put in link to real forum when available */}
-                    <a href="#">Forum</a>
+                    <a href="https://forum.allencell.org/c/software-code/simularium/">
+                        Forum
+                    </a>
                 </div>
             </Row>
             <Row justify="space-around">
