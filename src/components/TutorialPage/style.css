@@ -23,7 +23,7 @@
 }
 
 /* Prevents image from being huge on larger screens */
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 576px) {
     .drag-drop-image {
         width: 400px;
     }
@@ -34,7 +34,7 @@
 }
 
 /* Makes font size smaller and reduces whitespace on mobile */
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 480px) {
     .approach-block {
         font-size: 0.7rem;
         padding: 0;

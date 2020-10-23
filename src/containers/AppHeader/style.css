@@ -52,7 +52,7 @@
 }
 
 /* Hide the Load Model button in narrow screens */
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 480px) {
     .page-header :global(.ant-btn-ghost) {
         display: none;
     }
