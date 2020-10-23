@@ -22,23 +22,20 @@ interface ResultsPanelProps {
 class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
     public render(): JSX.Element {
         const { changeTime, time, plotData } = this.props;
+        const content =
+            plotData && plotData.data
+                ? [
+                      <Plots
+                          time={time}
+                          key="graph"
+                          changeTime={changeTime}
+                          plotData={plotData}
+                      />,
+                  ]
+                : [];
         return (
             <div className={styles.container}>
-                {plotData && plotData.data ? (
-                    <SideBarContents
-                        mainTitle="Plots"
-                        content={[
-                            <Plots
-                                time={time}
-                                key="graph"
-                                changeTime={changeTime}
-                                plotData={plotData}
-                            />,
-                        ]}
-                    />
-                ) : (
-                    <SideBarContents mainTitle="Plots" content={[null]} />
-                )}
+                <SideBarContents mainTitle="Plots" content={content} />
             </div>
         );
     }
