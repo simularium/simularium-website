@@ -27,7 +27,7 @@ const PLOT_STYLE = {
     borderColor: "#737373",
     fontFamily: "Overpass",
     fontSize: 11,
-    legendItemHeight: 19, // Dependent on fontSize
+    legendItemHeight: 19, // Dependent on fontSize and fontFamily
     marginTop: 40,
     marginLeft: 50,
     marginBottom: 30,
