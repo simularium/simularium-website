@@ -22,16 +22,17 @@ interface ResultsPanelProps {
 class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
     public render(): JSX.Element {
         const { changeTime, time, plotData } = this.props;
-        const content = plotData
-            ? [
-                  <Plots
-                      time={time}
-                      key="graph"
-                      changeTime={changeTime}
-                      plotData={plotData}
-                  />,
-              ]
-            : [];
+        const content =
+            plotData && plotData.length > 0
+                ? [
+                      <Plots
+                          time={time}
+                          key="graph"
+                          changeTime={changeTime}
+                          plotData={plotData}
+                      />,
+                  ]
+                : [];
         return (
             <div className={styles.container}>
                 <SideBarContents mainTitle="Plots" content={content} />
