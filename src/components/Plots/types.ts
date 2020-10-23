@@ -23,8 +23,3 @@ export interface PlotInterface {
     data: (ScatterTrace | HistogramTrace)[];
     layout: Layout;
 }
-
-export interface PlotData {
-    version: number;
-    data: PlotInterface[];
-}

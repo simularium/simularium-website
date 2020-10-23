@@ -4,10 +4,10 @@ import { ActionCreator } from "redux";
 
 import { ChangeTimeAction } from "../../state/selection/types.js";
 
-import { PlotData, PlotInterface } from "./types";
+import { PlotInterface } from "./types";
 
 interface PlotsProps {
-    plotData: PlotData;
+    plotData: PlotInterface[];
     time: number;
     changeTime: ActionCreator<ChangeTimeAction>;
 }
@@ -62,7 +62,7 @@ export default class Plots extends React.Component<PlotsProps, {}> {
         const { plotData } = this.props;
         return (
             <div className={styles.container}>
-                {plotData.data.map((plot: PlotInterface) => {
+                {plotData.map((plot: PlotInterface) => {
                     // Give plots with a legend (multi-trace plots) more vertical room
                     const plotHeight =
                         plot.data.length > 1

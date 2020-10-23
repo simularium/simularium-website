@@ -45,7 +45,7 @@ const requestPlotDataLogic = createLogic({
         httpClient
             .get(`${plotDataUrl}${baseApiUrl}/${action.payload.url}`)
             .then((metadata: AxiosResponse) => {
-                dispatch(receiveMetadata({ plotData: metadata.data }));
+                dispatch(receiveMetadata({ plotData: metadata.data.data }));
             })
             .catch((reason) => {
                 console.log(reason);
@@ -162,7 +162,7 @@ const loadLocalFile = createLogic({
             .then(() => {
                 dispatch(
                     receiveMetadata({
-                        plotData: simulariumFile.data.plotData,
+                        plotData: simulariumFile.data.plotData.data,
                     })
                 );
             })
