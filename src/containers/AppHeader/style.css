@@ -26,11 +26,6 @@
     width: 80%;
 }
 
-.page-header :global(.ant-page-header-footer) {
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
 .page-header :global(.ant-page-header-back-button) img {
     width: 40px;
 }
@@ -54,6 +49,19 @@
     color: var(--dark-theme-primary-color);
     border-color: var(--dark-theme-primary-color);
     border-radius: 3px;
+}
+
+/* Hide the Load Model button in narrow screens */
+@media screen and (max-width: 480px) {
+    .page-header :global(.ant-btn-ghost) {
+        display: none;
+    }
+}
+
+.page-header :global(.ant-page-header-footer) {
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: right;
 }
 
 .home {

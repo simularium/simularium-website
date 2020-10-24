@@ -6,7 +6,7 @@
 }
 
 .container :global(.ant-row) {
-    width: 800px;
+    width: 75%;
     margin: 0 auto 1.5em auto;
     display: flex;
     font-weight: 200;

@@ -17,14 +17,36 @@
 }
 
 .drag-drop-image {
-    width: 400px;
     border-width: 0.5px;
     border-style: solid;
     margin: 0.5em;
 }
 
+/* Prevents image from being huge on larger screens */
+@media screen and (min-width: 576px) {
+    .drag-drop-image {
+        width: 400px;
+    }
+}
+
 .approach-block {
     margin-bottom: 2em;
+}
+
+/* Makes font size smaller and reduces whitespace on mobile */
+@media screen and (max-width: 480px) {
+    .approach-block {
+        font-size: 0.7rem;
+        padding: 0;
+    }
+
+    .approach-block ol, ul {
+        padding-left: 1em;
+    }
+
+    .approach-block .list-header {
+        font-size: 0.8rem;
+    }
 }
 
 :global(.ant-typography code) {
