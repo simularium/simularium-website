@@ -6,7 +6,7 @@
 }
 
 .style__container--13uHQ .ant-row {
-    width: 800px;
+    width: 75%;
     margin: 0 auto 1.5em auto;
     display: flex;
     font-weight: 200;
@@ -40,14 +40,36 @@
 }
 
 .style__drag-drop-image--1rrQ2 {
-    width: 400px;
     border-width: 0.5px;
     border-style: solid;
     margin: 0.5em;
 }
 
+/* Prevents image from being huge on larger screens */
+@media screen and (min-width: 576px) {
+    .style__drag-drop-image--1rrQ2 {
+        width: 400px;
+    }
+}
+
 .style__approach-block--tGtAu {
     margin-bottom: 2em;
+}
+
+/* Makes font size smaller and reduces whitespace on mobile */
+@media screen and (max-width: 480px) {
+    .style__approach-block--tGtAu {
+        font-size: 0.7rem;
+        padding: 0;
+    }
+
+    .style__approach-block--tGtAu ol, ul {
+        padding-left: 1em;
+    }
+
+    .style__approach-block--tGtAu .style__list-header--3zcej {
+        font-size: 0.8rem;
+    }
 }
 
 .ant-typography code {
@@ -93,8 +115,21 @@
 }
 
 .style__content--2Eyxq h1, h2 {
-    margin-top: -0.3em;
     margin-bottom: 0px;
+}
+
+@media screen and (min-width: 576px) {
+    .style__content--2Eyxq h1, h2 {
+        margin-top: -0.3em;
+    }
+}
+
+/* Makes font size smaller for paragraph blocks on mobile */
+@media screen and (max-width: 480px) {
+    .style__content--2Eyxq p {
+        font-size: 0.8rem;
+        margin-bottom: 1em;
+    }
 }
 
 .style__panel--dJ60s {
@@ -131,8 +166,6 @@
 
 /* Simularium overview flowchart image */
 .style__flowchart--2EMjl {
-    width: 60%;
-    min-width: 600px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -140,9 +173,17 @@
     margin-bottom: 1em;
 }
 
+/* On larger screens, the flowchart width is 60% of parent div or 600px, whichever is larger.
+On smaller screens the width is 100% of parent div. */
+@media screen and (min-width: 768px) {
+    .style__flowchart--2EMjl {
+        width: 60%;
+        min-width: 600px;
+    }
+}
+
 .style__call-to-action-panel--2f3Eh {
-    padding-top: 3.5em;
-    padding-bottom: 3.5em;
+    padding: 3.5em;
     background-color: var(--light-theme-background-purple);
     text-align: center;
 }
@@ -779,11 +820,6 @@
     width: 80%;
 }
 
-.style__page-header--18F6z .ant-page-header-footer {
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
 .style__page-header--18F6z .ant-page-header-back-button img {
     width: 40px;
 }
@@ -807,6 +843,19 @@
     color: var(--dark-theme-primary-color);
     border-color: var(--dark-theme-primary-color);
     border-radius: 3px;
+}
+
+/* Hide the Load Model button in narrow screens */
+@media screen and (max-width: 480px) {
+    .style__page-header--18F6z .ant-btn-ghost {
+        display: none;
+    }
+}
+
+.style__page-header--18F6z .ant-page-header-footer {
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: right;
 }
 
 .style__home--3Sd_4 {
