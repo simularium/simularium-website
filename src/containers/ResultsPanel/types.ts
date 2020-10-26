@@ -1,3 +1,5 @@
+import { PlotParams } from "react-plotly.js";
+
 // TODO: import from observable manager
 interface ScatterTrace {
     x: number[];
@@ -15,11 +17,17 @@ interface HistogramTrace {
 
 interface Layout {
     title: string;
+    /* cSpell:disable */
     xaxis: { title: string };
     yaxis: { title: string };
+    /* cSpell:enable */
 }
 
-export interface PlotInterface {
+export interface RawPlotParams {
     data: (ScatterTrace | HistogramTrace)[];
     layout: Layout;
+}
+
+export interface PlotParamsWithKey extends PlotParams {
+    key: string;
 }
