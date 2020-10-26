@@ -5,6 +5,11 @@ import { getPlotData } from "../../state/metadata/selectors";
 import { PLOT_STYLE, AXIS_ATTRIBUTES } from "./constants";
 import { PlotParamsWithKey, RawPlotParams } from "./types";
 
+/*
+1) Add Plotly layout and styling attributes to raw input plot data
+    Plotly reference: https://plotly.com/javascript/reference/index/
+2) Add a key to the plot data to make React happy when using array.map()
+*/
 export const configurePlots = createSelector(
     [getPlotData],
     (plotData: RawPlotParams[]): PlotParamsWithKey[] => {
