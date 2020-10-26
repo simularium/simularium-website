@@ -30,7 +30,7 @@ pipeline {
         // N.b.: For choice parameters, the first choice is the default value
         // See https://github.com/jenkinsci/jenkins/blob/master/war/src/main/webapp/help/parameter/choice-choices.html
         choice(name: "JOB_TYPE", choices: [BUILD_ARTIFACT, PROMOTE_ARTIFACT, DEPLOY_ARTIFACT], description: "Which type of job this is.")
-        choice(name: "DEPLOYMENT_TYPE", choices: [STAGING_DEPLOYMENT, PRODUCTION_DEPLOYMENT], description: "Target environment for deployment. Will determine which S3 bucket assets are deployed to and how the release history is written. This is only used if JOB_TYPE is ${DEPLOY_ARTIFACT}.")
+        choice(name: "DEPLOYMENT_TYPE", choices: [PRODUCTION_DEPLOYMENT, STAGING_DEPLOYMENT], description: "Target environment for deployment. Will determine which S3 bucket assets are deployed to and how the release history is written. This is only used if JOB_TYPE is ${DEPLOY_ARTIFACT}.")
         gitParameter(name: "GIT_TAG", defaultValue: GIT_TAG_SENTINEL, type: "PT_TAG", sortMode: "DESCENDING_SMART", description: "Select a Git tag specifying the artifact which should be promoted or deployed. This is only used if JOB_TYPE is ${PROMOTE_ARTIFACT} or ${DEPLOY_ARTIFACT}")
     }
     environment {
@@ -73,21 +73,38 @@ pipeline {
                 equals expected: BUILD_ARTIFACT, actual: params.JOB_TYPE
             }
             environment {
-                DEPLOYMENT_ENV = "staging"
+                DEPLOYMENT_ENV = STAGING_DEPLOYMENT
             }
             steps {
                 sh "./gradlew -i snapshotPublishTarGzAndDockerImage"
             }
         }
-
-        stage ("build and push: master branch") {
+        // TODO: Combine these and paramaterize DEPLOYMENT_ENV such that
+        // on auto-deploy builds DEPLOYMENT_ENV = "staging" and on user trigger it equals the user
+        // chosen param
+        stage ("auto build staging and push: master branch") {
             when {
                 expression { !IGNORE_AUTHORS.contains(gitAuthor()) }
                 branch "master"
                 equals expected: BUILD_ARTIFACT, actual: params.JOB_TYPE
             }
             environment {
-                DEPLOYMENT_ENV = "production"
+                DEPLOYMENT_ENV = STAGING_DEPLOYMENT
+            }
+            steps {
+                sh "${PYTHON} ${VENV_BIN}/manage_version -t gradle -s prepare"
+                sh "./gradlew -i snapshotPublishTarGzAndDockerImage"
+                sh "${PYTHON} ${VENV_BIN}/manage_version -t gradle -s tag"
+            }
+        }
+
+        // Defaults to production, but can be switched to staging if user selects
+        stage ("build production and push: user trigger") {
+            when {
+                equals expected: DEPLOY_ARTIFACT, actual: params.JOB_TYPE
+            }
+            environment {
+                DEPLOYMENT_ENV = params.DEPLOYMENT_TYPE
             }
             steps {
                 sh "${PYTHON} ${VENV_BIN}/manage_version -t gradle -s prepare"
@@ -98,7 +115,8 @@ pipeline {
 
         stage ("promote") {
             when {
-                equals expected: PROMOTE_ARTIFACT, actual: params.JOB_TYPE
+                equals expected: PRODUCTION_DEPLOYMENT, actual: params.DEPLOYMENT_TYPE
+                equals expected: DEPLOY_ARTIFACT, actual: params.JOB_TYPE
             }
             steps {
                 sh "${PYTHON} ${VENV_BIN}/promote_artifact -t maven -g ${params.GIT_TAG}"
@@ -111,6 +129,7 @@ pipeline {
                 branch "master"
                 equals expected: BUILD_ARTIFACT, actual: params.JOB_TYPE
             }
+
             steps {
                 script {
                     DEPLOYMENT_TYPE = STAGING_DEPLOYMENT
@@ -120,6 +139,7 @@ pipeline {
                     // HACK - switch back to detached commit to get the tag
                     GIT_TAG = sh(script: 'git checkout - && git describe --tags --exact-match', returnStdout: true).trim()
                 }
+                
                 // Automatically deploy to staging env on changes to master branch
                 sh "${PYTHON} ${VENV_BIN}/deploy_artifact -d --branch=${env.BRANCH_NAME} --deploy-env=${DEPLOYMENT_TYPE} maven-tgz S3 --artifactory-repo=${ARTIFACTORY_REPO} --bucket=${S3_BUCKET} ${GIT_TAG}"
                 invalidateCache(CLOUDFRONT_ID)
@@ -132,10 +152,12 @@ pipeline {
             }
             steps {
                 script {
-                    ARTIFACTORY_REPO = DEPLOYMENT_TARGET_TO_MAVEN_REPO[params.DEPLOYMENT_TYPE]
-                    S3_BUCKET = DEPLOYMENT_TARGET_TO_S3_BUCKET[params.DEPLOYMENT_TYPE]
+                    DEPLOYMENT_TYPE = params.DEPLOYMENT_TYPE
                     CLOUDFRONT_ID = TARGET_CLOUDFRONT[DEPLOYMENT_TYPE]
+                    ARTIFACTORY_REPO = DEPLOYMENT_TARGET_TO_MAVEN_REPO[DEPLOYMENT_TYPE]
+                    S3_BUCKET = DEPLOYMENT_TARGET_TO_S3_BUCKET[DEPLOYMENT_TYPE]
                 }
+
                 sh "${PYTHON} ${VENV_BIN}/deploy_artifact -d --branch=${env.BRANCH_NAME} --deploy-env=${params.DEPLOYMENT_TYPE} maven-tgz S3 --artifactory-repo=${ARTIFACTORY_REPO} --bucket=${S3_BUCKET} ${params.GIT_TAG}"
                 invalidateCache(CLOUDFRONT_ID)
             }
