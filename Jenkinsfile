@@ -112,15 +112,15 @@ pipeline {
             }
         }
 
-        stage ("promote") {
-            when {
-                equals expected: PRODUCTION_DEPLOYMENT, actual: params.DEPLOYMENT_TYPE
-                equals expected: DEPLOY_ARTIFACT, actual: params.JOB_TYPE
-            }
-            steps {
-                sh "${PYTHON} ${VENV_BIN}/promote_artifact -t maven -g ${params.GIT_TAG}"
-            }
-        }
+        // stage ("promote") {
+        //     when {
+        //         equals expected: PRODUCTION_DEPLOYMENT, actual: params.DEPLOYMENT_TYPE
+        //         equals expected: DEPLOY_ARTIFACT, actual: params.JOB_TYPE
+        //     }
+        //     steps {
+        //         sh "${PYTHON} ${VENV_BIN}/promote_artifact -t maven -g ${params.GIT_TAG}"
+        //     }
+        // }
 
         stage("automated deploy") {
             when {
