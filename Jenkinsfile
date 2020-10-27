@@ -73,7 +73,7 @@ pipeline {
                 equals expected: BUILD_ARTIFACT, actual: params.JOB_TYPE
             }
             environment {
-                DEPLOYMENT_ENV = STAGING_DEPLOYMENT
+                DEPLOYMENT_ENV = "staging"
             }
             steps {
                 sh "./gradlew -i snapshotPublishTarGzAndDockerImage"
@@ -89,7 +89,7 @@ pipeline {
                 equals expected: BUILD_ARTIFACT, actual: params.JOB_TYPE
             }
             environment {
-                DEPLOYMENT_ENV = STAGING_DEPLOYMENT
+                DEPLOYMENT_ENV = "staging"
             }
             steps {
                 sh "${PYTHON} ${VENV_BIN}/manage_version -t gradle -s prepare"
@@ -103,13 +103,12 @@ pipeline {
             when {
                 equals expected: DEPLOY_ARTIFACT, actual: params.JOB_TYPE
             }
-            environment {
-                DEPLOYMENT_ENV = params.DEPLOYMENT_TYPE
-            }
             steps {
-                sh "${PYTHON} ${VENV_BIN}/manage_version -t gradle -s prepare"
-                sh "./gradlew -i snapshotPublishTarGzAndDockerImage"
-                sh "${PYTHON} ${VENV_BIN}/manage_version -t gradle -s tag"
+                withEnv(["DEPLOYMENT_ENV=${params.DEPLOYMENT_TYPE}"]) {
+                    sh "${PYTHON} ${VENV_BIN}/manage_version -t gradle -s prepare"
+                    sh "./gradlew -i snapshotPublishTarGzAndDockerImage"
+                    sh "${PYTHON} ${VENV_BIN}/manage_version -t gradle -s tag"
+                }
             }
         }
 
