@@ -1,55 +1,10 @@
 import { createSelector } from "reselect";
-import { Shape, Layout } from "plotly.js";
+import { Layout, Data } from "plotly.js";
 
 import { getPlotData } from "../../state/metadata/selectors";
 
 import { PLOT_STYLE, AXIS_ATTRIBUTES } from "./constants";
-import {
-    PlotParamsWithKey,
-    RawPlotParams,
-    ScatterTrace,
-    HistogramTrace,
-} from "./types";
-
-// Using autorange I can't get the exact values of the y-axis range needed for drawing the vertical line (shape) so need to manually configure y axis.
-// NOTE: Only call when not a histogram
-const yAxisRange = (plot: ScatterTrace[]): number[] => {
-    let yAxisMin: number | undefined;
-    let yAxisMax: number | undefined;
-    plot.forEach((trace) => {
-        const localMin = Math.min(...trace.y);
-        const localMax = Math.max(...trace.y);
-        if (yAxisMin === undefined || localMin < yAxisMin) {
-            yAxisMin = localMin;
-        }
-        if (yAxisMax === undefined || localMax > yAxisMax) {
-            yAxisMax = localMax;
-        }
-    });
-
-    if (yAxisMin === undefined || yAxisMax === undefined) return [];
-    const padding = (yAxisMax - yAxisMin) * 0.05;
-    return [yAxisMin - padding, yAxisMax + padding];
-};
-
-// const createTimeIndicatorLine = (plot: RawPlotParams): Partial<Shape>[] => {
-//     let shapes = [];
-//     if (plot.data[0].type === "scatter") {  // TODO: also check for time name on x axis
-//         shapes.push({
-//             type: "line" as "line",
-//             x0: plot.data[0].x[1],
-//             y0: getYAxisRange(plot)[0],
-//             x1: plot.data[0].x[1],
-//             y1: getYAxisRange(plot)[1],
-//             line: {
-//                 color: "#ffffff",
-//                 width: 1,
-//             },
-//         })
-//     }
-
-//     return shapes;
-// };
+import { PlotParamsWithKey, RawPlotParams } from "./types";
 
 /*
 1) Add Plotly layout and styling attributes to raw input plot data
@@ -106,12 +61,18 @@ export const configurePlots = createSelector(
                     },
                     hoverformat: ".2f", // Show 2 decimal places
                 },
+                yaxis2: {
+                    overlaying: "y",
+                    range: [0, 1],
+                    visible: false,
+                },
                 legend: {
                     xanchor: "left" as "left",
                     yanchor: "top" as "top",
                     x: 0,
                     y: -0.2,
                 },
+                showlegend: numTraces > 1 ? true : false,
                 margin: {
                     t: PLOT_STYLE.marginTop,
                     l: PLOT_STYLE.marginLeft,
@@ -129,24 +90,10 @@ export const configurePlots = createSelector(
                 // eslint-disable-next-line @typescript-eslint/camelcase
                 plot_bgcolor: PLOT_STYLE.backgroundColor,
                 // shapes: createTimeIndicatorLine(plot),
-                /* cSpell:enable */
             };
-
-            // Use a custom y-axis range and display vertical time indicator line for scatter plots
-            const isScatterTrace = (
-                data: (ScatterTrace | HistogramTrace)[]
-            ): data is ScatterTrace[] => {
-                return data[0].type === "scatter";
-            };
-            if (isScatterTrace(plot.data)) {
-                layout.yaxis = {
-                    ...layout.yaxis,
-                    range: yAxisRange(plot.data),
-                };
-            }
 
             // Add line and marker styling to data
-            const data = plot.data.map((traceData) => {
+            let data: Data[] = plot.data.map((traceData) => {
                 return {
                     ...traceData,
                     line: {
@@ -161,6 +108,23 @@ export const configurePlots = createSelector(
                     },
                 };
             });
+
+            const regex = /\btime\b/;
+            /* cSpell:disable */
+            if (regex.test(plot.layout.xaxis.title)) {
+                data.push({
+                    mode: "lines",
+                    x: [0, 0],
+                    y: [0, 1],
+                    xaxis: "x",
+                    yaxis: "y2",
+                    line: {
+                        color: "#ffffff",
+                    },
+                    showlegend: false,
+                });
+            }
+            /* cSpell:enable */
 
             return {
                 key: plot.layout.title,
