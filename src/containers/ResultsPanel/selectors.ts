@@ -32,7 +32,7 @@ export const configurePlots = createSelector(
                       PLOT_STYLE.legendItemHeight * numTraces
                     : PLOT_STYLE.height;
 
-            let layout: Partial<Layout> = {
+            const layout: Partial<Layout> = {
                 ...plot.layout,
                 /* cSpell:disable */
                 autosize: true,
@@ -96,7 +96,7 @@ export const configurePlots = createSelector(
                 paper_bgcolor: PLOT_STYLE.backgroundColor,
                 // eslint-disable-next-line @typescript-eslint/camelcase
                 plot_bgcolor: PLOT_STYLE.backgroundColor,
-                // shapes: createTimeIndicatorLine(plot),
+                /* cSpell:enable */
             };
 
             // Add line and marker styling to data
@@ -122,8 +122,8 @@ export const configurePlots = createSelector(
             ): data is ScatterTrace[] => {
                 return data[0].type === "scatter";
             };
-            // X-axis label has the word "time" in it, separated from other characters
-            // by whitespace and/or one or more special characters
+            // Check if the x-axis label has the word "time" in it, separated from other
+            // characters by whitespace and/or one or more special characters
             const isTimePlot = /\btime\b/.test(plot.layout.xaxis.title);
             if (isScatterTrace(plot.data) && isTimePlot && currentTime !== 0) {
                 data.push({
