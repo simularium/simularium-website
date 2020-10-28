@@ -5,7 +5,12 @@ import { getPlotData } from "../../state/metadata/selectors";
 import { getCurrentTime } from "../../state/selection/selectors";
 
 import { PLOT_STYLE, AXIS_ATTRIBUTES } from "./constants";
-import { PlotParamsWithKey, RawPlotParams } from "./types";
+import {
+    PlotParamsWithKey,
+    RawPlotParams,
+    ScatterTrace,
+    HistogramTrace,
+} from "./types";
 
 /*
 1) Add Plotly layout and styling attributes to raw input plot data
@@ -109,10 +114,15 @@ export const configurePlots = createSelector(
                 };
             });
 
-            const regex = /\btime\b/;
-            /* cSpell:disable */
-            if (regex.test(plot.layout.xaxis.title)) {
+            const isScatterTrace = (
+                data: (ScatterTrace | HistogramTrace)[]
+            ): data is ScatterTrace[] => {
+                return data[0].type === "scatter";
+            };
+            const isTimePlot = /\btime\b/.test(plot.layout.xaxis.title);
+            if (isScatterTrace(plot.data) && isTimePlot) {
                 data.push({
+                    /* cSpell:disable */
                     mode: "lines",
                     x: [currentTime, currentTime],
                     y: [0, 1],
@@ -123,9 +133,9 @@ export const configurePlots = createSelector(
                         color: "#ffffff",
                     },
                     showlegend: false,
+                    /* cSpell:enable */
                 });
             }
-            /* cSpell:enable */
 
             return {
                 key: plot.layout.title,
