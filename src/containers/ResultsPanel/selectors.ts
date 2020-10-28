@@ -100,7 +100,7 @@ export const configurePlots = createSelector(
             };
 
             // Add line and marker styling to data
-            let data: Data[] = plot.data.map((traceData) => {
+            const data: Data[] = plot.data.map((traceData) => {
                 return {
                     ...traceData,
                     line: {
