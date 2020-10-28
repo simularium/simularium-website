@@ -2,6 +2,7 @@ import { createSelector } from "reselect";
 import { Layout, Data } from "plotly.js";
 
 import { getPlotData } from "../../state/metadata/selectors";
+import { getCurrentTime } from "../../state/selection/selectors";
 
 import { PLOT_STYLE, AXIS_ATTRIBUTES } from "./constants";
 import { PlotParamsWithKey, RawPlotParams } from "./types";
@@ -12,11 +13,10 @@ import { PlotParamsWithKey, RawPlotParams } from "./types";
 2) Add a key to the plot data to make React happy when using array.map()
 */
 export const configurePlots = createSelector(
-    [getPlotData],
-    (plotData: RawPlotParams[]): PlotParamsWithKey[] => {
+    [getPlotData, getCurrentTime],
+    (plotData: RawPlotParams[], currentTime: number): PlotParamsWithKey[] => {
         if (!plotData) return [];
         return plotData.map((plot: RawPlotParams) => {
-            console.log(plot);
             // Give plots with a legend (multi-trace plots) more vertical room.
             const numTraces = plot.data.length;
             const plotHeight =
@@ -114,11 +114,12 @@ export const configurePlots = createSelector(
             if (regex.test(plot.layout.xaxis.title)) {
                 data.push({
                     mode: "lines",
-                    x: [0, 0],
+                    x: [currentTime, currentTime],
                     y: [0, 1],
                     xaxis: "x",
                     yaxis: "y2",
                     line: {
+                        width: 2,
                         color: "#ffffff",
                     },
                     showlegend: false,
