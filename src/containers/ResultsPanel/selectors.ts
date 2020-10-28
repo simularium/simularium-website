@@ -15,7 +15,9 @@ import {
 /*
 1) Add Plotly layout and styling attributes to raw input plot data
     Plotly reference: https://plotly.com/javascript/reference/index/
-2) Add a key to the plot data to make React happy when using array.map()
+2) Add time indicator line for scatter plots that contain the word "time"
+    in their x-axis label
+3) Add a key to the plot data to make React happy when using array.map()
 */
 export const configurePlots = createSelector(
     [getPlotData, getCurrentTime],
@@ -114,13 +116,16 @@ export const configurePlots = createSelector(
                 };
             });
 
+            // Add time indicator line
             const isScatterTrace = (
                 data: (ScatterTrace | HistogramTrace)[]
             ): data is ScatterTrace[] => {
                 return data[0].type === "scatter";
             };
+            // X-axis label has the word "time" in it, separated from other characters
+            // by whitespace and/or one or more special characters
             const isTimePlot = /\btime\b/.test(plot.layout.xaxis.title);
-            if (isScatterTrace(plot.data) && isTimePlot) {
+            if (isScatterTrace(plot.data) && isTimePlot && currentTime !== 0) {
                 data.push({
                     /* cSpell:disable */
                     mode: "lines",
@@ -129,10 +134,11 @@ export const configurePlots = createSelector(
                     xaxis: "x",
                     yaxis: "y2",
                     line: {
-                        width: 2,
-                        color: "#ffffff",
+                        width: 1,
+                        color: PLOT_STYLE.timeIndicatorColor,
                     },
                     showlegend: false,
+                    hoverinfo: "x",
                     /* cSpell:enable */
                 });
             }
