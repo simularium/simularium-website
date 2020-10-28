@@ -116,7 +116,7 @@ export const configurePlots = createSelector(
                 };
             });
 
-            // Add time indicator line
+            // Add time indicator line for scatter plots with time on x-axis
             const isScatterTrace = (
                 data: (ScatterTrace | HistogramTrace)[]
             ): data is ScatterTrace[] => {
