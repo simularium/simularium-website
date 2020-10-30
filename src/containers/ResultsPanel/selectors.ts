@@ -116,8 +116,8 @@ export const configurePlots = createSelector(
                 };
             });
 
-            // Add time indicator line for scatter plots with time on x-axis
-            const isScatterTrace = (
+            // Type guard for checking if a plot is a scatter plot
+            const isScatterPlot = (
                 data: (ScatterTrace | HistogramTrace)[]
             ): data is ScatterTrace[] => {
                 return data[0].type === "scatter";
@@ -125,7 +125,8 @@ export const configurePlots = createSelector(
             // Check if the x-axis label has the word "time" in it, separated from other
             // characters by whitespace and/or one or more special characters
             const isTimePlot = /\btime\b/.test(plot.layout.xaxis.title);
-            if (isScatterTrace(plot.data) && isTimePlot && currentTime !== 0) {
+            // Add time indicator line for scatter plots with time on x-axis
+            if (isScatterPlot(plot.data) && isTimePlot && currentTime !== 0) {
                 data.push({
                     /* cSpell:disable */
                     mode: "lines",
