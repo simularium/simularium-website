@@ -19,7 +19,7 @@ import {
     in their x-axis label
 3) Add a key to the plot data to make React happy when using array.map()
 */
-export const configurePlots = createSelector(
+export const getPlotDataConfiguredForPlotly = createSelector(
     [getPlotData, getCurrentTime],
     (plotData: RawPlotParams[], currentTime: number): PlotParamsWithKey[] => {
         if (!plotData) return [];
