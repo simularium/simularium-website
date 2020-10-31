@@ -26,7 +26,7 @@ Once input data files are updated we can have the input data use the
 PlotParams interface instead of RawPlotParams.
 */
 
-interface Layout {
+export interface Layout {
     title: string;
     /* cSpell:disable */
     xaxis: { title: string };
