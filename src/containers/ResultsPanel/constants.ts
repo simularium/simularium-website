@@ -9,6 +9,7 @@ export const PLOT_STYLE = {
     backgroundTransparentColor: "#14121987",
     textColor: COLORS.whiteTwo,
     borderColor: "#737373",
+    timeIndicatorColor: COLORS.whiteTwo,
     fontFamily: "Overpass",
     fontSize: 11,
     legendItemHeight: 19, // Dependent on fontSize and fontFamily

@@ -10,7 +10,7 @@ import { changeTime } from "../../state/selection/actions";
 import { ChangeTimeAction } from "../../state/selection/types";
 
 import { PlotParamsWithKey } from "./types";
-import { configurePlots } from "./selectors";
+import { getPlotDataConfiguredForPlotly } from "./selectors";
 
 const styles = require("./style.css");
 
@@ -45,7 +45,7 @@ class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
 function mapStateToProps(state: State) {
     return {
         time: getCurrentTime(state),
-        plotConfig: configurePlots(state),
+        plotConfig: getPlotDataConfiguredForPlotly(state),
     };
 }
 

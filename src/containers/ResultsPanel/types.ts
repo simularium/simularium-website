@@ -1,14 +1,14 @@
 import { PlotParams } from "react-plotly.js";
 
 // TODO: import from observable manager
-interface ScatterTrace {
+export interface ScatterTrace {
     x: number[];
     y: number[];
     mode: "markers" | "lines" | "lines+markers";
     type: "scatter";
     name?: string;
 }
-interface HistogramTrace {
+export interface HistogramTrace {
     x: number[];
     y: number[];
     type: "histogram";
@@ -26,7 +26,7 @@ Once input data files are updated we can have the input data use the
 PlotParams interface instead of RawPlotParams.
 */
 
-interface Layout {
+export interface Layout {
     title: string;
     /* cSpell:disable */
     xaxis: { title: string };
