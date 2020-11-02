@@ -58,7 +58,7 @@ const PlayBackControls = ({
     return (
         <div className={styles.container}>
             <Button
-                className={btnClassNames}
+                className={[btnClassNames, styles.stepButton].join(" ")}
                 size="small"
                 icon={Icons.StepBack}
                 onClick={prevHandler}
@@ -83,7 +83,7 @@ const PlayBackControls = ({
                 loading={loading}
             />
             <Button
-                className={btnClassNames}
+                className={[btnClassNames, styles.stepButton].join(" ")}
                 size="small"
                 icon={Icons.StepForward}
                 onClick={nextHandler}
