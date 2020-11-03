@@ -44,6 +44,7 @@
     --dark-theme-btn-disabled-bg: var(--dark-two);
     --dark-theme-btn-disabled-color: rgb(231 231 231 / 32%);
     --dark-theme-slider-color: var(--white-three);    
+    --dark-theme-tooltip-bg: var(--dark);
     --light-theme-background-purple: var(--pale-grey);
     --light-theme-button-purple: var(--dark-blue-grey);
     --light-theme-heading1-gray: var(--dark-three);
