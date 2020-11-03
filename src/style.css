@@ -87,3 +87,8 @@ canvas:focus {
 .icon-star-full:before {
     content: "\e9d9";
 }
+
+.ant-tooltip-inner {
+    background-color: var(--dark-theme-tooltip-bg);
+    border-radius: 3px;
+}
