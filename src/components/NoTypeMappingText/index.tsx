@@ -14,7 +14,11 @@ const NoTypeMappingText: React.FunctionComponent<{}> = () => {
                     example data
                 </a>{" "}
                 or{" "}
-                <a href={`${TUTORIAL_PATHNAME}#convert-your-data`}>
+                <a
+                    href={`${TUTORIAL_PATHNAME}#convert-your-data`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
                     the instructions on converting your data.
                 </a>{" "}
             </p>
