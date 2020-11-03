@@ -91,4 +91,5 @@ canvas:focus {
 .ant-tooltip-inner {
     background-color: var(--dark-theme-tooltip-bg);
     border-radius: 3px;
+    font-weight: 300;
 }
