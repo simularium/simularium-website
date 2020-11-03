@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, Slider } from "antd";
+import { Button, Slider, Tooltip } from "antd";
 import classNames from "classnames";
 
 import Icons from "../Icons";
@@ -57,14 +57,16 @@ const PlayBackControls = ({
 
     return (
         <div className={styles.container}>
-            <Button
-                className={[btnClassNames, styles.stepButton].join(" ")}
-                size="small"
-                icon={Icons.StepBack}
-                onClick={prevHandler}
-                disabled={time === 0 || loading}
-                loading={loading}
-            />
+            <Tooltip placement="top" title="Skip 1 frame back">
+                <Button
+                    className={[btnClassNames, styles.stepButton].join(" ")}
+                    size="small"
+                    icon={Icons.StepBack}
+                    onClick={prevHandler}
+                    disabled={time === 0 || loading}
+                    loading={loading}
+                />
+            </Tooltip>
 
             <Slider
                 value={time}
@@ -75,21 +77,25 @@ const PlayBackControls = ({
                 max={totalTime}
                 disabled={loading}
             />
-            <Button
-                className={btnClassNames}
-                size="small"
-                icon={isPlaying ? Icons.Pause : Icons.Play}
-                onClick={isPlaying ? pauseHandler : playHandler}
-                loading={loading}
-            />
-            <Button
-                className={[btnClassNames, styles.stepButton].join(" ")}
-                size="small"
-                icon={Icons.StepForward}
-                onClick={nextHandler}
-                disabled={time + timeStep >= totalTime || loading}
-                loading={loading}
-            />
+            <Tooltip placement="top" title={isPlaying ? "Pause" : "Play"}>
+                <Button
+                    className={btnClassNames}
+                    size="small"
+                    icon={isPlaying ? Icons.Pause : Icons.Play}
+                    onClick={isPlaying ? pauseHandler : playHandler}
+                    loading={loading}
+                />
+            </Tooltip>
+            <Tooltip placement="top" title="Skip 1 frame ahead">
+                <Button
+                    className={[btnClassNames, styles.stepButton].join(" ")}
+                    size="small"
+                    icon={Icons.StepForward}
+                    onClick={nextHandler}
+                    disabled={time + timeStep >= totalTime || loading}
+                    loading={loading}
+                />
+            </Tooltip>
         </div>
     );
 };
