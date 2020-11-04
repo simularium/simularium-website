@@ -13,6 +13,22 @@ interface CameraControlsProps {
 const CameraControls = ({ resetCamera }: CameraControlsProps) => {
     return (
         <div className={styles.container}>
+            <Tooltip placement="left" title="Zoom in" color={TOOLTIP_COLOR}>
+                <Button
+                    className={styles.btn}
+                    size="small"
+                    icon={Icons.ZoomIn}
+                    onClick={resetCamera}
+                />
+            </Tooltip>
+            <Tooltip placement="left" title="Zoom out" color={TOOLTIP_COLOR}>
+                <Button
+                    className={styles.btn}
+                    size="small"
+                    icon={Icons.ZoomOut}
+                    onClick={resetCamera}
+                />
+            </Tooltip>
             <Tooltip
                 placement="left"
                 title="Reset camera"

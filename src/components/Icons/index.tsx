@@ -7,6 +7,8 @@ import {
     DownOutlined,
     ArrowLeftOutlined,
     SyncOutlined,
+    PlusOutlined,
+    MinusOutlined,
 } from "@ant-design/icons";
 
 import PurpleArrowPointingRight from "../../assets/open-arrow.svg";
@@ -24,6 +26,8 @@ export const DownArrow = <DownOutlined />;
 export const CaretRight = <CaretRightOutlined />;
 export const GoBack = <ArrowLeftOutlined />;
 export const Reset = <SyncOutlined className={styles.flipH} />;
+export const ZoomIn = <PlusOutlined />;
+export const ZoomOut = <MinusOutlined />;
 
 export const PurpleArrow = <img src={PurpleArrowPointingRight} />;
 export const AicsLogo = <img src={AicsLogoWhite} />;
@@ -43,4 +47,6 @@ export default {
     PurpleArrow,
     AicsLogo,
     Reset,
+    ZoomIn,
+    ZoomOut,
 };
