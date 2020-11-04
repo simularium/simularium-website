@@ -51,7 +51,7 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
                 title={
                     <div>
                         <span key="home" className={styles.home}>
-                            <NavLink to="/">SIMULARIUM HOME</NavLink>
+                            <NavLink to="/">Simularium home</NavLink>
                         </span>
                         <LoadFileMenu
                             key="select"
