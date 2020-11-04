@@ -74,17 +74,6 @@ const PlayBackControls = ({
                     loading={loading}
                 />
             </Tooltip>
-
-            <Slider
-                value={time}
-                onChange={handleTimeChange}
-                // This ternary expression prevents an empty tooltip when time is undefined
-                tipFormatter={time ? tipFormatter : null}
-                className={[styles.slider, styles.item].join(" ")}
-                step={timeStep}
-                max={totalTime}
-                disabled={loading}
-            />
             <Tooltip
                 placement="top"
                 title={isPlaying ? "Pause" : "Play"}
@@ -112,6 +101,16 @@ const PlayBackControls = ({
                     loading={loading}
                 />
             </Tooltip>
+            <Slider
+                value={time}
+                onChange={handleTimeChange}
+                // This ternary expression prevents an empty tooltip when time is undefined
+                tipFormatter={time ? tipFormatter : null}
+                className={[styles.slider, styles.item].join(" ")}
+                step={timeStep}
+                max={totalTime}
+                disabled={loading}
+            />
         </div>
     );
 };
