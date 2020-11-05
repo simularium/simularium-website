@@ -15,11 +15,23 @@ const NoTrajectoriesText: React.FunctionComponent<{}> = () => {
                     download
                 </a>{" "}
                 our example data or{" "}
-                <a href={`${TUTORIAL_PATHNAME}#convert-your-data`}>convert</a>{" "}
+                <a
+                    href={`${TUTORIAL_PATHNAME}#convert-your-data`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    convert
+                </a>{" "}
                 your own data, then drag and drop it onto this window.
             </p>
             <p>
-                <Link to={TUTORIAL_PATHNAME}>Get started here.</Link>
+                <Link
+                    to={TUTORIAL_PATHNAME}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Get started here.
+                </Link>
             </p>
         </div>
     );
