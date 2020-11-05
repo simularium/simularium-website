@@ -12,7 +12,7 @@ import {
 } from "../../state/metadata/types";
 import LoadFileMenu from "../../components/LoadFileMenu";
 import HeaderExtra from "../../components/HeaderExtra";
-import HeaderFooter from "../../components/HeaderFooter";
+import TutorialLink from "../../components/TutorialLink";
 import { AicsLogo } from "../../components/Icons";
 import { State } from "../../state/types";
 import metadataStateBranch from "../../state/metadata";
@@ -69,7 +69,7 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
                         lastModified={lastModified}
                     />
                 }
-                footer={<HeaderFooter />}
+                footer={<TutorialLink />}
             />
         );
     }

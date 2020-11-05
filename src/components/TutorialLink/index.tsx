@@ -2,7 +2,7 @@ import * as React from "react";
 import { useLocation, NavLink } from "react-router-dom";
 import { TUTORIAL_PATHNAME } from "../../routes";
 
-const HeaderFooter: React.FunctionComponent<{}> = () => {
+const TutorialLink: React.FunctionComponent<{}> = () => {
     const location = useLocation();
     const link =
         location.pathname === "/viewer" ? (
@@ -20,4 +20,4 @@ const HeaderFooter: React.FunctionComponent<{}> = () => {
     return link;
 };
 
-export default HeaderFooter;
+export default TutorialLink;
