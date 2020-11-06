@@ -11,7 +11,7 @@ import {
     RequestNetworkFileAction,
 } from "../../state/metadata/types";
 import LoadFileMenu from "../../components/LoadFileMenu";
-import HeaderExtra from "../../components/HeaderExtra";
+import ViewerTitle from "../../components/ViewerTitle";
 import SupportMenu from "../../components/SupportMenu";
 import { AicsLogo } from "../../components/Icons";
 import { State } from "../../state/types";
@@ -57,7 +57,7 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
                     </div>
                 }
                 subTitle={
-                    <HeaderExtra
+                    <ViewerTitle
                         simulariumFileName={displayName}
                         lastModified={lastModified}
                     />

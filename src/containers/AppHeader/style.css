@@ -24,12 +24,19 @@
     align-items: center;
 }
 
+.page-header :global(.ant-page-header-heading-left) {
+    width: 100%;
+}
+
 .page-header :global(.ant-page-header-back-button) img {
     width: 40px;
 }
 
 .page-header :global(.ant-page-header-heading-sub-title) {
     color: var(--dark-theme-text-color);
+    display: block;
+    width: 80%;
+    padding-left: 10%;
 }
 
 .page-header :global(.ant-page-header-heading-extra) {

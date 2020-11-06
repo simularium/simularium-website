@@ -6,13 +6,13 @@ import { VIEWER_PATHNAME } from "../../routes";
 
 const styles = require("./style.css");
 
-interface HeaderExtraProps {
+interface ViewerTitleProps {
     simulariumFileName: string;
     lastModified?: number;
 }
 
-const HeaderExtra: React.FunctionComponent<HeaderExtraProps> = (
-    props: HeaderExtraProps
+const ViewerTitle: React.FunctionComponent<ViewerTitleProps> = (
+    props: ViewerTitleProps
 ) => {
     const { simulariumFileName, lastModified } = props;
     const location = useLocation();
@@ -32,10 +32,10 @@ const HeaderExtra: React.FunctionComponent<HeaderExtraProps> = (
         );
 
     return (
-        <div className={styles.container}>
+        <span className={styles.container}>
             {title} {tag}
-        </div>
+        </span>
     );
 };
 
-export default HeaderExtra;
+export default ViewerTitle;
