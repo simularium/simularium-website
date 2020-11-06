@@ -3,6 +3,7 @@ import { useLocation, Link } from "react-router-dom";
 import { Menu, Dropdown, Button } from "antd";
 
 import { TUTORIAL_PATHNAME } from "../../routes";
+import { DownArrow } from "../Icons";
 
 const styles = require("./style.css");
 
@@ -46,7 +47,7 @@ const SupportMenu: React.FunctionComponent<{}> = () => {
                 onClick={(e) => e.preventDefault()}
                 type="ghost"
             >
-                Support
+                Support {DownArrow}
             </Button>
         </Dropdown>
     );

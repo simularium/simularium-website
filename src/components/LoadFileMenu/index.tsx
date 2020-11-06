@@ -9,10 +9,10 @@ import {
     RequestLocalFileAction,
     RequestNetworkFileAction,
 } from "../../state/metadata/types";
-
-import LocalFileUpload from "../LocalFileUpload";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
+import LocalFileUpload from "../LocalFileUpload";
+import { DownArrow } from "../Icons";
 
 const styles = require("./style.css");
 
@@ -62,7 +62,7 @@ const LoadFileMenu = ({ loadLocalFile, selectFile }: NetworkFileMenuProps) => {
                 onClick={(e) => e.preventDefault()}
                 type="primary"
             >
-                Load model
+                Load model {DownArrow}
             </Button>
         </Dropdown>
     );
