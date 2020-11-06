@@ -56,7 +56,7 @@ const LoadFileMenu = ({ loadLocalFile, selectFile }: NetworkFileMenuProps) => {
         </Menu>
     );
     return (
-        <Dropdown overlay={menu}>
+        <Dropdown overlay={menu} placement="bottomRight">
             <Button
                 className="ant-dropdown-link"
                 onClick={(e) => e.preventDefault()}
