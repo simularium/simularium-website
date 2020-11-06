@@ -66,7 +66,16 @@
 }
 
 .home {
-    margin-left: 5px;
+    margin-left: 2px;
     margin-right: 20px;
     font-weight: 400;
+    font-size: 12px;
+}
+
+.verticalBar {
+    display: inline-block;
+    margin-right: 14px;
+    color: var(--dark-theme-header-text);
+    font-size: 16px;
+    font-weight: 100;
 }

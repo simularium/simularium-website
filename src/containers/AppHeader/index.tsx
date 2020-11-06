@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 import { PageHeader } from "antd";
@@ -49,11 +49,16 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
         return (
             <PageHeader
                 className={styles.pageHeader}
-                backIcon={<a href="https://allencell.org">{AicsLogo}</a>}
+                backIcon={
+                    <a href="https://allencell.org" title="Allen Cell Explorer">
+                        {AicsLogo}
+                    </a>
+                }
                 onBack={() => null}
                 title={
                     <div key="home" className={styles.home}>
-                        <NavLink to="/">Simularium home</NavLink>
+                        <span className={styles.verticalBar}>|</span>
+                        <Link to="/">SIMULARIUM HOME</Link>
                     </div>
                 }
                 subTitle={

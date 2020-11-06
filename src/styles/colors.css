@@ -28,6 +28,7 @@
     --dark-theme-primary-color: var(--baby-purple);
     --dark-theme-body-bg: var(--black);
     --dark-theme-header-bg: var(--dark-three);
+    --dark-theme-header-text: var(--text-gray);
     --dark-theme-component-bg: var(--dark-four);
     --dark-theme-text-color: var(--off-white);
     --dark-theme-menu-text-color: var(--transparent-white);
