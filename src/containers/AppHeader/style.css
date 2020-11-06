@@ -28,6 +28,10 @@
     width: 40px;
 }
 
+.page-header :global(.ant-page-header-heading-sub-title) {
+    color: var(--dark-theme-text-color);
+}
+
 .page-header :global(.ant-page-header-heading-extra) {
     color: var(--dark-theme-text-color);
     padding-left: 12px;
