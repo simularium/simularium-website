@@ -1,0 +1,55 @@
+import * as React from "react";
+import { useLocation, Link } from "react-router-dom";
+import { Menu, Dropdown, Button } from "antd";
+
+import { TUTORIAL_PATHNAME } from "../../routes";
+
+const styles = require("./style.css");
+
+const SupportMenu: React.FunctionComponent<{}> = () => {
+    const location = useLocation();
+    const tutorialLink =
+        location.pathname === "/viewer" ? (
+            <Link
+                to={TUTORIAL_PATHNAME}
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Quick start
+            </Link>
+        ) : (
+            <Link to={TUTORIAL_PATHNAME}>Quick start</Link>
+        );
+    const menu = (
+        <Menu theme="dark" className={styles.menu}>
+            <Menu.Item>{tutorialLink}</Menu.Item>
+            <Menu.Item>
+                <a href="https://forum.allencell.org/c/software-code/simularium/">
+                    Forum
+                </a>
+            </Menu.Item>
+            <Menu.Item>
+                <a href="https://github.com/allen-cell-animated/simularium-website/issues">
+                    Submit issue to GitHub
+                </a>
+            </Menu.Item>
+            <Menu.Item>
+                <a href="https://forms.gle/mwoJjaj3PcbTVStU7">Contact us</a>
+            </Menu.Item>
+        </Menu>
+    );
+
+    return (
+        <Dropdown overlay={menu}>
+            <Button
+                className="ant-dropdown-link"
+                onClick={(e) => e.preventDefault()}
+                type="ghost"
+            >
+                Support
+            </Button>
+        </Dropdown>
+    );
+};
+
+export default SupportMenu;

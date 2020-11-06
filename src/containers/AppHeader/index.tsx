@@ -12,7 +12,7 @@ import {
 } from "../../state/metadata/types";
 import LoadFileMenu from "../../components/LoadFileMenu";
 import HeaderExtra from "../../components/HeaderExtra";
-import TutorialLink from "../../components/TutorialLink";
+import SupportMenu from "../../components/SupportMenu";
 import { AicsLogo } from "../../components/Icons";
 import { State } from "../../state/types";
 import metadataStateBranch from "../../state/metadata";
@@ -48,28 +48,28 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
 
         return (
             <PageHeader
+                className={styles.pageHeader}
+                backIcon={<a href="https://allencell.org">{AicsLogo}</a>}
+                onBack={() => null}
                 title={
-                    <div>
-                        <span key="home" className={styles.home}>
-                            <NavLink to="/">Simularium home</NavLink>
-                        </span>
-                        <LoadFileMenu
-                            key="select"
-                            selectFile={loadNetworkFile}
-                            loadLocalFile={loadLocalFile}
-                        />
+                    <div key="home" className={styles.home}>
+                        <NavLink to="/">Simularium home</NavLink>
                     </div>
                 }
-                className={styles.pageHeader}
-                onBack={() => null}
-                backIcon={<a href="https://allencell.org">{AicsLogo}</a>}
-                extra={
+                subTitle={
                     <HeaderExtra
                         simulariumFileName={displayName}
                         lastModified={lastModified}
                     />
                 }
-                footer={<TutorialLink />}
+                extra={[
+                    <LoadFileMenu
+                        key="select"
+                        selectFile={loadNetworkFile}
+                        loadLocalFile={loadLocalFile}
+                    />,
+                    <SupportMenu key="support" />,
+                ]}
             />
         );
     }

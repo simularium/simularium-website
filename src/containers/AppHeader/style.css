@@ -20,29 +20,17 @@
 }
 
 .page-header :global(.ant-page-header-heading) {
-    display: flex;
-    justify-content: flex-start;
+    width: 100%;
     align-items: center;
-    width: 80%;
 }
 
 .page-header :global(.ant-page-header-back-button) img {
     width: 40px;
 }
 
-.page-header :global(.ant-page-header-heading-title) {
-    order: 1;
-}
-
 .page-header :global(.ant-page-header-heading-extra) {
     color: var(--dark-theme-text-color);
-    flex-grow: 3;
     padding-left: 12px;
-    order: 2
-}
-
-.page-header :global(.ant-page-header-heading-tags) {
-    order: 4;
 }
 
 .page-header :global(.ant-btn-ghost) {
@@ -56,12 +44,6 @@
     .page-header :global(.ant-btn-ghost) {
         display: none;
     }
-}
-
-.page-header :global(.ant-page-header-footer) {
-    margin-top: auto;
-    margin-bottom: auto;
-    text-align: right;
 }
 
 .home {
