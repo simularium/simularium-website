@@ -43,6 +43,8 @@
     --dark-theme-btn-hover-bg: var(--greyish-brown);
     --dark-theme-btn-disabled-bg: var(--dark-two);
     --dark-theme-btn-disabled-color: rgb(231 231 231 / 32%);
+    --dark-theme-btn-primary: var(--baby-purple);
+    --dark-theme-btn-primary-text: var(--dark-two);
     --dark-theme-slider-color: var(--white-three);    
     --dark-theme-tooltip-bg: var(--dark);
     --light-theme-background-purple: var(--pale-grey);

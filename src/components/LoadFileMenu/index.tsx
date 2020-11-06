@@ -60,7 +60,7 @@ const LoadFileMenu = ({ loadLocalFile, selectFile }: NetworkFileMenuProps) => {
             <Button
                 className="ant-dropdown-link"
                 onClick={(e) => e.preventDefault()}
-                type="ghost"
+                type="primary"
             >
                 Load model
             </Button>
