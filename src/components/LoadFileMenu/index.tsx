@@ -36,7 +36,11 @@ const LoadFileMenu = ({ loadLocalFile, selectFile }: NetworkFileMenuProps) => {
             <Menu.Item>
                 <LocalFileUpload loadLocalFile={loadLocalFile} />
             </Menu.Item>
-            <Menu.SubMenu title="Load existing model" popupOffset={[-0.5, -8]}>
+            <Menu.SubMenu
+                title="Load existing model"
+                popupClassName={styles.submenu}
+                popupOffset={[-0.5, -8]}
+            >
                 {TRAJECTORIES.map((trajectory) => (
                     <Menu.Item key={trajectory.id}>
                         <Link

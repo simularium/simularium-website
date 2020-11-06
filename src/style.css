@@ -44,11 +44,6 @@ canvas:focus {
     font-display: block;
 }
 
-/* The popup that appears when hovering over Load model -> Load existing model */
-.ant-dropdown-menu-submenu-popup.ant-dropdown-menu-dark {
-    box-shadow: 0 1px 3px black;
-}
-
 .icon-moon {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'icomoon' !important;
