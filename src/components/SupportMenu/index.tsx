@@ -25,17 +25,31 @@ const SupportMenu: React.FunctionComponent<{}> = () => {
         <Menu theme="dark" className={styles.menu}>
             <Menu.Item>{tutorialLink}</Menu.Item>
             <Menu.Item>
-                <a href="https://forum.allencell.org/c/software-code/simularium/">
+                <a
+                    href="https://forum.allencell.org/c/software-code/simularium/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
                     Forum
                 </a>
             </Menu.Item>
             <Menu.Item>
-                <a href="https://github.com/allen-cell-animated/simularium-website/issues">
-                    Submit issue to GitHub
+                <a
+                    href="https://github.com/allen-cell-animated/simularium-website"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    GitHub
                 </a>
             </Menu.Item>
             <Menu.Item>
-                <a href="https://forms.gle/mwoJjaj3PcbTVStU7">Contact us</a>
+                <a
+                    href="https://forms.gle/mwoJjaj3PcbTVStU7"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Contact us
+                </a>
             </Menu.Item>
         </Menu>
     );
