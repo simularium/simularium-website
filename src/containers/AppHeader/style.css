@@ -12,7 +12,13 @@
 .page-header {
     height: var(--header-height);
     display: flex;
-    padding: 0 20px;
+    padding: 0 10px;
+}
+
+@media screen and (min-width: 480px) {
+    .page-header {
+        padding: 0 20px;
+    }
 }
 
 .page-header a {
@@ -35,13 +41,12 @@
 .page-header :global(.ant-page-header-heading-sub-title) {
     color: var(--dark-theme-text-color);
     display: block;
-    width: 80%;
-    padding-left: 10%;
+    width: 65%;
+    padding-left: 18%;
 }
 
 .page-header :global(.ant-page-header-heading-extra) {
     color: var(--dark-theme-text-color);
-    padding-left: 12px;
 }
 
 .page-header :global(.ant-btn-primary) {
@@ -58,10 +63,24 @@
     border-radius: 3px;
 }
 
-/* Hide the Load Model button in narrow screens */
-@media screen and (max-width: 480px) {
-    .page-header :global(.ant-btn-ghost) {
+@media screen and (max-width: 768px) {
+    .page-header :global(.ant-page-header-heading-left) {
+        width: 65%;
+    }
+
+    .page-header :global(.ant-page-header-heading-title) {
+        margin: 0;
+    }
+    
+    /* Hide the Load Model button and the element containing the loaded
+    trajectory name */
+    .page-header :global(.ant-page-header-heading-sub-title),
+    .page-header :global(.ant-btn-primary) {
         display: none;
+    }
+
+    .page-header :global(.ant-btn-ghost) {
+        margin: 0;
     }
 }
 

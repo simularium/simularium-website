@@ -56,11 +56,7 @@ const SupportMenu: React.FunctionComponent<{}> = () => {
 
     return (
         <Dropdown overlay={menu}>
-            <Button
-                className="ant-dropdown-link"
-                onClick={(e) => e.preventDefault()}
-                type="ghost"
-            >
+            <Button onClick={(e) => e.preventDefault()} type="ghost">
                 Support {DownArrow}
             </Button>
         </Dropdown>
