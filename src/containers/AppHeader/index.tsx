@@ -12,7 +12,7 @@ import {
 } from "../../state/metadata/types";
 import LoadFileMenu from "../../components/LoadFileMenu";
 import ViewerTitle from "../../components/ViewerTitle";
-import SupportMenu from "../../components/SupportMenu";
+import HelpMenu from "../../components/HelpMenu";
 import { AicsLogo } from "../../components/Icons";
 import { State } from "../../state/types";
 import metadataStateBranch from "../../state/metadata";
@@ -73,7 +73,7 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
                         selectFile={loadNetworkFile}
                         loadLocalFile={loadLocalFile}
                     />,
-                    <SupportMenu key="support" />,
+                    <HelpMenu key="help" />,
                 ]}
             />
         );

@@ -7,7 +7,7 @@ import { DownArrow } from "../Icons";
 
 const styles = require("./style.css");
 
-const SupportMenu: React.FunctionComponent<{}> = () => {
+const HelpMenu: React.FunctionComponent<{}> = () => {
     const location = useLocation();
     const tutorialLink =
         location.pathname === "/viewer" ? (
@@ -57,10 +57,10 @@ const SupportMenu: React.FunctionComponent<{}> = () => {
     return (
         <Dropdown overlay={menu}>
             <Button onClick={(e) => e.preventDefault()} type="ghost">
-                Support {DownArrow}
+                Help {DownArrow}
             </Button>
         </Dropdown>
     );
 };
 
-export default SupportMenu;
+export default HelpMenu;
