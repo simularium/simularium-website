@@ -6,7 +6,14 @@
     right: 20px;
     justify-content: space-evenly;
     margin-bottom: 20px;
-    height: 90px;
+    height: 100px;
+}
+
+.zoomButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 60px;
 }
 
 .btn {
@@ -25,7 +32,6 @@
     color: var(--dark-theme-btn-color);
 }
 
- 
 .btn[disabled] {
     background-color: var(--dark-theme-btn-disabled-bg);
     color: var(--dark-theme-btn-disabled-color);
