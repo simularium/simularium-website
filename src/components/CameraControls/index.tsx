@@ -17,13 +17,16 @@ const CameraControls = ({
     zoomIn,
     zoomOut,
 }: CameraControlsProps) => {
-    document.onkeyup = function(event: KeyboardEvent) {
-        if (event.key === "ArrowUp") {
-            zoomIn();
-        } else if (event.key === "ArrowDown") {
-            zoomOut();
-        }
-    };
+    const viewerCanvas = document.querySelector("canvas");
+    if (viewerCanvas) {
+        viewerCanvas.onkeydown = function(event: KeyboardEvent) {
+            if (event.key === "ArrowUp") {
+                zoomIn();
+            } else if (event.key === "ArrowDown") {
+                zoomOut();
+            }
+        };
+    }
 
     return (
         <div className={styles.container}>
