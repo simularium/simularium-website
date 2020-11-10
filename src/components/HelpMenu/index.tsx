@@ -45,7 +45,7 @@ const HelpMenu: React.FunctionComponent<{}> = () => {
             <Menu.SubMenu
                 title="Submit issue"
                 popupClassName={styles.submenu}
-                popupOffset={[-0.5, -8]}
+                popupOffset={[-0.45, -4]}
             >
                 <Menu.Item key="github">
                     <a
