@@ -17,6 +17,14 @@ const CameraControls = ({
     zoomIn,
     zoomOut,
 }: CameraControlsProps) => {
+    document.onkeyup = function(event: KeyboardEvent) {
+        if (event.key === "ArrowUp") {
+            zoomIn();
+        } else if (event.key === "ArrowDown") {
+            zoomOut();
+        }
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.zoomButtons}>
