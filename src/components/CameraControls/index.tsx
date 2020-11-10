@@ -8,9 +8,15 @@ const styles = require("./style.css");
 
 interface CameraControlsProps {
     resetCamera: () => void;
+    zoomIn: () => void;
+    zoomOut: () => void;
 }
 
-const CameraControls = ({ resetCamera }: CameraControlsProps) => {
+const CameraControls = ({
+    resetCamera,
+    zoomIn,
+    zoomOut,
+}: CameraControlsProps) => {
     return (
         <div className={styles.container}>
             <Tooltip placement="left" title="Zoom in" color={TOOLTIP_COLOR}>
@@ -18,7 +24,7 @@ const CameraControls = ({ resetCamera }: CameraControlsProps) => {
                     className={styles.btn}
                     size="small"
                     icon={Icons.ZoomIn}
-                    onClick={resetCamera}
+                    onClick={zoomIn}
                 />
             </Tooltip>
             <Tooltip placement="left" title="Zoom out" color={TOOLTIP_COLOR}>
@@ -26,7 +32,7 @@ const CameraControls = ({ resetCamera }: CameraControlsProps) => {
                     className={styles.btn}
                     size="small"
                     icon={Icons.ZoomOut}
-                    onClick={resetCamera}
+                    onClick={zoomOut}
                 />
             </Tooltip>
             <Tooltip

@@ -294,6 +294,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 />
                 <CameraControls
                     resetCamera={simulariumController.resetCamera}
+                    zoomIn={simulariumController.zoomIn}
+                    zoomOut={simulariumController.zoomOut}
                 />
             </div>
         );
