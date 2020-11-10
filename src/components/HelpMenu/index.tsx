@@ -42,6 +42,30 @@ const HelpMenu: React.FunctionComponent<{}> = () => {
                     GitHub
                 </a>
             </Menu.Item>
+            <Menu.SubMenu
+                title="Submit issue"
+                popupClassName={styles.submenu}
+                popupOffset={[-0.5, -8]}
+            >
+                <Menu.Item key="github">
+                    <a
+                        href="https://github.com/allen-cell-animated/simularium-website/issues"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        via GitHub (preferred)
+                    </a>
+                </Menu.Item>
+                <Menu.Item key="web-form">
+                    <a
+                        href="https://forms.gle/mwoJjaj3PcbTVStU7"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        via web form (for non-GitHub users)
+                    </a>
+                </Menu.Item>
+            </Menu.SubMenu>
             <Menu.Item>
                 <a
                     href="https://forms.gle/mwoJjaj3PcbTVStU7"
