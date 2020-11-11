@@ -10,7 +10,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         modelName: "Actin-based Listeria Propulsion",
         id: "listeria_normal.simularium",
         title: "Actin-based Listeria Propulsion: Normal ActA Distribution",
-        totalSimulatedTime: "60s",
+        totalSimulatedTime: "120s",
         authors: "Jonathan Alberts et al",
         publication: {
             title:
