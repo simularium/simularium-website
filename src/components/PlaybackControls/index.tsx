@@ -35,27 +35,29 @@ const PlayBackControls = ({
         onTimeChange(sliderValue as number); // slider can be a list of numbers, but we're just using a single value
     };
 
-    const tipFormatter = (
-        sliderValue?: number | undefined
-    ): React.ReactNode => {
-        if (!sliderValue) {
+    const formatTime = () => {
+        if (!totalTime) {
             return null;
         }
-        const formatNumber = (num: number) => Number(num).toPrecision(3);
-        const microSeconds = sliderValue / 1000;
-        if (microSeconds > 1) {
-            const milliseconds = microSeconds / 1000;
-            if (milliseconds > 1) {
-                const seconds = milliseconds / 1000;
-                if (seconds > 1) {
-                    return `${formatNumber(seconds)} s`;
-                }
-                return `${formatNumber(milliseconds)} ms`;
-            }
-            return `${formatNumber(microSeconds)} \u03BCs`;
-        }
-        return `${formatNumber(sliderValue)} ns`;
+
+        const units = ["ns", "\u03BCs", "ms", "s"];
+        // How many times the total time can divide by 1000
+        const unitIndex = Math.floor(Math.log(totalTime) / Math.log(1000));
+        const unit = units[unitIndex];
+        const roundNumber = (num: number) => Number(num).toPrecision(3);
+
+        const roundedTime = time ? roundNumber(time / 1000 ** unitIndex) : 0;
+        const roundedTotalTime = roundNumber(totalTime / 1000 ** unitIndex);
+        return (
+            <p>
+                {roundedTime}{" "}
+                <span className={styles.totalTime}>
+                    / {roundedTotalTime} {unit}
+                </span>
+            </p>
+        );
     };
+
     const btnClassNames = classNames([styles.item, styles.btn]);
 
     return (
@@ -104,13 +106,13 @@ const PlayBackControls = ({
             <Slider
                 value={time}
                 onChange={handleTimeChange}
-                // This ternary expression prevents an empty tooltip when time is undefined
-                tipFormatter={time ? tipFormatter : null}
+                tooltipVisible={false}
                 className={[styles.slider, styles.item].join(" ")}
                 step={timeStep}
                 max={totalTime}
                 disabled={loading}
             />
+            <div className={styles.time}>{formatTime()}</div>
         </div>
     );
 };
