@@ -247,6 +247,15 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         batchActions(actions);
     };
 
+    public handleArrowKeyDown = (event: React.KeyboardEvent) => {
+        const { simulariumController } = this.props;
+        if (event.key === "ArrowUp") {
+            simulariumController.zoomIn();
+        } else if (event.key === "ArrowDown") {
+            simulariumController.zoomOut();
+        }
+    };
+
     public render(): JSX.Element {
         const {
             time,
@@ -257,7 +266,11 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             timeStep,
         } = this.props;
         return (
-            <div ref={this.centerContent} className={styles.container}>
+            <div
+                ref={this.centerContent}
+                className={styles.container}
+                onKeyDown={this.handleArrowKeyDown}
+            >
                 <SimulariumViewer
                     height={this.state.height}
                     width={this.state.width}
