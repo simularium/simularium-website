@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 import { PageHeader } from "antd";
@@ -11,8 +11,8 @@ import {
     RequestNetworkFileAction,
 } from "../../state/metadata/types";
 import LoadFileMenu from "../../components/LoadFileMenu";
-import HeaderExtra from "../../components/HeaderExtra";
-import TutorialLink from "../../components/TutorialLink";
+import ViewerTitle from "../../components/ViewerTitle";
+import HelpMenu from "../../components/HelpMenu";
 import { AicsLogo } from "../../components/Icons";
 import { State } from "../../state/types";
 import metadataStateBranch from "../../state/metadata";
@@ -48,28 +48,33 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
 
         return (
             <PageHeader
+                className={styles.pageHeader}
+                backIcon={
+                    <a href="https://allencell.org" title="Allen Cell Explorer">
+                        {AicsLogo}
+                    </a>
+                }
+                onBack={() => null}
                 title={
-                    <div>
-                        <span key="home" className={styles.home}>
-                            <NavLink to="/">SIMULARIUM HOME</NavLink>
-                        </span>
-                        <LoadFileMenu
-                            key="select"
-                            selectFile={loadNetworkFile}
-                            loadLocalFile={loadLocalFile}
-                        />
+                    <div key="home" className={styles.home}>
+                        <span className={styles.verticalBar}>|</span>
+                        <Link to="/">SIMULARIUM HOME</Link>
                     </div>
                 }
-                className={styles.pageHeader}
-                onBack={() => null}
-                backIcon={<a href="https://allencell.org">{AicsLogo}</a>}
-                extra={
-                    <HeaderExtra
+                subTitle={
+                    <ViewerTitle
                         simulariumFileName={displayName}
                         lastModified={lastModified}
                     />
                 }
-                footer={<TutorialLink />}
+                extra={[
+                    <LoadFileMenu
+                        key="select"
+                        selectFile={loadNetworkFile}
+                        loadLocalFile={loadLocalFile}
+                    />,
+                    <HelpMenu key="help" />,
+                ]}
             />
         );
     }

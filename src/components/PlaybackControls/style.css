@@ -53,7 +53,3 @@
 .slider :global(.ant-slider-handle):focus {
     box-shadow: none;
 }
-
-.stepButton img {
-    width: 15px;
-}

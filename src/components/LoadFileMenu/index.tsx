@@ -9,10 +9,10 @@ import {
     RequestLocalFileAction,
     RequestNetworkFileAction,
 } from "../../state/metadata/types";
-
-import LocalFileUpload from "../LocalFileUpload";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
+import LocalFileUpload from "../LocalFileUpload";
+import { DownArrow } from "../Icons";
 
 const styles = require("./style.css");
 
@@ -36,7 +36,11 @@ const LoadFileMenu = ({ loadLocalFile, selectFile }: NetworkFileMenuProps) => {
             <Menu.Item>
                 <LocalFileUpload loadLocalFile={loadLocalFile} />
             </Menu.Item>
-            <Menu.SubMenu title="Load existing model">
+            <Menu.SubMenu
+                title="Load existing model"
+                popupClassName={styles.submenu}
+                popupOffset={[-0.45, -4]}
+            >
                 {TRAJECTORIES.map((trajectory) => (
                     <Menu.Item key={trajectory.id}>
                         <Link
@@ -56,13 +60,13 @@ const LoadFileMenu = ({ loadLocalFile, selectFile }: NetworkFileMenuProps) => {
         </Menu>
     );
     return (
-        <Dropdown overlay={menu}>
+        <Dropdown overlay={menu} placement="bottomRight">
             <Button
                 className="ant-dropdown-link"
                 onClick={(e) => e.preventDefault()}
-                type="ghost"
+                type="primary"
             >
-                Load model
+                Load model {DownArrow}
             </Button>
         </Dropdown>
     );
