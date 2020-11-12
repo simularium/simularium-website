@@ -4,7 +4,6 @@ import { Button, Layout } from "antd";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import ModelCard from "../ModelCard";
 import Footer from "../Footer";
-import flowchartImg from "../../assets/overview-image.png";
 import { TUTORIAL_PATHNAME, VIEWER_PATHNAME } from "../../routes";
 
 const { Content } = Layout;
@@ -17,39 +16,20 @@ const LandingPage: React.FunctionComponent<{}> = () => {
             <Content className={styles.content}>
                 <div className={styles.panel}>
                     <h1>Simularium</h1>
-                    <h2 className={styles.subheader}>
-                        Create, visualize, and share biological simulations
-                    </h2>
+                    <h2>Share & visualize biological simulations</h2>
                     <br />
                     <p>
-                        ​This project aims to involve the wider biology
-                        community, especially wet lab biologists, in building
-                        and analyzing spatial mechanistic simulations at
-                        different levels of scale and connecting them in the
-                        context of whole cells. Our goal is to facilitate
-                        collaboration between experimental and computational
-                        biologists by building software tools and infrastructure
-                        to allow easy access to software packages written by
-                        computational biologists and easy visualization and
-                        sharing of results.
+                        Simularium makes it easy to share and analyze spatial
+                        mechanistic simulations directly in a web browser. Its
+                        major goal is to facilitate collaborations between
+                        experimental biologists and computational biologists by
+                        removing major challenges to accessing, running,
+                        sharing, and analyzing simulation results.
                     </p>
                 </div>
-                <div className={styles.callToActionPanel}>
-                    <h1>Visualize your own custom data</h1>
-                    <h2>View your own model in the Simularium viewer</h2>
-                    <Button type="ghost" href={TUTORIAL_PATHNAME}>
-                        Getting started
-                    </Button>
-                    <Button type="primary" href={VIEWER_PATHNAME}>
-                        Launch viewer
-                    </Button>
-                </div>
-                <div className={styles.panel}>
-                    <h1>Simulation Trajectory Library</h1>
-                    <h2>
-                        Try Simularium for yourself by selecting from the
-                        simulation trajectories below
-                    </h2>
+                <div className={styles.trySimulariumPanel}>
+                    <h1>Try Simularium now</h1>
+                    <h2>View example simulations or load your own data</h2>
                     <div className={styles.cards}>
                         {TRAJECTORIES.map((trajectory) => {
                             return (
@@ -60,67 +40,18 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                             );
                         })}
                     </div>
-                </div>
-                <div className={styles.aboutSimulariumPanel}>
-                    <img
-                        className={styles.flowchart}
-                        alt="A flowchart describing Simularium use"
-                        src={flowchartImg}
-                    />
                     <p>
-                        We have begun by building initial models for nucleating
-                        branched actin and growing microtubules as example
-                        systems, using the software package ReaDDy to simulate
-                        reaction-diffusion and dynamics and CytoSim to connect
-                        these coarse-grained molecular models to larger scale
-                        filament models of cytoskeletal networks. Our goal is to
-                        provide the resulting multiscale models to the community
-                        as a starting point for modeling their favorite aspect
-                        of cytoskeletal systems via a user interface on the web
-                        or programmatically through a python API. As we add more
-                        software packages and models, our long-term goal is to
-                        support mechanistic modeling of all cell systems at
-                        different levels of scale.
-                    </p>
-                    <p>
-                        A visual user interface on a website allows biologists
-                        to create computational biological models by dragging
-                        and dropping components, either starting from scratch or
-                        reusing components that others have built. When they’re
-                        ready, they run their model and interact with the
-                        results in real time by navigating through a 3D “video
-                        game” world full of the cells and molecules they
-                        created. They pull up graphs and charts and configure
-                        them to help understand the results. When they want to
-                        share their findings with colleagues or provide
-                        supplemental materials for their next paper, they
-                        generate a link to their simulation playground where
-                        others can change parameters and explore their
-                        conclusions.​
-                    </p>
-                    <p>
-                        The backend application accepts inputs from this user
-                        interface and sends them to existing 3rd party
-                        simulation software packages for computation. As results
-                        are calculated on the server, they are collected and
-                        sent back to the viewport on the website so the user can
-                        see what is happening in 3D space and create graphs and
-                        other data visualizations. Computational biologists, who
-                        generally create these kinds of simulations by writing
-                        custom software, can upload the results of their
-                        simulations directly to the web viewport so they can
-                        easily be explored and shared, and also can contribute
-                        their software package as a 3rd party simulation engine.
-                    </p>
-                    <p>
-                        Educators can peruse a library of simulations these
-                        researchers have published and use them to build
-                        interactive activities for their students. If you change
-                        the rate of a reaction, how does that affect the outcome
-                        of the simulation? These activities can be contributed
-                        back to a library that other educators can use. Some of
-                        these activities could also be published alongside news
-                        articles for the general public to explore.
+                        Simularium v1.0 allows you to interact with
+                        precalculated simulation results -– including your own
+                        results{" "}
+                        <a href={`${TUTORIAL_PATHNAME}#convert-your-data`}>
+                            converted
+                        </a>{" "}
+                        into the simularium file format (JSON). Click on any of
+                        the examples above to interact with example trajectories
+                        from various types of previously published simulations.
+                        Future versions of Simularium will allow you to modify,
+                        run, and even create simulations.
                     </p>
                 </div>
                 <div className={styles.callToActionPanel}>
@@ -131,10 +62,57 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                     </h2>
                     <Button
                         type="primary"
-                        href="https://www.allencell.org/simularium-sign-up.html"
+                        href="https://forms.gle/mwoJjaj3PcbTVStU7"
                     >
                         Sign up
                     </Button>
+                </div>
+                <div className={styles.panel}>
+                    <h1>Simularium future development</h1>
+                    <h2>
+                        Create, modify, run, experiment, share, interoperate, &
+                        grow as a community
+                    </h2>
+                    <br />
+                    <p>
+                        With this first release we present the Simularium
+                        Viewer, an online visual analysis tool, which is just
+                        one component of the larger Simularium platform. The
+                        Simularium Viewer provides an online application for
+                        visualizing simulation trajectories and related plots.
+                        It uses advanced rendering techniques based on [[VIOLA
+                        LAB PAPER]] to enable meaningful interpretation of
+                        spatial relationships among thousands of moving
+                        components. Users can import a trajectory file (JSON
+                        format) from their computer, or they can stream provided
+                        examples by choosing one from the [Load model] dropdown
+                        or by clicking on a card in the “View example
+                        simulations” section above.
+                    </p>
+                    <p>
+                        We plan to collect user feedback to improve this
+                        application in an effort to facilitate collaborations
+                        between model creators and potential model users. Please
+                        contact us if you have feature requests, bugs to report,
+                        or want to be alerted to major updates.​
+                    </p>
+                    <p>
+                        In the next phase of development, Simularium will enable
+                        users to modify simulation parameters for provided
+                        models through the web-based interface, to run the
+                        modified simulations on the cloud, and to analyze the
+                        results. Simularium currently supports CytoSim and
+                        ReaDDy. We plan to wrap several published packages that
+                        can serve as templates for community development and to
+                        encourage growth of the system by providing a well
+                        documented API for simulation engine integration.
+                    </p>
+                    <p>
+                        We will work with educators at all levels of science
+                        teaching to integrate and test Simularium’s potential
+                        for use in active learning classroom/lab/homework
+                        activities.
+                    </p>
                 </div>
             </Content>
             <Footer />
