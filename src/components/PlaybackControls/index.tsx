@@ -35,7 +35,7 @@ const PlayBackControls = ({
         onTimeChange(sliderValue as number); // slider can be a list of numbers, but we're just using a single value
     };
 
-    const formatTime = () => {
+    const formatTime = (): JSX.Element | null => {
         if (!totalTime) {
             return null;
         }
@@ -43,12 +43,12 @@ const PlayBackControls = ({
         All incoming times are in seconds, but we want to determine the best unit for displaying.
         
         Here we determine the most appropriate unit by calculating how many times (rounded up) the inverse of
-        total time can divide by 1000. Math.log(x) / Math.log(1000) is the same as log base 1000 of x:
+        totalTime can divide by 1000. Math.log(x) / Math.log(1000) is the same as log base 1000 of x:
         https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log/#Examples
         */
         const units = ["s", "ms", "\u03BCs", "ns"];
         let unitIndex = Math.ceil(Math.log(1 / totalTime) / Math.log(1000));
-        // Use nanoseconds if total time is less than 1 ns
+        // Use nanoseconds if totalTime is less than 1 ns
         if (unitIndex >= units.length) {
             unitIndex = units.length - 1;
         }
