@@ -59,6 +59,7 @@
     background-color: var(--dark-theme-btn-bg);
     color: var(--dark-theme-btn-color);
     height: 24px;
+    min-width: 100px;
     padding: 1px 7px 4px 7px;
     border-radius: 3px;
     text-align: center;
