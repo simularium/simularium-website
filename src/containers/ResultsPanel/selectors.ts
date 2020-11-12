@@ -125,7 +125,7 @@ const configureData = (
     };
     // Check if the x-axis label has the word "time" in it, separated from other
     // characters by whitespace and/or one or more special characters
-    const isTimePlot = /\btime\b/.test(xAxisTitle);
+    const isTimePlot = /\btime\b/i.test(xAxisTitle);
 
     // Add time indicator line for scatter plots with time on x-axis
     if (isScatterPlot(inputData) && isTimePlot && currentTime !== 0) {
