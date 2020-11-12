@@ -66,5 +66,5 @@
 }
 
 .totalTime {
-    color: var(--dark-theme-btn-disabled-color);
+    color: var(--dark-theme-btn-color-dim);
 }

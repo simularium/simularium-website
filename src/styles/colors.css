@@ -41,6 +41,7 @@
     --dark-theme-sidebar-text: var(--white-two);
     --dark-theme-btn-bg: var(--dark-three);
     --dark-theme-btn-color: var(--white-three);
+    --dark-theme-btn-color-dim: var(--text-gray);
     --dark-theme-btn-hover-bg: var(--greyish-brown);
     --dark-theme-btn-disabled-bg: var(--dark-two);
     --dark-theme-btn-disabled-color: rgb(231 231 231 / 32%);
