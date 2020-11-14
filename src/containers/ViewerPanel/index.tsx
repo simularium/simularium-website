@@ -173,12 +173,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public startPlay() {
-        const { time, timeStep, simulariumController, totalTime } = this.props;
-        let newTime = time + timeStep;
-        if (newTime >= totalTime) {
-            newTime = 0;
-        }
-        simulariumController.playFromTime(newTime);
+        const { time, simulariumController } = this.props;
+        simulariumController.playFromTime(time);
         simulariumController.resume();
         this.setState({ isPlaying: true });
     }
