@@ -48,9 +48,12 @@ const PlayBackControls = ({
         */
         const units = ["s", "ms", "\u03BCs", "ns"];
         let unitIndex = Math.ceil(Math.log(1 / totalTime) / Math.log(1000));
-        // Use nanoseconds if totalTime is less than 1 ns
+        // Handle very small values (use ns if totalTime is less than 1 ns)
         if (unitIndex >= units.length) {
             unitIndex = units.length - 1;
+            // Handle very large values (use s if totalTime is greater than 1000 s)
+        } else if (unitIndex < 0) {
+            unitIndex = 0;
         }
 
         const unit = units[unitIndex];
