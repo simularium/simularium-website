@@ -152,13 +152,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public playForwardOne() {
-        const { time, timeStep, simulariumController } = this.props;
-        simulariumController.gotoTime(time + timeStep);
+        const { time, timeStep } = this.props;
+        this.skipToTime(time + timeStep);
     }
 
     public playBackOne() {
-        const { time, timeStep, simulariumController } = this.props;
-        simulariumController.gotoTime(time - timeStep);
+        const { time, timeStep } = this.props;
+        this.skipToTime(time - timeStep);
     }
 
     public handleJsonMeshData(jsonData: any) {
@@ -176,6 +176,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const { time, simulariumController } = this.props;
         simulariumController.playFromTime(time);
         simulariumController.resume();
+        this.setState({ requestingTimeChange: true });
         this.setState({ isPlaying: true });
     }
 
@@ -201,7 +202,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             totalTime,
             timeStep,
         } = this.props;
-        this.setState({ requestingTimeChange: false });
         const actions: AnyAction[] = [changeTime(timeData.time)];
 
         if (viewerStatus !== VIEWER_SUCCESS) {
@@ -211,6 +211,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             this.pause();
         }
         batchActions(actions);
+        this.setState({ requestingTimeChange: false });
     }
 
     public skipToTime(time: number) {
