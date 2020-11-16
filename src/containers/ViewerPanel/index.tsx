@@ -202,6 +202,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             totalTime,
             timeStep,
         } = this.props;
+        this.setState({ requestingTimeChange: false });
         const actions: AnyAction[] = [changeTime(timeData.time)];
 
         if (viewerStatus !== VIEWER_SUCCESS) {
@@ -211,7 +212,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             this.pause();
         }
         batchActions(actions);
-        this.setState({ requestingTimeChange: false });
     }
 
     public skipToTime(time: number) {
