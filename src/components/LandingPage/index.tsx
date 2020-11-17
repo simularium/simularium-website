@@ -4,7 +4,7 @@ import { Button, Layout } from "antd";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import ModelCard from "../ModelCard";
 import Footer from "../Footer";
-import { TUTORIAL_PATHNAME, VIEWER_PATHNAME } from "../../routes";
+import { TUTORIAL_PATHNAME } from "../../routes";
 
 const { Content } = Layout;
 
