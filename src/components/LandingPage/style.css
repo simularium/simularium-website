@@ -32,10 +32,19 @@
 }
 
 /* Prevents content from horizontally spreading too much when browser window is very wide */
-.panel > *, .cards {
+.panel * {
     max-width: 1010px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.simulariumFuturePanel {
+    composes: panel;
+    font-size: 16px;
+}
+
+.simulariumFuturePanel p {
+    max-width: 900px;
 }
 
 .cards {

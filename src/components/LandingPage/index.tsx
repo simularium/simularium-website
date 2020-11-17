@@ -67,7 +67,7 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         Sign up
                     </Button>
                 </div>
-                <div className={styles.panel}>
+                <div className={styles.simulariumFuturePanel}>
                     <h1>Simularium future development</h1>
                     <h2>
                         Create, modify, run, experiment, share, interoperate, &
