@@ -51,13 +51,15 @@
     max-width: 100%;
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: center;
     align-items: stretch;
     margin-top: 2.5em;
 }
 
 .cards > * {
     margin-bottom: 50px;
+    margin-left: 1em;
+    margin-right: 1em;
 }
 
 .try-simularium-panel {
