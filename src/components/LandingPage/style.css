@@ -48,9 +48,10 @@
 }
 
 .cards {
+    max-width: 100%;
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: stretch;
     margin-top: 2.5em;
 }

@@ -80,6 +80,21 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         imageFile: covid19Image,
     },
     */
+    {
+        modelName: "",
+        id: "",
+        title: "Load your data",
+        totalSimulatedTime: " ",
+        authors: "",
+        publication: {
+            title: "",
+            journal: "",
+            year: 0,
+            url: "",
+        },
+        description: "Testing testing",
+        imageFile: endocytosisImage,
+    },
 ];
 
 export default TRAJECTORIES;
