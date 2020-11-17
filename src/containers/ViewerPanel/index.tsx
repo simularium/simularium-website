@@ -176,7 +176,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const { time, simulariumController } = this.props;
         simulariumController.playFromTime(time);
         simulariumController.resume();
-        this.setState({ requestingTimeChange: true });
+                this.setState({ requestingTimeChange: true, isPlaying: true });
         this.setState({ isPlaying: true });
     }
 
