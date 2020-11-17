@@ -32,37 +32,49 @@
 }
 
 /* Prevents content from horizontally spreading too much when browser window is very wide */
-.panel > *, .cards {
+.panel * {
     max-width: 1010px;
     margin-left: auto;
     margin-right: auto;
 }
 
+.simulariumFuturePanel {
+    composes: panel;
+    font-size: 16px;
+}
+
+.simulariumFuturePanel p {
+    max-width: 900px;
+}
+
 .cards {
+    max-width: 100%;
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-around;
+    justify-content: center;
     align-items: stretch;
     margin-top: 2.5em;
 }
 
 .cards > * {
     margin-bottom: 50px;
+    margin-left: 1em;
+    margin-right: 1em;
 }
 
-.about-simularium-panel {
+.try-simularium-panel {
     composes: panel;
-    background-color: white;
+    background-color: var(--light-theme-background-purple);
 }
 
-/* Simularium overview flowchart image */
-.flowchart {
+/* This will probably get reused once we have a new flowchart graphic */
+/* .flowchart {
     display: block;
     margin-left: auto;
     margin-right: auto;
     margin-top: 1em;
     margin-bottom: 1em;
-}
+} */
 
 /* On larger screens, the flowchart width is 60% of parent div or 600px, whichever is larger.
 On smaller screens the width is 100% of parent div. */
@@ -75,7 +87,7 @@ On smaller screens the width is 100% of parent div. */
 
 .call-to-action-panel {
     padding: 3.5em;
-    background-color: var(--light-theme-background-purple);
+    background-color: white;
     text-align: center;
 }
 
