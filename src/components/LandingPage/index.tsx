@@ -27,7 +27,10 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         sharing, and analyzing simulation results.
                     </p>
                 </div>
-                <div className={styles.trySimulariumPanel}>
+                <div
+                    className={styles.trySimulariumPanel}
+                    id="try-simularium-now"
+                >
                     <h1>Try Simularium now</h1>
                     <h2>View example simulations or load your own data</h2>
                     <div className={styles.cards}>
@@ -80,21 +83,28 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         one component of the larger Simularium platform. The
                         Simularium Viewer provides an online application for
                         visualizing simulation trajectories and related plots.
-                        It uses advanced rendering techniques based on [[VIOLA
-                        LAB PAPER]] to enable meaningful interpretation of
-                        spatial relationships among thousands of moving
-                        components. Users can import a trajectory file (JSON
-                        format) from their computer, or they can stream provided
-                        examples by choosing one from the [Load model] dropdown
-                        or by clicking on a card in the “View example
-                        simulations” section above.
+                        It uses advanced rendering techniques developed by{" "}
+                        <a href="https://www.cg.tuwien.ac.at/research/publications/2015/cellVIEW_2015/">
+                            Le Muzic et al. (2015)
+                        </a>{" "}
+                        to enable meaningful interpretation of spatial
+                        relationships among thousands of moving components.
+                        Users can import a trajectory file (JSON format) from
+                        their computer, or they can stream provided examples by
+                        choosing one from the <i>Load model</i> dropdown or by
+                        clicking on a card in the{" "}
+                        <a href="#try-simularium-now">Try Simularium now</a>{" "}
+                        section above.
                     </p>
                     <p>
                         We plan to collect user feedback to improve this
                         application in an effort to facilitate collaborations
-                        between model creators and potential model users. Please
-                        contact us if you have feature requests, bugs to report,
-                        or want to be alerted to major updates.​
+                        between model creators and potential model users. Please{" "}
+                        <a href="https://forms.gle/mwoJjaj3PcbTVStU7">
+                            contact us
+                        </a>{" "}
+                        if you have feature requests, bugs to report, or want to
+                        be alerted to major updates.​
                     </p>
                     <p>
                         In the next phase of development, Simularium will enable
