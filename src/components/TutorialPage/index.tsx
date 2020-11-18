@@ -18,7 +18,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                 <h1>Getting Started with Simularium</h1>
                 <p className={styles.intro}>
                     To try out the Simularium Viewer, either{" "}
-                    <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/akamatsu_0020.simularium">
+                    <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium">
                         download
                     </a>{" "}
                     our example data or <a href="#convert-your-data">convert</a>{" "}
@@ -40,7 +40,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                     <ol>
                         <li>
                             Download the example data{" "}
-                            <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/akamatsu_0020.simularium">
+                            <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium">
                                 here
                             </a>
                             .
