@@ -11,7 +11,7 @@ const NoTrajectoriesText: React.FunctionComponent<{}> = () => {
             <h3>No trajectories loaded</h3>
             <p>
                 To view a simulation, either{" "}
-                <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/akamatsu_0020.simularium">
+                <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium">
                     download
                 </a>{" "}
                 our example data or{" "}
@@ -22,7 +22,7 @@ const NoTrajectoriesText: React.FunctionComponent<{}> = () => {
                 >
                     convert
                 </a>{" "}
-                your own data, then drag and drop it onto this window.
+                your own data, and then drag and drop the file onto this window.
             </p>
             <p>
                 <Link
@@ -30,7 +30,7 @@ const NoTrajectoriesText: React.FunctionComponent<{}> = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    Get started here.
+                    Load an example instead.
                 </Link>
             </p>
         </div>
