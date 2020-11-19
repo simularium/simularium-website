@@ -15,6 +15,7 @@ interface NoTrajectoriesTextProps {
 }
 
 const NoTrajectoriesText = ({ selectFile }: NoTrajectoriesTextProps) => {
+    console.log(selectFile);
     const handleClick = (trajectoryData: TrajectoryDisplayData) => {
         selectFile({
             name: trajectoryData.id,
