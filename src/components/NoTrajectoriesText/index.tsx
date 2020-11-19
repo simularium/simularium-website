@@ -6,7 +6,7 @@ import { RequestNetworkFileAction } from "../../state/metadata/types";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
-import { TUTORIAL_PATHNAME, VIEWER_PATHNAME } from "../../routes";
+import { TUTORIAL_PATHNAME } from "../../routes";
 
 const styles = require("./style.css");
 
@@ -15,7 +15,6 @@ interface NoTrajectoriesTextProps {
 }
 
 const NoTrajectoriesText = ({ selectFile }: NoTrajectoriesTextProps) => {
-    console.log(selectFile);
     const handleClick = (trajectoryData: TrajectoryDisplayData) => {
         selectFile({
             name: trajectoryData.id,

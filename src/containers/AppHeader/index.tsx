@@ -28,10 +28,6 @@ interface AppHeaderProps {
 }
 
 class AppHeader extends React.Component<AppHeaderProps, {}> {
-    componentDidUpdate() {
-        console.log(this.props.simulariumFile.name);
-    }
-
     public render(): JSX.Element {
         const {
             simulariumFile,
