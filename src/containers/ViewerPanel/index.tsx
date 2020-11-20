@@ -35,9 +35,11 @@ import {
     convertUIDataToSelectionData,
     getSelectionStateInfoForViewer,
 } from "./selectors";
-import { AGENT_COLORS } from "./constants";
 import { batchActions } from "../../state/util";
 import CameraControls from "../../components/CameraControls";
+
+import { AGENT_COLORS } from "./constants";
+import { TimeData } from "./types";
 
 const styles = require("./style.css");
 
@@ -190,26 +192,33 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     public onTrajectoryFileInfoChanged(data: any) {
         const { receiveMetadata } = this.props;
         receiveMetadata({
-            totalTime: data.totalSteps * data.timeStepSize,
+            totalTime: (data.totalSteps - 1) * data.timeStepSize,
             timeStepSize: data.timeStepSize,
         });
     }
 
-    public receiveTimeChange(timeData: any) {
+    public receiveTimeChange(timeData: TimeData) {
         const {
             changeTime,
             setViewerStatus,
             viewerStatus,
             totalTime,
             timeStep,
+            receiveMetadata,
         } = this.props;
+        if (timeData.frameNumber === 0) {
+            receiveMetadata({
+                totalTime: timeData.time + totalTime,
+            });
+        }
+        console.log(totalTime);
         this.setState({ requestingTimeChange: false });
         const actions: AnyAction[] = [changeTime(timeData.time)];
 
         if (viewerStatus !== VIEWER_SUCCESS) {
             actions.push(setViewerStatus({ status: VIEWER_SUCCESS }));
         }
-        if (timeData.time + timeStep >= totalTime) {
+        if (timeData.time + timeStep > totalTime) {
             this.pause();
         }
         batchActions(actions);
