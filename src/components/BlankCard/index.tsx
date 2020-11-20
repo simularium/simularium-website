@@ -23,7 +23,14 @@ const BlankCard: React.FunctionComponent<{}> = () => {
                 <Link to={VIEWER_PATHNAME}>
                     <p className={styles.cardTitle}>LOAD YOUR DATA</p>
                 </Link>
-                <p>testing</p>
+                <p>
+                    Load your own data into the viewer. Learn how to convert
+                    your data{" "}
+                    <a href="https://simularium.allencell.org/tutorial#convert-your-data">
+                        here
+                    </a>
+                    .
+                </p>
             </div>
         </Card>
     );
