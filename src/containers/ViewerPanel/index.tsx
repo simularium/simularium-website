@@ -74,12 +74,10 @@ interface ViewerPanelState {
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
-    private animationTimer: number | null;
     private centerContent = React.createRef<HTMLDivElement>();
 
     constructor(props: ViewerPanelProps) {
         super(props);
-        this.animationTimer = null;
         this.playBackOne = this.playBackOne.bind(this);
         this.playForwardOne = this.playForwardOne.bind(this);
         this.startPlay = this.startPlay.bind(this);
