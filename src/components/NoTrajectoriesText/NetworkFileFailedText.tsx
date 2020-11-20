@@ -9,7 +9,7 @@ const NetworkFileFailedText: React.FunctionComponent<{}> = () => {
             <h3>Simulation failed to load</h3>
             <p>
                 Try reloading the page. If you continue to have problems you can
-                submit a bug report through <a href={ISSUE_URL}>Github </a>
+                submit a bug report through <a href={ISSUE_URL}>GitHub </a>
                 or <a href={CONTACT_FORM_URL}>contact us.</a>
             </p>
         </div>
