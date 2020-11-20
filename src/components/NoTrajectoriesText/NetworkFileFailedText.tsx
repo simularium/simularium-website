@@ -1,4 +1,5 @@
 import * as React from "react";
+import { CONTACT_FORM_URL, ISSUE_URL } from "../../constants";
 
 const styles = require("./style.css");
 
@@ -8,14 +9,8 @@ const NetworkFileFailedText: React.FunctionComponent<{}> = () => {
             <h3>Simulation failed to load</h3>
             <p>
                 Try reloading the page. If you continue to have problems you can
-                submit a bug report through{" "}
-                <a href="https://github.com/allen-cell-animated/simularium-website/issues">
-                    Github{" "}
-                </a>
-                or{" "}
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeJVBWC8SZrVaMhiI53xM41kDyknpu2hr2F5iPGevhcs-JbyA/viewform">
-                    contact us.
-                </a>
+                submit a bug report through <a href={ISSUE_URL}>Github </a>
+                or <a href={CONTACT_FORM_URL}>contact us.</a>
             </p>
         </div>
     );

@@ -4,6 +4,12 @@ import { Menu, Dropdown, Button } from "antd";
 
 import { TUTORIAL_PATHNAME } from "../../routes";
 import { DownArrow } from "../Icons";
+import {
+    CONTACT_FORM_URL,
+    FORUM_URL,
+    GITHUB_URL,
+    ISSUE_URL,
+} from "../../constants";
 
 const styles = require("./style.css");
 
@@ -25,20 +31,12 @@ const HelpMenu: React.FunctionComponent<{}> = () => {
         <Menu theme="dark" className={styles.menu}>
             <Menu.Item>{tutorialLink}</Menu.Item>
             <Menu.Item>
-                <a
-                    href="https://forum.allencell.org/c/software-code/simularium/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
+                <a href={FORUM_URL} target="_blank" rel="noopener noreferrer">
                     Forum
                 </a>
             </Menu.Item>
             <Menu.Item>
-                <a
-                    href="https://github.com/allen-cell-animated/simularium-website"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
+                <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
                     GitHub
                 </a>
             </Menu.Item>
@@ -49,7 +47,7 @@ const HelpMenu: React.FunctionComponent<{}> = () => {
             >
                 <Menu.Item key="github">
                     <a
-                        href="https://github.com/allen-cell-animated/simularium-website/issues"
+                        href={ISSUE_URL}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
@@ -58,7 +56,7 @@ const HelpMenu: React.FunctionComponent<{}> = () => {
                 </Menu.Item>
                 <Menu.Item key="web-form">
                     <a
-                        href="https://forms.gle/mwoJjaj3PcbTVStU7"
+                        href={CONTACT_FORM_URL}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
@@ -68,7 +66,7 @@ const HelpMenu: React.FunctionComponent<{}> = () => {
             </Menu.SubMenu>
             <Menu.Item>
                 <a
-                    href="https://forms.gle/mwoJjaj3PcbTVStU7"
+                    href={CONTACT_FORM_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                 >
