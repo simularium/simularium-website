@@ -3,8 +3,7 @@ import { Card } from "antd";
 import { Link } from "react-router-dom";
 
 import { VIEWER_PATHNAME } from "../../routes";
-// TODO: swap this image out
-import listeriaNormalImage from "../../assets/listeria-normal.png";
+import ImportThumbnail from "../../assets/import-thumbnail.svg";
 
 const styles = require("../ModelCard/style.css");
 
@@ -14,7 +13,7 @@ const BlankCard: React.FunctionComponent<{}> = () => {
             className={styles.card}
             cover={
                 <Link to={VIEWER_PATHNAME}>
-                    <img src={listeriaNormalImage} />
+                    <img src={ImportThumbnail} />
                 </Link>
             }
         >
