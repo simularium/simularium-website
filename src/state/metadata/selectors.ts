@@ -23,11 +23,16 @@ export const getViewerError = (state: State) => state.metadata.viewerError;
 // COMPOSED SELECTORS
 export const getIsNetworkedFile = createSelector(
     [getSimulariumFile],
-    (simFile: LocalSimFile | NetworkedSimFile) => {
+    (simFile: LocalSimFile | NetworkedSimFile): boolean => {
         if (!simFile.name) {
             return false;
         }
-        return !!find(TRAJECTORIES, { id: simFile.name });
+        const isNetworkedFileType = (file: any): file is NetworkedSimFile =>
+            !!file.title;
+        return (
+            !!find(TRAJECTORIES, { id: simFile.name }) &&
+            isNetworkedFileType(simFile)
+        );
     }
 );
 
