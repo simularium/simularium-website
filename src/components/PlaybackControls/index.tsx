@@ -12,7 +12,7 @@ interface PlayBackProps {
     pauseHandler: () => void;
     prevHandler: () => void;
     nextHandler: () => void;
-    totalTime: number;
+    lastFrameTime: number;
     isPlaying: boolean;
     onTimeChange: (time: number) => void;
     loading: boolean;
@@ -26,7 +26,7 @@ const PlayBackControls = ({
     prevHandler,
     isPlaying,
     nextHandler,
-    totalTime,
+    lastFrameTime,
     onTimeChange,
     loading,
     timeStep,
@@ -36,22 +36,22 @@ const PlayBackControls = ({
     };
 
     const formatTime = (): JSX.Element | null => {
-        if (!totalTime) {
+        if (!lastFrameTime) {
             return null;
         }
         /*
         All incoming times are in seconds, but we want to determine the best unit for displaying.
         
         Here we determine the most appropriate unit by calculating how many times (rounded up) the inverse of
-        totalTime can divide by 1000. Math.log(x) / Math.log(1000) is the same as log base 1000 of x:
+        lastFrameTime can divide by 1000. Math.log(x) / Math.log(1000) is the same as log base 1000 of x:
         https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log/#Examples
         */
         const units = ["s", "ms", "\u03BCs", "ns"];
-        let unitIndex = Math.ceil(Math.log(1 / totalTime) / Math.log(1000));
-        // Handle very small values (use ns if totalTime is less than 1 ns)
+        let unitIndex = Math.ceil(Math.log(1 / lastFrameTime) / Math.log(1000));
+        // Handle very small values (use ns if lastFrameTime is less than 1 ns)
         if (unitIndex >= units.length) {
             unitIndex = units.length - 1;
-            // Handle very large values (use s if totalTime is greater than 1000 s)
+            // Handle very large values (use s if lastFrameTime is greater than 1000 s)
         } else if (unitIndex < 0) {
             unitIndex = 0;
         }
@@ -59,12 +59,14 @@ const PlayBackControls = ({
         const unit = units[unitIndex];
         const roundNumber = (num: number) => Number(num).toPrecision(3);
         const roundedTime = time ? roundNumber(time * 1000 ** unitIndex) : 0;
-        const roundedTotalTime = roundNumber(totalTime * 1000 ** unitIndex);
+        const roundedLastFrameTime = roundNumber(
+            lastFrameTime * 1000 ** unitIndex
+        );
         return (
             <p>
                 {roundedTime}{" "}
-                <span className={styles.totalTime}>
-                    / {roundedTotalTime} {unit}
+                <span className={styles.lastFrameTime}>
+                    / {roundedLastFrameTime} {unit}
                 </span>
             </p>
         );
@@ -111,7 +113,7 @@ const PlayBackControls = ({
                     size="small"
                     icon={Icons.StepForward}
                     onClick={nextHandler}
-                    disabled={time + timeStep >= totalTime || loading}
+                    disabled={time + timeStep >= lastFrameTime || loading}
                     loading={loading}
                 />
             </Tooltip>
@@ -121,7 +123,7 @@ const PlayBackControls = ({
                 tooltipVisible={false}
                 className={[styles.slider, styles.item].join(" ")}
                 step={timeStep}
-                max={totalTime}
+                max={lastFrameTime}
                 disabled={loading}
             />
             <div className={styles.time}>{formatTime()}</div>

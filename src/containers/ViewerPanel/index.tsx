@@ -53,7 +53,7 @@ interface ViewerPanelProps {
     changeTime: ActionCreator<ChangeTimeAction>;
     timeStep: number;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
-    totalTime: number;
+    lastFrameTime: number;
     receiveMetadata: ActionCreator<ReceiveAction>;
     receiveAgentNamesAndStates: ActionCreator<ReceiveAction>;
     selectionStateInfoForViewer: SelectionStateInfo;
@@ -176,9 +176,14 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public startPlay() {
-        const { time, timeStep, simulariumController, totalTime } = this.props;
+        const {
+            time,
+            timeStep,
+            simulariumController,
+            lastFrameTime,
+        } = this.props;
         let newTime = time;
-        if (newTime + timeStep >= totalTime) {
+        if (newTime + timeStep >= lastFrameTime) {
             newTime = 0;
         }
         simulariumController.playFromTime(newTime);
@@ -196,7 +201,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const { receiveMetadata } = this.props;
         this.setState({ isInitialPlay: true });
         receiveMetadata({
-            totalTime: (data.totalSteps - 1) * data.timeStepSize,
+            lastFrameTime: (data.totalSteps - 1) * data.timeStepSize,
             timeStepSize: data.timeStepSize,
         });
     }
@@ -206,35 +211,35 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             changeTime,
             setViewerStatus,
             viewerStatus,
-            totalTime,
+            lastFrameTime,
             timeStep,
             receiveMetadata,
         } = this.props;
         if (this.state.isInitialPlay) {
             receiveMetadata({
-                totalTime: timeData.time + totalTime,
+                lastFrameTime: timeData.time + lastFrameTime,
             });
             this.setState({ isInitialPlay: false });
         }
-        console.log(totalTime);
+        console.log(lastFrameTime);
         this.setState({ requestingTimeChange: false });
         const actions: AnyAction[] = [changeTime(timeData.time)];
 
         if (viewerStatus !== VIEWER_SUCCESS) {
             actions.push(setViewerStatus({ status: VIEWER_SUCCESS }));
         }
-        if (timeData.time + timeStep > totalTime) {
+        if (timeData.time + timeStep > lastFrameTime) {
             this.pause();
         }
         batchActions(actions);
     }
 
     public skipToTime(time: number) {
-        const { simulariumController, totalTime } = this.props;
+        const { simulariumController, lastFrameTime } = this.props;
         if (this.state.requestingTimeChange) {
             return;
         }
-        if (time >= totalTime) {
+        if (time >= lastFrameTime) {
             return;
         }
 
@@ -271,7 +276,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     public render(): JSX.Element {
         const {
             time,
-            totalTime,
+            lastFrameTime,
             simulariumController,
             selectionStateInfoForViewer,
             setViewerStatus,
@@ -314,7 +319,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     prevHandler={this.playBackOne}
                     nextHandler={this.playForwardOne}
                     isPlaying={this.state.isPlaying}
-                    totalTime={totalTime}
+                    lastFrameTime={lastFrameTime}
                     loading={this.state.requestingTimeChange}
                 />
                 <CameraControls
@@ -333,7 +338,7 @@ function mapStateToProps(state: State) {
         numberPanelsCollapsed: selectionStateBranch.selectors.getNumberCollapsed(
             state
         ),
-        totalTime: metadataStateBranch.selectors.getTotalTimeOfCachedSimulation(
+        lastFrameTime: metadataStateBranch.selectors.getLastFrameTimeOfCachedSimulation(
             state
         ),
         timeStep: metadataStateBranch.selectors.getTimeStepSize(state),
