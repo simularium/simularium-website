@@ -201,6 +201,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const { receiveMetadata } = this.props;
         this.setState({ isInitialPlay: true });
         receiveMetadata({
+            // data.totalSteps is a misnomer; it is actually the total number of frames
             lastFrameTime: (data.totalSteps - 1) * data.timeStepSize,
             timeStepSize: data.timeStepSize,
         });
