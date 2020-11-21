@@ -20,6 +20,7 @@ import {
 } from "./types";
 
 export const initialState = {
+    firstFrameTime: 0,
     lastFrameTime: 0,
     timeStep: 0,
     agentIds: [],

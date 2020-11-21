@@ -8,6 +8,8 @@ import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
 // BASIC SELECTORS
 export const getMetadata = (state: State) => state.metadata;
 export const getPlotData = (state: State) => state.metadata.plotData;
+export const getFirstFrameTimeOfCachedSimulation = (state: State) =>
+    state.metadata.firstFrameTime;
 export const getLastFrameTimeOfCachedSimulation = (state: State) =>
     state.metadata.lastFrameTime;
 export const getTimeStepSize = (state: State) => state.metadata.timeStepSize;

@@ -53,6 +53,7 @@ interface ViewerPanelProps {
     changeTime: ActionCreator<ChangeTimeAction>;
     timeStep: number;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
+    firstFrameTime: number;
     lastFrameTime: number;
     receiveMetadata: ActionCreator<ReceiveAction>;
     receiveAgentNamesAndStates: ActionCreator<ReceiveAction>;
@@ -180,11 +181,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             time,
             timeStep,
             simulariumController,
+            firstFrameTime,
             lastFrameTime,
         } = this.props;
         let newTime = time;
         if (newTime + timeStep >= lastFrameTime) {
-            newTime = 0;
+            newTime = firstFrameTime;
         }
         simulariumController.playFromTime(newTime);
         simulariumController.resume();
@@ -218,6 +220,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         } = this.props;
         if (this.state.isInitialPlay) {
             receiveMetadata({
+                firstFrameTime: timeData.time,
                 lastFrameTime: timeData.time + lastFrameTime,
             });
             this.setState({ isInitialPlay: false });
@@ -277,6 +280,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     public render(): JSX.Element {
         const {
             time,
+            firstFrameTime,
             lastFrameTime,
             simulariumController,
             selectionStateInfoForViewer,
@@ -320,6 +324,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     prevHandler={this.playBackOne}
                     nextHandler={this.playForwardOne}
                     isPlaying={this.state.isPlaying}
+                    firstFrameTime={firstFrameTime}
                     lastFrameTime={lastFrameTime}
                     loading={this.state.requestingTimeChange}
                 />
@@ -337,6 +342,9 @@ function mapStateToProps(state: State) {
     return {
         time: selectionStateBranch.selectors.getCurrentTime(state),
         numberPanelsCollapsed: selectionStateBranch.selectors.getNumberCollapsed(
+            state
+        ),
+        firstFrameTime: metadataStateBranch.selectors.getFirstFrameTimeOfCachedSimulation(
             state
         ),
         lastFrameTime: metadataStateBranch.selectors.getLastFrameTimeOfCachedSimulation(

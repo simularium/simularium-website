@@ -12,6 +12,7 @@ interface PlayBackProps {
     pauseHandler: () => void;
     prevHandler: () => void;
     nextHandler: () => void;
+    firstFrameTime: number;
     lastFrameTime: number;
     isPlaying: boolean;
     onTimeChange: (time: number) => void;
@@ -26,6 +27,7 @@ const PlayBackControls = ({
     prevHandler,
     isPlaying,
     nextHandler,
+    firstFrameTime,
     lastFrameTime,
     onTimeChange,
     loading,
@@ -123,6 +125,7 @@ const PlayBackControls = ({
                 tooltipVisible={false}
                 className={[styles.slider, styles.item].join(" ")}
                 step={timeStep}
+                min={firstFrameTime}
                 max={lastFrameTime}
                 disabled={loading}
             />
