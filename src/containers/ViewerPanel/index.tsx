@@ -6,6 +6,9 @@ import SimulariumViewer, {
     SelectionStateInfo,
 } from "@aics/simularium-viewer";
 import "@aics/simularium-viewer/style/style.css";
+import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/simularium";
+// TODO: export TimeData from viewer so we can import it here
+// import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
 import { connect } from "react-redux";
 import { notification } from "antd";
 
@@ -189,8 +192,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.setState({ isPlaying: false });
     }
 
-    public onTrajectoryFileInfoChanged(data: any) {
+    public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
         const { receiveMetadata } = this.props;
+        this.setState({ isInitialPlay: true });
         receiveMetadata({
             totalTime: (data.totalSteps - 1) * data.timeStepSize,
             timeStepSize: data.timeStepSize,
@@ -206,10 +210,11 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             timeStep,
             receiveMetadata,
         } = this.props;
-        if (timeData.frameNumber === 0) {
+        if (this.state.isInitialPlay) {
             receiveMetadata({
                 totalTime: timeData.time + totalTime,
             });
+            this.setState({ isInitialPlay: false });
         }
         console.log(totalTime);
         this.setState({ requestingTimeChange: false });
