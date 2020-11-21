@@ -203,7 +203,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const { receiveMetadata } = this.props;
         this.setState({ isInitialPlay: true });
         receiveMetadata({
-            // data.totalSteps is a misnomer; it is actually the total number of frames
+            // lastFrameTime here is incomplete until we receive the timestamp for the
+            // first frame in receiveTimeChange() later.
+            // data.totalSteps is a misnomer; it is actually the total number of frames.
             lastFrameTime: (data.totalSteps - 1) * data.timeStepSize,
             timeStepSize: data.timeStepSize,
         });
@@ -218,14 +220,17 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             timeStep,
             receiveMetadata,
         } = this.props;
+
         if (this.state.isInitialPlay) {
             receiveMetadata({
                 firstFrameTime: timeData.time,
+                // Now that we have the timestamp for the first frame, use it to calculate
+                // the real lastFrameTime
                 lastFrameTime: timeData.time + lastFrameTime,
             });
             this.setState({ isInitialPlay: false });
         }
-        console.log(lastFrameTime);
+
         this.setState({ requestingTimeChange: false });
         const actions: AnyAction[] = [changeTime(timeData.time)];
 
