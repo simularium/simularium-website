@@ -48,6 +48,11 @@ export interface NetworkedSimFile {
     name: string;
     title: string;
 }
+export const isLocalFileInterface = (file: any): file is LocalSimFile =>
+    !!file.lastModified;
+export const isNetworkSimFileInterface = (
+    file: any
+): file is NetworkedSimFile => !!file.title;
 
 export interface SetSimulariumControllerAction {
     payload: SimulariumController;

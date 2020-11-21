@@ -2,7 +2,12 @@ import { createSelector } from "reselect";
 import { uniq, find } from "lodash";
 import { State } from "../types";
 
-import { LocalSimFile, MetadataStateBranch, NetworkedSimFile } from "./types";
+import {
+    isNetworkSimFileInterface,
+    LocalSimFile,
+    MetadataStateBranch,
+    NetworkedSimFile,
+} from "./types";
 import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 
@@ -27,11 +32,9 @@ export const getIsNetworkedFile = createSelector(
         if (!simFile.name) {
             return false;
         }
-        const isNetworkedFileType = (file: any): file is NetworkedSimFile =>
-            !!file.title;
         return (
             !!find(TRAJECTORIES, { id: simFile.name }) &&
-            isNetworkedFileType(simFile)
+            isNetworkSimFileInterface(simFile)
         );
     }
 );
