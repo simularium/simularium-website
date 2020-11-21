@@ -42,7 +42,6 @@ import { batchActions } from "../../state/util";
 import CameraControls from "../../components/CameraControls";
 
 import { AGENT_COLORS } from "./constants";
-import { TimeData } from "./types";
 
 const styles = require("./style.css");
 
@@ -211,7 +210,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         });
     }
 
-    public receiveTimeChange(timeData: TimeData) {
+    // TODO: use TimeData type for the timeData arg when we can import it from viewer
+    public receiveTimeChange(timeData: any) {
         const {
             changeTime,
             setViewerStatus,
