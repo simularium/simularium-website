@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { PageHeader } from "antd";
 
 import {
+    isLocalFileInterface,
+    isNetworkSimFileInterface,
     LocalSimFile,
     NetworkedSimFile,
     RequestLocalFileAction,
@@ -34,15 +36,10 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
         } = this.props;
         let lastModified = 0;
         let displayName = "";
-        const isLocalSimFile = (file: any): file is LocalSimFile =>
-            !!file.lastModified;
-        const isNetworkedFile = (file: any): file is NetworkedSimFile =>
-            !!file.title;
-
-        if (isLocalSimFile(simulariumFile)) {
+        if (isLocalFileInterface(simulariumFile)) {
             displayName = simulariumFile.name;
             lastModified = simulariumFile.lastModified;
-        } else if (isNetworkedFile(simulariumFile)) {
+        } else if (isNetworkSimFileInterface(simulariumFile)) {
             displayName = simulariumFile.title;
         }
 

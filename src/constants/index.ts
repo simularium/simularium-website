@@ -8,3 +8,9 @@ export const URL_PARAM_KEY_FILE_NAME = "trajFileName";
 export const CHECKBOX_TYPE_STAR = "star";
 export type CHECKBOX_TYPE_STAR = typeof CHECKBOX_TYPE_STAR;
 export const TOOLTIP_COLOR = "#141219";
+export const FORUM_URL =
+    "https://forum.allencell.org/c/software-code/simularium/";
+export const GITHUB_URL =
+    "https://github.com/allen-cell-animated/simularium-website";
+export const ISSUE_URL = `${GITHUB_URL}/issues`;
+export const CONTACT_FORM_URL = "https://forms.gle/mwoJjaj3PcbTVStU7";

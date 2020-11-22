@@ -17,7 +17,7 @@ import TreeNode from "../TreeNode";
 import Checkbox from "../Checkbox";
 import { CHECKBOX_TYPE_STAR } from "../../constants";
 import ColorSwatch from "../ColorSwatch";
-import NoTypeMappingText from "../NoTypeMappingText";
+import NoTypeMappingText from "../NoTrajectoriesText/NoTypeMappingText";
 
 export interface AgentDisplayNode {
     title: string;

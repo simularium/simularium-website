@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Upload } from "antd";
+import { Upload, message } from "antd";
 import { ActionCreator } from "redux";
 import { LocalSimFile } from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
@@ -37,8 +37,11 @@ const ViewerOverlayTarget = ({
             setVisibility(false);
         } else if (file.status === "error") {
             setVisibility(false);
+            message.error(`${file.name} file upload failed.`);
+            resetDragOverViewer();
         }
     };
+
     const loadingOverlay = (
         <div className={styles.container}>
             <p className="loading-icon">{Loading}</p>

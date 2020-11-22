@@ -7,6 +7,7 @@ import { requestMetadata } from "../../state/metadata/actions";
 import {
     getUiDisplayDataTree,
     getViewerStatus,
+    getIsNetworkedFile,
 } from "../../state/metadata/selectors";
 import { State } from "../../state/types";
 import {
@@ -38,8 +39,9 @@ import {
     VIEWER_SUCCESS,
 } from "../../state/metadata/constants";
 import NoTrajectoriesText from "../../components/NoTrajectoriesText";
-import NoTypeMappingText from "../../components/NoTypeMappingText";
+import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
 import { ViewerStatus } from "../../state/metadata/types";
+import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFileFailedText";
 
 const styles = require("./style.css");
 
@@ -57,6 +59,7 @@ interface ModelPanelProps {
     checkAllIsIntermediate: boolean;
     agentColors: AgentColorMap;
     viewerStatus: ViewerStatus;
+    isNetworkedFile: boolean;
 }
 
 class ModelPanel extends React.Component<ModelPanelProps, {}> {
@@ -73,6 +76,7 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
             checkAllIsIntermediate,
             agentColors,
             viewerStatus,
+            isNetworkedFile,
         } = this.props;
         const checkboxTree = (
             <CheckBoxTree
@@ -92,7 +96,11 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
             [VIEWER_SUCCESS]: checkboxTree,
             [VIEWER_EMPTY]: <NoTrajectoriesText />,
             [VIEWER_LOADING]: <div />,
-            [VIEWER_ERROR]: <NoTypeMappingText />,
+            [VIEWER_ERROR]: isNetworkedFile ? (
+                <NetworkFileFailedText />
+            ) : (
+                <NoTypeMappingText />
+            ),
         };
 
         return (
@@ -121,6 +129,7 @@ function mapStateToProps(state: State) {
         checkAllIsIntermediate: getCheckboxAllIsIntermediate(state),
         agentColors: getAgentColors(state),
         viewerStatus: getViewerStatus(state),
+        isNetworkedFile: getIsNetworkedFile(state),
     };
 }
 

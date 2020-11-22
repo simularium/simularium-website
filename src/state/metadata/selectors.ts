@@ -1,9 +1,15 @@
 import { createSelector } from "reselect";
-import { uniq } from "lodash";
+import { uniq, find } from "lodash";
 import { State } from "../types";
 
-import { MetadataStateBranch } from "./types";
+import {
+    isNetworkSimFileInterface,
+    LocalSimFile,
+    MetadataStateBranch,
+    NetworkedSimFile,
+} from "./types";
 import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
+import TRAJECTORIES from "../../constants/networked-trajectories";
 
 // BASIC SELECTORS
 export const getMetadata = (state: State) => state.metadata;
@@ -20,6 +26,19 @@ export const getViewerStatus = (state: State) => state.metadata.viewerStatus;
 export const getViewerError = (state: State) => state.metadata.viewerError;
 
 // COMPOSED SELECTORS
+export const getIsNetworkedFile = createSelector(
+    [getSimulariumFile],
+    (simFile: LocalSimFile | NetworkedSimFile): boolean => {
+        if (!simFile.name) {
+            return false;
+        }
+        return (
+            !!find(TRAJECTORIES, { id: simFile.name }) &&
+            isNetworkSimFileInterface(simFile)
+        );
+    }
+);
+
 export const getKeysOfMetadata = createSelector(
     [getMetadata],
     (metadata: MetadataStateBranch): string[] => Object.keys(metadata)
