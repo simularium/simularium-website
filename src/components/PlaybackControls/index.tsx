@@ -37,6 +37,7 @@ const PlayBackControls = ({
         onTimeChange(sliderValue as number); // slider can be a list of numbers, but we're just using a single value
     };
 
+    const roundNumber = (num: number) => Number(num).toPrecision(3);
     const formatTime = (): JSX.Element | null => {
         if (!lastFrameTime) {
             return null;
@@ -59,7 +60,6 @@ const PlayBackControls = ({
         }
 
         const unit = units[unitIndex];
-        const roundNumber = (num: number) => Number(num).toPrecision(3);
         const roundedTime = time ? roundNumber(time * 1000 ** unitIndex) : 0;
         const roundedLastFrameTime = roundNumber(
             lastFrameTime * 1000 ** unitIndex
