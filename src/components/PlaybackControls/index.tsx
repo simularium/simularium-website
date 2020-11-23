@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import { Button, Slider, Tooltip } from "antd";
 import classNames from "classnames";
 
@@ -37,11 +37,12 @@ const PlayBackControls = ({
         onTimeChange(sliderValue as number); // slider can be a list of numbers, but we're just using a single value
     };
 
-    const roundNumber = (num: number) => Number(num).toPrecision(3);
-    const formatTime = (): JSX.Element | null => {
-        if (!lastFrameTime) {
-            return null;
-        }
+    const units = ["s", "ms", "\u03BCs", "ns"];
+    let unitIndex = 0;
+
+    // Determines display unit when lastFrameTime is updated, i.e., when a new trajectory is loaded
+    useEffect(() => {
+        if (!lastFrameTime) return;
         /*
         All incoming times are in seconds, but we want to determine the best unit for displaying.
         
@@ -49,8 +50,8 @@ const PlayBackControls = ({
         lastFrameTime can divide by 1000. Math.log(x) / Math.log(1000) is the same as log base 1000 of x:
         https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log/#Examples
         */
-        const units = ["s", "ms", "\u03BCs", "ns"];
-        let unitIndex = Math.ceil(Math.log(1 / lastFrameTime) / Math.log(1000));
+        unitIndex = Math.ceil(Math.log(1 / lastFrameTime) / Math.log(1000));
+
         // Handle very small values (use ns if lastFrameTime is less than 1 ns)
         if (unitIndex >= units.length) {
             unitIndex = units.length - 1;
@@ -58,8 +59,10 @@ const PlayBackControls = ({
         } else if (unitIndex < 0) {
             unitIndex = 0;
         }
+    }, [lastFrameTime]);
 
-        const unit = units[unitIndex];
+    const roundNumber = (num: number) => Number(num).toPrecision(3);
+    const formatTime = (): JSX.Element | null => {
         const roundedTime = time ? roundNumber(time * 1000 ** unitIndex) : 0;
         const roundedLastFrameTime = roundNumber(
             lastFrameTime * 1000 ** unitIndex
@@ -68,7 +71,7 @@ const PlayBackControls = ({
             <p>
                 {roundedTime}{" "}
                 <span className={styles.lastFrameTime}>
-                    / {roundedLastFrameTime} {unit}
+                    / {roundedLastFrameTime} {units[unitIndex]}
                 </span>
             </p>
         );
