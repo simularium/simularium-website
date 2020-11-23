@@ -39,8 +39,11 @@ const PlayBackControls = ({
 
     const units = ["s", "ms", "\u03BCs", "ns"];
     let unitIndex = 0;
+    const roundNumber = (num: number) => Number(num).toPrecision(3);
+    const roundedTime = time ? roundNumber(time * 1000 ** unitIndex) : 0;
+    const roundedLastFrameTime = roundNumber(lastFrameTime * 1000 ** unitIndex);
 
-    // Determines display unit when lastFrameTime is updated, i.e., when a new trajectory is loaded
+    // Calculates display unit when lastFrameTime is updated, i.e., when a new trajectory is loaded
     useEffect(() => {
         if (!lastFrameTime) return;
         /*
@@ -60,22 +63,6 @@ const PlayBackControls = ({
             unitIndex = 0;
         }
     }, [lastFrameTime]);
-
-    const roundNumber = (num: number) => Number(num).toPrecision(3);
-    const formatTime = (): JSX.Element | null => {
-        const roundedTime = time ? roundNumber(time * 1000 ** unitIndex) : 0;
-        const roundedLastFrameTime = roundNumber(
-            lastFrameTime * 1000 ** unitIndex
-        );
-        return (
-            <p>
-                {roundedTime}{" "}
-                <span className={styles.lastFrameTime}>
-                    / {roundedLastFrameTime} {units[unitIndex]}
-                </span>
-            </p>
-        );
-    };
 
     const btnClassNames = classNames([styles.item, styles.btn]);
 
@@ -132,7 +119,14 @@ const PlayBackControls = ({
                 max={lastFrameTime}
                 disabled={loading}
             />
-            <div className={styles.time}>{formatTime()}</div>
+            <div className={styles.time}>
+                <p>
+                    {roundedTime}{" "}
+                    <span className={styles.lastFrameTime}>
+                        / {roundedLastFrameTime} {units[unitIndex]}
+                    </span>
+                </p>
+            </div>
         </div>
     );
 };
