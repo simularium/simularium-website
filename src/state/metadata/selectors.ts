@@ -14,8 +14,10 @@ import TRAJECTORIES from "../../constants/networked-trajectories";
 // BASIC SELECTORS
 export const getMetadata = (state: State) => state.metadata;
 export const getPlotData = (state: State) => state.metadata.plotData;
-export const getTotalTimeOfCachedSimulation = (state: State) =>
-    state.metadata.totalTime;
+export const getFirstFrameTimeOfCachedSimulation = (state: State) =>
+    state.metadata.firstFrameTime;
+export const getLastFrameTimeOfCachedSimulation = (state: State) =>
+    state.metadata.lastFrameTime;
 export const getTimeStepSize = (state: State) => state.metadata.timeStepSize;
 export const getAgentIds = (state: State) => state.metadata.agentIds;
 export const getSimulariumFile = (state: State) =>

@@ -6,6 +6,9 @@ import SimulariumViewer, {
     SelectionStateInfo,
 } from "@aics/simularium-viewer";
 import "@aics/simularium-viewer/style/style.css";
+import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/simularium";
+// TODO: export TimeData from viewer so we can import it here
+// import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
 import { connect } from "react-redux";
 import { notification } from "antd";
 
@@ -35,9 +38,10 @@ import {
     convertUIDataToSelectionData,
     getSelectionStateInfoForViewer,
 } from "./selectors";
-import { AGENT_COLORS } from "./constants";
 import { batchActions } from "../../state/util";
 import CameraControls from "../../components/CameraControls";
+
+import { AGENT_COLORS } from "./constants";
 
 const styles = require("./style.css");
 
@@ -48,7 +52,8 @@ interface ViewerPanelProps {
     changeTime: ActionCreator<ChangeTimeAction>;
     timeStep: number;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
-    totalTime: number;
+    firstFrameTime: number;
+    lastFrameTime: number;
     receiveMetadata: ActionCreator<ReceiveAction>;
     receiveAgentNamesAndStates: ActionCreator<ReceiveAction>;
     selectionStateInfoForViewer: SelectionStateInfo;
@@ -74,12 +79,10 @@ interface ViewerPanelState {
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
-    private animationTimer: number | null;
     private centerContent = React.createRef<HTMLDivElement>();
 
     constructor(props: ViewerPanelProps) {
         super(props);
-        this.animationTimer = null;
         this.playBackOne = this.playBackOne.bind(this);
         this.playForwardOne = this.playForwardOne.bind(this);
         this.startPlay = this.startPlay.bind(this);
@@ -173,10 +176,16 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public startPlay() {
-        const { time, timeStep, simulariumController, totalTime } = this.props;
+        const {
+            time,
+            timeStep,
+            simulariumController,
+            firstFrameTime,
+            lastFrameTime,
+        } = this.props;
         let newTime = time;
-        if (newTime + timeStep >= totalTime) {
-            newTime = 0;
+        if (newTime + timeStep >= lastFrameTime) {
+            newTime = firstFrameTime;
         }
         simulariumController.playFromTime(newTime);
         simulariumController.resume();
@@ -189,40 +198,57 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.setState({ isPlaying: false });
     }
 
-    public onTrajectoryFileInfoChanged(data: any) {
+    public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
         const { receiveMetadata } = this.props;
+        this.setState({ isInitialPlay: true });
         receiveMetadata({
-            totalTime: data.totalSteps * data.timeStepSize,
+            // lastFrameTime here is incomplete until we receive the timestamp for the
+            // first frame in receiveTimeChange() later.
+            // data.totalSteps is a misnomer; it is actually the total number of frames.
+            lastFrameTime: (data.totalSteps - 1) * data.timeStepSize,
             timeStepSize: data.timeStepSize,
         });
     }
 
+    // TODO: use TimeData type for the timeData arg when we can import it from viewer
     public receiveTimeChange(timeData: any) {
         const {
             changeTime,
             setViewerStatus,
             viewerStatus,
-            totalTime,
+            lastFrameTime,
             timeStep,
+            receiveMetadata,
         } = this.props;
+
+        if (this.state.isInitialPlay) {
+            receiveMetadata({
+                firstFrameTime: timeData.time,
+                // Now that we have the timestamp for the first frame, use it to calculate
+                // the real lastFrameTime
+                lastFrameTime: timeData.time + lastFrameTime,
+            });
+            this.setState({ isInitialPlay: false });
+        }
+
         this.setState({ requestingTimeChange: false });
         const actions: AnyAction[] = [changeTime(timeData.time)];
 
         if (viewerStatus !== VIEWER_SUCCESS) {
             actions.push(setViewerStatus({ status: VIEWER_SUCCESS }));
         }
-        if (timeData.time + timeStep >= totalTime) {
+        if (timeData.time + timeStep > lastFrameTime) {
             this.pause();
         }
         batchActions(actions);
     }
 
     public skipToTime(time: number) {
-        const { simulariumController, totalTime } = this.props;
+        const { simulariumController, lastFrameTime } = this.props;
         if (this.state.requestingTimeChange) {
             return;
         }
-        if (time >= totalTime) {
+        if (time >= lastFrameTime) {
             return;
         }
 
@@ -259,7 +285,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     public render(): JSX.Element {
         const {
             time,
-            totalTime,
+            firstFrameTime,
+            lastFrameTime,
             simulariumController,
             selectionStateInfoForViewer,
             setViewerStatus,
@@ -302,7 +329,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     prevHandler={this.playBackOne}
                     nextHandler={this.playForwardOne}
                     isPlaying={this.state.isPlaying}
-                    totalTime={totalTime}
+                    firstFrameTime={firstFrameTime}
+                    lastFrameTime={lastFrameTime}
                     loading={this.state.requestingTimeChange}
                 />
                 <CameraControls
@@ -321,7 +349,10 @@ function mapStateToProps(state: State) {
         numberPanelsCollapsed: selectionStateBranch.selectors.getNumberCollapsed(
             state
         ),
-        totalTime: metadataStateBranch.selectors.getTotalTimeOfCachedSimulation(
+        firstFrameTime: metadataStateBranch.selectors.getFirstFrameTimeOfCachedSimulation(
+            state
+        ),
+        lastFrameTime: metadataStateBranch.selectors.getLastFrameTimeOfCachedSimulation(
             state
         ),
         timeStep: metadataStateBranch.selectors.getTimeStepSize(state),
