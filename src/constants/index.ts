@@ -14,3 +14,5 @@ export const GITHUB_URL =
     "https://github.com/allen-cell-animated/simularium-website";
 export const ISSUE_URL = `${GITHUB_URL}/issues`;
 export const CONTACT_FORM_URL = "https://forms.gle/mwoJjaj3PcbTVStU7";
+export const EXAMPLE_TRAJECTORY_URL =
+    "https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium";

@@ -2,6 +2,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 
 import { TUTORIAL_PATHNAME } from "../../routes";
+import { EXAMPLE_TRAJECTORY_URL } from "../../constants";
 
 const styles = require("./style.css");
 
@@ -11,10 +12,8 @@ const NoTrajectoriesText: React.FunctionComponent<{}> = () => {
             <h3>No trajectories loaded</h3>
             <p>
                 To view a simulation, either{" "}
-                <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/akamatsu_0020.simularium">
-                    download
-                </a>{" "}
-                our example data or{" "}
+                <a href={EXAMPLE_TRAJECTORY_URL}>download</a> our example data
+                or{" "}
                 <a
                     href={`${TUTORIAL_PATHNAME}#convert-your-data`}
                     target="_blank"

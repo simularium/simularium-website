@@ -4,6 +4,7 @@ import { Layout, Typography } from "antd";
 
 import dragDropImage from "../../assets/drag-drop.gif";
 import { VIEWER_PATHNAME } from "../../routes";
+import { EXAMPLE_TRAJECTORY_URL } from "../../constants";
 import Footer from "../Footer";
 
 const { Content } = Layout;
@@ -18,11 +19,9 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                 <h1>Getting Started with Simularium</h1>
                 <p className={styles.intro}>
                     To try out the Simularium Viewer, either{" "}
-                    <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium">
-                        download
-                    </a>{" "}
-                    our example data or <a href="#convert-your-data">convert</a>{" "}
-                    your own data, and drag and drop it onto the{" "}
+                    <a href={EXAMPLE_TRAJECTORY_URL}>download</a> our example
+                    data or <a href="#convert-your-data">convert</a> your own
+                    data, and drag and drop it onto the{" "}
                     <Link to={VIEWER_PATHNAME}>viewer</Link>. More details
                     below:
                 </p>
@@ -40,10 +39,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                     <ol>
                         <li>
                             Download the example data{" "}
-                            <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium">
-                                here
-                            </a>
-                            .
+                            <a href={EXAMPLE_TRAJECTORY_URL}>here</a>.
                         </li>
                         <li>
                             In a web browser (Chrome or Firefox), navigate to

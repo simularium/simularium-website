@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { TUTORIAL_PATHNAME } from "../../routes";
+import { EXAMPLE_TRAJECTORY_URL } from "../../constants";
 
 const styles = require("../NoTrajectoriesText/style.css");
 
@@ -9,11 +10,7 @@ const NoTypeMappingText: React.FunctionComponent<{}> = () => {
         <div className={styles.container}>
             <h3>Unable to load UI controls</h3>
             <p>
-                Review the{" "}
-                <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/akamatsu_0020.simularium">
-                    example data
-                </a>{" "}
-                or{" "}
+                Review the <a href={EXAMPLE_TRAJECTORY_URL}>example data</a> or{" "}
                 <a
                     href={`${TUTORIAL_PATHNAME}#convert-your-data`}
                     target="_blank"
