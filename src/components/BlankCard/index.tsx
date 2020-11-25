@@ -2,7 +2,7 @@ import * as React from "react";
 import { Card } from "antd";
 import { Link } from "react-router-dom";
 
-import { VIEWER_PATHNAME } from "../../routes";
+import { VIEWER_PATHNAME, TUTORIAL_PATHNAME } from "../../routes";
 import ImportThumbnail from "../../assets/import-thumbnail.svg";
 
 const styles = require("../ModelCard/style.css");
@@ -25,10 +25,7 @@ const BlankCard: React.FunctionComponent<{}> = () => {
                 <p>
                     Load your own data into the viewer. Learn how to convert
                     your data{" "}
-                    <a href="https://simularium.allencell.org/tutorial#convert-your-data">
-                        here
-                    </a>
-                    .
+                    <a href={`${TUTORIAL_PATHNAME}#convert-your-data`}>here</a>.
                 </p>
             </div>
         </Card>
