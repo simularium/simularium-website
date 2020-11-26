@@ -42,32 +42,4 @@ export const WEBGL = {
             return false;
         }
     },
-    getWebGL2ErrorMessage: function() {
-        return this.getErrorMessage();
-    },
-    getErrorMessage: function() {
-        var message =
-            'Your $0 does not seem to support <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation" style="color:#000">WebGL 2</a>';
-        var element = document.createElement("div");
-
-        element.id = "webglmessage";
-        element.style.fontFamily = "monospace";
-        element.style.fontSize = "13px";
-        element.style.fontWeight = "normal";
-        element.style.textAlign = "center";
-        element.style.background = "#fff";
-        element.style.color = "#000";
-        element.style.padding = "1.5em";
-        element.style.width = "400px";
-        element.style.margin = "5em auto 0";
-
-        if (window.WebGL2RenderingContext) {
-            message = message.replace("$0", "graphics card");
-        } else {
-            message = message.replace("$0", "browser");
-        }
-
-        element.innerHTML = message;
-        return element;
-    },
 };
