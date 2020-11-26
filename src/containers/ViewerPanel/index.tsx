@@ -31,7 +31,7 @@ import {
 } from "../../state/metadata/types";
 import PlaybackControls from "../../components/PlaybackControls";
 import { VIEWER_ERROR } from "../../state/metadata/constants";
-import { convertToSentenceCase } from "../../util";
+import { convertToSentenceCase, WEBGL } from "../../util";
 
 import {
     convertUIDataToColorMap,
@@ -112,6 +112,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public componentDidMount() {
+        if (WEBGL.isWebGL2Available() === false) {
+            console.log("webgl2 not available");
+        } else {
+            console.log("webgl2 available");
+        }
+
         const current = this.centerContent.current;
         if (current) {
             window.addEventListener("resize", () => this.resize(current));
