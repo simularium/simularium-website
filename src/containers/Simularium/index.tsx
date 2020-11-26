@@ -62,14 +62,6 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     componentDidMount() {
-        if (window.matchMedia("(max-width: 900px)").matches) {
-            Modal.warning({
-                title: "Small screens are not supported",
-                content:
-                    "The Simularium Viewer does not support small screens at this time. Please use a larger screen for the best experience.",
-            });
-        }
-
         const {
             setSimulariumController,
             changeToNetworkedFile,

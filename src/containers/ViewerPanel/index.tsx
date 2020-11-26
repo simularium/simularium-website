@@ -10,7 +10,7 @@ import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/si
 // TODO: export TimeData from viewer so we can import it here
 // import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
 import { connect } from "react-redux";
-import { notification } from "antd";
+import { notification, Modal } from "antd";
 
 import { State } from "../../state/types";
 import selectionStateBranch from "../../state/selection";
@@ -113,9 +113,19 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public componentDidMount() {
         if (WEBGL.isWebGL2Available() === false) {
-            console.log("webgl2 not available");
-        } else {
-            console.log("webgl2 available");
+            Modal.info({
+                title: "Please enable WebGL 2.0",
+                content:
+                    'If you are using Safari, please enable WebGL 2.0 by choosing Develop > Experimental Features and enabling "WebGL 2.0" (If you do not have a Develop menu in your menu bar, please first choose Safari > Preferences > Advanced and enable "Show Develop menu in menu bar"). Then please reload this page.',
+            });
+        }
+
+        if (window.matchMedia("(max-width: 900px)").matches) {
+            Modal.warning({
+                title: "Small screens are not supported",
+                content:
+                    "The Simularium Viewer does not support small screens at this time. Please use a larger screen for the best experience.",
+            });
         }
 
         const current = this.centerContent.current;
