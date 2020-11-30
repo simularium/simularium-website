@@ -62,13 +62,8 @@ const ViewerOverlayTarget = ({
             <p className="ant-upload-text">
                 {isLoading
                     ? "Loading Simularium file"
-                    : "Drag your trajectory here"}
+                    : "Drag a Simularium file here"}
             </p>
-            {!isLoading && (
-                <p className="ant-upload-hint">
-                    Support for a single Simularium file
-                </p>
-            )}
         </Dragger>
     );
     if (showTarget) {
