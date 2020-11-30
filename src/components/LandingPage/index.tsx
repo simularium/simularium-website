@@ -2,6 +2,7 @@ import * as React from "react";
 import { Button, Layout } from "antd";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
+import flowchartImg from "../../assets/overview-image.png";
 import ModelCard from "../ModelCard";
 import BlankCard from "../BlankCard";
 import Footer from "../Footer";
@@ -72,13 +73,18 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         Sign up
                     </Button>
                 </div>
-                <div className={styles.panel}>
+                <div className={styles.futureSimulariumPanel}>
                     <h1>Simularium future development</h1>
                     <h2>
                         Create, modify, run, experiment, share, interoperate, &
                         grow as a community
                     </h2>
                     <br />
+                    <img
+                        className={styles.flowchart}
+                        alt="A flowchart summarizing how Simularium currently works"
+                        src={flowchartImg}
+                    />
                     <p>
                         With this first release we present the Simularium
                         Viewer, an online visual analysis tool, which is just
