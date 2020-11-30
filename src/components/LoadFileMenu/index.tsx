@@ -16,12 +16,12 @@ import { DownArrow } from "../Icons";
 
 const styles = require("./style.css");
 
-interface NetworkFileMenuProps {
+interface LoadFileMenuProps {
     selectFile: ActionCreator<RequestNetworkFileAction>;
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
 }
 
-const LoadFileMenu = ({ loadLocalFile, selectFile }: NetworkFileMenuProps) => {
+const LoadFileMenu = ({ loadLocalFile, selectFile }: LoadFileMenuProps) => {
     const location = useLocation();
     const onClick = (trajectoryData: TrajectoryDisplayData) => {
         if (location.pathname === VIEWER_PATHNAME) {

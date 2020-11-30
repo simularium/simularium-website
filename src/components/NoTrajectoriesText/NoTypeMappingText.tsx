@@ -10,7 +10,7 @@ const NoTypeMappingText: React.FunctionComponent<{}> = () => {
             <h3>Unable to load UI controls</h3>
             <p>
                 Review the{" "}
-                <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/akamatsu_0020.simularium">
+                <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium">
                     example data
                 </a>{" "}
                 or{" "}

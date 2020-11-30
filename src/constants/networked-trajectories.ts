@@ -30,7 +30,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         id: "listeria_ultrapolar",
         title: "Actin-based Listeria Propulsion: Ultrapolar ActA Distribution",
         totalSimulatedTime: "60s",
-        authors: "Susanne Rafelski et al",
+        authors: "Susanne Rafelski et al.",
         publication: {
             title:
                 "An Experimental and Computational Study of the Effect of ActA Polarity on the Speed of Listeria monocytogenes Actin-based Motility",
@@ -49,7 +49,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         id: "endocytosis.simularium",
         title: "Actin in Clathrin-mediated Endocytosis",
         totalSimulatedTime: "15s",
-        authors: "Matthew Akamatsu et al",
+        authors: "Matthew Akamatsu et al.",
         publication: {
             title:
                 "Principles of self-organization and load adaptation by the actin cytoskeleton during clathrin-mediated endocytosis",
@@ -67,7 +67,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         id: "covid19",
         title: "SARS-CoV-2 Virion",
         totalSimulatedTime: "0s",
-        authors: "Ngan Nguyen et al",
+        authors: "Ngan Nguyen et al.",
         publication: {
             title:
                 "Modeling in the Time of COVID-19: Statistical and Rule-based Mesoscale Models",

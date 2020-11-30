@@ -3,7 +3,10 @@ import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 
 import SideBarContents from "../../components/SideBarContents";
-import { requestMetadata } from "../../state/metadata/actions";
+import {
+    requestMetadata,
+    changeToNetworkedFile,
+} from "../../state/metadata/actions";
 import {
     getUiDisplayDataTree,
     getViewerStatus,
@@ -94,7 +97,9 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
         );
         const contentMap = {
             [VIEWER_SUCCESS]: checkboxTree,
-            [VIEWER_EMPTY]: <NoTrajectoriesText />,
+            [VIEWER_EMPTY]: (
+                <NoTrajectoriesText selectFile={changeToNetworkedFile} />
+            ),
             [VIEWER_LOADING]: <div />,
             [VIEWER_ERROR]: isNetworkedFile ? (
                 <NetworkFileFailedText />
@@ -135,6 +140,7 @@ function mapStateToProps(state: State) {
 
 const dispatchToPropsMap = {
     requestMetadata,
+    changeToNetworkedFile,
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
     setAgentsVisible,

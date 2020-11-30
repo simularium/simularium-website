@@ -3,6 +3,7 @@ import { Button, Layout } from "antd";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import ModelCard from "../ModelCard";
+import BlankCard from "../BlankCard";
 import Footer from "../Footer";
 import { TUTORIAL_PATHNAME } from "../../routes";
 
@@ -42,6 +43,7 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                                 />
                             );
                         })}
+                        <BlankCard />
                     </div>
                     <p>
                         Simularium v1.0 allows you to interact with
@@ -70,7 +72,7 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         Sign up
                     </Button>
                 </div>
-                <div className={styles.simulariumFuturePanel}>
+                <div className={styles.panel}>
                     <h1>Simularium future development</h1>
                     <h2>
                         Create, modify, run, experiment, share, interoperate, &
