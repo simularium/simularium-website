@@ -7,8 +7,7 @@ import SimulariumViewer, {
 } from "@aics/simularium-viewer";
 import "@aics/simularium-viewer/style/style.css";
 import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/simularium";
-// TODO: export TimeData from viewer so we can import it here
-// import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
+import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
 import { connect } from "react-redux";
 import { notification, Modal } from "antd";
 
@@ -226,8 +225,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         });
     }
 
-    // TODO: use TimeData type for the timeData arg when we can import it from viewer
-    public receiveTimeChange(timeData: any) {
+    public receiveTimeChange(timeData: TimeData) {
         const {
             changeTime,
             setViewerStatus,
