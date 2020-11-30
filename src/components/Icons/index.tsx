@@ -2,7 +2,7 @@ import React from "react";
 import {
     PauseOutlined,
     CaretRightOutlined,
-    UploadOutlined,
+    ImportOutlined,
     LoadingOutlined,
     DownOutlined,
     ArrowLeftOutlined,
@@ -21,7 +21,7 @@ const styles = require("./style.css");
 export const Loading = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 export const Play = <CaretRightOutlined />;
 export const Pause = <PauseOutlined />;
-export const UploadFile = <UploadOutlined />;
+export const UploadFile = <ImportOutlined />;
 export const DownArrow = <DownOutlined />;
 export const CaretRight = <CaretRightOutlined />;
 export const GoBack = <ArrowLeftOutlined />;
