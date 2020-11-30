@@ -80,11 +80,6 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         grow as a community
                     </h2>
                     <br />
-                    <img
-                        className={styles.flowchart}
-                        alt="A flowchart summarizing how Simularium currently works"
-                        src={flowchartImg}
-                    />
                     <p>
                         With this first release we present the Simularium
                         Viewer, an online visual analysis tool, which is just
@@ -104,6 +99,11 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         <a href="#try-simularium-now">Try Simularium now</a>{" "}
                         section above.
                     </p>
+                    <img
+                        className={styles.flowchart}
+                        alt="A flowchart summarizing how Simularium currently works"
+                        src={flowchartImg}
+                    />
                     <p>
                         We plan to collect user feedback to improve this
                         application in an effort to facilitate collaborations
