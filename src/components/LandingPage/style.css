@@ -70,17 +70,17 @@ On smaller screens the width is 100% of parent div. */
 .call-to-action-panel {
     composes: panel;
     padding: 3.5em;
-    text-align: center;
 }
 
 .call-to-action-panel :global(.ant-btn) {
+    display: block;
     width: 130px;
     height: 30px;
     font-size: 14px;
     margin-top: 3em;
     margin-bottom: 0.5em;
-    margin-left: 1em;
-    margin-right: 1em;
+    margin-left: auto;
+    margin-right: auto;
     transition: 0.3s;
     border-radius: 3px;
 }

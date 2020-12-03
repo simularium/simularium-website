@@ -98,6 +98,7 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         Receive updates and/or collaborate on your project by
                         signing up
                     </h2>
+                    <br />
                     <p>
                         We plan to collect user feedback to improve this
                         application in an effort to facilitate collaborations
@@ -105,8 +106,10 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         <a href="https://forms.gle/mwoJjaj3PcbTVStU7">
                             contact us
                         </a>{" "}
-                        if you have feature requests, bugs to report, or want to
-                        be alerted to major updates.
+                        if you have feature requests or want to be alerted to
+                        major updates. To find tutorials, report bugs, or to
+                        discuss Simularium on the forum, use the Help menu in
+                        the upper right of this website.
                     </p>
                     <Button
                         type="primary"
@@ -129,13 +132,16 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         the modified simulations on the cloud, and to analyze
                         the results. Simularium currently supports{" "}
                         <a href="https://gitlab.com/f.nedelec/cytosim">
-                            CytoSim
+                            <i>CytoSim</i>
                         </a>{" "}
-                        and <a href="https://readdy.github.io/">ReaDDy</a>. We
-                        plan to wrap several published packages that can serve
-                        as templates for community development and to encourage
-                        growth of the system by providing a well- documented API
-                        for simulation engine integration.
+                        and{" "}
+                        <a href="https://readdy.github.io/">
+                            <i>ReaDDy</i>
+                        </a>
+                        . We plan to wrap several published packages that can
+                        serve as templates for community development and to
+                        encourage growth of the system by providing a well-
+                        documented API for simulation engine integration.
                     </p>
                     <p>
                         We are investigating the use of these types of
