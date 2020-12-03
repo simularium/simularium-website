@@ -39,7 +39,7 @@
 }
 
 .cards {
-    max-width: 100%;
+    max-width: 1500px;
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
