@@ -49,7 +49,7 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                         search: `?${URL_PARAM_KEY_FILE_NAME}=${id}`,
                     }}
                 >
-                    <p className={styles.cardTitle}>{title.toUpperCase()}</p>
+                    <p className={styles.cardTitle}>{title}</p>
                 </Link>
                 <p>{authors}</p>
                 <a
