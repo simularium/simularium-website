@@ -1,7 +1,9 @@
-import listeriaNormalImage from "../assets/listeria-normal.png";
-// import listeriaUltrapolarImage from "../assets/card-image-2.png";
-import endocytosisImage from "../assets/endocytosis.png";
-// import covid19Image from "../assets/card-image-4.png";
+import listeriaNormalImage from "../assets/card-images/listeria-normal.png";
+import listeriaNormalGif from "../assets/card-images/listeria-normal.gif";
+// import listeriaUltrapolarImage from "../assets/card-images/card-image-2.png";
+import endocytosisImage from "../assets/card-images/endocytosis.png";
+import endocytosisGif from "../assets/card-images/endocytosis.gif";
+// import covid19Image from "../assets/card-images/card-image-4.png";
 
 import { TrajectoryDisplayData } from "./interfaces";
 
@@ -23,6 +25,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         description:
             "A model of Listeria monocytogenes propulsion that explicitly simulates monomer-scale biochemical and mechanical interactions. This run has a normal ActA distribution on the bacterial surface.",
         imageFile: listeriaNormalImage,
+        gifFile: listeriaNormalGif,
     },
     /* Not ready yet
     {
@@ -60,6 +63,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         description:
             "A CytoSim model of a branched actin network internalizing an endocytic pit against membrane tension.",
         imageFile: endocytosisImage,
+        gifFile: endocytosisGif,
     },
     /* Not ready yet
     {

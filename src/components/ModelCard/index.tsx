@@ -23,6 +23,7 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
         publication,
         description,
         imageFile,
+        gifFile,
     } = props.trajectory;
     return (
         <Card
@@ -34,10 +35,18 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                         search: `?${URL_PARAM_KEY_FILE_NAME}=${id}`,
                     }}
                 >
-                    <img
-                        alt={`Snapshot of simulation for ${title}`}
-                        src={imageFile}
-                    />
+                    <div className={styles.thumbnail}>
+                        <img
+                            className={styles.staticThumbnail}
+                            alt={`Snapshot of simulation for ${title}`}
+                            src={imageFile}
+                        />
+                        <img
+                            className={styles.animatedThumbnail}
+                            alt={`Snapshot of simulation for ${title}`}
+                            src={gifFile}
+                        />
+                    </div>
                 </Link>
             }
         >

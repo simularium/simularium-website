@@ -12,4 +12,5 @@ export interface TrajectoryDisplayData {
     };
     description: string;
     imageFile: string;
+    gifFile: string;
 }
