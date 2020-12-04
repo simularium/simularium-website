@@ -22,3 +22,7 @@
     font-size: 16px;
     border: none;
 }
+
+.topLevelList > li {
+    margin-bottom: 0.5em;
+}
