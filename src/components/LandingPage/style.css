@@ -44,13 +44,19 @@
     flex-flow: row wrap;
     justify-content: center;
     align-items: stretch;
-    margin-top: 2.5em;
 }
 
 .cards > * {
-    margin-bottom: 50px;
+    margin-top: 2em;
     margin-left: 1em;
     margin-right: 1em;
+}
+
+.caption {
+    margin-top: 1em;
+    margin-bottom: 2.5em;
+    font-size: 16px;
+    text-align: center;
 }
 
 .try-simularium-panel {
