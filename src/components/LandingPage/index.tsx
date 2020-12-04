@@ -61,9 +61,7 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                     <div className={styles.caption}>
                         Click on any of the examples above to interact with
                         example trajectories from various types of previously
-                        published simulations. Future versions of Simularium
-                        will allow you to modify, run, and even create
-                        simulations.
+                        published simulations.
                     </div>
                     <p>
                         Simularium v1.0 allows you to interact with
