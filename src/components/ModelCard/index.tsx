@@ -24,6 +24,7 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
         description,
         imageFile,
         gifFile,
+        subtitle,
     } = props.trajectory;
     return (
         <Card
@@ -58,7 +59,19 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                         search: `?${URL_PARAM_KEY_FILE_NAME}=${id}`,
                     }}
                 >
-                    <p className={styles.cardTitle}>{title}</p>
+                    <p className={styles.cardTitle}>
+                        {/* e.g.,
+                        Actin-based Listeria Propulsion:
+                        Normal ActA Distribution
+                        */}
+                        {title}
+                        {subtitle && (
+                            <span>
+                                :<br />
+                                {subtitle}
+                            </span>
+                        )}
+                    </p>
                 </Link>
                 <p>{authors}</p>
                 <a
