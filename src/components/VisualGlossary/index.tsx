@@ -29,9 +29,9 @@ const VisualGlossary: React.FunctionComponent<{}> = () => {
                             continue to Follow that object (outlined in bright
                             green) until another another is selected, or all
                             objects are deselected by clicking on an empty space
-                            in the viewport’s background. It's easiest to pause
-                            the playback before attempting to CLICK on an object
-                            to follow.
+                            in the viewport’s background. It&apos;s easiest to
+                            pause the playback before attempting to CLICK on an
+                            object to follow.
                         </li>
                         <li>
                             <b>PLAYBACK CONTROLS, from left to right:</b>
