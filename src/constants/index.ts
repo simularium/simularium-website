@@ -10,6 +10,7 @@ export type CHECKBOX_TYPE_STAR = typeof CHECKBOX_TYPE_STAR;
 export const TOOLTIP_COLOR = "#141219";
 export const FORUM_URL =
     "https://forum.allencell.org/c/software-code/simularium/";
+export const FORUM_BUG_REPORT_URL = `${FORUM_URL}15/bug-report`;
 export const GITHUB_URL =
     "https://github.com/allen-cell-animated/simularium-website";
 export const ISSUE_URL = `${GITHUB_URL}/issues`;
