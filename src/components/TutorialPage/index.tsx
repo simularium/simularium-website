@@ -1,8 +1,9 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Layout, Typography } from "antd";
+import { Layout, Typography, Collapse } from "antd";
 
 import dragDropImage from "../../assets/drag-drop.gif";
+import visualGlossary from "../../assets/visual-glossary.png";
 import { VIEWER_PATHNAME } from "../../routes";
 import Footer from "../Footer";
 
@@ -16,6 +17,14 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
         <>
             <Content className={styles.content}>
                 <h1>Getting Started with Simularium</h1>
+                <div className={styles.visualGlossary}>
+                    <img src={visualGlossary} />
+                    <Collapse>
+                        <Collapse.Panel header="Visual Glossary Key" key="1">
+                            <p>blah</p>
+                        </Collapse.Panel>
+                    </Collapse>
+                </div>
                 <p className={styles.intro}>
                     To try out the Simularium Viewer, either{" "}
                     <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium">

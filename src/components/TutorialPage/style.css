@@ -6,6 +6,31 @@
     font-size: 18px;
 }
 
+.visual-glossary img {
+    max-width: 800px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.visual-glossary :global(.ant-collapse) {
+    background-color: #ddd9ec;
+    border: transparent;
+    border-radius: 3px;
+    font-size: 20px;
+    box-shadow: 3px 3px 10px #a0a0a0;
+}
+
+.visual-glossary :global(.ant-collapse > .ant-collapse-item) {
+    border: none;
+}
+
+.visual-glossary :global(.ant-collapse-content) {
+    background-color: #f8f8f8;
+    font-size: 16px;
+    border: none;
+}
+
 .intro {
     margin-top: 1.5em;
     margin-bottom: 1.5em;
