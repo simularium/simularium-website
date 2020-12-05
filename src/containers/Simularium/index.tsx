@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
-import { Layout, Modal } from "antd";
+import { Layout } from "antd";
 import queryString from "query-string";
 import { SimulariumController } from "@aics/simularium-viewer";
 import { find } from "lodash";
@@ -62,14 +62,6 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     componentDidMount() {
-        if (window.matchMedia("(max-width: 900px)").matches) {
-            Modal.warning({
-                title: "Small screens are not supported",
-                content:
-                    "The Simularium Viewer does not support small screens at this time. Please use a larger screen for the best experience.",
-            });
-        }
-
         const {
             setSimulariumController,
             changeToNetworkedFile,

@@ -7,10 +7,9 @@ import SimulariumViewer, {
 } from "@aics/simularium-viewer";
 import "@aics/simularium-viewer/style/style.css";
 import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/simularium";
-// TODO: export TimeData from viewer so we can import it here
-// import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
+import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
 import { connect } from "react-redux";
-import { notification } from "antd";
+import { notification, Modal } from "antd";
 
 import { State } from "../../state/types";
 import selectionStateBranch from "../../state/selection";
@@ -112,6 +111,14 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public componentDidMount() {
+        if (window.matchMedia("(max-width: 900px)").matches) {
+            Modal.warning({
+                title: "Small screens are not supported",
+                content:
+                    "The Simularium Viewer does not support small screens at this time. Please use a larger screen for the best experience.",
+            });
+        }
+
         const current = this.centerContent.current;
         if (current) {
             window.addEventListener("resize", () => this.resize(current));
@@ -210,8 +217,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         });
     }
 
-    // TODO: use TimeData type for the timeData arg when we can import it from viewer
-    public receiveTimeChange(timeData: any) {
+    public receiveTimeChange(timeData: TimeData) {
         const {
             changeTime,
             setViewerStatus,
