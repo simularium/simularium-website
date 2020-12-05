@@ -222,6 +222,21 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                         </li>
                     </ol>
                 </ul>
+                <h1 id="browser-support">Browser support</h1>
+                <ul>
+                    <li>
+                        Currently, Simularium supports Firefox and Chrome. Some
+                        features may not work on other browsers.
+                    </li>
+                    <li>
+                        If using Safari on a Mac, please enable WebGL 2.0 by
+                        choosing Develop &gt; Experimental Features and enabling
+                        &quot;WebGL 2.0&quot; (If you do not have a Develop menu
+                        in your menu bar, please first choose Safari &gt;
+                        Preferences &gt; Advanced and enable &quot;Show Develop
+                        menu in menu bar&quot;.) Then please reload the viewer.
+                    </li>
+                </ul>
             </Content>
             <Footer />
         </>
