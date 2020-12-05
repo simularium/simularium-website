@@ -10,6 +10,7 @@ import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/si
 import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
 import { connect } from "react-redux";
 import { notification, Modal } from "antd";
+import Bowser from "bowser";
 
 import { State } from "../../state/types";
 import selectionStateBranch from "../../state/selection";
@@ -38,6 +39,7 @@ import {
     getSelectionStateInfoForViewer,
 } from "./selectors";
 import { batchActions } from "../../state/util";
+import { TUTORIAL_PATHNAME } from "../../routes";
 import CameraControls from "../../components/CameraControls";
 
 import { AGENT_COLORS } from "./constants";
@@ -111,6 +113,24 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public componentDidMount() {
+        const browser = Bowser.getParser(
+            window.navigator.userAgent
+        ).getBrowserName();
+        if (browser === "Safari" || browser === "Internet Explorer") {
+            Modal.info({
+                title: "The browser you are using is not supported.",
+                content: (
+                    <p>
+                        Please use Firefox or Chrome. See more details{" "}
+                        <a href={`${TUTORIAL_PATHNAME}#browser-support`}>
+                            here
+                        </a>{" "}
+                        or choose OK to continue anyway.
+                    </p>
+                ),
+            });
+        }
+
         if (window.matchMedia("(max-width: 900px)").matches) {
             Modal.warning({
                 title: "Small screens are not supported",
