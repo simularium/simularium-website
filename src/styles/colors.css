@@ -56,5 +56,6 @@
     --light-theme-panel-light-gray: var(--white-four);
     --light-theme-button-light-gray: var(--white-four);
     --light-theme-card-bg-white: var(--pure-white);
+    --light-theme-background-off-white: var(--off-white);
 }
 

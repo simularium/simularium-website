@@ -4,6 +4,7 @@ import { Layout, Typography } from "antd";
 
 import dragDropImage from "../../assets/drag-drop.gif";
 import { VIEWER_PATHNAME } from "../../routes";
+import VisualGlossary from "../VisualGlossary";
 import { CYTOSIM_URL, PHYSICELL_URL, READDY_URL } from "../../constants";
 import Footer from "../Footer";
 
@@ -17,6 +18,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
         <>
             <Content className={styles.content}>
                 <h1>Getting Started with Simularium</h1>
+                <VisualGlossary />
                 <p className={styles.intro}>
                     To try out the Simularium Viewer, either{" "}
                     <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium">

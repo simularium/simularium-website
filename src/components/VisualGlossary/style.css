@@ -1,0 +1,34 @@
+.container img {
+    max-width: 800px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: -20px;
+}
+
+.container :global(.ant-collapse) {
+    max-width: 750px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2em;
+    background-color: var(--light-theme-background-purple);
+    border: transparent;
+    border-radius: 3px;
+    font-size: 20px;
+    box-shadow: 3px 3px 10px var(--text-gray);
+}
+
+.container :global(.ant-collapse > .ant-collapse-item) {
+    border: none;
+}
+
+.container :global(.ant-collapse-content) {
+    background-color: var(--light-theme-background-off-white);
+    font-size: 16px;
+    border: none;
+}
+
+.topLevelList > li {
+    margin-bottom: 0.5em;
+}
