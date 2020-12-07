@@ -11,6 +11,9 @@ const VisualGlossary: React.FunctionComponent<{}> = () => {
             <img src={visualGlossaryImage} />
             <Collapse>
                 <Collapse.Panel header="Visual Glossary Key" key="1">
+                    // TODO: Make this data driven so we can adjust either the
+                    components being used or the number something corresponds to
+                    without a lot of JSX editing
                     <ol className={styles.topLevelList}>
                         <li>
                             <b>LOAD MODEL MENU</b>
