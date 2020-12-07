@@ -90,31 +90,24 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         src={flowchartImg}
                     />
                 </div>
-                <div className={styles.callToActionPanel}>
+                <div className={styles.panel}>
                     <h1>Connect with us</h1>
                     <h2>
-                        Receive updates and/or collaborate on your project by
-                        signing up
+                        Receive updates & technical support, or provide feedback
                     </h2>
                     <br />
                     <p>
-                        We plan to collect user feedback to improve this
-                        application in an effort to facilitate collaborations
-                        between model creators and potential model users. Please{" "}
-                        <a href="https://forms.gle/mwoJjaj3PcbTVStU7">
+                        We are collecting user feedback to improve this
+                        application. To find tutorials, seek technical support,
+                        report bugs or request features, use the <i>Help</i>{" "}
+                        menu found in the upper right corner of this website.
+                        Please{" "}
+                        <a href="http://allins.convio.net/site/PageServer?pagename=send_message_cs">
                             contact us
                         </a>{" "}
-                        if you have feature requests or want to be alerted to
-                        major updates. To find tutorials, report bugs, or to
-                        discuss Simularium on the forum, use the Help menu in
-                        the upper right of this website.
+                        if you have ideas for potential collaborations, or want
+                        to be alerted to major updates.
                     </p>
-                    <Button
-                        type="primary"
-                        href="https://forms.gle/mwoJjaj3PcbTVStU7"
-                    >
-                        Sign up
-                    </Button>
                 </div>
                 <div className={styles.futureSimulariumPanel}>
                     <h1>Future plans for Simularium</h1>
