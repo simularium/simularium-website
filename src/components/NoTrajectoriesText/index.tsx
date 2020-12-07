@@ -21,7 +21,7 @@ const NoTrajectoriesText = ({ selectFile }: NoTrajectoriesTextProps) => {
             title: trajectoryData.title,
         });
     };
-    const exampleTrajectory = TRAJECTORIES[1];
+    const exampleTrajectory = TRAJECTORIES[0];
 
     return (
         <div className={styles.container}>

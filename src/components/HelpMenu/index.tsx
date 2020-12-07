@@ -5,8 +5,8 @@ import { Menu, Dropdown, Button } from "antd";
 import { TUTORIAL_PATHNAME } from "../../routes";
 import { DownArrow } from "../Icons";
 import {
-    CONTACT_FORM_URL,
     FORUM_URL,
+    FORUM_BUG_REPORT_URL,
     GITHUB_URL,
     ISSUE_URL,
 } from "../../constants";
@@ -56,23 +56,14 @@ const HelpMenu: React.FunctionComponent<{}> = () => {
                 </Menu.Item>
                 <Menu.Item key="web-form">
                     <a
-                        href={CONTACT_FORM_URL}
+                        href={FORUM_BUG_REPORT_URL}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        via web form (for non-GitHub users)
+                        via Forum (for non-GitHub users)
                     </a>
                 </Menu.Item>
             </Menu.SubMenu>
-            <Menu.Item>
-                <a
-                    href={CONTACT_FORM_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Contact us
-                </a>
-            </Menu.Item>
         </Menu>
     );
 

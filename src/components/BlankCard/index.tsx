@@ -20,7 +20,7 @@ const BlankCard: React.FunctionComponent<{}> = () => {
             <div className={styles.cardText}>
                 <p className={styles.simulatedTime}>&nbsp;</p>
                 <Link to={VIEWER_PATHNAME}>
-                    <p className={styles.cardTitle}>LOAD YOUR DATA</p>
+                    <p className={styles.cardTitle}>Load your data</p>
                 </Link>
                 <p>
                     Load your own data into the viewer. Learn how to convert

@@ -3,3 +3,4 @@
 --require mock-css-modules
 --require ./scripts/adapt-enzyme-to-react-16.js
 --compilers png:./scripts/mochacfg.js
+--compilers gif:./scripts/mochacfg.js
