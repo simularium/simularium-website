@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, Layout } from "antd";
+import { Layout } from "antd";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import flowchartImg from "../../assets/overview-image.png";
@@ -7,6 +7,7 @@ import ModelCard from "../ModelCard";
 import BlankCard from "../BlankCard";
 import Footer from "../Footer";
 import { TUTORIAL_PATHNAME } from "../../routes";
+import { CYTOSIM_URL, READDY_URL } from "../../constants";
 
 const { Content } = Layout;
 
@@ -122,11 +123,11 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         provided models through the web-based interface, to run
                         the modified simulations on the cloud, and to analyze
                         the results. Simularium currently supports{" "}
-                        <a href="https://gitlab.com/f.nedelec/cytosim">
+                        <a href={CYTOSIM_URL}>
                             <i>CytoSim</i>
                         </a>{" "}
                         and{" "}
-                        <a href="https://readdy.github.io/">
+                        <a href={READDY_URL}>
                             <i>ReaDDy</i>
                         </a>
                         . We plan to wrap several published packages that can
