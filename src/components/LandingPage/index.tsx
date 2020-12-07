@@ -103,6 +103,7 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         report bugs or request features, use the <i>Help</i>{" "}
                         menu found in the upper right corner of this website.
                         Please{" "}
+                        {/* TODO: Change the URL to "mailto: simularium@alleninstitute.org" when that email address is ready */}
                         <a href="http://allins.convio.net/site/PageServer?pagename=send_message_cs">
                             contact us
                         </a>{" "}
