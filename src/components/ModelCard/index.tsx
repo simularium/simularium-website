@@ -36,6 +36,7 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                         search: `?${URL_PARAM_KEY_FILE_NAME}=${id}`,
                     }}
                 >
+                    {/* Static image turns into animated gif on hover */}
                     <div className={styles.thumbnail}>
                         <img
                             className={styles.staticThumbnail}
@@ -60,9 +61,11 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                     }}
                 >
                     <p className={styles.cardTitle}>
-                        {/* e.g.,
+                        {/*
+                        First line is {title}, and second line is optional {subTitle},
+                        with a colon after title if subTitle exists, e.g.,
                         Actin-based Listeria Propulsion:
-                        Normal ActA Distribution
+                        Normal ActA Distribution 
                         */}
                         {title}
                         {subtitle && (
