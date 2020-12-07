@@ -42,8 +42,6 @@ import { batchActions } from "../../state/util";
 import { TUTORIAL_PATHNAME } from "../../routes";
 import CameraControls from "../../components/CameraControls";
 
-import { AGENT_COLORS } from "./constants";
-
 const styles = require("./style.css");
 
 interface ViewerPanelProps {
@@ -362,6 +360,10 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     firstFrameTime={firstFrameTime}
                     lastFrameTime={lastFrameTime}
                     loading={this.state.requestingTimeChange}
+                />
+                <ScaleBar
+                    length={simulariumController.tickIntervalLength}
+                    unit={"nm"}
                 />
                 <CameraControls
                     resetCamera={simulariumController.resetCamera}
