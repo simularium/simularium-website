@@ -9,6 +9,43 @@ import { TrajectoryDisplayData } from "./interfaces";
 
 const TRAJECTORIES: TrajectoryDisplayData[] = [
     {
+        modelName: "Actin in Clathrin-mediated Endocytosis",
+        id: "endocytosis.simularium",
+        title: "Actin in Clathrin-mediated Endocytosis",
+        totalSimulatedTime: "15s",
+        authors: "Matthew Akamatsu et al.",
+        publication: {
+            title:
+                "Principles of self-organization and load adaptation by the actin cytoskeleton during clathrin-mediated endocytosis",
+            journal: "eLife",
+            year: 2020,
+            url: "https://elifesciences.org/articles/49840",
+        },
+        description:
+            "A CytoSim model of a branched actin network internalizing an endocytic pit against membrane tension.",
+        imageFile: endocytosisImage,
+        gifFile: endocytosisGif,
+    },
+    /* Not ready yet
+    {
+        modelName: "Covid Virion",
+        id: "covid19",
+        title: "SARS-CoV-2 Virion",
+        totalSimulatedTime: "0s",
+        authors: "Ngan Nguyen et al.",
+        publication: {
+            title:
+                "Modeling in the Time of COVID-19: Statistical and Rule-based Mesoscale Models",
+            journal: "arXiv",
+            year: 2020,
+            url: "https://arxiv.org/abs/2005.01804",
+        },
+        description:
+            "A structural model of a diffusing SARS-CoV-2 virus particle.",
+        imageFile: covid19Image,
+    },
+    */
+    {
         modelName: "Actin-based Listeria Propulsion",
         id: "listeria_normal.simularium",
         title: "Actin-based Listeria Propulsion",
@@ -46,43 +83,6 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         description:
             "A model of Listeria monocytogenes propulsion that explicitly simulates monomer-scale biochemical and mechanical interactions. This run has an ultrapolar ActA distribution on the bacterial surface.",
         imageFile: listeriaUltrapolarImage,
-    },
-    */
-    {
-        modelName: "Actin in Clathrin-mediated Endocytosis",
-        id: "endocytosis.simularium",
-        title: "Actin in Clathrin-mediated Endocytosis",
-        totalSimulatedTime: "15s",
-        authors: "Matthew Akamatsu et al.",
-        publication: {
-            title:
-                "Principles of self-organization and load adaptation by the actin cytoskeleton during clathrin-mediated endocytosis",
-            journal: "eLife",
-            year: 2020,
-            url: "https://elifesciences.org/articles/49840",
-        },
-        description:
-            "A CytoSim model of a branched actin network internalizing an endocytic pit against membrane tension.",
-        imageFile: endocytosisImage,
-        gifFile: endocytosisGif,
-    },
-    /* Not ready yet
-    {
-        modelName: "Covid Virion",
-        id: "covid19",
-        title: "SARS-CoV-2 Virion",
-        totalSimulatedTime: "0s",
-        authors: "Ngan Nguyen et al.",
-        publication: {
-            title:
-                "Modeling in the Time of COVID-19: Statistical and Rule-based Mesoscale Models",
-            journal: "arXiv",
-            year: 2020,
-            url: "https://arxiv.org/abs/2005.01804",
-        },
-        description:
-            "A structural model of a diffusing SARS-CoV-2 virus particle.",
-        imageFile: covid19Image,
     },
     */
 ];
