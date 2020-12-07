@@ -5,6 +5,7 @@ import { Layout, Typography } from "antd";
 import dragDropImage from "../../assets/drag-drop.gif";
 import { VIEWER_PATHNAME } from "../../routes";
 import VisualGlossary from "../VisualGlossary";
+import { CYTOSIM_URL, PHYSICELL_URL, READDY_URL } from "../../constants";
 import Footer from "../Footer";
 
 const { Content } = Layout;
@@ -127,33 +128,33 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                                         <li>
                                             ReaDDy (
                                             <a
-                                                href="https://readdy.github.io/"
+                                                href={READDY_URL}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                             >
-                                                https://readdy.github.io/
+                                                {READDY_URL}
                                             </a>
                                             )
                                         </li>
                                         <li>
                                             PhysiCell (
                                             <a
-                                                href="http://physicell.org/"
+                                                href={PHYSICELL_URL}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                             >
-                                                http://physicell.org/
+                                                {PHYSICELL_URL}
                                             </a>
                                             )
                                         </li>
                                         <li>
                                             CytoSim (
                                             <a
-                                                href="https://gitlab.com/f.nedelec/cytosim"
+                                                href={CYTOSIM_URL}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                             >
-                                                https://gitlab.com/f.nedelec/cytosim
+                                                {CYTOSIM_URL}
                                             </a>
                                             )
                                         </li>
