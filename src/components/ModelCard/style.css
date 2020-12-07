@@ -9,8 +9,20 @@
     padding: 0px;
 }
 
+.animated-thumbnail {
+    display: none;
+}
+
+.thumbnail:hover .animated-thumbnail {
+    display: block;
+}
+
+.thumbnail:hover .static-thumbnail {
+    display: none;
+}
+
 .card-text {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .simulated-time {

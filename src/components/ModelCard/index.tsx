@@ -23,6 +23,8 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
         publication,
         description,
         imageFile,
+        gifFile,
+        subtitle,
     } = props.trajectory;
     return (
         <Card
@@ -34,10 +36,19 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                         search: `?${URL_PARAM_KEY_FILE_NAME}=${id}`,
                     }}
                 >
-                    <img
-                        alt={`Snapshot of simulation for ${title}`}
-                        src={imageFile}
-                    />
+                    {/* Static image turns into animated gif on hover */}
+                    <div className={styles.thumbnail}>
+                        <img
+                            className={styles.staticThumbnail}
+                            alt={`Snapshot of simulation for ${title}`}
+                            src={imageFile}
+                        />
+                        <img
+                            className={styles.animatedThumbnail}
+                            alt={`Snapshot of simulation for ${title}`}
+                            src={gifFile}
+                        />
+                    </div>
                 </Link>
             }
         >
@@ -49,7 +60,21 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                         search: `?${URL_PARAM_KEY_FILE_NAME}=${id}`,
                     }}
                 >
-                    <p className={styles.cardTitle}>{title.toUpperCase()}</p>
+                    <p className={styles.cardTitle}>
+                        {/*
+                        First line is {title}, and second line is optional {subTitle},
+                        with a colon after title if subTitle exists, e.g.,
+                        Actin-based Listeria Propulsion:
+                        Normal ActA Distribution 
+                        */}
+                        {title}
+                        {subtitle && (
+                            <span>
+                                :<br />
+                                {subtitle}
+                            </span>
+                        )}
+                    </p>
                 </Link>
                 <p>{authors}</p>
                 <a

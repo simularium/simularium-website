@@ -1,3 +1,3 @@
-require.extensions['.png'] = function () {
-    return null;
-}
+['.png', '.gif'].forEach(extension => {
+    require.extensions[extension] = () => null;
+});

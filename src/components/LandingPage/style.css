@@ -39,33 +39,30 @@
 }
 
 .cards {
-    max-width: 100%;
+    max-width: 1500px;
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
     align-items: stretch;
-    margin-top: 2.5em;
 }
 
 .cards > * {
-    margin-bottom: 50px;
+    margin-top: 2em;
     margin-left: 1em;
     margin-right: 1em;
+}
+
+.caption {
+    margin-top: 1em;
+    margin-bottom: 2.5em;
+    font-size: 16px;
+    text-align: center;
 }
 
 .try-simularium-panel {
     composes: panel;
     background-color: var(--light-theme-background-purple);
 }
-
-/* This will probably get reused once we have a new flowchart graphic */
-/* .flowchart {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 1em;
-    margin-bottom: 1em;
-} */
 
 /* On larger screens, the flowchart width is 60% of parent div or 600px, whichever is larger.
 On smaller screens the width is 100% of parent div. */
@@ -76,20 +73,29 @@ On smaller screens the width is 100% of parent div. */
     }
 }
 
-.call-to-action-panel {
-    padding: 3.5em;
+.future-simularium-panel {
+    composes: panel;
     background-color: white;
-    text-align: center;
 }
 
-.call-to-action-panel :global(.ant-btn) {
+.flowchart {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+    margin-bottom: 3em;
+}
+
+/* These will be useful if we ever bring a call-to-action button back */
+/* .call-to-action-panel :global(.ant-btn) {
+    display: block;
     width: 130px;
     height: 30px;
     font-size: 14px;
     margin-top: 3em;
     margin-bottom: 0.5em;
-    margin-left: 1em;
-    margin-right: 1em;
+    margin-left: auto;
+    margin-right: auto;
     transition: 0.3s;
     border-radius: 3px;
 }
@@ -104,4 +110,4 @@ On smaller screens the width is 100% of parent div. */
 :global(.ant-btn-primary:hover) {
     background-color: transparent;
     color: var(--light-theme-button-purple);
-}
+} */
