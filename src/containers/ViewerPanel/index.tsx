@@ -239,10 +239,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const tickIntervalLength = simulariumController.tickIntervalLength;
         console.log("tickIntervalLength", tickIntervalLength);
         console.log("spatialUnitFactorMeters", spatialUnitFactorMeters);
-        const scaleBarLabel = si.meter.format(
+        let scaleBarLabel = si.meter.format(
             tickIntervalLength * spatialUnitFactorMeters,
             " "
         );
+        // The si-prefix library abbreviates "micro" as "mc" instead of "µ"
+        scaleBarLabel = scaleBarLabel.replace(" mc", " µ");
+
         this.setState({
             scaleBarLabel: scaleBarLabel,
             isInitialPlay: true,
