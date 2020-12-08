@@ -7,10 +7,10 @@ import SimulariumViewer, {
 } from "@aics/simularium-viewer";
 import "@aics/simularium-viewer/style/style.css";
 import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/simularium";
-// TODO: export TimeData from viewer so we can import it here
-// import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
+import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
 import { connect } from "react-redux";
-import { notification } from "antd";
+import { notification, Modal } from "antd";
+import Bowser from "bowser";
 
 import { State } from "../../state/types";
 import selectionStateBranch from "../../state/selection";
@@ -39,6 +39,7 @@ import {
     getSelectionStateInfoForViewer,
 } from "./selectors";
 import { batchActions } from "../../state/util";
+import { TUTORIAL_PATHNAME } from "../../routes";
 import CameraControls from "../../components/CameraControls";
 
 import { AGENT_COLORS } from "./constants";
@@ -112,6 +113,36 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public componentDidMount() {
+        const browser = Bowser.getParser(window.navigator.userAgent);
+        // Versions from https://caniuse.com/webgl2
+        const isBrowserSupported = browser.satisfies({
+            firefox: ">=51",
+            chrome: ">=56",
+            edge: ">=79",
+        });
+        if (!isBrowserSupported) {
+            Modal.info({
+                title: "The browser you are using is not supported.",
+                content: (
+                    <p>
+                        Please use Firefox, Chrome, or Edge. See more details{" "}
+                        <a href={`${TUTORIAL_PATHNAME}#browser-support`}>
+                            here
+                        </a>{" "}
+                        or choose OK to continue anyway.
+                    </p>
+                ),
+            });
+        }
+
+        if (window.matchMedia("(max-width: 900px)").matches) {
+            Modal.warning({
+                title: "Small screens are not supported",
+                content:
+                    "The Simularium Viewer does not support small screens at this time. Please use a larger screen for the best experience.",
+            });
+        }
+
         const current = this.centerContent.current;
         if (current) {
             window.addEventListener("resize", () => this.resize(current));
@@ -210,8 +241,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         });
     }
 
-    // TODO: use TimeData type for the timeData arg when we can import it from viewer
-    public receiveTimeChange(timeData: any) {
+    public receiveTimeChange(timeData: TimeData) {
         const {
             changeTime,
             setViewerStatus,

@@ -49,8 +49,8 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                             .
                         </li>
                         <li>
-                            In a web browser (Chrome or Firefox), navigate to
-                            the{" "}
+                            In a web browser (Firefox, Chrome, or Edge),
+                            navigate to the{" "}
                             <Link to={VIEWER_PATHNAME}>Simularium viewer</Link>.
                         </li>
                         <li>
@@ -214,8 +214,8 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                             at the output path you provided.
                         </li>
                         <li>
-                            In a web browser (Chrome or Firefox), navigate to
-                            the{" "}
+                            In a web browser (Firefox, Chrome, or Edge),
+                            navigate to the{" "}
                             <Link to={VIEWER_PATHNAME}>Simularium viewer</Link>.
                         </li>
                         <li>
@@ -224,6 +224,21 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                             your file.
                         </li>
                     </ol>
+                </ul>
+                <h1 id="browser-support">Browser support</h1>
+                <ul>
+                    <li>
+                        Currently, Simularium supports Firefox, Chrome, and
+                        Edge. Some features may not work on other browsers.
+                    </li>
+                    <li>
+                        If using Safari on a Mac, please enable WebGL 2.0 by
+                        choosing Develop &gt; Experimental Features and enabling
+                        &quot;WebGL 2.0&quot; (If you do not have a Develop menu
+                        in your menu bar, please first choose Safari &gt;
+                        Preferences &gt; Advanced and enable &quot;Show Develop
+                        menu in menu bar&quot;.) Then please reload the viewer.
+                    </li>
                 </ul>
             </Content>
             <Footer />
