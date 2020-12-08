@@ -29,18 +29,20 @@ import {
     SetViewerStatusAction,
     ViewerError,
 } from "../../state/metadata/types";
-import PlaybackControls from "../../components/PlaybackControls";
 import { VIEWER_ERROR } from "../../state/metadata/constants";
+import { batchActions } from "../../state/util";
+import PlaybackControls from "../../components/PlaybackControls";
+import CameraControls from "../../components/CameraControls";
+import ScaleBar from "../../components/ScaleBar";
 import { convertToSentenceCase } from "../../util";
+import { TUTORIAL_PATHNAME } from "../../routes";
 
 import {
     convertUIDataToColorMap,
     convertUIDataToSelectionData,
     getSelectionStateInfoForViewer,
 } from "./selectors";
-import { batchActions } from "../../state/util";
-import { TUTORIAL_PATHNAME } from "../../routes";
-import CameraControls from "../../components/CameraControls";
+import { AGENT_COLORS } from "./constants";
 
 const styles = require("./style.css");
 
