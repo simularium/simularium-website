@@ -77,6 +77,7 @@ interface ViewerPanelState {
     height: number;
     width: number;
     requestingTimeChange: boolean;
+    spatialUnit: string;
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -103,6 +104,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             height: 0,
             width: 0,
             requestingTimeChange: false,
+            spatialUnit: "",
         };
     }
 
@@ -231,6 +233,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
         const { receiveMetadata } = this.props;
+        const { spatialUnitFactorMeters } = data;
+
         this.setState({ isInitialPlay: true });
         receiveMetadata({
             // lastFrameTime here is incomplete until we receive the timestamp for the
