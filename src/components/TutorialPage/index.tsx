@@ -46,8 +46,8 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                             .
                         </li>
                         <li>
-                            In a web browser (Chrome or Firefox), navigate to
-                            the{" "}
+                            In a web browser (Firefox, Chrome, or Edge),
+                            navigate to the{" "}
                             <Link to={VIEWER_PATHNAME}>Simularium viewer</Link>.
                         </li>
                         <li>
@@ -211,8 +211,8 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                             at the output path you provided.
                         </li>
                         <li>
-                            In a web browser (Chrome or Firefox), navigate to
-                            the{" "}
+                            In a web browser (Firefox, Chrome, or Edge),
+                            navigate to the{" "}
                             <Link to={VIEWER_PATHNAME}>Simularium viewer</Link>.
                         </li>
                         <li>
@@ -225,8 +225,8 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                 <h1 id="browser-support">Browser support</h1>
                 <ul>
                     <li>
-                        Currently, Simularium supports Firefox and Chrome. Some
-                        features may not work on other browsers.
+                        Currently, Simularium supports Firefox, Chrome, and
+                        Edge. Some features may not work on other browsers.
                     </li>
                     <li>
                         If using Safari on a Mac, please enable WebGL 2.0 by

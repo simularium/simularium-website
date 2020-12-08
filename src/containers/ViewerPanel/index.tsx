@@ -113,15 +113,19 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public componentDidMount() {
-        const browser = Bowser.getParser(
-            window.navigator.userAgent
-        ).getBrowserName();
-        if (browser === "Safari" || browser === "Internet Explorer") {
+        const browser = Bowser.getParser(window.navigator.userAgent);
+        // Versions from https://caniuse.com/webgl2
+        const isBrowserSupported = browser.satisfies({
+            firefox: ">=51",
+            chrome: ">=56",
+            edge: ">=79",
+        });
+        if (!isBrowserSupported) {
             Modal.info({
                 title: "The browser you are using is not supported.",
                 content: (
                     <p>
-                        Please use Firefox or Chrome. See more details{" "}
+                        Please use Firefox, Chrome, or Edge. See more details{" "}
                         <a href={`${TUTORIAL_PATHNAME}#browser-support`}>
                             here
                         </a>{" "}
