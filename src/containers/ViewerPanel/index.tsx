@@ -11,6 +11,7 @@ import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
 import { connect } from "react-redux";
 import { notification, Modal } from "antd";
 import Bowser from "bowser";
+const si = require("si-prefix");
 
 import { State } from "../../state/types";
 import selectionStateBranch from "../../state/selection";
@@ -77,7 +78,7 @@ interface ViewerPanelState {
     height: number;
     width: number;
     requestingTimeChange: boolean;
-    spatialUnit: string;
+    scaleBarLabel: string;
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -104,7 +105,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             height: 0,
             width: 0,
             requestingTimeChange: false,
-            spatialUnit: "",
+            scaleBarLabel: "",
         };
     }
 
@@ -232,10 +233,21 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
-        const { receiveMetadata } = this.props;
+        const { receiveMetadata, simulariumController } = this.props;
         const { spatialUnitFactorMeters } = data;
 
-        this.setState({ isInitialPlay: true });
+        const tickIntervalLength = simulariumController.tickIntervalLength;
+        console.log("tickIntervalLength", tickIntervalLength);
+        console.log("spatialUnitFactorMeters", spatialUnitFactorMeters);
+        const scaleBarLabel = si.meter.format(
+            tickIntervalLength * spatialUnitFactorMeters,
+            " "
+        );
+        this.setState({
+            scaleBarLabel: scaleBarLabel,
+            isInitialPlay: true,
+        });
+
         receiveMetadata({
             // lastFrameTime here is incomplete until we receive the timestamp for the
             // first frame in receiveTimeChange() later.
@@ -367,10 +379,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     lastFrameTime={lastFrameTime}
                     loading={this.state.requestingTimeChange}
                 />
-                <ScaleBar
-                    length={simulariumController.tickIntervalLength}
-                    unit={"nm"}
-                />
+                <ScaleBar label={this.state.scaleBarLabel} />
                 <CameraControls
                     resetCamera={simulariumController.resetCamera}
                     zoomIn={simulariumController.zoomIn}
