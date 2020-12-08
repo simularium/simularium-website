@@ -54,17 +54,17 @@ const PlayBackControls = ({
         lastFrameTime can divide by 1000. Math.log(x) / Math.log(1000) is the same as log base 1000 of x:
         https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log/#Examples
         */
-        let unitIndex = Math.ceil(Math.log(1 / lastFrameTime) / Math.log(1000));
+        let index = Math.ceil(Math.log(1 / lastFrameTime) / Math.log(1000));
 
         // Handle very small values (use ns if lastFrameTime is less than 1 ns)
-        if (unitIndex >= units.length) {
-            unitIndex = units.length - 1;
+        if (index >= units.length) {
+            index = units.length - 1;
             // Handle very large values (use s if lastFrameTime is greater than 1000 s)
-        } else if (unitIndex < 0) {
-            unitIndex = 0;
+        } else if (index < 0) {
+            index = 0;
         }
 
-        setUnitIndex(unitIndex);
+        setUnitIndex(index);
     }, [lastFrameTime]);
 
     const btnClassNames = classNames([styles.item, styles.btn]);
