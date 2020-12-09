@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Slider, Tooltip } from "antd";
 import classNames from "classnames";
 
@@ -37,8 +37,9 @@ const PlayBackControls = ({
         onTimeChange(sliderValue as number); // slider can be a list of numbers, but we're just using a single value
     };
 
+    const [unitIndex, setUnitIndex] = useState(0);
+
     const units = ["s", "ms", "\u03BCs", "ns"];
-    let unitIndex = 0;
     const roundNumber = (num: number) => Number(num).toPrecision(3);
     const roundedTime = time ? roundNumber(time * 1000 ** unitIndex) : 0;
     const roundedLastFrameTime = roundNumber(lastFrameTime * 1000 ** unitIndex);
@@ -53,15 +54,17 @@ const PlayBackControls = ({
         lastFrameTime can divide by 1000. Math.log(x) / Math.log(1000) is the same as log base 1000 of x:
         https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log/#Examples
         */
-        unitIndex = Math.ceil(Math.log(1 / lastFrameTime) / Math.log(1000));
+        let index = Math.ceil(Math.log(1 / lastFrameTime) / Math.log(1000));
 
         // Handle very small values (use ns if lastFrameTime is less than 1 ns)
-        if (unitIndex >= units.length) {
-            unitIndex = units.length - 1;
+        if (index >= units.length) {
+            index = units.length - 1;
             // Handle very large values (use s if lastFrameTime is greater than 1000 s)
-        } else if (unitIndex < 0) {
-            unitIndex = 0;
+        } else if (index < 0) {
+            index = 0;
         }
+
+        setUnitIndex(index);
     }, [lastFrameTime]);
 
     const btnClassNames = classNames([styles.item, styles.btn]);
