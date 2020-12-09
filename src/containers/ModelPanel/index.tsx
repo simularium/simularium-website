@@ -43,7 +43,10 @@ import {
 } from "../../state/metadata/constants";
 import NoTrajectoriesText from "../../components/NoTrajectoriesText";
 import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
-import { ViewerStatus } from "../../state/metadata/types";
+import {
+    ViewerStatus,
+    RequestNetworkFileAction,
+} from "../../state/metadata/types";
 import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFileFailedText";
 
 const styles = require("./style.css");
@@ -63,6 +66,7 @@ interface ModelPanelProps {
     agentColors: AgentColorMap;
     viewerStatus: ViewerStatus;
     isNetworkedFile: boolean;
+    changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
 }
 
 class ModelPanel extends React.Component<ModelPanelProps, {}> {
@@ -80,6 +84,7 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
             agentColors,
             viewerStatus,
             isNetworkedFile,
+            changeToNetworkedFile: loadNetworkFile,
         } = this.props;
         const checkboxTree = (
             <CheckBoxTree
@@ -97,9 +102,7 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
         );
         const contentMap = {
             [VIEWER_SUCCESS]: checkboxTree,
-            [VIEWER_EMPTY]: (
-                <NoTrajectoriesText selectFile={changeToNetworkedFile} />
-            ),
+            [VIEWER_EMPTY]: <NoTrajectoriesText selectFile={loadNetworkFile} />,
             [VIEWER_LOADING]: <div />,
             [VIEWER_ERROR]: isNetworkedFile ? (
                 <NetworkFileFailedText />
