@@ -8,11 +8,16 @@ interface ScaleBarProps {
 }
 
 const ScaleBar = (scaleBarProps: ScaleBarProps) => {
-    return (
+    const { label } = scaleBarProps;
+    const scaleBarNode = label ? (
         <div className={styles.container}>
-            <div className={styles.text}>{scaleBarProps.label}</div>
+            <div className={styles.text}>{label}</div>
             <img src={ScaleBarImage} />
         </div>
+    ) : (
+        <div />
     );
+
+    return scaleBarNode;
 };
 export default ScaleBar;
