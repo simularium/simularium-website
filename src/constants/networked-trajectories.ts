@@ -1,8 +1,10 @@
-import listeriaNormalImage from "../assets/card-images/listeria-normal.png";
-import listeriaNormalGif from "../assets/card-images/listeria-normal.gif";
+// import listeriaNormalImage from "../assets/card-images/listeria-normal.png";
+// import listeriaNormalGif from "../assets/card-images/listeria-normal.gif";
 // import listeriaUltrapolarImage from "../assets/card-images/card-image-2.png";
 import endocytosisImage from "../assets/card-images/endocytosis.png";
 import endocytosisGif from "../assets/card-images/endocytosis.gif";
+import covidImage from "../assets/card-images/covid.png";
+import covidGif from "../assets/card-images/covid.gif";
 // import covid19Image from "../assets/card-images/card-image-4.png";
 
 import { TrajectoryDisplayData } from "./interfaces";
@@ -41,8 +43,8 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A PhysiCell model of SARS-CoV-2 dynamics in human lung epithelium.",
-        imageFile: endocytosisImage,
-        gifFile: endocytosisGif,
+        imageFile: covidImage,
+        gifFile: covidGif,
     },
     /* Not ready yet
     {
