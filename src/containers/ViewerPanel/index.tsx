@@ -11,6 +11,7 @@ import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
 import { connect } from "react-redux";
 import { notification, Modal } from "antd";
 import Bowser from "bowser";
+const si = require("si-prefix");
 
 import { State } from "../../state/types";
 import selectionStateBranch from "../../state/selection";
@@ -29,19 +30,19 @@ import {
     SetViewerStatusAction,
     ViewerError,
 } from "../../state/metadata/types";
-import PlaybackControls from "../../components/PlaybackControls";
 import { VIEWER_ERROR } from "../../state/metadata/constants";
+import { batchActions } from "../../state/util";
+import PlaybackControls from "../../components/PlaybackControls";
+import CameraControls from "../../components/CameraControls";
+import ScaleBar from "../../components/ScaleBar";
 import { convertToSentenceCase } from "../../util";
+import { TUTORIAL_PATHNAME } from "../../routes";
 
 import {
     convertUIDataToColorMap,
     convertUIDataToSelectionData,
     getSelectionStateInfoForViewer,
 } from "./selectors";
-import { batchActions } from "../../state/util";
-import { TUTORIAL_PATHNAME } from "../../routes";
-import CameraControls from "../../components/CameraControls";
-
 import { AGENT_COLORS } from "./constants";
 
 const styles = require("./style.css");
@@ -77,6 +78,7 @@ interface ViewerPanelState {
     height: number;
     width: number;
     requestingTimeChange: boolean;
+    scaleBarLabel: string;
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -103,6 +105,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             height: 0,
             width: 0,
             requestingTimeChange: false,
+            scaleBarLabel: "",
         };
     }
 
@@ -230,8 +233,29 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
-        const { receiveMetadata } = this.props;
-        this.setState({ isInitialPlay: true });
+        const { receiveMetadata, simulariumController } = this.props;
+        const { spatialUnitFactorMeters } = data;
+
+        const tickIntervalLength = simulariumController.tickIntervalLength;
+        // Format scale bar length and unit so that it's more readable, e.g.:
+        // 0.000000015 m -> [15, "nm"]
+        const scaleBarLabelArray = si.meter.convert(
+            tickIntervalLength * spatialUnitFactorMeters
+        );
+        const scaleBarLabelNumber: number = parseFloat(
+            scaleBarLabelArray[0].toPrecision(2)
+        );
+        // The si-prefix library abbreviates "micro" as "mc", so swap it out with "µ"
+        const scaleBarLabelUnit: string = scaleBarLabelArray[1].replace(
+            "mc",
+            "µ"
+        );
+
+        this.setState({
+            scaleBarLabel: scaleBarLabelNumber + " " + scaleBarLabelUnit,
+            isInitialPlay: true,
+        });
+
         receiveMetadata({
             // lastFrameTime here is incomplete until we receive the timestamp for the
             // first frame in receiveTimeChange() later.
@@ -363,6 +387,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     lastFrameTime={lastFrameTime}
                     loading={this.state.requestingTimeChange}
                 />
+                <ScaleBar label={this.state.scaleBarLabel} />
                 <CameraControls
                     resetCamera={simulariumController.resetCamera}
                     zoomIn={simulariumController.zoomIn}
