@@ -26,6 +26,24 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         imageFile: endocytosisImage,
         gifFile: endocytosisGif,
     },
+    {
+        modelName: "SARS-CoV-2 Dynamics in Human Lung Epithelium",
+        id: "pc4covid19.simularium",
+        title: "SARS-CoV-2 Dynamics in Human Lung Epithelium",
+        totalSimulatedTime: "4h",
+        authors: "Michael Getz et al.",
+        publication: {
+            title:
+                "Rapid community-driven development of a SARS-CoV-2 tissue simulator",
+            journal: "bioRxiv",
+            year: 2020,
+            url: "https://www.biorxiv.org/content/10.1101/2020.04.02.019075v3",
+        },
+        description:
+            "A PhysiCell model of SARS-CoV-2 dynamics in human lung epithelium.",
+        imageFile: endocytosisImage,
+        gifFile: endocytosisGif,
+    },
     /* Not ready yet
     {
         modelName: "Covid Virion",
@@ -45,6 +63,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         imageFile: covid19Image,
     },
     */
+    /* Not ready yet
     {
         modelName: "Actin-based Listeria Propulsion",
         id: "listeria_normal.simularium",
@@ -64,7 +83,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
             "A model of Listeria monocytogenes propulsion that explicitly simulates monomer-scale biochemical and mechanical interactions. This run has a normal ActA distribution on the bacterial surface.",
         imageFile: listeriaNormalImage,
         gifFile: listeriaNormalGif,
-    },
+    },*/
     /* Not ready yet
     {
         modelName: "Actin-based Listeria Propulsion",
