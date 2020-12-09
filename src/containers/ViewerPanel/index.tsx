@@ -237,8 +237,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const { spatialUnitFactorMeters } = data;
 
         const tickIntervalLength = simulariumController.tickIntervalLength;
-        // Format both the number and the appropriate unit with a space in between,
-        // e.g., "15 nm"
+        // Format scale bar length so that it's more readable, e.g.:
+        // 0.000000015 m -> 15 nm
         let scaleBarLabel = si.meter.format(
             tickIntervalLength * spatialUnitFactorMeters,
             " "
