@@ -237,11 +237,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const { spatialUnitFactorMeters } = data;
 
         const tickIntervalLength = simulariumController.tickIntervalLength;
+        // Format both the number and the appropriate unit with a space in between,
+        // e.g., "15 nm"
         let scaleBarLabel = si.meter.format(
             tickIntervalLength * spatialUnitFactorMeters,
             " "
         );
-        // The si-prefix library abbreviates "micro" as "mc" instead of "µ"
+        // The si-prefix library abbreviates "micro" as "mc", so swap it out with "µ"
         scaleBarLabel = scaleBarLabel.replace(" mc", " µ");
 
         this.setState({
