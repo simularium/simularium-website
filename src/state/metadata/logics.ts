@@ -20,12 +20,7 @@ import {
     LOAD_NETWORKED_FILE_IN_VIEWER,
     REQUEST_PLOT_DATA,
 } from "./constants";
-import {
-    ReceiveAction,
-    LocalSimFile,
-    NetworkedSimFile,
-    FrontEndError,
-} from "./types";
+import { ReceiveAction, LocalSimFile, FrontEndError } from "./types";
 import { VIEWER_ERROR } from "./constants";
 import { setViewerStatus } from "../metadata/actions";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
@@ -60,19 +55,7 @@ const loadNetworkedFile = createLogic({
         const { action, getState } = deps;
         const currentState = getState();
 
-        const lastSimulariumFile:
-            | LocalSimFile
-            | NetworkedSimFile = getSimulariumFile(currentState);
         const simulariumFile = action.payload;
-        if (lastSimulariumFile) {
-            if (
-                // for networked files, only check same file name
-                lastSimulariumFile.name === simulariumFile.name
-            ) {
-                // exact same file loaded again, dont need to reload anything
-                return done();
-            }
-        }
 
         const resetAgentNames = receiveAgentNamesAndStates([]);
         const setViewerLoading = setViewerStatus({ status: VIEWER_LOADING });
