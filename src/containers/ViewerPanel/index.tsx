@@ -250,11 +250,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             "mc",
             "µ"
         );
-        const scaleBarLabel: string =
-            scaleBarLabelNumber + " " + scaleBarLabelUnit;
 
         this.setState({
-            scaleBarLabel: scaleBarLabel,
+            scaleBarLabel: scaleBarLabelNumber + " " + scaleBarLabelUnit,
             isInitialPlay: true,
         });
 
