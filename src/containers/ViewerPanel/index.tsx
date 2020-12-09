@@ -237,8 +237,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const { spatialUnitFactorMeters } = data;
 
         const tickIntervalLength = simulariumController.tickIntervalLength;
-        console.log("tickIntervalLength", tickIntervalLength);
-        console.log("spatialUnitFactorMeters", spatialUnitFactorMeters);
         let scaleBarLabel = si.meter.format(
             tickIntervalLength * spatialUnitFactorMeters,
             " "
