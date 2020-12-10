@@ -1,5 +1,4 @@
 import {
-    DESELECT_FILE,
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
     SIDE_PANEL_COLLAPSED,
@@ -10,9 +9,9 @@ import {
     SET_AGENTS_VISIBLE,
     SET_ALL_AGENT_COLORS,
     CHANGE_AGENT_COLOR,
+    RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
 } from "./constants";
 import {
-    DeselectFileAction,
     ChangeAgentsRenderingStateAction,
     SelectMetadataAction,
     ChangeTimeAction,
@@ -22,14 +21,8 @@ import {
     VisibilitySelectionMap,
     AgentColorMap,
     SetAllColorsAction,
+    ResetAction,
 } from "./types";
-
-export function deselectFile(fileId: string | string[]): DeselectFileAction {
-    return {
-        payload: fileId,
-        type: DESELECT_FILE,
-    };
-}
 
 export function changeTime(time: number): ChangeTimeAction {
     return {
@@ -110,5 +103,11 @@ export function dragOverViewer(): DragOverViewerAction {
 export function resetDragOverViewer(): ResetDragOverViewerAction {
     return {
         type: RESET_DRAG_OVER_VIEWER,
+    };
+}
+
+export function resetAgentSelectionsAndHighlights(): ResetAction {
+    return {
+        type: RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
     };
 }

@@ -8,7 +8,6 @@ import { ReduxLogicDeps } from "../types";
 
 import { getSimulariumController, getSimulariumFile } from "./selectors";
 import {
-    receiveAgentNamesAndStates,
     receiveMetadata,
     receiveSimulariumFile,
     requestCachedPlotData,
@@ -20,17 +19,64 @@ import {
     LOAD_NETWORKED_FILE_IN_VIEWER,
     REQUEST_PLOT_DATA,
     CLEAR_SIMULARIUM_FILE,
+    VIEWER_EMPTY,
 } from "./constants";
 import { ReceiveAction, LocalSimFile, FrontEndError } from "./types";
 import { VIEWER_ERROR } from "./constants";
 import { setViewerStatus } from "../metadata/actions";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import { batchActions } from "../util";
+import { initialState } from "./reducer";
+import {
+    changeTime,
+    resetAgentSelectionsAndHighlights,
+} from "../selection/actions";
+import { initialState as initialSelectionState } from "../selection/reducer";
+import { getCurrentTime } from "../selection/selectors";
 
 const netConnectionSettings = {
     serverIp: process.env.BACKEND_SERVER_IP,
     serverPort: 9002,
 };
+
+const clearSimulariumFile = createLogic({
+    process(deps: ReduxLogicDeps, dispatch, done) {
+        const { getState, action } = deps;
+        const controller = getSimulariumController(getState());
+        const clearMetaData = receiveMetadata({
+            plotData: initialState.plotData,
+            firstFrameTime: initialState.firstFrameTime,
+            lastFrameTime: initialState.lastFrameTime,
+            timeStep: initialState.timeStep,
+            agentId: initialState.agentIds,
+            agentUiNames: initialState.agentUiNames,
+        });
+        const resetTime = changeTime(initialSelectionState.time);
+        const resetVisibility = resetAgentSelectionsAndHighlights();
+
+        const actions = [clearMetaData, resetTime, resetVisibility];
+        let setViewerStatusAction;
+        // if requesting new sim file, set loading
+        if (action.payload && action.payload.name) {
+            setViewerStatusAction = setViewerStatus({
+                status: VIEWER_LOADING,
+            });
+        } else {
+            setViewerStatusAction = setViewerStatus({
+                status: VIEWER_EMPTY,
+            });
+        }
+        actions.push(setViewerStatusAction);
+        dispatch(batchActions(actions));
+        //only clear file if not requesting new one
+        if (controller && !action.payload) {
+            controller.clearFile();
+        }
+        done();
+    },
+    type: [CLEAR_SIMULARIUM_FILE],
+});
+
 const requestPlotDataLogic = createLogic({
     process(
         deps: ReduxLogicDeps,
@@ -57,10 +103,7 @@ const loadNetworkedFile = createLogic({
         const currentState = getState();
 
         const simulariumFile = action.payload;
-
-        const resetAgentNames = receiveAgentNamesAndStates([]);
-        const setViewerLoading = setViewerStatus({ status: VIEWER_LOADING });
-        dispatch(batchActions([resetAgentNames, setViewerLoading]));
+        dispatch({ type: CLEAR_SIMULARIUM_FILE });
 
         let simulariumController = getSimulariumController(currentState);
         if (!simulariumController) {
@@ -121,6 +164,7 @@ const loadLocalFile = createLogic({
             currentState
         );
         const simulariumFile = action.payload;
+
         if (lastSimulariumFile) {
             if (
                 lastSimulariumFile.name === simulariumFile.name &&
@@ -130,11 +174,11 @@ const loadLocalFile = createLogic({
                 return;
             }
         }
+        console.log("before", getCurrentTime(getState()));
 
+        dispatch({ type: CLEAR_SIMULARIUM_FILE });
+        console.log("after", getCurrentTime(getState()));
         clearOutFileTrajectoryUrlParam();
-        const resetAgentNames = receiveAgentNamesAndStates([]);
-        const setViewerLoading = setViewerStatus({ status: VIEWER_LOADING });
-        dispatch(batchActions([resetAgentNames, setViewerLoading]));
         // if requested while playing, just pause sim until done loading
         simulariumController.pause();
 
@@ -163,24 +207,6 @@ const loadLocalFile = createLogic({
             });
     },
     type: LOAD_LOCAL_FILE_IN_VIEWER,
-});
-
-const clearSimulariumFile = createLogic({
-    process(deps: ReduxLogicDeps, dispatch, done) {
-        const { getState } = deps;
-        const controller = getSimulariumController(getState());
-        console.log(controller);
-        const resetAgentNames = receiveAgentNamesAndStates([]);
-        // const setViewerLoading = setViewerStatus({ status: VIEWER_LOADING });
-        const clearPlotData = receiveMetadata({ plotData: [] });
-
-        dispatch(batchActions([resetAgentNames, clearPlotData]));
-        if (controller) {
-            controller.clearFile();
-        }
-        done();
-    },
-    type: CLEAR_SIMULARIUM_FILE,
 });
 
 export default [

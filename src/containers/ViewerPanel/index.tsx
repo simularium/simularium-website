@@ -201,6 +201,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         receiveAgentTypeIds(particleTypeIds);
     }
 
+    // TODO: remove this (old function)
     public highlightParticleType(typeId: number) {
         const highlightId = typeId;
         this.setState({ highlightId });

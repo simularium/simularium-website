@@ -1,11 +1,9 @@
-import { castArray, without } from "lodash";
 import { AnyAction } from "redux";
 
 import { TypeToDescriptionMap } from "../types";
 import { makeReducer } from "../util";
 
 import {
-    DESELECT_FILE,
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
     SIDE_PANEL_COLLAPSED,
@@ -16,9 +14,9 @@ import {
     SET_AGENTS_VISIBLE,
     SET_ALL_AGENT_COLORS,
     CHANGE_AGENT_COLOR,
+    RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
 } from "./constants";
 import {
-    DeselectFileAction,
     ChangeAgentsRenderingStateAction,
     SelectionStateBranch,
     SelectMetadataAction,
@@ -28,10 +26,10 @@ import {
     ResetDragOverViewerAction,
     SetVisibleAction,
     SetAllColorsAction,
+    ResetAction,
 } from "./types";
 
 export const initialState = {
-    files: [],
     time: 0,
     numberPanelsCollapsed: 0,
     visibleAgentKeys: {},
@@ -41,13 +39,16 @@ export const initialState = {
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
-    [DESELECT_FILE]: {
-        accepts: (action: AnyAction): action is DeselectFileAction =>
-            action.type === DESELECT_FILE,
-        perform: (state: SelectionStateBranch, action: DeselectFileAction) => ({
-            ...state,
-            files: without(state.files, ...castArray(action.payload)),
-        }),
+    [RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS]: {
+        accepts: (action: AnyAction): action is ResetAction =>
+            action.type === RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
+        perform: (state: SelectionStateBranch) => {
+            return {
+                ...state,
+                visibleAgentKeys: initialState.visibleAgentKeys,
+                highlightedAgentKeys: initialState.highlightedAgentKeys,
+            };
+        },
     },
     [SET_AGENTS_VISIBLE]: {
         accepts: (action: AnyAction): action is SetVisibleAction =>
