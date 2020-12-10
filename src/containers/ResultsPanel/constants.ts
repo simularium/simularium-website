@@ -2,6 +2,12 @@ const COLORS = {
     darkTwo: "#1e1b25",
     whiteTwo: "#d3d3d3",
     babyPurple: "#b59ff6",
+    lightGreen: "#c9e358",
+    cyan: "#12e9ff",
+    darkBlue: "#005097",
+    pink: "#ce729e",
+    burntOrange: "#ce7152",
+    green: "#54ce52",
 };
 
 export const PLOT_STYLE = {
@@ -18,14 +24,14 @@ export const PLOT_STYLE = {
     marginBottom: 30,
     marginRight: 5,
     colorway: [
-        "#c9e358",
-        "#12e9ff",
-        "#005097",
+        COLORS.lightGreen,
+        COLORS.cyan,
+        COLORS.darkBlue,
         COLORS.babyPurple,
         COLORS.whiteTwo,
-        "#ce729e",
-        "#ce7152",
-        "#54ce52",
+        COLORS.pink,
+        COLORS.burntOrange,
+        COLORS.green,
     ],
     height: 240,
     width: 260,
