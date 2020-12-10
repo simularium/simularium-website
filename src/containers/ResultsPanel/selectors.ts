@@ -51,6 +51,8 @@ const configureLayout = (
                 ...AXIS_ATTRIBUTES.title,
                 text: layout.xaxis.title,
             },
+            ticks: "inside",
+            tickcolor: PLOT_STYLE.textColor,
             hoverformat: ".1f", // Show 1 decimal place
         },
         yaxis: {
@@ -59,6 +61,8 @@ const configureLayout = (
                 ...AXIS_ATTRIBUTES.title,
                 text: layout.yaxis.title,
             },
+            ticks: "inside",
+            tickcolor: PLOT_STYLE.textColor,
             hoverformat: ".2f", // Show 2 decimal places
         },
         yaxis2: {
