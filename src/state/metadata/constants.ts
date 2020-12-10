@@ -21,6 +21,7 @@ export const LOAD_NETWORKED_FILE_IN_VIEWER = makeMetadataConstant(
     "load-networked-file"
 );
 export const REQUEST_PLOT_DATA = makeMetadataConstant("request-plot-data");
+export const CLEAR_SIMULARIUM_FILE = makeMetadataConstant("clear-sim-file");
 
 export const VIEWER_EMPTY = "empty";
 export const VIEWER_LOADING = "loading";

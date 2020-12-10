@@ -19,6 +19,7 @@ import {
     VIEWER_LOADING,
     LOAD_NETWORKED_FILE_IN_VIEWER,
     REQUEST_PLOT_DATA,
+    CLEAR_SIMULARIUM_FILE,
 } from "./constants";
 import { ReceiveAction, LocalSimFile, FrontEndError } from "./types";
 import { VIEWER_ERROR } from "./constants";
@@ -164,4 +165,27 @@ const loadLocalFile = createLogic({
     type: LOAD_LOCAL_FILE_IN_VIEWER,
 });
 
-export default [requestPlotDataLogic, loadLocalFile, loadNetworkedFile];
+const clearSimulariumFile = createLogic({
+    process(deps: ReduxLogicDeps, dispatch, done) {
+        const { getState } = deps;
+        const controller = getSimulariumController(getState());
+        console.log(controller);
+        const resetAgentNames = receiveAgentNamesAndStates([]);
+        // const setViewerLoading = setViewerStatus({ status: VIEWER_LOADING });
+        const clearPlotData = receiveMetadata({ plotData: [] });
+
+        dispatch(batchActions([resetAgentNames, clearPlotData]));
+        if (controller) {
+            controller.clearFile();
+        }
+        done();
+    },
+    type: CLEAR_SIMULARIUM_FILE,
+});
+
+export default [
+    requestPlotDataLogic,
+    loadLocalFile,
+    loadNetworkedFile,
+    clearSimulariumFile,
+];

@@ -9,6 +9,7 @@ import {
     SET_VIEWER_STATUS,
     LOAD_NETWORKED_FILE_IN_VIEWER,
     REQUEST_PLOT_DATA,
+    CLEAR_SIMULARIUM_FILE,
 } from "./constants";
 import {
     MetadataStateBranch,
@@ -100,6 +101,12 @@ export function receiveSimulariumFile(
     return {
         payload,
         type: RECEIVE_SIMULARIUM_FILE,
+    };
+}
+
+export function clearSimulariumFile() {
+    return {
+        type: CLEAR_SIMULARIUM_FILE,
     };
 }
 
