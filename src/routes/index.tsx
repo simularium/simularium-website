@@ -14,15 +14,23 @@ import {
 export const VIEWER_PATHNAME = "/viewer";
 export const TUTORIAL_PATHNAME = "/tutorial";
 
+interface LocationWithState extends Location {
+    state: {
+        localFile?: boolean;
+    };
+}
 function RenderSimularium() {
-    const location = useLocation();
+    const location = useLocation() as LocationWithState;
     React.useEffect(() => {
         const state = store.getState();
         const controller = getSimulariumController(state);
         const simFile = getSimulariumFile(state);
+        if (location.state && location.state.localFile) {
+            return;
+        }
         if (!location.search && controller && simFile.name) {
-            console.log("clearing", controller, simFile);
-            store.dispatch(clearSimulariumFile());
+            // going to /viewer, clear out any existing files
+            store.dispatch(clearSimulariumFile(false));
         }
     }, [location]);
 

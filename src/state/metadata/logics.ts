@@ -32,15 +32,14 @@ import {
     resetAgentSelectionsAndHighlights,
 } from "../selection/actions";
 import { initialState as initialSelectionState } from "../selection/reducer";
-import { getCurrentTime } from "../selection/selectors";
 
 const netConnectionSettings = {
     serverIp: process.env.BACKEND_SERVER_IP,
     serverPort: 9002,
 };
 
-const clearSimulariumFile = createLogic({
-    process(deps: ReduxLogicDeps, dispatch, done) {
+const resetSimulariumFileState = createLogic({
+    async process(deps: ReduxLogicDeps, dispatch, done) {
         const { getState, action } = deps;
         const controller = getSimulariumController(getState());
         const clearMetaData = receiveMetadata({
@@ -48,30 +47,24 @@ const clearSimulariumFile = createLogic({
             firstFrameTime: initialState.firstFrameTime,
             lastFrameTime: initialState.lastFrameTime,
             timeStep: initialState.timeStep,
-            agentId: initialState.agentIds,
             agentUiNames: initialState.agentUiNames,
         });
         const resetTime = changeTime(initialSelectionState.time);
         const resetVisibility = resetAgentSelectionsAndHighlights();
 
         const actions = [clearMetaData, resetTime, resetVisibility];
-        let setViewerStatusAction;
-        // if requesting new sim file, set loading
-        if (action.payload && action.payload.name) {
-            setViewerStatusAction = setViewerStatus({
-                status: VIEWER_LOADING,
-            });
-        } else {
-            setViewerStatusAction = setViewerStatus({
+
+        if (!action.payload.newFile) {
+            //only clear controller if not requesting new one
+            if (controller) {
+                controller.clearFile();
+            }
+            const setViewerStatusAction = setViewerStatus({
                 status: VIEWER_EMPTY,
             });
+            actions.push(setViewerStatusAction);
         }
-        actions.push(setViewerStatusAction);
         dispatch(batchActions(actions));
-        //only clear file if not requesting new one
-        if (controller && !action.payload) {
-            controller.clearFile();
-        }
         done();
     },
     type: [CLEAR_SIMULARIUM_FILE],
@@ -98,12 +91,20 @@ const requestPlotDataLogic = createLogic({
 });
 
 const loadNetworkedFile = createLogic({
-    process(deps: ReduxLogicDeps, dispatch, done) {
+    async process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
         const currentState = getState();
 
         const simulariumFile = action.payload;
-        dispatch({ type: CLEAR_SIMULARIUM_FILE });
+        dispatch(
+            setViewerStatus({
+                status: VIEWER_LOADING,
+            })
+        );
+        await dispatch({
+            payload: { newFile: true },
+            type: CLEAR_SIMULARIUM_FILE,
+        });
 
         let simulariumController = getSimulariumController(currentState);
         if (!simulariumController) {
@@ -156,7 +157,7 @@ const clearOutFileTrajectoryUrlParam = () => {
 };
 
 const loadLocalFile = createLogic({
-    process(deps: ReduxLogicDeps, dispatch, done) {
+    async process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
         const currentState = getState();
         const simulariumController = getSimulariumController(currentState);
@@ -174,10 +175,17 @@ const loadLocalFile = createLogic({
                 return;
             }
         }
-        console.log("before", getCurrentTime(getState()));
+        dispatch(
+            setViewerStatus({
+                status: VIEWER_LOADING,
+            })
+        );
 
-        dispatch({ type: CLEAR_SIMULARIUM_FILE });
-        console.log("after", getCurrentTime(getState()));
+        await dispatch({
+            payload: { newFile: true },
+            type: CLEAR_SIMULARIUM_FILE,
+        });
+
         clearOutFileTrajectoryUrlParam();
         // if requested while playing, just pause sim until done loading
         simulariumController.pause();
@@ -213,5 +221,5 @@ export default [
     requestPlotDataLogic,
     loadLocalFile,
     loadNetworkedFile,
-    clearSimulariumFile,
+    resetSimulariumFileState,
 ];

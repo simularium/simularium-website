@@ -22,6 +22,13 @@ export interface RequestAction {
     type: string;
 }
 
+export interface ResetSimFileDataAction {
+    payload: {
+        newFile: boolean;
+    };
+    type: string;
+}
+
 export interface RequestCachedPlotAction {
     payload: { url: string };
     type: string;

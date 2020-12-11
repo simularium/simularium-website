@@ -23,6 +23,7 @@ import {
     SetViewerStatusAction,
     RequestNetworkFileAction,
     RequestLocalFileAction,
+    ResetSimFileDataAction,
 } from "./types";
 import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
 
@@ -104,8 +105,11 @@ export function receiveSimulariumFile(
     };
 }
 
-export function clearSimulariumFile() {
+export function clearSimulariumFile(newFile: boolean): ResetSimFileDataAction {
     return {
+        payload: {
+            newFile,
+        },
         type: CLEAR_SIMULARIUM_FILE,
     };
 }
