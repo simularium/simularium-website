@@ -39,31 +39,45 @@ const netConnectionSettings = {
 };
 
 const resetSimulariumFileState = createLogic({
-    async process(deps: ReduxLogicDeps, dispatch, done) {
+    process(deps: ReduxLogicDeps, dispatch, done) {
         const { getState, action } = deps;
         const controller = getSimulariumController(getState());
-        const clearMetaData = receiveMetadata({
-            plotData: initialState.plotData,
-            firstFrameTime: initialState.firstFrameTime,
-            lastFrameTime: initialState.lastFrameTime,
-            timeStep: initialState.timeStep,
-            agentUiNames: initialState.agentUiNames,
-        });
+
         const resetTime = changeTime(initialSelectionState.time);
         const resetVisibility = resetAgentSelectionsAndHighlights();
+        let clearMetaData;
 
-        const actions = [clearMetaData, resetTime, resetVisibility];
+        const actions = [resetTime, resetVisibility];
 
         if (!action.payload.newFile) {
-            //only clear controller if not requesting new one
+            //only clear controller if not requesting new sim file
             if (controller) {
                 controller.clearFile();
             }
+            clearMetaData = receiveMetadata({
+                plotData: initialState.plotData,
+                firstFrameTime: initialState.firstFrameTime,
+                lastFrameTime: initialState.lastFrameTime,
+                timeStep: initialState.timeStep,
+                agentUiNames: initialState.agentUiNames,
+            });
             const setViewerStatusAction = setViewerStatus({
                 status: VIEWER_EMPTY,
             });
             actions.push(setViewerStatusAction);
+        } else {
+            dispatch(
+                setViewerStatus({
+                    status: VIEWER_LOADING,
+                })
+            );
+            // plot data is a separate request, clear it out to avoid
+            // wrong plot data sticking around if the request fails
+            clearMetaData = receiveMetadata({
+                plotData: initialState.plotData,
+            });
         }
+        actions.push(clearMetaData);
         dispatch(batchActions(actions));
         done();
     },
@@ -91,7 +105,7 @@ const requestPlotDataLogic = createLogic({
 });
 
 const loadNetworkedFile = createLogic({
-    async process(deps: ReduxLogicDeps, dispatch, done) {
+    process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
         const currentState = getState();
 
@@ -101,7 +115,7 @@ const loadNetworkedFile = createLogic({
                 status: VIEWER_LOADING,
             })
         );
-        await dispatch({
+        dispatch({
             payload: { newFile: true },
             type: CLEAR_SIMULARIUM_FILE,
         });
@@ -157,7 +171,7 @@ const clearOutFileTrajectoryUrlParam = () => {
 };
 
 const loadLocalFile = createLogic({
-    async process(deps: ReduxLogicDeps, dispatch, done) {
+    process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
         const currentState = getState();
         const simulariumController = getSimulariumController(currentState);
@@ -175,16 +189,6 @@ const loadLocalFile = createLogic({
                 return;
             }
         }
-        dispatch(
-            setViewerStatus({
-                status: VIEWER_LOADING,
-            })
-        );
-
-        await dispatch({
-            payload: { newFile: true },
-            type: CLEAR_SIMULARIUM_FILE,
-        });
 
         clearOutFileTrajectoryUrlParam();
         // if requested while playing, just pause sim until done loading

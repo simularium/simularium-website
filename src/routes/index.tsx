@@ -22,11 +22,11 @@ interface LocationWithState extends Location {
 function RenderSimularium() {
     /**
      * Gets called every time the app navigates to the Simularium page.
-     * There are 3 different states the viewer should be in
+     * There are 2 possible url types and 3 different states the viewer should be in
      * when we get there:
-     * 1. Empty viewer, by clicking "launch viewer" or "load your own data" card
-     * 2. Loading network file, the url will have a search param with the file name
-     * 3. Loading a local file through the dropdown, will be reflexed in the location state
+     * 1. Empty viewer, by clicking "launch viewer" or "load your own data" card; url: '/viewer'
+     * 2. Loading network file; url: '/viewer?trajFileName=FILE_NAME'
+     * 3. Loading a local file through the dropdown, will be reflected in the location state; url: '/viewer'
      */
     const location = useLocation() as LocationWithState;
     const dispatch = useDispatch();
