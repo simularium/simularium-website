@@ -13,15 +13,13 @@ import {
     Layout as InputLayout,
 } from "./types";
 
-const wrapTitle = (
-    text: string
+export const wrapTitle = (
+    text: string,
+    maxCharPerLine: number
 ): {
     formattedText: string;
     numLines: number;
 } => {
-    // 32 characters seems to be approximately the max title length that can fit in
-    // one line in the current layout
-    const maxCharPerLine = 32;
     let numLines = 0;
     const formatTitle = (text: string): string => {
         numLines++;
@@ -32,12 +30,12 @@ const wrapTitle = (
         let numWordsInLine = 0;
         for (let i = 0; i < words.length; i++) {
             if (lineLength + words[i].length > maxCharPerLine) {
-                numWordsInLine = i + 1;
                 break;
             }
             lineLength += words[i].length;
         }
         let textInLine = words.slice(0, numWordsInLine).join(" ");
+        console.log(textInLine);
         if (words.length > numWordsInLine) {
             return (
                 textInLine +
@@ -67,8 +65,10 @@ const configureLayout = (
             ? PLOT_STYLE.height + PLOT_STYLE.legendItemHeight * numTraces
             : PLOT_STYLE.height;
     console.log(plotHeight);
-
-    const wrappedTitle = wrapTitle(layout.title);
+    // 32 characters seems to be approximately the max title length that can fit in
+    // one line in the current layout
+    const maxCharPerLine = 32;
+    const wrappedTitle = wrapTitle(layout.title, maxCharPerLine);
     const numLinesInTitle = wrappedTitle.numLines;
     console.log(numLinesInTitle);
     const topMargin =
