@@ -16,6 +16,8 @@ import {
     SET_AGENTS_VISIBLE,
     SET_ALL_AGENT_COLORS,
     CHANGE_AGENT_COLOR,
+    START_BUFFERING,
+    END_BUFFERING,
 } from "./constants";
 import {
     DeselectFileAction,
@@ -38,6 +40,7 @@ export const initialState = {
     highlightedAgentKeys: {},
     draggedOverViewer: false,
     agentColors: {},
+    isBuffering: false,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -80,7 +83,6 @@ const actionToConfigMap: TypeToDescriptionMap = {
             };
         },
     },
-
     [SELECT_METADATA]: {
         accepts: (action: AnyAction): action is SelectMetadataAction =>
             action.type === SELECT_METADATA,
@@ -162,6 +164,22 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: SelectionStateBranch) => ({
             ...state,
             draggedOverViewer: false,
+        }),
+    },
+    [START_BUFFERING]: {
+        accepts: (action: AnyAction): action is ResetDragOverViewerAction =>
+            action.type === START_BUFFERING,
+        perform: (state: SelectionStateBranch) => ({
+            ...state,
+            isBuffering: true,
+        }),
+    },
+    [END_BUFFERING]: {
+        accepts: (action: AnyAction): action is ResetDragOverViewerAction =>
+            action.type === END_BUFFERING,
+        perform: (state: SelectionStateBranch) => ({
+            ...state,
+            isBuffering: false,
         }),
     },
 };
