@@ -1,9 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
+
 import TutorialPage from "../components/TutorialPage";
 import LandingPage from "../components/LandingPage";
 import Simularium from "../containers/Simularium";
-import { useLocation } from "react-router-dom";
 import { store } from "..";
 import { clearSimulariumFile } from "../state/metadata/actions";
 import {
