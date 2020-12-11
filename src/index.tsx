@@ -23,15 +23,12 @@ export const store = createReduxStore();
 
 const App = () => {
     /**
-     * For SPA routing on AWS:
+     * Note for implementing redirect rules for SPA routing on AWS.
+     * Currently we are just serving index.html as our 400 response. If we want to have an 404.html
+     * page we can go back to this implementation: but we can't use query params
      * https://via.studio/journal/hosting-a-reactjs-app-with-routing-on-aws-s3
-     * using /#! to avoid 404 on AWS, and then setting the browser history with the updated location
-     * without the /#!
+     *
      */
-    // const path = (/#!(\/.*)$/.exec(location.hash) || [])[1];
-    // if (path) {
-    //     history.replaceState(null, "", path);
-    // }
 
     return (
         <Provider store={store}>
