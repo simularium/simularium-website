@@ -20,11 +20,21 @@ interface LocationWithState extends Location {
     };
 }
 function RenderSimularium() {
+    /**
+     * Gets called every time the app navigates to the Simularium page.
+     * There are 3 different states the viewer should be in
+     * when we get there:
+     * 1. Empty viewer, by clicking "launch viewer" or "load your own data" card
+     * 2. Loading network file, the url will have a search param with the file name
+     * 3. Loading a local file through the dropdown, will be reflexed in the location state
+     */
     const location = useLocation() as LocationWithState;
     React.useEffect(() => {
         const state = store.getState();
         const controller = getSimulariumController(state);
         const simFile = getSimulariumFile(state);
+        // got here from the "load local file button" so the app is going to
+        // `/viewer` but don't want to clear out the viewer
         if (location.state && location.state.localFile) {
             return;
         }
