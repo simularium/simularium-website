@@ -17,11 +17,16 @@ import { DownArrow } from "../Icons";
 const styles = require("./style.css");
 
 interface LoadFileMenuProps {
+    isBuffering: boolean;
     selectFile: ActionCreator<RequestNetworkFileAction>;
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
 }
 
-const LoadFileMenu = ({ loadLocalFile, selectFile }: LoadFileMenuProps) => {
+const LoadFileMenu = ({
+    isBuffering,
+    loadLocalFile,
+    selectFile,
+}: LoadFileMenuProps) => {
     const location = useLocation();
     const onClick = (trajectoryData: TrajectoryDisplayData) => {
         if (location.pathname === VIEWER_PATHNAME) {
@@ -65,6 +70,7 @@ const LoadFileMenu = ({ loadLocalFile, selectFile }: LoadFileMenuProps) => {
                 className="ant-dropdown-link"
                 onClick={(e) => e.preventDefault()}
                 type="primary"
+                disabled={isBuffering}
             >
                 Load model {DownArrow}
             </Button>
