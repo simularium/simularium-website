@@ -45,7 +45,6 @@ import {
     getSelectionStateInfoForViewer,
 } from "./selectors";
 import { AGENT_COLORS } from "./constants";
-import { setIsPlaying } from "../../state/selection/actions";
 
 const styles = require("./style.css");
 
@@ -226,14 +225,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             newTime = firstFrameTime;
         }
         simulariumController.playFromTime(newTime);
-        simulariumController.resume();
         setIsPlaying(true);
         this.setState({ requestingTimeChange: true });
     }
 
     public pause() {
-        const { simulariumController, setIsPlaying } = this.props;
-        simulariumController.pause();
+        const { setIsPlaying } = this.props;
         setIsPlaying(false);
     }
 
