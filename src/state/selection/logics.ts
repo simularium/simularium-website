@@ -10,10 +10,9 @@ const setPlayingLogic = createLogic({
         const controller: SimulariumController = getSimulariumController(
             getState()
         );
-        if (action.payload) {
-            console.log("playing");
+        if (action.payload && controller) {
             controller.resume();
-        } else {
+        } else if (controller) {
             controller.pause();
         }
     },
