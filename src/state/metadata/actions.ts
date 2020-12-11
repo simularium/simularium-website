@@ -105,11 +105,11 @@ export function receiveSimulariumFile(
     };
 }
 
-export function clearSimulariumFile(newFile: boolean): ResetSimFileDataAction {
+export function clearSimulariumFile(payload: {
+    newFile: boolean;
+}): ResetSimFileDataAction {
     return {
-        payload: {
-            newFile,
-        },
+        payload,
         type: CLEAR_SIMULARIUM_FILE,
     };
 }
