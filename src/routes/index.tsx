@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useDispatch } from "react-redux";
 import TutorialPage from "../components/TutorialPage";
 import LandingPage from "../components/LandingPage";
 import Simularium from "../containers/Simularium";
@@ -29,6 +29,7 @@ function RenderSimularium() {
      * 3. Loading a local file through the dropdown, will be reflexed in the location state
      */
     const location = useLocation() as LocationWithState;
+    const dispatch = useDispatch();
     React.useEffect(() => {
         const state = store.getState();
         const controller = getSimulariumController(state);
@@ -40,7 +41,7 @@ function RenderSimularium() {
         }
         if (!location.search && controller && simFile.name) {
             // going to /viewer, clear out any existing files
-            store.dispatch(clearSimulariumFile(false));
+            dispatch(clearSimulariumFile(false));
         }
     }, [location]);
 
