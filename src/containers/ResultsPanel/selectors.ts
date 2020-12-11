@@ -19,11 +19,38 @@ const configureLayout = (
     layout: InputLayout,
     numTraces: number
 ): Partial<Layout> => {
+    const { title } = layout;
     // Give plots with a legend (multi-trace plots) more vertical room
     const plotHeight =
         numTraces > 1
             ? PLOT_STYLE.height + PLOT_STYLE.legendItemHeight * numTraces
             : PLOT_STYLE.height;
+    // TODO: adjust plotHeight more based on numLinesInTitle
+
+    // 32 characters seems to be approximately the max title length that can fit in
+    // one line in the current layout
+    const maxCharPerLine = 32;
+    let numLinesInTitle = 0;
+    const formatTitle = (title: string): string => {
+        numLinesInTitle++;
+        if (title.length <= maxCharPerLine) return title;
+
+        const words = title.split(" ");
+        let lineLength = words[0].length;
+        let numWordsInLine = 0;
+        for (let i = 0; i < words.length; i++) {
+            if (lineLength + words[i].length > maxCharPerLine) {
+                numWordsInLine = i + 1;
+                break;
+            }
+            lineLength += words[i].length;
+        }
+        let textInLine = words.slice(0, numWordsInLine).join(" ");
+        if (words.length > numWordsInLine) {
+            textInLine += "<br>";
+        }
+        return textInLine + formatTitle(words.slice(numWordsInLine).join(" "));
+    };
 
     return {
         ...layout,
@@ -32,7 +59,7 @@ const configureLayout = (
         height: plotHeight,
         width: PLOT_STYLE.width,
         title: {
-            text: layout.title,
+            text: formatTitle(title),
             font: {
                 size: 16,
             },
