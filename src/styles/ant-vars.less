@@ -19,7 +19,7 @@ https://github.com/ant-design/ant-design/blob/master/components/style/themes/def
 @warning-color          : @gold-6;
 @normal-color           : #d9d9d9;
 @background-color       : @white-six;
-@disabled-color         : fade(@white-six, 10%);
+@disabled-color         : fade(@primary-color, 10%);
 @disabled-bg            : @background-color;
 // Border color
 @border-color-base      :  @dark-three;  // base border outline a component
@@ -88,11 +88,12 @@ https://github.com/ant-design/ant-design/blob/master/components/style/themes/def
 
 // Buttons
 @btn-font-weight        : 400;
-@btn-border-radius-base : @border-radius-base;
-@btn-border-radius-sm   : @border-radius-base;
+@btn-border-radius-base : 3px;
+@btn-border-radius-sm   : 3px;
 
-@btn-primary-bg         : @dark-purple;
-@btn-primary-border     : @dark-purple;
+@btn-primary-color      : @dark-two;
+@btn-primary-bg         : @primary-color;
+@btn-primary-border     : @primary-color;
 
 @btn-default-color      : @text-color;
 @btn-default-bg         : @background-color;
@@ -102,9 +103,9 @@ https://github.com/ant-design/ant-design/blob/master/components/style/themes/def
 @btn-danger-bg          : @background-color-base;
 @btn-danger-border      : @border-color-base;
 
-@btn-disable-color      : @disabled-color;
-@btn-disable-bg         : @disabled-bg;
-@btn-disable-border     : @border-color-base;
+@btn-disable-color      : @text-color;
+@btn-disable-bg         : lighten(@dark-purple, 10%);
+@btn-disable-border     : lighten(@dark-purple, 10%);
 
 @btn-default-ghost-color: @primary-color;
 @btn-default-ghost-bg: transparent;

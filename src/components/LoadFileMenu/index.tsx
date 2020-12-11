@@ -65,12 +65,11 @@ const LoadFileMenu = ({
         </Menu>
     );
     return (
-        <Dropdown overlay={menu} placement="bottomRight">
+        <Dropdown overlay={menu} placement="bottomRight" disabled={isBuffering}>
             <Button
                 className="ant-dropdown-link"
                 onClick={(e) => e.preventDefault()}
                 type="primary"
-                disabled={isBuffering}
             >
                 Load model {DownArrow}
             </Button>

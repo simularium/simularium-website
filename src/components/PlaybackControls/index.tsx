@@ -79,7 +79,7 @@ const PlayBackControls = ({
                 <Button
                     className={[btnClassNames, styles.stepButton].join(" ")}
                     size="small"
-                    icon={Icons.StepBack}
+                    icon={Icons.StepBack} // TODO: load these as fonts instead of images
                     onClick={prevHandler}
                     disabled={time === 0 || loading}
                     loading={loading}
@@ -93,7 +93,7 @@ const PlayBackControls = ({
                 <Button
                     className={btnClassNames}
                     size="small"
-                    icon={isPlaying ? Icons.Pause : Icons.Play}
+                    icon={isPlaying ? Icons.Pause : Icons.Play} // TODO: load these as fonts instead of images
                     onClick={isPlaying ? pauseHandler : playHandler}
                     loading={loading}
                 />
