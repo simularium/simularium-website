@@ -17,7 +17,7 @@ import {
 import {
     MetadataStateBranch,
     ReceiveAction,
-    ResetSimFileDataAction,
+    ClearCSimFileDataAction,
     SetViewerStatusAction,
 } from "./types";
 
@@ -72,7 +72,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
         }),
     },
     [CLEAR_SIMULARIUM_FILE]: {
-        accepts: (action: AnyAction): action is ResetSimFileDataAction =>
+        accepts: (action: AnyAction): action is ClearCSimFileDataAction =>
             action.type === CLEAR_SIMULARIUM_FILE,
         perform: (state: MetadataStateBranch) => ({
             ...state,

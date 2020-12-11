@@ -22,7 +22,7 @@ export interface RequestAction {
     type: string;
 }
 
-export interface ResetSimFileDataAction {
+export interface ClearCSimFileDataAction {
     payload: {
         newFile: boolean;
     };
