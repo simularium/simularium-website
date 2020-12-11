@@ -10,6 +10,7 @@ import {
     SET_ALL_AGENT_COLORS,
     CHANGE_AGENT_COLOR,
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
+    SET_IS_PLAYING,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -22,6 +23,7 @@ import {
     AgentColorMap,
     SetAllColorsAction,
     ResetAction,
+    ToggleAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -109,5 +111,12 @@ export function resetDragOverViewer(): ResetDragOverViewerAction {
 export function resetAgentSelectionsAndHighlights(): ResetAction {
     return {
         type: RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
+    };
+}
+
+export function setIsPlaying(isPlaying: boolean): ToggleAction {
+    return {
+        payload: isPlaying,
+        type: SET_IS_PLAYING,
     };
 }
