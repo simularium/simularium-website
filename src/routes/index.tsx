@@ -35,13 +35,14 @@ function RenderSimularium() {
         const controller = getSimulariumController(state);
         const simFile = getSimulariumFile(state);
         // got here from the "load local file button" so the app is going to
-        // `/viewer` but don't want to clear out the viewer
+        // `/viewer`, but the loadFile action will take care of resetting state
+        // if the user clicks "Open"
         if (location.state && location.state.localFile) {
             return;
         }
         if (!location.search && controller && simFile.name) {
             // going to /viewer, clear out any existing files
-            dispatch(clearSimulariumFile(false));
+            dispatch(clearSimulariumFile({ newFile: false }));
         }
     }, [location]);
 
