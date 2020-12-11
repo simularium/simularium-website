@@ -20,7 +20,7 @@ export const PLOT_STYLE = {
     fontSize: 11,
     legendItemHeight: 19, // Dependent on fontSize and fontFamily
     titleHeightPerLine: 20.02, // Dependent on fontSize and fontFamily
-    marginTop: 40,
+    marginTop: 55,
     marginLeft: 50,
     marginBottom: 30,
     marginRight: 5,

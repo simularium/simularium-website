@@ -89,7 +89,11 @@ const configureLayout = (
                 size: 16,
             },
             x: 0.03,
-            y: 0.97,
+            y: 0.95,
+            yanchor: "top",
+            pad: {
+                t: 5,
+            },
         },
         hoverlabel: {
             font: {
