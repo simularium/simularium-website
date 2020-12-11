@@ -10,6 +10,7 @@ import {
     SET_AGENTS_VISIBLE,
     SET_ALL_AGENT_COLORS,
     CHANGE_AGENT_COLOR,
+    SET_BUFFERING,
 } from "./constants";
 import {
     DeselectFileAction,
@@ -22,6 +23,7 @@ import {
     VisibilitySelectionMap,
     AgentColorMap,
     SetAllColorsAction,
+    ToggleAction,
 } from "./types";
 
 export function deselectFile(fileId: string | string[]): DeselectFileAction {
@@ -110,5 +112,12 @@ export function dragOverViewer(): DragOverViewerAction {
 export function resetDragOverViewer(): ResetDragOverViewerAction {
     return {
         type: RESET_DRAG_OVER_VIEWER,
+    };
+}
+
+export function setBuffering(payload: boolean): ToggleAction {
+    return {
+        payload,
+        type: SET_BUFFERING,
     };
 }

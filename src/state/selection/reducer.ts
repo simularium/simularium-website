@@ -16,8 +16,7 @@ import {
     SET_AGENTS_VISIBLE,
     SET_ALL_AGENT_COLORS,
     CHANGE_AGENT_COLOR,
-    START_BUFFERING,
-    END_BUFFERING,
+    SET_BUFFERING,
 } from "./constants";
 import {
     DeselectFileAction,
@@ -30,6 +29,7 @@ import {
     ResetDragOverViewerAction,
     SetVisibleAction,
     SetAllColorsAction,
+    ToggleAction,
 } from "./types";
 
 export const initialState = {
@@ -166,20 +166,12 @@ const actionToConfigMap: TypeToDescriptionMap = {
             draggedOverViewer: false,
         }),
     },
-    [START_BUFFERING]: {
+    [SET_BUFFERING]: {
         accepts: (action: AnyAction): action is ResetDragOverViewerAction =>
-            action.type === START_BUFFERING,
-        perform: (state: SelectionStateBranch) => ({
+            action.type === SET_BUFFERING,
+        perform: (state: SelectionStateBranch, action: ToggleAction) => ({
             ...state,
-            isBuffering: true,
-        }),
-    },
-    [END_BUFFERING]: {
-        accepts: (action: AnyAction): action is ResetDragOverViewerAction =>
-            action.type === END_BUFFERING,
-        perform: (state: SelectionStateBranch) => ({
-            ...state,
-            isBuffering: false,
+            isBuffering: action.payload,
         }),
     },
 };

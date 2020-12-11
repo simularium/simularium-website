@@ -19,5 +19,4 @@ export const DRAG_OVER_VIEWER = makeSelectConstant("drag-over-viewer");
 export const RESET_DRAG_OVER_VIEWER = makeSelectConstant("drag-off-viewer");
 export const SET_ALL_AGENT_COLORS = makeSelectConstant("set-all-agent-colors");
 export const CHANGE_AGENT_COLOR = makeSelectConstant("change-agent-color");
-export const START_BUFFERING = makeSelectConstant("start-buffering");
-export const END_BUFFERING = makeSelectConstant("end-buffering");
+export const SET_BUFFERING = makeSelectConstant("set-buffering");
