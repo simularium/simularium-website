@@ -26,16 +26,17 @@ export const wrapTitle = (
         if (text.length <= maxCharPerLine) return text;
 
         const words = text.split(" ");
-        let lineLength = words[0].length;
+        let lineLength = 0;
         let numWordsInLine = 0;
         for (let i = 0; i < words.length; i++) {
             if (lineLength + words[i].length > maxCharPerLine) {
                 break;
             }
-            lineLength += words[i].length;
+            // +1 to account for space between words
+            lineLength += words[i].length + 1;
+            numWordsInLine++;
         }
         let textInLine = words.slice(0, numWordsInLine).join(" ");
-        console.log(textInLine);
         if (words.length > numWordsInLine) {
             return (
                 textInLine +
@@ -65,9 +66,9 @@ const configureLayout = (
             ? PLOT_STYLE.height + PLOT_STYLE.legendItemHeight * numTraces
             : PLOT_STYLE.height;
     console.log(plotHeight);
-    // 32 characters seems to be approximately the max title length that can fit in
+    // 33 characters seems to be approximately the max title length that can fit in
     // one line in the current layout
-    const maxCharPerLine = 32;
+    const maxCharPerLine = 33;
     const wrappedTitle = wrapTitle(layout.title, maxCharPerLine);
     const numLinesInTitle = wrappedTitle.numLines;
     console.log(numLinesInTitle);
