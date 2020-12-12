@@ -18,6 +18,7 @@ export const getFirstFrameTimeOfCachedSimulation = (state: State) =>
     state.metadata.firstFrameTime;
 export const getLastFrameTimeOfCachedSimulation = (state: State) =>
     state.metadata.lastFrameTime;
+export const getNumFrames = (state: State) => state.metadata.numFrames;
 export const getTimeStepSize = (state: State) => state.metadata.timeStepSize;
 export const getAgentIds = (state: State) => state.metadata.agentIds;
 export const getSimulariumFile = (state: State) =>

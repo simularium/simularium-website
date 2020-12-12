@@ -40,7 +40,7 @@ const PlayBackControls = ({
     const [unitIndex, setUnitIndex] = useState(0);
 
     const units = ["s", "ms", "\u03BCs", "ns"];
-    const roundNumber = (num: number) => Number(num).toPrecision(3);
+    const roundNumber = (num: number) => parseFloat(Number(num).toPrecision(3));
     const roundedTime = time ? roundNumber(time * 1000 ** unitIndex) : 0;
     const roundedLastFrameTime = roundNumber(lastFrameTime * 1000 ** unitIndex);
 

@@ -57,6 +57,7 @@ interface ViewerPanelProps {
     isPlaying: boolean;
     fileIsDraggedOverViewer: boolean;
     viewerStatus: string;
+    numFrames: number;
     simulariumController: SimulariumController;
     changeTime: ActionCreator<ChangeTimeAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
@@ -259,10 +260,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         });
 
         receiveMetadata({
-            // lastFrameTime here is incomplete until we receive the timestamp for the
-            // first frame in receiveTimeChange() later.
-            // data.totalSteps is a misnomer; it is actually the total number of frames.
-            lastFrameTime: (data.totalSteps - 1) * data.timeStepSize,
+            numFrames: data.totalSteps,
             timeStepSize: data.timeStepSize,
         });
     }
@@ -273,6 +271,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setViewerStatus,
             viewerStatus,
             lastFrameTime,
+            numFrames,
             timeStep,
             receiveMetadata,
         } = this.props;
@@ -280,9 +279,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         if (this.state.isInitialPlay) {
             receiveMetadata({
                 firstFrameTime: timeData.time,
-                // Now that we have the timestamp for the first frame, use it to calculate
-                // the real lastFrameTime
-                lastFrameTime: timeData.time + lastFrameTime,
+                lastFrameTime: (numFrames - 1) * timeStep + timeData.time,
             });
             this.setState({ isInitialPlay: false });
         }
@@ -413,6 +410,7 @@ function mapStateToProps(state: State) {
         lastFrameTime: metadataStateBranch.selectors.getLastFrameTimeOfCachedSimulation(
             state
         ),
+        numFrames: metadataStateBranch.selectors.getNumFrames(state),
         timeStep: metadataStateBranch.selectors.getTimeStepSize(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
         viewerStatus: metadataStateBranch.selectors.getViewerStatus(state),

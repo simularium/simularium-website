@@ -6,8 +6,9 @@ export default (
     { file, onSuccess, onError }: RcCustomRequestOptions,
     loadFunction: (simulariumFile: LocalSimFile) => void
 ) => {
-    // want the loading indicator to show and clear out
-    // as soon as user hits "Open" button
+    // want the loading indicator to show without any lag time
+    // as soon as user hits "Open" button, and not have to have this action called
+    // multiple places in the code.
     store.dispatch({
         payload: { newFile: true },
         type: CLEAR_SIMULARIUM_FILE,
