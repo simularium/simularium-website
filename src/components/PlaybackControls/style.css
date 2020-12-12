@@ -68,3 +68,13 @@
 .lastFrameTime {
     color: var(--dark-theme-btn-color-dim);
 }
+
+.step-back::after {
+    content: "\e906";
+    color: #d8d8d8;
+}
+
+.step-forward::after {
+    content: "\e907";
+    color: #d8d8d8;
+}

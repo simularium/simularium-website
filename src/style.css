@@ -83,6 +83,16 @@ canvas:focus {
     content: "\e9d9";
 }
 
+.icon-step-back:before {
+    content: "\e906";
+    color: #d8d8d8;
+}
+
+.icon-step-forward:before {
+    content: "\e907";
+    color: #d8d8d8;
+}
+
 .ant-tooltip-inner {
     background-color: var(--dark-theme-tooltip-bg);
     border-radius: 3px;

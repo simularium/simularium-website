@@ -79,11 +79,13 @@ const PlayBackControls = ({
                 <Button
                     className={[btnClassNames, styles.stepButton].join(" ")}
                     size="small"
-                    icon={Icons.StepBack}
+                    // icon={Icons.StepBack}
                     onClick={prevHandler}
                     disabled={time === 0 || loading}
                     loading={loading}
-                />
+                >
+                    <span className={classNames(["icon-moon", "stepBack"])} />
+                </Button>
             </Tooltip>
             <Tooltip
                 placement="top"
