@@ -286,7 +286,10 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             this.setState({ isInitialPlay: false });
         }
 
-        const actions: AnyAction[] = [changeTime(timeData.time)];
+        const actions: AnyAction[] = [
+            changeTime(timeData.time),
+            setBuffering(false),
+        ];
 
         if (viewerStatus !== VIEWER_SUCCESS) {
             actions.push(setViewerStatus({ status: VIEWER_SUCCESS }));
@@ -295,7 +298,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             this.pause();
         }
         batchActions(actions);
-        setBuffering(false);
     }
 
     public skipToTime(time: number) {
