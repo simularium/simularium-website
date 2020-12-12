@@ -1,4 +1,3 @@
---inspect-brk
 --require ts-node/register
 --require jsdom-global/register
 --require mock-css-modules
