@@ -1,10 +1,5 @@
 import { MetadataStateBranch } from "../metadata/types";
 
-export interface DeselectFileAction {
-    payload: string | string[];
-    type: string;
-}
-
 export interface SelectionStateBranch {
     [key: string]: any;
 }
@@ -68,5 +63,9 @@ export interface AgentColorMap {
 
 export interface SetAllColorsAction {
     payload: AgentColorMap;
+    type: string;
+}
+
+export interface ResetAction {
     type: string;
 }
