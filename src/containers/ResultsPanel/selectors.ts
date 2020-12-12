@@ -21,36 +21,38 @@ export const wrapTitle = (
     numLines: number;
 } => {
     let numLines = 0;
-    const formatTitle = (text: string): string => {
+    const insertBreaks = (text: string): string => {
         numLines++;
         if (text.length <= maxCharPerLine) return text;
 
         const words = text.split(" ");
         if (words.length === 1) return text;
 
-        let lineLength = 0;
-        let numWordsInLine = 0;
+        let currentLineLength = 0;
+        let numWordsInCurrentLine = 0;
         for (let i = 0; i < words.length - 1; i++) {
             // +1 to account for space between words
-            lineLength += words[i].length + 1;
-            numWordsInLine++;
-            if (lineLength + words[i + 1].length > maxCharPerLine) {
+            currentLineLength += words[i].length + 1;
+            numWordsInCurrentLine++;
+            if (currentLineLength + words[i + 1].length > maxCharPerLine) {
                 break;
             }
         }
-        let textInLine = words.slice(0, numWordsInLine).join(" ");
-        if (words.length > numWordsInLine) {
+        const textInCurrentLine = words
+            .slice(0, numWordsInCurrentLine)
+            .join(" ");
+        if (words.length > numWordsInCurrentLine) {
             return (
-                textInLine +
+                textInCurrentLine +
                 "<br>" +
-                formatTitle(words.slice(numWordsInLine).join(" "))
+                insertBreaks(words.slice(numWordsInCurrentLine).join(" "))
             );
         } else {
-            return textInLine;
+            return textInCurrentLine;
         }
     };
     return {
-        formattedText: formatTitle(text),
+        formattedText: insertBreaks(text),
         numLines: numLines,
     };
 };
