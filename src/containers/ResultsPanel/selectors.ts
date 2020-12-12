@@ -26,6 +26,8 @@ export const wrapTitle = (
         if (text.length <= maxCharPerLine) return text;
 
         const words = text.split(" ");
+        if (words.length === 1) return text;
+
         let lineLength = 0;
         let numWordsInLine = 0;
         for (let i = 0; i < words.length; i++) {
