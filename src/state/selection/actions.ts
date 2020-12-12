@@ -1,5 +1,4 @@
 import {
-    DESELECT_FILE,
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
     SIDE_PANEL_COLLAPSED,
@@ -11,9 +10,9 @@ import {
     SET_ALL_AGENT_COLORS,
     CHANGE_AGENT_COLOR,
     SET_BUFFERING,
+    RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
 } from "./constants";
 import {
-    DeselectFileAction,
     ChangeAgentsRenderingStateAction,
     SelectMetadataAction,
     ChangeTimeAction,
@@ -24,14 +23,8 @@ import {
     AgentColorMap,
     SetAllColorsAction,
     ToggleAction,
+    ResetAction,
 } from "./types";
-
-export function deselectFile(fileId: string | string[]): DeselectFileAction {
-    return {
-        payload: fileId,
-        type: DESELECT_FILE,
-    };
-}
 
 export function changeTime(time: number): ChangeTimeAction {
     return {
@@ -119,5 +112,11 @@ export function setBuffering(payload: boolean): ToggleAction {
     return {
         payload,
         type: SET_BUFFERING,
+    };
+}
+
+export function resetAgentSelectionsAndHighlights(): ResetAction {
+    return {
+        type: RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
     };
 }

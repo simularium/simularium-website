@@ -9,6 +9,7 @@ import {
     SET_VIEWER_STATUS,
     LOAD_NETWORKED_FILE_IN_VIEWER,
     REQUEST_PLOT_DATA,
+    CLEAR_SIMULARIUM_FILE,
 } from "./constants";
 import {
     MetadataStateBranch,
@@ -22,6 +23,7 @@ import {
     SetViewerStatusAction,
     RequestNetworkFileAction,
     RequestLocalFileAction,
+    ClearSimFileDataAction,
 } from "./types";
 import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
 
@@ -100,6 +102,15 @@ export function receiveSimulariumFile(
     return {
         payload,
         type: RECEIVE_SIMULARIUM_FILE,
+    };
+}
+
+export function clearSimulariumFile(payload: {
+    newFile: boolean;
+}): ClearSimFileDataAction {
+    return {
+        payload,
+        type: CLEAR_SIMULARIUM_FILE,
     };
 }
 
