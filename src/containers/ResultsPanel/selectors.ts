@@ -30,13 +30,13 @@ export const wrapTitle = (
 
         let lineLength = 0;
         let numWordsInLine = 0;
-        for (let i = 0; i < words.length; i++) {
-            if (lineLength + words[i].length > maxCharPerLine) {
-                break;
-            }
+        for (let i = 0; i < words.length - 1; i++) {
             // +1 to account for space between words
             lineLength += words[i].length + 1;
             numWordsInLine++;
+            if (lineLength + words[i + 1].length > maxCharPerLine) {
+                break;
+            }
         }
         let textInLine = words.slice(0, numWordsInLine).join(" ");
         if (words.length > numWordsInLine) {
@@ -62,12 +62,11 @@ const configureLayout = (
     numTraces: number
 ): Partial<Layout> => {
     // Give plots with a legend (multi-trace plots) more vertical room
-    console.log("numTraces:", numTraces);
     const plotHeight =
         numTraces > 1
             ? PLOT_STYLE.height + PLOT_STYLE.legendItemHeight * numTraces
             : PLOT_STYLE.height;
-    console.log(plotHeight);
+
     // 33 characters seems to be approximately the max title length that can fit in
     // one line in the current layout
     const maxCharPerLine = 33;

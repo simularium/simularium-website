@@ -9,12 +9,12 @@ describe("wrapTitle", () => {
             numLines: 1,
         });
     });
-    // it("wraps a title with a very long first word", () => {
-    //     expect(wrapTitle("1234567890 abc", 8)).to.deep.equal({
-    //         formattedText: "1234567890<br>abc",
-    //         numLines: 2,
-    //     });
-    // });
+    it("wraps a title with a long first word", () => {
+        expect(wrapTitle("1234567890 abc", 8)).to.deep.equal({
+            formattedText: "1234567890<br>abc",
+            numLines: 2,
+        });
+    });
     it("does not wrap text shorter than maximum character length", () => {
         expect(wrapTitle("123456", 8)).to.deep.equal({
             formattedText: "123456",
