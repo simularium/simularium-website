@@ -1,7 +1,7 @@
+--inspect-brk
 --require ts-node/register
 --require jsdom-global/register
 --require mock-css-modules
 --require ./scripts/adapt-enzyme-to-react-16.js
 --compilers png:./scripts/mochacfg.js
 --compilers gif:./scripts/mochacfg.js
---inspect-brk
