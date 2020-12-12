@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Upload, message, Button } from "antd";
 import { RequestLocalFileAction } from "../../state/metadata/types";
 import { UploadChangeParam } from "antd/lib/upload";
@@ -14,24 +14,30 @@ interface FileUploadProps {
 const styles = require("./style.css");
 
 const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
-    const history = useHistory();
     const onChange = ({ file }: UploadChangeParam) => {
-        if (!history.location.pathname.startsWith(VIEWER_PATHNAME)) {
-            history.push(VIEWER_PATHNAME);
-        }
         if (file.status === "error") {
             message.error(`${file.name} file upload failed.`);
         }
     };
     return (
-        <Upload
-            onChange={onChange}
-            showUploadList={false}
-            customRequest={(options) => customRequest(options, loadLocalFile)}
-            className={styles.container}
+        <Link
+            // used to decide whether to clear out the viewer
+            to={{
+                pathname: VIEWER_PATHNAME,
+                state: { localFile: true },
+            }}
         >
-            <Button type="ghost">Import Simularium file...</Button>
-        </Upload>
+            <Upload
+                onChange={onChange}
+                showUploadList={false}
+                customRequest={(options) =>
+                    customRequest(options, loadLocalFile)
+                }
+                className={styles.container}
+            >
+                <Button type="ghost">Import Simularium file...</Button>
+            </Upload>
+        </Link>
     );
 };
 

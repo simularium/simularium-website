@@ -12,10 +12,12 @@ import {
     SET_VIEWER_STATUS,
     VIEWER_ERROR,
     VIEWER_EMPTY,
+    CLEAR_SIMULARIUM_FILE,
 } from "./constants";
 import {
     MetadataStateBranch,
     ReceiveAction,
+    ClearSimFileDataAction,
     SetViewerStatusAction,
 } from "./types";
 
@@ -25,6 +27,7 @@ export const initialState = {
     timeStep: 0,
     agentIds: [],
     agentUiNames: [],
+    plotData: [],
     simulariumFile: {
         name: "",
         data: null,
@@ -66,6 +69,14 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: MetadataStateBranch, action: ReceiveAction) => ({
             ...state,
             simulariumFile: action.payload,
+        }),
+    },
+    [CLEAR_SIMULARIUM_FILE]: {
+        accepts: (action: AnyAction): action is ClearSimFileDataAction =>
+            action.type === CLEAR_SIMULARIUM_FILE,
+        perform: (state: MetadataStateBranch) => ({
+            ...state,
+            simulariumFile: initialState.simulariumFile,
         }),
     },
     [SET_SIMULARIUM_CONTROLLER]: {
