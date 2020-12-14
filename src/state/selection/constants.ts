@@ -22,3 +22,4 @@ export const CHANGE_AGENT_COLOR = makeSelectConstant("change-agent-color");
 export const RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS = makeSelectConstant(
     "reset-selections-and-highlighted-agents"
 );
+export const SET_IS_PLAYING = makeSelectConstant("set-is-playing");

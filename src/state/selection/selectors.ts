@@ -22,6 +22,7 @@ export const getNumberCollapsed = (state: State) =>
     state.selection.numberPanelsCollapsed;
 export const getFileDraggedOverViewer = (state: State) =>
     state.selection.draggedOverViewer;
+export const getIsPlaying = (state: State) => state.selection.isPlaying;
 // COMPOSED SELECTORS
 
 export const getHightLightedAgents = createSelector(

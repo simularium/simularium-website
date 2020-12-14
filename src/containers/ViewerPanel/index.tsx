@@ -23,6 +23,7 @@ import {
     DragOverViewerAction,
     SetVisibleAction,
     SetAllColorsAction,
+    ToggleAction,
 } from "../../state/selection/types";
 import {
     ReceiveAction,
@@ -48,23 +49,25 @@ import { AGENT_COLORS } from "./constants";
 const styles = require("./style.css");
 
 interface ViewerPanelProps {
-    simulariumController: SimulariumController;
     time: number;
     numberPanelsCollapsed: number;
-    changeTime: ActionCreator<ChangeTimeAction>;
     timeStep: number;
-    receiveAgentTypeIds: ActionCreator<ReceiveAction>;
     firstFrameTime: number;
     lastFrameTime: number;
+    isPlaying: boolean;
+    fileIsDraggedOverViewer: boolean;
+    viewerStatus: string;
     numFrames: number;
+    simulariumController: SimulariumController;
+    changeTime: ActionCreator<ChangeTimeAction>;
+    receiveAgentTypeIds: ActionCreator<ReceiveAction>;
     receiveMetadata: ActionCreator<ReceiveAction>;
     receiveAgentNamesAndStates: ActionCreator<ReceiveAction>;
     selectionStateInfoForViewer: SelectionStateInfo;
+    setIsPlaying: ActionCreator<ToggleAction>;
     loadLocalFile: (localSimFile: LocalSimFile) => void;
-    fileIsDraggedOverViewer: boolean;
     dragOverViewer: ActionCreator<DragOverViewerAction>;
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
-    viewerStatus: string;
     setAgentsVisible: ActionCreator<SetVisibleAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setAllAgentColors: ActionCreator<SetAllColorsAction>;
@@ -72,7 +75,6 @@ interface ViewerPanelProps {
 }
 
 interface ViewerPanelState {
-    isPlaying: boolean;
     isInitialPlay: boolean;
     highlightId: number;
     particleTypeIds: string[];
@@ -99,7 +101,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.skipToTime = this.skipToTime.bind(this);
         this.resize = this.resize.bind(this);
         this.state = {
-            isPlaying: false,
             isInitialPlay: true,
             highlightId: -1,
             particleTypeIds: [],
@@ -218,20 +219,20 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             simulariumController,
             firstFrameTime,
             lastFrameTime,
+            setIsPlaying,
         } = this.props;
         let newTime = time;
         if (newTime + timeStep >= lastFrameTime) {
             newTime = firstFrameTime;
         }
         simulariumController.playFromTime(newTime);
-        simulariumController.resume();
-        this.setState({ requestingTimeChange: true, isPlaying: true });
+        setIsPlaying(true);
+        this.setState({ requestingTimeChange: true });
     }
 
     public pause() {
-        const { simulariumController } = this.props;
-        simulariumController.pause();
-        this.setState({ isPlaying: false });
+        const { setIsPlaying } = this.props;
+        setIsPlaying(false);
     }
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
@@ -343,6 +344,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             selectionStateInfoForViewer,
             setViewerStatus,
             timeStep,
+            isPlaying,
         } = this.props;
         return (
             <div
@@ -380,7 +382,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     pauseHandler={this.pause}
                     prevHandler={this.playBackOne}
                     nextHandler={this.playForwardOne}
-                    isPlaying={this.state.isPlaying}
+                    isPlaying={isPlaying}
                     firstFrameTime={firstFrameTime}
                     lastFrameTime={lastFrameTime}
                     loading={this.state.requestingTimeChange}
@@ -416,6 +418,7 @@ function mapStateToProps(state: State) {
         fileIsDraggedOverViewer: selectionStateBranch.selectors.getFileDraggedOverViewer(
             state
         ),
+        isPlaying: selectionStateBranch.selectors.getIsPlaying(state),
     };
 }
 
@@ -430,6 +433,7 @@ const dispatchToPropsMap = {
     dragOverViewer: selectionStateBranch.actions.dragOverViewer,
     resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
     setAllAgentColors: selectionStateBranch.actions.setAllAgentColors,
+    setIsPlaying: selectionStateBranch.actions.setIsPlaying,
 };
 
 export default connect(
