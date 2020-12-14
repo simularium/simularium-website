@@ -30,7 +30,6 @@ import {
     SetAllColorsAction,
     ToggleAction,
     ResetAction,
-    ToggleAction,
 } from "./types";
 
 export const initialState = {
@@ -176,6 +175,8 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: SelectionStateBranch, action: ToggleAction) => ({
             ...state,
             isBuffering: action.payload,
+        }),
+    },
     [SET_IS_PLAYING]: {
         accepts: (action: AnyAction): action is ToggleAction =>
             action.type === SET_IS_PLAYING,

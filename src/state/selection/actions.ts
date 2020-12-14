@@ -23,7 +23,6 @@ import {
     VisibilitySelectionMap,
     AgentColorMap,
     SetAllColorsAction,
-    ToggleAction,
     ResetAction,
     ToggleAction,
 } from "./types";
