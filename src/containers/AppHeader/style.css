@@ -50,10 +50,6 @@
 }
 
 .page-header :global(.ant-btn-primary) {
-    background-color: var(--dark-theme-btn-primary);
-    border-color: var(--dark-theme-btn-primary);
-    border-radius: 3px;
-    color: var(--dark-theme-btn-primary-text);
     text-shadow: none;
 }
 

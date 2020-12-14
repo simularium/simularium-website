@@ -14,6 +14,7 @@ import {
     SET_AGENTS_VISIBLE,
     SET_ALL_AGENT_COLORS,
     CHANGE_AGENT_COLOR,
+    SET_BUFFERING,
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
     SET_IS_PLAYING,
 } from "./constants";
@@ -27,8 +28,8 @@ import {
     ResetDragOverViewerAction,
     SetVisibleAction,
     SetAllColorsAction,
-    ResetAction,
     ToggleAction,
+    ResetAction,
 } from "./types";
 
 export const initialState = {
@@ -38,6 +39,7 @@ export const initialState = {
     highlightedAgentKeys: {},
     draggedOverViewer: false,
     agentColors: {},
+    isBuffering: false,
     isPlaying: false,
 };
 
@@ -84,7 +86,6 @@ const actionToConfigMap: TypeToDescriptionMap = {
             };
         },
     },
-
     [SELECT_METADATA]: {
         accepts: (action: AnyAction): action is SelectMetadataAction =>
             action.type === SELECT_METADATA,
@@ -166,6 +167,14 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: SelectionStateBranch) => ({
             ...state,
             draggedOverViewer: false,
+        }),
+    },
+    [SET_BUFFERING]: {
+        accepts: (action: AnyAction): action is ResetDragOverViewerAction =>
+            action.type === SET_BUFFERING,
+        perform: (state: SelectionStateBranch, action: ToggleAction) => ({
+            ...state,
+            isBuffering: action.payload,
         }),
     },
     [SET_IS_PLAYING]: {

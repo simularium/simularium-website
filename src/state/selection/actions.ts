@@ -9,6 +9,7 @@ import {
     SET_AGENTS_VISIBLE,
     SET_ALL_AGENT_COLORS,
     CHANGE_AGENT_COLOR,
+    SET_BUFFERING,
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
     SET_IS_PLAYING,
 } from "./constants";
@@ -105,6 +106,13 @@ export function dragOverViewer(): DragOverViewerAction {
 export function resetDragOverViewer(): ResetDragOverViewerAction {
     return {
         type: RESET_DRAG_OVER_VIEWER,
+    };
+}
+
+export function setBuffering(payload: boolean): ToggleAction {
+    return {
+        payload,
+        type: SET_BUFFERING,
     };
 }
 

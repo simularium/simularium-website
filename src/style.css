@@ -44,6 +44,10 @@ canvas:focus {
     font-display: block;
 }
 
+.ant-btn:focus, .ant-btn:hover {
+    border-color: transparent!important;
+}
+
 .icon-moon {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'icomoon' !important;

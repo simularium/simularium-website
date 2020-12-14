@@ -58,6 +58,7 @@ interface ViewerPanelProps {
     fileIsDraggedOverViewer: boolean;
     viewerStatus: string;
     numFrames: number;
+    isBuffering: boolean;
     simulariumController: SimulariumController;
     changeTime: ActionCreator<ChangeTimeAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
@@ -72,6 +73,7 @@ interface ViewerPanelProps {
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setAllAgentColors: ActionCreator<SetAllColorsAction>;
     viewerError: ViewerError;
+    setBuffering: ActionCreator<ToggleAction>;
 }
 
 interface ViewerPanelState {
@@ -80,7 +82,6 @@ interface ViewerPanelState {
     particleTypeIds: string[];
     height: number;
     width: number;
-    requestingTimeChange: boolean;
     scaleBarLabel: string;
 }
 
@@ -106,7 +107,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             particleTypeIds: [],
             height: 0,
             width: 0,
-            requestingTimeChange: false,
             scaleBarLabel: "",
         };
     }
@@ -219,6 +219,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             simulariumController,
             firstFrameTime,
             lastFrameTime,
+            setBuffering,
             setIsPlaying,
         } = this.props;
         let newTime = time;
@@ -226,8 +227,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             newTime = firstFrameTime;
         }
         simulariumController.playFromTime(newTime);
+        setBuffering(true);
         setIsPlaying(true);
-        this.setState({ requestingTimeChange: true });
     }
 
     public pause() {
@@ -274,6 +275,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             numFrames,
             timeStep,
             receiveMetadata,
+            setBuffering,
         } = this.props;
 
         if (this.state.isInitialPlay) {
@@ -284,8 +286,10 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             this.setState({ isInitialPlay: false });
         }
 
-        this.setState({ requestingTimeChange: false });
-        const actions: AnyAction[] = [changeTime(timeData.time)];
+        const actions: AnyAction[] = [
+            changeTime(timeData.time),
+            setBuffering(false),
+        ];
 
         if (viewerStatus !== VIEWER_SUCCESS) {
             actions.push(setViewerStatus({ status: VIEWER_SUCCESS }));
@@ -297,15 +301,20 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public skipToTime(time: number) {
-        const { simulariumController, lastFrameTime } = this.props;
-        if (this.state.requestingTimeChange) {
+        const {
+            simulariumController,
+            lastFrameTime,
+            isBuffering,
+            setBuffering,
+        } = this.props;
+        if (isBuffering) {
             return;
         }
         if (time >= lastFrameTime) {
             return;
         }
 
-        this.setState({ requestingTimeChange: true });
+        setBuffering(true);
         simulariumController.gotoTime(time);
     }
 
@@ -344,6 +353,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             selectionStateInfoForViewer,
             setViewerStatus,
             timeStep,
+            isBuffering,
             isPlaying,
         } = this.props;
         return (
@@ -385,7 +395,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     isPlaying={isPlaying}
                     firstFrameTime={firstFrameTime}
                     lastFrameTime={lastFrameTime}
-                    loading={this.state.requestingTimeChange}
+                    loading={isBuffering}
                 />
                 <ScaleBar label={this.state.scaleBarLabel} />
                 <CameraControls
@@ -418,6 +428,7 @@ function mapStateToProps(state: State) {
         fileIsDraggedOverViewer: selectionStateBranch.selectors.getFileDraggedOverViewer(
             state
         ),
+        isBuffering: selectionStateBranch.selectors.getIsBuffering(state),
         isPlaying: selectionStateBranch.selectors.getIsPlaying(state),
     };
 }
@@ -433,6 +444,7 @@ const dispatchToPropsMap = {
     dragOverViewer: selectionStateBranch.actions.dragOverViewer,
     resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
     setAllAgentColors: selectionStateBranch.actions.setAllAgentColors,
+    setBuffering: selectionStateBranch.actions.setBuffering,
     setIsPlaying: selectionStateBranch.actions.setIsPlaying,
 };
 

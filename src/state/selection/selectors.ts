@@ -22,7 +22,9 @@ export const getNumberCollapsed = (state: State) =>
     state.selection.numberPanelsCollapsed;
 export const getFileDraggedOverViewer = (state: State) =>
     state.selection.draggedOverViewer;
+export const getIsBuffering = (state: State) => state.selection.isBuffering;
 export const getIsPlaying = (state: State) => state.selection.isPlaying;
+
 // COMPOSED SELECTORS
 
 export const getHightLightedAgents = createSelector(
@@ -98,7 +100,7 @@ export const getAgentsToHide = createSelector(
                             (tag) => !currentlyOn[agent.name].includes(tag.id)
                         )
                         .map((displayState) => displayState.id);
-                    // if unmodified state isnt checked, add to hidden tags
+                    // if unmodified state isn't checked, add to hidden tags
                     if (!currentlyOn[agent.name].includes("")) {
                         hiddenTags.push("");
                     }
