@@ -17,9 +17,9 @@ project documentation. If you cannot find the documentation you're
 looking for, please file a GitHub issue with details of what
 you'd like to see documented.
 
-## How to Contribute
+___
 
-Typical steps to contribute:
+## How to Contribute
 
 1. Fork the repo on GitHub.
 2. Create a branch and make your edits on your branch, pushing back to your fork.
@@ -86,7 +86,6 @@ From the Jenkins UI:
 | ------- |-------- |---------|---------|
 | `PORT` | - | 80 | Port on which the app will run **inside** the container. |
 ___
-
 
 ## Questions or Thoughts?
 
