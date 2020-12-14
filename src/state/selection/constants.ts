@@ -23,3 +23,4 @@ export const SET_BUFFERING = makeSelectConstant("set-buffering");
 export const RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS = makeSelectConstant(
     "reset-selections-and-highlighted-agents"
 );
+export const SET_IS_PLAYING = makeSelectConstant("set-is-playing");

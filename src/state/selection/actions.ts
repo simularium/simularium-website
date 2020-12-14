@@ -11,6 +11,7 @@ import {
     CHANGE_AGENT_COLOR,
     SET_BUFFERING,
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
+    SET_IS_PLAYING,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -24,6 +25,7 @@ import {
     SetAllColorsAction,
     ToggleAction,
     ResetAction,
+    ToggleAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -118,5 +120,12 @@ export function setBuffering(payload: boolean): ToggleAction {
 export function resetAgentSelectionsAndHighlights(): ResetAction {
     return {
         type: RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
+    };
+}
+
+export function setIsPlaying(isPlaying: boolean): ToggleAction {
+    return {
+        payload: isPlaying,
+        type: SET_IS_PLAYING,
     };
 }

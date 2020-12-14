@@ -49,24 +49,26 @@ import { AGENT_COLORS } from "./constants";
 const styles = require("./style.css");
 
 interface ViewerPanelProps {
-    simulariumController: SimulariumController;
     time: number;
     numberPanelsCollapsed: number;
-    changeTime: ActionCreator<ChangeTimeAction>;
     timeStep: number;
-    receiveAgentTypeIds: ActionCreator<ReceiveAction>;
     firstFrameTime: number;
     lastFrameTime: number;
+    isPlaying: boolean;
+    fileIsDraggedOverViewer: boolean;
+    viewerStatus: string;
     numFrames: number;
     isBuffering: boolean;
+    simulariumController: SimulariumController;
+    changeTime: ActionCreator<ChangeTimeAction>;
+    receiveAgentTypeIds: ActionCreator<ReceiveAction>;
     receiveMetadata: ActionCreator<ReceiveAction>;
     receiveAgentNamesAndStates: ActionCreator<ReceiveAction>;
     selectionStateInfoForViewer: SelectionStateInfo;
+    setIsPlaying: ActionCreator<ToggleAction>;
     loadLocalFile: (localSimFile: LocalSimFile) => void;
-    fileIsDraggedOverViewer: boolean;
     dragOverViewer: ActionCreator<DragOverViewerAction>;
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
-    viewerStatus: string;
     setAgentsVisible: ActionCreator<SetVisibleAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setAllAgentColors: ActionCreator<SetAllColorsAction>;
@@ -75,7 +77,6 @@ interface ViewerPanelProps {
 }
 
 interface ViewerPanelState {
-    isPlaying: boolean;
     isInitialPlay: boolean;
     highlightId: number;
     particleTypeIds: string[];
@@ -101,7 +102,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.skipToTime = this.skipToTime.bind(this);
         this.resize = this.resize.bind(this);
         this.state = {
-            isPlaying: false,
             isInitialPlay: true,
             highlightId: -1,
             particleTypeIds: [],
@@ -220,21 +220,20 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             firstFrameTime,
             lastFrameTime,
             setBuffering,
+            setIsPlaying,
         } = this.props;
         let newTime = time;
         if (newTime + timeStep >= lastFrameTime) {
             newTime = firstFrameTime;
         }
         simulariumController.playFromTime(newTime);
-        simulariumController.resume();
-        this.setState({ isPlaying: true });
         setBuffering(true);
+        setIsPlaying(true);
     }
 
     public pause() {
-        const { simulariumController } = this.props;
-        simulariumController.pause();
-        this.setState({ isPlaying: false });
+        const { setIsPlaying } = this.props;
+        setIsPlaying(false);
     }
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
@@ -355,6 +354,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setViewerStatus,
             timeStep,
             isBuffering,
+            isPlaying,
         } = this.props;
         return (
             <div
@@ -392,7 +392,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     pauseHandler={this.pause}
                     prevHandler={this.playBackOne}
                     nextHandler={this.playForwardOne}
-                    isPlaying={this.state.isPlaying}
+                    isPlaying={isPlaying}
                     firstFrameTime={firstFrameTime}
                     lastFrameTime={lastFrameTime}
                     loading={isBuffering}
@@ -429,6 +429,7 @@ function mapStateToProps(state: State) {
             state
         ),
         isBuffering: selectionStateBranch.selectors.getIsBuffering(state),
+        isPlaying: selectionStateBranch.selectors.getIsPlaying(state),
     };
 }
 
@@ -444,6 +445,7 @@ const dispatchToPropsMap = {
     resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
     setAllAgentColors: selectionStateBranch.actions.setAllAgentColors,
     setBuffering: selectionStateBranch.actions.setBuffering,
+    setIsPlaying: selectionStateBranch.actions.setIsPlaying,
 };
 
 export default connect(

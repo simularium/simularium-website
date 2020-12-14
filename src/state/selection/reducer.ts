@@ -16,6 +16,7 @@ import {
     CHANGE_AGENT_COLOR,
     SET_BUFFERING,
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
+    SET_IS_PLAYING,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -29,6 +30,7 @@ import {
     SetAllColorsAction,
     ToggleAction,
     ResetAction,
+    ToggleAction,
 } from "./types";
 
 export const initialState = {
@@ -39,6 +41,7 @@ export const initialState = {
     draggedOverViewer: false,
     agentColors: {},
     isBuffering: false,
+    isPlaying: false,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -173,6 +176,12 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: SelectionStateBranch, action: ToggleAction) => ({
             ...state,
             isBuffering: action.payload,
+    [SET_IS_PLAYING]: {
+        accepts: (action: AnyAction): action is ToggleAction =>
+            action.type === SET_IS_PLAYING,
+        perform: (state: SelectionStateBranch, action: ToggleAction) => ({
+            ...state,
+            isPlaying: action.payload,
         }),
     },
 };

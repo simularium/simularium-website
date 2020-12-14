@@ -30,6 +30,7 @@ import { initialState } from "./reducer";
 import {
     changeTime,
     resetAgentSelectionsAndHighlights,
+    setIsPlaying,
 } from "../selection/actions";
 import { initialState as initialSelectionState } from "../selection/reducer";
 
@@ -45,9 +46,10 @@ const resetSimulariumFileState = createLogic({
 
         const resetTime = changeTime(initialSelectionState.time);
         const resetVisibility = resetAgentSelectionsAndHighlights();
+        const stopPlay = setIsPlaying(false);
         let clearMetaData;
 
-        const actions = [resetTime, resetVisibility];
+        const actions = [resetTime, resetVisibility, stopPlay];
 
         if (!action.payload.newFile) {
             //only clear controller if not requesting new sim file
@@ -130,8 +132,6 @@ const loadNetworkedFile = createLogic({
         if (!simulariumController.netConnection) {
             simulariumController.configureNetwork(netConnectionSettings);
         }
-        // if requested while playing, just pause sim until done loading
-        simulariumController.pause();
 
         simulariumController
             .changeFile(simulariumFile.name)
@@ -191,8 +191,6 @@ const loadLocalFile = createLogic({
         }
 
         clearOutFileTrajectoryUrlParam();
-        // if requested while playing, just pause sim until done loading
-        simulariumController.pause();
 
         simulariumController
             .changeFile(simulariumFile.name, true, simulariumFile.data)

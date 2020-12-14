@@ -23,6 +23,7 @@ export const getNumberCollapsed = (state: State) =>
 export const getFileDraggedOverViewer = (state: State) =>
     state.selection.draggedOverViewer;
 export const getIsBuffering = (state: State) => state.selection.isBuffering;
+export const getIsPlaying = (state: State) => state.selection.isPlaying;
 
 // COMPOSED SELECTORS
 
