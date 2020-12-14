@@ -31,7 +31,7 @@ node {
     nodeModulesDir = file("${project.projectDir}")
 }
 
-project.version = "1.0.x"
+project.version = "1.0.109"
 project.group = "org.alleninstitute.aics"
 
 ext {
