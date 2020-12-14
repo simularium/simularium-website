@@ -19,3 +19,8 @@ export const DRAG_OVER_VIEWER = makeSelectConstant("drag-over-viewer");
 export const RESET_DRAG_OVER_VIEWER = makeSelectConstant("drag-off-viewer");
 export const SET_ALL_AGENT_COLORS = makeSelectConstant("set-all-agent-colors");
 export const CHANGE_AGENT_COLOR = makeSelectConstant("change-agent-color");
+export const SET_BUFFERING = makeSelectConstant("set-buffering");
+export const RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS = makeSelectConstant(
+    "reset-selections-and-highlighted-agents"
+);
+export const SET_IS_PLAYING = makeSelectConstant("set-is-playing");

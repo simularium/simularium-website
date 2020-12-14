@@ -1,11 +1,9 @@
-import { castArray, without } from "lodash";
 import { AnyAction } from "redux";
 
 import { TypeToDescriptionMap } from "../types";
 import { makeReducer } from "../util";
 
 import {
-    DESELECT_FILE,
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
     SIDE_PANEL_COLLAPSED,
@@ -16,6 +14,9 @@ import {
     SET_AGENTS_VISIBLE,
     SET_ALL_AGENT_COLORS,
     CHANGE_AGENT_COLOR,
+    SET_BUFFERING,
+    RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
+    SET_IS_PLAYING,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -27,19 +28,33 @@ import {
     ResetDragOverViewerAction,
     SetVisibleAction,
     SetAllColorsAction,
+    ToggleAction,
+    ResetAction,
 } from "./types";
 
 export const initialState = {
-    files: [],
     time: 0,
     numberPanelsCollapsed: 0,
     visibleAgentKeys: {},
     highlightedAgentKeys: {},
     draggedOverViewer: false,
     agentColors: {},
+    isBuffering: false,
+    isPlaying: false,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
+    [RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS]: {
+        accepts: (action: AnyAction): action is ResetAction =>
+            action.type === RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
+        perform: (state: SelectionStateBranch) => {
+            return {
+                ...state,
+                visibleAgentKeys: initialState.visibleAgentKeys,
+                highlightedAgentKeys: initialState.highlightedAgentKeys,
+            };
+        },
+    },
     [SET_AGENTS_VISIBLE]: {
         accepts: (action: AnyAction): action is SetVisibleAction =>
             action.type === SET_AGENTS_VISIBLE,
@@ -71,7 +86,6 @@ const actionToConfigMap: TypeToDescriptionMap = {
             };
         },
     },
-
     [SELECT_METADATA]: {
         accepts: (action: AnyAction): action is SelectMetadataAction =>
             action.type === SELECT_METADATA,
@@ -153,6 +167,22 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: SelectionStateBranch) => ({
             ...state,
             draggedOverViewer: false,
+        }),
+    },
+    [SET_BUFFERING]: {
+        accepts: (action: AnyAction): action is ResetDragOverViewerAction =>
+            action.type === SET_BUFFERING,
+        perform: (state: SelectionStateBranch, action: ToggleAction) => ({
+            ...state,
+            isBuffering: action.payload,
+        }),
+    },
+    [SET_IS_PLAYING]: {
+        accepts: (action: AnyAction): action is ToggleAction =>
+            action.type === SET_IS_PLAYING,
+        perform: (state: SelectionStateBranch, action: ToggleAction) => ({
+            ...state,
+            isPlaying: action.payload,
         }),
     },
 };

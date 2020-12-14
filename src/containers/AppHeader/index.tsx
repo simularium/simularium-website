@@ -18,11 +18,13 @@ import HelpMenu from "../../components/HelpMenu";
 import { AicsLogo } from "../../components/Icons";
 import { State } from "../../state/types";
 import metadataStateBranch from "../../state/metadata";
+import selectionStateBranch from "../../state/selection";
 
 const styles = require("./style.css");
 
 interface AppHeaderProps {
     simulariumFile: LocalSimFile | NetworkedSimFile;
+    isBuffering: boolean;
     changeToLocalSimulariumFile: ActionCreator<RequestLocalFileAction>;
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
 }
@@ -31,6 +33,7 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
     public render(): JSX.Element {
         const {
             simulariumFile,
+            isBuffering,
             changeToLocalSimulariumFile: loadLocalFile,
             changeToNetworkedFile: loadNetworkFile,
         } = this.props;
@@ -69,6 +72,7 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
                         key="select"
                         selectFile={loadNetworkFile}
                         loadLocalFile={loadLocalFile}
+                        isBuffering={isBuffering}
                     />,
                     <HelpMenu key="help" />,
                 ]}
@@ -80,6 +84,7 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
 function mapStateToProps(state: State) {
     return {
         simulariumFile: metadataStateBranch.selectors.getSimulariumFile(state),
+        isBuffering: selectionStateBranch.selectors.getIsBuffering(state),
     };
 }
 

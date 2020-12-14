@@ -8,7 +8,6 @@ import { ReduxLogicDeps } from "../types";
 
 import { getSimulariumController, getSimulariumFile } from "./selectors";
 import {
-    receiveAgentNamesAndStates,
     receiveMetadata,
     receiveSimulariumFile,
     requestCachedPlotData,
@@ -19,17 +18,74 @@ import {
     VIEWER_LOADING,
     LOAD_NETWORKED_FILE_IN_VIEWER,
     REQUEST_PLOT_DATA,
+    CLEAR_SIMULARIUM_FILE,
+    VIEWER_EMPTY,
 } from "./constants";
 import { ReceiveAction, LocalSimFile, FrontEndError } from "./types";
 import { VIEWER_ERROR } from "./constants";
 import { setViewerStatus } from "../metadata/actions";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import { batchActions } from "../util";
+import { initialState } from "./reducer";
+import {
+    changeTime,
+    resetAgentSelectionsAndHighlights,
+    setIsPlaying,
+} from "../selection/actions";
+import { initialState as initialSelectionState } from "../selection/reducer";
 
 const netConnectionSettings = {
     serverIp: process.env.BACKEND_SERVER_IP,
     serverPort: 9002,
 };
+
+const resetSimulariumFileState = createLogic({
+    process(deps: ReduxLogicDeps, dispatch, done) {
+        const { getState, action } = deps;
+        const controller = getSimulariumController(getState());
+
+        const resetTime = changeTime(initialSelectionState.time);
+        const resetVisibility = resetAgentSelectionsAndHighlights();
+        const stopPlay = setIsPlaying(false);
+        let clearMetaData;
+
+        const actions = [resetTime, resetVisibility, stopPlay];
+
+        if (!action.payload.newFile) {
+            //only clear controller if not requesting new sim file
+            if (controller) {
+                controller.clearFile();
+            }
+            clearMetaData = receiveMetadata({
+                plotData: initialState.plotData,
+                firstFrameTime: initialState.firstFrameTime,
+                lastFrameTime: initialState.lastFrameTime,
+                timeStep: initialState.timeStep,
+                agentUiNames: initialState.agentUiNames,
+            });
+            const setViewerStatusAction = setViewerStatus({
+                status: VIEWER_EMPTY,
+            });
+            actions.push(setViewerStatusAction);
+        } else {
+            dispatch(
+                setViewerStatus({
+                    status: VIEWER_LOADING,
+                })
+            );
+            // plot data is a separate request, clear it out to avoid
+            // wrong plot data sticking around if the request fails
+            clearMetaData = receiveMetadata({
+                plotData: initialState.plotData,
+            });
+        }
+        actions.push(clearMetaData);
+        dispatch(batchActions(actions));
+        done();
+    },
+    type: [CLEAR_SIMULARIUM_FILE],
+});
+
 const requestPlotDataLogic = createLogic({
     process(
         deps: ReduxLogicDeps,
@@ -56,10 +112,15 @@ const loadNetworkedFile = createLogic({
         const currentState = getState();
 
         const simulariumFile = action.payload;
-
-        const resetAgentNames = receiveAgentNamesAndStates([]);
-        const setViewerLoading = setViewerStatus({ status: VIEWER_LOADING });
-        dispatch(batchActions([resetAgentNames, setViewerLoading]));
+        dispatch(
+            setViewerStatus({
+                status: VIEWER_LOADING,
+            })
+        );
+        dispatch({
+            payload: { newFile: true },
+            type: CLEAR_SIMULARIUM_FILE,
+        });
 
         let simulariumController = getSimulariumController(currentState);
         if (!simulariumController) {
@@ -71,8 +132,6 @@ const loadNetworkedFile = createLogic({
         if (!simulariumController.netConnection) {
             simulariumController.configureNetwork(netConnectionSettings);
         }
-        // if requested while playing, just pause sim until done loading
-        simulariumController.pause();
 
         simulariumController
             .changeFile(simulariumFile.name)
@@ -120,6 +179,7 @@ const loadLocalFile = createLogic({
             currentState
         );
         const simulariumFile = action.payload;
+
         if (lastSimulariumFile) {
             if (
                 lastSimulariumFile.name === simulariumFile.name &&
@@ -131,11 +191,6 @@ const loadLocalFile = createLogic({
         }
 
         clearOutFileTrajectoryUrlParam();
-        const resetAgentNames = receiveAgentNamesAndStates([]);
-        const setViewerLoading = setViewerStatus({ status: VIEWER_LOADING });
-        dispatch(batchActions([resetAgentNames, setViewerLoading]));
-        // if requested while playing, just pause sim until done loading
-        simulariumController.pause();
 
         simulariumController
             .changeFile(simulariumFile.name, true, simulariumFile.data)
@@ -164,4 +219,9 @@ const loadLocalFile = createLogic({
     type: LOAD_LOCAL_FILE_IN_VIEWER,
 });
 
-export default [requestPlotDataLogic, loadLocalFile, loadNetworkedFile];
+export default [
+    requestPlotDataLogic,
+    loadLocalFile,
+    loadNetworkedFile,
+    resetSimulariumFileState,
+];

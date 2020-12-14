@@ -24,7 +24,6 @@
 }
 
 .btn button[disabled] {
-    background-color: var(--dark-theme-btn-disabled-bg);
     color: var(--dark-theme-btn-disabled-color);
     border-radius: 3px;
 }

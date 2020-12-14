@@ -84,7 +84,9 @@ const PlayBackControls = ({
                     disabled={time === 0 || loading}
                     loading={loading}
                 >
-                    <span className={classNames(["icon-moon", "stepBack"])} />
+                    <span
+                        className={classNames(["icon-moon", styles.stepBack])}
+                    />
                 </Button>
             </Tooltip>
             <Tooltip
@@ -95,7 +97,7 @@ const PlayBackControls = ({
                 <Button
                     className={btnClassNames}
                     size="small"
-                    icon={isPlaying ? Icons.Pause : Icons.Play}
+                    icon={isPlaying ? Icons.Pause : Icons.Play} // TODO: load these as fonts instead of images
                     onClick={isPlaying ? pauseHandler : playHandler}
                     loading={loading}
                 />
