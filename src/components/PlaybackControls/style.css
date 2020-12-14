@@ -68,12 +68,15 @@
     color: var(--dark-theme-btn-color-dim);
 }
 
+.custom-step-button, .custom-step-button :global(.ant-btn) {
+    padding: 0;
+    width: 24px;
+}
+
 .step-back::after {
     content: "\e906";
-    color: #d8d8d8;
 }
 
 .step-forward::after {
     content: "\e907";
-    color: #d8d8d8;
 }
