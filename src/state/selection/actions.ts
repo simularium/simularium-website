@@ -1,5 +1,4 @@
 import {
-    DESELECT_FILE,
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
     SIDE_PANEL_COLLAPSED,
@@ -12,7 +11,6 @@ import {
     CHANGE_AGENT_COLOR,
 } from "./constants";
 import {
-    DeselectFileAction,
     ChangeAgentsRenderingStateAction,
     SelectMetadataAction,
     ChangeTimeAction,
@@ -23,13 +21,6 @@ import {
     AgentColorMap,
     SetAllColorsAction,
 } from "./types";
-
-export function deselectFile(fileId: string | string[]): DeselectFileAction {
-    return {
-        payload: fileId,
-        type: DESELECT_FILE,
-    };
-}
 
 export function changeTime(time: number): ChangeTimeAction {
     return {

@@ -18,7 +18,6 @@ import {
     CHANGE_AGENT_COLOR,
 } from "./constants";
 import {
-    DeselectFileAction,
     ChangeAgentsRenderingStateAction,
     SelectionStateBranch,
     SelectMetadataAction,
@@ -41,14 +40,6 @@ export const initialState = {
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
-    [DESELECT_FILE]: {
-        accepts: (action: AnyAction): action is DeselectFileAction =>
-            action.type === DESELECT_FILE,
-        perform: (state: SelectionStateBranch, action: DeselectFileAction) => ({
-            ...state,
-            files: without(state.files, ...castArray(action.payload)),
-        }),
-    },
     [SET_AGENTS_VISIBLE]: {
         accepts: (action: AnyAction): action is SetVisibleAction =>
             action.type === SET_AGENTS_VISIBLE,
