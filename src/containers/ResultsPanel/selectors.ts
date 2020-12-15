@@ -3,6 +3,7 @@ import { Layout, Data } from "plotly.js";
 
 import { getPlotData } from "../../state/metadata/selectors";
 import { getCurrentTime } from "../../state/selection/selectors";
+import { wrapText } from "../../util";
 
 import { PLOT_STYLE, AXIS_ATTRIBUTES } from "./constants";
 import {
@@ -12,50 +13,6 @@ import {
     HistogramTrace,
     Layout as InputLayout,
 } from "./types";
-
-export const wrapTitle = (
-    text: string,
-    maxCharPerLine: number
-): {
-    formattedText: string;
-    numLines: number;
-} => {
-    let numLines = 0;
-    const insertBreaks = (text: string): string => {
-        numLines++;
-        if (text.length <= maxCharPerLine) return text;
-
-        const words = text.split(" ");
-        if (words.length === 1) return text;
-
-        let currentLineLength = 0;
-        let numWordsInCurrentLine = 0;
-        for (let i = 0; i < words.length - 1; i++) {
-            // +1 to account for space between words
-            currentLineLength += words[i].length + 1;
-            numWordsInCurrentLine++;
-            if (currentLineLength + words[i + 1].length > maxCharPerLine) {
-                break;
-            }
-        }
-        const textInCurrentLine = words
-            .slice(0, numWordsInCurrentLine)
-            .join(" ");
-        if (words.length > numWordsInCurrentLine) {
-            return (
-                textInCurrentLine +
-                "<br>" +
-                insertBreaks(words.slice(numWordsInCurrentLine).join(" "))
-            );
-        } else {
-            return textInCurrentLine;
-        }
-    };
-    return {
-        formattedText: insertBreaks(text),
-        numLines: numLines,
-    };
-};
 
 // Add Plotly layout and styling attributes to raw input plot data
 // Plotly reference: https://plotly.com/javascript/reference/index/
@@ -72,7 +29,7 @@ const configureLayout = (
     // 33 characters seems to be approximately the max title length that can fit in
     // one line in the current layout
     const maxCharPerLine = 33;
-    const wrappedTitle = wrapTitle(layout.title, maxCharPerLine);
+    const wrappedTitle = wrapText(layout.title, maxCharPerLine);
     const numLinesInTitle = wrappedTitle.numLines;
     console.log(numLinesInTitle);
     const topMargin =
