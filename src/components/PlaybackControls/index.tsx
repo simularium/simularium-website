@@ -18,6 +18,7 @@ interface PlayBackProps {
     onTimeChange: (time: number) => void;
     loading: boolean;
     timeStep: number;
+    isEmpty: boolean;
 }
 
 const PlayBackControls = ({
@@ -32,6 +33,7 @@ const PlayBackControls = ({
     onTimeChange,
     loading,
     timeStep,
+    isEmpty,
 }: PlayBackProps) => {
     const handleTimeChange = (sliderValue: number | [number, number]): void => {
         onTimeChange(sliderValue as number); // slider can be a list of numbers, but we're just using a single value
@@ -96,6 +98,7 @@ const PlayBackControls = ({
                     icon={isPlaying ? Icons.Pause : Icons.Play} // TODO: load these as fonts instead of images
                     onClick={isPlaying ? pauseHandler : playHandler}
                     loading={loading}
+                    disabled={isEmpty}
                 />
             </Tooltip>
             <Tooltip
@@ -120,7 +123,7 @@ const PlayBackControls = ({
                 step={timeStep}
                 min={firstFrameTime}
                 max={lastFrameTime}
-                disabled={loading}
+                disabled={loading || isEmpty}
             />
             <div className={styles.time}>
                 <p>
