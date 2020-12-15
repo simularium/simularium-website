@@ -19,6 +19,7 @@ export const PLOT_STYLE = {
     fontFamily: "Overpass",
     fontSize: 11,
     legendItemHeight: 19, // Dependent on fontSize and fontFamily
+    titleMaxCharPerLine: 33,
     titleHeightPerLine: 20.02, // Dependent on fontSize and fontFamily
     marginTop: 55,
     marginLeft: 50,

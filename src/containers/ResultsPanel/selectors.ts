@@ -26,12 +26,8 @@ const configureLayout = (
             ? PLOT_STYLE.height + PLOT_STYLE.legendItemHeight * numTraces
             : PLOT_STYLE.height;
 
-    // 33 characters seems to be approximately the max title length that can fit in
-    // one line in the current layout
-    const maxCharPerLine = 33;
-    const wrappedTitle = wrapText(layout.title, maxCharPerLine);
+    const wrappedTitle = wrapText(layout.title, PLOT_STYLE.titleMaxCharPerLine);
     const numLinesInTitle = wrappedTitle.numLines;
-    console.log(numLinesInTitle);
     const topMargin =
         PLOT_STYLE.marginTop +
         PLOT_STYLE.titleHeightPerLine * (numLinesInTitle - 1);
@@ -42,7 +38,6 @@ const configureLayout = (
         autosize: true,
         height:
             plotHeight + PLOT_STYLE.titleHeightPerLine * (numLinesInTitle - 1),
-        // height: plotHeight,
         width: PLOT_STYLE.width,
         title: {
             text: wrappedTitle.formattedText,
