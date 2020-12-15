@@ -25,6 +25,8 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A CytoSim model of a branched actin network internalizing an endocytic pit against membrane tension.",
+        legalese:
+            "Please note that the use of this model is subject to third party licensing requirements, which are currently available <a href='https://github.com/DrubinBarnes/Akamatsu_CME_manuscript'>here</a>.",
         imageFile: endocytosisImage,
         gifFile: endocytosisGif,
     },
@@ -43,6 +45,8 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A PhysiCell model of SARS-CoV-2 dynamics in human lung epithelium.",
+        legalese:
+            "Please note that the use of this model is subject to third party licensing requirements, which are currently available <a href='https://github.com/pc4covid19/pc4covid19'>here</a>.",
         imageFile: covidImage,
         gifFile: covidGif,
     },

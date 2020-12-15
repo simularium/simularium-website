@@ -12,6 +12,7 @@ export interface TrajectoryDisplayData {
         url: string;
     };
     description: string;
+    legalese?: string;
     imageFile: string;
     gifFile: string;
 }
