@@ -26,8 +26,8 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                     <br />
                     <p>
                         Simularium makes it easy to share and analyze spatial
-                        simulations directly in a web browser. Its major goal is
-                        to facilitate collaborations between experimental
+                        simulations directly in a web browser. Its primary goal
+                        is to facilitate collaborations between experimental
                         biologists and computational biologists by removing
                         major challenges to accessing, running, sharing, and
                         analyzing simulation results.
@@ -43,10 +43,10 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                     <p>
                         With this first release we present the{" "}
                         <i>Simularium Viewer</i>, an online visual analysis
-                        tool, which is just one component of the larger
-                        Simularium platform. The Simularium Viewer provides an
-                        online application for visualizing simulation
-                        trajectories and related plots.
+                        tool, which is one component of the larger Simularium
+                        platform. The Simularium Viewer provides an online
+                        application for visualizing simulation trajectories and
+                        related plots.
                     </p>
                     <div className={styles.cards}>
                         {TRAJECTORIES.map((trajectory) => {
@@ -75,6 +75,10 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         Viewer uses advanced rendering techniques developed by{" "}
                         <a href="https://www.cg.tuwien.ac.at/research/publications/2015/cellVIEW_2015/">
                             Le Muzic et al. (2015)
+                        </a>{" "}
+                        and{" "}
+                        <a href="https://ieeexplore.ieee.org/document/8017635">
+                            Mindek et al. (2017)
                         </a>{" "}
                         to enable meaningful interpretation of spatial
                         relationships among thousands of moving components.
