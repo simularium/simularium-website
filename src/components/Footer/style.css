@@ -20,3 +20,11 @@
     border-bottom: 1px solid var(--footer-text-border-bottom);
     padding: 1em;
 }
+
+.container :global(#ot-sdk-btn) {
+    font-weight: 200;
+}
+
+.container :global(#ot-sdk-btn):hover, :global(#ot-sdk-btn):active, :global(#ot-sdk-btn):focus {
+    color: var(--footer-link);
+}
