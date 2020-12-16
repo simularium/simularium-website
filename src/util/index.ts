@@ -42,15 +42,18 @@ export const wrapText = (
         numLines++;
         const words = text.split(" ");
 
+        // No need to process if text is already short enough or there is only 1 word
         if (text.length <= maxCharPerLine || words.length === 1) {
             return text;
         }
 
+        // Do some processing if text is too long for 1 line
         let numWordsInCurrentLine = 0;
         let currentLineLength = 0;
-        // Loop through words until maxCharPerLine is reached
+        // Get number of words that can fit in current line by summing lengths of words
+        // until maxCharPerLine is reached
         for (let i = 0; i < words.length - 1; i++) {
-            // Add 1 character for space if this word is not the first word in line
+            // Add 1 character for space if current word is not the first word in line
             if (i !== 0) currentLineLength++;
             currentLineLength += words[i].length;
             if (currentLineLength + 1 + words[i + 1].length > maxCharPerLine) {
@@ -61,7 +64,6 @@ export const wrapText = (
         const textInCurrentLine = words
             .slice(0, numWordsInCurrentLine)
             .join(" ");
-
         // Insert line break and repeat with any remaining words
         if (words.length > numWordsInCurrentLine) {
             return (
