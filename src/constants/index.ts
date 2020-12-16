@@ -12,7 +12,9 @@ export const PLOT_DATA_URL =
     "https://aics-agentviz-data.s3.us-east-2.amazonaws.com";
 export const FORUM_URL =
     "https://forum.allencell.org/c/software-code/simularium/";
-export const FORUM_BUG_REPORT_URL = `${FORUM_URL}15/bug-report`;
+// Note that below has "/tags/" unlike FORUM_URL
+export const FORUM_BUG_REPORT_URL =
+    "https://forum.allencell.org/tags/c/software-code/simularium/15/bug-report";
 export const GITHUB_URL = "https://github.com/allen-cell-animated?q=simularium";
 export const ISSUE_URL =
     "https://github.com/allen-cell-animated/simularium-website/issues";
