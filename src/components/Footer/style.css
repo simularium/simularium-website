@@ -21,10 +21,15 @@
     padding: 1em;
 }
 
-.container :global(#ot-sdk-btn) {
+.container :global(#ot-sdk-btn.ot-sdk-show-settings) {
     font-weight: 200;
+    font-size: 14px;
+    color: var(--footer-link);
+    border: none;
+    padding: 0;
 }
 
-.container :global(#ot-sdk-btn):hover, :global(#ot-sdk-btn):active, :global(#ot-sdk-btn):focus {
+.container :global(#ot-sdk-btn.ot-sdk-show-settings):hover, :global(#ot-sdk-btn.ot-sdk-show-settings):active, :global(#ot-sdk-btn.ot-sdk-show-settings):focus {
     color: var(--footer-link);
+    background-color: transparent;
 }
