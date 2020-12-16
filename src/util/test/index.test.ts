@@ -84,9 +84,15 @@ describe("General utilities", () => {
                 numLines: 2,
             });
         });
-        it("does not wrap text shorter than maximum character length", () => {
+        it("does not wrap single-word text shorter than maximum character length", () => {
             expect(wrapText("123456", 8)).to.deep.equal({
                 formattedText: "123456",
+                numLines: 1,
+            });
+        });
+        it("does not wrap multi-word text shorter than maximum character length", () => {
+            expect(wrapText("12 45", 8)).to.deep.equal({
+                formattedText: "12 45",
                 numLines: 1,
             });
         });

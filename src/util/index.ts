@@ -37,19 +37,22 @@ export const wrapText = (
     numLines: number;
 } => {
     let numLines = 0;
+    // Recursively break text into lines
     const insertBreaks = (text: string): string => {
         numLines++;
-        if (text.length <= maxCharPerLine) return text;
-
         const words = text.split(" ");
-        if (words.length === 1) return text;
 
-        let currentLineLength = 0;
+        if (text.length <= maxCharPerLine || words.length === 1) {
+            return text;
+        }
+
         let numWordsInCurrentLine = 0;
+        let currentLineLength = 0;
+        // Loop through words until maxCharPerLine is reached or words run out
         for (let i = 0; i < words.length - 1; i++) {
-            // +1 to account for space between words
-            currentLineLength += words[i].length + 1;
             numWordsInCurrentLine++;
+            // +1 accounts for space between words
+            currentLineLength += words[i].length + 1;
             if (currentLineLength + words[i + 1].length > maxCharPerLine) {
                 break;
             }
@@ -57,6 +60,8 @@ export const wrapText = (
         const textInCurrentLine = words
             .slice(0, numWordsInCurrentLine)
             .join(" ");
+
+        // Insert line break and repeat with any remaining words
         if (words.length > numWordsInCurrentLine) {
             return (
                 textInCurrentLine +
