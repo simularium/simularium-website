@@ -21,23 +21,25 @@ const configureLayout = (
     numTraces: number
 ): Partial<Layout> => {
     // Give plots with a legend (multi-trace plots) more vertical room
-    const plotHeight =
+    let plotHeight =
         numTraces > 1
             ? PLOT_STYLE.height + PLOT_STYLE.legendItemHeight * numTraces
             : PLOT_STYLE.height;
 
     const wrappedTitle = wrapText(layout.title, PLOT_STYLE.titleMaxCharPerLine);
     const numLinesInTitle = wrappedTitle.numLines;
+    // Make more room for each extra line in a wrapped title
     const topMargin =
         PLOT_STYLE.marginTop +
         PLOT_STYLE.titleHeightPerLine * (numLinesInTitle - 1);
+    // Just increasing the topMargin squishes the plot, so also need to increase plotHeight by the same amount
+    plotHeight += PLOT_STYLE.titleHeightPerLine * (numLinesInTitle - 1);
 
     return {
         ...layout,
         /* cSpell:disable */
         autosize: true,
-        height:
-            plotHeight + PLOT_STYLE.titleHeightPerLine * (numLinesInTitle - 1),
+        height: plotHeight,
         width: PLOT_STYLE.width,
         title: {
             text: wrappedTitle.formattedText,
