@@ -48,12 +48,13 @@ export const wrapText = (
 
         let numWordsInCurrentLine = 0;
         let currentLineLength = 0;
-        // Loop through words until maxCharPerLine is reached or words run out
+        // Loop through words until maxCharPerLine is reached
         for (let i = 0; i < words.length - 1; i++) {
-            numWordsInCurrentLine++;
-            // +1 accounts for space between words
-            currentLineLength += words[i].length + 1;
-            if (currentLineLength + words[i + 1].length > maxCharPerLine) {
+            // Add 1 character for space if this word is not the first word in line
+            if (i !== 0) currentLineLength++;
+            currentLineLength += words[i].length;
+            if (currentLineLength + 1 + words[i + 1].length > maxCharPerLine) {
+                numWordsInCurrentLine = i + 1;
                 break;
             }
         }
