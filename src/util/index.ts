@@ -61,19 +61,11 @@ export const wrapText = (
                 break;
             }
         }
-        const textInCurrentLine = words
-            .slice(0, numWordsInCurrentLine)
-            .join(" ");
-        // Insert line break and repeat with any remaining words
-        if (words.length > numWordsInCurrentLine) {
-            return (
-                textInCurrentLine +
-                "<br>" +
-                insertBreaks(words.slice(numWordsInCurrentLine).join(" "))
-            );
-        } else {
-            return textInCurrentLine;
-        }
+        // Insert line break and repeat with remaining words
+        const textInCurrentLine =
+            words.slice(0, numWordsInCurrentLine).join(" ") + "<br>";
+        const remainingText = words.slice(numWordsInCurrentLine).join(" ");
+        return textInCurrentLine + insertBreaks(remainingText);
     };
     return {
         formattedText: insertBreaks(text),
