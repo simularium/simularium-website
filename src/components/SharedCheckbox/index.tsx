@@ -5,6 +5,7 @@ import classNames from "classnames";
 import Checkbox from "../Checkbox";
 import { CHECKBOX_TYPE_STAR } from "../../constants";
 import { isUndefined } from "lodash";
+import { Tooltip } from "antd";
 
 const styles = require("./style.css");
 
@@ -51,19 +52,26 @@ export default class SharedCheckbox extends React.Component<
             styles.container,
             { [styles.header]: isHeader, ["header-checkbox"]: isHeader },
         ]);
+        const checked = checkedList.length === options.length;
         return (
-            <Checkbox
-                indeterminate={isIndeterminate}
-                onChange={this.onCheckAllChange}
-                checked={checkedList.length === options.length}
-                style={{
-                    margin: "auto",
-                }}
-                className={checkboxClassNames}
-                checkboxType={checkboxType}
+            <Tooltip
+                title={checked ? "Hide all" : "Show all"}
+                placement="left"
+                mouseEnterDelay={1}
             >
-                {showLabel ? title : ""}
-            </Checkbox>
+                <Checkbox
+                    indeterminate={isIndeterminate}
+                    onChange={this.onCheckAllChange}
+                    checked={checked}
+                    style={{
+                        margin: "auto",
+                    }}
+                    className={checkboxClassNames}
+                    checkboxType={checkboxType}
+                >
+                    {showLabel ? title : ""}
+                </Checkbox>
+            </Tooltip>
         );
     }
 }
