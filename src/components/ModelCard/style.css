@@ -42,3 +42,13 @@
 .journal {
     font-style: italic;
 }
+
+.legalese {
+    font-size: 10px;
+    color: var(--light-theme-faint-text);
+}
+
+.legalese a {
+    color: var(--light-theme-faint-text);
+    text-decoration: underline;
+}
