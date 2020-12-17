@@ -31,7 +31,7 @@ interface LocationWithState extends Location {
         localFile?: boolean;
     };
 }
-function useLocationChangeToStopPlay() {
+function useLocationChange() {
     const location = useLocation() as LocationWithState;
     const dispatch = useDispatch();
 
@@ -66,7 +66,7 @@ function useLocationChangeToStopPlay() {
 }
 
 const RouterSwitch = () => {
-    useLocationChangeToStopPlay();
+    useLocationChange();
     return (
         <Switch>
             {routes.map((route) => (
