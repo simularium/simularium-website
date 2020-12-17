@@ -79,13 +79,26 @@ const PlayBackControls = ({
                 color={TOOLTIP_COLOR}
             >
                 <Button
-                    className={[btnClassNames, styles.stepButton].join(" ")}
+                    className={classNames([
+                        btnClassNames,
+                        { [styles.customStepButton]: !loading },
+                    ])}
                     size="small"
-                    icon={Icons.StepBack} // TODO: load these as fonts instead of images
                     onClick={prevHandler}
                     disabled={time === 0 || loading}
                     loading={loading}
-                />
+                >
+                    {/* if loading, antd will show loading icon, otherwise, show our custom svg */}
+                    {!loading && (
+                        <span
+                            className={classNames([
+                                "icon-moon",
+                                "anticon",
+                                styles.stepBack,
+                            ])}
+                        />
+                    )}
+                </Button>
             </Tooltip>
             <Tooltip
                 placement="top"
@@ -95,7 +108,7 @@ const PlayBackControls = ({
                 <Button
                     className={btnClassNames}
                     size="small"
-                    icon={isPlaying ? Icons.Pause : Icons.Play} // TODO: load these as fonts instead of images
+                    icon={isPlaying ? Icons.Pause : Icons.Play}
                     onClick={isPlaying ? pauseHandler : playHandler}
                     loading={loading}
                     disabled={isEmpty}
@@ -107,13 +120,26 @@ const PlayBackControls = ({
                 color={TOOLTIP_COLOR}
             >
                 <Button
-                    className={[btnClassNames, styles.stepButton].join(" ")}
+                    className={classNames([
+                        btnClassNames,
+                        { [styles.customStepButton]: !loading },
+                    ])}
                     size="small"
-                    icon={Icons.StepForward}
                     onClick={nextHandler}
                     disabled={time + timeStep >= lastFrameTime || loading}
                     loading={loading}
-                />
+                >
+                    {/* if loading, antd will show loading icon, otherwise, show our custom svg */}
+                    {!loading && (
+                        <span
+                            className={classNames([
+                                "icon-moon",
+                                "anticon",
+                                styles.stepForward,
+                            ])}
+                        />
+                    )}
+                </Button>
             </Tooltip>
             <Slider
                 value={time}
