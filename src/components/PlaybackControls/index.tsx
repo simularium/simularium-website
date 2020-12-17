@@ -35,11 +35,28 @@ const PlayBackControls = ({
     timeStep,
     isEmpty,
 }: PlayBackProps) => {
+    const [unitIndex, setUnitIndex] = useState(0);
+    const [wasPlayingBeforeScrubbing, setWasPlayingBeforeScrubbing] = useState(
+        false
+    );
+
     const handleTimeChange = (sliderValue: number | [number, number]): void => {
         onTimeChange(sliderValue as number); // slider can be a list of numbers, but we're just using a single value
+        if (isPlaying) {
+            setWasPlayingBeforeScrubbing(true);
+            pauseHandler();
+        }
     };
 
-    const [unitIndex, setUnitIndex] = useState(0);
+    const handleSliderMouseUp = (
+        sliderValue: number | [number, number]
+    ): void => {
+        if (wasPlayingBeforeScrubbing) {
+            onTimeChange(sliderValue as number);
+            playHandler();
+        }
+        setWasPlayingBeforeScrubbing(false);
+    };
 
     const units = ["s", "ms", "\u03BCs", "ns"];
     const roundNumber = (num: number) => parseFloat(Number(num).toPrecision(3));
@@ -144,6 +161,7 @@ const PlayBackControls = ({
             <Slider
                 value={time}
                 onChange={handleTimeChange}
+                onAfterChange={handleSliderMouseUp}
                 tooltipVisible={false}
                 className={[styles.slider, styles.item].join(" ")}
                 step={timeStep}
