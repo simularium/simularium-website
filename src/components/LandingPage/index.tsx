@@ -19,9 +19,7 @@ const LandingPage: React.FunctionComponent<{}> = () => {
         <React.Fragment>
             <Content className={styles.content}>
                 <div className={styles.panel}>
-                    <h1>
-                        Simularium <span>{BetaTag}</span>
-                    </h1>
+                    <h1>Simularium {BetaTag}</h1>
                     <h2>
                         Visualize, analyze, interrogate & share biological
                         simulations
