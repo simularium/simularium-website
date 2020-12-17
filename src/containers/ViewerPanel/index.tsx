@@ -16,7 +16,7 @@ const si = require("si-prefix");
 import { State } from "../../state/types";
 import selectionStateBranch from "../../state/selection";
 import metadataStateBranch from "../../state/metadata";
-import { VIEWER_SUCCESS } from "../../state/metadata/constants";
+import { VIEWER_EMPTY, VIEWER_SUCCESS } from "../../state/metadata/constants";
 import {
     ChangeTimeAction,
     ResetDragOverViewerAction,
@@ -355,6 +355,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             timeStep,
             isBuffering,
             isPlaying,
+            viewerStatus,
         } = this.props;
         return (
             <div
@@ -396,6 +397,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     firstFrameTime={firstFrameTime}
                     lastFrameTime={lastFrameTime}
                     loading={isBuffering}
+                    isEmpty={viewerStatus === VIEWER_EMPTY}
                 />
                 <ScaleBar label={this.state.scaleBarLabel} />
                 <CameraControls

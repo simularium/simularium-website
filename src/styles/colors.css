@@ -20,11 +20,13 @@
     --dark-blue-grey: #2d224d;
     --background-dark-gray: #131313;
     --baby-purple: #b59ff6;
+    --blue: #0094FF;
     --background-dim-gray: var(--dim-gray);
     --border-gray: var(--white-six);
     --footer-bg: var(--dark-three);
     --footer-text: var(--warm-gray);
     --footer-text-border-bottom: var(--greyish-brown);
+    --footer-link: var(--blue);
     --dark-theme-primary-color: var(--baby-purple);
     --dark-theme-body-bg: var(--black);
     --dark-theme-header-bg: var(--dark-three);

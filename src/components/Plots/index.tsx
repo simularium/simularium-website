@@ -25,7 +25,12 @@ export default class Plots extends React.Component<PlotsProps, {}> {
                             data={plot.data}
                             useResizeHandler={true}
                             layout={plot.layout}
-                            config={{ displayModeBar: false }}
+                            // config attributes:
+                            // https://github.com/plotly/plotly.js/blob/master/src/plot_api/plot_config.js#L23
+                            config={{
+                                modeBarButtons: [["resetViews"]],
+                                displaylogo: false,
+                            }}
                             // onClick={onPointClicked}
                             // onClickAnnotation={this.clickedAnnotation}
                             // onHover={onPlotHovered}
