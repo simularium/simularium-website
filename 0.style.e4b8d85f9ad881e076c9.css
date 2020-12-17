@@ -55,6 +55,18 @@
     padding: 1em;
 }
 
+.style__container--13uHQ #ot-sdk-btn.ot-sdk-show-settings {
+    font-weight: 200;
+    font-size: 14px;
+    color: var(--footer-link);
+    border: none;
+    padding: 0;
+}
+
+.style__container--13uHQ #ot-sdk-btn.ot-sdk-show-settings:hover, #ot-sdk-btn.ot-sdk-show-settings:active, #ot-sdk-btn.ot-sdk-show-settings:focus {
+    color: var(--footer-link);
+    background-color: transparent;
+}
 .style__content--3aAyX {
     display: block;
     margin: auto;
@@ -291,11 +303,13 @@ On smaller screens the width is 100% of parent div. */
     --dark-blue-grey: #2d224d;
     --background-dark-gray: #131313;
     --baby-purple: #b59ff6;
+    --blue: #0094FF;
     --background-dim-gray: var(--dim-gray);
     --border-gray: var(--white-six);
     --footer-bg: var(--dark-three);
     --footer-text: var(--warm-gray);
     --footer-text-border-bottom: var(--greyish-brown);
+    --footer-link: var(--blue);
     --dark-theme-primary-color: var(--baby-purple);
     --dark-theme-body-bg: var(--black);
     --dark-theme-header-bg: var(--dark-three);
@@ -726,7 +740,6 @@ On smaller screens the width is 100% of parent div. */
 }
 
 .style__btn--1jmhT button[disabled] {
-    background-color: var(--dark-theme-btn-disabled-bg);
     color: var(--dark-theme-btn-disabled-color);
     border-radius: 3px;
 }
@@ -979,10 +992,6 @@ On smaller screens the width is 100% of parent div. */
 }
 
 .style__page-header--18F6z .ant-btn-primary {
-    background-color: var(--dark-theme-btn-primary);
-    border-color: var(--dark-theme-btn-primary);
-    border-radius: 3px;
-    color: var(--dark-theme-btn-primary-text);
     text-shadow: none;
 }
 
@@ -1071,6 +1080,10 @@ canvas:focus {
     font-weight: normal;
     font-style: normal;
     font-display: block;
+}
+
+.ant-btn:focus, .ant-btn:hover {
+    border-color: transparent!important;
 }
 
 .icon-moon {
