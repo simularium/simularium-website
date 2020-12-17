@@ -3,6 +3,7 @@ import { Layout } from "antd";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import flowchartImg from "../../assets/overview-image.png";
+import { BetaTag } from "../Icons";
 import ModelCard from "../ModelCard";
 import BlankCard from "../BlankCard";
 import Footer from "../Footer";
@@ -18,7 +19,9 @@ const LandingPage: React.FunctionComponent<{}> = () => {
         <React.Fragment>
             <Content className={styles.content}>
                 <div className={styles.panel}>
-                    <h1>Simularium</h1>
+                    <h1>
+                        Simularium <span>{BetaTag}</span>
+                    </h1>
                     <h2>
                         Visualize, analyze, interrogate & share biological
                         simulations
