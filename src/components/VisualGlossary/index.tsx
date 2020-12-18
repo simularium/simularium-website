@@ -58,6 +58,12 @@ const VisualGlossary: React.FunctionComponent<{}> = () => {
                             Displays the current and total simulated time.
                         </li>
                         <li>
+                            <b>SCALE BAR</b>
+                            <br />
+                            Displays the distance between tickmarks on the
+                            bounding box.
+                        </li>
+                        <li>
                             <b>CAMERA CONTROLS, from top to bottom:</b>
                             <br />
                             <ul>
