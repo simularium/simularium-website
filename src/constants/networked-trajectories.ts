@@ -33,7 +33,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
     {
         modelName: "SARS-CoV-2 Dynamics in Human Lung Epithelium",
         id: "pc4covid19.simularium",
-        title: "SARS-CoV-2 Dynamics in Human Lung Epithelium",
+        title: "SARS-CoV-2 Dynamics in Human Lung Epithelium (v4.1)",
         totalSimulatedTime: "4h",
         authors: "Michael Getz et al.",
         publication: {
