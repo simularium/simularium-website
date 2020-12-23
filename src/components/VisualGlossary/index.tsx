@@ -7,6 +7,24 @@ import { VisualGlossaryItem } from "../../constants/interfaces";
 
 const styles = require("./style.css");
 
+const renderGlossaryItems = visualGlossary.map((item: VisualGlossaryItem) => {
+    const { label, description, bulletItems } = item;
+    return (
+        <li key={label}>
+            <b>{label}</b>
+            <br />
+            {description}
+            {bulletItems && (
+                <ul>
+                    {bulletItems.map((bullet: string, i) => (
+                        <li key={i}>{bullet}</li>
+                    ))}
+                </ul>
+            )}
+        </li>
+    );
+});
+
 const VisualGlossary: React.FunctionComponent<{}> = () => {
     return (
         <div className={styles.container}>
@@ -14,28 +32,7 @@ const VisualGlossary: React.FunctionComponent<{}> = () => {
             <Collapse>
                 <Collapse.Panel header="Visual Glossary Key" key="1">
                     <ol className={styles.topLevelList}>
-                        {visualGlossary.map((item: VisualGlossaryItem) => {
-                            return (
-                                <li key={item.label}>
-                                    <b>{item.label}</b>
-                                    <br />
-                                    {item.description}
-                                    {item.bulletItems && (
-                                        <ul>
-                                            {item.bulletItems.map(
-                                                (bullet: string, i) => {
-                                                    return (
-                                                        <li key={i}>
-                                                            {bullet}
-                                                        </li>
-                                                    );
-                                                }
-                                            )}
-                                        </ul>
-                                    )}
-                                </li>
-                            );
-                        })}
+                        {renderGlossaryItems}
                     </ol>
                 </Collapse.Panel>
             </Collapse>
