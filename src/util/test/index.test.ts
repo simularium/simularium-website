@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import * as React from "react";
 
-import { bindAll, convertToSentenceCase } from "../";
+import { bindAll, convertToSentenceCase, wrapText } from "../";
 
 describe("General utilities", () => {
     describe("bindAll", () => {
@@ -49,6 +49,7 @@ describe("General utilities", () => {
             expect(baz).to.throw(TypeError);
         });
     });
+
     describe("toSentenceCase", () => {
         it("takes a string and converts it to sentence case", () => {
             const startingString = "all lowercase. all lowercase";
@@ -67,6 +68,33 @@ describe("General utilities", () => {
             expect(convertToSentenceCase(startingString)).to.equal(
                 "All lowercase. Has mid sentence cap"
             );
+        });
+    });
+
+    describe("wrapText", () => {
+        it("does not wrap a 1-word title", () => {
+            expect(wrapText("1234567890", 8)).to.deep.equal({
+                formattedText: "1234567890",
+                numLines: 1,
+            });
+        });
+        it("wraps a title with a long first word", () => {
+            expect(wrapText("1234567890 abc", 8)).to.deep.equal({
+                formattedText: "1234567890<br>abc",
+                numLines: 2,
+            });
+        });
+        it("does not wrap text shorter than maximum character length", () => {
+            expect(wrapText("12345 7", 8)).to.deep.equal({
+                formattedText: "12345 7",
+                numLines: 1,
+            });
+        });
+        it("wraps text longer than maximum character length", () => {
+            expect(wrapText("123 567 890 abcdefg wxyz", 8)).to.deep.equal({
+                formattedText: "123 567<br>890<br>abcdefg<br>wxyz",
+                numLines: 4,
+            });
         });
     });
 });
