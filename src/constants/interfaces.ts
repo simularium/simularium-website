@@ -16,3 +16,9 @@ export interface TrajectoryDisplayData {
     imageFile: string;
     gifFile: string;
 }
+
+export interface VisualGlossaryItem {
+    label: string;
+    description: string;
+    bulletItems?: string[];
+}
