@@ -26,6 +26,10 @@ const configureLayout = (
             ? PLOT_STYLE.height + PLOT_STYLE.legendItemHeight * numTraces
             : PLOT_STYLE.height;
 
+    // Manually wrap the title because Plotly currently does not offer automatic wrapping:
+    // https://github.com/plotly/plotly.js/issues/2053
+    // https://github.com/plotly/plotly.js/issues/382
+    // https://stackoverflow.com/questions/35185143/how-to-create-new-line-in-plot-ly-js-title
     const wrappedTitle = wrapText(layout.title, PLOT_STYLE.titleMaxCharPerLine);
     const numLinesInTitle = wrappedTitle.numLines;
     // Make more room for each extra line in a wrapped title
