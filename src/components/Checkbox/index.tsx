@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Checkbox as AntdCheckbox } from "antd";
+import { Checkbox as AntdCheckbox, Tooltip } from "antd";
 import { CheckboxProps } from "antd/lib/checkbox";
 
 import StarCheckbox from "../StarCheckbox";
@@ -16,7 +16,15 @@ const Checkbox: React.FunctionComponent<CheckboxTypeProps> = (
     if (props.checkboxType === CHECKBOX_TYPE_STAR) {
         return <StarCheckbox {...childProps} />;
     }
-    return <AntdCheckbox {...childProps} />;
+    return (
+        <Tooltip
+            title={props.checked ? "Hide" : "Show"}
+            placement="top"
+            mouseEnterDelay={1}
+        >
+            <AntdCheckbox {...childProps} />
+        </Tooltip>
+    );
 };
 
 export default Checkbox;

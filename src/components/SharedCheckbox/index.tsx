@@ -52,26 +52,20 @@ export default class SharedCheckbox extends React.Component<
             styles.container,
             { [styles.header]: isHeader, ["header-checkbox"]: isHeader },
         ]);
-        const checked = checkedList.length === options.length;
+
         return (
-            <Tooltip
-                title={checked ? "Hide all" : "Show all"}
-                placement="left"
-                mouseEnterDelay={1}
+            <Checkbox
+                indeterminate={isIndeterminate}
+                onChange={this.onCheckAllChange}
+                checked={checkedList.length === options.length}
+                style={{
+                    margin: "auto",
+                }}
+                className={checkboxClassNames}
+                checkboxType={checkboxType}
             >
-                <Checkbox
-                    indeterminate={isIndeterminate}
-                    onChange={this.onCheckAllChange}
-                    checked={checked}
-                    style={{
-                        margin: "auto",
-                    }}
-                    className={checkboxClassNames}
-                    checkboxType={checkboxType}
-                >
-                    {showLabel ? title : ""}
-                </Checkbox>
-            </Tooltip>
+                {showLabel ? title : ""}
+            </Checkbox>
         );
     }
 }
