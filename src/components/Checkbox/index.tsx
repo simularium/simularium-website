@@ -7,12 +7,28 @@ import { CHECKBOX_TYPE_STAR } from "../../constants";
 
 interface CheckboxTypeProps extends CheckboxProps {
     checkboxType?: CHECKBOX_TYPE_STAR;
+    checkboxLevel?: keyof TooltipOffsets;
 }
+
+interface TooltipOffsets {
+    default: number[];
+    top: number[];
+    shared: number[];
+}
+
+const tooltipOffsets: TooltipOffsets = {
+    default: [-11, -1],
+    top: [-22, -3],
+    shared: [-8, 8],
+};
 
 const Checkbox: React.FunctionComponent<CheckboxTypeProps> = (
     props: CheckboxTypeProps
 ) => {
-    const childProps = { ...props, checkboxType: null }; // removing prop that is only needed at this level
+    // removing props that are only needed at this level
+    const childProps = { ...props, checkboxType: null, checkboxLevel: null };
+    const checkboxLevel = props.checkboxLevel ? props.checkboxLevel : "default";
+
     if (props.checkboxType === CHECKBOX_TYPE_STAR) {
         return <StarCheckbox {...childProps} />;
     }
@@ -21,6 +37,8 @@ const Checkbox: React.FunctionComponent<CheckboxTypeProps> = (
             title={props.checked ? "Hide" : "Show"}
             placement="top"
             mouseEnterDelay={1}
+            // Position tooltip with alignConfig object: https://github.com/yiminghe/dom-align#usage
+            align={{ offset: tooltipOffsets[checkboxLevel] }}
         >
             <AntdCheckbox {...childProps} />
         </Tooltip>

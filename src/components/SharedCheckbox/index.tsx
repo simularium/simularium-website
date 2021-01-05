@@ -5,7 +5,6 @@ import classNames from "classnames";
 import Checkbox from "../Checkbox";
 import { CHECKBOX_TYPE_STAR } from "../../constants";
 import { isUndefined } from "lodash";
-import { Tooltip } from "antd";
 
 const styles = require("./style.css");
 
@@ -63,6 +62,7 @@ export default class SharedCheckbox extends React.Component<
                 }}
                 className={checkboxClassNames}
                 checkboxType={checkboxType}
+                checkboxLevel={title === "All" ? "top" : "shared"}
             >
                 {showLabel ? title : ""}
             </Checkbox>
