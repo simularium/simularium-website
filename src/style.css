@@ -63,6 +63,11 @@ canvas:focus {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* these class names are not being used, are but included here to 
+keep track of what font glyphs are available.
+To use one, the span must have the "icon-moon" class name, and then 
+use the :after pseduo selector to input the content.
+*/
 .icon-star-empty1:before {
     content: "\e901";
 }
@@ -85,6 +90,14 @@ canvas:focus {
 
 .icon-star-full:before {
     content: "\e9d9";
+}
+
+.icon-step-back:before {
+    content: "\e906";
+}
+
+.icon-step-forward:before {
+    content: "\e907";
 }
 
 .ant-tooltip-inner {

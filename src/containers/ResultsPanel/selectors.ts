@@ -3,6 +3,7 @@ import { Layout, Data } from "plotly.js";
 
 import { getPlotData } from "../../state/metadata/selectors";
 import { getCurrentTime } from "../../state/selection/selectors";
+import { wrapText } from "../../util";
 
 import { PLOT_STYLE, AXIS_ATTRIBUTES } from "./constants";
 import {
@@ -20,10 +21,23 @@ const configureLayout = (
     numTraces: number
 ): Partial<Layout> => {
     // Give plots with a legend (multi-trace plots) more vertical room
-    const plotHeight =
+    let plotHeight =
         numTraces > 1
             ? PLOT_STYLE.height + PLOT_STYLE.legendItemHeight * numTraces
             : PLOT_STYLE.height;
+
+    // Manually wrap the title because Plotly currently does not offer automatic wrapping:
+    // https://github.com/plotly/plotly.js/issues/2053
+    // https://github.com/plotly/plotly.js/issues/382
+    // https://stackoverflow.com/questions/35185143/how-to-create-new-line-in-plot-ly-js-title
+    const wrappedTitle = wrapText(layout.title, PLOT_STYLE.titleMaxCharPerLine);
+    const numLinesInTitle = wrappedTitle.numLines;
+    // Make more room for each extra line in a wrapped title
+    const topMargin =
+        PLOT_STYLE.marginTop +
+        PLOT_STYLE.titleHeightPerLine * (numLinesInTitle - 1);
+    // Just increasing the topMargin squishes the plot, so also need to increase plotHeight by the same amount
+    plotHeight += PLOT_STYLE.titleHeightPerLine * (numLinesInTitle - 1);
 
     return {
         ...layout,
@@ -32,12 +46,13 @@ const configureLayout = (
         height: plotHeight,
         width: PLOT_STYLE.width,
         title: {
-            text: layout.title,
+            text: wrappedTitle.formattedText,
             font: {
                 size: 16,
             },
             x: 0.03,
-            y: 0.97,
+            y: 0.94,
+            yanchor: "top",
         },
         hoverlabel: {
             font: {
@@ -78,7 +93,7 @@ const configureLayout = (
         },
         showlegend: numTraces > 1 ? true : false,
         margin: {
-            t: PLOT_STYLE.marginTop,
+            t: topMargin,
             l: PLOT_STYLE.marginLeft,
             b: PLOT_STYLE.marginBottom,
             r: PLOT_STYLE.marginRight,

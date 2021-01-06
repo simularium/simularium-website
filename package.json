@@ -50,6 +50,7 @@
     "eslint": "5.14.1",
     "eslint-config-prettier": "4.0.0",
     "eslint-plugin-react": "7.12.4",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "file-loader": "^6.1.0",
     "fork-ts-checker-webpack-plugin": "0.5.2",
     "gh-pages": "^3.1.0",
@@ -78,7 +79,7 @@
   },
   "dependencies": {
     "@aics/simularium-observables-manager": "^0.1.0",
-    "@aics/simularium-viewer": "^2.5.2",
+    "@aics/simularium-viewer": "^2.5.3",
     "@ant-design/css-animation": "^1.7.3",
     "@ant-design/icons": "^4.0.6",
     "@types/react-plotly.js": "^2.2.4",

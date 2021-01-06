@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Layout, Row } from "antd";
+import { Layout, Row, Button } from "antd";
 
 const { Footer: AntdFooter } = Layout;
 
@@ -35,6 +35,15 @@ const Footer: React.FunctionComponent<{}> = () => {
                 </div>
             </Row>
             <Row justify="space-around">
+                {/* OneTrust Cookies Settings button start */}
+                <Button
+                    type="link"
+                    id="ot-sdk-btn"
+                    className="ot-sdk-show-settings"
+                >
+                    Cookie Settings
+                </Button>
+                {/* OneTrust Cookies Settings button end */}
                 <div>
                     Copyright © 2020 Allen Institute. All Rights Reserved.
                 </div>

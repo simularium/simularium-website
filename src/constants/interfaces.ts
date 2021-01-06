@@ -12,6 +12,13 @@ export interface TrajectoryDisplayData {
         url: string;
     };
     description: string;
+    legalese?: string;
     imageFile: string;
     gifFile: string;
+}
+
+export interface VisualGlossaryItem {
+    label: string;
+    description: string;
+    bulletItems?: string[];
 }

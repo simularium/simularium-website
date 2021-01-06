@@ -24,8 +24,9 @@
 }
 
 .btn button[disabled] {
-    color: var(--dark-theme-btn-disabled-color);
     border-radius: 3px;
+    background-color: var(--dark-theme-btn-bg);
+    border-color: transparent!important;
 }
 .slider {
     flex: 3;
@@ -66,4 +67,17 @@
 
 .lastFrameTime {
     color: var(--dark-theme-btn-color-dim);
+}
+
+.custom-step-button, .custom-step-button :global(.ant-btn) {
+    padding: 0;
+    width: 24px;
+}
+
+.step-back::after {
+    content: "\e906";
+}
+
+.step-forward::after {
+    content: "\e907";
 }
