@@ -3,7 +3,10 @@ import classNames from "classnames";
 import { Tooltip } from "antd";
 import { CheckboxChangeEvent, CheckboxProps } from "antd/lib/checkbox";
 
-import { LEFT_PANEL_TOOLTIP_DELAY, TOOLTIP_COLOR } from "../../constants";
+import {
+    LEFT_PANEL_TOOLTIP_DELAY,
+    LEFT_PANEL_TOOLTIP_COLOR,
+} from "../../constants";
 
 const styles = require("./style.css");
 
@@ -28,7 +31,7 @@ const StarCheckbox: React.FunctionComponent<CheckboxProps> = ({
                     title={checked ? "Remove highlight" : "Highlight"}
                     placement="top"
                     mouseEnterDelay={LEFT_PANEL_TOOLTIP_DELAY}
-                    color={TOOLTIP_COLOR}
+                    color={LEFT_PANEL_TOOLTIP_COLOR}
                 >
                     <input
                         checked={checked}
