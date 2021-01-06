@@ -30,6 +30,14 @@ const Checkbox: React.FunctionComponent<CheckboxTypeProps> = (
     const checkboxLevel = props.checkboxLevel ? props.checkboxLevel : "default";
 
     if (props.checkboxType === CHECKBOX_TYPE_STAR) {
+        /* 
+        Wrapping the StarCheckbox in a Tooltip component as done below for AntdCheckbox
+        doesn't work (tooltips don't appear). May be due to this requirement not being met:
+        https://ant.design/components/tooltip/#Note. So we wrap the input element
+        inside the StarCheckbox component with a Tooltip component instead. Good thing is,
+        wrapping the input element with Tooltip aligns the tooltip perfectly above the star,
+        so we don't have to manually align it as we have done for the AntdCheckbox tooltip below.
+        */
         return <StarCheckbox {...childProps} />;
     }
     return (
