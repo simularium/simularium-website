@@ -3,7 +3,11 @@ import { Checkbox as AntdCheckbox, Tooltip } from "antd";
 import { CheckboxProps } from "antd/lib/checkbox";
 
 import StarCheckbox from "../StarCheckbox";
-import { CHECKBOX_TYPE_STAR, LEFT_PANEL_TOOLTIP_DELAY } from "../../constants";
+import {
+    CHECKBOX_TYPE_STAR,
+    LEFT_PANEL_TOOLTIP_DELAY,
+    TOOLTIP_COLOR,
+} from "../../constants";
 
 interface CheckboxTypeProps extends CheckboxProps {
     checkboxType?: CHECKBOX_TYPE_STAR;
@@ -47,6 +51,7 @@ const Checkbox: React.FunctionComponent<CheckboxTypeProps> = (
             mouseEnterDelay={LEFT_PANEL_TOOLTIP_DELAY}
             // Position tooltip with alignConfig object: https://github.com/yiminghe/dom-align#usage
             align={{ offset: tooltipOffsets[checkboxLevel] }}
+            color={TOOLTIP_COLOR}
         >
             <AntdCheckbox {...childProps} />
         </Tooltip>
