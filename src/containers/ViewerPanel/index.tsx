@@ -212,7 +212,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.setState({ highlightId });
     }
 
-    public startPlay() {
+    public startPlay(timeOverride?: number) {
         const {
             time,
             timeStep,
@@ -222,7 +222,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setBuffering,
             setIsPlaying,
         } = this.props;
-        let newTime = time;
+        let newTime = timeOverride || time;
         if (newTime + timeStep >= lastFrameTime) {
             newTime = firstFrameTime;
         }

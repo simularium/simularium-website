@@ -7,7 +7,7 @@ import Icons from "../Icons";
 
 const styles = require("./style.css");
 interface PlayBackProps {
-    playHandler: () => void;
+    playHandler: (timeOverride?: number) => void;
     time: number;
     pauseHandler: () => void;
     prevHandler: () => void;
@@ -37,25 +37,38 @@ const PlayBackControls = ({
 }: PlayBackProps) => {
     const [unitIndex, setUnitIndex] = useState(0);
     const [wasPlayingBeforeScrubbing, setWasPlayingBeforeScrubbing] = useState(
-        false
+        -1
     );
 
     const handleTimeChange = (sliderValue: number | [number, number]): void => {
-        onTimeChange(sliderValue as number); // slider can be a list of numbers, but we're just using a single value
+        console.log("handleTimeChange");
+        console.log(sliderValue);
         if (isPlaying) {
-            setWasPlayingBeforeScrubbing(true);
+            console.log("isPlaying");
+            setWasPlayingBeforeScrubbing(sliderValue as number);
             pauseHandler();
+        } else if (wasPlayingBeforeScrubbing >= 0) {
+            console.log("not playing, still dragging");
+            setWasPlayingBeforeScrubbing(sliderValue as number);
+        } else {
+            console.log("onTimeChange");
+            onTimeChange(sliderValue as number); // slider can be a list of numbers, but we're just using a single value
         }
     };
 
     const handleSliderMouseUp = (
         sliderValue: number | [number, number]
     ): void => {
-        if (wasPlayingBeforeScrubbing) {
-            onTimeChange(sliderValue as number);
-            playHandler();
+        console.log("mouseUp");
+        if (wasPlayingBeforeScrubbing >= 0) {
+            console.log("wasPlayingBefore");
+            console.log(
+                "wasPlayingBeforeScrubbing:",
+                wasPlayingBeforeScrubbing
+            );
+            playHandler(wasPlayingBeforeScrubbing);
         }
-        setWasPlayingBeforeScrubbing(false);
+        setWasPlayingBeforeScrubbing(-1);
     };
 
     const units = ["s", "ms", "\u03BCs", "ns"];
@@ -126,7 +139,7 @@ const PlayBackControls = ({
                     className={btnClassNames}
                     size="small"
                     icon={isPlaying ? Icons.Pause : Icons.Play}
-                    onClick={isPlaying ? pauseHandler : playHandler}
+                    onClick={isPlaying ? pauseHandler : () => playHandler()}
                     loading={loading}
                     disabled={isEmpty}
                 />
@@ -159,7 +172,11 @@ const PlayBackControls = ({
                 </Button>
             </Tooltip>
             <Slider
-                value={time}
+                value={
+                    wasPlayingBeforeScrubbing >= 0
+                        ? wasPlayingBeforeScrubbing
+                        : time
+                }
                 onChange={handleTimeChange}
                 onAfterChange={handleSliderMouseUp}
                 tooltipVisible={false}
