@@ -101,7 +101,7 @@ use the :after pseduo selector to input the content.
 }
 
 .ant-tooltip-inner {
-    background-color: var(--dark-theme-tooltip-bg);
     border-radius: 3px;
     font-weight: 300;
+    box-shadow: 2px 2px 3px black;
 }
