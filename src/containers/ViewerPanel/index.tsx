@@ -212,6 +212,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.setState({ highlightId });
     }
 
+    // timeOverride is passed in when the user manipulates the playback slider
     public startPlay(timeOverride?: number) {
         const {
             time,
