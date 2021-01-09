@@ -36,31 +36,28 @@ const PlayBackControls = ({
     isEmpty,
 }: PlayBackProps) => {
     const [unitIndex, setUnitIndex] = useState(0);
+    const [wasPlaying, setWasPlaying] = useState(false);
     const [targetPlayTime, setTargetPlayTime] = useState(-1);
 
     const handleTimeChange = (sliderValue: number | [number, number]): void => {
-        console.log("handleTimeChange");
-        console.log(sliderValue);
+        // slider can be a list of numbers, but we're just using a single value
+        setTargetPlayTime(sliderValue as number);
         if (isPlaying) {
-            console.log("isPlaying");
-            // slider can be a list of numbers, but we're just using a single value
-            setTargetPlayTime(sliderValue as number);
+            setWasPlaying(true);
             pauseHandler();
-        } else if (targetPlayTime >= 0) {
-            console.log("not playing, still dragging");
-            setTargetPlayTime(sliderValue as number);
-        } else {
-            console.log("onTimeChange");
-            onTimeChange(sliderValue as number);
         }
     };
 
     const handleSliderMouseUp = (): void => {
-        console.log("mouseUp");
-        if (targetPlayTime >= 0) {
+        // Resume playing at targetPlayTime if simulation was playing before,
+        // otherwise just skip to targetPlayTime without resuming.
+        if (wasPlaying) {
             playHandler(targetPlayTime);
-            setTargetPlayTime(-1);
+        } else {
+            onTimeChange(targetPlayTime);
         }
+        setTargetPlayTime(-1);
+        setWasPlaying(false);
     };
 
     const units = ["s", "ms", "\u03BCs", "ns"];
