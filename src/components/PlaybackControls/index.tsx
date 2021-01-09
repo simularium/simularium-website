@@ -36,44 +36,39 @@ const PlayBackControls = ({
     isEmpty,
 }: PlayBackProps) => {
     const [unitIndex, setUnitIndex] = useState(0);
-    const [wasPlayingBeforeScrubbing, setWasPlayingBeforeScrubbing] = useState(
-        -1
-    );
+    const [targetPlayTime, setTargetPlayTime] = useState(-1);
 
     const handleTimeChange = (sliderValue: number | [number, number]): void => {
         console.log("handleTimeChange");
         console.log(sliderValue);
         if (isPlaying) {
             console.log("isPlaying");
-            setWasPlayingBeforeScrubbing(sliderValue as number);
+            // slider can be a list of numbers, but we're just using a single value
+            setTargetPlayTime(sliderValue as number);
             pauseHandler();
-        } else if (wasPlayingBeforeScrubbing >= 0) {
+        } else if (targetPlayTime >= 0) {
             console.log("not playing, still dragging");
-            setWasPlayingBeforeScrubbing(sliderValue as number);
+            setTargetPlayTime(sliderValue as number);
         } else {
             console.log("onTimeChange");
-            onTimeChange(sliderValue as number); // slider can be a list of numbers, but we're just using a single value
+            onTimeChange(sliderValue as number);
         }
     };
 
-    const handleSliderMouseUp = (
-        sliderValue: number | [number, number]
-    ): void => {
+    const handleSliderMouseUp = (): void => {
         console.log("mouseUp");
-        if (wasPlayingBeforeScrubbing >= 0) {
-            console.log("wasPlayingBefore");
-            console.log(
-                "wasPlayingBeforeScrubbing:",
-                wasPlayingBeforeScrubbing
-            );
-            playHandler(wasPlayingBeforeScrubbing);
+        if (targetPlayTime >= 0) {
+            playHandler(targetPlayTime);
+            setTargetPlayTime(-1);
         }
-        setWasPlayingBeforeScrubbing(-1);
     };
 
     const units = ["s", "ms", "\u03BCs", "ns"];
     const roundNumber = (num: number) => parseFloat(Number(num).toPrecision(3));
-    const roundedTime = time ? roundNumber(time * 1000 ** unitIndex) : 0;
+    const displayTime = targetPlayTime >= 0 ? targetPlayTime : time;
+    const roundedTime = displayTime
+        ? roundNumber(displayTime * 1000 ** unitIndex)
+        : 0;
     const roundedLastFrameTime = roundNumber(lastFrameTime * 1000 ** unitIndex);
 
     // Calculates display unit when lastFrameTime is updated, i.e., when a new trajectory is loaded
@@ -172,11 +167,7 @@ const PlayBackControls = ({
                 </Button>
             </Tooltip>
             <Slider
-                value={
-                    wasPlayingBeforeScrubbing >= 0
-                        ? wasPlayingBeforeScrubbing
-                        : time
-                }
+                value={targetPlayTime >= 0 ? targetPlayTime : time}
                 onChange={handleTimeChange}
                 onAfterChange={handleSliderMouseUp}
                 tooltipVisible={false}
