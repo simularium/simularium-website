@@ -36,7 +36,6 @@ const PlayBackControls = ({
     isEmpty,
 }: PlayBackProps) => {
     const [unitIndex, setUnitIndex] = useState(0);
-    const [wasPlaying, setWasPlaying] = useState(false);
     const [targetPlayTime, setTargetPlayTime] = useState(-1);
 
     // - Gets called once when the user clicks on the slider to skip to a specific time
@@ -45,20 +44,19 @@ const PlayBackControls = ({
     const handleTimeChange = (sliderValue: number | [number, number]): void => {
         // sliderValue can be an array of numbers (representing a selected range),
         // but we're just using a single value
-        setTargetPlayTime(sliderValue as number);
         onTimeChange(sliderValue as number);
         if (isPlaying) {
-            setWasPlaying(true);
+            setTargetPlayTime(sliderValue as number);
             pauseHandler();
         }
     };
 
     const handleSliderMouseUp = (): void => {
-        if (wasPlaying) {
+        // Resume playing if simulation was playing before
+        if (targetPlayTime >= 0) {
             playHandler(targetPlayTime);
-            setWasPlaying(false);
+            setTargetPlayTime(-1);
         }
-        setTargetPlayTime(-1);
     };
 
     const units = ["s", "ms", "\u03BCs", "ns"];
