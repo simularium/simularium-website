@@ -213,6 +213,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     // timeOverride is passed in when the user manipulates the playback slider
+    // because this.props.time sometimes doesn't get updated in time before mouseUp
     public startPlay(timeOverride?: number) {
         const {
             time,

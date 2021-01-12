@@ -47,7 +47,7 @@ const PlayBackControls = ({
         // but we're just using a single value
         onTimeChange(sliderValue as number);
         if (isPlaying) {
-            // Need to save the sliderValue in local state to use in handleSliderMouseUp,
+            // Need to save the sliderValue as targetPlayTime to use in handleSliderMouseUp,
             // because the sliderValue argument available in handleSliderMouseUp is not accurate
             // when the time between mouse down and mouse up is short.
             setTargetPlayTime(sliderValue as number);
