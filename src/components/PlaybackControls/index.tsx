@@ -36,6 +36,7 @@ const PlayBackControls = ({
     isEmpty,
 }: PlayBackProps) => {
     const [unitIndex, setUnitIndex] = useState(0);
+    // Where to resume playing if simulation was playing before scrubbing
     const [targetPlayTime, setTargetPlayTime] = useState(-1);
 
     // - Gets called once when the user clicks on the slider to skip to a specific time
@@ -51,6 +52,9 @@ const PlayBackControls = ({
             // when the time between mouse down and mouse up is short.
             setTargetPlayTime(sliderValue as number);
             pauseHandler();
+        } else if (targetPlayTime >= 0) {
+            // Update targetPlayTime if user is still dragging
+            setTargetPlayTime(sliderValue as number);
         }
     };
 
