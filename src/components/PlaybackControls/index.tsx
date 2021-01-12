@@ -57,11 +57,11 @@ const PlayBackControls = ({
         // otherwise just skip to targetPlayTime without resuming.
         if (wasPlaying) {
             playHandler(targetPlayTime);
+            setWasPlaying(false);
         } else {
             onTimeChange(targetPlayTime);
         }
         setTargetPlayTime(-1);
-        setWasPlaying(false);
     };
 
     const units = ["s", "ms", "\u03BCs", "ns"];
