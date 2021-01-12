@@ -46,6 +46,7 @@ const PlayBackControls = ({
         // sliderValue can be an array of numbers (representing a selected range),
         // but we're just using a single value
         setTargetPlayTime(sliderValue as number);
+        onTimeChange(sliderValue as number);
         if (isPlaying) {
             setWasPlaying(true);
             pauseHandler();
@@ -53,13 +54,9 @@ const PlayBackControls = ({
     };
 
     const handleSliderMouseUp = (): void => {
-        // Resume playing at targetPlayTime if simulation was playing before,
-        // otherwise just skip to targetPlayTime without resuming.
         if (wasPlaying) {
             playHandler(targetPlayTime);
             setWasPlaying(false);
-        } else {
-            onTimeChange(targetPlayTime);
         }
         setTargetPlayTime(-1);
     };
