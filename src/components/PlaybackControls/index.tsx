@@ -39,8 +39,12 @@ const PlayBackControls = ({
     const [wasPlaying, setWasPlaying] = useState(false);
     const [targetPlayTime, setTargetPlayTime] = useState(-1);
 
+    // - Gets called once when the user clicks on the slider to skip to a specific time
+    // - Gets called multiple times when user is scrubbing (every time the play head
+    //     passes through a time value associated with a frame)
     const handleTimeChange = (sliderValue: number | [number, number]): void => {
-        // slider can be a list of numbers, but we're just using a single value
+        // sliderValue can be an array of numbers (representing a selected range),
+        // but we're just using a single value
         setTargetPlayTime(sliderValue as number);
         if (isPlaying) {
             setWasPlaying(true);
