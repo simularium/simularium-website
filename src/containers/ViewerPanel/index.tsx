@@ -224,7 +224,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setBuffering,
             setIsPlaying,
         } = this.props;
-        let newTime = timeOverride || time;
+        let newTime = timeOverride !== undefined ? timeOverride : time;
         if (newTime + timeStep >= lastFrameTime) {
             newTime = firstFrameTime;
         }
