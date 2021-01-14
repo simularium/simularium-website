@@ -212,7 +212,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.setState({ highlightId });
     }
 
-    public startPlay() {
+    // timeOverride is passed in when the user manipulates the playback slider
+    // because this.props.time sometimes doesn't get updated in time before mouseUp
+    public startPlay(timeOverride?: number) {
         const {
             time,
             timeStep,
@@ -222,7 +224,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setBuffering,
             setIsPlaying,
         } = this.props;
-        let newTime = time;
+        let newTime = timeOverride !== undefined ? timeOverride : time;
         if (newTime + timeStep >= lastFrameTime) {
             newTime = firstFrameTime;
         }
