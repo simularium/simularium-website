@@ -37,7 +37,10 @@ const PlayBackControls = ({
 }: PlayBackProps) => {
     const [unitIndex, setUnitIndex] = useState(0);
     // Where to resume playing if simulation was playing before scrubbing
-    const [targetPlayTime, setTargetPlayTime] = useState(-1);
+    const [
+        timeToResumeAfterScrubbing,
+        setTimeToResumeAfterScrubbing,
+    ] = useState(-1);
 
     // - Gets called once when the user clicks on the slider to skip to a specific time
     // - Gets called multiple times when user is scrubbing (every time the play head
@@ -47,22 +50,22 @@ const PlayBackControls = ({
         // but we're just using a single value
         onTimeChange(sliderValue as number);
         if (isPlaying) {
-            // Need to save the sliderValue as targetPlayTime to use in handleSliderMouseUp,
+            // Need to save the sliderValue as timeToResumeAfterScrubbing to use in handleSliderMouseUp,
             // because the sliderValue argument available in handleSliderMouseUp is not accurate
             // when the time between mouse down and mouse up is short.
-            setTargetPlayTime(sliderValue as number);
+            setTimeToResumeAfterScrubbing(sliderValue as number);
             pauseHandler();
-        } else if (targetPlayTime >= 0) {
-            // Update targetPlayTime if user is still dragging
-            setTargetPlayTime(sliderValue as number);
+        } else if (timeToResumeAfterScrubbing >= 0) {
+            // Update value if user is still dragging
+            setTimeToResumeAfterScrubbing(sliderValue as number);
         }
     };
 
     const handleSliderMouseUp = (): void => {
         // Resume playing if simulation was playing before
-        if (targetPlayTime >= 0) {
-            playHandler(targetPlayTime);
-            setTargetPlayTime(-1);
+        if (timeToResumeAfterScrubbing >= 0) {
+            playHandler(timeToResumeAfterScrubbing);
+            setTimeToResumeAfterScrubbing(-1);
         }
     };
 
