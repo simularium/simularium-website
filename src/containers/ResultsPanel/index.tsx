@@ -3,7 +3,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import SideBarContents from "../../components/SideBarContents";
-import Plots from "../../components/Plots";
+import Plot from "../../components/Plot";
 // import { getCurrentTime } from "../../state/selection/selectors";
 import { State } from "../../state/types";
 // import { changeTime } from "../../state/selection/actions";
@@ -26,12 +26,14 @@ class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
         const content =
             plotConfigs && plotConfigs.length > 0
                 ? [
-                      <Plots
-                          //   time={time}
-                          key="graph"
-                          //   changeTime={changeTime}
-                          plotConfigs={plotConfigs}
-                      />,
+                      <div key="plots">
+                          {plotConfigs.map((plotConfig) => (
+                              <Plot
+                                  key={plotConfig.key}
+                                  plotConfig={plotConfig}
+                              />
+                          ))}
+                      </div>,
                   ]
                 : [];
         return (
