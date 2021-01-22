@@ -1,25 +1,32 @@
 import * as React from "react";
+import { connect } from "react-redux";
 import PlotlyPlot from "react-plotly.js";
 // import { ActionCreator } from "redux";
 
-// import { ChangeTimeAction } from "../../state/selection/types.js";
-import { PlotParamsWithKey } from "../../containers/ResultsPanel/types";
+import { State } from "../../state/types";
+import { PlotConfig } from "../../containers/ResultsPanel/types";
+import { getCurrentTime } from "../../state/selection/selectors";
+// import { changeTime } from "../../state/selection/actions";
+// import { ChangeTimeAction } from "../../state/selection/types";
 
 interface PlotProps {
-    plotConfig: PlotParamsWithKey;
-    // time: number;
+    plotConfig: PlotConfig;
+    time: number;
     // changeTime: ActionCreator<ChangeTimeAction>;
 }
 
 const styles = require("./style.css");
 
-export default class Plot extends React.Component<PlotProps, {}> {
+class Plot extends React.Component<PlotProps, {}> {
+    shouldComponentUpdate() {
+        return this.props.plotConfig.hasTimeIndicator;
+    }
+
     public render(): JSX.Element | null {
         const { plotConfig } = this.props;
         return (
             <div className={styles.container}>
                 <PlotlyPlot
-                    key={plotConfig.key}
                     data={plotConfig.data}
                     useResizeHandler={true}
                     layout={plotConfig.layout}
@@ -34,3 +41,18 @@ export default class Plot extends React.Component<PlotProps, {}> {
         );
     }
 }
+
+function mapStateToProps(state: State) {
+    return {
+        time: getCurrentTime(state),
+    };
+}
+
+// const dispatchToPropsMap = {
+//     changeTime,
+// };
+
+export default connect(
+    mapStateToProps
+    // dispatchToPropsMap
+)(Plot);

@@ -40,6 +40,7 @@ export interface RawPlotParams {
     layout: Layout;
 }
 
-export interface PlotParamsWithKey extends PlotParams {
+export interface PlotConfig extends PlotParams {
     key: string;
+    hasTimeIndicator: boolean;
 }

@@ -1,23 +1,17 @@
 import * as React from "react";
-// import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 
 import SideBarContents from "../../components/SideBarContents";
 import Plot from "../../components/Plot";
-// import { getCurrentTime } from "../../state/selection/selectors";
 import { State } from "../../state/types";
-// import { changeTime } from "../../state/selection/actions";
-// import { ChangeTimeAction } from "../../state/selection/types";
 
-import { PlotParamsWithKey } from "./types";
+import { PlotConfig } from "./types";
 import { getPlotDataConfiguredForPlotly } from "./selectors";
 
 const styles = require("./style.css");
 
 interface ResultsPanelProps {
-    plotConfigs: PlotParamsWithKey[];
-    // time: number;
-    // changeTime: ActionCreator<ChangeTimeAction>;
+    plotConfigs: PlotConfig[];
 }
 
 class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
@@ -46,16 +40,8 @@ class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
 
 function mapStateToProps(state: State) {
     return {
-        // time: getCurrentTime(state),
         plotConfigs: getPlotDataConfiguredForPlotly(state),
     };
 }
 
-// const dispatchToPropsMap = {
-//     changeTime,
-// };
-
-export default connect(
-    mapStateToProps
-    // dispatchToPropsMap
-)(ResultsPanel);
+export default connect(mapStateToProps)(ResultsPanel);
