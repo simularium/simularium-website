@@ -11,13 +11,13 @@ import { getCurrentTime } from "../../state/selection/selectors";
 
 interface PlotProps {
     plotConfig: PlotConfig;
-    time: number;
+    // time: number;
     // changeTime: ActionCreator<ChangeTimeAction>;
 }
 
 const styles = require("./style.css");
 
-class Plot extends React.Component<PlotProps, {}> {
+export default class Plot extends React.Component<PlotProps, {}> {
     shouldComponentUpdate() {
         return this.props.plotConfig.hasTimeIndicator;
     }
@@ -42,17 +42,17 @@ class Plot extends React.Component<PlotProps, {}> {
     }
 }
 
-function mapStateToProps(state: State) {
-    return {
-        time: getCurrentTime(state),
-    };
-}
+// function mapStateToProps(state: State) {
+//     return {
+//         time: getCurrentTime(state),
+//     };
+// }
 
 // const dispatchToPropsMap = {
 //     changeTime,
 // };
 
-export default connect(
-    mapStateToProps
-    // dispatchToPropsMap
-)(Plot);
+// export default connect(
+//     mapStateToProps
+//     // dispatchToPropsMap
+// )(Plot);
