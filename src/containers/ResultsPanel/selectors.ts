@@ -2,7 +2,6 @@ import { createSelector } from "reselect";
 import { Layout, Data } from "plotly.js";
 
 import { getPlotData } from "../../state/metadata/selectors";
-import { getCurrentTime } from "../../state/selection/selectors";
 import { wrapText } from "../../util";
 
 import { PLOT_STYLE, AXIS_ATTRIBUTES } from "./constants";
@@ -148,8 +147,9 @@ const getHasTimeIndicator = (plot: RawPlotParams): boolean => {
 };
 
 export const getPlotDataConfiguredForPlotly = createSelector(
-    [getPlotData, getCurrentTime],
-    (plotData: RawPlotParams[], currentTime: number): PlotConfig[] => {
+    [getPlotData],
+    (plotData: RawPlotParams[]): PlotConfig[] => {
+        console.log("getPlotDataConfiguredForPlotly");
         if (!plotData) return [];
         return plotData.map((plot: RawPlotParams) => {
             const layout: Partial<Layout> = configureLayout(
@@ -159,24 +159,24 @@ export const getPlotDataConfiguredForPlotly = createSelector(
             const data: Data[] = configureData(plot.data);
             const hasTimeIndicator = getHasTimeIndicator(plot);
 
-            // Add time indicator line for scatter plots with time on x-axis
-            if (hasTimeIndicator && currentTime !== 0) {
-                data.push({
-                    /* cSpell:disable */
-                    mode: "lines",
-                    x: [currentTime, currentTime],
-                    y: [0, 1],
-                    xaxis: "x",
-                    yaxis: "y2",
-                    line: {
-                        width: 1,
-                        color: PLOT_STYLE.timeIndicatorColor,
-                    },
-                    showlegend: false,
-                    hoverinfo: "x",
-                    /* cSpell:enable */
-                });
-            }
+            // // Add time indicator line for scatter plots with time on x-axis
+            // if (hasTimeIndicator && currentTime !== 0) {
+            //     data.push({
+            //         /* cSpell:disable */
+            //         mode: "lines",
+            //         x: [currentTime, currentTime],
+            //         y: [0, 1],
+            //         xaxis: "x",
+            //         yaxis: "y2",
+            //         line: {
+            //             width: 1,
+            //             color: PLOT_STYLE.timeIndicatorColor,
+            //         },
+            //         showlegend: false,
+            //         hoverinfo: "x",
+            //         /* cSpell:enable */
+            //     });
+            // }
 
             return {
                 key: plot.layout.title,
