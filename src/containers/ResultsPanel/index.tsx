@@ -2,8 +2,8 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import SideBarContents from "../../components/SideBarContents";
-import Plot from "../../components/Plot";
 import { State } from "../../state/types";
+import Plot from "../Plot";
 
 import { PlotConfig } from "./types";
 import { getPlotDataConfiguredForPlotly } from "./selectors";

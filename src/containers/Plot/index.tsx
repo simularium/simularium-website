@@ -4,11 +4,11 @@ import PlotlyPlot from "react-plotly.js";
 // import { ActionCreator } from "redux";
 
 import { State } from "../../state/types";
-import { PlotConfig } from "../../containers/ResultsPanel/types";
+import { PlotConfig } from "../ResultsPanel/types";
 import { getCurrentTime } from "../../state/selection/selectors";
 // import { changeTime } from "../../state/selection/actions";
 // import { ChangeTimeAction } from "../../state/selection/types";
-import { PLOT_STYLE } from "../../containers/ResultsPanel/constants";
+import { PLOT_STYLE } from "../ResultsPanel/constants";
 
 interface PlotProps {
     plotConfig: PlotConfig;
