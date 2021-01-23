@@ -32,10 +32,7 @@ class Plot extends React.Component<PlotProps, {}> {
             const lastPlot = data[data.length - 1];
             // Update the time for the time indicator line if it already exists,
             // otherwise add a time indicator line
-            if (
-                lastPlot.hasOwnProperty("name") &&
-                lastPlot.name === TIME_INDICATOR_LINE
-            ) {
+            if (lastPlot.name === TIME_INDICATOR_LINE) {
                 lastPlot.x = [time, time];
             } else {
                 data.push({
