@@ -10,13 +10,11 @@ import { PlotConfig } from "../ResultsPanel/types";
 import { getCurrentTime } from "../../state/selection/selectors";
 // import { changeTime } from "../../state/selection/actions";
 // import { ChangeTimeAction } from "../../state/selection/types";
-import { getFirstFrameTimeOfCachedSimulation } from "../../state/metadata/selectors";
 import { PLOT_STYLE } from "../ResultsPanel/constants";
 
 interface PlotProps {
     plotConfig: PlotConfig;
     time: number;
-    firstFrameTime: number;
     // changeTime: ActionCreator<ChangeTimeAction>;
 }
 
@@ -28,11 +26,11 @@ class Plot extends React.Component<PlotProps, {}> {
     }
 
     public render(): JSX.Element | null {
-        const { plotConfig, time, firstFrameTime } = this.props;
+        const { plotConfig, time } = this.props;
         const { shouldRenderTimeIndicator, data, layout } = plotConfig;
         const TIME_INDICATOR_LINE = "timeIndicatorLine";
 
-        if (shouldRenderTimeIndicator && time !== firstFrameTime) {
+        if (shouldRenderTimeIndicator) {
             const lastPlot = data[data.length - 1];
             // Update the time for the time indicator line if it already exists,
             // otherwise add a time indicator line
@@ -80,7 +78,6 @@ class Plot extends React.Component<PlotProps, {}> {
 function mapStateToProps(state: State) {
     return {
         time: getCurrentTime(state),
-        firstFrameTime: getFirstFrameTimeOfCachedSimulation(state),
     };
 }
 
