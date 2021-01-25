@@ -1,6 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import PlotlyPlot from "react-plotly.js";
+// TODO: Use changeTime action to allow updating of app time by dragging the
+// time indicator bar
 // import { ActionCreator } from "redux";
 
 import { State } from "../../state/types";
