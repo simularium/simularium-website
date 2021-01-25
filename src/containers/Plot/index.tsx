@@ -22,15 +22,15 @@ const styles = require("./style.css");
 
 class Plot extends React.Component<PlotProps, {}> {
     shouldComponentUpdate() {
-        return this.props.plotConfig.hasTimeIndicator;
+        return this.props.plotConfig.shouldRenderTimeIndicator;
     }
 
     public render(): JSX.Element | null {
         const { plotConfig, time } = this.props;
-        const { hasTimeIndicator, data, layout } = plotConfig;
+        const { shouldRenderTimeIndicator, data, layout } = plotConfig;
         const TIME_INDICATOR_LINE = "timeIndicatorLine";
 
-        if (hasTimeIndicator && time !== 0) {
+        if (shouldRenderTimeIndicator && time !== 0) {
             const lastPlot = data[data.length - 1];
             // Update the time for the time indicator line if it already exists,
             // otherwise add a time indicator line

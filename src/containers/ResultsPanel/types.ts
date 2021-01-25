@@ -42,5 +42,5 @@ export interface RawPlotParams {
 
 export interface PlotConfig extends PlotParams {
     key: string;
-    hasTimeIndicator: boolean;
+    shouldRenderTimeIndicator: boolean;
 }

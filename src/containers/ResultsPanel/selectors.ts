@@ -132,7 +132,7 @@ const configureData = (
     });
 };
 
-const getHasTimeIndicator = (plot: RawPlotParams): boolean => {
+const getShouldRenderTimeIndicator = (plot: RawPlotParams): boolean => {
     // Type guard for checking if a plot is a scatter plot
     const isScatterPlot = (
         data: (ScatterTrace | HistogramTrace)[]
@@ -156,12 +156,14 @@ export const getPlotDataConfiguredForPlotly = createSelector(
                 plot.data.length
             );
             const data: Data[] = configureData(plot.data);
-            const hasTimeIndicator = getHasTimeIndicator(plot);
+            const shouldRenderTimeIndicator = getShouldRenderTimeIndicator(
+                plot
+            );
             return {
                 key: plot.layout.title,
                 data: data,
                 layout: layout,
-                hasTimeIndicator: hasTimeIndicator,
+                shouldRenderTimeIndicator: shouldRenderTimeIndicator,
             };
         });
     }
