@@ -19,8 +19,33 @@ interface PlotProps {
 }
 
 const styles = require("./style.css");
+const TIME_INDICATOR_LINE = "timeIndicatorLine";
 
 class Plot extends React.Component<PlotProps, {}> {
+    componentDidMount() {
+        const { plotConfig, time } = this.props;
+        if (plotConfig.shouldRenderTimeIndicator) {
+            // Add a new plot trace representing the time indicator line, positioned at initial time
+            // Plotly reference: https://plotly.com/javascript/reference/index/
+            plotConfig.data.push({
+                name: TIME_INDICATOR_LINE,
+                mode: "lines",
+                x: [time, time],
+                y: [0, 1],
+                /* cSpell:disable */
+                xaxis: "x",
+                yaxis: "y2",
+                line: {
+                    width: 1,
+                    color: PLOT_STYLE.timeIndicatorColor,
+                },
+                showlegend: false,
+                hoverinfo: "x",
+                /* cSpell:enable */
+            });
+        }
+    }
+
     shouldComponentUpdate() {
         return this.props.plotConfig.shouldRenderTimeIndicator;
     }
@@ -28,32 +53,13 @@ class Plot extends React.Component<PlotProps, {}> {
     public render(): JSX.Element | null {
         const { plotConfig, time } = this.props;
         const { shouldRenderTimeIndicator, data, layout } = plotConfig;
-        const TIME_INDICATOR_LINE = "timeIndicatorLine";
 
         if (shouldRenderTimeIndicator) {
-            const lastPlot = data[data.length - 1];
-            // Update the time for the time indicator line if it already exists,
-            // otherwise add a time indicator line
-            if (lastPlot.name === TIME_INDICATOR_LINE) {
-                lastPlot.x = [time, time];
-            } else {
-                data.push({
-                    // Plotly reference: https://plotly.com/javascript/reference/index/
-                    name: TIME_INDICATOR_LINE,
-                    mode: "lines",
-                    x: [time, time],
-                    y: [0, 1],
-                    /* cSpell:disable */
-                    xaxis: "x",
-                    yaxis: "y2",
-                    line: {
-                        width: 1,
-                        color: PLOT_STYLE.timeIndicatorColor,
-                    },
-                    showlegend: false,
-                    hoverinfo: "x",
-                    /* cSpell:enable */
-                });
+            // Position the time indicator line at current time (the time indicator should be the last
+            // plot trace in `data` because we pushed it to `data` in componentDidMount())
+            const lastTrace = data[data.length - 1];
+            if (lastTrace.name === TIME_INDICATOR_LINE) {
+                lastTrace.x = [time, time];
             }
         }
 
