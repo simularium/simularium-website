@@ -2,12 +2,11 @@ import { createSelector } from "reselect";
 import { Layout, Data } from "plotly.js";
 
 import { getPlotData } from "../../state/metadata/selectors";
-import { getCurrentTime } from "../../state/selection/selectors";
 import { wrapText } from "../../util";
 
 import { PLOT_STYLE, AXIS_ATTRIBUTES } from "./constants";
 import {
-    PlotParamsWithKey,
+    PlotConfig,
     RawPlotParams,
     ScatterTrace,
     HistogramTrace,
@@ -112,30 +111,28 @@ const configureLayout = (
     };
 };
 
+// Add line and marker styling to data
 const configureData = (
-    inputData: (ScatterTrace | HistogramTrace)[],
-    currentTime: number,
-    xAxisTitle: string
+    inputData: (ScatterTrace | HistogramTrace)[]
 ): Data[] => {
-    // Add line and marker styling to data
-    const data: Data[] = inputData.map(
-        (traceData: ScatterTrace | HistogramTrace) => {
-            return {
-                ...traceData,
+    return inputData.map((traceData: ScatterTrace | HistogramTrace) => {
+        return {
+            ...traceData,
+            line: {
+                width: 1,
+            },
+            marker: {
+                size: 3,
                 line: {
-                    width: 1,
+                    color: PLOT_STYLE.backgroundColor,
+                    width: 0.5,
                 },
-                marker: {
-                    size: 3,
-                    line: {
-                        color: PLOT_STYLE.backgroundColor,
-                        width: 0.5,
-                    },
-                },
-            };
-        }
-    );
+            },
+        };
+    });
+};
 
+const getShouldRenderTimeIndicator = (plot: RawPlotParams): boolean => {
     // Type guard for checking if a plot is a scatter plot
     const isScatterPlot = (
         data: (ScatterTrace | HistogramTrace)[]
@@ -144,48 +141,29 @@ const configureData = (
     };
     // Check if the x-axis label has the word "time" in it, separated from other
     // characters by whitespace and/or one or more special characters
-    const isTimePlot = /\btime\b/i.test(xAxisTitle);
+    const isTimePlot = /\btime\b/i.test(plot.layout.xaxis.title);
 
-    // Add time indicator line for scatter plots with time on x-axis
-    if (isScatterPlot(inputData) && isTimePlot && currentTime !== 0) {
-        data.push({
-            /* cSpell:disable */
-            mode: "lines",
-            x: [currentTime, currentTime],
-            y: [0, 1],
-            xaxis: "x",
-            yaxis: "y2",
-            line: {
-                width: 1,
-                color: PLOT_STYLE.timeIndicatorColor,
-            },
-            showlegend: false,
-            hoverinfo: "x",
-            /* cSpell:enable */
-        });
-    }
-
-    return data;
+    return isScatterPlot(plot.data) && isTimePlot;
 };
 
 export const getPlotDataConfiguredForPlotly = createSelector(
-    [getPlotData, getCurrentTime],
-    (plotData: RawPlotParams[], currentTime: number): PlotParamsWithKey[] => {
+    [getPlotData],
+    (plotData: RawPlotParams[]): PlotConfig[] => {
         if (!plotData) return [];
         return plotData.map((plot: RawPlotParams) => {
             const layout: Partial<Layout> = configureLayout(
                 plot.layout,
                 plot.data.length
             );
-            const data: Data[] = configureData(
-                plot.data,
-                currentTime,
-                plot.layout.xaxis.title
+            const data: Data[] = configureData(plot.data);
+            const shouldRenderTimeIndicator = getShouldRenderTimeIndicator(
+                plot
             );
             return {
                 key: plot.layout.title,
                 data: data,
                 layout: layout,
+                shouldRenderTimeIndicator: shouldRenderTimeIndicator,
             };
         });
     }
