@@ -86,7 +86,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/victory": "^31.0.12",
     "antd": "^4.0.0-rc.6",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bowser": "^2.11.0",
     "classnames": "2.2.5",
     "core-js": "2.5.5",
