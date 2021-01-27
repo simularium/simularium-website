@@ -59,8 +59,7 @@ class Plot extends React.Component<PlotProps, PlotState> {
 
     shouldComponentUpdate(nextProps: PlotProps, nextState: PlotState) {
         const { shouldRenderTimeIndicator } = this.props.plotConfig;
-        if (shouldRenderTimeIndicator && nextState.isInView) return true;
-        return false;
+        return shouldRenderTimeIndicator && nextState.isInView
     }
 
     public render(): JSX.Element | null {
