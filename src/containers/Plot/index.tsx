@@ -59,21 +59,13 @@ class Plot extends React.Component<PlotProps, PlotState> {
 
     shouldComponentUpdate(nextProps: PlotProps, nextState: PlotState) {
         const { shouldRenderTimeIndicator } = this.props.plotConfig;
-        if (!shouldRenderTimeIndicator) return false;
-
-        if (this.state.isInView) {
-            return true;
-        } else if (!this.state.isInView && nextState.isInView) {
-            return true;
-        } else {
-            return false;
-        }
+        if (shouldRenderTimeIndicator && nextState.isInView) return true;
+        return false;
     }
 
     public render(): JSX.Element | null {
         const { plotConfig, time } = this.props;
         const { shouldRenderTimeIndicator, data, layout } = plotConfig;
-        console.log("rendering Plot:", layout.title);
 
         if (shouldRenderTimeIndicator) {
             // Position the time indicator line at current time (the time indicator should be the last
@@ -86,9 +78,11 @@ class Plot extends React.Component<PlotProps, PlotState> {
 
         return (
             <Waypoint
-                // debug={true}
+                key={layout.title as string}
                 onEnter={() => this.setState({ isInView: true })}
                 onLeave={() => this.setState({ isInView: false })}
+                topOffset={50}
+                bottomOffset={50}
             >
                 <div className={styles.container}>
                     <PlotlyPlot
