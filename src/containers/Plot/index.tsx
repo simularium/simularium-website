@@ -1,5 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import { Waypoint } from "react-waypoint";
 import PlotlyPlot from "react-plotly.js";
 // TODO: Use changeTime action to allow updating of app time by dragging the
 // time indicator bar
@@ -18,10 +19,20 @@ interface PlotProps {
     // changeTime: ActionCreator<ChangeTimeAction>;
 }
 
+interface PlotState {
+    isInView: boolean;
+}
+
 const styles = require("./style.css");
 const TIME_INDICATOR_LINE = "timeIndicatorLine";
 
-class Plot extends React.Component<PlotProps, {}> {
+class Plot extends React.Component<PlotProps, PlotState> {
+    constructor(props: PlotProps) {
+        super(props);
+        this.state = {
+            isInView: false,
+        };
+    }
     componentDidMount() {
         const { plotConfig, time } = this.props;
         if (plotConfig.shouldRenderTimeIndicator) {
@@ -46,8 +57,9 @@ class Plot extends React.Component<PlotProps, {}> {
         }
     }
 
-    shouldComponentUpdate() {
-        return this.props.plotConfig.shouldRenderTimeIndicator;
+    shouldComponentUpdate(nextProps: PlotProps, nextState: PlotState) {
+        const { shouldRenderTimeIndicator } = this.props.plotConfig;
+        return shouldRenderTimeIndicator && nextState.isInView
     }
 
     public render(): JSX.Element | null {
@@ -64,19 +76,27 @@ class Plot extends React.Component<PlotProps, {}> {
         }
 
         return (
-            <div className={styles.container}>
-                <PlotlyPlot
-                    data={data}
-                    useResizeHandler={true}
-                    layout={layout}
-                    // config attributes:
-                    // https://github.com/plotly/plotly.js/blob/master/src/plot_api/plot_config.js#L23
-                    config={{
-                        modeBarButtons: [["resetViews"]],
-                        displaylogo: false,
-                    }}
-                />
-            </div>
+            <Waypoint
+                key={layout.title as string}
+                onEnter={() => this.setState({ isInView: true })}
+                onLeave={() => this.setState({ isInView: false })}
+                topOffset={50}
+                bottomOffset={50}
+            >
+                <div className={styles.container}>
+                    <PlotlyPlot
+                        data={data}
+                        useResizeHandler={true}
+                        layout={layout}
+                        // config attributes:
+                        // https://github.com/plotly/plotly.js/blob/master/src/plot_api/plot_config.js#L23
+                        config={{
+                            modeBarButtons: [["resetViews"]],
+                            displaylogo: false,
+                        }}
+                    />
+                </div>
+            </Waypoint>
         );
     }
 }
