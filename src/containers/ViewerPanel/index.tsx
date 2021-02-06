@@ -78,7 +78,6 @@ interface ViewerPanelProps {
 
 interface ViewerPanelState {
     isInitialPlay: boolean;
-    highlightId: number;
     particleTypeIds: string[];
     height: number;
     width: number;
@@ -103,7 +102,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.resize = this.resize.bind(this);
         this.state = {
             isInitialPlay: true,
-            highlightId: -1,
             particleTypeIds: [],
             height: 0,
             width: 0,
@@ -204,12 +202,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const { receiveAgentTypeIds } = this.props;
         const particleTypeIds = Object.keys(jsonData);
         receiveAgentTypeIds(particleTypeIds);
-    }
-
-    // TODO: remove this (old function)
-    public highlightParticleType(typeId: number) {
-        const highlightId = typeId;
-        this.setState({ highlightId });
     }
 
     // timeOverride is passed in when the user manipulates the playback slider
