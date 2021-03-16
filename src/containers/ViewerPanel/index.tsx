@@ -240,50 +240,46 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
         const tickIntervalLength = simulariumController.tickIntervalLength;
 
-        // Type guards to make TS happy
-        const isTrajectoryFileInfoV1 = (
-            data: TrajectoryFileInfo
-        ): data is TrajectoryFileInfoV1 => {
-            if (data.version === 1) return true;
-            return false;
-        };
-        const isTrajectoryFileInfoV2 = (
-            data: TrajectoryFileInfo
-        ): data is TrajectoryFileInfoV2 => {
-            if (data.version === 2) return true;
-            return false;
-        };
+        switch (data.version) {
+            case 1:
+                const dataV1 = data as TrajectoryFileInfoV1;
 
-        if (isTrajectoryFileInfoV1(data)) {
-            // Format scale bar length and unit so that it's more readable, e.g.:
-            // 0.000000015 m -> [15, "nm"]
-            const scaleBarLabelArray = si.meter.convert(
-                tickIntervalLength * data.spatialUnitFactorMeters
-            );
-            const scaleBarLabelNumber: number = parseFloat(
-                scaleBarLabelArray[0].toPrecision(2)
-            );
-            // The si-prefix library abbreviates "micro" as "mc", so swap it out with "µ"
-            const scaleBarLabelUnit: string = scaleBarLabelArray[1].replace(
-                "mc",
-                "µ"
-            );
+                // Format scale bar length and unit so that it's more readable, e.g.:
+                // 0.000000015 m -> [15, "nm"]
+                const scaleBarLabelArray = si.meter.convert(
+                    tickIntervalLength * dataV1.spatialUnitFactorMeters
+                );
+                const scaleBarLabelNumber: number = parseFloat(
+                    scaleBarLabelArray[0].toPrecision(2)
+                );
+                // The si-prefix library abbreviates "micro" as "mc", so swap it out with "µ"
+                const scaleBarLabelUnit: string = scaleBarLabelArray[1].replace(
+                    "mc",
+                    "µ"
+                );
 
-            this.setState({
-                scaleBarLabel: scaleBarLabelNumber + " " + scaleBarLabelUnit,
-                isInitialPlay: true,
-            });
+                this.setState({
+                    scaleBarLabel:
+                        scaleBarLabelNumber + " " + scaleBarLabelUnit,
+                    isInitialPlay: true,
+                });
 
-            receiveMetadata({
-                numFrames: data.totalSteps,
-                timeStepSize: data.timeStepSize,
-            });
-        } else if (isTrajectoryFileInfoV2(data)) {
-            receiveMetadata({
-                numFrames: data.totalSteps,
-                timeStepSize: data.timeStepSize * data.spatialUnits.magnitude,
-                spatialUnits: data.spatialUnits,
-            });
+                receiveMetadata({
+                    numFrames: dataV1.totalSteps,
+                    timeStepSize: dataV1.timeStepSize,
+                });
+                break;
+            case 2:
+                const dataV2 = data as TrajectoryFileInfoV2;
+                receiveMetadata({
+                    numFrames: dataV2.totalSteps,
+                    timeStepSize:
+                        dataV2.timeStepSize * dataV2.spatialUnits.magnitude,
+                    spatialUnits: dataV2.spatialUnits,
+                });
+                break;
+            default:
+                throw "Invalid version number in TrajectoryFileInfo";
         }
     }
 
