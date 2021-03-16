@@ -6,7 +6,11 @@ import SimulariumViewer, {
     SelectionStateInfo,
 } from "@aics/simularium-viewer";
 import "@aics/simularium-viewer/style/style.css";
-import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/simularium";
+import {
+    TrajectoryFileInfo,
+    TrajectoryFileInfoV1,
+    TrajectoryFileInfoV2,
+} from "@aics/simularium-viewer/type-declarations/simularium";
 import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
 import { connect } from "react-redux";
 import { notification, Modal } from "antd";
@@ -232,32 +236,55 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
         const { receiveMetadata, simulariumController } = this.props;
-        const { spatialUnitFactorMeters } = data;
+        console.log(data);
 
         const tickIntervalLength = simulariumController.tickIntervalLength;
-        // Format scale bar length and unit so that it's more readable, e.g.:
-        // 0.000000015 m -> [15, "nm"]
-        const scaleBarLabelArray = si.meter.convert(
-            tickIntervalLength * spatialUnitFactorMeters
-        );
-        const scaleBarLabelNumber: number = parseFloat(
-            scaleBarLabelArray[0].toPrecision(2)
-        );
-        // The si-prefix library abbreviates "micro" as "mc", so swap it out with "µ"
-        const scaleBarLabelUnit: string = scaleBarLabelArray[1].replace(
-            "mc",
-            "µ"
-        );
 
-        this.setState({
-            scaleBarLabel: scaleBarLabelNumber + " " + scaleBarLabelUnit,
-            isInitialPlay: true,
-        });
+        // Type guards to make TS happy
+        const isTrajectoryFileInfoV1 = (
+            data: TrajectoryFileInfo
+        ): data is TrajectoryFileInfoV1 => {
+            if (data.version === 1) return true;
+            return false;
+        };
+        const isTrajectoryFileInfoV2 = (
+            data: TrajectoryFileInfo
+        ): data is TrajectoryFileInfoV2 => {
+            if (data.version === 2) return true;
+            return false;
+        };
 
-        receiveMetadata({
-            numFrames: data.totalSteps,
-            timeStepSize: data.timeStepSize,
-        });
+        if (isTrajectoryFileInfoV1(data)) {
+            // Format scale bar length and unit so that it's more readable, e.g.:
+            // 0.000000015 m -> [15, "nm"]
+            const scaleBarLabelArray = si.meter.convert(
+                tickIntervalLength * data.spatialUnitFactorMeters
+            );
+            const scaleBarLabelNumber: number = parseFloat(
+                scaleBarLabelArray[0].toPrecision(2)
+            );
+            // The si-prefix library abbreviates "micro" as "mc", so swap it out with "µ"
+            const scaleBarLabelUnit: string = scaleBarLabelArray[1].replace(
+                "mc",
+                "µ"
+            );
+
+            this.setState({
+                scaleBarLabel: scaleBarLabelNumber + " " + scaleBarLabelUnit,
+                isInitialPlay: true,
+            });
+
+            receiveMetadata({
+                numFrames: data.totalSteps,
+                timeStepSize: data.timeStepSize,
+            });
+        } else if (isTrajectoryFileInfoV2(data)) {
+            receiveMetadata({
+                numFrames: data.totalSteps,
+                timeStepSize: data.timeStepSize * data.spatialUnits.magnitude,
+                spatialUnits: data.spatialUnits,
+            });
+        }
     }
 
     public receiveTimeChange(timeData: TimeData) {
