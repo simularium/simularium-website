@@ -47,37 +47,38 @@ const PlayBackControls = ({
         setTimeToResumeAfterScrubbing,
     ] = useState(-1);
 
+    // Sets display unit when a new trajectory is loaded
     useEffect(() => {
-        if (!timeUnits) return;
-        setUnitLabel(timeUnits.name);
-    }, [timeUnits]);
+        // V1 data format
+        if (!timeUnits) {
+            console.log("no timeUnits, calculating unit");
+            if (!lastFrameTime) return;
 
-    // Calculates display unit when lastFrameTime is updated, i.e., when a new trajectory is loaded
-    useEffect(() => {
-        if (timeUnits) return;
-        if (!lastFrameTime) return;
+            const units = ["s", "ms", "\u03BCs", "ns"];
+            /*
+            All incoming times are in seconds, but we want to determine the best unit for displaying.
+    
+            Here we determine the most appropriate unit by calculating how many times (rounded up) the inverse of
+            lastFrameTime can divide by 1000. Math.log(x) / Math.log(1000) is the same as log base 1000 of x:
+            https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log/#Examples
+            */
+            let index = Math.ceil(Math.log(1 / lastFrameTime) / Math.log(1000));
 
-        const units = ["s", "ms", "\u03BCs", "ns"];
-        /*
-        All incoming times are in seconds, but we want to determine the best unit for displaying.
+            // Handle very small values (use ns if lastFrameTime is less than 1 ns)
+            if (index >= units.length) {
+                index = units.length - 1;
+                // Handle very large values (use s if lastFrameTime is greater than 1000 s)
+            } else if (index < 0) {
+                index = 0;
+            }
 
-        Here we determine the most appropriate unit by calculating how many times (rounded up) the inverse of
-        lastFrameTime can divide by 1000. Math.log(x) / Math.log(1000) is the same as log base 1000 of x:
-        https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log/#Examples
-        */
-        let index = Math.ceil(Math.log(1 / lastFrameTime) / Math.log(1000));
-
-        // Handle very small values (use ns if lastFrameTime is less than 1 ns)
-        if (index >= units.length) {
-            index = units.length - 1;
-            // Handle very large values (use s if lastFrameTime is greater than 1000 s)
-        } else if (index < 0) {
-            index = 0;
+            setUnitIndex(index);
+            setUnitLabel(units[unitIndex]);
+        } else {
+            // V2 data format
+            setUnitLabel(timeUnits.name);
         }
-
-        setUnitIndex(index);
-        setUnitLabel(units[unitIndex]);
-    }, [lastFrameTime]);
+    }, [timeUnits, lastFrameTime]);
 
     // - Gets called once when the user clicks on the slider to skip to a specific time
     // - Gets called multiple times when user is scrubbing (every time the play head

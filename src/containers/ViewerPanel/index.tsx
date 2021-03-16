@@ -261,6 +261,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 receiveMetadata({
                     numFrames: dataV1.totalSteps,
                     timeStepSize: dataV1.timeStepSize,
+                    timeUnits: null,
                 });
 
                 break;
