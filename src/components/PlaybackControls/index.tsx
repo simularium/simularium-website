@@ -39,16 +39,45 @@ const PlayBackControls = ({
     isEmpty,
 }: PlayBackProps) => {
     const [unitLabel, setUnitLabel] = useState("s");
-    useEffect(() => {
-        if (!timeUnits) return;
-        setUnitLabel(timeUnits.name);
-    }, [timeUnits]);
+    const [unitIndex, setUnitIndex] = useState(0);
 
     // Where to resume playing if simulation was playing before scrubbing
     const [
         timeToResumeAfterScrubbing,
         setTimeToResumeAfterScrubbing,
     ] = useState(-1);
+
+    useEffect(() => {
+        if (!timeUnits) return;
+        setUnitLabel(timeUnits.name);
+    }, [timeUnits]);
+
+    // Calculates display unit when lastFrameTime is updated, i.e., when a new trajectory is loaded
+    useEffect(() => {
+        if (timeUnits) return;
+        if (!lastFrameTime) return;
+
+        const units = ["s", "ms", "\u03BCs", "ns"];
+        /*
+        All incoming times are in seconds, but we want to determine the best unit for displaying.
+
+        Here we determine the most appropriate unit by calculating how many times (rounded up) the inverse of
+        lastFrameTime can divide by 1000. Math.log(x) / Math.log(1000) is the same as log base 1000 of x:
+        https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log/#Examples
+        */
+        let index = Math.ceil(Math.log(1 / lastFrameTime) / Math.log(1000));
+
+        // Handle very small values (use ns if lastFrameTime is less than 1 ns)
+        if (index >= units.length) {
+            index = units.length - 1;
+            // Handle very large values (use s if lastFrameTime is greater than 1000 s)
+        } else if (index < 0) {
+            index = 0;
+        }
+
+        setUnitIndex(index);
+        setUnitLabel(units[unitIndex]);
+    }, [lastFrameTime]);
 
     // - Gets called once when the user clicks on the slider to skip to a specific time
     // - Gets called multiple times when user is scrubbing (every time the play head
@@ -81,39 +110,11 @@ const PlayBackControls = ({
 
     let roundedTime = 0;
     let roundedLastFrameTime = 0;
-    let unitIndex = 0;
 
     if (timeUnits === null) {
-        console.log("timeUnits is null");
-        // const units = ["s", "ms", "\u03BCs", "ns"];
-        // roundedTime = time ? roundNumber(time * 1000 ** unitIndex) : 0;
-        // roundedLastFrameTime = roundNumber(lastFrameTime * 1000 ** unitIndex);
-
-        // Calculates display unit when lastFrameTime is updated, i.e., when a new trajectory is loaded
-        // useEffect(() => {
-        //     if (!lastFrameTime) return;
-        //     /*
-        //     All incoming times are in seconds, but we want to determine the best unit for displaying.
-
-        //     Here we determine the most appropriate unit by calculating how many times (rounded up) the inverse of
-        //     lastFrameTime can divide by 1000. Math.log(x) / Math.log(1000) is the same as log base 1000 of x:
-        //     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log/#Examples
-        //     */
-        //     let index = Math.ceil(Math.log(1 / lastFrameTime) / Math.log(1000));
-
-        //     // Handle very small values (use ns if lastFrameTime is less than 1 ns)
-        //     if (index >= units.length) {
-        //         index = units.length - 1;
-        //         // Handle very large values (use s if lastFrameTime is greater than 1000 s)
-        //     } else if (index < 0) {
-        //         index = 0;
-        //     }
-
-        //     unitIndex = index;
-        //     setUnitLabel(units[unitIndex]);
-        // }, [lastFrameTime]);
+        roundedTime = time ? roundNumber(time * 1000 ** unitIndex) : 0;
+        roundedLastFrameTime = roundNumber(lastFrameTime * 1000 ** unitIndex);
     } else {
-        console.log(unitLabel);
         roundedTime = time ? roundNumber(time * timeUnits.magnitude) : 0;
         roundedLastFrameTime = roundNumber(lastFrameTime * timeUnits.magnitude);
     }
