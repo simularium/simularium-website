@@ -39,7 +39,7 @@ const PlayBackControls = ({
     isEmpty,
 }: PlayBackProps) => {
     const [unitLabel, setUnitLabel] = useState("s");
-    const [unitIndex, setUnitIndex] = useState(0);
+    const [unitIndex, setUnitIndex] = useState(0); // For v1 data only
 
     // Where to resume playing if simulation was playing before scrubbing
     const [
@@ -47,11 +47,10 @@ const PlayBackControls = ({
         setTimeToResumeAfterScrubbing,
     ] = useState(-1);
 
-    // Sets display unit when a new trajectory is loaded
+    // Set display unit when a new trajectory is loaded, i.e., when timeUnits or lastFrameTime changes
     useEffect(() => {
-        // V1 data format
-        if (!timeUnits) {
-            console.log("no timeUnits, calculating unit");
+        if (timeUnits === null) {
+            // v1 data format
             if (!lastFrameTime) return;
 
             const units = ["s", "ms", "\u03BCs", "ns"];
@@ -73,9 +72,9 @@ const PlayBackControls = ({
             }
 
             setUnitIndex(index);
-            setUnitLabel(units[unitIndex]);
+            setUnitLabel(units[index]);
         } else {
-            // V2 data format
+            // v2 data format
             setUnitLabel(timeUnits.name);
         }
     }, [timeUnits, lastFrameTime]);
@@ -113,9 +112,11 @@ const PlayBackControls = ({
     let roundedLastFrameTime = 0;
 
     if (timeUnits === null) {
+        // v1 data format
         roundedTime = time ? roundNumber(time * 1000 ** unitIndex) : 0;
         roundedLastFrameTime = roundNumber(lastFrameTime * 1000 ** unitIndex);
     } else {
+        // v2 data format
         roundedTime = time ? roundNumber(time * timeUnits.magnitude) : 0;
         roundedLastFrameTime = roundNumber(lastFrameTime * timeUnits.magnitude);
     }
