@@ -6,11 +6,7 @@ import SimulariumViewer, {
     SelectionStateInfo,
 } from "@aics/simularium-viewer";
 import "@aics/simularium-viewer/style/style.css";
-import {
-    TrajectoryFileInfo,
-    TrajectoryFileInfoV1,
-    TrajectoryFileInfoV2,
-} from "@aics/simularium-viewer/type-declarations/simularium";
+import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/simularium";
 import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
 import { connect } from "react-redux";
 import { notification, Modal } from "antd";
@@ -41,7 +37,10 @@ import PlaybackControls from "../../components/PlaybackControls";
 import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
 import { convertToSentenceCase } from "../../util";
-import { makeScaleBarLabel } from "../../util/versionHandlers";
+import {
+    makeScaleBarLabel,
+    versionSpecificMetadata,
+} from "../../util/versionHandlers";
 import { TUTORIAL_PATHNAME } from "../../routes";
 
 import {
@@ -239,34 +238,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
         const { receiveMetadata, simulariumController } = this.props;
         const tickIntervalLength = simulariumController.tickIntervalLength;
+        const versionedData = versionSpecificMetadata(data);
 
-        switch (data.version) {
-            case 1:
-                const dataV1 = data as TrajectoryFileInfoV1;
-
-                receiveMetadata({
-                    numFrames: dataV1.totalSteps,
-                    timeStepSize: dataV1.timeStepSize,
-                    timeUnits: null,
-                });
-
-                break;
-
-            case 2:
-                const dataV2 = data as TrajectoryFileInfoV2;
-
-                receiveMetadata({
-                    numFrames: dataV2.totalSteps,
-                    timeStepSize:
-                        dataV2.timeStepSize * dataV2.timeUnits.magnitude,
-                    timeUnits: dataV2.timeUnits,
-                });
-
-                break;
-
-            default:
-                throw "Invalid version number in TrajectoryFileInfo";
-        }
+        receiveMetadata({
+            numFrames: data.totalSteps,
+            timeStepSize: versionedData.timeStepSize,
+            timeUnits: versionedData.timeUnits,
+        });
 
         this.setState({
             scaleBarLabel: makeScaleBarLabel(tickIntervalLength, data),
@@ -290,6 +268,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             receiveMetadata({
                 firstFrameTime: timeData.time,
                 lastFrameTime: (numFrames - 1) * timeStep + timeData.time,
+                // TODO: also get display unit
             });
             this.setState({ isInitialPlay: false });
         }

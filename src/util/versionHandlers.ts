@@ -7,6 +7,9 @@ import {
 } from "@aics/simularium-viewer/type-declarations/simularium";
 const si = require("si-prefix");
 
+const invalidVersionNumberError =
+    "Invalid version number in TrajectoryFileInfo";
+
 export const makeScaleBarLabel = (
     tickIntervalLength: number,
     data: TrajectoryFileInfo
@@ -37,8 +40,27 @@ export const makeScaleBarLabel = (
             scaleBarLabelUnit = dataV2.spatialUnits.name;
             break;
         default:
-            throw "Invalid version number in TrajectoryFileInfo";
+            throw invalidVersionNumberError;
     }
 
     return scaleBarLabelNumber + " " + scaleBarLabelUnit;
+};
+
+export const versionSpecificMetadata = (data: TrajectoryFileInfo) => {
+    switch (data.version) {
+        case 1:
+            const dataV1 = data as TrajectoryFileInfoV1;
+            return {
+                timeStepSize: dataV1.timeStepSize,
+                timeUnits: null,
+            };
+        case 2:
+            const dataV2 = data as TrajectoryFileInfoV2;
+            return {
+                timeStepSize: dataV2.timeStepSize * dataV2.timeUnits.magnitude,
+                timeUnits: dataV2.timeUnits,
+            };
+        default:
+            throw invalidVersionNumberError;
+    }
 };
