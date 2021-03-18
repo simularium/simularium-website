@@ -87,6 +87,9 @@ interface ViewerPanelState {
     height: number;
     width: number;
     scaleBarLabel: string;
+    roundedTime: number;
+    roundedLastFrameTime: number;
+    timeUnitLabel: string;
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -111,6 +114,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             height: 0,
             width: 0,
             scaleBarLabel: "",
+            roundedTime: 0,
+            roundedLastFrameTime: 0,
+            timeUnitLabel: "",
         };
     }
 
@@ -263,25 +269,23 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             receiveMetadata,
             setBuffering,
         } = this.props;
+        const { time } = timeData;
 
         if (this.state.isInitialPlay) {
             receiveMetadata({
-                firstFrameTime: timeData.time,
-                lastFrameTime: (numFrames - 1) * timeStep + timeData.time,
+                firstFrameTime: time,
+                lastFrameTime: (numFrames - 1) * timeStep + time,
                 // TODO: also get display unit
             });
             this.setState({ isInitialPlay: false });
         }
 
-        const actions: AnyAction[] = [
-            changeTime(timeData.time),
-            setBuffering(false),
-        ];
+        const actions: AnyAction[] = [changeTime(time), setBuffering(false)];
 
         if (viewerStatus !== VIEWER_SUCCESS) {
             actions.push(setViewerStatus({ status: VIEWER_SUCCESS }));
         }
-        if (timeData.time + timeStep > lastFrameTime) {
+        if (time + timeStep > lastFrameTime) {
             this.pause();
         }
         batchActions(actions);
@@ -340,7 +344,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             selectionStateInfoForViewer,
             setViewerStatus,
             timeStep,
-            timeUnits,
             isBuffering,
             isPlaying,
             viewerStatus,
@@ -377,7 +380,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     playHandler={this.startPlay}
                     time={time}
                     timeStep={timeStep}
-                    timeUnits={timeUnits}
+                    roundedTime={this.state.roundedTime}
+                    roundedLastFrameTime={this.state.roundedLastFrameTime}
+                    timeUnitLabel={this.state.timeUnitLabel}
                     onTimeChange={this.skipToTime}
                     pauseHandler={this.pause}
                     prevHandler={this.playBackOne}

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Button, Slider, Tooltip } from "antd";
 import classNames from "classnames";
 
-import { TimeUnits } from "../../state/metadata/types";
 import { TOOLTIP_COLOR } from "../../constants/index";
 import Icons from "../Icons";
 
@@ -19,8 +18,10 @@ interface PlayBackProps {
     onTimeChange: (time: number) => void;
     loading: boolean;
     timeStep: number;
-    timeUnits: TimeUnits;
+    timeUnitLabel: string;
     isEmpty: boolean;
+    roundedTime: number;
+    roundedLastFrameTime: number;
 }
 
 const PlayBackControls = ({
@@ -34,8 +35,10 @@ const PlayBackControls = ({
     lastFrameTime,
     onTimeChange,
     loading,
+    roundedTime,
+    roundedLastFrameTime,
     timeStep,
-    timeUnits,
+    timeUnitLabel,
     isEmpty,
 }: PlayBackProps) => {
     const [unitLabel, setUnitLabel] = useState("s");
