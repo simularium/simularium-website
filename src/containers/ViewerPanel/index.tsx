@@ -38,8 +38,8 @@ import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
 import { convertToSentenceCase } from "../../util";
 import {
-    makeScaleBarLabel,
-    versionSpecificMetadata,
+    getScaleBarLabelByVersion,
+    getMetadataByVersion,
 } from "../../util/versionHandlers";
 import { TUTORIAL_PATHNAME } from "../../routes";
 
@@ -47,6 +47,7 @@ import {
     convertUIDataToColorMap,
     convertUIDataToSelectionData,
     getSelectionStateInfoForViewer,
+    getRoundedCurrentTime,
 } from "./selectors";
 import { AGENT_COLORS } from "./constants";
 
@@ -79,6 +80,7 @@ interface ViewerPanelProps {
     setAllAgentColors: ActionCreator<SetAllColorsAction>;
     viewerError: ViewerError;
     setBuffering: ActionCreator<ToggleAction>;
+    roundedCurrentTime: number;
 }
 
 interface ViewerPanelState {
@@ -90,6 +92,7 @@ interface ViewerPanelState {
     roundedTime: number;
     roundedLastFrameTime: number;
     timeUnitLabel: string;
+    timeUnitIndex: number;
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -117,6 +120,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             roundedTime: 0,
             roundedLastFrameTime: 0,
             timeUnitLabel: "",
+            timeUnitIndex: 0,
         };
     }
 
@@ -244,16 +248,17 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
         const { receiveMetadata, simulariumController } = this.props;
         const tickIntervalLength = simulariumController.tickIntervalLength;
-        const versionedData = versionSpecificMetadata(data);
+        const versionedData = getMetadataByVersion(data);
 
         receiveMetadata({
             numFrames: data.totalSteps,
+            fileFormatVersion: data.version,
             timeStepSize: versionedData.timeStepSize,
             timeUnits: versionedData.timeUnits,
         });
 
         this.setState({
-            scaleBarLabel: makeScaleBarLabel(tickIntervalLength, data),
+            scaleBarLabel: getScaleBarLabelByVersion(tickIntervalLength, data),
             isInitialPlay: true,
         });
     }
@@ -268,6 +273,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             timeStep,
             receiveMetadata,
             setBuffering,
+            roundedCurrentTime,
         } = this.props;
         const { time } = timeData;
 
@@ -275,9 +281,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             receiveMetadata({
                 firstFrameTime: time,
                 lastFrameTime: (numFrames - 1) * timeStep + time,
-                // TODO: also get display unit
             });
-            this.setState({ isInitialPlay: false });
+            this.setState({
+                isInitialPlay: false,
+                // TODO: get display unit and roundedLastFrameTime
+                // roundedLastFrameTime: ,
+                // timeUnitLabel: ,
+            });
         }
 
         const actions: AnyAction[] = [changeTime(time), setBuffering(false)];
@@ -289,6 +299,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             this.pause();
         }
         batchActions(actions);
+        this.setState({ roundedTime: roundedCurrentTime });
     }
 
     public skipToTime(time: number) {
@@ -420,6 +431,7 @@ function mapStateToProps(state: State) {
         timeStep: metadataStateBranch.selectors.getTimeStepSize(state),
         timeUnits: metadataStateBranch.selectors.getTimeUnits(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
+        roundedCurrentTime: getRoundedCurrentTime(state),
         viewerStatus: metadataStateBranch.selectors.getViewerStatus(state),
         viewerError: metadataStateBranch.selectors.getViewerError(state),
         fileIsDraggedOverViewer: selectionStateBranch.selectors.getFileDraggedOverViewer(

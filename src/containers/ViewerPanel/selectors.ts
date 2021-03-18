@@ -3,11 +3,18 @@ import { createSelector } from "reselect";
 import {
     getAgentsToHide,
     getHightLightedAgents,
+    getCurrentTime,
 } from "../../state/selection/selectors";
 import {
     AgentColorMap,
     VisibilitySelectionMap,
 } from "../../state/selection/types";
+import {
+    getFileFormatVersion,
+    getTimeUnits,
+    getLastFrameTimeOfCachedSimulation,
+} from "../../state/metadata/selectors";
+import { getRoundedCurrentTimeByVersion } from "../../util/versionHandlers";
 
 export const getSelectionStateInfoForViewer = createSelector(
     [getHightLightedAgents, getAgentsToHide],
@@ -44,3 +51,20 @@ export const convertUIDataToColorMap = (
         return acc;
     }, returnData);
 };
+
+export const getRoundedCurrentTime = createSelector(
+    [
+        getFileFormatVersion,
+        getTimeUnits,
+        getCurrentTime,
+        getLastFrameTimeOfCachedSimulation,
+    ],
+    (version, timeUnits, time, lastFrameTime) => {
+        return getRoundedCurrentTimeByVersion(
+            version,
+            time,
+            timeUnits,
+            lastFrameTime
+        );
+    }
+);

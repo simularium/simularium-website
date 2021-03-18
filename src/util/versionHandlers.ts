@@ -7,10 +7,12 @@ import {
 } from "@aics/simularium-viewer/type-declarations/simularium";
 const si = require("si-prefix");
 
+import { TimeUnits } from "../state/metadata/types";
+
 const invalidVersionNumberError =
     "Invalid version number in TrajectoryFileInfo";
 
-export const makeScaleBarLabel = (
+export const getScaleBarLabelByVersion = (
     tickIntervalLength: number,
     data: TrajectoryFileInfo
 ): string => {
@@ -46,7 +48,7 @@ export const makeScaleBarLabel = (
     return scaleBarLabelNumber + " " + scaleBarLabelUnit;
 };
 
-export const versionSpecificMetadata = (data: TrajectoryFileInfo) => {
+export const getMetadataByVersion = (data: TrajectoryFileInfo) => {
     switch (data.version) {
         case 1:
             const dataV1 = data as TrajectoryFileInfoV1;
@@ -60,6 +62,50 @@ export const versionSpecificMetadata = (data: TrajectoryFileInfo) => {
                 timeStepSize: dataV2.timeStepSize * dataV2.timeUnits.magnitude,
                 timeUnits: dataV2.timeUnits,
             };
+        default:
+            throw invalidVersionNumberError;
+    }
+};
+
+/* 
+In version 1, all incoming times are in seconds, but we want to determine the best unit for 
+displaying. We do this by calculating how many times (rounded up) the inverse of lastFrameTime 
+can divide by 1000.
+*/
+const getTimeUnitIndex = (lastFrameTime: number): number => {
+    const units = ["s", "ms", "\u03BCs", "ns"];
+
+    // Math.log(x) / Math.log(1000) is the same as log base 1000 of x:
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log/#Examples
+    let index = Math.ceil(Math.log(1 / lastFrameTime) / Math.log(1000));
+
+    if (index >= units.length) {
+        // Handle very small values (use ns if lastFrameTime is less than 1 ns)
+        index = units.length - 1;
+    } else if (index < 0) {
+        // Handle very large values (use s if lastFrameTime is greater than 1000 s)
+        index = 0;
+    }
+
+    // `index` corresponds to the index of the unit in the array `units`
+    return index;
+};
+
+const roundTime = (num: number) => parseFloat(Number(num).toPrecision(3));
+
+export const getRoundedCurrentTimeByVersion = (
+    version: number,
+    time: number,
+    timeUnits: TimeUnits | null,
+    lastFrameTime: number
+) => {
+    switch (version) {
+        case 1:
+            const unitIndex = getTimeUnitIndex(lastFrameTime);
+            return time ? roundTime(time * 1000 ** unitIndex) : 0;
+        case 2:
+            const units = timeUnits as TimeUnits;
+            return time ? roundTime(time * units.magnitude) : 0;
         default:
             throw invalidVersionNumberError;
     }
