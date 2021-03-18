@@ -15,7 +15,6 @@ import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
 import { connect } from "react-redux";
 import { notification, Modal } from "antd";
 import Bowser from "bowser";
-const si = require("si-prefix");
 
 import { State } from "../../state/types";
 import selectionStateBranch from "../../state/selection";
@@ -42,6 +41,7 @@ import PlaybackControls from "../../components/PlaybackControls";
 import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
 import { convertToSentenceCase } from "../../util";
+import { makeScaleBarLabel } from "../../util/versionHandlers";
 import { TUTORIAL_PATHNAME } from "../../routes";
 
 import {
@@ -238,25 +238,11 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
         const { receiveMetadata, simulariumController } = this.props;
-
         const tickIntervalLength = simulariumController.tickIntervalLength;
-        let scaleBarLabelNumber: number;
-        let scaleBarLabelUnit: string;
 
         switch (data.version) {
             case 1:
                 const dataV1 = data as TrajectoryFileInfoV1;
-
-                // Format scale bar length and unit so that it's more readable, e.g.:
-                // 0.000000015 m -> [15, "nm"]
-                const scaleBarLabelArray = si.meter.convert(
-                    tickIntervalLength * dataV1.spatialUnitFactorMeters
-                );
-                scaleBarLabelNumber = parseFloat(
-                    scaleBarLabelArray[0].toPrecision(2)
-                );
-                // The si-prefix library abbreviates "micro" as "mc", so swap it out with "µ"
-                scaleBarLabelUnit = scaleBarLabelArray[1].replace("mc", "µ");
 
                 receiveMetadata({
                     numFrames: dataV1.totalSteps,
@@ -268,10 +254,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
             case 2:
                 const dataV2 = data as TrajectoryFileInfoV2;
-
-                scaleBarLabelNumber =
-                    tickIntervalLength * dataV2.spatialUnits.magnitude;
-                scaleBarLabelUnit = dataV2.spatialUnits.name;
 
                 receiveMetadata({
                     numFrames: dataV2.totalSteps,
@@ -287,7 +269,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
 
         this.setState({
-            scaleBarLabel: scaleBarLabelNumber + " " + scaleBarLabelUnit,
+            scaleBarLabel: makeScaleBarLabel(tickIntervalLength, data),
             isInitialPlay: true,
         });
     }
