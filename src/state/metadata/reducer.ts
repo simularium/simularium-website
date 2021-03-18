@@ -26,6 +26,7 @@ export const initialState = {
     lastFrameTime: 0,
     timeStep: 0,
     timeUnits: null,
+    fileFormatVersion: 0,
     agentIds: [],
     agentUiNames: [],
     plotData: [],
