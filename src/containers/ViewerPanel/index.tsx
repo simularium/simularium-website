@@ -48,6 +48,8 @@ import {
     convertUIDataToSelectionData,
     getSelectionStateInfoForViewer,
     getRoundedCurrentTime,
+    getRoundedLastFrameTime,
+    getTimeUnitLabel,
 } from "./selectors";
 import { AGENT_COLORS } from "./constants";
 
@@ -81,6 +83,8 @@ interface ViewerPanelProps {
     viewerError: ViewerError;
     setBuffering: ActionCreator<ToggleAction>;
     roundedCurrentTime: number;
+    roundedLastFrameTime: number;
+    timeUnitLabel: string;
 }
 
 interface ViewerPanelState {
@@ -89,8 +93,6 @@ interface ViewerPanelState {
     height: number;
     width: number;
     scaleBarLabel: string;
-    roundedTime: number;
-    roundedLastFrameTime: number;
     timeUnitLabel: string;
     timeUnitIndex: number;
 }
@@ -117,8 +119,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             height: 0,
             width: 0,
             scaleBarLabel: "",
-            roundedTime: 0,
-            roundedLastFrameTime: 0,
             timeUnitLabel: "",
             timeUnitIndex: 0,
         };
@@ -273,7 +273,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             timeStep,
             receiveMetadata,
             setBuffering,
-            roundedCurrentTime,
         } = this.props;
         const { time } = timeData;
 
@@ -282,12 +281,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 firstFrameTime: time,
                 lastFrameTime: (numFrames - 1) * timeStep + time,
             });
-            this.setState({
-                isInitialPlay: false,
-                // TODO: get display unit and roundedLastFrameTime
-                // roundedLastFrameTime: ,
-                // timeUnitLabel: ,
-            });
+            this.setState({ isInitialPlay: false });
         }
 
         const actions: AnyAction[] = [changeTime(time), setBuffering(false)];
@@ -299,7 +293,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             this.pause();
         }
         batchActions(actions);
-        this.setState({ roundedTime: roundedCurrentTime });
     }
 
     public skipToTime(time: number) {
@@ -358,6 +351,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             isBuffering,
             isPlaying,
             viewerStatus,
+            roundedCurrentTime,
+            roundedLastFrameTime,
+            timeUnitLabel,
         } = this.props;
         return (
             <div
@@ -391,9 +387,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     playHandler={this.startPlay}
                     time={time}
                     timeStep={timeStep}
-                    roundedTime={this.state.roundedTime}
-                    roundedLastFrameTime={this.state.roundedLastFrameTime}
-                    timeUnitLabel={this.state.timeUnitLabel}
+                    roundedTime={roundedCurrentTime}
+                    roundedLastFrameTime={roundedLastFrameTime}
+                    timeUnitLabel={timeUnitLabel}
                     onTimeChange={this.skipToTime}
                     pauseHandler={this.pause}
                     prevHandler={this.playBackOne}
@@ -432,6 +428,8 @@ function mapStateToProps(state: State) {
         timeUnits: metadataStateBranch.selectors.getTimeUnits(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
         roundedCurrentTime: getRoundedCurrentTime(state),
+        roundedLastFrameTime: getRoundedLastFrameTime(state),
+        timeUnitLabel: getTimeUnitLabel(state),
         viewerStatus: metadataStateBranch.selectors.getViewerStatus(state),
         viewerError: metadataStateBranch.selectors.getViewerError(state),
         fileIsDraggedOverViewer: selectionStateBranch.selectors.getFileDraggedOverViewer(

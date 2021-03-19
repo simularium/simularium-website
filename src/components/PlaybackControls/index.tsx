@@ -41,46 +41,11 @@ const PlayBackControls = ({
     timeUnitLabel,
     isEmpty,
 }: PlayBackProps) => {
-    const [unitLabel, setUnitLabel] = useState("s");
-    const [unitIndex, setUnitIndex] = useState(0); // For v1 data only
-
     // Where to resume playing if simulation was playing before scrubbing
     const [
         timeToResumeAfterScrubbing,
         setTimeToResumeAfterScrubbing,
     ] = useState(-1);
-
-    // Set display unit when a new trajectory is loaded, i.e., when timeUnits or lastFrameTime changes
-    useEffect(() => {
-        if (timeUnits === null) {
-            // v1 data format
-            if (!lastFrameTime) return;
-
-            const units = ["s", "ms", "\u03BCs", "ns"];
-            /*
-            All incoming times are in seconds, but we want to determine the best unit for displaying.
-    
-            Here we determine the most appropriate unit by calculating how many times (rounded up) the inverse of
-            lastFrameTime can divide by 1000. Math.log(x) / Math.log(1000) is the same as log base 1000 of x:
-            https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log/#Examples
-            */
-            let index = Math.ceil(Math.log(1 / lastFrameTime) / Math.log(1000));
-
-            // Handle very small values (use ns if lastFrameTime is less than 1 ns)
-            if (index >= units.length) {
-                index = units.length - 1;
-                // Handle very large values (use s if lastFrameTime is greater than 1000 s)
-            } else if (index < 0) {
-                index = 0;
-            }
-
-            setUnitIndex(index);
-            setUnitLabel(units[index]);
-        } else {
-            // v2 data format
-            setUnitLabel(timeUnits.name);
-        }
-    }, [timeUnits, lastFrameTime]);
 
     // - Gets called once when the user clicks on the slider to skip to a specific time
     // - Gets called multiple times when user is scrubbing (every time the play head
@@ -108,21 +73,6 @@ const PlayBackControls = ({
             setTimeToResumeAfterScrubbing(-1);
         }
     };
-
-    const roundNumber = (num: number) => parseFloat(Number(num).toPrecision(3));
-
-    let roundedTime = 0;
-    let roundedLastFrameTime = 0;
-
-    if (timeUnits === null) {
-        // v1 data format
-        roundedTime = time ? roundNumber(time * 1000 ** unitIndex) : 0;
-        roundedLastFrameTime = roundNumber(lastFrameTime * 1000 ** unitIndex);
-    } else {
-        // v2 data format
-        roundedTime = time ? roundNumber(time * timeUnits.magnitude) : 0;
-        roundedLastFrameTime = roundNumber(lastFrameTime * timeUnits.magnitude);
-    }
 
     const btnClassNames = classNames([styles.item, styles.btn]);
 
@@ -211,7 +161,7 @@ const PlayBackControls = ({
                 <p>
                     {roundedTime}{" "}
                     <span className={styles.lastFrameTime}>
-                        / {roundedLastFrameTime} {unitLabel}
+                        / {roundedLastFrameTime} {timeUnitLabel}
                     </span>
                 </p>
             </div>

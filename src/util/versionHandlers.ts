@@ -72,16 +72,15 @@ In version 1, all incoming times are in seconds, but we want to determine the be
 displaying. We do this by calculating how many times (rounded up) the inverse of lastFrameTime 
 can divide by 1000.
 */
+const unitStrings = ["s", "ms", "\u03BCs", "ns"];
 const getTimeUnitIndex = (lastFrameTime: number): number => {
-    const units = ["s", "ms", "\u03BCs", "ns"];
-
     // Math.log(x) / Math.log(1000) is the same as log base 1000 of x:
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log/#Examples
     let index = Math.ceil(Math.log(1 / lastFrameTime) / Math.log(1000));
 
-    if (index >= units.length) {
+    if (index >= unitStrings.length) {
         // Handle very small values (use ns if lastFrameTime is less than 1 ns)
-        index = units.length - 1;
+        index = unitStrings.length - 1;
     } else if (index < 0) {
         // Handle very large values (use s if lastFrameTime is greater than 1000 s)
         index = 0;
@@ -93,7 +92,7 @@ const getTimeUnitIndex = (lastFrameTime: number): number => {
 
 const roundTime = (num: number) => parseFloat(Number(num).toPrecision(3));
 
-export const getRoundedCurrentTimeByVersion = (
+export const getRoundedTimeByVersion = (
     version: number,
     time: number,
     timeUnits: TimeUnits | null,
@@ -102,10 +101,27 @@ export const getRoundedCurrentTimeByVersion = (
     switch (version) {
         case 1:
             const unitIndex = getTimeUnitIndex(lastFrameTime);
-            return time ? roundTime(time * 1000 ** unitIndex) : 0;
+            return roundTime(time * 1000 ** unitIndex);
         case 2:
             const units = timeUnits as TimeUnits;
-            return time ? roundTime(time * units.magnitude) : 0;
+            return roundTime(time * units.magnitude);
+        default:
+            throw invalidVersionNumberError;
+    }
+};
+
+export const getTimeUnitLabelByVersion = (
+    version: number,
+    timeUnits: TimeUnits | null,
+    lastFrameTime: number
+) => {
+    switch (version) {
+        case 1:
+            const unitIndex = getTimeUnitIndex(lastFrameTime);
+            return unitStrings[unitIndex];
+        case 2:
+            const units = timeUnits as TimeUnits;
+            return units.name;
         default:
             throw invalidVersionNumberError;
     }

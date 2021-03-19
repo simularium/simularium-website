@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { makeScaleBarLabel } from "../versionHandlers";
+// import { makeScaleBarLabel } from "../versionHandlers";
 
 describe("Version handlers", () => {
     describe("makeScaleBarLabel", () => {

@@ -14,7 +14,10 @@ import {
     getTimeUnits,
     getLastFrameTimeOfCachedSimulation,
 } from "../../state/metadata/selectors";
-import { getRoundedCurrentTimeByVersion } from "../../util/versionHandlers";
+import {
+    getRoundedTimeByVersion,
+    getTimeUnitLabelByVersion,
+} from "../../util/versionHandlers";
 
 export const getSelectionStateInfoForViewer = createSelector(
     [getHightLightedAgents, getAgentsToHide],
@@ -60,11 +63,28 @@ export const getRoundedCurrentTime = createSelector(
         getLastFrameTimeOfCachedSimulation,
     ],
     (version, timeUnits, time, lastFrameTime) => {
-        return getRoundedCurrentTimeByVersion(
+        if (!time) return 0;
+        return getRoundedTimeByVersion(version, time, timeUnits, lastFrameTime);
+    }
+);
+
+export const getRoundedLastFrameTime = createSelector(
+    [getFileFormatVersion, getTimeUnits, getLastFrameTimeOfCachedSimulation],
+    (version, timeUnits, lastFrameTime) => {
+        if (!lastFrameTime) return 0;
+        return getRoundedTimeByVersion(
             version,
-            time,
+            lastFrameTime,
             timeUnits,
             lastFrameTime
         );
+    }
+);
+
+export const getTimeUnitLabel = createSelector(
+    [getFileFormatVersion, getTimeUnits, getLastFrameTimeOfCachedSimulation],
+    (version, timeUnits, lastFrameTime) => {
+        if (!lastFrameTime) return "s";
+        return getTimeUnitLabelByVersion(version, timeUnits, lastFrameTime);
     }
 );
