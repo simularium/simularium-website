@@ -93,8 +93,6 @@ interface ViewerPanelState {
     height: number;
     width: number;
     scaleBarLabel: string;
-    timeUnitLabel: string;
-    timeUnitIndex: number;
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -119,8 +117,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             height: 0,
             width: 0,
             scaleBarLabel: "",
-            timeUnitLabel: "",
-            timeUnitIndex: 0,
         };
     }
 
@@ -248,13 +244,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
         const { receiveMetadata, simulariumController } = this.props;
         const tickIntervalLength = simulariumController.tickIntervalLength;
-        const versionedData = getMetadataByVersion(data);
+        const versionSpecificData = getMetadataByVersion(data);
 
         receiveMetadata({
             numFrames: data.totalSteps,
             fileFormatVersion: data.version,
-            timeStepSize: versionedData.timeStepSize,
-            timeUnits: versionedData.timeUnits,
+            timeStepSize: versionSpecificData.timeStepSize,
+            timeUnits: versionSpecificData.timeUnits,
         });
 
         this.setState({
@@ -274,22 +270,24 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             receiveMetadata,
             setBuffering,
         } = this.props;
-        const { time } = timeData;
 
         if (this.state.isInitialPlay) {
             receiveMetadata({
-                firstFrameTime: time,
-                lastFrameTime: (numFrames - 1) * timeStep + time,
+                firstFrameTime: timeData.time,
+                lastFrameTime: (numFrames - 1) * timeStep + timeData.time,
             });
             this.setState({ isInitialPlay: false });
         }
 
-        const actions: AnyAction[] = [changeTime(time), setBuffering(false)];
+        const actions: AnyAction[] = [
+            changeTime(timeData.time),
+            setBuffering(false),
+        ];
 
         if (viewerStatus !== VIEWER_SUCCESS) {
             actions.push(setViewerStatus({ status: VIEWER_SUCCESS }));
         }
-        if (time + timeStep > lastFrameTime) {
+        if (timeData.time + timeStep > lastFrameTime) {
             this.pause();
         }
         batchActions(actions);
