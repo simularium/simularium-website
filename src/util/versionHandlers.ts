@@ -1,4 +1,7 @@
-/* Performs actions dependent on the trajectory file format version */
+/* 
+Performs actions dependent on the trajectory file format version.
+Currently supported versions: 1, 2
+*/
 
 import {
     TrajectoryFileInfo,
