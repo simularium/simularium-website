@@ -139,7 +139,7 @@ const loadNetworkedFile = createLogic({
                 return dispatch(receiveSimulariumFile(simulariumFile));
             })
             .then(() => {
-                simulariumController.resume();
+                simulariumController.start();
                 simulariumController.pause();
             })
             .then(() => {
