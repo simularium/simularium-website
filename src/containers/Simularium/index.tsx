@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
-import { Layout } from "antd";
+import { Layout, notification } from "antd";
 import queryString from "query-string";
 import { SimulariumController } from "@aics/simularium-viewer";
 import { find } from "lodash";
@@ -76,7 +76,7 @@ class App extends React.Component<AppProps, AppState> {
 
         const parsed = queryString.parse(location.search);
         const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
-        const userTrajectoryUrl = urlCheck(parsed[URL_PARAM_KEY_USER_URL]);
+        const userTrajectoryUrl = parsed[URL_PARAM_KEY_USER_URL];
         const networkedFile = find(TRAJECTORIES, { id: fileName });
         const controller = simulariumController || new SimulariumController({});
         if (fileName && networkedFile) {
@@ -90,11 +90,28 @@ class App extends React.Component<AppProps, AppState> {
                 controller
             );
         } else if (userTrajectoryUrl) {
-            console.log(userTrajectoryUrl);
-            fetch(userTrajectoryUrl)
+            const verifiedUrl = urlCheck(userTrajectoryUrl);
+            // if the url doesn't pass the regEx check, notify the user and then clear the url
+            if (!verifiedUrl) {
+                notification.error({
+                    message: `${userTrajectoryUrl} does not seem like a url`,
+                    description:
+                        "make sure to include 'http/https' at the beginning of the url, and check for typos",
+                    onClose: () => {
+                        history.replaceState(
+                            {},
+                            "",
+                            `${location.origin}${location.pathname}`
+                        );
+                    },
+                });
+                setSimulariumController(controller);
+                return;
+            }
+            fetch(verifiedUrl)
                 .then((data) => data.json())
                 .then((json) => {
-                    const urlSplit = userTrajectoryUrl.split("/");
+                    const urlSplit = verifiedUrl.split("/");
                     const name = urlSplit[urlSplit.length - 1];
                     console.log(name);
                     changeToLocalSimulariumFile(
@@ -105,6 +122,19 @@ class App extends React.Component<AppProps, AppState> {
                         },
                         controller
                     );
+                })
+                .catch((error) => {
+                    notification.error({
+                        message: `${userTrajectoryUrl} failed to fetch`,
+                        description: error.message,
+                        onClose: () => {
+                            history.replaceState(
+                                {},
+                                "",
+                                `${location.origin}${location.pathname}`
+                            );
+                        },
+                    });
                 });
         } else {
             setSimulariumController(controller);
