@@ -178,7 +178,6 @@ const loadLocalFile = createLogic({
         const currentState = getState();
         const simulariumController =
             getSimulariumController(currentState) || action.controller;
-        console.log(simulariumController);
         const lastSimulariumFile: LocalSimFile = getSimulariumFile(
             currentState
         );

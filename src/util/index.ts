@@ -74,12 +74,10 @@ export const wrapText = (
 };
 
 export const urlCheck = (urlToCheck: any): string => {
-    console.log(typeof urlToCheck);
     if (typeof urlToCheck !== "string") {
         return "";
     }
     const regEx = /(https?:\/\/)([\w\-]){0,200}(\.[a-zA-Z][^\-])([\/\w]*)*\/?\??([^\n\r]*)??([^\n\r]*)/g;
-    console.log(urlToCheck, urlToCheck.match(regEx));
     if (!!urlToCheck.match(regEx)) {
         return urlToCheck;
     }
