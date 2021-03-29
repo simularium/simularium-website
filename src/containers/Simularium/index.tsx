@@ -77,9 +77,17 @@ class App extends React.Component<AppProps, AppState> {
         const parsed = queryString.parse(location.search);
         const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
         const userTrajectoryUrl = parsed[URL_PARAM_KEY_USER_URL];
-        const networkedFile = find(TRAJECTORIES, { id: fileName });
         const controller = simulariumController || new SimulariumController({});
-        if (fileName && networkedFile) {
+        if (fileName) {
+            const networkedFile = find(TRAJECTORIES, { id: fileName });
+            if (!networkedFile) {
+                history.replaceState(
+                    {},
+                    "",
+                    `${location.origin}${location.pathname}`
+                );
+                setSimulariumController(controller);
+            }
             const fileData = networkedFile as TrajectoryDisplayData;
             // simularium controller will get initialize in the change file logic
             changeToNetworkedFile(
