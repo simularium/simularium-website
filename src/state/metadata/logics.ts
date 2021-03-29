@@ -139,6 +139,10 @@ const loadNetworkedFile = createLogic({
                 return dispatch(receiveSimulariumFile(simulariumFile));
             })
             .then(() => {
+                simulariumController.resume();
+                simulariumController.pause();
+            })
+            .then(() => {
                 return dispatch(
                     requestCachedPlotData({
                         url: `${
