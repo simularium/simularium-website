@@ -43,6 +43,7 @@ export interface RequestNetworkFileAction {
 export interface RequestLocalFileAction {
     payload: LocalSimFile;
     type: string;
+    controller?: SimulariumController;
 }
 
 export interface LocalSimFile {

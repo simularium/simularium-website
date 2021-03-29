@@ -174,7 +174,14 @@ const loadLocalFile = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
         const currentState = getState();
-        const simulariumController = getSimulariumController(currentState);
+        let simulariumController = getSimulariumController(currentState);
+        console.log(action.controller);
+        if (!simulariumController) {
+            if (action.controller) {
+                simulariumController = action.controller;
+                dispatch(setSimulariumController(simulariumController));
+            }
+        }
         const lastSimulariumFile: LocalSimFile = getSimulariumFile(
             currentState
         );

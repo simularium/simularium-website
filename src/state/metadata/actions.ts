@@ -77,10 +77,12 @@ export function receiveAgentNamesAndStates(
 }
 
 export function changeToLocalSimulariumFile(
-    payload: LocalSimFile
+    payload: LocalSimFile,
+    controller?: SimulariumController
 ): RequestLocalFileAction {
     return {
         payload,
+        controller,
         type: LOAD_LOCAL_FILE_IN_VIEWER,
     };
 }

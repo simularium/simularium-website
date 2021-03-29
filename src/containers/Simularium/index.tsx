@@ -91,7 +91,19 @@ class App extends React.Component<AppProps, AppState> {
         } else if (userTrajectoryUrl) {
             fetch(userTrajectoryUrl as string)
                 .then((data) => data.json())
-                .then(console.log);
+                .then((json) => {
+                    const urlSplit = userTrajectoryUrl.split("/");
+                    const name = urlSplit[urlSplit.length - 1];
+                    console.log(name);
+                    changeToLocalSimulariumFile(
+                        {
+                            name, //TODO: add this to metadata about the file
+                            data: json,
+                            lastModified: Date.now(), //TODO: add this to metadata about the file
+                        },
+                        controller
+                    );
+                });
         } else {
             setSimulariumController(controller);
         }
