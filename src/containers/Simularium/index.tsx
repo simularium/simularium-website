@@ -32,6 +32,7 @@ import {
 import { VIEWER_LOADING } from "../../state/metadata/constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
+import { urlCheck } from "../../util";
 const { Content } = Layout;
 
 const styles = require("./style.css");
@@ -75,7 +76,7 @@ class App extends React.Component<AppProps, AppState> {
 
         const parsed = queryString.parse(location.search);
         const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
-        const userTrajectoryUrl = parsed[URL_PARAM_KEY_USER_URL];
+        const userTrajectoryUrl = urlCheck(parsed[URL_PARAM_KEY_USER_URL]);
         const networkedFile = find(TRAJECTORIES, { id: fileName });
         const controller = simulariumController || new SimulariumController({});
         if (fileName && networkedFile) {
@@ -89,7 +90,8 @@ class App extends React.Component<AppProps, AppState> {
                 controller
             );
         } else if (userTrajectoryUrl) {
-            fetch(userTrajectoryUrl as string)
+            console.log(userTrajectoryUrl);
+            fetch(userTrajectoryUrl)
                 .then((data) => data.json())
                 .then((json) => {
                     const urlSplit = userTrajectoryUrl.split("/");

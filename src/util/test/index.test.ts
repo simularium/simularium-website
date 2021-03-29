@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import * as React from "react";
 
-import { bindAll, convertToSentenceCase, wrapText } from "../";
+import { bindAll, convertToSentenceCase, urlCheck, wrapText } from "../";
 
 describe("General utilities", () => {
     describe("bindAll", () => {
@@ -95,6 +95,40 @@ describe("General utilities", () => {
                 formattedText: "123 567<br>890<br>abcdefg<br>wxyz",
                 numLines: 4,
             });
+        });
+    });
+    describe("urlCheck", () => {
+        it("returns strings that match the regex", () => {
+            const shouldMatch = [
+                "https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium",
+                "https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.json",
+                "http://web5-site.com/directory",
+                "https://fa-st.web9site.com/directory/file.filename",
+                "https://fa-st.web9site.com/directory-name/file.filename",
+                "https://website.com/directory/?key=val",
+                "http://www.website.com/?key=val#anchor",
+            ];
+            const result = shouldMatch.map(urlCheck);
+            expect(result).to.deep.equal(shouldMatch);
+        });
+        it("returns an empty string if give a non string", () => {
+            const shouldNotMatch = [[], {}, 2, null, undefined];
+            const result = shouldNotMatch.map(urlCheck);
+            expect(result).to.deep.equal(Array(shouldNotMatch.length).fill(""));
+        });
+        it("returns an empty string if the given string is not an accepted url", () => {
+            const shouldNotMatch = [
+                "website.com/?querystring",
+                "www.website.com/?key=val",
+                "http://website.c-om/directory",
+                "https://website",
+                "fast..web9site.com/directory/file.filename",
+                "web?site.com",
+                "website...com/??querystring",
+                "www.w;ebsite.?com/",
+            ];
+            const result = shouldNotMatch.map(urlCheck);
+            expect(result).to.deep.equal(Array(shouldNotMatch.length).fill(""));
         });
     });
 });
