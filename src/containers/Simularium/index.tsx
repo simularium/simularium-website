@@ -14,7 +14,10 @@ import { State } from "../../state/types";
 
 import metadataStateBranch from "../../state/metadata";
 import selectionStateBranch from "../../state/selection";
-import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
+import {
+    URL_PARAM_KEY_FILE_NAME,
+    URL_PARAM_KEY_USER_URL,
+} from "../../constants";
 import {
     LocalSimFile,
     RequestLocalFileAction,
@@ -66,15 +69,17 @@ class App extends React.Component<AppProps, AppState> {
             setSimulariumController,
             changeToNetworkedFile,
             simulariumController,
+            changeToLocalSimulariumFile,
         } = this.props;
         const current = this.interactiveContent.current;
 
         const parsed = queryString.parse(location.search);
         const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
-        const file = find(TRAJECTORIES, { id: fileName });
+        const userTrajectoryUrl = parsed[URL_PARAM_KEY_USER_URL];
+        const networkedFile = find(TRAJECTORIES, { id: fileName });
         const controller = simulariumController || new SimulariumController({});
-        if (fileName && file) {
-            const fileData = file as TrajectoryDisplayData;
+        if (fileName && networkedFile) {
+            const fileData = networkedFile as TrajectoryDisplayData;
             // simularium controller will get initialize in the change file logic
             changeToNetworkedFile(
                 {
@@ -83,6 +88,10 @@ class App extends React.Component<AppProps, AppState> {
                 },
                 controller
             );
+        } else if (userTrajectoryUrl) {
+            fetch(userTrajectoryUrl as string)
+                .then((data) => data.json())
+                .then(console.log);
         } else {
             setSimulariumController(controller);
         }
