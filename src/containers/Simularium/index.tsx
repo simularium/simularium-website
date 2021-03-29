@@ -19,6 +19,7 @@ import {
     URL_PARAM_KEY_USER_URL,
 } from "../../constants";
 import {
+    LoadViaUrlAction,
     LocalSimFile,
     RequestLocalFileAction,
     RequestNetworkFileAction,
@@ -48,6 +49,7 @@ interface AppProps {
     dragOverViewer: ActionCreator<DragOverViewerAction>;
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
     viewerStatus: string;
+    loadViaUrl: ActionCreator<LoadViaUrlAction>;
 }
 
 interface AppState {
@@ -70,7 +72,7 @@ class App extends React.Component<AppProps, AppState> {
             setSimulariumController,
             changeToNetworkedFile,
             simulariumController,
-            changeToLocalSimulariumFile,
+            loadViaUrl,
         } = this.props;
         const current = this.interactiveContent.current;
 
@@ -116,34 +118,7 @@ class App extends React.Component<AppProps, AppState> {
                 setSimulariumController(controller);
                 return;
             }
-            fetch(verifiedUrl)
-                .then((data) => data.json())
-                .then((json) => {
-                    const urlSplit = verifiedUrl.split("/");
-                    const name = urlSplit[urlSplit.length - 1];
-                    console.log(name);
-                    changeToLocalSimulariumFile(
-                        {
-                            name, //TODO: add this to metadata about the file
-                            data: json,
-                            lastModified: Date.now(), //TODO: add this to metadata about the file
-                        },
-                        controller
-                    );
-                })
-                .catch((error) => {
-                    notification.error({
-                        message: `${userTrajectoryUrl} failed to fetch`,
-                        description: error.message,
-                        onClose: () => {
-                            history.replaceState(
-                                {},
-                                "",
-                                `${location.origin}${location.pathname}`
-                            );
-                        },
-                    });
-                });
+            loadViaUrl(verifiedUrl, controller);
         } else {
             setSimulariumController(controller);
         }
@@ -245,6 +220,7 @@ const dispatchToPropsMap = {
     changeToNetworkedFile: metadataStateBranch.actions.changeToNetworkedFile,
     resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
     dragOverViewer: selectionStateBranch.actions.dragOverViewer,
+    loadViaUrl: metadataStateBranch.actions.loadViaUrl,
 };
 
 export default connect(

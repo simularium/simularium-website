@@ -46,6 +46,12 @@ export interface RequestLocalFileAction {
     controller?: SimulariumController;
 }
 
+export interface LoadViaUrlAction {
+    payload: string;
+    type: string;
+    controller?: SimulariumController;
+}
+
 export interface LocalSimFile {
     name: string;
     data: SimulariumFileFormat;

@@ -8,6 +8,7 @@ import { ReduxLogicDeps } from "../types";
 
 import { getSimulariumController, getSimulariumFile } from "./selectors";
 import {
+    changeToLocalSimulariumFile,
     receiveMetadata,
     receiveSimulariumFile,
     requestCachedPlotData,
@@ -20,6 +21,7 @@ import {
     REQUEST_PLOT_DATA,
     CLEAR_SIMULARIUM_FILE,
     VIEWER_EMPTY,
+    LOAD_FILE_VIA_URL,
 } from "./constants";
 import { ReceiveAction, LocalSimFile, FrontEndError } from "./types";
 import { VIEWER_ERROR } from "./constants";
@@ -174,14 +176,9 @@ const loadLocalFile = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
         const currentState = getState();
-        let simulariumController = getSimulariumController(currentState);
-        console.log(action.controller);
-        if (!simulariumController) {
-            if (action.controller) {
-                simulariumController = action.controller;
-                dispatch(setSimulariumController(simulariumController));
-            }
-        }
+        const simulariumController =
+            getSimulariumController(currentState) || action.controller;
+        console.log(simulariumController);
         const lastSimulariumFile: LocalSimFile = getSimulariumFile(
             currentState
         );
@@ -226,9 +223,57 @@ const loadLocalFile = createLogic({
     type: LOAD_LOCAL_FILE_IN_VIEWER,
 });
 
+const loadFileViaUrl = createLogic({
+    process(deps: ReduxLogicDeps, dispatch, done) {
+        const { action, getState } = deps;
+        const url = action.payload;
+        const currentState = getState();
+        dispatch(
+            setViewerStatus({
+                status: VIEWER_LOADING,
+            })
+        );
+        let simulariumController = getSimulariumController(currentState);
+        if (!simulariumController) {
+            if (action.controller) {
+                simulariumController = action.controller;
+                dispatch(setSimulariumController(simulariumController));
+            }
+        }
+        fetch(url)
+            .then((data) => data.json())
+            .then((json) => {
+                const urlSplit = url.split("/");
+                const name = urlSplit[urlSplit.length - 1];
+                dispatch(
+                    changeToLocalSimulariumFile(
+                        {
+                            name, //TODO: add this to metadata about the file
+                            data: json,
+                            lastModified: Date.now(), //TODO: add this to metadata about the file
+                        },
+                        simulariumController
+                    )
+                );
+            })
+            .catch((error) => {
+                dispatch(
+                    setViewerStatus({
+                        status: VIEWER_ERROR,
+                        errorMessage: error.message,
+                        htmlData: `${url} failed` || "",
+                    })
+                );
+                done();
+            });
+    },
+    type: LOAD_FILE_VIA_URL,
+});
+
 export default [
     requestPlotDataLogic,
     loadLocalFile,
     loadNetworkedFile,
     resetSimulariumFileState,
+    loadFileViaUrl,
 ];
