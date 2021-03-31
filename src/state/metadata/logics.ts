@@ -254,6 +254,7 @@ const loadFileViaUrl = createLogic({
                         simulariumController
                     )
                 );
+                done();
             })
             .catch((error) => {
                 dispatch(
