@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
-import { Layout, notification } from "antd";
+import { Layout } from "antd";
 import queryString from "query-string";
 import { SimulariumController } from "@aics/simularium-viewer";
 import { find } from "lodash";
