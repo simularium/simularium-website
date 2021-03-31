@@ -261,6 +261,12 @@ const loadFileViaUrl = createLogic({
                         status: VIEWER_ERROR,
                         errorMessage: error.message,
                         htmlData: `${url} failed` || "",
+                        onClose: () =>
+                            history.replaceState(
+                                {},
+                                "",
+                                `${location.origin}${location.pathname}`
+                            ),
                     })
                 );
                 done();

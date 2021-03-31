@@ -92,11 +92,13 @@ export interface ViewerStatusInfo {
     htmlData?: string;
     errorMessage?: string;
     status: ViewerStatus;
+    onClose?: () => void;
 }
 
 export interface ViewerError {
     htmlData?: string;
     message: string;
+    onClose?: () => void;
 }
 
 export interface FrontEndError extends Error {
