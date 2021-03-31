@@ -24,13 +24,14 @@ import {
     RequestLocalFileAction,
     RequestNetworkFileAction,
     SetSimulariumControllerAction,
+    SetViewerStatusAction,
 } from "../../state/metadata/types";
 import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
 import {
     DragOverViewerAction,
     ResetDragOverViewerAction,
 } from "../../state/selection/types";
-import { VIEWER_LOADING } from "../../state/metadata/constants";
+import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/metadata/constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { urlCheck } from "../../util";
@@ -50,6 +51,7 @@ interface AppProps {
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
     viewerStatus: string;
     loadViaUrl: ActionCreator<LoadViaUrlAction>;
+    setViewerStatus: ActionCreator<SetViewerStatusAction>;
 }
 
 interface AppState {
@@ -73,6 +75,7 @@ class App extends React.Component<AppProps, AppState> {
             changeToNetworkedFile,
             simulariumController,
             loadViaUrl,
+            setViewerStatus,
         } = this.props;
         const current = this.interactiveContent.current;
 
@@ -103,17 +106,18 @@ class App extends React.Component<AppProps, AppState> {
             const verifiedUrl = urlCheck(userTrajectoryUrl);
             // if the url doesn't pass the regEx check, notify the user and then clear the url
             if (!verifiedUrl) {
-                notification.error({
-                    message: `${userTrajectoryUrl} does not seem like a url`,
-                    description:
+                console.log("Not verified url");
+                setViewerStatus({
+                    status: VIEWER_ERROR,
+                    errorMessage: `${userTrajectoryUrl} does not seem like a url`,
+                    htmlData:
                         "make sure to include 'http/https' at the beginning of the url, and check for typos",
-                    onClose: () => {
+                    onClose: () =>
                         history.replaceState(
                             {},
                             "",
                             `${location.origin}${location.pathname}`
-                        );
-                    },
+                        ),
                 });
                 setSimulariumController(controller);
                 return;
@@ -221,6 +225,7 @@ const dispatchToPropsMap = {
     resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
     dragOverViewer: selectionStateBranch.actions.dragOverViewer,
     loadViaUrl: metadataStateBranch.actions.loadViaUrl,
+    setViewerStatus: metadataStateBranch.actions.setViewerStatus,
 };
 
 export default connect(

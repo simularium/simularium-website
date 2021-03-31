@@ -36,7 +36,6 @@ import { batchActions } from "../../state/util";
 import PlaybackControls from "../../components/PlaybackControls";
 import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
-import { convertToSentenceCase } from "../../util";
 import { TUTORIAL_PATHNAME } from "../../routes";
 
 import {
@@ -45,6 +44,7 @@ import {
     getSelectionStateInfoForViewer,
 } from "./selectors";
 import { AGENT_COLORS } from "./constants";
+import errorNotification from "../../components/ErrorNotification";
 
 const styles = require("./style.css");
 
@@ -116,6 +116,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public componentDidMount() {
+        const { viewerError } = this.props;
         const browser = Bowser.getParser(window.navigator.userAgent);
         // Versions from https://caniuse.com/webgl2
         const isBrowserSupported = browser.satisfies({
@@ -154,6 +155,14 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 this.resize(current);
             }, 200);
         }
+
+        if (viewerError) {
+            return errorNotification({
+                message: viewerError.message,
+                htmlData: viewerError.htmlData,
+                onClose: viewerError.onClose,
+            });
+        }
     }
 
     public componentDidUpdate(prevProps: ViewerPanelProps) {
@@ -164,17 +173,10 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             prevProps.viewerStatus !== VIEWER_ERROR &&
             viewerError.message
         ) {
-            notification.error({
-                message: convertToSentenceCase(viewerError.message),
-                description:
-                    (
-                        <div
-                            dangerouslySetInnerHTML={{
-                                __html: viewerError.htmlData as string,
-                            }}
-                        />
-                    ) || "",
-                duration: viewerError.htmlData ? 0 : 4.5,
+            return errorNotification({
+                message: viewerError.message,
+                htmlData: viewerError.htmlData,
+                onClose: viewerError.onClose,
             });
         }
         if (
