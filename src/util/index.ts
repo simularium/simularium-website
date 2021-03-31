@@ -83,3 +83,7 @@ export const urlCheck = (urlToCheck: any): string => {
     }
     return "";
 };
+
+export const clearUrlParams = () => {
+    history.replaceState({}, "", `${location.origin}${location.pathname}`);
+};

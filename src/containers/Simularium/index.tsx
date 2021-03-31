@@ -34,7 +34,7 @@ import {
 import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/metadata/constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
-import { urlCheck } from "../../util";
+import { clearUrlParams, urlCheck } from "../../util";
 const { Content } = Layout;
 
 const styles = require("./style.css");
@@ -85,47 +85,42 @@ class App extends React.Component<AppProps, AppState> {
         const controller = simulariumController || new SimulariumController({});
         if (fileName) {
             const networkedFile = find(TRAJECTORIES, { id: fileName });
-            if (!networkedFile) {
-                history.replaceState(
-                    {},
-                    "",
-                    `${location.origin}${location.pathname}`
+            if (networkedFile) {
+                const fileData = networkedFile as TrajectoryDisplayData;
+                changeToNetworkedFile(
+                    {
+                        name: fileData.id,
+                        title: fileData.title,
+                    },
+                    // simularium controller will get initialize in the change file logic
+                    controller
                 );
+            } else {
+                // if the name is not in our list of networked files, just quietly clear out the url
+                // and save the controller
+                clearUrlParams();
                 setSimulariumController(controller);
             }
-            const fileData = networkedFile as TrajectoryDisplayData;
-            // simularium controller will get initialize in the change file logic
-            changeToNetworkedFile(
-                {
-                    name: fileData.id,
-                    title: fileData.title,
-                },
-                controller
-            );
         } else if (userTrajectoryUrl) {
             const verifiedUrl = urlCheck(userTrajectoryUrl);
-            // if the url doesn't pass the regEx check, notify the user and then clear the url
-            if (!verifiedUrl) {
-                console.log("Not verified url");
+            if (verifiedUrl) {
+                loadViaUrl(verifiedUrl, controller);
+            } else {
+                // if the url doesn't pass the regEx check, notify the user and then clear the url
+                // and save the controller
                 setViewerStatus({
                     status: VIEWER_ERROR,
                     errorMessage: `${userTrajectoryUrl} does not seem like a url`,
                     htmlData:
                         "make sure to include 'http/https' at the beginning of the url, and check for typos",
-                    onClose: () =>
-                        history.replaceState(
-                            {},
-                            "",
-                            `${location.origin}${location.pathname}`
-                        ),
+                    onClose: clearUrlParams,
                 });
                 setSimulariumController(controller);
-                return;
             }
-            loadViaUrl(verifiedUrl, controller);
         } else {
             setSimulariumController(controller);
         }
+
         if (current) {
             current.addEventListener(
                 "dragover",
