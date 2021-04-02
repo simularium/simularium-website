@@ -43,6 +43,13 @@ export interface RequestNetworkFileAction {
 export interface RequestLocalFileAction {
     payload: LocalSimFile;
     type: string;
+    controller?: SimulariumController;
+}
+
+export interface LoadViaUrlAction {
+    payload: string;
+    type: string;
+    controller?: SimulariumController;
 }
 
 export interface LocalSimFile {
@@ -85,11 +92,13 @@ export interface ViewerStatusInfo {
     htmlData?: string;
     errorMessage?: string;
     status: ViewerStatus;
+    onClose?: () => void;
 }
 
 export interface ViewerError {
     htmlData?: string;
     message: string;
+    onClose?: () => void;
 }
 
 export interface FrontEndError extends Error {

@@ -101,6 +101,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
                     ? {
                           message: action.payload.errorMessage,
                           htmlData: action.payload.htmlData,
+                          onClose: action.payload.onClose,
                       }
                     : "",
         }),

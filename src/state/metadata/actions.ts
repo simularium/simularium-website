@@ -10,6 +10,7 @@ import {
     LOAD_NETWORKED_FILE_IN_VIEWER,
     REQUEST_PLOT_DATA,
     CLEAR_SIMULARIUM_FILE,
+    LOAD_FILE_VIA_URL,
 } from "./constants";
 import {
     MetadataStateBranch,
@@ -24,6 +25,7 @@ import {
     RequestNetworkFileAction,
     RequestLocalFileAction,
     ClearSimFileDataAction,
+    LoadViaUrlAction,
 } from "./types";
 import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
 
@@ -77,10 +79,12 @@ export function receiveAgentNamesAndStates(
 }
 
 export function changeToLocalSimulariumFile(
-    payload: LocalSimFile
+    payload: LocalSimFile,
+    controller?: SimulariumController
 ): RequestLocalFileAction {
     return {
         payload,
+        controller,
         type: LOAD_LOCAL_FILE_IN_VIEWER,
     };
 }
@@ -120,5 +124,16 @@ export function setViewerStatus(
     return {
         payload,
         type: SET_VIEWER_STATUS,
+    };
+}
+
+export function loadViaUrl(
+    payload: string,
+    controller?: SimulariumController
+): LoadViaUrlAction {
+    return {
+        payload,
+        controller,
+        type: LOAD_FILE_VIA_URL,
     };
 }

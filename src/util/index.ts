@@ -72,3 +72,23 @@ export const wrapText = (
         numLines: numLines,
     };
 };
+
+export const urlCheck = (urlToCheck: any): string => {
+    if (typeof urlToCheck !== "string") {
+        return "";
+    }
+    /**
+     * RegEx: https://regexr.com/5pkui, forked from https://regexr.com/39p0t
+     * I had to modify the original to allow s3 buckets which have multiple `.letters-letters.` in them
+     * and I made the http(s) required
+     */
+    const regEx = /(https?:\/\/)([\w\-]){0,200}(\.[a-zA-Z][^\-])([\/\w]*)*\/?\??([^\n\r]*)??([^\n\r]*)/g;
+    if (regEx.test(urlToCheck)) {
+        return urlToCheck;
+    }
+    return "";
+};
+
+export const clearUrlParams = () => {
+    history.replaceState({}, "", `${location.origin}${location.pathname}`);
+};

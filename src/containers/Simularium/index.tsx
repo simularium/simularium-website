@@ -14,21 +14,27 @@ import { State } from "../../state/types";
 
 import metadataStateBranch from "../../state/metadata";
 import selectionStateBranch from "../../state/selection";
-import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import {
+    URL_PARAM_KEY_FILE_NAME,
+    URL_PARAM_KEY_USER_URL,
+} from "../../constants";
+import {
+    LoadViaUrlAction,
     LocalSimFile,
     RequestLocalFileAction,
     RequestNetworkFileAction,
     SetSimulariumControllerAction,
+    SetViewerStatusAction,
 } from "../../state/metadata/types";
 import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
 import {
     DragOverViewerAction,
     ResetDragOverViewerAction,
 } from "../../state/selection/types";
-import { VIEWER_LOADING } from "../../state/metadata/constants";
+import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/metadata/constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
+import { clearUrlParams, urlCheck } from "../../util";
 const { Content } = Layout;
 
 const styles = require("./style.css");
@@ -44,6 +50,8 @@ interface AppProps {
     dragOverViewer: ActionCreator<DragOverViewerAction>;
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
     viewerStatus: string;
+    loadViaUrl: ActionCreator<LoadViaUrlAction>;
+    setViewerStatus: ActionCreator<SetViewerStatusAction>;
 }
 
 interface AppState {
@@ -66,26 +74,53 @@ class App extends React.Component<AppProps, AppState> {
             setSimulariumController,
             changeToNetworkedFile,
             simulariumController,
+            loadViaUrl,
+            setViewerStatus,
         } = this.props;
         const current = this.interactiveContent.current;
 
         const parsed = queryString.parse(location.search);
         const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
-        const file = find(TRAJECTORIES, { id: fileName });
+        const userTrajectoryUrl = parsed[URL_PARAM_KEY_USER_URL];
         const controller = simulariumController || new SimulariumController({});
-        if (fileName && file) {
-            const fileData = file as TrajectoryDisplayData;
-            // simularium controller will get initialize in the change file logic
-            changeToNetworkedFile(
-                {
-                    name: fileData.id,
-                    title: fileData.title,
-                },
-                controller
-            );
+        if (fileName) {
+            const networkedFile = find(TRAJECTORIES, { id: fileName });
+            if (networkedFile) {
+                const fileData = networkedFile as TrajectoryDisplayData;
+                changeToNetworkedFile(
+                    {
+                        name: fileData.id,
+                        title: fileData.title,
+                    },
+                    // simularium controller will get initialize in the change file logic
+                    controller
+                );
+            } else {
+                // if the name is not in our list of networked files, just quietly clear out the url
+                // and save the controller
+                clearUrlParams();
+                setSimulariumController(controller);
+            }
+        } else if (userTrajectoryUrl) {
+            const verifiedUrl = urlCheck(userTrajectoryUrl);
+            if (verifiedUrl) {
+                loadViaUrl(verifiedUrl, controller);
+            } else {
+                // if the url doesn't pass the regEx check, notify the user and then clear the url
+                // and save the controller
+                setViewerStatus({
+                    status: VIEWER_ERROR,
+                    errorMessage: `${userTrajectoryUrl} does not seem like a url`,
+                    htmlData:
+                        "make sure to include 'http/https' at the beginning of the url, and check for typos",
+                    onClose: clearUrlParams,
+                });
+                setSimulariumController(controller);
+            }
         } else {
             setSimulariumController(controller);
         }
+
         if (current) {
             current.addEventListener(
                 "dragover",
@@ -184,6 +219,8 @@ const dispatchToPropsMap = {
     changeToNetworkedFile: metadataStateBranch.actions.changeToNetworkedFile,
     resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
     dragOverViewer: selectionStateBranch.actions.dragOverViewer,
+    loadViaUrl: metadataStateBranch.actions.loadViaUrl,
+    setViewerStatus: metadataStateBranch.actions.setViewerStatus,
 };
 
 export default connect(
