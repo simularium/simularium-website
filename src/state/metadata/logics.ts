@@ -261,7 +261,7 @@ const loadFileViaUrl = createLogic({
                     setViewerStatus({
                         status: VIEWER_ERROR,
                         errorMessage: error.message,
-                        htmlData: `${url} failed` || "",
+                        htmlData: `${url} failed`,
                         onClose: () =>
                             history.replaceState(
                                 {},
