@@ -83,7 +83,7 @@ export const urlCheck = (urlToCheck: any): string => {
      * and I made the http(s) required
      */
     const regEx = /(https?:\/\/)([\w\-]){0,200}(\.[a-zA-Z][^\-])([\/\w]*)*\/?\??([^\n\r]*)??([^\n\r]*)/g;
-    if (!!urlToCheck.match(regEx)) {
+    if (regEx.test(urlToCheck)) {
         return urlToCheck;
     }
     return "";
