@@ -238,16 +238,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
         const { receiveMetadata, simulariumController } = this.props;
-        console.log(data);
-
-        const tickIntervalLength = simulariumController.tickIntervalLength;
-        let scaleBarLabelNumber: number;
-        let scaleBarLabelUnit: string;
         const updatedData = data as TrajectoryFileInfoV2;
+        const tickIntervalLength = simulariumController.tickIntervalLength;
 
-        scaleBarLabelNumber =
+        const scaleBarLabelNumber =
             tickIntervalLength * updatedData.spatialUnits.magnitude;
-        scaleBarLabelUnit = updatedData.spatialUnits.name;
+        const scaleBarLabelUnit = updatedData.spatialUnits.name;
 
         receiveMetadata({
             numFrames: updatedData.totalSteps,

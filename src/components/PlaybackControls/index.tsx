@@ -80,12 +80,8 @@ const PlayBackControls = ({
     const roundNumber = (num: number) => parseFloat(Number(num).toPrecision(3));
     let roundedTime = 0;
     let roundedLastFrameTime = 0;
-    let unitIndex = 0;
 
-    if (timeUnits === null) {
-        console.log("timeUnits is null");
-    } else {
-        console.log(unitLabel);
+    if (timeUnits) {
         roundedTime = time ? roundNumber(time * timeUnits.magnitude) : 0;
         roundedLastFrameTime = roundNumber(lastFrameTime * timeUnits.magnitude);
     }
