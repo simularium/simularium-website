@@ -38,12 +38,6 @@ const PlayBackControls = ({
     timeUnits,
     isEmpty,
 }: PlayBackProps) => {
-    const [unitLabel, setUnitLabel] = useState("s");
-    useEffect(() => {
-        if (!timeUnits) return;
-        setUnitLabel(timeUnits.name);
-    }, [timeUnits]);
-
     // Where to resume playing if simulation was playing before scrubbing
     const [
         timeToResumeAfterScrubbing,
@@ -173,7 +167,8 @@ const PlayBackControls = ({
                 <p>
                     {roundedTime}{" "}
                     <span className={styles.lastFrameTime}>
-                        / {roundedLastFrameTime} {unitLabel}
+                        / {roundedLastFrameTime}{" "}
+                        {timeUnits ? timeUnits.name : "s"}
                     </span>
                 </p>
             </div>
