@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Slider, Tooltip } from "antd";
 import classNames from "classnames";
 
