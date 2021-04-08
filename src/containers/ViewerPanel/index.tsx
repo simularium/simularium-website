@@ -40,14 +40,16 @@ import PlaybackControls from "../../components/PlaybackControls";
 import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
 import { TUTORIAL_PATHNAME } from "../../routes";
+import errorNotification from "../../components/ErrorNotification";
 
 import {
     convertUIDataToColorMap,
     convertUIDataToSelectionData,
+    getDisplayTimes,
     getSelectionStateInfoForViewer,
 } from "./selectors";
 import { AGENT_COLORS } from "./constants";
-import errorNotification from "../../components/ErrorNotification";
+import { DisplayTimes } from "./types";
 
 const styles = require("./style.css");
 
@@ -58,6 +60,7 @@ interface ViewerPanelProps {
     firstFrameTime: number;
     lastFrameTime: number;
     timeUnits: TimeUnits;
+    displayTimes: DisplayTimes;
     isPlaying: boolean;
     fileIsDraggedOverViewer: boolean;
     viewerStatus: string;
@@ -346,6 +349,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setViewerStatus,
             timeStep,
             timeUnits,
+            displayTimes,
             isBuffering,
             isPlaying,
             viewerStatus,
@@ -383,6 +387,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     time={time}
                     timeStep={timeStep}
                     timeUnits={timeUnits}
+                    displayTimes={displayTimes}
                     onTimeChange={this.skipToTime}
                     pauseHandler={this.pause}
                     prevHandler={this.playBackOne}
@@ -419,6 +424,7 @@ function mapStateToProps(state: State) {
         numFrames: metadataStateBranch.selectors.getNumFrames(state),
         timeStep: metadataStateBranch.selectors.getTimeStepSize(state),
         timeUnits: metadataStateBranch.selectors.getTimeUnits(state),
+        displayTimes: getDisplayTimes(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
         viewerStatus: metadataStateBranch.selectors.getViewerStatus(state),
         viewerError: metadataStateBranch.selectors.getViewerError(state),

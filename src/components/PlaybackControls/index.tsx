@@ -5,6 +5,7 @@ import classNames from "classnames";
 import { TimeUnits } from "../../state/metadata/types";
 import { TOOLTIP_COLOR } from "../../constants/index";
 import Icons from "../Icons";
+import { DisplayTimes } from "../../containers/ViewerPanel/types";
 
 const styles = require("./style.css");
 interface PlayBackProps {
@@ -20,6 +21,7 @@ interface PlayBackProps {
     loading: boolean;
     timeStep: number;
     timeUnits: TimeUnits;
+    displayTimes: DisplayTimes;
     isEmpty: boolean;
 }
 
@@ -36,6 +38,7 @@ const PlayBackControls = ({
     loading,
     timeStep,
     timeUnits,
+    displayTimes,
     isEmpty,
 }: PlayBackProps) => {
     // Where to resume playing if simulation was playing before scrubbing
@@ -70,15 +73,6 @@ const PlayBackControls = ({
             setTimeToResumeAfterScrubbing(-1);
         }
     };
-
-    const roundNumber = (num: number) => parseFloat(Number(num).toPrecision(3));
-    let roundedTime = 0;
-    let roundedLastFrameTime = 0;
-
-    if (timeUnits) {
-        roundedTime = time ? roundNumber(time * timeUnits.magnitude) : 0;
-        roundedLastFrameTime = roundNumber(lastFrameTime * timeUnits.magnitude);
-    }
 
     const btnClassNames = classNames([styles.item, styles.btn]);
 
@@ -165,10 +159,10 @@ const PlayBackControls = ({
             />
             <div className={styles.time}>
                 <p>
-                    {roundedTime}{" "}
+                    {displayTimes.roundedTime}{" "}
                     <span className={styles.lastFrameTime}>
-                        / {roundedLastFrameTime}{" "}
-                        {timeUnits ? timeUnits.name : "s"}
+                        / {displayTimes.roundedLastFrameTime}{" "}
+                        {displayTimes.unitLabel}
                     </span>
                 </p>
             </div>
