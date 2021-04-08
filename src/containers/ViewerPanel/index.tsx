@@ -32,7 +32,6 @@ import {
     LocalSimFile,
     SetViewerStatusAction,
     ViewerError,
-    TimeUnits,
 } from "../../state/metadata/types";
 import { VIEWER_ERROR } from "../../state/metadata/constants";
 import { batchActions } from "../../state/util";
@@ -59,7 +58,6 @@ interface ViewerPanelProps {
     timeStep: number;
     firstFrameTime: number;
     lastFrameTime: number;
-    timeUnits: TimeUnits;
     displayTimes: DisplayTimes;
     isPlaying: boolean;
     fileIsDraggedOverViewer: boolean;
@@ -348,7 +346,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             selectionStateInfoForViewer,
             setViewerStatus,
             timeStep,
-            timeUnits,
             displayTimes,
             isBuffering,
             isPlaying,
@@ -386,7 +383,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     playHandler={this.startPlay}
                     time={time}
                     timeStep={timeStep}
-                    timeUnits={timeUnits}
                     displayTimes={displayTimes}
                     onTimeChange={this.skipToTime}
                     pauseHandler={this.pause}
@@ -423,7 +419,6 @@ function mapStateToProps(state: State) {
         ),
         numFrames: metadataStateBranch.selectors.getNumFrames(state),
         timeStep: metadataStateBranch.selectors.getTimeStepSize(state),
-        timeUnits: metadataStateBranch.selectors.getTimeUnits(state),
         displayTimes: getDisplayTimes(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
         viewerStatus: metadataStateBranch.selectors.getViewerStatus(state),
