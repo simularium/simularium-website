@@ -6,12 +6,14 @@ import SimulariumViewer, {
     SelectionStateInfo,
 } from "@aics/simularium-viewer";
 import "@aics/simularium-viewer/style/style.css";
-import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/simularium";
+import {
+    TrajectoryFileInfo,
+    TrajectoryFileInfoV2,
+} from "@aics/simularium-viewer/type-declarations/simularium";
 import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
 import { connect } from "react-redux";
 import { Modal } from "antd";
 import Bowser from "bowser";
-const si = require("si-prefix");
 
 import { State } from "../../state/types";
 import selectionStateBranch from "../../state/selection";
@@ -37,14 +39,16 @@ import PlaybackControls from "../../components/PlaybackControls";
 import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
 import { TUTORIAL_PATHNAME } from "../../routes";
+import errorNotification from "../../components/ErrorNotification";
 
 import {
     convertUIDataToColorMap,
     convertUIDataToSelectionData,
+    getDisplayTimes,
     getSelectionStateInfoForViewer,
 } from "./selectors";
 import { AGENT_COLORS } from "./constants";
-import errorNotification from "../../components/ErrorNotification";
+import { DisplayTimes } from "./types";
 
 const styles = require("./style.css");
 
@@ -54,6 +58,7 @@ interface ViewerPanelProps {
     timeStep: number;
     firstFrameTime: number;
     lastFrameTime: number;
+    displayTimes: DisplayTimes;
     isPlaying: boolean;
     fileIsDraggedOverViewer: boolean;
     viewerStatus: string;
@@ -234,31 +239,23 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
         const { receiveMetadata, simulariumController } = this.props;
-        const { spatialUnitFactorMeters } = data;
-
+        const updatedData = data as TrajectoryFileInfoV2;
         const tickIntervalLength = simulariumController.tickIntervalLength;
-        // Format scale bar length and unit so that it's more readable, e.g.:
-        // 0.000000015 m -> [15, "nm"]
-        const scaleBarLabelArray = si.meter.convert(
-            tickIntervalLength * spatialUnitFactorMeters
-        );
-        const scaleBarLabelNumber: number = parseFloat(
-            scaleBarLabelArray[0].toPrecision(2)
-        );
-        // The si-prefix library abbreviates "micro" as "mc", so swap it out with "µ"
-        const scaleBarLabelUnit: string = scaleBarLabelArray[1].replace(
-            "mc",
-            "µ"
-        );
+
+        const scaleBarLabelNumber =
+            tickIntervalLength * updatedData.spatialUnits.magnitude;
+        const scaleBarLabelUnit = updatedData.spatialUnits.name;
+
+        receiveMetadata({
+            numFrames: updatedData.totalSteps,
+            timeStepSize:
+                updatedData.timeStepSize * updatedData.timeUnits.magnitude,
+            timeUnits: updatedData.timeUnits,
+        });
 
         this.setState({
             scaleBarLabel: scaleBarLabelNumber + " " + scaleBarLabelUnit,
             isInitialPlay: true,
-        });
-
-        receiveMetadata({
-            numFrames: data.totalSteps,
-            timeStepSize: data.timeStepSize,
         });
     }
 
@@ -349,6 +346,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             selectionStateInfoForViewer,
             setViewerStatus,
             timeStep,
+            displayTimes,
             isBuffering,
             isPlaying,
             viewerStatus,
@@ -385,6 +383,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     playHandler={this.startPlay}
                     time={time}
                     timeStep={timeStep}
+                    displayTimes={displayTimes}
                     onTimeChange={this.skipToTime}
                     pauseHandler={this.pause}
                     prevHandler={this.playBackOne}
@@ -420,6 +419,7 @@ function mapStateToProps(state: State) {
         ),
         numFrames: metadataStateBranch.selectors.getNumFrames(state),
         timeStep: metadataStateBranch.selectors.getTimeStepSize(state),
+        displayTimes: getDisplayTimes(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
         viewerStatus: metadataStateBranch.selectors.getViewerStatus(state),
         viewerError: metadataStateBranch.selectors.getViewerError(state),

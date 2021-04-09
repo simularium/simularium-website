@@ -1,7 +1,12 @@
 import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
 import { createSelector } from "reselect";
 import {
+    getLastFrameTimeOfCachedSimulation,
+    getTimeUnits,
+} from "../../state/metadata/selectors";
+import {
     getAgentsToHide,
+    getCurrentTime,
     getHightLightedAgents,
 } from "../../state/selection/selectors";
 import {
@@ -44,3 +49,28 @@ export const convertUIDataToColorMap = (
         return acc;
     }, returnData);
 };
+
+export const getDisplayTimes = createSelector(
+    [getCurrentTime, getTimeUnits, getLastFrameTimeOfCachedSimulation],
+    (time, timeUnits, lastFrameTime) => {
+        const roundNumber = (num: number) =>
+            parseFloat(Number(num).toPrecision(3));
+        let roundedTime = 0;
+        let roundedLastFrameTime = 0;
+        let unitLabel = "s";
+
+        if (timeUnits) {
+            roundedTime = time ? roundNumber(time * timeUnits.magnitude) : 0;
+            roundedLastFrameTime = roundNumber(
+                lastFrameTime * timeUnits.magnitude
+            );
+            unitLabel = timeUnits.name;
+        }
+
+        return {
+            roundedTime: roundedTime,
+            roundedLastFrameTime: roundedLastFrameTime,
+            unitLabel: unitLabel,
+        };
+    }
+);

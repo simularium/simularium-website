@@ -68,6 +68,11 @@ export const isNetworkSimFileInterface = (
     file: any
 ): file is NetworkedSimFile => !!file.title;
 
+export interface TimeUnits {
+    magnitude: number;
+    name: string;
+}
+
 export interface SetSimulariumControllerAction {
     payload: SimulariumController;
     type: string;
