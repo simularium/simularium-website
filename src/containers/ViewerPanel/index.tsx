@@ -6,10 +6,7 @@ import SimulariumViewer, {
     SelectionStateInfo,
 } from "@aics/simularium-viewer";
 import "@aics/simularium-viewer/style/style.css";
-import {
-    TrajectoryFileInfo,
-    TrajectoryFileInfoV2,
-} from "@aics/simularium-viewer/type-declarations/simularium";
+import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/simularium";
 import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
 import { connect } from "react-redux";
 import { Modal } from "antd";
@@ -239,18 +236,16 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
         const { receiveMetadata, simulariumController } = this.props;
-        const updatedData = data as TrajectoryFileInfoV2;
         const tickIntervalLength = simulariumController.tickIntervalLength;
 
         const scaleBarLabelNumber =
-            tickIntervalLength * updatedData.spatialUnits.magnitude;
-        const scaleBarLabelUnit = updatedData.spatialUnits.name;
+            tickIntervalLength * data.spatialUnits.magnitude;
+        const scaleBarLabelUnit = data.spatialUnits.name;
 
         receiveMetadata({
-            numFrames: updatedData.totalSteps,
-            timeStepSize:
-                updatedData.timeStepSize * updatedData.timeUnits.magnitude,
-            timeUnits: updatedData.timeUnits,
+            numFrames: data.totalSteps,
+            timeStepSize: data.timeStepSize * data.timeUnits.magnitude,
+            timeUnits: data.timeUnits,
         });
 
         this.setState({
