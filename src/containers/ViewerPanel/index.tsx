@@ -299,7 +299,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         if (isBuffering) {
             return;
         }
-        if (time >= lastFrameTime) {
+        if (time > lastFrameTime) {
             return;
         }
 
