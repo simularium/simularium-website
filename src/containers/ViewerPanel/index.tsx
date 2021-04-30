@@ -238,8 +238,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const { receiveMetadata, simulariumController } = this.props;
         const tickIntervalLength = simulariumController.tickIntervalLength;
 
-        const scaleBarLabelNumber =
+        let scaleBarLabelNumber =
             tickIntervalLength * data.spatialUnits.magnitude;
+        scaleBarLabelNumber = parseFloat(scaleBarLabelNumber.toPrecision(2));
         const scaleBarLabelUnit = data.spatialUnits.name;
 
         receiveMetadata({
