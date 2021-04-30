@@ -46,7 +46,8 @@ module.exports = ({ analyze, env } = {}) => ({
                 test: /\.css/,
                 include: [
                     path.resolve(__dirname, "../", "src/components"),
-                    path.resolve(__dirname, "../", "src/containers")
+                    path.resolve(__dirname, "../", "src/containers"),
+                    path.resolve(__dirname, "../", "../simularium-viewer/style")
 
                 ],
                 use: [
