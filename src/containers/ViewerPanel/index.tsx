@@ -300,12 +300,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         if (isBuffering) {
             return;
         }
-        if (time > lastFrameTime || time < firstFrameTime) {
+        const roundedTime = parseFloat(time.toFixed(4));
+        if (roundedTime > lastFrameTime || roundedTime < firstFrameTime) {
             return;
         }
 
         setBuffering(true);
-        simulariumController.gotoTime(time);
+        simulariumController.gotoTime(roundedTime);
     }
 
     public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
