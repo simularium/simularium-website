@@ -300,7 +300,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         if (isBuffering) {
             return;
         }
-        const roundedTime = parseFloat(time.toFixed(4));
+        const roundedTime = parseFloat(time.toPrecision(4));
         if (roundedTime > lastFrameTime || roundedTime < firstFrameTime) {
             return;
         }
