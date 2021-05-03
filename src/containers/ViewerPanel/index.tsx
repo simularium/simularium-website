@@ -292,6 +292,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     public skipToTime(time: number) {
         const {
             simulariumController,
+            firstFrameTime,
             lastFrameTime,
             isBuffering,
             setBuffering,
@@ -299,7 +300,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         if (isBuffering) {
             return;
         }
-        if (time > lastFrameTime) {
+        if (time > lastFrameTime || time < firstFrameTime) {
             return;
         }
 
