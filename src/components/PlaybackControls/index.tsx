@@ -128,7 +128,7 @@ const PlayBackControls = ({
                     ])}
                     size="small"
                     onClick={nextHandler}
-                    disabled={time + timeStep >= lastFrameTime || loading}
+                    disabled={time + timeStep > lastFrameTime || loading}
                     loading={loading}
                 >
                     {/* if loading, antd will show loading icon, otherwise, show our custom svg */}
