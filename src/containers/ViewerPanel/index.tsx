@@ -292,6 +292,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     public skipToTime(time: number) {
         const {
             simulariumController,
+            firstFrameTime,
             lastFrameTime,
             isBuffering,
             setBuffering,
@@ -299,12 +300,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         if (isBuffering) {
             return;
         }
-        if (time > lastFrameTime) {
+        const roundedTime = parseFloat(time.toPrecision(4));
+        if (roundedTime > lastFrameTime || roundedTime < firstFrameTime) {
             return;
         }
 
         setBuffering(true);
-        simulariumController.gotoTime(time);
+        simulariumController.gotoTime(roundedTime);
     }
 
     public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
