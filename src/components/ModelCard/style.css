@@ -47,6 +47,10 @@
     background-color: var(--light-theme-card-version-tag-purple);
 }
 
+.version-tag:hover {
+    opacity: 1;
+}
+
 .card-title {
     font-weight: 600;
 }
