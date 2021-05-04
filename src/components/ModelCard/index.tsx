@@ -57,7 +57,7 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
             <div className={styles.cardText}>
                 <p className={styles.versionAndTime}>
                     {version ? (
-                        <div className={styles.versionTag}>v{version}</div>
+                        <Tag className={styles.versionTag}>v{version}</Tag>
                     ) : (
                         <div />
                     )}
