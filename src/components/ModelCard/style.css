@@ -36,6 +36,15 @@
     margin: 0 !important;
 }
 
+.version-tag {
+    border-radius: 2px;
+    padding-right: 5px;
+    padding-left: 5px;
+    height: 1.25em;
+    color: white;
+    background-color: var(--light-theme-card-version-tag-purple);
+}
+
 .card-title {
     font-weight: 600;
 }

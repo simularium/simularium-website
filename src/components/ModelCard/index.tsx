@@ -19,6 +19,7 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
         id,
         title,
         totalSimulatedTime,
+        version,
         authors,
         publication,
         description,
@@ -55,10 +56,14 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
         >
             <div className={styles.cardText}>
                 <p className={styles.versionAndTime}>
-                    <Tag className={styles.versionTag}>f</Tag>
-                    <div className={styles.simulatedTime}>
+                    {version ? (
+                        <div className={styles.versionTag}>v{version}</div>
+                    ) : (
+                        <div />
+                    )}
+                    <span className={styles.simulatedTime}>
                         {totalSimulatedTime}
-                    </div>
+                    </span>
                 </p>
                 <Link
                     to={{

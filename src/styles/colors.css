@@ -57,6 +57,7 @@
     --light-theme-panel-light-gray: var(--white-four);
     --light-theme-button-light-gray: var(--white-four);
     --light-theme-card-bg-white: var(--pure-white);
+    --light-theme-card-version-tag-purple: var(--baby-purple);
     --light-theme-background-off-white: var(--off-white);
     --light-theme-faint-text: var(--white-two);
 }
