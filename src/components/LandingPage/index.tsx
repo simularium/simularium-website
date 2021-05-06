@@ -92,7 +92,7 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                     </p>
                     <img
                         className={styles.flowchart}
-                        alt="A flowchart summarizing how Simularium currently works"
+                        alt="Aa flowchart summarizing how Simularium currently works"
                         src={flowchartImg}
                     />
                 </div>
