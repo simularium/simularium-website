@@ -74,7 +74,7 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         </a>{" "}
                         into the Simularium file format (JSON). The Simularium
                         Viewer uses advanced rendering techniques developed by{" "}
-                        <a href="https://www.cg.tuwien.ac.at/research/publications/2015/cellVIEW_2015/">
+                        <a href="ahttps://www.cg.tuwien.ac.at/research/publications/2015/cellVIEW_2015/">
                             Le Muzic et al. (2015)
                         </a>{" "}
                         and{" "}
