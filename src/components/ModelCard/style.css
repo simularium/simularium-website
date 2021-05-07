@@ -32,6 +32,7 @@
     font-size: 16px;
 }
 
+/* Necessary to make flexbox spacing work */
 .version-tag, .simulated-time {
     margin: 0 !important;
 }
@@ -46,6 +47,7 @@
     border-color: var(--light-theme-version-badge-purple);
 }
 
+/* Remove Antd hover effect for Tags */
 .version-tag:hover {
     opacity: 1;
 }

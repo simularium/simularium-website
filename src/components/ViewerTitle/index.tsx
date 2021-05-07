@@ -25,6 +25,10 @@ const ViewerTitle: React.FunctionComponent<ViewerTitleProps> = (
             <span />
         );
 
+    // Grab the trajectory ID from the URL and find the corresponding trajectory object in
+    // networked-trajectories.ts to get its version info
+    // TODO: Eventually we should put all the contents of networked-trajectories.ts in the
+    // Simularium files themselves
     const trajectoryId = location.search.replace("?trajFileName=", "");
     const currentTrajectory = TRAJECTORIES.find(
         (trajectory) => trajectory.id === trajectoryId
