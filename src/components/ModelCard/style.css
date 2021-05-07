@@ -43,8 +43,7 @@
     height: 20px;
     font-size: 16px;
     color: white;
-    border-color: var(--light-theme-card-version-tag-purple);
-    background-color: var(--light-theme-card-version-tag-purple);
+    border-color: var(--light-theme-version-badge-purple);
 }
 
 .version-tag:hover {
