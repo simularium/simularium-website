@@ -152,10 +152,31 @@
     font-size: 16px;
 }
 
-.style__simulated-time--inYqS {
+.style__version-and-time--33bLi {
+    display: flex;
+    justify-content: space-between;
     margin-top: 4px;
-    text-align: right;
     font-size: 16px;
+}
+
+/* Necessary to make flexbox spacing work */
+.style__version-tag--M3dmz, .style__simulated-time--inYqS {
+    margin: 0 !important;
+}
+
+.style__version-tag--M3dmz {
+    border-radius: 2px;
+    padding-right: 3px;
+    padding-left: 3px;
+    height: 20px;
+    font-size: 16px;
+    color: white;
+    border-color: var(--light-theme-version-badge-purple);
+}
+
+/* Remove Antd hover effect for Tags */
+.style__version-tag--M3dmz:hover {
+    opacity: 1;
 }
 
 .style__card-title--mHH2m {
@@ -296,6 +317,7 @@ On smaller screens the width is 100% of parent div. */
     --dark-two: #1e1b25;
     --dark-three: #25222e;
     --dark-four: #2f2a3c;
+    --dark-five: #3c384a;
     --pure-white: #ffffff;
     --off-white: #f8f8f8;
     --white-two: #d3d3d3;
@@ -311,6 +333,7 @@ On smaller screens the width is 100% of parent div. */
     --dark-blue-grey: #2d224d;
     --background-dark-gray: #131313;
     --baby-purple: #b59ff6;
+    --allen-purple: #8d87aa;
     --blue: #0094FF;
     --background-dim-gray: var(--dim-gray);
     --border-gray: var(--white-six);
@@ -342,6 +365,7 @@ On smaller screens the width is 100% of parent div. */
     --dark-theme-btn-primary-text: var(--dark-two);
     --dark-theme-slider-color: var(--white-three);    
     --dark-theme-tooltip-bg: var(--dark);
+    --dark-theme-version-badge-purple: var(--dark-five);
     --light-theme-background-purple: var(--pale-grey);
     --light-theme-button-purple: var(--dark-blue-grey);
     --light-theme-heading1-gray: var(--dark-three);
@@ -349,6 +373,7 @@ On smaller screens the width is 100% of parent div. */
     --light-theme-panel-light-gray: var(--white-four);
     --light-theme-button-light-gray: var(--white-four);
     --light-theme-card-bg-white: var(--pure-white);
+    --light-theme-version-badge-purple: var(--allen-purple);
     --light-theme-background-off-white: var(--off-white);
     --light-theme-faint-text: var(--white-two);
 }
@@ -950,7 +975,13 @@ On smaller screens the width is 100% of parent div. */
 
 .style__tag--2w7Eb {
     margin-left: 10px;
-    color: var(--dark-theme-text-color);
+    border-radius: 2px;
+    padding-right: 5px;
+    padding-left: 5px;
+    height: 20px;
+    font-size: 12px;
+    border-color: var(--dark-theme-version-badge-purple);
+    background-color: var(--dark-theme-version-badge-purple);
 }
 .style__menu--3ntOg {
     width: calc(var(--dropdown-menu-width) - 50px);
