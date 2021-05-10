@@ -3,6 +3,7 @@ export interface TrajectoryDisplayData {
     id: string;
     title: string;
     subtitle?: string;
+    version?: string;
     totalSimulatedTime: string;
     authors: string;
     publication: {

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Card } from "antd";
+import { Card, Tag } from "antd";
 import { Link } from "react-router-dom";
 
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
@@ -19,6 +19,7 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
         id,
         title,
         totalSimulatedTime,
+        version,
         authors,
         publication,
         description,
@@ -54,7 +55,16 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
             }
         >
             <div className={styles.cardText}>
-                <p className={styles.simulatedTime}>{totalSimulatedTime}</p>
+                <p className={styles.versionAndTime}>
+                    {version ? (
+                        <Tag className={styles.versionTag}>v{version}</Tag>
+                    ) : (
+                        <div />
+                    )}
+                    <span className={styles.simulatedTime}>
+                        {totalSimulatedTime}
+                    </span>
+                </p>
                 <Link
                     to={{
                         pathname: VIEWER_PATHNAME,

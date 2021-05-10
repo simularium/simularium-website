@@ -4,6 +4,7 @@
     --dark-two: #1e1b25;
     --dark-three: #25222e;
     --dark-four: #2f2a3c;
+    --dark-five: #3c384a;
     --pure-white: #ffffff;
     --off-white: #f8f8f8;
     --white-two: #d3d3d3;
@@ -19,6 +20,7 @@
     --dark-blue-grey: #2d224d;
     --background-dark-gray: #131313;
     --baby-purple: #b59ff6;
+    --allen-purple: #8d87aa;
     --blue: #0094FF;
     --background-dim-gray: var(--dim-gray);
     --border-gray: var(--white-six);
@@ -50,6 +52,7 @@
     --dark-theme-btn-primary-text: var(--dark-two);
     --dark-theme-slider-color: var(--white-three);    
     --dark-theme-tooltip-bg: var(--dark);
+    --dark-theme-version-badge-purple: var(--dark-five);
     --light-theme-background-purple: var(--pale-grey);
     --light-theme-button-purple: var(--dark-blue-grey);
     --light-theme-heading1-gray: var(--dark-three);
@@ -57,6 +60,7 @@
     --light-theme-panel-light-gray: var(--white-four);
     --light-theme-button-light-gray: var(--white-four);
     --light-theme-card-bg-white: var(--pure-white);
+    --light-theme-version-badge-purple: var(--allen-purple);
     --light-theme-background-off-white: var(--off-white);
     --light-theme-faint-text: var(--white-two);
 }
