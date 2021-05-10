@@ -136,9 +136,12 @@ const loadNetworkedFile = createLogic({
         }
 
         simulariumController
-            .changeFile(simulariumFile.name, null, null, {
-                netConnectionSettings: netConnectionSettings,
-            })
+            .changeFile(
+                {
+                    netConnectionSettings: netConnectionSettings,
+                },
+                simulariumFile.name
+            )
             .then(() => {
                 return dispatch(receiveSimulariumFile(simulariumFile));
             })
@@ -198,9 +201,12 @@ const loadLocalFile = createLogic({
         clearOutFileTrajectoryUrlParam();
 
         simulariumController
-            .changeFile(simulariumFile.name, null, null, {
-                simulariumFile: simulariumFile,
-            })
+            .changeFile(
+                {
+                    simulariumFile: simulariumFile,
+                },
+                simulariumFile.name
+            )
             .then(() => {
                 dispatch(receiveSimulariumFile(simulariumFile));
             })
