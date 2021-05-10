@@ -1,15 +1,13 @@
 const path = require("path");
-const fs  = require('fs');
+const fs = require("fs");
 
-const lessToJs = require('less-vars-to-js');
+const lessToJs = require("less-vars-to-js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const themeVariables = lessToJs(fs.readFileSync(path.join(__dirname, '../src/styles/ant-vars.less'), 'utf8'));
+const themeVariables = lessToJs(
+    fs.readFileSync(path.join(__dirname, "../src/styles/ant-vars.less"), "utf8")
+);
 
-const {
-    devServer,
-    Env,
-    stats,
-} = require("./constants");
+const { devServer, Env, stats } = require("./constants");
 const getPluginsByEnv = require("./plugins");
 
 module.exports = ({ analyze, env } = {}) => ({
@@ -19,25 +17,21 @@ module.exports = ({ analyze, env } = {}) => ({
         disableHostCheck: true,
         host: devServer.host,
         port: devServer.port,
-        publicPath: '/',
+        publicPath: "/",
         historyApiFallback: true,
         stats,
     },
     entry: {
-        app: "./src/index.tsx"
+        app: "./src/index.tsx",
     },
     mode: env === Env.PRODUCTION ? "production" : "development",
     module: {
         rules: [
             {
                 test: /\.(j|t)sx?/,
-                include: [
-                    path.resolve(__dirname, "../", "src")
-                ],
+                include: [path.resolve(__dirname, "../", "src")],
                 exclude: /node_modules/,
-                use: [
-                    { loader: "babel-loader" },
-                ],
+                use: [{ loader: "babel-loader" }],
             },
 
             // this rule processes any CSS written for this project and contained in src/
@@ -47,8 +41,6 @@ module.exports = ({ analyze, env } = {}) => ({
                 include: [
                     path.resolve(__dirname, "../", "src/components"),
                     path.resolve(__dirname, "../", "src/containers"),
-                    path.resolve(__dirname, "../", "../simularium-viewer/style")
-
                 ],
                 use: [
                     {
@@ -60,8 +52,8 @@ module.exports = ({ analyze, env } = {}) => ({
                             camelCase: true,
                             importLoaders: 1,
                             localIdentName: "[name]__[local]--[hash:base64:5]",
-                            modules: true
-                        }
+                            modules: true,
+                        },
                     },
                     {
                         loader: "postcss-loader",
@@ -76,7 +68,7 @@ module.exports = ({ analyze, env } = {}) => ({
                                 }),
                             ],
                             sourceMap: env !== Env.PRODUCTION,
-                        }
+                        },
                     },
                 ],
             },
@@ -88,7 +80,7 @@ module.exports = ({ analyze, env } = {}) => ({
                 test: /\.css/,
                 include: [
                     path.resolve(__dirname, "../src", "style.css"),
-                    path.resolve(__dirname, "../", "node_modules")
+                    path.resolve(__dirname, "../", "node_modules"),
                 ],
                 use: [
                     { loader: MiniCssExtractPlugin.loader },
@@ -97,66 +89,59 @@ module.exports = ({ analyze, env } = {}) => ({
             },
             {
                 test: /\.less$/,
-                    use: [
-                        { loader: MiniCssExtractPlugin.loader },
-                        {
-                            loader: "css-loader",
-                            options: {
-                                camelCase: true,
-                                importLoaders: 1
-                            }
-
+                use: [
+                    { loader: MiniCssExtractPlugin.loader },
+                    {
+                        loader: "css-loader",
+                        options: {
+                            camelCase: true,
+                            importLoaders: 1,
                         },
-                        {
-                            loader: "less-loader",
-                            options: {
-                                javascriptEnabled: true,
-                                modifyVars: themeVariables,
-
-                            }
-                        }
-                    ]
+                    },
+                    {
+                        loader: "less-loader",
+                        options: {
+                            javascriptEnabled: true,
+                            modifyVars: themeVariables,
+                        },
+                    },
+                ],
             },
             {
                 test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/,
-                include: [
-                    path.resolve(__dirname, "../src/assets/fonts"),
-                ],
+                include: [path.resolve(__dirname, "../src/assets/fonts")],
                 loader: "url-loader",
                 options: {
-                    name: '[name].[ext]',
-                    esModule: false
-
-                }
+                    name: "[name].[ext]",
+                    esModule: false,
+                },
             },
             {
                 test: /\.(png|jpg|gif|svg)$/i,
-                use: [
-                    "file-loader",
-                ],
+                use: ["file-loader"],
             },
-        ]
+        ],
     },
     optimization: {
-        runtimeChunk: 'single',
+        runtimeChunk: "single",
         splitChunks: {
-            chunks: 'all',
+            chunks: "all",
             cacheGroups: {
                 vendor: {
-                    filename: 'vendor.[contenthash].js',
+                    filename: "vendor.[contenthash].js",
                     test: /[\\/]node_modules[\\/]/,
                 },
-            }
-        }
+            },
+        },
     },
     output: {
         path: path.resolve(__dirname, "../", "dist"),
         filename: "[name].[chunkhash].js",
-        publicPath: process.env.GH_BUILD ? '' : '/'
+        publicPath: process.env.GH_BUILD ? "" : "/",
     },
     plugins: getPluginsByEnv(env, analyze),
     resolve: {
-        extensions: [".ts", ".tsx", ".js", ".jsx", ".json"]
+        extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
     },
     stats: analyze ? "none" : stats,
 });
