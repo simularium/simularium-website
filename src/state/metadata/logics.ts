@@ -203,7 +203,7 @@ const loadLocalFile = createLogic({
         simulariumController
             .changeFile(
                 {
-                    simulariumFile: simulariumFile,
+                    simulariumFile: simulariumFile.data,
                 },
                 simulariumFile.name
             )
