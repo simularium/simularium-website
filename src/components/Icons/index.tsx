@@ -12,7 +12,7 @@ import {
 } from "@ant-design/icons";
 
 import PurpleArrowPointingRight from "../../assets/open-arrow.svg";
-import AicsLogoWhite from "../../assets/AICS-logo-white.svg";
+import AicsLogoWhite from "../../assets/AICS-logo-full.png";
 import ClockwiseArrow from "../../assets/step-forward.svg";
 import CounterClockwiseArrow from "../../assets/step-back.svg";
 import Beta from "../../assets/beta.svg";
@@ -31,7 +31,7 @@ export const ZoomIn = <PlusOutlined />;
 export const ZoomOut = <MinusOutlined />;
 
 export const PurpleArrow = <img src={PurpleArrowPointingRight} />;
-export const AicsLogo = <img src={AicsLogoWhite} />;
+export const AicsLogo = <img src={AicsLogoWhite} style={{ width: "160px" }} />;
 export const StepForward = <img src={ClockwiseArrow} />;
 export const StepBack = <img src={CounterClockwiseArrow} />;
 export const BetaTag = <img src={Beta} style={{ width: "42px" }} />;
