@@ -21,22 +21,6 @@
     color: var(--dark-theme-primary-color);
 }
 
-.page-header :global(.ant-page-header-heading) {
-    width: 100%;
-    align-items: center;
-}
-
-.page-header :global(.ant-page-header-heading-left) {
-    width: 100%;
-}
-
-.page-header :global(.ant-page-header-heading-sub-title) {
-    color: var(--dark-theme-text-color);
-    display: block;
-    width: 65%;
-    padding-left: 18%;
-}
-
 .page-header :global(.ant-btn-primary) {
     text-shadow: none;
 }
@@ -70,15 +54,7 @@
     align-items: center;
 }
 
-@media screen and (max-width: 768px) {
-    .page-header :global(.ant-page-header-heading-left) {
-        width: 65%;
-    }
-
-    .page-header :global(.ant-page-header-heading-title) {
-        margin: 0;
-    }
-    
+@media screen and (max-width: 768px) {  
     /* Hide the Load Model button and the element containing the loaded
     trajectory name */
     .page-header .viewer-title,
