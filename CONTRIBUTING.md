@@ -68,7 +68,7 @@ Note: The final two steps require the AWS CLI as well as permissions on AWS to c
 See https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html for details on installing the AWS CLI.
 
 From the Jenkins UI:
-1. Go to this project's `master` branch pipeline page: https://jenkins.corp.alleninstitute.org/job/docker-images/job/docker-cell-feature-explorer/
+1. Go to this project's `master` branch pipeline page: https://jenkins.corp.alleninstitute.org/job/docker-images/job/docker-agentviz-front-end/job/master/
 2. Select "Build with Parameters" on the left-hand-side navigation menu.
 3. Under the "JOB_TYPE" dropdown, select "PROMOTE_ARTIFACT".
 4. Ignore the "DEPLOYMENT_TYPE" dropdown for now.
