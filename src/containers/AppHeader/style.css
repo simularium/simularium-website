@@ -54,19 +54,7 @@
     align-items: center;
 }
 
-@media screen and (max-width: 768px) {  
-    /* Hide the Load Model button and the element containing the loaded
-    trajectory name */
-    .page-header .viewer-title,
-    .page-header :global(.ant-btn-primary) {
-        display: none;
-    }
-
-    .page-header :global(.ant-btn-ghost) {
-        margin: 0;
-    }
-}
-
+/* For large screens only */
 @media screen and (min-width: 768px) {
     .page-header {
         padding: 0 20px;
@@ -77,7 +65,22 @@
     }
 }
 
+/* For small-med tablet in portrait mode or narrower */
+@media screen and (max-width: 768px) {  
+    /* Hide the Load Model button and the loaded trajectory name */
+    .page-header .viewer-title,
+    .page-header :global(.ant-btn-primary) {
+        display: none;
+    }
+
+    .page-header :global(.ant-btn-ghost) {
+        margin: 0;
+    }
+}
+
+/* For smartphone in portrait mode */
 @media screen and (max-width: 480px) {
+    /* Hide "| Simularium Home" */
     .vertical-bar, .simularium-home {
         display: none;
     }
