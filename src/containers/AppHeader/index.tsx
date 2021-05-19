@@ -58,7 +58,7 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
                     simulariumFileName={displayName}
                     lastModified={lastModified}
                 />
-                <div>
+                <div className={styles.buttons}>
                     <LoadFileMenu
                         key="select"
                         selectFile={loadNetworkFile}
