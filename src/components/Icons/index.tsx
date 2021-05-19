@@ -31,7 +31,7 @@ export const ZoomIn = <PlusOutlined />;
 export const ZoomOut = <MinusOutlined />;
 
 export const PurpleArrow = <img src={PurpleArrowPointingRight} />;
-export const AicsLogo = <img src={AicsLogoWhite} style={{ width: "150px" }} />;
+export const AicsLogo = <img src={AicsLogoWhite} style={{ width: "140px" }} />;
 export const StepForward = <img src={ClockwiseArrow} />;
 export const StepBack = <img src={CounterClockwiseArrow} />;
 export const BetaTag = <img src={Beta} style={{ width: "42px" }} />;

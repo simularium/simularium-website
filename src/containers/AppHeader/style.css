@@ -13,12 +13,6 @@
     padding: 0 10px;
 }
 
-@media screen and (min-width: 480px) {
-    .page-header {
-        padding: 0 20px;
-    }
-}
-
 .page-header img {
     padding-bottom: 5px;
 }
@@ -54,6 +48,28 @@
     margin-left: 12px;
 }
 
+.home {
+    margin-left: 2px;
+    margin-right: 20px;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.vertical-bar {
+    display: inline-block;
+    margin-right: 14px;
+    margin-left: 14px;
+    color: var(--dark-theme-header-text);
+    font-size: 16px;
+    font-weight: 100;
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
 @media screen and (max-width: 768px) {
     .page-header :global(.ant-page-header-heading-left) {
         width: 65%;
@@ -65,7 +81,7 @@
     
     /* Hide the Load Model button and the element containing the loaded
     trajectory name */
-    .page-header :global(.ant-page-header-heading-sub-title),
+    .page-header .viewer-title,
     .page-header :global(.ant-btn-primary) {
         display: none;
     }
@@ -75,25 +91,18 @@
     }
 }
 
-.home {
-    margin-left: 2px;
-    margin-right: 20px;
-    font-weight: 400;
-    font-size: 12px;
+@media screen and (min-width: 768px) {
+    .page-header {
+        padding: 0 20px;
+    }
+
+    .buttons {
+        min-width: 282px;
+    }
 }
 
-.verticalBar {
-    display: inline-block;
-    margin-right: 14px;
-    margin-left: 14px;
-    color: var(--dark-theme-header-text);
-    font-size: 16px;
-    font-weight: 100;
-}
-
-.buttons {
-    width: 292px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+@media screen and (max-width: 480px) {
+    .vertical-bar, .simularium-home {
+        display: none;
+    }
 }

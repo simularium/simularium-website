@@ -52,12 +52,16 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
                         {AicsLogo}
                     </a>
                     <span className={styles.verticalBar}>|</span>
-                    <Link to="/">SIMULARIUM HOME</Link>
+                    <Link to="/" className={styles.simulariumHome}>
+                        SIMULARIUM HOME
+                    </Link>
                 </div>
-                <ViewerTitle
-                    simulariumFileName={displayName}
-                    lastModified={lastModified}
-                />
+                <div className={styles.viewerTitle}>
+                    <ViewerTitle
+                        simulariumFileName={displayName}
+                        lastModified={lastModified}
+                    />
+                </div>
                 <div className={styles.buttons}>
                     <LoadFileMenu
                         key="select"
