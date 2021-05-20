@@ -2,7 +2,6 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
-import { PageHeader } from "antd";
 
 import {
     isLocalFileInterface,
@@ -47,36 +46,32 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
         }
 
         return (
-            <PageHeader
-                className={styles.pageHeader}
-                backIcon={
+            <div className={styles.pageHeader}>
+                <div>
                     <a href="https://allencell.org" title="Allen Cell Explorer">
                         {AicsLogo}
                     </a>
-                }
-                onBack={() => null}
-                title={
-                    <div key="home" className={styles.home}>
-                        <span className={styles.verticalBar}>|</span>
-                        <Link to="/">SIMULARIUM HOME</Link>
-                    </div>
-                }
-                subTitle={
+                    <span className={styles.verticalBar}>|</span>
+                    <Link to="/" className={styles.simulariumHome}>
+                        SIMULARIUM HOME
+                    </Link>
+                </div>
+                <div className={styles.viewerTitle}>
                     <ViewerTitle
                         simulariumFileName={displayName}
                         lastModified={lastModified}
                     />
-                }
-                extra={[
+                </div>
+                <div className={styles.buttons}>
                     <LoadFileMenu
                         key="select"
                         selectFile={loadNetworkFile}
                         loadLocalFile={loadLocalFile}
                         isBuffering={isBuffering}
-                    />,
-                    <HelpMenu key="help" />,
-                ]}
-            />
+                    />
+                    <HelpMenu key="help" />
+                </div>
+            </div>
         );
     }
 }
