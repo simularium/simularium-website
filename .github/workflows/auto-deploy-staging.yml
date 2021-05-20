@@ -1,4 +1,4 @@
-name: Deploy AWS
+name: Auto deploy staging AWS
 env: 
   NODE_VERSION: '12.x'
 on:
@@ -62,5 +62,7 @@ jobs:
       - run: npm ci 
       - run: npm run build:staging
       - name: Copy files to staging bucket
-        run: aws s3 sync ./dist/ s3://staging.simularium.allencell.org --delete
+        run: aws s3 sync ./dist/ s3://staging.agentviz.allencell.org --delete
+      - name: Clear cloudfront cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CFE_CLOUDFRONT_DISTRIBUTION_ID_STAGING }} --paths "/*"
 
