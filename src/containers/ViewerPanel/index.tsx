@@ -4,6 +4,7 @@ import SimulariumViewer, {
     SimulariumController,
     UIDisplayData,
     SelectionStateInfo,
+    compareTimes,
 } from "@aics/simularium-viewer";
 import "@aics/simularium-viewer/style/style.css";
 import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/simularium";
@@ -294,19 +295,23 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             simulariumController,
             firstFrameTime,
             lastFrameTime,
+            timeStep,
             isBuffering,
             setBuffering,
         } = this.props;
         if (isBuffering) {
             return;
         }
-        const roundedTime = parseFloat(time.toPrecision(4));
-        if (roundedTime > lastFrameTime || roundedTime < firstFrameTime) {
+
+        if (
+            compareTimes(time, lastFrameTime, timeStep) === 1 ||
+            compareTimes(time, firstFrameTime, timeStep) === -1
+        ) {
             return;
         }
 
         setBuffering(true);
-        simulariumController.gotoTime(roundedTime);
+        simulariumController.gotoTime(time);
     }
 
     public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
