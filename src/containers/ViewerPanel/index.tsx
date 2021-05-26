@@ -284,9 +284,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         if (viewerStatus !== VIEWER_SUCCESS) {
             actions.push(setViewerStatus({ status: VIEWER_SUCCESS }));
         }
-        if (timeData.time + timeStep > lastFrameTime) {
+
+        const atLastFrame =
+            compareTimes(timeData.time, lastFrameTime, timeStep) === 0;
+        if (atLastFrame) {
             this.pause();
         }
+
         batchActions(actions);
     }
 
@@ -303,10 +307,11 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             return;
         }
 
-        if (
-            compareTimes(time, lastFrameTime, timeStep) === 1 ||
-            compareTimes(time, firstFrameTime, timeStep) === -1
-        ) {
+        const isTimeGreaterThanLastFrameTime =
+            compareTimes(time, lastFrameTime, timeStep) === 1;
+        const isTimeLessThanFirstFrameTime =
+            compareTimes(time, firstFrameTime, timeStep) === -1;
+        if (isTimeGreaterThanLastFrameTime || isTimeLessThanFirstFrameTime) {
             return;
         }
 
