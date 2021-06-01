@@ -4,6 +4,7 @@ import SimulariumViewer, {
     SimulariumController,
     UIDisplayData,
     SelectionStateInfo,
+    compareTimes,
 } from "@aics/simularium-viewer";
 import "@aics/simularium-viewer/style/style.css";
 import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/simularium";
@@ -283,9 +284,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         if (viewerStatus !== VIEWER_SUCCESS) {
             actions.push(setViewerStatus({ status: VIEWER_SUCCESS }));
         }
-        if (timeData.time + timeStep > lastFrameTime) {
+
+        const atLastFrame =
+            compareTimes(timeData.time, lastFrameTime, timeStep) === 0;
+        if (atLastFrame) {
             this.pause();
         }
+
         batchActions(actions);
     }
 
@@ -294,19 +299,24 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             simulariumController,
             firstFrameTime,
             lastFrameTime,
+            timeStep,
             isBuffering,
             setBuffering,
         } = this.props;
         if (isBuffering) {
             return;
         }
-        const roundedTime = parseFloat(time.toPrecision(4));
-        if (roundedTime > lastFrameTime || roundedTime < firstFrameTime) {
+
+        const isTimeGreaterThanLastFrameTime =
+            compareTimes(time, lastFrameTime, timeStep) === 1;
+        const isTimeLessThanFirstFrameTime =
+            compareTimes(time, firstFrameTime, timeStep) === -1;
+        if (isTimeGreaterThanLastFrameTime || isTimeLessThanFirstFrameTime) {
             return;
         }
 
         setBuffering(true);
-        simulariumController.gotoTime(roundedTime);
+        simulariumController.gotoTime(time);
     }
 
     public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
