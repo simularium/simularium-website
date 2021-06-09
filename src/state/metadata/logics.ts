@@ -235,7 +235,10 @@ const loadLocalFile = createLogic({
 const loadFileViaUrl = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
-        const url = action.payload;
+        const url = action.payload.replace(
+            "dropbox.com",
+            "dl.dropboxusercontent.com"
+        );
         const currentState = getState();
         dispatch(
             setViewerStatus({
@@ -259,7 +262,9 @@ const loadFileViaUrl = createLogic({
                         {
                             name, //TODO: add this to metadata about the file
                             data: json,
-                            lastModified: Date.now(), //TODO: add this to metadata about the file
+                            // Temp solution: Set lastModified to a date in the future to tell this apart
+                            // from legitimate lastModified values
+                            lastModified: Date.now() + 600000, //TODO: add this to metadata about the file
                         },
                         simulariumController
                     )

@@ -36,7 +36,13 @@ const ViewerTitle: React.FunctionComponent<ViewerTitleProps> = (
     const version = currentTrajectory ? currentTrajectory.version : "";
 
     let tagText = "";
-    if (lastModified) {
+
+    // If the trajectory file was loaded from an external link (trajUrl param), we set
+    // lastModified to a date in the future when we received it (in loadFileViaUrl logic)
+    // to indicate that it's not a real "last modified" date and that it shouldn't be displayed as such
+    const shouldShowModifiedDate =
+        lastModified && lastModified - Date.now() < 0;
+    if (shouldShowModifiedDate) {
         tagText = `modified: ${moment(lastModified).format(
             "YYYY-MM-DD, h:m A"
         )}`;
