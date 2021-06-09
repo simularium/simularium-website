@@ -235,7 +235,10 @@ const loadLocalFile = createLogic({
 const loadFileViaUrl = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
-        const url = action.payload;
+        const url = action.payload.replace(
+            "dropbox.com",
+            "dl.dropboxusercontent.com"
+        );
         const currentState = getState();
         dispatch(
             setViewerStatus({
