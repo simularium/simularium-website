@@ -37,7 +37,9 @@ const ViewerTitle: React.FunctionComponent<ViewerTitleProps> = (
 
     let tagText = "";
 
-    // lastModified is a date in the future if file was loaded via external link in URL param
+    // If the trajectory file was loaded from an external link (trajUrl param), we set
+    // lastModified to a date in the future when we received it (in loadFileViaUrl logic)
+    // to indicate that it's not a real "last modified" date and that it shouldn't be displayed as such
     const shouldShowModifiedDate =
         lastModified && lastModified - Date.now() < 0;
     if (shouldShowModifiedDate) {
