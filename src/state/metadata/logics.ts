@@ -262,7 +262,9 @@ const loadFileViaUrl = createLogic({
                         {
                             name, //TODO: add this to metadata about the file
                             data: json,
-                            lastModified: Date.now(), //TODO: add this to metadata about the file
+                            // Temp solution: Set lastModified to a date in the future to tell this apart
+                            // from legitimate lastModified values
+                            lastModified: Date.now() + 60000, //TODO: add this to metadata about the file
                         },
                         simulariumController
                     )

@@ -36,7 +36,11 @@ const ViewerTitle: React.FunctionComponent<ViewerTitleProps> = (
     const version = currentTrajectory ? currentTrajectory.version : "";
 
     let tagText = "";
-    if (lastModified) {
+
+    // lastModified is a date in the future if file was loaded via external link in URL param
+    const shouldShowModifiedDate =
+        lastModified && lastModified - Date.now() < 0;
+    if (shouldShowModifiedDate) {
         tagText = `modified: ${moment(lastModified).format(
             "YYYY-MM-DD, h:m A"
         )}`;
