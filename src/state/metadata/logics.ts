@@ -262,7 +262,9 @@ const loadFileViaUrl = createLogic({
                 }
             })
             .then((json) => {
+                // ex) "mysite.com/myTraj.simularium?dl=0" -> ["mysite.com", "myTraj.simularium?dl=0"]
                 const urlSplit = url.split("/");
+                // ex) ["mysite.com", "myTraj.simularium?dl=0"] -> "myTraj.simularium"
                 const name = urlSplit[urlSplit.length - 1].split("?")[0];
                 dispatch(
                     changeToLocalSimulariumFile(
