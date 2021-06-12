@@ -253,10 +253,19 @@ const loadFileViaUrl = createLogic({
             }
         }
         fetch(url)
-            .then((data) => data.json())
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    // If there's a CORS error, this line of code is not reached because there is no response
+                    throw new Error(`Failed to fetch - ${response.status}`);
+                }
+            })
             .then((json) => {
+                // ex) "mysite.com/myTraj.simularium?dl=0" -> ["mysite.com", "myTraj.simularium?dl=0"]
                 const urlSplit = url.split("/");
-                const name = urlSplit[urlSplit.length - 1];
+                // ex) ["mysite.com", "myTraj.simularium?dl=0"] -> "myTraj.simularium"
+                const name = urlSplit[urlSplit.length - 1].split("?")[0];
                 dispatch(
                     changeToLocalSimulariumFile(
                         {
@@ -272,11 +281,17 @@ const loadFileViaUrl = createLogic({
                 done();
             })
             .catch((error) => {
+                let errorDetails = `"${url}" failed to load.`;
+                // If there was a CORS error, error.message does not contain a status code
+                if (error.message === "Failed to fetch") {
+                    errorDetails +=
+                        "<br/><br/>Try uploading your trajectory file from a Dropbox or Amazon S3 link instead.";
+                }
                 dispatch(
                     setViewerStatus({
                         status: VIEWER_ERROR,
                         errorMessage: error.message,
-                        htmlData: `${url} failed`,
+                        htmlData: errorDetails,
                         onClose: () =>
                             history.replaceState(
                                 {},
