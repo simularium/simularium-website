@@ -8,6 +8,11 @@
     margin-bottom: 20px;
 }
 
+/* Hide the up/down buttons in the time input box */
+.container :global(.ant-input-number-handler-wrap) {
+    display: none;
+}
+
 .item {
     margin: auto 2px;
 }
