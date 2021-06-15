@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Slider, Tooltip } from "antd";
+import { Button, Slider, Tooltip, InputNumber } from "antd";
 import classNames from "classnames";
 
 import { TOOLTIP_COLOR } from "../../constants/index";
@@ -43,6 +43,7 @@ const PlayBackControls = ({
         timeToResumeAfterScrubbing,
         setTimeToResumeAfterScrubbing,
     ] = useState(-1);
+    const [timeInput, setTimeInput] = useState(firstFrameTime);
 
     // - Gets called once when the user clicks on the slider to skip to a specific time
     // - Gets called multiple times when user is scrubbing (every time the play head
@@ -69,6 +70,18 @@ const PlayBackControls = ({
             playHandler(timeToResumeAfterScrubbing);
             setTimeToResumeAfterScrubbing(-1);
         }
+    };
+
+    const handleTimeInputChange = (
+        timeInput: number | string | undefined
+    ): void => {
+        if (timeInput !== undefined) {
+            setTimeInput(timeInput as number);
+        }
+    };
+
+    const handleTimeInputEnter = (): void => {
+        onTimeChange(timeInput as number);
     };
 
     const btnClassNames = classNames([styles.item, styles.btn]);
@@ -159,13 +172,21 @@ const PlayBackControls = ({
                 disabled={loading || isEmpty}
             />
             <div className={styles.time}>
-                <p>
-                    {displayTimes.roundedTime}{" "}
-                    <span className={styles.lastFrameTime}>
-                        / {displayTimes.roundedLastFrameTime}{" "}
-                        {displayTimes.unitLabel}
-                    </span>
-                </p>
+                <InputNumber
+                    size="small"
+                    step={timeStep}
+                    min={firstFrameTime}
+                    max={lastFrameTime}
+                    value={displayTimes.roundedTime}
+                    onChange={handleTimeInputChange}
+                    onPressEnter={handleTimeInputEnter}
+                    disabled={loading || isEmpty || isPlaying}
+                    // formatter={}
+                />
+                <span className={styles.lastFrameTime}>
+                    / {displayTimes.roundedLastFrameTime}{" "}
+                    {displayTimes.unitLabel}
+                </span>
             </div>
         </div>
     );
