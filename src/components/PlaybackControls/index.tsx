@@ -84,6 +84,10 @@ const PlayBackControls = ({
         onTimeChange(timeInput as number);
     };
 
+    const inputNumberWidth =
+        Math.min(displayTimes.roundedLastFrameTime.toString().length + 5, 7) +
+        "ch";
+
     const btnClassNames = classNames([styles.item, styles.btn]);
 
     return (
@@ -180,6 +184,7 @@ const PlayBackControls = ({
                     onChange={handleTimeInputChange}
                     onPressEnter={handleTimeInputEnter}
                     disabled={loading || isEmpty || isPlaying}
+                    style={{ width: inputNumberWidth }}
                 />
                 <span className={styles.lastFrameTime}>
                     / {displayTimes.roundedLastFrameTime}{" "}
