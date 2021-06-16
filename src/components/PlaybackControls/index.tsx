@@ -173,6 +173,8 @@ const PlayBackControls = ({
             />
             <div className={styles.time}>
                 <InputNumber
+                    // Necessary to re-render this component and override user input
+                    key={displayTimes.roundedTime}
                     size="small"
                     step={timeStep}
                     min={firstFrameTime}
