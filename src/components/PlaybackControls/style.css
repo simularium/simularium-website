@@ -8,6 +8,15 @@
     margin-bottom: 20px;
 }
 
+.container :global(.ant-input-number) {
+    background-color: transparent;
+}
+
+.container :global(.ant-input-number input) {
+    color: var(--dark-theme-btn-color);
+    text-align: right;
+}
+
 /* Hide the up/down buttons in the time input box */
 .container :global(.ant-input-number-handler-wrap) {
     display: none;
