@@ -176,14 +176,10 @@ const PlayBackControls = ({
                     // Necessary to re-render this component and override user input
                     key={displayTimes.roundedTime}
                     size="small"
-                    step={timeStep}
-                    min={firstFrameTime}
-                    max={lastFrameTime}
                     value={displayTimes.roundedTime}
                     onChange={handleTimeInputChange}
                     onPressEnter={handleTimeInputEnter}
                     disabled={loading || isEmpty || isPlaying}
-                    // formatter={}
                 />
                 <span className={styles.lastFrameTime}>
                     / {displayTimes.roundedLastFrameTime}{" "}
