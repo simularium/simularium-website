@@ -90,7 +90,9 @@ const PlayBackControls = ({
             // by timeUnits.magnitude in the getDisplayTimes selector, so we have to undo the
             // multiplication before requesting the time. timeUnits.magnitude is 1 for a vast
             // majority of the time so it shouldn't make a difference most times.
-            onTimeChange(timeInput / timeUnits.magnitude);
+            if (typeof timeInput === "number") {
+                onTimeChange(timeInput / timeUnits.magnitude);
+            }
         }
     };
 
