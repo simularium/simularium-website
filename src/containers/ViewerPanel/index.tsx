@@ -248,7 +248,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
         receiveMetadata({
             numFrames: data.totalSteps,
-            timeStepSize: data.timeStepSize * data.timeUnits.magnitude,
+            timeStep: data.timeStepSize,
             timeUnits: data.timeUnits,
         });
 

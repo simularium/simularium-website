@@ -46,7 +46,7 @@ describe("ViewerPanel selectors", () => {
             });
         });
 
-        it("shows correct values and units when timeUnits.magnitude is not 1", () => {
+        it("shows correct values when timeUnits.magnitude is not 1", () => {
             const mockState: State = {
                 ...initialState,
                 selection: {
