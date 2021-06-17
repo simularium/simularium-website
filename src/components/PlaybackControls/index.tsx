@@ -94,6 +94,10 @@ const PlayBackControls = ({
                 onTimeChange(timeInput / timeUnits.magnitude);
             }
         }
+        if (event.key === "Escape") {
+            const inputNumberComponent = event.target as HTMLElement;
+            inputNumberComponent.blur();
+        }
     };
 
     // Determine the width of the input box
