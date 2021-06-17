@@ -75,6 +75,7 @@ const PlayBackControls = ({
         }
     };
 
+    // Called after every keystroke
     const handleTimeInputChange = (
         userInput: number | string | undefined
     ): void => {
@@ -83,15 +84,24 @@ const PlayBackControls = ({
         }
     };
 
-    const handleTimeInputEnter = (): void => {
+    const handleTimeInputPressEnter = (): void => {
+        // User input will be aligned with the displayed time values, which were multiplied
+        // by timeUnits.magnitude in the getDisplayTimes selector, so we have to undo the
+        // multiplication before requesting the time. timeUnits.magnitude is 1 for a vast
+        // majority of the time so it shouldn't make a difference most times.
         onTimeChange(timeInput / timeUnits.magnitude);
     };
 
+    // Determine the width of the input box
     const getTimeInputWidth = (): string => {
-        const longTimeValue =
+        // If lastFrameTime is 15 and step size is 0.25 then 15.25 is probably going to have
+        // the max number of characters for this trajectory
+        const refTimeValue =
             displayTimes.roundedLastFrameTime + displayTimes.roundedTimeStep;
-        const longTimeValueLength = longTimeValue.toString().length;
-        return longTimeValueLength + 1 + "ch";
+        const maxNumChars = refTimeValue.toString().length;
+        // If maxNumChars is 5 then the input box width will be 6 character widths long
+        // (+ 1 is arbitrary padding)
+        return maxNumChars + 1 + "ch";
     };
 
     const btnClassNames = classNames([styles.item, styles.btn]);
@@ -188,7 +198,7 @@ const PlayBackControls = ({
                     size="small"
                     value={displayTimes.roundedTime}
                     onChange={handleTimeInputChange}
-                    onPressEnter={handleTimeInputEnter}
+                    onPressEnter={handleTimeInputPressEnter}
                     disabled={loading || isEmpty || isPlaying}
                     style={{ width: getTimeInputWidth() }}
                 />
