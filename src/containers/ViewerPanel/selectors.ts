@@ -65,7 +65,6 @@ export const getDisplayTimes = createSelector(
         let roundedTime = 0;
         let roundedLastFrameTime = 0;
         let roundedTimeStep = 0;
-        let unitLabel = "s";
 
         if (timeUnits) {
             roundedTime = time ? roundNumber(time * timeUnits.magnitude) : 0;
@@ -73,14 +72,12 @@ export const getDisplayTimes = createSelector(
                 lastFrameTime * timeUnits.magnitude
             );
             roundedTimeStep = roundNumber(timeStepSize);
-            unitLabel = timeUnits.name;
         }
 
         return {
             roundedTime: roundedTime,
             roundedLastFrameTime: roundedLastFrameTime,
             roundedTimeStep: roundedTimeStep,
-            unitLabel: unitLabel,
         };
     }
 );

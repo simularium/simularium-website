@@ -5,6 +5,7 @@ import classNames from "classnames";
 import { TOOLTIP_COLOR } from "../../constants/index";
 import Icons from "../Icons";
 import { DisplayTimes } from "../../containers/ViewerPanel/types";
+import { TimeUnits } from "../../state/metadata/types";
 
 const styles = require("./style.css");
 interface PlayBackProps {
@@ -20,6 +21,7 @@ interface PlayBackProps {
     loading: boolean;
     timeStep: number;
     displayTimes: DisplayTimes;
+    timeUnits: TimeUnits;
     isEmpty: boolean;
 }
 
@@ -36,6 +38,7 @@ const PlayBackControls = ({
     loading,
     timeStep,
     displayTimes,
+    timeUnits,
     isEmpty,
 }: PlayBackProps) => {
     // Where to resume playing if simulation was playing before scrubbing
@@ -73,15 +76,15 @@ const PlayBackControls = ({
     };
 
     const handleTimeInputChange = (
-        timeInput: number | string | undefined
+        userInput: number | string | undefined
     ): void => {
-        if (timeInput !== undefined) {
-            setTimeInput(timeInput as number);
+        if (userInput !== undefined) {
+            setTimeInput(userInput as number);
         }
     };
 
     const handleTimeInputEnter = (): void => {
-        onTimeChange(timeInput as number);
+        onTimeChange(timeInput / timeUnits.magnitude);
     };
 
     const getTimeInputWidth = (): string => {
@@ -180,7 +183,7 @@ const PlayBackControls = ({
             />
             <div className={styles.time}>
                 <InputNumber
-                    // Necessary to re-render this component and override user input
+                    // key is necessary to re-render this component and override user input
                     key={displayTimes.roundedTime}
                     size="small"
                     value={displayTimes.roundedTime}
@@ -191,7 +194,7 @@ const PlayBackControls = ({
                 />
                 <span className={styles.lastFrameTime}>
                     / {displayTimes.roundedLastFrameTime}{" "}
-                    {displayTimes.unitLabel}
+                    {timeUnits ? timeUnits.name : "s"}
                 </span>
             </div>
         </div>
