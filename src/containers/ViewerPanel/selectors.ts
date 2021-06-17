@@ -3,7 +3,7 @@ import { createSelector } from "reselect";
 import {
     getLastFrameTimeOfCachedSimulation,
     getTimeUnits,
-    getTimeStepSize,
+    getTimeStep,
 } from "../../state/metadata/selectors";
 import {
     getAgentsToHide,
@@ -56,10 +56,10 @@ export const getDisplayTimes = createSelector(
     [
         getCurrentTime,
         getTimeUnits,
-        getTimeStepSize,
+        getTimeStep,
         getLastFrameTimeOfCachedSimulation,
     ],
-    (time, timeUnits, timeStepSize, lastFrameTime): DisplayTimes => {
+    (time, timeUnits, timeStep, lastFrameTime): DisplayTimes => {
         const roundNumber = (num: number) =>
             parseFloat(Number(num).toPrecision(3));
         let roundedTime = 0;
@@ -71,7 +71,7 @@ export const getDisplayTimes = createSelector(
             roundedLastFrameTime = roundNumber(
                 lastFrameTime * timeUnits.magnitude
             );
-            roundedTimeStep = roundNumber(timeStepSize);
+            roundedTimeStep = roundNumber(timeStep * timeUnits.magnitude);
         }
 
         return {

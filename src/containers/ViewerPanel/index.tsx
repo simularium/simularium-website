@@ -430,7 +430,7 @@ function mapStateToProps(state: State) {
             state
         ),
         numFrames: metadataStateBranch.selectors.getNumFrames(state),
-        timeStep: metadataStateBranch.selectors.getTimeStepSize(state),
+        timeStep: metadataStateBranch.selectors.getTimeStep(state),
         displayTimes: getDisplayTimes(state),
         timeUnits: metadataStateBranch.selectors.getTimeUnits(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
