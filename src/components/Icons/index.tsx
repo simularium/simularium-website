@@ -15,6 +15,9 @@ import PurpleArrowPointingRight from "../../assets/open-arrow.svg";
 import AicsLogoWhite from "../../assets/AICS-logo-full.png";
 import ClockwiseArrow from "../../assets/step-forward.svg";
 import CounterClockwiseArrow from "../../assets/step-back.svg";
+import PanIcon from "../../assets/pan.svg";
+import RotateIcon from "../../assets/rotate.svg";
+
 import Beta from "../../assets/beta.svg";
 
 const styles = require("./style.css");
@@ -35,6 +38,9 @@ export const AicsLogo = <img src={AicsLogoWhite} style={{ width: "140px" }} />;
 export const StepForward = <img src={ClockwiseArrow} />;
 export const StepBack = <img src={CounterClockwiseArrow} />;
 export const BetaTag = <img src={Beta} style={{ width: "42px" }} />;
+export const Pan = <img src={PanIcon} />;
+export const Rotate = <img src={RotateIcon} />;
+
 export default {
     StepBack,
     Play,
@@ -52,4 +58,6 @@ export default {
     ZoomIn,
     ZoomOut,
     BetaTag,
+    Pan,
+    Rotate,
 };
