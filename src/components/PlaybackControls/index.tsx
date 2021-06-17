@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { KeyboardEvent, useState } from "react";
 import { Button, Slider, Tooltip, InputNumber } from "antd";
 import classNames from "classnames";
 
@@ -84,12 +84,14 @@ const PlayBackControls = ({
         }
     };
 
-    const handleTimeInputPressEnter = (): void => {
-        // User input will be aligned with the displayed time values, which were multiplied
-        // by timeUnits.magnitude in the getDisplayTimes selector, so we have to undo the
-        // multiplication before requesting the time. timeUnits.magnitude is 1 for a vast
-        // majority of the time so it shouldn't make a difference most times.
-        onTimeChange(timeInput / timeUnits.magnitude);
+    const handleTimeInputKeyDown = (event: KeyboardEvent): void => {
+        if (event.key === "Enter" || event.key === "Tab") {
+            // User input will be aligned with the displayed time values, which were multiplied
+            // by timeUnits.magnitude in the getDisplayTimes selector, so we have to undo the
+            // multiplication before requesting the time. timeUnits.magnitude is 1 for a vast
+            // majority of the time so it shouldn't make a difference most times.
+            onTimeChange(timeInput / timeUnits.magnitude);
+        }
     };
 
     // Determine the width of the input box
@@ -198,7 +200,7 @@ const PlayBackControls = ({
                     size="small"
                     value={displayTimes.roundedTime}
                     onChange={handleTimeInputChange}
-                    onPressEnter={handleTimeInputPressEnter}
+                    onKeyDown={handleTimeInputKeyDown}
                     disabled={loading || isEmpty || isPlaying}
                     style={{ width: getTimeInputWidth() }}
                 />
