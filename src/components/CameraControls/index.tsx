@@ -4,6 +4,7 @@ import classNames from "classnames";
 
 import { TOOLTIP_COLOR } from "../../constants/index";
 import Icons from "../Icons";
+import { RadioChangeEvent } from "antd/lib/radio";
 
 const GroupedRadio = Radio.Group;
 const styles = require("./style.css");
@@ -12,13 +13,19 @@ interface CameraControlsProps {
     resetCamera: () => void;
     zoomIn: () => void;
     zoomOut: () => void;
+    setPanningMode: (value: boolean) => void;
 }
 
 const CameraControls = ({
     resetCamera,
     zoomIn,
     zoomOut,
+    setPanningMode,
 }: CameraControlsProps) => {
+    const onRadioChange = (changeEvent: RadioChangeEvent) => {
+        setPanningMode(changeEvent.target.value === "pan");
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.moveButtons}>
@@ -26,6 +33,7 @@ const CameraControls = ({
                     size="small"
                     name="camera-movement"
                     defaultValue="rotate"
+                    onChange={onRadioChange}
                 >
                     <Tooltip
                         placement="left"
