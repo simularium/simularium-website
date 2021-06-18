@@ -46,6 +46,7 @@ const CameraControls = ({
         <div className={styles.container}>
             <div className={styles.moveButtons}>
                 <GroupedRadio
+                    className={styles.radioGroup}
                     size="small"
                     name="camera-movement"
                     defaultValue={mode}
