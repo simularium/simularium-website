@@ -5,6 +5,12 @@ import endocytosisImage from "../assets/card-images/endocytosis.png";
 import endocytosisGif from "../assets/card-images/endocytosis.gif";
 import covidImage from "../assets/card-images/covid.png";
 import covidGif from "../assets/card-images/covid.gif";
+import nanoparticleImage from "../assets/card-images/nanoparticle_wrapping_thumb.png";
+import nanoparticleGif from "../assets/card-images/nanoparticle_wrapping_thumb.gif";
+import smoldynMin1Image from "../assets/card-images/smoldyn_min1_thumb.png";
+import smoldynMin1Gif from "../assets/card-images/smoldyn_min1_thumb.gif";
+import smoldynSpineImage from "../assets/card-images/smoldyn_spine_thumb.png";
+import smoldynSpineGif from "../assets/card-images/smoldyn_spine_thumb.gif";
 // import covid19Image from "../assets/card-images/card-image-4.png";
 
 import { TrajectoryDisplayData } from "./interfaces";
@@ -70,8 +76,8 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A model of a coarse-grained particle-based membrane wrapping a nanoparticle.",
-        imageFile: covidImage,
-        gifFile: covidGif,
+        imageFile: nanoparticleImage,
+        gifFile: nanoparticleGif,
     },
     {
         modelName: "Spatiotemporal oscillations in the E. coli Min system",
@@ -92,8 +98,8 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
             "Software used to generate this data is available <a href='https://github.com/ssandrews/Smoldyn'>here</a>. The input data file is <a href='https://github.com/ssandrews/Smoldyn/blob/master/examples/S99_more/Min/Min1.txt'>here</a>.",
         legalese:
             "Please note that the use of this model is subject to third party licensing requirements, which are currently available <a href='https://github.com/ssandrews/Smoldyn/blob/master/LICENSE'>here</a>.",
-        imageFile: covidImage,
-        gifFile: covidGif,
+        imageFile: smoldynMin1Image,
+        gifFile: smoldynMin1Gif,
     },
     {
         modelName: "Sequestration of CaMKII in dendritic spines",
@@ -114,8 +120,8 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
             "Software used to generate this data is available <a href='https://github.com/ssandrews/Smoldyn'>here</a>. The input data file is <a href='http://www.smoldyn.org/archive/Andrews_Arkin_2010/spine.txt'>here</a>.",
         legalese:
             "Please note that the use of this model is subject to third party licensing requirements, which are currently available <a href='https://github.com/ssandrews/Smoldyn/blob/master/LICENSE'>here</a>.",
-        imageFile: covidImage,
-        gifFile: covidGif,
+        imageFile: smoldynSpineImage,
+        gifFile: smoldynSpineGif,
     },
     /* Not ready yet
     {
