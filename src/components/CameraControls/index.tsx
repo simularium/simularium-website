@@ -57,7 +57,10 @@ const CameraControls = ({
                         title="Rotate"
                         color={TOOLTIP_COLOR}
                     >
-                        <Radio.Button className={styles.btn} value={"rotate"}>
+                        <Radio.Button
+                            className={styles.radioBtn}
+                            value={"rotate"}
+                        >
                             <span
                                 className={classNames([
                                     "icon-moon",
@@ -68,7 +71,7 @@ const CameraControls = ({
                         </Radio.Button>
                     </Tooltip>
                     <Tooltip placement="left" title="Pan" color={TOOLTIP_COLOR}>
-                        <Radio.Button className={styles.btn} value="pan">
+                        <Radio.Button className={styles.radioBtn} value="pan">
                             <span
                                 className={classNames([
                                     "icon-moon",
