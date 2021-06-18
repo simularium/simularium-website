@@ -55,7 +55,7 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                 </Link>
             }
         >
-            <div className={styles.cardText}>
+            <div className={styles.trajectoryDescription}>
                 <p className={styles.versionAndTime}>
                     {version ? (
                         <Tag className={styles.versionTag}>v{version}</Tag>
@@ -104,6 +104,9 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                 </a>
                 <p>{description}</p>
                 {code && <p dangerouslySetInnerHTML={{ __html: code }} />}
+            </div>
+            <div className={styles.stretch} />
+            <div>
                 {legalese && (
                     <p
                         className={styles.legalese}
