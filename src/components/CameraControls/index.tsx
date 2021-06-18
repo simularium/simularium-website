@@ -6,13 +6,18 @@ import { useHotkeys, useIsHotkeyPressed } from "react-hotkeys-hook";
 import { TOOLTIP_COLOR } from "../../constants/index";
 import Icons from "../Icons";
 import { RadioChangeEvent } from "antd/lib/radio";
+import { isUndefined } from "lodash";
 
 const GroupedRadio = Radio.Group;
 const styles = require("./style.css");
 
 const PAN = "pan";
 const ROTATE = "rotate";
-const CAMERA_MODE_MODIFIER_KEYS = ["command+*", "shift+*"]; //key
+const CAMERA_MODE_MODIFIER_KEYS = ["Meta", "Shift"];
+const ZOOM_IN_HK = "ArrowUp";
+const ZOOM_OUT_HK = "ArrowDown";
+const RESET_HK = "r";
+const HOT_KEYS = [ZOOM_IN_HK, ZOOM_OUT_HK, RESET_HK];
 
 interface CameraControlsProps {
     resetCamera: () => void;
@@ -29,13 +34,21 @@ const CameraControls = ({
 }: CameraControlsProps) => {
     const [mode, setMode] = useState("rotate");
     const [isModifyingClick, setIsModifyingClick] = useState(false);
+    const [keyPressed, setKeyPressed] = useState("");
     const wasModified: { current: boolean | undefined } = useRef();
-    useHotkeys(`${CAMERA_MODE_MODIFIER_KEYS.join(",")}`, (event, handler) => {
-        console.log("hit", handler.key);
-        if (CAMERA_MODE_MODIFIER_KEYS.includes(handler.key)) {
-            return setIsModifyingClick(true);
-        }
-    });
+
+    useHotkeys(
+        "*",
+        (event) => {
+            console.log("KEY down");
+            if (CAMERA_MODE_MODIFIER_KEYS.includes(event.key)) {
+                return setIsModifyingClick(true);
+            } else if (HOT_KEYS.includes(event.key)) {
+                return setKeyPressed(event.key);
+            }
+        },
+        { keydown: true }
+    );
 
     useHotkeys(
         "*",
@@ -43,29 +56,47 @@ const CameraControls = ({
             if (wasModified.current) {
                 return setIsModifyingClick(false);
             }
+            return setKeyPressed("");
         },
         { keyup: true }
     );
 
     useEffect(() => {
-        console.log("USING EFFECT");
-        if (
-            (isModifyingClick && !wasModified.current) ||
-            (wasModified.current && !isModifyingClick)
-        ) {
-            // if we have just entered, or just exited a key modified state,
-            // toggle the mode, but importantly, this isn't going to call the simularium controller function
-            setMode(mode === PAN ? ROTATE : PAN);
-        } else if (!wasModified.current && !isModifyingClick) {
+        if (!wasModified.current && !isModifyingClick) {
             // only call the simularium controller if it's not a modifier key
             // because the viewer is already setting the mode
             setPanningMode(mode === PAN);
         }
+    }, [mode]);
+
+    useEffect(() => {
+        if (isUndefined(wasModified.current)) {
+            // avoid toggle from the first time state is set
+            wasModified.current = isModifyingClick;
+            return;
+        }
+        setMode(mode === PAN ? ROTATE : PAN);
         wasModified.current = isModifyingClick;
-    });
+    }, [isModifyingClick]);
+
+    useEffect(() => {
+        switch (keyPressed) {
+            case ZOOM_IN_HK:
+                zoomIn();
+                break;
+            case ZOOM_OUT_HK:
+                zoomOut();
+                break;
+            case RESET_HK:
+                resetCamera();
+                break;
+            default:
+                break;
+        }
+    }, [keyPressed]);
 
     const onRadioChange = (changeEvent: RadioChangeEvent) => {
-        setMode(changeEvent.target.value);
+        return setMode(changeEvent.target.value);
     };
 
     return (
@@ -81,7 +112,7 @@ const CameraControls = ({
                 >
                     <Tooltip
                         placement="left"
-                        title="Rotate"
+                        title="Rotate (SHIFT or CMD)"
                         color={TOOLTIP_COLOR}
                     >
                         <Radio.Button
@@ -97,7 +128,11 @@ const CameraControls = ({
                             />
                         </Radio.Button>
                     </Tooltip>
-                    <Tooltip placement="left" title="Pan" color={TOOLTIP_COLOR}>
+                    <Tooltip
+                        placement="left"
+                        title="Pan (SHIFT or CMD)"
+                        color={TOOLTIP_COLOR}
+                    >
                         <Radio.Button className={styles.radioBtn} value="pan">
                             <span
                                 className={classNames([
@@ -111,7 +146,11 @@ const CameraControls = ({
                 </GroupedRadio>
             </div>
             <div className={styles.zoomButtons}>
-                <Tooltip placement="left" title="Zoom in" color={TOOLTIP_COLOR}>
+                <Tooltip
+                    placement="left"
+                    title="Zoom in ( &uarr; )"
+                    color={TOOLTIP_COLOR}
+                >
                     <Button
                         className={styles.btn}
                         size="small"
@@ -121,7 +160,7 @@ const CameraControls = ({
                 </Tooltip>
                 <Tooltip
                     placement="left"
-                    title="Zoom out"
+                    title="Zoom out ( &darr; )"
                     color={TOOLTIP_COLOR}
                 >
                     <Button
@@ -134,7 +173,7 @@ const CameraControls = ({
             </div>
             <Tooltip
                 placement="left"
-                title="Reset camera"
+                title="Reset camera (R)"
                 color={TOOLTIP_COLOR}
             >
                 <Button
