@@ -23,6 +23,7 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
         authors,
         publication,
         description,
+        code,
         legalese,
         imageFile,
         gifFile,
@@ -102,6 +103,7 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                     </p>
                 </a>
                 <p>{description}</p>
+                {code && <p dangerouslySetInnerHTML={{ __html: code }} />}
                 {legalese && (
                     <p
                         className={styles.legalese}
