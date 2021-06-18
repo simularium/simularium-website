@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Button, Tooltip, Radio } from "antd";
 import classNames from "classnames";
-import { useHotkeys } from "react-hotkeys-hook";
+import { useHotkeys, useIsHotkeyPressed } from "react-hotkeys-hook";
 
 import { TOOLTIP_COLOR } from "../../constants/index";
 import Icons from "../Icons";
@@ -10,10 +10,9 @@ import { RadioChangeEvent } from "antd/lib/radio";
 const GroupedRadio = Radio.Group;
 const styles = require("./style.css");
 
-const ROTATE_HOT_KEY = "r";
-const PAN_HOT_KEY = "p";
 const PAN = "pan";
 const ROTATE = "rotate";
+const CAMERA_MODE_MODIFIER_KEYS = ["command+*", "shift+*"]; //key
 
 interface CameraControlsProps {
     resetCamera: () => void;
@@ -29,13 +28,40 @@ const CameraControls = ({
     setPanningMode,
 }: CameraControlsProps) => {
     const [mode, setMode] = useState("rotate");
-
-    useHotkeys(`${ROTATE_HOT_KEY}, ${PAN_HOT_KEY}`, (event, handler) => {
-        return setMode(handler.key === PAN_HOT_KEY ? PAN : ROTATE);
+    const [isModifyingClick, setIsModifyingClick] = useState(false);
+    const wasModified: { current: boolean | undefined } = useRef();
+    useHotkeys(`${CAMERA_MODE_MODIFIER_KEYS.join(",")}`, (event, handler) => {
+        console.log("hit", handler.key);
+        if (CAMERA_MODE_MODIFIER_KEYS.includes(handler.key)) {
+            return setIsModifyingClick(true);
+        }
     });
 
+    useHotkeys(
+        "*",
+        () => {
+            if (wasModified.current) {
+                return setIsModifyingClick(false);
+            }
+        },
+        { keyup: true }
+    );
+
     useEffect(() => {
-        setPanningMode(mode === PAN);
+        console.log("USING EFFECT");
+        if (
+            (isModifyingClick && !wasModified.current) ||
+            (wasModified.current && !isModifyingClick)
+        ) {
+            // if we have just entered, or just exited a key modified state,
+            // toggle the mode, but importantly, this isn't going to call the simularium controller function
+            setMode(mode === PAN ? ROTATE : PAN);
+        } else if (!wasModified.current && !isModifyingClick) {
+            // only call the simularium controller if it's not a modifier key
+            // because the viewer is already setting the mode
+            setPanningMode(mode === PAN);
+        }
+        wasModified.current = isModifyingClick;
     });
 
     const onRadioChange = (changeEvent: RadioChangeEvent) => {
