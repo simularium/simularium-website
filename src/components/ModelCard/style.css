@@ -43,6 +43,11 @@
     font-size: 16px;
 }
 
+.load-your-data {
+    font-size: 16px;
+    flex-grow: 2;
+}
+
 /* Necessary to make flexbox spacing work */
 .version-tag, .simulated-time {
     margin: 0 !important;
