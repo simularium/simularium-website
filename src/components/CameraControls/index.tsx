@@ -1,6 +1,7 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Tooltip, Radio } from "antd";
 import classNames from "classnames";
+import { useHotkeys } from "react-hotkeys-hook";
 
 import { TOOLTIP_COLOR } from "../../constants/index";
 import Icons from "../Icons";
@@ -8,6 +9,11 @@ import { RadioChangeEvent } from "antd/lib/radio";
 
 const GroupedRadio = Radio.Group;
 const styles = require("./style.css");
+
+const ROTATE_HOT_KEY = "r";
+const PAN_HOT_KEY = "p";
+const PAN = "pan";
+const ROTATE = "rotate";
 
 interface CameraControlsProps {
     resetCamera: () => void;
@@ -22,8 +28,18 @@ const CameraControls = ({
     zoomOut,
     setPanningMode,
 }: CameraControlsProps) => {
+    const [mode, setMode] = useState("rotate");
+
+    useHotkeys(`${ROTATE_HOT_KEY}, ${PAN_HOT_KEY}`, (event, handler) => {
+        return setMode(handler.key === PAN_HOT_KEY ? PAN : ROTATE);
+    });
+
+    useEffect(() => {
+        setPanningMode(mode === PAN);
+    });
+
     const onRadioChange = (changeEvent: RadioChangeEvent) => {
-        setPanningMode(changeEvent.target.value === "pan");
+        setMode(changeEvent.target.value);
     };
 
     return (
@@ -32,7 +48,8 @@ const CameraControls = ({
                 <GroupedRadio
                     size="small"
                     name="camera-movement"
-                    defaultValue="rotate"
+                    defaultValue={mode}
+                    value={mode}
                     onChange={onRadioChange}
                 >
                     <Tooltip
@@ -40,11 +57,7 @@ const CameraControls = ({
                         title="Rotate"
                         color={TOOLTIP_COLOR}
                     >
-                        <Radio.Button
-                            className={styles.btn}
-                            value={"rotate"}
-                            onClick={zoomIn}
-                        >
+                        <Radio.Button className={styles.btn} value={"rotate"}>
                             <span
                                 className={classNames([
                                     "icon-moon",
@@ -55,11 +68,7 @@ const CameraControls = ({
                         </Radio.Button>
                     </Tooltip>
                     <Tooltip placement="left" title="Pan" color={TOOLTIP_COLOR}>
-                        <Radio.Button
-                            className={styles.btn}
-                            value="pan"
-                            onClick={zoomIn}
-                        >
+                        <Radio.Button className={styles.btn} value="pan">
                             <span
                                 className={classNames([
                                     "icon-moon",
