@@ -56,7 +56,7 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
             }
         >
             <div className={styles.trajectoryDescription}>
-                <p className={styles.versionAndTime}>
+                <div className={styles.versionAndTime}>
                     {version ? (
                         <Tag className={styles.versionTag}>v{version}</Tag>
                     ) : (
@@ -65,7 +65,7 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                     <span className={styles.simulatedTime}>
                         {totalSimulatedTime}
                     </span>
-                </p>
+                </div>
                 <Link
                     to={{
                         pathname: VIEWER_PATHNAME,
