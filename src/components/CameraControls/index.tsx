@@ -1,9 +1,11 @@
 import * as React from "react";
-import { Button, Tooltip } from "antd";
+import { Button, Tooltip, Radio } from "antd";
+import classNames from "classnames";
 
 import { TOOLTIP_COLOR } from "../../constants/index";
 import Icons from "../Icons";
 
+const GroupedRadio = Radio.Group;
 const styles = require("./style.css");
 
 interface CameraControlsProps {
@@ -19,6 +21,48 @@ const CameraControls = ({
 }: CameraControlsProps) => {
     return (
         <div className={styles.container}>
+            <div className={styles.moveButtons}>
+                <GroupedRadio
+                    size="small"
+                    name="camera-movement"
+                    defaultValue="rotate"
+                >
+                    <Tooltip
+                        placement="left"
+                        title="Rotate"
+                        color={TOOLTIP_COLOR}
+                    >
+                        <Radio.Button
+                            className={styles.btn}
+                            value={"rotate"}
+                            onClick={zoomIn}
+                        >
+                            <span
+                                className={classNames([
+                                    "icon-moon",
+                                    "anticon",
+                                    styles.rotate,
+                                ])}
+                            />
+                        </Radio.Button>
+                    </Tooltip>
+                    <Tooltip placement="left" title="Pan" color={TOOLTIP_COLOR}>
+                        <Radio.Button
+                            className={styles.btn}
+                            value="pan"
+                            onClick={zoomIn}
+                        >
+                            <span
+                                className={classNames([
+                                    "icon-moon",
+                                    "anticon",
+                                    styles.pan,
+                                ])}
+                            />
+                        </Radio.Button>
+                    </Tooltip>
+                </GroupedRadio>
+            </div>
             <div className={styles.zoomButtons}>
                 <Tooltip placement="left" title="Zoom in" color={TOOLTIP_COLOR}>
                     <Button
