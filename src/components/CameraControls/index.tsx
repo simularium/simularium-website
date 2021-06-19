@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Button, Tooltip, Radio } from "antd";
 import classNames from "classnames";
-import { useHotkeys, useIsHotkeyPressed } from "react-hotkeys-hook";
+import { useHotkeys } from "react-hotkeys-hook";
 
 import { TOOLTIP_COLOR } from "../../constants/index";
 import Icons from "../Icons";
 import { RadioChangeEvent } from "antd/lib/radio";
-import { isUndefined } from "lodash";
 
 const GroupedRadio = Radio.Group;
 const styles = require("./style.css");
@@ -33,17 +32,18 @@ const CameraControls = ({
     setPanningMode,
 }: CameraControlsProps) => {
     const [mode, setMode] = useState("rotate");
-    const [isModifyingClick, setIsModifyingClick] = useState(false);
     const [keyPressed, setKeyPressed] = useState("");
-    const wasModified: { current: boolean | undefined } = useRef();
-
+    const lastKeyPressed = useRef("");
+    const isModifierKey = (key: string) =>
+        CAMERA_MODE_MODIFIER_KEYS.includes(key);
     useHotkeys(
         "*",
         (event) => {
             console.log("KEY down");
-            if (CAMERA_MODE_MODIFIER_KEYS.includes(event.key)) {
-                return setIsModifyingClick(true);
-            } else if (HOT_KEYS.includes(event.key)) {
+            if (
+                CAMERA_MODE_MODIFIER_KEYS.includes(event.key) ||
+                HOT_KEYS.includes(event.key)
+            ) {
                 return setKeyPressed(event.key);
             }
         },
@@ -53,16 +53,16 @@ const CameraControls = ({
     useHotkeys(
         "*",
         () => {
-            if (wasModified.current) {
-                return setIsModifyingClick(false);
-            }
             return setKeyPressed("");
         },
         { keyup: true }
     );
 
     useEffect(() => {
-        if (!wasModified.current && !isModifyingClick) {
+        if (
+            !isModifierKey(lastKeyPressed.current) &&
+            !isModifierKey(keyPressed)
+        ) {
             // only call the simularium controller if it's not a modifier key
             // because the viewer is already setting the mode
             setPanningMode(mode === PAN);
@@ -70,16 +70,15 @@ const CameraControls = ({
     }, [mode]);
 
     useEffect(() => {
-        if (isUndefined(wasModified.current)) {
-            // avoid toggle from the first time state is set
-            wasModified.current = isModifyingClick;
-            return;
+        console.log("key pressed", keyPressed, lastKeyPressed.current);
+        if (
+            (isModifierKey(keyPressed) && !lastKeyPressed.current) ||
+            (isModifierKey(lastKeyPressed.current) && !keyPressed)
+        ) {
+            // toggle the mode, so the radio buttons reflect the true state
+            lastKeyPressed.current = keyPressed;
+            return setMode(mode === PAN ? ROTATE : PAN);
         }
-        setMode(mode === PAN ? ROTATE : PAN);
-        wasModified.current = isModifyingClick;
-    }, [isModifyingClick]);
-
-    useEffect(() => {
         switch (keyPressed) {
             case ZOOM_IN_HK:
                 zoomIn();
@@ -93,6 +92,7 @@ const CameraControls = ({
             default:
                 break;
         }
+        lastKeyPressed.current = keyPressed;
     }, [keyPressed]);
 
     const onRadioChange = (changeEvent: RadioChangeEvent) => {
