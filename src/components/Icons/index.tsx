@@ -17,8 +17,6 @@ import ClockwiseArrow from "../../assets/step-forward.svg";
 import CounterClockwiseArrow from "../../assets/step-back.svg";
 import Beta from "../../assets/beta.svg";
 
-const styles = require("./style.css");
-
 export const Loading = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 export const Play = <CaretRightOutlined />;
 export const Pause = <PauseOutlined />;
