@@ -29,7 +29,7 @@ const CameraControls = ({
     zoomOut,
     setPanningMode,
 }: CameraControlsProps) => {
-    const [mode, setMode] = useState("rotate");
+    const [mode, setMode] = useState(ROTATE);
     const [keyPressed, setKeyPressed] = useState("");
     const lastKeyPressed = useRef("");
     const isModifierKey = (key: string) =>
