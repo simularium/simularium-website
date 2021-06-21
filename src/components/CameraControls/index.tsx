@@ -14,7 +14,8 @@ const CAMERA_MODE_MODIFIER_KEYS = ["Meta", "Shift"];
 const ZOOM_IN_HK = "ArrowUp";
 const ZOOM_OUT_HK = "ArrowDown";
 const RESET_HK = "r";
-const HOT_KEYS = [ZOOM_IN_HK, ZOOM_OUT_HK, RESET_HK];
+const FOCUS_HK = "f";
+const HOT_KEYS = [ZOOM_IN_HK, ZOOM_OUT_HK, RESET_HK, FOCUS_HK];
 
 interface CameraControlsProps {
     resetCamera: () => void;
@@ -91,6 +92,9 @@ const CameraControls = ({
                 break;
             case RESET_HK:
                 resetCamera();
+                break;
+            case FOCUS_HK:
+                saveFocusMode(!isFocused);
                 break;
             default:
                 break;
