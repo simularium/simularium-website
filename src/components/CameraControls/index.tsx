@@ -97,7 +97,6 @@ const CameraControls = ({
         }
         lastKeyPressed.current = keyPressed;
     }, [keyPressed]);
-
     return (
         <div className={styles.container}>
             <div className={styles.moveButtons}>
@@ -147,25 +146,30 @@ const CameraControls = ({
                         </Button>
                     </Tooltip>
                 </div>
-            </div>
-            <Tooltip placement="left" title="Focus (F)" color={TOOLTIP_COLOR}>
-                <Button
-                    size="small"
-                    className={classNames([
-                        { [styles.active]: isFocused },
-                        styles.radioBtn,
-                    ])}
-                    onClick={() => saveFocusMode(!isFocused)}
+                <Tooltip
+                    placement="left"
+                    title="Focus (F)"
+                    color={TOOLTIP_COLOR}
                 >
-                    <span
+                    <Button
+                        size="small"
                         className={classNames([
-                            "icon-moon",
-                            "anticon",
-                            styles.focus,
+                            { [styles.active]: isFocused },
+                            styles.radioBtn,
                         ])}
-                    />
-                </Button>
-            </Tooltip>
+                        onClick={() => saveFocusMode(!isFocused)}
+                    >
+                        <span
+                            className={classNames([
+                                "icon-moon",
+                                "anticon",
+                                styles.focus,
+                            ])}
+                        />
+                    </Button>
+                </Tooltip>
+            </div>
+
             <div className={styles.zoomButtons}>
                 <Tooltip
                     placement="left"
