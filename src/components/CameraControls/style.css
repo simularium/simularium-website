@@ -19,6 +19,10 @@
     height: 60px;
 }
 
+.move-buttons {
+    margin-bottom: 4px;
+}
+
 .btn {
     background-color: var(--dark-theme-btn-bg);
     color: var(--dark-theme-btn-color);
@@ -81,4 +85,8 @@
 
 .pan::after {
     content: "\e908";
+}
+
+.focus::after {
+    content: "\e90a";
 }

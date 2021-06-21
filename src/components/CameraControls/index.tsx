@@ -21,6 +21,7 @@ interface CameraControlsProps {
     zoomIn: () => void;
     zoomOut: () => void;
     setPanningMode: (value: boolean) => void;
+    setFocusMode: (value: boolean) => void;
 }
 
 const CameraControls = ({
@@ -28,8 +29,10 @@ const CameraControls = ({
     zoomIn,
     zoomOut,
     setPanningMode,
+    setFocusMode,
 }: CameraControlsProps) => {
     const [mode, setMode] = useState("rotate");
+    const [isFocused, saveFocusMode] = useState(true);
     const [keyPressed, setKeyPressed] = useState("");
     const lastKeyPressed = useRef("");
     const isModifierKey = (key: string) =>
@@ -54,6 +57,10 @@ const CameraControls = ({
         },
         { keyup: true }
     );
+
+    useEffect(() => {
+        setFocusMode(isFocused);
+    }, [isFocused]);
 
     useEffect(() => {
         if (
@@ -141,6 +148,24 @@ const CameraControls = ({
                     </Tooltip>
                 </div>
             </div>
+            <Tooltip placement="left" title="Focus (F)" color={TOOLTIP_COLOR}>
+                <Button
+                    size="small"
+                    className={classNames([
+                        { [styles.active]: isFocused },
+                        styles.radioBtn,
+                    ])}
+                    onClick={() => saveFocusMode(!isFocused)}
+                >
+                    <span
+                        className={classNames([
+                            "icon-moon",
+                            "anticon",
+                            styles.focus,
+                        ])}
+                    />
+                </Button>
+            </Tooltip>
             <div className={styles.zoomButtons}>
                 <Tooltip
                     placement="left"
