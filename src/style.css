@@ -45,7 +45,7 @@ canvas:focus {
 }
 
 .ant-btn:focus, .ant-btn:hover {
-    border-color: transparent!important;
+    border-color: var(--dark-theme-btn-hover-bg);
 }
 
 .icon-moon {

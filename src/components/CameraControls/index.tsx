@@ -1,13 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Button, Tooltip, Radio } from "antd";
+import { Button, Tooltip } from "antd";
 import classNames from "classnames";
 import { useHotkeys } from "react-hotkeys-hook";
 
 import { TOOLTIP_COLOR } from "../../constants/index";
 import Icons from "../Icons";
-import { RadioChangeEvent } from "antd/lib/radio";
 
-const GroupedRadio = Radio.Group;
 const styles = require("./style.css");
 
 const PAN = "pan";
@@ -39,7 +37,6 @@ const CameraControls = ({
     useHotkeys(
         "*",
         (event) => {
-            console.log("KEY down");
             if (
                 CAMERA_MODE_MODIFIER_KEYS.includes(event.key) ||
                 HOT_KEYS.includes(event.key)
@@ -70,7 +67,6 @@ const CameraControls = ({
     }, [mode]);
 
     useEffect(() => {
-        console.log("key pressed", keyPressed, lastKeyPressed.current);
         if (
             (isModifierKey(keyPressed) && !lastKeyPressed.current) ||
             (isModifierKey(lastKeyPressed.current) && !keyPressed)
@@ -95,29 +91,23 @@ const CameraControls = ({
         lastKeyPressed.current = keyPressed;
     }, [keyPressed]);
 
-    const onRadioChange = (changeEvent: RadioChangeEvent) => {
-        return setMode(changeEvent.target.value);
-    };
-
     return (
         <div className={styles.container}>
             <div className={styles.moveButtons}>
-                <GroupedRadio
-                    className={styles.radioGroup}
-                    size="small"
-                    name="camera-movement"
-                    defaultValue={mode}
-                    value={mode}
-                    onChange={onRadioChange}
-                >
+                <div className={styles.radioGroup}>
                     <Tooltip
                         placement="left"
                         title="Rotate (SHIFT or CMD)"
                         color={TOOLTIP_COLOR}
                     >
-                        <Radio.Button
-                            className={styles.radioBtn}
-                            value={"rotate"}
+                        {/* Should be radio buttons, but using radio buttons 
+                        detaches keypressed listener after the button is pressed */}
+                        <Button
+                            className={classNames([
+                                { [styles.active]: mode === ROTATE },
+                                styles.radioBtn,
+                            ])}
+                            onClick={() => setMode(ROTATE)}
                         >
                             <span
                                 className={classNames([
@@ -126,14 +116,20 @@ const CameraControls = ({
                                     styles.rotate,
                                 ])}
                             />
-                        </Radio.Button>
+                        </Button>
                     </Tooltip>
                     <Tooltip
                         placement="left"
                         title="Pan (SHIFT or CMD)"
                         color={TOOLTIP_COLOR}
                     >
-                        <Radio.Button className={styles.radioBtn} value="pan">
+                        <Button
+                            className={classNames([
+                                { [styles.active]: mode === PAN },
+                                styles.radioBtn,
+                            ])}
+                            onClick={() => setMode(PAN)}
+                        >
                             <span
                                 className={classNames([
                                     "icon-moon",
@@ -141,9 +137,9 @@ const CameraControls = ({
                                     styles.pan,
                                 ])}
                             />
-                        </Radio.Button>
+                        </Button>
                     </Tooltip>
-                </GroupedRadio>
+                </div>
             </div>
             <div className={styles.zoomButtons}>
                 <Tooltip

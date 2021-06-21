@@ -27,10 +27,12 @@
 
 .radio-btn {
     border-color: var(--dark-theme-btn-bg)!important;
+    background-color: black!important;
     padding: 0 2px!important;
     width: 24px;
     height: 24px;
     font-size: 18px;
+    line-height: 18px;
     border-left-width: 1px;
 }
 
@@ -42,21 +44,22 @@
     border-radius: 0px 0px 3px 3px;
 }
  
-.radio-btn:global(.ant-radio-button-wrapper-checked) {
+.radio-btn.active {
     color: var(--dark-theme-btn-color) !important;
+    background-color: var(--dark-theme-btn-bg) !important;
 }
 
-.radio-btn:global(.ant-radio-button-wrapper:not(:first-child)) {
+.radio-btn:not(:first-child) {
     border-top: 0px;
 }
 
-.radio-btn:global(.ant-radio-button-wrapper:not(:first-child)::before) {
-    content: none;
+.radio-btn:hover {
+    color: var(--dark-theme-btn-color);
+    background-color: var(--dark-theme-btn-hover-bg)!important;
 }
 
 .btn:hover,
-.btn:active,
-.radio-btn:hover {
+.btn:active {
     color: var(--dark-theme-btn-color);
     background-color: var(--dark-theme-btn-hover-bg);
 }
