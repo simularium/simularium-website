@@ -3,10 +3,17 @@
     padding: 15px 15px 5px 15px;
     background-color: var(--light-theme-card-bg-white);
     border: none;
+    display: flex;
+    flex-direction: column;
 }
 
 .card :global(.ant-card-body) {
     padding: 0px;
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
 .animated-thumbnail {
@@ -21,15 +28,25 @@
     display: none;
 }
 
-.card-text {
+.trajectory-description {
     font-size: 16px;
+}
+
+.stretch {
+    flex-grow: 2;
 }
 
 .version-and-time {
     display: flex;
     justify-content: space-between;
     margin-top: 4px;
+    margin-bottom: 8px;
     font-size: 16px;
+}
+
+.load-your-data {
+    font-size: 16px;
+    flex-grow: 2;
 }
 
 /* Necessary to make flexbox spacing work */
