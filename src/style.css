@@ -68,6 +68,11 @@ keep track of what font glyphs are available.
 To use one, the span must have the "icon-moon" class name, and then 
 use the :after pseduo selector to input the content.
 */
+.icon-focus:before {
+    content: "\e90a";
+    color: #d8d8d8;
+}
+
 .icon-rotate:before {
     content: "\e909";
 }
