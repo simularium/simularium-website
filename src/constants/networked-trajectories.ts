@@ -63,7 +63,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
     },
     {
         modelName: "Membrane Wrapping a Nanoparticle",
-        id: "nanoparticle-wrapping.simularium",
+        id: "nanoparticle_wrapping.simularium",
         title: "Membrane Wrapping a Nanoparticle",
         totalSimulatedTime: "5.48ms",
         authors: "Mohsen Sadeghi et al.",
