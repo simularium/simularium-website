@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { Button, Slider, Tooltip } from "antd";
+import React, { KeyboardEvent, useState } from "react";
+import { Button, Slider, Tooltip, InputNumber } from "antd";
 import classNames from "classnames";
 
 import { TOOLTIP_COLOR } from "../../constants/index";
 import Icons from "../Icons";
 import { DisplayTimes } from "../../containers/ViewerPanel/types";
+import { TimeUnits } from "../../state/metadata/types";
 
 const styles = require("./style.css");
 interface PlayBackProps {
@@ -20,6 +21,7 @@ interface PlayBackProps {
     loading: boolean;
     timeStep: number;
     displayTimes: DisplayTimes;
+    timeUnits: TimeUnits;
     isEmpty: boolean;
 }
 
@@ -36,6 +38,7 @@ const PlayBackControls = ({
     loading,
     timeStep,
     displayTimes,
+    timeUnits,
     isEmpty,
 }: PlayBackProps) => {
     // Where to resume playing if simulation was playing before scrubbing
@@ -43,6 +46,7 @@ const PlayBackControls = ({
         timeToResumeAfterScrubbing,
         setTimeToResumeAfterScrubbing,
     ] = useState(-1);
+    const [timeInput, setTimeInput] = useState(firstFrameTime);
 
     // - Gets called once when the user clicks on the slider to skip to a specific time
     // - Gets called multiple times when user is scrubbing (every time the play head
@@ -69,6 +73,43 @@ const PlayBackControls = ({
             playHandler(timeToResumeAfterScrubbing);
             setTimeToResumeAfterScrubbing(-1);
         }
+    };
+
+    // Called after every keystroke
+    const handleTimeInputChange = (
+        userInput: number | string | undefined
+    ): void => {
+        if (userInput !== undefined) {
+            setTimeInput(userInput as number);
+        }
+    };
+
+    const handleTimeInputKeyDown = (event: KeyboardEvent): void => {
+        if (event.key === "Enter" || event.key === "Tab") {
+            // User input will be aligned with the displayed time values, which were multiplied
+            // by timeUnits.magnitude in the getDisplayTimes selector, so we have to undo the
+            // multiplication before requesting the time. timeUnits.magnitude is 1 for a vast
+            // majority of the time so it shouldn't make a difference most times.
+            if (typeof timeInput === "number") {
+                onTimeChange(timeInput / timeUnits.magnitude);
+            }
+        }
+        if (event.key === "Escape") {
+            const inputNumberComponent = event.target as HTMLElement;
+            inputNumberComponent.blur();
+        }
+    };
+
+    // Determine the width of the input box
+    const getTimeInputWidth = (): string => {
+        // If lastFrameTime is 15 and step size is 0.25 then 15.25 is probably going to have
+        // the max number of characters for this trajectory
+        const refTimeValue =
+            displayTimes.roundedLastFrameTime + displayTimes.roundedTimeStep;
+        const maxNumChars = refTimeValue.toString().length;
+        // If maxNumChars is 5 then the input box width will be 6 character widths long
+        // (+ 1 is arbitrary padding)
+        return maxNumChars + 1 + "ch";
     };
 
     const btnClassNames = classNames([styles.item, styles.btn]);
@@ -159,13 +200,20 @@ const PlayBackControls = ({
                 disabled={loading || isEmpty}
             />
             <div className={styles.time}>
-                <p>
-                    {displayTimes.roundedTime}{" "}
-                    <span className={styles.lastFrameTime}>
-                        / {displayTimes.roundedLastFrameTime}{" "}
-                        {displayTimes.unitLabel}
-                    </span>
-                </p>
+                <InputNumber
+                    // key is necessary to re-render this component and override user input
+                    key={displayTimes.roundedTime}
+                    size="small"
+                    value={displayTimes.roundedTime}
+                    onChange={handleTimeInputChange}
+                    onKeyDown={handleTimeInputKeyDown}
+                    disabled={loading || isEmpty || isPlaying}
+                    style={{ width: getTimeInputWidth() }}
+                />
+                <span className={styles.lastFrameTime}>
+                    / {displayTimes.roundedLastFrameTime}{" "}
+                    {timeUnits ? timeUnits.name : "s"}
+                </span>
             </div>
         </div>
     );

@@ -3,6 +3,7 @@ import { createSelector } from "reselect";
 import {
     getLastFrameTimeOfCachedSimulation,
     getTimeUnits,
+    getTimeStep,
 } from "../../state/metadata/selectors";
 import {
     getAgentsToHide,
@@ -13,6 +14,7 @@ import {
     AgentColorMap,
     VisibilitySelectionMap,
 } from "../../state/selection/types";
+import { DisplayTimes } from "./types";
 
 export const getSelectionStateInfoForViewer = createSelector(
     [getHightLightedAgents, getAgentsToHide],
@@ -51,26 +53,31 @@ export const convertUIDataToColorMap = (
 };
 
 export const getDisplayTimes = createSelector(
-    [getCurrentTime, getTimeUnits, getLastFrameTimeOfCachedSimulation],
-    (time, timeUnits, lastFrameTime) => {
+    [
+        getCurrentTime,
+        getTimeUnits,
+        getTimeStep,
+        getLastFrameTimeOfCachedSimulation,
+    ],
+    (time, timeUnits, timeStep, lastFrameTime): DisplayTimes => {
         const roundNumber = (num: number) =>
             parseFloat(Number(num).toPrecision(3));
         let roundedTime = 0;
         let roundedLastFrameTime = 0;
-        let unitLabel = "s";
+        let roundedTimeStep = 0;
 
         if (timeUnits) {
             roundedTime = time ? roundNumber(time * timeUnits.magnitude) : 0;
             roundedLastFrameTime = roundNumber(
                 lastFrameTime * timeUnits.magnitude
             );
-            unitLabel = timeUnits.name;
+            roundedTimeStep = roundNumber(timeStep * timeUnits.magnitude);
         }
 
         return {
             roundedTime: roundedTime,
             roundedLastFrameTime: roundedLastFrameTime,
-            unitLabel: unitLabel,
+            roundedTimeStep: roundedTimeStep,
         };
     }
 );
