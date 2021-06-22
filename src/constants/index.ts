@@ -25,3 +25,17 @@ export const CONTACT_FORM_URL = "https://forms.gle/mwoJjaj3PcbTVStU7";
 export const CYTOSIM_URL = "https://gitlab.com/f.nedelec/cytosim";
 export const PHYSICELL_URL = "http://physicell.org/";
 export const READDY_URL = "https://readdy.github.io/";
+export const MCELL_URL = "https://mcell.org/";
+export const SMOLDYN_URL = "http://www.smoldyn.org/";
+export const SPRINGSALAD_URL = "https://vcell.org/ssalad";
+export const MEDYAN_URL = "http://medyan.org/";
+
+export const SUPPORTED_ENGINES = [
+    ["ReaDDy", READDY_URL],
+    ["PhysiCell", PHYSICELL_URL],
+    ["CytoSim", CYTOSIM_URL],
+    ["MCell", MCELL_URL],
+    ["Smoldyn", SMOLDYN_URL],
+    ["SpringSaLaD", SPRINGSALAD_URL],
+    ["MEDYAN", MEDYAN_URL],
+];
