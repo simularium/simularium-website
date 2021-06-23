@@ -32,6 +32,7 @@ const CameraControls = ({
     const [mode, setMode] = useState(ROTATE);
     const [keyPressed, setKeyPressed] = useState("");
     const lastKeyPressed = useRef("");
+
     const isModifierKey = (key: string) =>
         CAMERA_MODE_MODIFIER_KEYS.includes(key);
     useHotkeys(
