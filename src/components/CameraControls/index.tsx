@@ -110,9 +110,7 @@ const CameraControls = ({
                     <Tooltip
                         placement="left"
                         title={
-                            mode === ROTATE
-                                ? "Rotate"
-                                : "Rotate (Hold CMD and drag)"
+                            mode === ROTATE ? "Rotate" : "Rotate (hold SHIFT)"
                         }
                         color={TOOLTIP_COLOR}
                     >
@@ -136,7 +134,7 @@ const CameraControls = ({
                     </Tooltip>
                     <Tooltip
                         placement="left"
-                        title={mode === PAN ? "Pan" : "Pan (Hold CMD and drag)"}
+                        title={mode === PAN ? "Pan" : "Pan (hold SHIFT)"}
                         color={TOOLTIP_COLOR}
                     >
                         <Button
