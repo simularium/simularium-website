@@ -45,7 +45,7 @@ canvas:focus {
 }
 
 .ant-btn:focus, .ant-btn:hover {
-    border-color: transparent!important;
+    border-color: var(--dark-theme-btn-hover-bg);
 }
 
 .icon-moon {
@@ -68,6 +68,14 @@ keep track of what font glyphs are available.
 To use one, the span must have the "icon-moon" class name, and then 
 use the :after pseduo selector to input the content.
 */
+.icon-rotate:before {
+    content: "\e909";
+}
+
+.icon-pan:before {
+    content: "\e908";
+}
+
 .icon-star-empty1:before {
     content: "\e901";
 }
