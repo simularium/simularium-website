@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Button, Tooltip } from "antd";
 import classNames from "classnames";
-import { useHotkeys } from "react-hotkeys-hook";
+import { useHotkeys, useIsHotkeyPressed } from "react-hotkeys-hook";
 
 import { TOOLTIP_COLOR } from "../../constants/index";
 import Icons from "../Icons";
@@ -39,6 +39,17 @@ const CameraControls = ({
 
     const isModifierKey = (key: string) =>
         CAMERA_MODE_MODIFIER_KEYS.includes(key);
+    const modifierKeyIsPressed = (isPressed) => {
+        return CAMERA_MODE_MODIFIER_KEYS.reduce((acc, key) => {
+            console.log("key", key);
+            if (isPressed(key)) {
+                console.log("is pressed", key);
+                acc = key;
+            }
+            return acc;
+        }, "");
+    };
+
     useHotkeys(
         "*",
         (event) => {
@@ -55,6 +66,11 @@ const CameraControls = ({
     useHotkeys(
         "*",
         () => {
+            const isPressed = useIsHotkeyPressed();
+            const modifierKeyPressed = modifierKeyIsPressed(isPressed);
+            if (!!modifierKeyPressed) {
+                return setKeyPressed(modifierKeyPressed);
+            }
             return setKeyPressed("");
         },
         { keyup: true }
