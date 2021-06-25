@@ -5,7 +5,7 @@ import { Layout, Typography } from "antd";
 import dragDropImage from "../../assets/drag-drop.gif";
 import { VIEWER_PATHNAME } from "../../routes";
 import VisualGlossary from "../VisualGlossary";
-import { CYTOSIM_URL, PHYSICELL_URL, READDY_URL } from "../../constants";
+import { SUPPORTED_ENGINES } from "../../constants";
 import Footer from "../Footer";
 
 const { Content } = Layout;
@@ -125,39 +125,24 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                                 <li>
                                     We support the following simulators:
                                     <ul>
-                                        <li>
-                                            ReaDDy (
-                                            <a
-                                                href={READDY_URL}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                {READDY_URL}
-                                            </a>
-                                            )
-                                        </li>
-                                        <li>
-                                            PhysiCell (
-                                            <a
-                                                href={PHYSICELL_URL}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                {PHYSICELL_URL}
-                                            </a>
-                                            )
-                                        </li>
-                                        <li>
-                                            CytoSim (
-                                            <a
-                                                href={CYTOSIM_URL}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                {CYTOSIM_URL}
-                                            </a>
-                                            )
-                                        </li>
+                                        {SUPPORTED_ENGINES.map(
+                                            (engine: string[]) => {
+                                                const [name, url] = engine;
+                                                return (
+                                                    <li key={name}>
+                                                        {name} (
+                                                        <a
+                                                            href={url}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                        >
+                                                            {url}
+                                                        </a>
+                                                        )
+                                                    </li>
+                                                );
+                                            }
+                                        )}
                                     </ul>
                                 </li>
                                 <li>
@@ -165,33 +150,23 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                                     to generate your data, choose the notebook
                                     for that simulator:
                                     <ul>
-                                        <li>
-                                            <a
-                                                href="https://github.com/allen-cell-animated/simulariumio/blob/master/examples/Tutorial_readdy.ipynb"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                ReaDDy
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="https://github.com/allen-cell-animated/simulariumio/blob/master/examples/Tutorial_physicell.ipynb"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                PhysiCell
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="https://github.com/allen-cell-animated/simulariumio/blob/master/examples/Tutorial_cytosim.ipynb"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                CytoSim
-                                            </a>
-                                        </li>
+                                        {SUPPORTED_ENGINES.map(
+                                            (engine: string[]) => {
+                                                const name = engine[0];
+                                                const url = `https://github.com/allen-cell-animated/simulariumio/blob/master/examples/Tutorial_${name.toLowerCase()}.ipynb`;
+                                                return (
+                                                    <li key={name}>
+                                                        <a
+                                                            href={url}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                        >
+                                                            {name}
+                                                        </a>
+                                                    </li>
+                                                );
+                                            }
+                                        )}
                                     </ul>
                                 </li>
                                 <li>
