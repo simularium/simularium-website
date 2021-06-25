@@ -23,6 +23,7 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
         authors,
         publication,
         description,
+        code,
         legalese,
         imageFile,
         gifFile,
@@ -54,8 +55,8 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                 </Link>
             }
         >
-            <div className={styles.cardText}>
-                <p className={styles.versionAndTime}>
+            <div className={styles.trajectoryDescription}>
+                <div className={styles.versionAndTime}>
                     {version ? (
                         <Tag className={styles.versionTag}>v{version}</Tag>
                     ) : (
@@ -64,7 +65,7 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                     <span className={styles.simulatedTime}>
                         {totalSimulatedTime}
                     </span>
-                </p>
+                </div>
                 <Link
                     to={{
                         pathname: VIEWER_PATHNAME,
@@ -102,6 +103,10 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                     </p>
                 </a>
                 <p>{description}</p>
+                {code && <p dangerouslySetInnerHTML={{ __html: code }} />}
+            </div>
+            <div className={styles.stretch} />
+            <div>
                 {legalese && (
                     <p
                         className={styles.legalese}

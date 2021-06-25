@@ -31,10 +31,11 @@ const CameraControls = ({
     setPanningMode,
     setFocusMode,
 }: CameraControlsProps) => {
-    const [mode, setMode] = useState("rotate");
     const [isFocused, saveFocusMode] = useState(true);
+    const [mode, setMode] = useState(ROTATE);
     const [keyPressed, setKeyPressed] = useState("");
     const lastKeyPressed = useRef("");
+
     const isModifierKey = (key: string) =>
         CAMERA_MODE_MODIFIER_KEYS.includes(key);
     useHotkeys(
