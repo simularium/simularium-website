@@ -17,6 +17,15 @@
     flex-direction: column;
     justify-content: space-evenly;
     height: 60px;
+    margin-bottom: 4px;
+
+}
+
+.move-buttons {
+    display: flex;
+    height: 84px;
+    flex-flow: column;
+    justify-content: space-evenly;
 }
 
 .btn {
@@ -36,11 +45,11 @@
     border-left-width: 1px;
 }
 
-.radio-btn:first-child {
+.radio-group .radio-btn:first-child {
     border-radius: 3px 3px 0px 0px;
 }
 
-.radio-btn:last-child {
+.radio-group .radio-btn:last-child {
     border-radius: 0px 0px 3px 3px;
 }
  
@@ -49,7 +58,7 @@
     background-color: var(--dark-theme-btn-bg) !important;
 }
 
-.radio-btn:not(:first-child) {
+.radio-group .radio-btn:not(:first-child) {
     border-top: 0px;
 }
 
@@ -81,4 +90,8 @@
 
 .pan::after {
     content: "\e908";
+}
+
+.focus::after {
+    content: "\e90a";
 }

@@ -14,13 +14,15 @@ const CAMERA_MODE_MODIFIER_KEYS = ["Meta", "Shift"];
 const ZOOM_IN_HK = "ArrowUp";
 const ZOOM_OUT_HK = "ArrowDown";
 const RESET_HK = "r";
-const HOT_KEYS = [ZOOM_IN_HK, ZOOM_OUT_HK, RESET_HK];
+const FOCUS_HK = "f";
+const HOT_KEYS = [ZOOM_IN_HK, ZOOM_OUT_HK, RESET_HK, FOCUS_HK];
 
 interface CameraControlsProps {
     resetCamera: () => void;
     zoomIn: () => void;
     zoomOut: () => void;
     setPanningMode: (value: boolean) => void;
+    setFocusMode: (value: boolean) => void;
 }
 
 const CameraControls = ({
@@ -28,7 +30,9 @@ const CameraControls = ({
     zoomIn,
     zoomOut,
     setPanningMode,
+    setFocusMode,
 }: CameraControlsProps) => {
+    const [isFocused, saveFocusMode] = useState(true);
     const [mode, setMode] = useState(ROTATE);
     const [keyPressed, setKeyPressed] = useState("");
     const lastKeyPressed = useRef("");
@@ -55,6 +59,10 @@ const CameraControls = ({
         },
         { keyup: true }
     );
+
+    useEffect(() => {
+        setFocusMode(isFocused);
+    }, [isFocused]);
 
     useEffect(() => {
         if (
@@ -86,12 +94,14 @@ const CameraControls = ({
             case RESET_HK:
                 resetCamera();
                 break;
+            case FOCUS_HK:
+                saveFocusMode(!isFocused);
+                break;
             default:
                 break;
         }
         lastKeyPressed.current = keyPressed;
     }, [keyPressed]);
-
     return (
         <div className={styles.container}>
             <div className={styles.moveButtons}>
@@ -141,7 +151,30 @@ const CameraControls = ({
                         </Button>
                     </Tooltip>
                 </div>
+                <Tooltip
+                    placement="left"
+                    title="Focus (F)"
+                    color={TOOLTIP_COLOR}
+                >
+                    <Button
+                        size="small"
+                        className={classNames([
+                            { [styles.active]: isFocused },
+                            styles.radioBtn,
+                        ])}
+                        onClick={() => saveFocusMode(!isFocused)}
+                    >
+                        <span
+                            className={classNames([
+                                "icon-moon",
+                                "anticon",
+                                styles.focus,
+                            ])}
+                        />
+                    </Button>
+                </Tooltip>
             </div>
+
             <div className={styles.zoomButtons}>
                 <Tooltip
                     placement="left"
