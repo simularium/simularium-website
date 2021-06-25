@@ -39,6 +39,7 @@ const CameraControls = ({
 
     const isModifierKey = (key: string) =>
         CAMERA_MODE_MODIFIER_KEYS.includes(key);
+
     useHotkeys(
         "*",
         (event) => {
@@ -108,7 +109,11 @@ const CameraControls = ({
                 <div className={styles.radioGroup}>
                     <Tooltip
                         placement="left"
-                        title="Rotate (SHIFT or CMD)"
+                        title={
+                            mode === ROTATE
+                                ? "Rotate"
+                                : "Rotate (Hold CMD and drag)"
+                        }
                         color={TOOLTIP_COLOR}
                     >
                         {/* Should be radio buttons, but using radio buttons 
@@ -131,7 +136,7 @@ const CameraControls = ({
                     </Tooltip>
                     <Tooltip
                         placement="left"
-                        title="Pan (SHIFT or CMD)"
+                        title={mode === PAN ? "Pan" : "Pan (Hold CMD and drag)"}
                         color={TOOLTIP_COLOR}
                     >
                         <Button
