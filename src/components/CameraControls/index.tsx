@@ -39,11 +39,12 @@ const CameraControls = ({
 
     const isModifierKey = (key: string) =>
         CAMERA_MODE_MODIFIER_KEYS.includes(key);
-    const modifierKeyIsPressed = (isPressed) => {
+
+    const getModifierKeyPressed = () => {
+        const isPressed = useIsHotkeyPressed();
+
         return CAMERA_MODE_MODIFIER_KEYS.reduce((acc, key) => {
-            console.log("key", key);
             if (isPressed(key)) {
-                console.log("is pressed", key);
                 acc = key;
             }
             return acc;
@@ -66,10 +67,9 @@ const CameraControls = ({
     useHotkeys(
         "*",
         () => {
-            const isPressed = useIsHotkeyPressed();
-            const modifierKeyPressed = modifierKeyIsPressed(isPressed);
-            if (!!modifierKeyPressed) {
-                return setKeyPressed(modifierKeyPressed);
+            const currentModifierKeyPressed = getModifierKeyPressed();
+            if (!!currentModifierKeyPressed) {
+                return setKeyPressed(currentModifierKeyPressed);
             }
             return setKeyPressed("");
         },
