@@ -13,7 +13,7 @@ const ROTATE = "rotate";
 const CAMERA_MODE_MODIFIER_KEYS = ["Meta", "Shift"];
 const ZOOM_IN_HK = "ArrowUp";
 const ZOOM_OUT_HK = "ArrowDown";
-const RESET_HK = "r";
+const RESET_HK = "h";
 const FOCUS_HK = "f";
 const HOT_KEYS = [ZOOM_IN_HK, ZOOM_OUT_HK, RESET_HK, FOCUS_HK];
 
@@ -203,7 +203,7 @@ const CameraControls = ({
             </div>
             <Tooltip
                 placement="left"
-                title="Reset camera (R)"
+                title="Home view (H)"
                 color={TOOLTIP_COLOR}
             >
                 <Button
