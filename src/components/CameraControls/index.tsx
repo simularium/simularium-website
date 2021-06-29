@@ -13,7 +13,7 @@ const ROTATE = "rotate";
 const CAMERA_MODE_MODIFIER_KEYS = ["Meta", "Shift"];
 const ZOOM_IN_HK = "ArrowUp";
 const ZOOM_OUT_HK = "ArrowDown";
-const RESET_HK = "r";
+const RESET_HK = "h";
 const FOCUS_HK = "f";
 const HOT_KEYS = [ZOOM_IN_HK, ZOOM_OUT_HK, RESET_HK, FOCUS_HK];
 
@@ -50,6 +50,7 @@ const CameraControls = ({
             return acc;
         }, "");
     };
+
 
     useHotkeys(
         "*",
@@ -124,7 +125,9 @@ const CameraControls = ({
                 <div className={styles.radioGroup}>
                     <Tooltip
                         placement="left"
-                        title="Rotate (SHIFT or CMD)"
+                        title={
+                            mode === ROTATE ? "Rotate" : "Rotate (hold SHIFT)"
+                        }
                         color={TOOLTIP_COLOR}
                     >
                         {/* Should be radio buttons, but using radio buttons 
@@ -147,7 +150,7 @@ const CameraControls = ({
                     </Tooltip>
                     <Tooltip
                         placement="left"
-                        title="Pan (SHIFT or CMD)"
+                        title={mode === PAN ? "Pan" : "Pan (hold SHIFT)"}
                         color={TOOLTIP_COLOR}
                     >
                         <Button
@@ -219,7 +222,7 @@ const CameraControls = ({
             </div>
             <Tooltip
                 placement="left"
-                title="Reset camera (R)"
+                title="Home view (H)"
                 color={TOOLTIP_COLOR}
             >
                 <Button
