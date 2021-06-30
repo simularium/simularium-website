@@ -1,9 +1,10 @@
 ---
 name: Feature Request
 about: '"It would be really cool if x did y..."'
-title: ""
-labels: ""
-assignees: ""
+title: ''
+labels: enhancement
+assignees: ''
+
 ---
 
 ## Use Case

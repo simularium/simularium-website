@@ -1,9 +1,10 @@
 ---
 name: Bug Report
 about: '"Something''s wrong..."'
-title: ""
-labels: ""
-assignees: ""
+title: ''
+labels: bug
+assignees: ''
+
 ---
 
 ## Description
