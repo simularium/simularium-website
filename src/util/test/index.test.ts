@@ -107,6 +107,7 @@ describe("General utilities", () => {
                 "https://fa-st.web9site.com/directory-name/file.filename",
                 "https://website.com/directory/?key=val",
                 "http://www.website.com/?key=val#anchor",
+                "https://drive.google.com/uc?export=download&id=1HH5KBpH7QAiwqw-qfm0_tfkTO3XC8afR",
             ];
             const result = shouldMatch.map(urlCheck);
             expect(result).to.deep.equal(shouldMatch);

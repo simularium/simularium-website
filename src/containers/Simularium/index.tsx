@@ -35,6 +35,7 @@ import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/metadata/constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { clearUrlParams, urlCheck } from "../../util";
+import { getGoogleDriveFileId, isGoogleDriveUrl } from "../../util/googleApi";
 const { Content } = Layout;
 
 const styles = require("./style.css");
@@ -103,8 +104,12 @@ class App extends React.Component<AppProps, AppState> {
             }
         } else if (userTrajectoryUrl) {
             const verifiedUrl = urlCheck(userTrajectoryUrl);
+            let googleDriveId;
+            if (isGoogleDriveUrl(verifiedUrl)) {
+                googleDriveId = getGoogleDriveFileId(parsed);
+            }
             if (verifiedUrl) {
-                loadViaUrl(verifiedUrl, controller);
+                loadViaUrl(verifiedUrl, controller, googleDriveId);
             } else {
                 // if the url doesn't pass the regEx check, notify the user and then clear the url
                 // and save the controller

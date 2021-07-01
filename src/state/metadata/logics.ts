@@ -35,6 +35,11 @@ import {
     setIsPlaying,
 } from "../selection/actions";
 import { initialState as initialSelectionState } from "../selection/reducer";
+import {
+    getGoogleApiUrl,
+    getGoogleDriveFileId,
+    isGoogleDriveUrl,
+} from "../../util/googleApi";
 
 const netConnectionSettings = {
     serverIp: process.env.BACKEND_SERVER_IP,
@@ -235,7 +240,8 @@ const loadLocalFile = createLogic({
 const loadFileViaUrl = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
-        const url = action.payload.replace(
+        console.log(action);
+        let url = action.payload.replace(
             "dropbox.com",
             "dl.dropboxusercontent.com"
         );
@@ -252,9 +258,13 @@ const loadFileViaUrl = createLogic({
                 dispatch(setSimulariumController(simulariumController));
             }
         }
+        if (action.fileId && isGoogleDriveUrl(url)) {
+            url = getGoogleApiUrl(action.fileId);
+        }
         fetch(url)
             .then((response) => {
                 if (response.ok) {
+                    console.log(response);
                     return response.json();
                 } else {
                     // If there's a CORS error, this line of code is not reached because there is no response

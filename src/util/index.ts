@@ -74,6 +74,7 @@ export const wrapText = (
 };
 
 export const urlCheck = (urlToCheck: any): string => {
+    console.log("CHECKING", urlToCheck);
     if (typeof urlToCheck !== "string") {
         return "";
     }
@@ -82,8 +83,9 @@ export const urlCheck = (urlToCheck: any): string => {
      * I had to modify the original to allow s3 buckets which have multiple `.letters-letters.` in them
      * and I made the http(s) required
      */
-    const regEx = /(https?:\/\/)([\w\-]){0,200}(\.[a-zA-Z][^\-])([\/\w]*)*\/?\??([^\n\r]*)??([^\n\r]*)/g;
+    const regEx = /(https?:\/\/)([\w\-]){0,200}(\.[a-zA-Z][^\-])([\/\w]*)*\/?\??([^\n\r]*)?([^\n\r]*)/g;
     if (regEx.test(urlToCheck)) {
+        console.log(urlToCheck);
         return urlToCheck;
     }
     return "";
