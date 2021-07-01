@@ -30,5 +30,7 @@ export const getGoogleDriveFileId = (allParams: { [key: string]: string }) => {
 };
 
 export const getGoogleApiUrl = (id: string) => {
-    return `https://www.googleapis.com/drive/v2/files/${id}?alt=media&key=AIzaSyAZ3ow-AhfTcOsBml7e3oXZ7JwqIATcGwU`;
+    return `https://www.googleapis.com/drive/v2/files/${id}?alt=media&key=${
+        process.env.GOOGLE_API_KEY
+    }`;
 };
