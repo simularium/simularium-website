@@ -255,7 +255,6 @@ const loadFileViaUrl = createLogic({
         fetch(url)
             .then((response) => {
                 if (response.ok) {
-                    console.log(response);
                     return response.json();
                 } else {
                     // If there's a CORS error, this line of code is not reached because there is no response
