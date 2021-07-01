@@ -4,10 +4,12 @@ import * as React from "react";
 import { bindAll, convertToSentenceCase, wrapText } from "../";
 import {
     getGoogleDriveFileId,
+    getUserTrajectoryUrl,
     isGoogleDriveUrl,
     urlCheck,
 } from "../userUrlHandling";
 
+process.env.GOOGLE_API_KEY = "key";
 describe("General utilities", () => {
     describe("bindAll", () => {
         it("binds class methods to a class", () => {
@@ -180,6 +182,26 @@ describe("User Url handling", () => {
             const id = "id";
 
             expect(getGoogleDriveFileId("url", id)).to.deep.equal(id);
+        });
+    });
+    describe("getUserTrajectoryUrl", () => {
+        it("returns a google api url if given an id and a google url", () => {
+            const id = "id";
+
+            const result = getUserTrajectoryUrl("google.com", id);
+            expect(result).to.deep.equal(
+                `https://www.googleapis.com/drive/v2/files/${id}?alt=media&key=key`
+            );
+        });
+        it("returns the url if given an id, but not a google url", () => {
+            const id = "id";
+            const result = getUserTrajectoryUrl("url", id);
+            expect(result).to.deep.equal("url");
+        });
+        it("returns replaces dropbox.com", () => {
+            const id = "id";
+            const result = getUserTrajectoryUrl("dropbox.com/path", id);
+            expect(result).to.deep.equal("dl.dropboxusercontent.com/path");
         });
     });
 });
