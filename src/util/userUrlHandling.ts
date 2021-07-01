@@ -27,9 +27,11 @@ export const getGoogleDriveFileId = (
 ): string | undefined => {
     // already checked it was a google url before entering this function.
     if (id && isString(id)) {
-        // if the url is formatted "https://drive.google.com/uc?export=download&id=1HH5KBpH7QAiwqw-qfm0_tfkTO3XC8afR"
-        // the url params with have an id
-        // less common case since this is not the url that you get from selecting "share" on google drive
+        /**
+         * if the url is formatted "https://drive.google.com/uc?export=download&id=1HH5KBpH7QAiwqw-qfm0_tfkTO3XC8afR"
+         * the url params will have an id. This is less common case since this is not the url that you get from
+         * selecting "share" on google drive
+         **/
         return id;
     } else {
         // will match drive.google.com/file/d/1HH5KBpH7QAiwqw-qfm0_tfkTO3XC8afR
