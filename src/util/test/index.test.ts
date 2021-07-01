@@ -1,7 +1,8 @@
 import { expect } from "chai";
 import * as React from "react";
 
-import { bindAll, convertToSentenceCase, urlCheck, wrapText } from "../";
+import { bindAll, convertToSentenceCase, wrapText } from "../";
+import { isGoogleDriveUrl, urlCheck } from "../userUrlHandling";
 
 describe("General utilities", () => {
     describe("bindAll", () => {
@@ -97,6 +98,9 @@ describe("General utilities", () => {
             });
         });
     });
+});
+
+describe("User Url handling", () => {
     describe("urlCheck", () => {
         it("returns strings that match the regex", () => {
             const shouldMatch = [
@@ -130,6 +134,17 @@ describe("General utilities", () => {
             ];
             const result = shouldNotMatch.map(urlCheck);
             expect(result).to.deep.equal(Array(shouldNotMatch.length).fill(""));
+        });
+    });
+    describe("isGoogleDriveUrl", () => {
+        it("returns true if the url has google.com in it", () => {
+            const shouldMatch = [
+                "https://google.com.amazonaws.com/trajectory/endocytosis.simularium",
+                "https://drive.google.com/file/d/1HH5KBpH7QAiwqw-qfm0_tfkTO3XC8afR/view",
+                "https://drive.google.com/uc?export=download&id=1HH5KBpH7QAiwqw-qfm0_tfkTO3XC8afR",
+            ];
+            const result = shouldMatch.map(isGoogleDriveUrl);
+            expect(result).to.deep.equal([true, true, true]);
         });
     });
 });

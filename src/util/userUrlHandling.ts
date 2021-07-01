@@ -3,6 +3,22 @@ import { isString } from "lodash";
 const googleDriveUrlRegEx = /(?:drive.google\.com\/file\/d\/)(.*)(?=\/)|(?:drive.google\.com\/file\/d\/)(.*)/g;
 const googleDriveUrlExcludingIdRegEx = /(drive.google\.com\/file\/d\/)(?=.*)/g;
 
+export const urlCheck = (urlToCheck: any): string => {
+    if (typeof urlToCheck !== "string") {
+        return "";
+    }
+    /**
+     * RegEx: https://regexr.com/5pkui, forked from https://regexr.com/39p0t
+     * I had to modify the original to allow s3 buckets which have multiple `.letters-letters.` in them
+     * and I made the http(s) required
+     */
+    const regEx = /(https?:\/\/)([\w\-]){0,200}(\.[a-zA-Z][^\-])([\/\w]*)*\/?\??([^\n\r]*)?([^\n\r]*)/g;
+    if (regEx.test(urlToCheck)) {
+        return urlToCheck;
+    }
+    return "";
+};
+
 export const isGoogleDriveUrl = (url: string) => /google.com/g.test(url);
 
 export const getGoogleDriveFileId = (

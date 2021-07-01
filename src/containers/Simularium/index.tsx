@@ -34,10 +34,11 @@ import {
 import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/metadata/constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
-import { clearUrlParams, urlCheck } from "../../util";
+import { clearUrlParams } from "../../util";
 import {
     getGoogleDriveFileId,
     isGoogleDriveUrl,
+    urlCheck,
 } from "../../util/userUrlHandling";
 const { Content } = Layout;
 
