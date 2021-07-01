@@ -2,7 +2,11 @@ import { expect } from "chai";
 import * as React from "react";
 
 import { bindAll, convertToSentenceCase, wrapText } from "../";
-import { isGoogleDriveUrl, urlCheck } from "../userUrlHandling";
+import {
+    getGoogleDriveFileId,
+    isGoogleDriveUrl,
+    urlCheck,
+} from "../userUrlHandling";
 
 describe("General utilities", () => {
     describe("bindAll", () => {
@@ -141,10 +145,41 @@ describe("User Url handling", () => {
             const shouldMatch = [
                 "https://google.com.amazonaws.com/trajectory/endocytosis.simularium",
                 "https://drive.google.com/file/d/1HH5KBpH7QAiwqw-qfm0_tfkTO3XC8afR/view",
-                "https://drive.google.com/uc?export=download&id=1HH5KBpH7QAiwqw-qfm0_tfkTO3XC8afR",
+                "drive.google.com/uc?export=download&id=1HH5KBpH7QAiwqw-qfm0_tfkTO3XC8afR",
             ];
             const result = shouldMatch.map(isGoogleDriveUrl);
             expect(result).to.deep.equal([true, true, true]);
+        });
+    });
+    it("returns false if the url doesn't have google.com in it", () => {
+        const shouldNotMatch = [
+            "https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium",
+            "https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.json",
+            "http://web5-site.com/directory",
+            "https://fa-st.web9site.com/directory/file.filename",
+            "https://fa-st.web9site.com/directory-name/file.filename",
+            "https://website.com/directory/?key=val",
+            "http://www.website.com/?key=val#anchor",
+        ];
+        const result = shouldNotMatch.map(isGoogleDriveUrl);
+        expect(result).to.deep.equal(Array(shouldNotMatch.length).fill(false));
+    });
+
+    describe("getGoogleDriveFileId", () => {
+        it("returns an id from a url", () => {
+            const id = "id";
+            const urls = [
+                `https://drive.google.com/file/d/${id}/view`,
+                `https://drive.google.com/file/d/${id}`,
+                `https://drive.google.com/file/d/${id}/edit`,
+            ];
+            const result = urls.map((url) => getGoogleDriveFileId(url));
+            expect(result).to.deep.equal(Array(urls.length).fill(id));
+        });
+        it("returns an id if given one", () => {
+            const id = "id";
+
+            expect(getGoogleDriveFileId("url", id)).to.deep.equal(id);
         });
     });
 });
