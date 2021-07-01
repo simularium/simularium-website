@@ -50,6 +50,16 @@ export const getGoogleDriveFileId = (
     }
 };
 
+export const getFileIdFromUrl = (
+    url: string,
+    idParam?: string | string[] | null
+) => {
+    // currently only id we're extracting from the url, but possible we'll need more
+    if (isGoogleDriveUrl(url)) {
+        return getGoogleDriveFileId(url, idParam);
+    }
+};
+
 export const getGoogleApiUrl = (id: string) => {
     return `https://www.googleapis.com/drive/v2/files/${id}?alt=media&key=${
         process.env.GOOGLE_API_KEY
