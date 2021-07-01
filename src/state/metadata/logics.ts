@@ -35,11 +35,7 @@ import {
     setIsPlaying,
 } from "../selection/actions";
 import { initialState as initialSelectionState } from "../selection/reducer";
-import {
-    getGoogleApiUrl,
-    getGoogleDriveFileId,
-    isGoogleDriveUrl,
-} from "../../util/googleApi";
+import { getUserTrajectoryUrl } from "../../util/userUrlHandling";
 
 const netConnectionSettings = {
     serverIp: process.env.BACKEND_SERVER_IP,
@@ -240,11 +236,7 @@ const loadLocalFile = createLogic({
 const loadFileViaUrl = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
-        console.log(action);
-        let url = action.payload.replace(
-            "dropbox.com",
-            "dl.dropboxusercontent.com"
-        );
+
         const currentState = getState();
         dispatch(
             setViewerStatus({
@@ -258,9 +250,8 @@ const loadFileViaUrl = createLogic({
                 dispatch(setSimulariumController(simulariumController));
             }
         }
-        if (action.fileId && isGoogleDriveUrl(url)) {
-            url = getGoogleApiUrl(action.fileId);
-        }
+
+        const url = getUserTrajectoryUrl(action.payload, action.fileId);
         fetch(url)
             .then((response) => {
                 if (response.ok) {
