@@ -104,7 +104,7 @@ class App extends React.Component<AppProps, AppState> {
             }
         } else if (userTrajectoryUrl) {
             const verifiedUrl = urlCheck(userTrajectoryUrl);
-            let fileId = getFileIdFromUrl(verifiedUrl, parsed.id);
+            const fileId = getFileIdFromUrl(verifiedUrl, parsed.id);
             if (verifiedUrl) {
                 loadViaUrl(verifiedUrl, controller, fileId);
             } else {
