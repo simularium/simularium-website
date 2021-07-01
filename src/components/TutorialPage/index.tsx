@@ -200,6 +200,30 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                         </li>
                     </ol>
                 </ul>
+                <ul className={styles.approachBlock}>
+                    <li>
+                        <span id="share-a-link" className={styles.listHeader}>
+                            Share a link to your data
+                        </span>
+                    </li>
+                    <ol>
+                        <li>
+                            Upload your Simularium file to one of the supported
+                            public cloud providers, currently Dropbox or Amazon
+                            S3, and get a publicly accessible link to the file.
+                        </li>
+                        <li>
+                            In a supported browser, navigate to{" "}
+                            <Text code>
+                                https://simularium.allencell.org/viewer?trajUrl=[link
+                                to your file]
+                            </Text>
+                            . You can share this link with collaborators or post
+                            it on your website so that others can interactively
+                            view your results.
+                        </li>
+                    </ol>
+                </ul>
                 <h1 id="browser-support">Browser support</h1>
                 <ul>
                     <li>
