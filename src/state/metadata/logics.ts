@@ -35,6 +35,7 @@ import {
     setIsPlaying,
 } from "../selection/actions";
 import { initialState as initialSelectionState } from "../selection/reducer";
+import { getUserTrajectoryUrl } from "../../util/userUrlHandling";
 
 const netConnectionSettings = {
     serverIp: process.env.BACKEND_SERVER_IP,
@@ -235,10 +236,7 @@ const loadLocalFile = createLogic({
 const loadFileViaUrl = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
-        const url = action.payload.replace(
-            "dropbox.com",
-            "dl.dropboxusercontent.com"
-        );
+
         const currentState = getState();
         dispatch(
             setViewerStatus({
@@ -252,6 +250,8 @@ const loadFileViaUrl = createLogic({
                 dispatch(setSimulariumController(simulariumController));
             }
         }
+
+        const url = getUserTrajectoryUrl(action.payload, action.fileId);
         fetch(url)
             .then((response) => {
                 if (response.ok) {

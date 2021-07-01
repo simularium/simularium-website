@@ -1,3 +1,4 @@
+require('dotenv').config()
 const path = require('path');
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -27,6 +28,7 @@ const BASE_PLUGINS = [
     }),
     new webpack.EnvironmentPlugin({
         GH_BUILD: !!process.env.GH_BUILD,
+        GOOGLE_API_KEY: process.env.GOOGLE_API_KEY || "AIzaSyAZ3ow-AhfTcOsBml7e3oXZ7JwqIATcGwU"
     }),
 ];
 

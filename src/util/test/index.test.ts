@@ -1,8 +1,15 @@
 import { expect } from "chai";
 import * as React from "react";
 
-import { bindAll, convertToSentenceCase, urlCheck, wrapText } from "../";
+import { bindAll, convertToSentenceCase, wrapText } from "../";
+import {
+    getGoogleDriveFileId,
+    getUserTrajectoryUrl,
+    isGoogleDriveUrl,
+    urlCheck,
+} from "../userUrlHandling";
 
+process.env.GOOGLE_API_KEY = "key";
 describe("General utilities", () => {
     describe("bindAll", () => {
         it("binds class methods to a class", () => {
@@ -97,6 +104,9 @@ describe("General utilities", () => {
             });
         });
     });
+});
+
+describe("User Url handling", () => {
     describe("urlCheck", () => {
         it("returns strings that match the regex", () => {
             const shouldMatch = [
@@ -107,6 +117,7 @@ describe("General utilities", () => {
                 "https://fa-st.web9site.com/directory-name/file.filename",
                 "https://website.com/directory/?key=val",
                 "http://www.website.com/?key=val#anchor",
+                "https://drive.google.com/uc?export=download&id=1HH5KBpH7QAiwqw-qfm0_tfkTO3XC8afR",
             ];
             const result = shouldMatch.map(urlCheck);
             expect(result).to.deep.equal(shouldMatch);
@@ -129,6 +140,68 @@ describe("General utilities", () => {
             ];
             const result = shouldNotMatch.map(urlCheck);
             expect(result).to.deep.equal(Array(shouldNotMatch.length).fill(""));
+        });
+    });
+    describe("isGoogleDriveUrl", () => {
+        it("returns true if the url has google.com in it", () => {
+            const shouldMatch = [
+                "https://google.com.amazonaws.com/trajectory/endocytosis.simularium",
+                "https://drive.google.com/file/d/1HH5KBpH7QAiwqw-qfm0_tfkTO3XC8afR/view",
+                "drive.google.com/uc?export=download&id=1HH5KBpH7QAiwqw-qfm0_tfkTO3XC8afR",
+            ];
+            const result = shouldMatch.map(isGoogleDriveUrl);
+            expect(result).to.deep.equal([true, true, true]);
+        });
+    });
+    it("returns false if the url doesn't have google.com in it", () => {
+        const shouldNotMatch = [
+            "https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium",
+            "https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.json",
+            "http://web5-site.com/directory",
+            "https://fa-st.web9site.com/directory/file.filename",
+            "https://fa-st.web9site.com/directory-name/file.filename",
+            "https://website.com/directory/?key=val",
+            "http://www.website.com/?key=val#anchor",
+        ];
+        const result = shouldNotMatch.map(isGoogleDriveUrl);
+        expect(result).to.deep.equal(Array(shouldNotMatch.length).fill(false));
+    });
+
+    describe("getGoogleDriveFileId", () => {
+        it("returns an id from a url", () => {
+            const id = "id";
+            const urls = [
+                `https://drive.google.com/file/d/${id}/view`,
+                `https://drive.google.com/file/d/${id}`,
+                `https://drive.google.com/file/d/${id}/edit`,
+            ];
+            const result = urls.map((url) => getGoogleDriveFileId(url));
+            expect(result).to.deep.equal(Array(urls.length).fill(id));
+        });
+        it("returns an id if given one", () => {
+            const id = "id";
+
+            expect(getGoogleDriveFileId("url", id)).to.deep.equal(id);
+        });
+    });
+    describe("getUserTrajectoryUrl", () => {
+        it("returns a google api url if given an id and a google url", () => {
+            const id = "id";
+
+            const result = getUserTrajectoryUrl("google.com", id);
+            expect(result).to.deep.equal(
+                `https://www.googleapis.com/drive/v2/files/${id}?alt=media&key=key`
+            );
+        });
+        it("returns the url if given an id, but not a google url", () => {
+            const id = "id";
+            const result = getUserTrajectoryUrl("url", id);
+            expect(result).to.deep.equal("url");
+        });
+        it("returns replaces dropbox.com", () => {
+            const id = "id";
+            const result = getUserTrajectoryUrl("dropbox.com/path", id);
+            expect(result).to.deep.equal("dl.dropboxusercontent.com/path");
         });
     });
 });

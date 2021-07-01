@@ -34,7 +34,8 @@ import {
 import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/metadata/constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
-import { clearUrlParams, urlCheck } from "../../util";
+import { clearUrlParams } from "../../util";
+import { getFileIdFromUrl, urlCheck } from "../../util/userUrlHandling";
 const { Content } = Layout;
 
 const styles = require("./style.css");
@@ -103,8 +104,9 @@ class App extends React.Component<AppProps, AppState> {
             }
         } else if (userTrajectoryUrl) {
             const verifiedUrl = urlCheck(userTrajectoryUrl);
+            const fileId = getFileIdFromUrl(verifiedUrl, parsed.id);
             if (verifiedUrl) {
-                loadViaUrl(verifiedUrl, controller);
+                loadViaUrl(verifiedUrl, controller, fileId);
             } else {
                 // if the url doesn't pass the regEx check, notify the user and then clear the url
                 // and save the controller

@@ -50,6 +50,7 @@ export interface LoadViaUrlAction {
     payload: string;
     type: string;
     controller?: SimulariumController;
+    fileId?: string;
 }
 
 export interface LocalSimFile {

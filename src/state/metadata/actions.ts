@@ -129,11 +129,13 @@ export function setViewerStatus(
 
 export function loadViaUrl(
     payload: string,
-    controller?: SimulariumController
+    controller?: SimulariumController,
+    fileId?: string
 ): LoadViaUrlAction {
     return {
         payload,
         controller,
         type: LOAD_FILE_VIA_URL,
+        fileId,
     };
 }
