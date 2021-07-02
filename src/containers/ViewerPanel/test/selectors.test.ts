@@ -2,7 +2,7 @@ import { expect } from "chai";
 
 import { initialState } from "../../../state/index";
 import { State } from "../../../state/types";
-import { getDisplayTimes } from "../selectors";
+import { getDisplayTimes, getMaxNumChars } from "../selectors";
 
 describe("ViewerPanel selectors", () => {
     describe("getDisplayTimes", () => {
@@ -105,6 +105,64 @@ describe("ViewerPanel selectors", () => {
                 roundedTimeStep: 0.08,
                 maxNumChars: 8,
             });
+        });
+    });
+
+    describe("getMaxNumChars", () => {
+        it("determines correct maxNumChars when time values are simple integers", () => {
+            const firstFrameTime = 0;
+            const lastFrameTime = 10;
+            const timeStep = 1;
+
+            const maxNumChars = getMaxNumChars(
+                firstFrameTime,
+                lastFrameTime,
+                timeStep
+            );
+
+            expect(maxNumChars).to.equal(2); // "11".length()
+        });
+
+        it("determines correct maxNumChars when time values are floats", () => {
+            const firstFrameTime = 0.1;
+            const lastFrameTime = 44.1;
+            const timeStep = 0.8;
+
+            const maxNumChars = getMaxNumChars(
+                firstFrameTime,
+                lastFrameTime,
+                timeStep
+            );
+
+            expect(maxNumChars).to.equal(4); // "44.9".length()
+        });
+
+        it("determines correct maxNumChars when time values are lengthy floats", () => {
+            const firstFrameTime = 0.1;
+            const lastFrameTime = 44.10006;
+            const timeStep = 0.0003;
+
+            const maxNumChars = getMaxNumChars(
+                firstFrameTime,
+                lastFrameTime,
+                timeStep
+            );
+
+            expect(maxNumChars).to.equal(4); // "44.1".length()
+        });
+
+        it("determines correct maxNumChars when firstFrameTime is very small and long", () => {
+            const firstFrameTime = 0.00001;
+            const lastFrameTime = 44.1;
+            const timeStep = 0.8;
+
+            const maxNumChars = getMaxNumChars(
+                firstFrameTime,
+                lastFrameTime,
+                timeStep
+            );
+
+            expect(maxNumChars).to.equal(7); // "0.00001".length()
         });
     });
 });

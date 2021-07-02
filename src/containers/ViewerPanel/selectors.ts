@@ -55,7 +55,7 @@ export const convertUIDataToColorMap = (
 };
 
 // Determine the likely max number of characters for the time input box
-const getMaxNumChars = (
+export const getMaxNumChars = (
     firstFrameTime: number,
     lastFrameTime: number,
     timeStep: number
