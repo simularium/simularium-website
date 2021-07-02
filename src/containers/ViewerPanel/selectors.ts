@@ -54,19 +54,19 @@ export const convertUIDataToColorMap = (
     }, returnData);
 };
 
-// Determine the width of the input box
+// Determine the likely max number of characters for the time input box
 const getMaxNumChars = (
     firstFrameTime: number,
     lastFrameTime: number,
     timeStep: number
 ) => {
-    // If lastFrameTime is 15 and step size is 0.25 then 15.25 is probably going to have
+    // If lastFrameTime is 15 and step size is 0.2 then 15.2 is probably going to have
     // the max number of characters for this trajectory
     const refTimeValue = lastFrameTime + timeStep;
     const roundedRefTime = roundTimeForDisplay(refTimeValue).toString();
 
-    // Edge case: firstFrameTime is a very small but long number like this 0.000008,
-    // so we need to accommodate that.
+    // Edge case: If firstFrameTime is a very small but long number like 0.000008,
+    // we need to accommodate that.
     const maxNumChars = Math.max(
         firstFrameTime.toString().length,
         roundedRefTime.length
