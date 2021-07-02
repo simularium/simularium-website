@@ -103,25 +103,9 @@ const PlayBackControls = ({
 
     // Determine the width of the input box
     const getTimeInputWidth = (): string => {
-        // If lastFrameTime is 15 and step size is 0.25 then 15.25 is probably going to have
-        // the max number of characters for this trajectory
-        const refTimeValue =
-            displayTimes.roundedLastFrameTime + displayTimes.roundedTimeStep;
-        const roundedRefTime = roundTimeForDisplay(refTimeValue).toString();
-
-        // Edge case: firstFrameTime is a very small but long number like this 0.000008,
-        // so we need to accommodate that.
-        const roundedFirstFrameTime = roundTimeForDisplay(
-            firstFrameTime
-        ).toString();
-        const maxNumChars = Math.max(
-            roundedFirstFrameTime.length,
-            roundedRefTime.length
-        );
-
         // If maxNumChars is 5 then the input box width will be 6 character widths long
         // (+ 1 is arbitrary padding)
-        return maxNumChars + 1 + "ch";
+        return displayTimes.maxNumChars + 1 + "ch";
     };
 
     const btnClassNames = classNames([styles.item, styles.btn]);
