@@ -1,6 +1,7 @@
 name: Auto deploy staging AWS
 env: 
   NODE_VERSION: '12.x'
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 on:
   push:
     # Sequence of patterns matched against refs/tags
@@ -65,4 +66,10 @@ jobs:
         run: aws s3 sync ./dist/ s3://staging.agentviz.allencell.org --delete
       - name: Clear cloudfront cache
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CFE_CLOUDFRONT_DISTRIBUTION_ID_STAGING }} --paths "/*"
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: '#workflows'
+        if: always()
 
