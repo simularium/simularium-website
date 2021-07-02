@@ -104,7 +104,7 @@ const PlayBackControls = ({
     const getTimeInputWidth = (): string => {
         // If maxNumChars is 5 then the input box width will be 6 character widths long
         // (+ 1 is arbitrary padding)
-        return displayTimes.maxNumChars + 1 + "ch";
+        return `${displayTimes.maxNumChars + 1}ch`;
     };
 
     const btnClassNames = classNames([styles.item, styles.btn]);
