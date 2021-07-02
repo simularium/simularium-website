@@ -6,6 +6,7 @@ import { TOOLTIP_COLOR } from "../../constants/index";
 import Icons from "../Icons";
 import { DisplayTimes } from "../../containers/ViewerPanel/types";
 import { TimeUnits } from "../../state/metadata/types";
+import { roundTimeForDisplay } from "../../util";
 
 const styles = require("./style.css");
 interface PlayBackProps {
@@ -106,7 +107,8 @@ const PlayBackControls = ({
         // the max number of characters for this trajectory
         const refTimeValue =
             displayTimes.roundedLastFrameTime + displayTimes.roundedTimeStep;
-        const maxNumChars = refTimeValue.toString().length;
+        const roundedRefTime = roundTimeForDisplay(refTimeValue);
+        const maxNumChars = roundedRefTime.toString().length;
         // If maxNumChars is 5 then the input box width will be 6 character widths long
         // (+ 1 is arbitrary padding)
         return maxNumChars + 1 + "ch";

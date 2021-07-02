@@ -14,6 +14,7 @@ import {
     AgentColorMap,
     VisibilitySelectionMap,
 } from "../../state/selection/types";
+import { roundTimeForDisplay } from "../../util";
 import { DisplayTimes } from "./types";
 
 export const getSelectionStateInfoForViewer = createSelector(
@@ -60,18 +61,20 @@ export const getDisplayTimes = createSelector(
         getLastFrameTimeOfCachedSimulation,
     ],
     (time, timeUnits, timeStep, lastFrameTime): DisplayTimes => {
-        const roundNumber = (num: number) =>
-            parseFloat(Number(num).toPrecision(3));
         let roundedTime = 0;
         let roundedLastFrameTime = 0;
         let roundedTimeStep = 0;
 
         if (timeUnits) {
-            roundedTime = time ? roundNumber(time * timeUnits.magnitude) : 0;
-            roundedLastFrameTime = roundNumber(
+            roundedTime = time
+                ? roundTimeForDisplay(time * timeUnits.magnitude)
+                : 0;
+            roundedLastFrameTime = roundTimeForDisplay(
                 lastFrameTime * timeUnits.magnitude
             );
-            roundedTimeStep = roundNumber(timeStep * timeUnits.magnitude);
+            roundedTimeStep = roundTimeForDisplay(
+                timeStep * timeUnits.magnitude
+            );
         }
 
         return {
