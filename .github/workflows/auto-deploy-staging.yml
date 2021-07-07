@@ -6,7 +6,7 @@ on:
   push:
     # Sequence of patterns matched against refs/tags
     branches:
-      - master
+      - main
 
 jobs:
   lint:
