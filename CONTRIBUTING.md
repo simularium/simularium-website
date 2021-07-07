@@ -24,7 +24,7 @@ ___
 1. Fork the repo on GitHub.
 2. Create a branch and make your edits on your branch, pushing back to your fork.
 3. Make sure `npm run typeCheck`, `npm run test` and `npm run lint` all exit without errors. Add tests and documentation as needed.
-4. Submit a pull request back to master via GitHub using template, include screen shots for visual changes. 
+4. Submit a pull request back to main via GitHub using template, include screen shots for visual changes. 
 
 
 ### Structure
@@ -61,11 +61,11 @@ and b) copying the contents of the artifact to an S3 website bucket. For both st
 steps are captured in this project's Jenkinsfile and can be executed by setting the proper parameters for the Jenkins build.
 
 #### Staging deployment
-Automatically builds from `master`
+Automatically builds from `main`
 
 #### Production deployment
 1. Make a new version: `npm version [patch/minor/major]`
-2. Push the new package.json version: `git push origin master`
+2. Push the new package.json version: `git push origin main`
 3. Push the new tag: `git push origin [NEW_TAG]`
 
 ### Docker image configuration
