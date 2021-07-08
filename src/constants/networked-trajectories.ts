@@ -207,7 +207,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         modelName: "Condensate Formation",
         id: "springsalad_condensate_formation_Below_Ksp.simularium",
         title: "Condensate Formation: Below Ksp",
-        totalSimulatedTime: "0.4s",
+        totalSimulatedTime: "1s",
         authors: "Aniruddha Chattaraj et al.",
         publication: {
             title:
