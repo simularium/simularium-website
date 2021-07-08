@@ -206,8 +206,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
     {
         modelName: "Condensate Formation",
         id: "springsalad_condensate_formation_Below_Ksp.simularium",
-        title: "Condensate Formation",
-        subtitle: "Below Ksp",
+        title: "Condensate Formation: Below Ksp",
         totalSimulatedTime: "0.4s",
         authors: "Aniruddha Chattaraj et al.",
         publication: {
@@ -227,8 +226,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
     {
         modelName: "Condensate Formation",
         id: "springsalad_condensate_formation_At_Ksp.simularium",
-        title: "Condensate Formation",
-        subtitle: "At Ksp",
+        title: "Condensate Formation: At Ksp",
         totalSimulatedTime: "0.4s",
         authors: "Aniruddha Chattaraj et al.",
         publication: {
@@ -248,8 +246,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
     {
         modelName: "Condensate Formation",
         id: "springsalad_condensate_formation_Above_Ksp.simularium",
-        title: "Condensate Formation",
-        subtitle: "Above Ksp",
+        title: "Condensate Formation: Above Ksp",
         totalSimulatedTime: "0.4s",
         authors: "Aniruddha Chattaraj et al.",
         publication: {
