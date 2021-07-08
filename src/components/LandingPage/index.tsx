@@ -50,7 +50,7 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         related plots.
                     </p>
                     <div className={styles.cards}>
-                        {TRAJECTORIES.map((trajectory) => {
+                        {TRAJECTORIES.slice(0, 2).map((trajectory) => {
                             return (
                                 <ModelCard
                                     key={trajectory.id}
@@ -59,6 +59,14 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                             );
                         })}
                         <BlankCard />
+                        {TRAJECTORIES.slice(2).map((trajectory) => {
+                            return (
+                                <ModelCard
+                                    key={trajectory.id}
+                                    trajectory={trajectory}
+                                />
+                            );
+                        })}
                     </div>
                     <div className={styles.caption}>
                         Click on any of the examples above to interact with
