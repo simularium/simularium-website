@@ -4,6 +4,7 @@ import {
     getLastFrameTimeOfCachedSimulation,
     getTimeUnits,
     getTimeStep,
+    getFirstFrameTimeOfCachedSimulation,
 } from "../../state/metadata/selectors";
 import {
     getAgentsToHide,
@@ -14,6 +15,7 @@ import {
     AgentColorMap,
     VisibilitySelectionMap,
 } from "../../state/selection/types";
+import { roundTimeForDisplay } from "../../util";
 import { DisplayTimes } from "./types";
 
 export const getSelectionStateInfoForViewer = createSelector(
@@ -52,32 +54,73 @@ export const convertUIDataToColorMap = (
     }, returnData);
 };
 
+// Determine the likely max number of characters for the time input box
+export const getMaxNumChars = (
+    firstFrameTime: number,
+    lastFrameTime: number,
+    timeStep: number
+) => {
+    // If lastFrameTime is 15 and step size is 0.2 then 15.2 is probably going to have
+    // the max number of characters for this trajectory
+    const refTimeValue = lastFrameTime + timeStep;
+    const roundedRefTime = roundTimeForDisplay(refTimeValue).toString();
+
+    // Edge case: If firstFrameTime is a very small but long number like 0.000008,
+    // we need to accommodate that.
+    const maxNumChars = Math.max(
+        firstFrameTime.toString().length,
+        roundedRefTime.length
+    );
+
+    return maxNumChars;
+};
+
 export const getDisplayTimes = createSelector(
     [
         getCurrentTime,
         getTimeUnits,
         getTimeStep,
+        getFirstFrameTimeOfCachedSimulation,
         getLastFrameTimeOfCachedSimulation,
     ],
-    (time, timeUnits, timeStep, lastFrameTime): DisplayTimes => {
-        const roundNumber = (num: number) =>
-            parseFloat(Number(num).toPrecision(3));
+    (
+        time,
+        timeUnits,
+        timeStep,
+        firstFrameTime,
+        lastFrameTime
+    ): DisplayTimes => {
         let roundedTime = 0;
+        let roundedFirstFrameTime = 0;
         let roundedLastFrameTime = 0;
         let roundedTimeStep = 0;
 
         if (timeUnits) {
-            roundedTime = time ? roundNumber(time * timeUnits.magnitude) : 0;
-            roundedLastFrameTime = roundNumber(
+            roundedTime = time
+                ? roundTimeForDisplay(time * timeUnits.magnitude)
+                : 0;
+            roundedFirstFrameTime = roundTimeForDisplay(
+                firstFrameTime * timeUnits.magnitude
+            );
+            roundedLastFrameTime = roundTimeForDisplay(
                 lastFrameTime * timeUnits.magnitude
             );
-            roundedTimeStep = roundNumber(timeStep * timeUnits.magnitude);
+            roundedTimeStep = roundTimeForDisplay(
+                timeStep * timeUnits.magnitude
+            );
         }
+
+        const maxNumChars = getMaxNumChars(
+            roundedFirstFrameTime,
+            roundedLastFrameTime,
+            roundedTimeStep
+        );
 
         return {
             roundedTime: roundedTime,
             roundedLastFrameTime: roundedLastFrameTime,
             roundedTimeStep: roundedTimeStep,
+            maxNumChars: maxNumChars,
         };
     }
 );

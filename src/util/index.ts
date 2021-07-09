@@ -76,3 +76,7 @@ export const wrapText = (
 export const clearUrlParams = () => {
     history.replaceState({}, "", `${location.origin}${location.pathname}`);
 };
+
+export const roundTimeForDisplay = (time: number): number => {
+    return parseFloat(time.toPrecision(3));
+};

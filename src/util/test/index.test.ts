@@ -1,7 +1,12 @@
 import { expect } from "chai";
 import * as React from "react";
 
-import { bindAll, convertToSentenceCase, wrapText } from "../";
+import {
+    bindAll,
+    convertToSentenceCase,
+    roundTimeForDisplay,
+    wrapText,
+} from "../";
 import {
     getGoogleDriveFileId,
     getUserTrajectoryUrl,
@@ -102,6 +107,30 @@ describe("General utilities", () => {
                 formattedText: "123 567<br>890<br>abcdefg<br>wxyz",
                 numLines: 4,
             });
+        });
+    });
+
+    describe("roundTimeForDisplay", () => {
+        it("returns a float with the requisite number of sig figs as is", () => {
+            expect(roundTimeForDisplay(1.23)).to.equal(1.23);
+        });
+        it("returns a float with less than the requisite number of sig figs as is", () => {
+            expect(roundTimeForDisplay(1.2)).to.equal(1.2);
+        });
+        it("rounds a float with greater than the requisite number of sig figs", () => {
+            expect(roundTimeForDisplay(1.234123)).to.equal(1.23);
+        });
+        it("returns an integer with the requisite number of sig figs as is", () => {
+            expect(roundTimeForDisplay(123)).to.equal(123);
+        });
+        it("returns an integer with less than the requisite number of sig figs as is", () => {
+            expect(roundTimeForDisplay(12)).to.equal(12);
+        });
+        it("rounds an integer with greater than the requisite number of sig figs", () => {
+            expect(roundTimeForDisplay(1234123)).to.equal(1230000);
+        });
+        it("does not include unnecessary zeros", () => {
+            expect(roundTimeForDisplay(1.20000001)).to.equal(1.2);
         });
     });
 });
