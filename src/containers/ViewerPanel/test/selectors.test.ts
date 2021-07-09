@@ -109,7 +109,7 @@ describe("ViewerPanel selectors", () => {
     });
 
     describe("getMaxNumChars", () => {
-        it("determines correct maxNumChars when time values are simple integers", () => {
+        it("returns length of lastFrameTime + timeStep when time values are integers", () => {
             const firstFrameTime = 0;
             const lastFrameTime = 10;
             const timeStep = 1;
@@ -123,7 +123,7 @@ describe("ViewerPanel selectors", () => {
             expect(maxNumChars).to.equal("11".length);
         });
 
-        it("determines correct maxNumChars when time values are floats", () => {
+        it("returns length of lastFrameTime + timeStep when time values are floats", () => {
             const firstFrameTime = 0.1;
             const lastFrameTime = 44.1;
             const timeStep = 0.8;
@@ -137,7 +137,7 @@ describe("ViewerPanel selectors", () => {
             expect(maxNumChars).to.equal("44.9".length);
         });
 
-        it("determines correct maxNumChars when time values are lengthy floats", () => {
+        it("returns length of lastFrameTime + timeStep when time values are lengthy floats that need rounding at the end", () => {
             const firstFrameTime = 0.1;
             const lastFrameTime = 44.10006;
             const timeStep = 0.0003;
@@ -151,7 +151,7 @@ describe("ViewerPanel selectors", () => {
             expect(maxNumChars).to.equal("44.1".length);
         });
 
-        it("determines correct maxNumChars when firstFrameTime is very small and long", () => {
+        it("returns length of firstFrameTime when it is longer than lastFrameTime + timeStep", () => {
             const firstFrameTime = 0.00001;
             const lastFrameTime = 44.1;
             const timeStep = 0.8;
