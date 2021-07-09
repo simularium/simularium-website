@@ -103,7 +103,7 @@ describe("ViewerPanel selectors", () => {
                 roundedTime: 3,
                 roundedLastFrameTime: 15,
                 roundedTimeStep: 0.08,
-                maxNumChars: 8,
+                maxNumChars: "0.000004".length,
             });
         });
     });
@@ -120,7 +120,7 @@ describe("ViewerPanel selectors", () => {
                 timeStep
             );
 
-            expect(maxNumChars).to.equal(2); // "11".length()
+            expect(maxNumChars).to.equal("11".length);
         });
 
         it("determines correct maxNumChars when time values are floats", () => {
@@ -134,7 +134,7 @@ describe("ViewerPanel selectors", () => {
                 timeStep
             );
 
-            expect(maxNumChars).to.equal(4); // "44.9".length()
+            expect(maxNumChars).to.equal("44.9".length);
         });
 
         it("determines correct maxNumChars when time values are lengthy floats", () => {
@@ -148,7 +148,7 @@ describe("ViewerPanel selectors", () => {
                 timeStep
             );
 
-            expect(maxNumChars).to.equal(4); // "44.1".length()
+            expect(maxNumChars).to.equal("44.1".length);
         });
 
         it("determines correct maxNumChars when firstFrameTime is very small and long", () => {
@@ -162,7 +162,7 @@ describe("ViewerPanel selectors", () => {
                 timeStep
             );
 
-            expect(maxNumChars).to.equal(7); // "0.00001".length()
+            expect(maxNumChars).to.equal("0.00001".length);
         });
     });
 });
