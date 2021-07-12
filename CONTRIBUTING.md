@@ -24,16 +24,19 @@ ___
 1. Fork the repo on GitHub.
 2. Create a branch and make your edits on your branch, pushing back to your fork.
 3. Make sure `npm run typeCheck`, `npm run test` and `npm run lint` all exit without errors. Add tests and documentation as needed.
-4. Submit a pull request back to main via GitHub using template, include screen shots for visual changes. 
+4. Submit a pull request back to the main branch via GitHub.
 
 
 ### Structure
 src/<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;assets/<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;[components/](src/components/README.md)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;[constants/](src/constants/README.md)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;[containers/](src/containers/README.md)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;routes/<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;[state/](src/state/README.md)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;[styles/](src/styles/README.md)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;util/<br/>
 ___
 
 
@@ -46,7 +49,7 @@ ___
 
 Differences in builds by environment:
 
-| Target | Sources Maps | Uglification | NODE_ENV === 'production' |
+| Target | Sources Maps | Uglification | `NODE_ENV === 'production'` |
 | ------ | ------------ | ------------ |  ------------------------- |
 | dev    | true         | false |  false                     |
 | staging| true         | false |  false                      |
@@ -55,6 +58,8 @@ ___
 
 
 ### Deployment
+TODO: Update this section
+
 Once built, Webpack outputs (e.g., index.html, JS and CSS files) are put into a tar archive, gzipped, and stored in
 Artifactory in the `maven-snapshot-local` repo. From there, deployments involve: a) pulling a particular artifact (referenced by git tag) out of Artifactory
 and b) copying the contents of the artifact to an S3 website bucket. For both staging and production deployments, these 
@@ -69,6 +74,7 @@ Automatically builds from `main`
 3. Push the new tag: `git push origin [NEW_TAG]`
 
 ### Docker image configuration
+NOTE: Should this be deleted? Is Docker used for anything?
 | Env var | Required | Default | Notes |
 | ------- |-------- |---------|---------|
 | `PORT` | - | 80 | Port on which the app will run **inside** the container. |
@@ -76,6 +82,6 @@ ___
 
 ## Questions or Thoughts?
 
-Talk to us on [one of our community forums][community].
+Feel free to submit a GitHub issue or talk to us on the [Allen Cell Discussion Form - Simularium][community].
 
-[community]: https://forum.allencell.org/
+[community]: https://forum.allencell.org/c/software-code/simularium/
