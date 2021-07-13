@@ -183,6 +183,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         imageFile: medyan2Image,
         gifFile: medyan2Gif,
     },
+    /*
     {
         modelName: "Vivarium E coli",
         id: "vivarium_ecoli.simularium",
@@ -203,6 +204,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         imageFile: vivariumImage,
         gifFile: vivariumGif,
     },
+    */
     {
         modelName: "Condensate Formation",
         id: "springsalad_condensate_formation_Below_Ksp.simularium",
