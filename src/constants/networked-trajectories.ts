@@ -15,8 +15,8 @@ import medyan1Image from "../assets/card-images/MEDYAN_MA_0225_thumb.png";
 import medyan1Gif from "../assets/card-images/MEDYAN_MA_0225_thumb.gif";
 import medyan2Image from "../assets/card-images/MEDYAN_MA_675_thumb.png";
 import medyan2Gif from "../assets/card-images/MEDYAN_MA_675_thumb.gif";
-import vivariumImage from "../assets/card-images/vivarium_ecoli_thumb.png";
-import vivariumGif from "../assets/card-images/vivarium_ecoli_thumb.gif";
+// import vivariumImage from "../assets/card-images/vivarium_ecoli_thumb.png";
+// import vivariumGif from "../assets/card-images/vivarium_ecoli_thumb.gif";
 import springSalad1Image from "../assets/card-images/springsalad_below_thumb.png";
 import springSalad1Gif from "../assets/card-images/springsalad_below_thumb.gif";
 import springSalad2Image from "../assets/card-images/springsalad_at_thumb.png";
@@ -26,6 +26,10 @@ import springSalad3Gif from "../assets/card-images/springsalad_above_thumb.gif";
 // import covid19Image from "../assets/card-images/card-image-4.png";
 
 import { TrajectoryDisplayData } from "./interfaces";
+
+const thirdPartyLicensing = (licenseUrl: string) => {
+    return `Please note that the use of this model is subject to third party licensing requirements, which are currently available <a href='${licenseUrl}'>here</a>.`;
+};
 
 const TRAJECTORIES: TrajectoryDisplayData[] = [
     {
@@ -45,8 +49,9 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
             "A CytoSim model of a branched actin network internalizing an endocytic pit against membrane tension.",
         code:
             "Software used to generate this data is available <a href='https://github.com/DrubinBarnes/Akamatsu_CME_manuscript'>here</a>.",
-        legalese:
-            "Please note that the use of this model is subject to third party licensing requirements, which are currently available <a href='https://github.com/DrubinBarnes/Akamatsu_CME_manuscript/blob/master/LICENSE'>here</a>.",
+        legalese: thirdPartyLicensing(
+            "https://github.com/DrubinBarnes/Akamatsu_CME_manuscript/blob/master/LICENSE"
+        ),
         imageFile: endocytosisImage,
         gifFile: endocytosisGif,
     },
@@ -68,8 +73,9 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
             "A PhysiCell model of SARS-CoV-2 dynamics in human lung epithelium.",
         code:
             "Software used to generate this data is available <a href='https://github.com/pc4covid19/pc4covid19'>here</a>.",
-        legalese:
-            "Please note that the use of this model is subject to third party licensing requirements, which are currently available <a href='https://github.com/pc4covid19/pc4covid19/blob/master/LICENSE'>here</a>.",
+        legalese: thirdPartyLicensing(
+            "https://github.com/pc4covid19/pc4covid19/blob/master/LICENSE"
+        ),
         imageFile: covidImage,
         gifFile: covidGif,
     },
@@ -108,8 +114,9 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
             "A Smoldyn example model of the E. coli Min system, which is used to find the cell center during cell division.",
         code:
             "Software used to generate this data is available <a href='https://github.com/ssandrews/Smoldyn'>here</a>. The input data file is <a href='https://github.com/ssandrews/Smoldyn/blob/master/examples/S99_more/Min/Min1.txt'>here</a>.",
-        legalese:
-            "Please note that the use of this model is subject to third party licensing requirements, which are currently available <a href='https://github.com/ssandrews/Smoldyn/blob/master/LICENSE'>here</a>.",
+        legalese: thirdPartyLicensing(
+            "https://github.com/ssandrews/Smoldyn/blob/master/LICENSE"
+        ),
         imageFile: smoldynMin1Image,
         gifFile: smoldynMin1Gif,
     },
@@ -130,8 +137,9 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
             "A Smoldyn model of a dendritic spine with CaMKII and molecules of the postsynaptic density at the spine tip.",
         code:
             "Software used to generate this data is available <a href='https://github.com/ssandrews/Smoldyn'>here</a>. The input data file is <a href='http://www.smoldyn.org/archive/Andrews_Arkin_2010/spine.txt'>here</a>.",
-        legalese:
-            "Please note that the use of this model is subject to third party licensing requirements, which are currently available <a href='https://github.com/ssandrews/Smoldyn/blob/master/LICENSE'>here</a>.",
+        legalese: thirdPartyLicensing(
+            "https://github.com/ssandrews/Smoldyn/blob/master/LICENSE"
+        ),
         imageFile: smoldynSpineImage,
         gifFile: smoldynSpineGif,
     },
@@ -154,8 +162,9 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
             "A MEDYAN model of interacting actin filaments, α–actinin crosslinkers, and myosin motors. Low myosin activity maintains the bundle structure.",
         code:
             "Software used to generate this data is available <a href='https://bitbucket.org/jkomianos/medyan/src/master/'>here</a>. The outputs that were visualized can be downloaded <a href='https://drum.lib.umd.edu/handle/1903/21856'>here</a>.",
-        legalese:
-            "Please note that the use of this model is subject to third party licensing requirements, which are currently available <a href='https://bitbucket.org/jkomianos/medyan/src/master/license.txt'>here</a>.",
+        legalese: thirdPartyLicensing(
+            "https://bitbucket.org/jkomianos/medyan/src/master/license.txt"
+        ),
         imageFile: medyan1Image,
         gifFile: medyan1Gif,
     },
@@ -178,8 +187,9 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
             "A MEDYAN model of interacting actin filaments, α–actinin crosslinkers, and myosin motors. High myosin activity causes formation of an aster-like structure.",
         code:
             "Software used to generate this data is available <a href='https://bitbucket.org/jkomianos/medyan/src/master/'>here</a>. The outputs that were visualized can be downloaded <a href='https://drum.lib.umd.edu/handle/1903/21856'>here</a>.",
-        legalese:
-            "Please note that the use of this model is subject to third party licensing requirements, which are currently available <a href='https://bitbucket.org/jkomianos/medyan/src/master/license.txt'>here</a>.",
+        legalese: thirdPartyLicensing(
+            "https://bitbucket.org/jkomianos/medyan/src/master/license.txt"
+        ),
         imageFile: medyan2Image,
         gifFile: medyan2Gif,
     },
@@ -200,7 +210,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         code:
             "Software used to generate this data is available <a href='https://github.com/vivarium-collective/vivarium-chemotaxis'>here</a>.",
         legalese:
-            "Please note that the use of this model is subject to third party licensing requirements, which are currently available <a href='https://github.com/vivarium-collective/vivarium-chemotaxis/blob/master/LICENSE'>here</a>.",
+            thirdPartyLicensing("https://github.com/vivarium-collective/vivarium-chemotaxis/blob/master/LICENSE"),
         imageFile: vivariumImage,
         gifFile: vivariumGif,
     },
