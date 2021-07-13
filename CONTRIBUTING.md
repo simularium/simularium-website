@@ -67,13 +67,6 @@ Automatically builds from `main`
 2. Push the new package.json version: `git push origin main`
 3. Push the new tag: `git push origin [NEW_TAG]`
 
-### Docker image configuration
-NOTE: Should this be deleted? Is Docker used for anything?
-| Env var | Required | Default | Notes |
-| ------- |-------- |---------|---------|
-| `PORT` | - | 80 | Port on which the app will run **inside** the container. |
-___
-
 ## Questions or Thoughts?
 
 Feel free to submit a GitHub issue or talk to us on the [Allen Cell Discussion Form - Simularium][community].
