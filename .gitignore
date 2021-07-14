@@ -9,3 +9,4 @@ build/
 .settings/
 .env
 .vscode/
+coverage/
