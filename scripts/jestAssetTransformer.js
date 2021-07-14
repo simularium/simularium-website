@@ -1,4 +1,7 @@
-// From https://jestjs.io/docs/webpack#mocking-css-modules
+/*
+Transform asset files for Jest so that require('logo.jpg') returns 'logo', for example.
+From https://jestjs.io/docs/webpack#mocking-css-modules
+*/
 
 const path = require('path');
 
