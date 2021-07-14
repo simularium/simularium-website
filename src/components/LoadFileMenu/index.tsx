@@ -58,6 +58,7 @@ const LoadFileMenu = ({
                             }}
                         >
                             {trajectory.title}
+                            {trajectory.subtitle && `: ${trajectory.subtitle}`}
                         </Link>
                     </Menu.Item>
                 ))}
