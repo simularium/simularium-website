@@ -11,6 +11,7 @@ import { TUTORIAL_PATHNAME } from "../../routes";
 import { CYTOSIM_URL, READDY_URL } from "../../constants";
 
 const { Content } = Layout;
+const NUM_CARDS_PER_ROW = 3;
 
 const styles = require("./style.css");
 
@@ -50,23 +51,27 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         related plots.
                     </p>
                     <div className={styles.cards}>
-                        {TRAJECTORIES.slice(0, 2).map((trajectory) => {
-                            return (
-                                <ModelCard
-                                    key={trajectory.id}
-                                    trajectory={trajectory}
-                                />
-                            );
-                        })}
+                        {TRAJECTORIES.slice(0, NUM_CARDS_PER_ROW - 1).map(
+                            (trajectory) => {
+                                return (
+                                    <ModelCard
+                                        key={trajectory.id}
+                                        trajectory={trajectory}
+                                    />
+                                );
+                            }
+                        )}
                         <BlankCard />
-                        {TRAJECTORIES.slice(2).map((trajectory) => {
-                            return (
-                                <ModelCard
-                                    key={trajectory.id}
-                                    trajectory={trajectory}
-                                />
-                            );
-                        })}
+                        {TRAJECTORIES.slice(NUM_CARDS_PER_ROW - 1).map(
+                            (trajectory) => {
+                                return (
+                                    <ModelCard
+                                        key={trajectory.id}
+                                        trajectory={trajectory}
+                                    />
+                                );
+                            }
+                        )}
                     </div>
                     <div className={styles.caption}>
                         Click on any of the examples above to interact with
