@@ -1,5 +1,3 @@
-import { expect } from "chai";
-
 import { initialState } from "../../../state/index";
 import { State } from "../../../state/types";
 import { getDisplayTimes, getMaxNumChars } from "../selectors";
@@ -8,11 +6,11 @@ describe("ViewerPanel selectors", () => {
     describe("getDisplayTimes", () => {
         it("returns default values when timeUnits doesn't exist", () => {
             const mockState: State = initialState;
-            expect(mockState.metadata.timeUnits).to.equal(null);
+            expect(mockState.metadata.timeUnits).toBe(null);
 
             const displayTimes = getDisplayTimes(mockState);
 
-            expect(displayTimes).to.deep.equal({
+            expect(displayTimes).toEqual({
                 roundedTime: 0,
                 roundedLastFrameTime: 0,
                 roundedTimeStep: 0,
@@ -41,7 +39,7 @@ describe("ViewerPanel selectors", () => {
 
             const displayTimes = getDisplayTimes(mockState);
 
-            expect(displayTimes).to.deep.equal({
+            expect(displayTimes).toEqual({
                 roundedTime: 3,
                 roundedLastFrameTime: 15,
                 roundedTimeStep: 0.1,
@@ -70,7 +68,7 @@ describe("ViewerPanel selectors", () => {
 
             const displayTimes = getDisplayTimes(mockState);
 
-            expect(displayTimes).to.deep.equal({
+            expect(displayTimes).toEqual({
                 roundedTime: 6,
                 roundedLastFrameTime: 30,
                 roundedTimeStep: 0.2,
@@ -99,7 +97,7 @@ describe("ViewerPanel selectors", () => {
 
             const displayTimes = getDisplayTimes(mockState);
 
-            expect(displayTimes).to.deep.equal({
+            expect(displayTimes).toEqual({
                 roundedTime: 3,
                 roundedLastFrameTime: 15,
                 roundedTimeStep: 0.08,
@@ -120,7 +118,7 @@ describe("ViewerPanel selectors", () => {
                 timeStep
             );
 
-            expect(maxNumChars).to.equal("11".length);
+            expect(maxNumChars).toBe("11".length);
         });
 
         it("returns length of lastFrameTime + timeStep when time values are floats", () => {
@@ -134,7 +132,7 @@ describe("ViewerPanel selectors", () => {
                 timeStep
             );
 
-            expect(maxNumChars).to.equal("44.9".length);
+            expect(maxNumChars).toBe("44.9".length);
         });
 
         it("returns length of lastFrameTime + timeStep when time values are lengthy floats that need rounding at the end", () => {
@@ -148,7 +146,7 @@ describe("ViewerPanel selectors", () => {
                 timeStep
             );
 
-            expect(maxNumChars).to.equal("44.1".length);
+            expect(maxNumChars).toBe("44.1".length);
         });
 
         it("returns length of firstFrameTime when it is longer than lastFrameTime + timeStep", () => {
@@ -162,7 +160,7 @@ describe("ViewerPanel selectors", () => {
                 timeStep
             );
 
-            expect(maxNumChars).to.equal("0.00001".length);
+            expect(maxNumChars).toBe("0.00001".length);
         });
     });
 });
