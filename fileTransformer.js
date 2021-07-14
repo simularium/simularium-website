@@ -1,3 +1,5 @@
+// From https://jestjs.io/docs/webpack#mocking-css-modules
+
 const path = require('path');
 
 module.exports = {
