@@ -15,12 +15,6 @@ import {
 
 process.env.GOOGLE_API_KEY = "key";
 describe("General utilities", () => {
-    let testContext: any;
-
-    beforeEach(() => {
-        testContext = {};
-    });
-
     describe("bindAll", () => {
         it("binds class methods to a class", () => {
             class Foo extends React.Component {
@@ -28,11 +22,11 @@ describe("General utilities", () => {
 
                 constructor(props: any) {
                     super(props);
-                    bindAll(this, [testContext.bar]);
+                    bindAll(this, [this.bar]);
                 }
 
                 public bar() {
-                    return testContext.message;
+                    return this.message;
                 }
             }
 
@@ -47,15 +41,15 @@ describe("General utilities", () => {
 
                 constructor(props: {}) {
                     super(props);
-                    bindAll(this, [testContext.bar]);
+                    bindAll(this, [this.bar]);
                 }
 
                 public bar() {
-                    return testContext.message;
+                    return this.message;
                 }
 
                 public baz() {
-                    return testContext.message;
+                    return this.message;
                 }
             }
 
