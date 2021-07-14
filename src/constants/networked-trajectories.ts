@@ -28,7 +28,7 @@ import springSalad3Gif from "../assets/card-images/springsalad_above_thumb.gif";
 import { TrajectoryDisplayData } from "./interfaces";
 
 const thirdPartyLicensing = (licenseUrl: string) => {
-    return `Please note that the use of this model is subject to third party licensing requirements, which are currently available <a href='${licenseUrl}'>here</a>.`;
+    return `Please note that the use of this software is subject to third party licensing requirements, which are currently available <a href='${licenseUrl}'>here</a>.`;
 };
 
 const TRAJECTORIES: TrajectoryDisplayData[] = [
