@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { initialState } from "../../index";
 import { State } from "../../types";
 import { getHightLightedAgents, getAgentsToHide } from "../selectors";
@@ -48,8 +47,8 @@ describe("selection composed selectors", () => {
                 },
             };
             const highlightedNames = getHightLightedAgents(stateWithSelection);
-            expect(highlightedNames).to.be.a("array");
-            expect(highlightedNames).to.deep.equal([
+            expect(highlightedNames).toBeInstanceOf(Array);
+            expect(highlightedNames).toEqual([
                 { name: "agent1", tags: ["state1"] },
             ]);
         });
@@ -62,8 +61,8 @@ describe("selection composed selectors", () => {
                 },
             };
             const highlightedNames = getHightLightedAgents(stateWithSelection);
-            expect(highlightedNames).to.be.a("array");
-            expect(highlightedNames).to.deep.equal([]);
+            expect(highlightedNames).toBeInstanceOf(Array);
+            expect(highlightedNames).toEqual([]);
         });
     });
     describe("getAgentNamesToHide", () => {
@@ -76,8 +75,8 @@ describe("selection composed selectors", () => {
                 },
             };
             const hiddenNames = getAgentsToHide(stateWithSelection);
-            expect(hiddenNames).to.be.a("array");
-            expect(hiddenNames).to.deep.equal([
+            expect(hiddenNames).toBeInstanceOf(Array);
+            expect(hiddenNames).toEqual([
                 { name: "agent1", tags: ["state1", ""] },
             ]);
         });
