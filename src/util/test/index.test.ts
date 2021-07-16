@@ -1,9 +1,14 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import * as React from "react";
 
 import {
     bindAll,
     convertToSentenceCase,
     roundTimeForDisplay,
+    clearUrlParams,
     wrapText,
 } from "../";
 import {
@@ -62,6 +67,10 @@ describe("General utilities", () => {
     });
 
     describe("toSentenceCase", () => {
+        it("returns an empty string as is", () => {
+            const startingString = "";
+            expect(convertToSentenceCase(startingString)).toBe("");
+        });
         it("takes a string and converts it to sentence case", () => {
             const startingString = "all lowercase. all lowercase";
             expect(convertToSentenceCase(startingString)).toBe(
@@ -106,6 +115,35 @@ describe("General utilities", () => {
                 formattedText: "123 567<br>890<br>abcdefg<br>wxyz",
                 numLines: 4,
             });
+        });
+    });
+
+    describe("clearUrlParams", () => {
+        it("clears one URL param", () => {
+            const baseUrl = `${location.origin}${location.pathname}`;
+            history.replaceState({}, "", "?trajFileName=traj.simularium");
+            expect(location.href).toBe(
+                baseUrl + "?trajFileName=traj.simularium"
+            );
+
+            clearUrlParams();
+
+            expect(location.href).toBe(baseUrl);
+        });
+        it("clears multiple URL params", () => {
+            const baseUrl = `${location.origin}${location.pathname}`;
+            history.replaceState(
+                {},
+                "",
+                "?trajFileName=traj.simularium&month=jan"
+            );
+            expect(location.href).toBe(
+                baseUrl + "?trajFileName=traj.simularium&month=jan"
+            );
+
+            clearUrlParams();
+
+            expect(location.href).toBe(baseUrl);
         });
     });
 
