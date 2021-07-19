@@ -285,7 +285,7 @@ const loadFileViaUrl = createLogic({
                 // If there was a CORS error, error.message does not contain a status code
                 if (error.message === "Failed to fetch") {
                     errorDetails +=
-                        "<br/><br/>Try uploading your trajectory file from a Dropbox or Amazon S3 link instead.";
+                        "<br/><br/>Try uploading your trajectory file from a Dropbox, Google Drive, or Amazon S3 link instead.";
                 }
                 dispatch(
                     setViewerStatus({
