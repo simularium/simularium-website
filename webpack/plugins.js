@@ -6,7 +6,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const webpack = require('webpack');
 
@@ -51,9 +50,6 @@ const PLUGINS_BY_ENV = {
         })
     ],
     [Env.DEVELOPMENT]: [
-        new CopyWebpackPlugin([
-            { from: 'src/data', to: 'api/v1' }
-        ]),
         new webpack.EnvironmentPlugin({
             BACKEND_SERVER_IP: `dev-node1-agentviz-backend.cellexplore.net`
         })
