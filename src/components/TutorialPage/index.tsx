@@ -209,8 +209,9 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                     <ol>
                         <li>
                             Upload your Simularium file to one of the supported
-                            public cloud providers, currently Dropbox or Amazon
-                            S3, and get a publicly accessible link to the file.
+                            public cloud providers, currently Dropbox, Google
+                            Drive, or Amazon S3, and get a publicly accessible
+                            link to the file.
                         </li>
                         <li>
                             In a supported browser, navigate to{" "}
