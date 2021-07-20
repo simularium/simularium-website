@@ -4,9 +4,11 @@ import {
     bindAll,
     convertToSentenceCase,
     roundTimeForDisplay,
+    clearUrlParams,
     wrapText,
 } from "../";
 import {
+    getFileIdFromUrl,
     getGoogleDriveFileId,
     getUserTrajectoryUrl,
     isGoogleDriveUrl,
@@ -62,6 +64,10 @@ describe("General utilities", () => {
     });
 
     describe("toSentenceCase", () => {
+        it("returns an empty string as is", () => {
+            const startingString = "";
+            expect(convertToSentenceCase(startingString)).toBe("");
+        });
         it("takes a string and converts it to sentence case", () => {
             const startingString = "all lowercase. all lowercase";
             expect(convertToSentenceCase(startingString)).toBe(
@@ -106,6 +112,35 @@ describe("General utilities", () => {
                 formattedText: "123 567<br>890<br>abcdefg<br>wxyz",
                 numLines: 4,
             });
+        });
+    });
+
+    describe("clearUrlParams", () => {
+        it("clears one URL param", () => {
+            const baseUrl = `${location.origin}${location.pathname}`;
+            history.replaceState({}, "", "?trajFileName=traj.simularium");
+            expect(location.href).toBe(
+                baseUrl + "?trajFileName=traj.simularium"
+            );
+
+            clearUrlParams();
+
+            expect(location.href).toBe(baseUrl);
+        });
+        it("clears multiple URL params", () => {
+            const baseUrl = `${location.origin}${location.pathname}`;
+            history.replaceState(
+                {},
+                "",
+                "?trajFileName=traj.simularium&month=jan"
+            );
+            expect(location.href).toBe(
+                baseUrl + "?trajFileName=traj.simularium&month=jan"
+            );
+
+            clearUrlParams();
+
+            expect(location.href).toBe(baseUrl);
         });
     });
 
@@ -212,6 +247,18 @@ describe("User Url handling", () => {
             expect(getGoogleDriveFileId("url", id)).toEqual(id);
         });
     });
+
+    describe("getFileIdFromUrl", () => {
+        it("returns nothing if the URL is not a Google Drive URL", () => {
+            const url = "https://dropbox.com/123456789";
+            expect(getFileIdFromUrl(url)).toBe(undefined);
+        });
+        it("returns an id if the URL is a Google Drive URL", () => {
+            const url = "https://drive.google.com/file/d/123456789";
+            expect(getFileIdFromUrl(url)).toBe("123456789");
+        });
+    });
+
     describe("getUserTrajectoryUrl", () => {
         it("returns a google api url if given an id and a google url", () => {
             const id = "id";
