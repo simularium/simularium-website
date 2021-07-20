@@ -17,6 +17,7 @@ import selectionStateBranch from "../../state/selection";
 import {
     URL_PARAM_KEY_FILE_NAME,
     URL_PARAM_KEY_USER_URL,
+    USER_TRAJ_REDIRECTS,
 } from "../../constants";
 import {
     LoadViaUrlAction,
@@ -79,12 +80,13 @@ class App extends React.Component<AppProps, AppState> {
             setViewerStatus,
         } = this.props;
         const current = this.interactiveContent.current;
+        const controller = simulariumController || new SimulariumController({});
 
         const parsed = queryString.parse(location.search);
         const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
         const userTrajectoryUrl = parsed[URL_PARAM_KEY_USER_URL];
-        const controller = simulariumController || new SimulariumController({});
-        if (fileName) {
+
+        const loadNetworkedFile = (fileName: string | string[]) => {
             const networkedFile = find(TRAJECTORIES, { id: fileName });
             if (networkedFile) {
                 const fileData = networkedFile as TrajectoryDisplayData;
@@ -102,10 +104,24 @@ class App extends React.Component<AppProps, AppState> {
                 clearUrlParams();
                 setSimulariumController(controller);
             }
-        } else if (userTrajectoryUrl) {
+        };
+
+        const loadUserTrajectoryUrl = (
+            userTrajectoryUrl: string | string[]
+        ) => {
             const verifiedUrl = urlCheck(userTrajectoryUrl);
             const fileId = getFileIdFromUrl(verifiedUrl, parsed.id);
-            if (verifiedUrl) {
+            if (
+                verifiedUrl &&
+                fileId &&
+                USER_TRAJ_REDIRECTS.includes(verifiedUrl)
+            ) {
+                const streamingUrl = `${location.origin}${
+                    location.pathname
+                }/trajFileName=${fileId}`;
+                history.replaceState({}, "", streamingUrl);
+                loadNetworkedFile(fileId);
+            } else if (verifiedUrl) {
                 loadViaUrl(verifiedUrl, controller, fileId);
             } else {
                 // if the url doesn't pass the regEx check, notify the user and then clear the url
@@ -119,6 +135,12 @@ class App extends React.Component<AppProps, AppState> {
                 });
                 setSimulariumController(controller);
             }
+        };
+
+        if (fileName) {
+            loadNetworkedFile(fileName);
+        } else if (userTrajectoryUrl) {
+            loadUserTrajectoryUrl(userTrajectoryUrl);
         } else {
             setSimulariumController(controller);
         }

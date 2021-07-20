@@ -57,6 +57,10 @@ export const getFileIdFromUrl = (
     // currently only id we're extracting from the url, but possible we'll need more
     if (isGoogleDriveUrl(url)) {
         return getGoogleDriveFileId(url, idParam);
+    } else {
+        // ex) "mysite.com/myTraj.simularium?dl=0" -> "myTraj.simularium"
+        const urlSplit = url.split("/");
+        return urlSplit[urlSplit.length - 1].split("?")[0];
     }
 };
 
