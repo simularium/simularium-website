@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { USER_TRAJ_REDIRECTS } from "../../constants";
 import {
     bindAll,
     convertToSentenceCase,
@@ -266,19 +267,24 @@ describe("User Url handling", () => {
         });
     });
 
-    // describe("getStreamingUrl", () => {
-    //     it("replaces the trajUrl param in current location with a trajFileName param", () => {
-    //         window.history.replaceState(
-    //             {},
-    //             "",
-    //             "/viewer?trajUrl=https://myfile.com/myfile"
-    //         );
-    //         const streamingUrl = getStreamingUrl("endocytosis.simularium");
-    //         const expected =
-    //             "http://localhost/viewer?trajFileName=endocytosis.simularium";
-    //         expect(streamingUrl).toBe(expected);
-    //     });
-    // });
+    describe("getRedirectUrl", () => {
+        it("returns empty string for a URL that shouldn't be redirected", () => {
+            const url =
+                "https://s3.amazonaws.com/trajectory/vivarium_ecoli.simularium";
+            const fileName = "vivarium_ecoli.simularium";
+            expect(getRedirectUrl(url, fileName)).toBe("");
+        });
+        it("replaces the trajUrl param in current URL with a trajFileName param if URL is listed in USER_TRAJ_REDIRECTS", () => {
+            const fileName = "testFileName";
+            const url = USER_TRAJ_REDIRECTS[0];
+            window.history.replaceState({}, "", `/viewer?trajUrl=${url}`);
+
+            const redirectUrl = getRedirectUrl(url, fileName);
+            const expected =
+                "http://localhost/viewer?trajFileName=testFileName";
+            expect(redirectUrl).toBe(expected);
+        });
+    });
 
     describe("getUserTrajectoryUrl", () => {
         it("returns a google api url if given an id and a google url", () => {

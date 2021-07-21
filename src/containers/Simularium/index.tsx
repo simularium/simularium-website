@@ -17,7 +17,6 @@ import selectionStateBranch from "../../state/selection";
 import {
     URL_PARAM_KEY_FILE_NAME,
     URL_PARAM_KEY_USER_URL,
-    USER_TRAJ_REDIRECTS,
 } from "../../constants";
 import {
     LoadViaUrlAction,
