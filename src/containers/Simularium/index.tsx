@@ -39,7 +39,7 @@ import { clearUrlParams } from "../../util";
 import {
     getFileIdFromUrl,
     urlCheck,
-    getStreamingUrl,
+    getRedirectUrl,
 } from "../../util/userUrlHandling";
 const { Content } = Layout;
 
@@ -115,15 +115,12 @@ class App extends React.Component<AppProps, AppState> {
         ) => {
             const verifiedUrl = urlCheck(userTrajectoryUrl);
             const fileId = getFileIdFromUrl(verifiedUrl, parsed.id);
-            if (
-                verifiedUrl &&
-                fileId &&
-                USER_TRAJ_REDIRECTS.includes(verifiedUrl)
-            ) {
+            const redirectUrl = getRedirectUrl(verifiedUrl, fileId);
+
+            if (redirectUrl) {
                 // Edge case where we want to redirect to a networked file
-                const streamingUrl = getStreamingUrl(fileId);
-                history.replaceState({}, "", streamingUrl);
-                loadNetworkedFile(fileId);
+                history.replaceState({}, "", redirectUrl);
+                loadNetworkedFile(fileId as string);
             } else if (verifiedUrl) {
                 loadViaUrl(verifiedUrl, controller, fileId);
             } else {

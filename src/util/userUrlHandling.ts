@@ -1,5 +1,7 @@
 import { isString } from "lodash";
 
+import { USER_TRAJ_REDIRECTS } from "../constants";
+
 const googleDriveUrlRegEx = /(?:drive.google\.com\/file\/d\/)(.*)(?=\/)|(?:drive.google\.com\/file\/d\/)(.*)/g;
 const googleDriveUrlExcludingIdRegEx = /(drive.google\.com\/file\/d\/)(?=.*)/g;
 
@@ -63,9 +65,15 @@ export const getFileIdFromUrl = (
     }
 };
 
-export const getStreamingUrl = (fileId: string) => {
-    // ex) simularium.allencell.org/viewer?trajFileName=endocytosis.simularium
-    return `${location.origin}${location.pathname}?trajFileName=${fileId}`;
+export const getRedirectUrl = (url: string, fileName: string | undefined) => {
+    if (url && fileName && USER_TRAJ_REDIRECTS.includes(url)) {
+        // ex) simularium.allencell.org/viewer?trajFileName=endocytosis.simularium
+        return `${location.origin}${
+            location.pathname
+        }?trajFileName=${fileName}`;
+    } else {
+        return "";
+    }
 };
 
 export const getGoogleApiUrl = (id: string) => {
