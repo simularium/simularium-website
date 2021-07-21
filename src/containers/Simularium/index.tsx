@@ -118,7 +118,7 @@ class App extends React.Component<AppProps, AppState> {
             ) {
                 const streamingUrl = `${location.origin}${
                     location.pathname
-                }/trajFileName=${fileId}`;
+                }?trajFileName=${fileId}`;
                 history.replaceState({}, "", streamingUrl);
                 loadNetworkedFile(fileId);
             } else if (verifiedUrl) {
