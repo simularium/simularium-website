@@ -249,13 +249,19 @@ describe("User Url handling", () => {
     });
 
     describe("getFileIdFromUrl", () => {
-        it("returns nothing if the URL is not a Google Drive URL", () => {
-            const url = "https://dropbox.com/123456789";
-            expect(getFileIdFromUrl(url)).toBe(undefined);
-        });
         it("returns an id if the URL is a Google Drive URL", () => {
             const url = "https://drive.google.com/file/d/123456789";
             expect(getFileIdFromUrl(url)).toBe("123456789");
+        });
+        it("returns file name if the URL is not a Google Drive URL and has a query string", () => {
+            const url =
+                "https://s3.amazonaws.com/trajectory/vivarium_ecoli.simularium?city=seattle";
+            expect(getFileIdFromUrl(url)).toBe("vivarium_ecoli.simularium");
+        });
+        it("returns file name if the URL is not a Google Drive URL and does not have a query string", () => {
+            const url =
+                "https://s3.amazonaws.com/trajectory/vivarium_ecoli.simularium";
+            expect(getFileIdFromUrl(url)).toBe("vivarium_ecoli.simularium");
         });
     });
 
