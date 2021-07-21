@@ -63,6 +63,11 @@ export const getFileIdFromUrl = (
     }
 };
 
+export const getStreamingUrl = (fileId: string) => {
+    // ex) simularium.allencell.org/viewer?trajFileName=endocytosis.simularium
+    return `${location.origin}${location.pathname}?trajFileName=${fileId}`;
+};
+
 export const getGoogleApiUrl = (id: string) => {
     return `https://www.googleapis.com/drive/v2/files/${id}?alt=media&key=${
         process.env.GOOGLE_API_KEY

@@ -36,7 +36,11 @@ import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/metadata/constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { clearUrlParams } from "../../util";
-import { getFileIdFromUrl, urlCheck } from "../../util/userUrlHandling";
+import {
+    getFileIdFromUrl,
+    urlCheck,
+    getStreamingUrl,
+} from "../../util/userUrlHandling";
 const { Content } = Layout;
 
 const styles = require("./style.css");
@@ -117,10 +121,7 @@ class App extends React.Component<AppProps, AppState> {
                 USER_TRAJ_REDIRECTS.includes(verifiedUrl)
             ) {
                 // Edge case where we want to redirect to a networked file
-                const streamingUrl =
-                    location.origin +
-                    location.pathname +
-                    `?trajFileName=${fileId}`;
+                const streamingUrl = getStreamingUrl(fileId);
                 history.replaceState({}, "", streamingUrl);
                 loadNetworkedFile(fileId);
             } else if (verifiedUrl) {

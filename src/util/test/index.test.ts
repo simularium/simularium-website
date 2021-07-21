@@ -10,6 +10,7 @@ import {
 import {
     getFileIdFromUrl,
     getGoogleDriveFileId,
+    getStreamingUrl,
     getUserTrajectoryUrl,
     isGoogleDriveUrl,
     urlCheck,
@@ -262,6 +263,20 @@ describe("User Url handling", () => {
             const url =
                 "https://s3.amazonaws.com/trajectory/vivarium_ecoli.simularium";
             expect(getFileIdFromUrl(url)).toBe("vivarium_ecoli.simularium");
+        });
+    });
+
+    describe("getStreamingUrl", () => {
+        it("replaces the trajUrl param in current location with a trajFileName param", () => {
+            window.history.replaceState(
+                {},
+                "",
+                "/viewer?trajUrl=https://myfile.com/myfile"
+            );
+            const streamingUrl = getStreamingUrl("endocytosis.simularium");
+            const expected =
+                "http://localhost/viewer?trajFileName=endocytosis.simularium";
+            expect(streamingUrl).toBe(expected);
         });
     });
 
