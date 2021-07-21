@@ -54,7 +54,6 @@ export const getFileIdFromUrl = (
     url: string,
     idParam?: string | string[] | null
 ) => {
-    // currently only id we're extracting from the url, but possible we'll need more
     if (isGoogleDriveUrl(url)) {
         return getGoogleDriveFileId(url, idParam);
     } else {
