@@ -262,14 +262,10 @@ const loadFileViaUrl = createLogic({
                 }
             })
             .then((json) => {
-                // ex) "mysite.com/myTraj.simularium?dl=0" -> ["mysite.com", "myTraj.simularium?dl=0"]
-                const urlSplit = url.split("/");
-                // ex) ["mysite.com", "myTraj.simularium?dl=0"] -> "myTraj.simularium"
-                const name = urlSplit[urlSplit.length - 1].split("?")[0];
                 dispatch(
                     changeToLocalSimulariumFile(
                         {
-                            name, //TODO: add this to metadata about the file
+                            name: action.fileId, //TODO: add this to metadata about the file
                             data: json,
                             // Temp solution: Set lastModified to a date in the future to tell this apart
                             // from legitimate lastModified values
