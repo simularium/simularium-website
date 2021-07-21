@@ -116,9 +116,11 @@ class App extends React.Component<AppProps, AppState> {
                 fileId &&
                 USER_TRAJ_REDIRECTS.includes(verifiedUrl)
             ) {
-                const streamingUrl = `${location.origin}${
-                    location.pathname
-                }?trajFileName=${fileId}`;
+                // Edge case where we want to redirect to a networked file
+                const streamingUrl =
+                    location.origin +
+                    location.pathname +
+                    `?trajFileName=${fileId}`;
                 history.replaceState({}, "", streamingUrl);
                 loadNetworkedFile(fileId);
             } else if (verifiedUrl) {
@@ -138,8 +140,10 @@ class App extends React.Component<AppProps, AppState> {
         };
 
         if (fileName) {
+            // URL has trajFileName param
             loadNetworkedFile(fileName);
         } else if (userTrajectoryUrl) {
+            // URL has trajUrl param
             loadUserTrajectoryUrl(userTrajectoryUrl);
         } else {
             setSimulariumController(controller);
