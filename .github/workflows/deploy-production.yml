@@ -63,7 +63,7 @@ jobs:
       - run: npm ci 
       - run: npm run build
       - name: Copy files to production bucket
-        run: aws s3 sync ./dist/ s3://production.agentviz.allencell.org --delete
+        run: aws s3 sync ./dist/ s3://production.simularium.allencell.org --delete
       - name: Clear cloudfront cache
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CFE_CLOUDFRONT_DISTRIBUTION_ID_PRODUCTION }} --paths "/*"
       - uses: act10ns/slack@v1
