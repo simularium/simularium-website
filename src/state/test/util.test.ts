@@ -14,7 +14,7 @@ describe("state utilities", () => {
             const constant = makeConstant("foo", "bar");
             const [namespace, reducer, type] = constant.split("/");
             expect(typeof constant).toBe("string");
-            expect(namespace).toBe("agentviz-ui");
+            expect(namespace).toBe("simularium-ui");
             expect(reducer).toBe("FOO");
             expect(type).toBe("BAR");
         });

@@ -175,8 +175,8 @@ describe("User Url handling", () => {
     describe("urlCheck", () => {
         it("returns strings that match the regex", () => {
             const shouldMatch = [
-                "https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium",
-                "https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.json",
+                "https://aics-simularium-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium",
+                "https://aics-simularium-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.json",
                 "http://web5-site.com/directory",
                 "https://fa-st.web9site.com/directory/file.filename",
                 "https://fa-st.web9site.com/directory-name/file.filename",
@@ -220,8 +220,8 @@ describe("User Url handling", () => {
     });
     it("returns false if the url doesn't have google.com in it", () => {
         const shouldNotMatch = [
-            "https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium",
-            "https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.json",
+            "https://aics-simularium-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium",
+            "https://aics-simularium-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.json",
             "http://web5-site.com/directory",
             "https://fa-st.web9site.com/directory/file.filename",
             "https://fa-st.web9site.com/directory-name/file.filename",

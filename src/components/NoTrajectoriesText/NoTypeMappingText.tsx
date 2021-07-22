@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { TUTORIAL_PATHNAME } from "../../routes";
+import { DATA_BUCKET_URL } from "../../constants";
 
 const styles = require("../NoTrajectoriesText/style.css");
 
@@ -10,7 +11,9 @@ const NoTypeMappingText: React.FunctionComponent<{}> = () => {
             <h3>Unable to load UI controls</h3>
             <p>
                 Review the{" "}
-                <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium">
+                <a
+                    href={`${DATA_BUCKET_URL}/trajectory/endocytosis.simularium`}
+                >
                     example data
                 </a>{" "}
                 or{" "}
