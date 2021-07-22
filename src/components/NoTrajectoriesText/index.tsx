@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ActionCreator } from "redux";
 
 import { RequestNetworkFileAction } from "../../state/metadata/types";
-import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
+import { URL_PARAM_KEY_FILE_NAME, DATA_BUCKET_URL } from "../../constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { TUTORIAL_PATHNAME } from "../../routes";
@@ -28,7 +28,9 @@ const NoTrajectoriesText = ({ selectFile }: NoTrajectoriesTextProps) => {
             <h3>No trajectories loaded</h3>
             <p>
                 To view a simulation, either{" "}
-                <a href="https://aics-simularium-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium">
+                <a
+                    href={`${DATA_BUCKET_URL}/trajectory/endocytosis.simularium`}
+                >
                     download
                 </a>{" "}
                 our example data or{" "}

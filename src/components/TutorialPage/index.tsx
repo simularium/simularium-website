@@ -5,7 +5,7 @@ import { Layout, Typography } from "antd";
 import dragDropImage from "../../assets/drag-drop.gif";
 import { VIEWER_PATHNAME } from "../../routes";
 import VisualGlossary from "../VisualGlossary";
-import { SUPPORTED_ENGINES } from "../../constants";
+import { SUPPORTED_ENGINES, DATA_BUCKET_URL } from "../../constants";
 import Footer from "../Footer";
 
 const { Content } = Layout;
@@ -21,7 +21,9 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                 <VisualGlossary />
                 <p className={styles.intro}>
                     To try out the Simularium Viewer, either{" "}
-                    <a href="https://aics-simularium-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium">
+                    <a
+                        href={`${DATA_BUCKET_URL}/trajectory/endocytosis.simularium`}
+                    >
                         download
                     </a>{" "}
                     our example data or <a href="#convert-your-data">convert</a>{" "}
@@ -43,7 +45,9 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                     <ol>
                         <li>
                             Download the example data{" "}
-                            <a href="https://aics-simularium-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium">
+                            <a
+                                href={`${DATA_BUCKET_URL}/trajectory/endocytosis.simularium`}
+                            >
                                 here
                             </a>
                             .

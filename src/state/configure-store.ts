@@ -2,7 +2,7 @@ import axios from "axios";
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import { createLogicMiddleware } from "redux-logic";
 
-import { BASE_API_URL, PLOT_DATA_URL } from "../constants";
+import { BASE_API_URL, DATA_BUCKET_URL } from "../constants";
 
 import { enableBatching, initialState, metadata, selection, State } from "./";
 
@@ -15,7 +15,7 @@ const logics = [...metadata.logics, ...selection.logics];
 
 const reduxLogicDependencies = {
     baseApiUrl: BASE_API_URL,
-    plotDataUrl: PLOT_DATA_URL,
+    plotDataUrl: DATA_BUCKET_URL,
     httpClient: axios,
 };
 
