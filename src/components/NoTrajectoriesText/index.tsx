@@ -28,7 +28,7 @@ const NoTrajectoriesText = ({ selectFile }: NoTrajectoriesTextProps) => {
             <h3>No trajectories loaded</h3>
             <p>
                 To view a simulation, either{" "}
-                <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium">
+                <a href="https://aics-simularium-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium">
                     download
                 </a>{" "}
                 our example data or{" "}

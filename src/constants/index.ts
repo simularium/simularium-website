@@ -12,7 +12,7 @@ export const LEFT_PANEL_TOOLTIP_DELAY = 1; // in seconds
 // URLs
 export const BASE_API_URL = `/api/${API_VERSION}`;
 export const PLOT_DATA_URL =
-    "https://aics-agentviz-data.s3.us-east-2.amazonaws.com";
+    "https://aics-simularium-data.s3.us-east-2.amazonaws.com";
 export const FORUM_URL =
     "https://forum.allencell.org/c/software-code/simularium/";
 // Note that below has "/tags/" unlike FORUM_URL
