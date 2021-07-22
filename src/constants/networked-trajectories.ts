@@ -223,10 +223,10 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         authors: "Aniruddha Chattaraj et al.",
         publication: {
             title:
-                "Solubility product constant directs the formation of biomolecular condensates",
-            journal: "bioRxiv",
-            year: 2020,
-            url: "https://www.biorxiv.org/content/10.1101/2020.12.26.424446v2",
+                "The solubility product extends the buffering concept to heterotypic biomolecular condensates",
+            journal: "eLife",
+            year: 2021,
+            url: "https://elifesciences.org/articles/67176",
         },
         description:
             "A SpringSaLaD model of liquid-liquid phase separation below Ksp where no condensate forms.",
@@ -243,10 +243,10 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         authors: "Aniruddha Chattaraj et al.",
         publication: {
             title:
-                "Solubility product constant directs the formation of biomolecular condensates",
-            journal: "bioRxiv",
-            year: 2020,
-            url: "https://www.biorxiv.org/content/10.1101/2020.12.26.424446v2",
+                "The solubility product extends the buffering concept to heterotypic biomolecular condensates",
+            journal: "eLife",
+            year: 2021,
+            url: "https://elifesciences.org/articles/67176",
         },
         description:
             "A SpringSaLaD model of liquid-liquid phase separation at Ksp where condensate forms.",
@@ -263,10 +263,10 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         authors: "Aniruddha Chattaraj et al.",
         publication: {
             title:
-                "Solubility product constant directs the formation of biomolecular condensates",
-            journal: "bioRxiv",
-            year: 2020,
-            url: "https://www.biorxiv.org/content/10.1101/2020.12.26.424446v2",
+                "The solubility product extends the buffering concept to heterotypic biomolecular condensates",
+            journal: "eLife",
+            year: 2021,
+            url: "https://elifesciences.org/articles/67176",
         },
         description:
             "A SpringSaLaD model of liquid-liquid phase separation above Ksp where condensate forms.",

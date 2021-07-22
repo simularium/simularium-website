@@ -39,3 +39,11 @@ export const SUPPORTED_ENGINES = [
     ["SpringSaLaD", SPRINGSALAD_URL],
     ["MEDYAN", MEDYAN_URL],
 ];
+
+// If any these URLs are used as a trajUrl param, we want to redirect to a networked file
+// More info: https://github.com/allen-cell-animated/simularium-website/issues/213
+export const USER_TRAJ_REDIRECTS = [
+    "https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/springsalad_condensate_formation_Below_Ksp.simularium",
+    "https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/springsalad_condensate_formation_At_Ksp.simularium",
+    "https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/springsalad_condensate_formation_Above_Ksp.simularium",
+];

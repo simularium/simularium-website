@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { USER_TRAJ_REDIRECTS } from "../../constants";
 import {
     bindAll,
     convertToSentenceCase,
@@ -10,6 +11,7 @@ import {
 import {
     getFileIdFromUrl,
     getGoogleDriveFileId,
+    getRedirectUrl,
     getUserTrajectoryUrl,
     isGoogleDriveUrl,
     urlCheck,
@@ -249,13 +251,38 @@ describe("User Url handling", () => {
     });
 
     describe("getFileIdFromUrl", () => {
-        it("returns nothing if the URL is not a Google Drive URL", () => {
-            const url = "https://dropbox.com/123456789";
-            expect(getFileIdFromUrl(url)).toBe(undefined);
-        });
         it("returns an id if the URL is a Google Drive URL", () => {
             const url = "https://drive.google.com/file/d/123456789";
             expect(getFileIdFromUrl(url)).toBe("123456789");
+        });
+        it("returns file name if the URL is not a Google Drive URL and has a query string", () => {
+            const url =
+                "https://s3.amazonaws.com/trajectory/vivarium_ecoli.simularium?city=seattle";
+            expect(getFileIdFromUrl(url)).toBe("vivarium_ecoli.simularium");
+        });
+        it("returns file name if the URL is not a Google Drive URL and does not have a query string", () => {
+            const url =
+                "https://s3.amazonaws.com/trajectory/vivarium_ecoli.simularium";
+            expect(getFileIdFromUrl(url)).toBe("vivarium_ecoli.simularium");
+        });
+    });
+
+    describe("getRedirectUrl", () => {
+        it("returns empty string for a URL that shouldn't be redirected", () => {
+            const url =
+                "https://s3.amazonaws.com/trajectory/vivarium_ecoli.simularium";
+            const fileName = "vivarium_ecoli.simularium";
+            expect(getRedirectUrl(url, fileName)).toBe("");
+        });
+        it("replaces the trajUrl param in current URL with a trajFileName param if URL is listed in USER_TRAJ_REDIRECTS", () => {
+            const fileName = "testFileName";
+            const url = USER_TRAJ_REDIRECTS[0];
+            window.history.replaceState({}, "", `/viewer?trajUrl=${url}`);
+
+            const redirectUrl = getRedirectUrl(url, fileName);
+            const expected =
+                "http://localhost/viewer?trajFileName=testFileName";
+            expect(redirectUrl).toBe(expected);
         });
     });
 
