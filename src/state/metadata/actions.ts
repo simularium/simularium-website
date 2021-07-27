@@ -6,7 +6,6 @@ import {
     RECEIVE_SIMULARIUM_FILE,
     SET_SIMULARIUM_CONTROLLER,
     LOAD_LOCAL_FILE_IN_VIEWER,
-    SET_VIEWER_STATUS,
     LOAD_NETWORKED_FILE_IN_VIEWER,
     REQUEST_PLOT_DATA,
     CLEAR_SIMULARIUM_FILE,
@@ -20,8 +19,6 @@ import {
     LocalSimFile,
     NetworkedSimFile,
     RequestCachedPlotAction,
-    ViewerStatusInfo,
-    SetViewerStatusAction,
     RequestNetworkFileAction,
     RequestLocalFileAction,
     ClearSimFileDataAction,
@@ -115,15 +112,6 @@ export function clearSimulariumFile(payload: {
     return {
         payload,
         type: CLEAR_SIMULARIUM_FILE,
-    };
-}
-
-export function setViewerStatus(
-    payload: ViewerStatusInfo
-): SetViewerStatusAction {
-    return {
-        payload,
-        type: SET_VIEWER_STATUS,
     };
 }
 

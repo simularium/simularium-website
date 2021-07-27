@@ -4,27 +4,20 @@ import {
     SIDE_PANEL_COLLAPSED,
     TURN_AGENTS_ON_BY_KEY,
     HIGHLIGHT_AGENTS_BY_KEY,
-    DRAG_OVER_VIEWER,
-    RESET_DRAG_OVER_VIEWER,
     SET_AGENTS_VISIBLE,
     SET_ALL_AGENT_COLORS,
     CHANGE_AGENT_COLOR,
-    SET_BUFFERING,
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
-    SET_IS_PLAYING,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
     SelectMetadataAction,
     ChangeTimeAction,
-    DragOverViewerAction,
-    ResetDragOverViewerAction,
     SetVisibleAction,
     VisibilitySelectionMap,
     AgentColorMap,
     SetAllColorsAction,
     ResetAction,
-    ToggleAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -97,34 +90,8 @@ export function selectMetadata(
     };
 }
 
-export function dragOverViewer(): DragOverViewerAction {
-    return {
-        type: DRAG_OVER_VIEWER,
-    };
-}
-
-export function resetDragOverViewer(): ResetDragOverViewerAction {
-    return {
-        type: RESET_DRAG_OVER_VIEWER,
-    };
-}
-
-export function setBuffering(payload: boolean): ToggleAction {
-    return {
-        payload,
-        type: SET_BUFFERING,
-    };
-}
-
 export function resetAgentSelectionsAndHighlights(): ResetAction {
     return {
         type: RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
-    };
-}
-
-export function setIsPlaying(isPlaying: boolean): ToggleAction {
-    return {
-        payload: isPlaying,
-        type: SET_IS_PLAYING,
     };
 }

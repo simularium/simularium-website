@@ -4,14 +4,6 @@ export interface SelectionStateBranch {
     [key: string]: any;
 }
 
-export interface DragOverViewerAction {
-    type: string;
-}
-
-export interface ResetDragOverViewerAction {
-    type: string;
-}
-
 export interface ChangeAgentsRenderingStateAction {
     payload: { [key: string]: string[] };
     type: string;
@@ -35,11 +27,6 @@ export interface ChangeNumberCollapsedPanelsAction {
 
 export interface HighlightAgentAction {
     payload: string;
-    type: string;
-}
-
-export interface ToggleAction {
-    payload: boolean;
     type: string;
 }
 
