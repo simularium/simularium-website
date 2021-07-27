@@ -150,6 +150,9 @@ describe("General utilities", () => {
         it("returns a float with the requisite number of sig figs as is", () => {
             expect(roundTimeForDisplay(1.23)).toBe(1.23);
         });
+        it("returns zero if given zero", () => {
+            expect(roundTimeForDisplay(0)).toBe(0);
+        });
         it("returns a float with less than the requisite number of sig figs as is", () => {
             expect(roundTimeForDisplay(1.2)).toBe(1.2);
         });

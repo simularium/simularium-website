@@ -80,5 +80,8 @@ export const clearUrlParams = () => {
 };
 
 export const roundTimeForDisplay = (time: number): number => {
+    if (time === 0) {
+        return 0;
+    }
     return parseFloat(time.toPrecision(3));
 };
