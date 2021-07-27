@@ -2,10 +2,19 @@ import { initialState } from "../../../state/index";
 import { State } from "../../../state/types";
 import {
     convertUIDataToColorMap,
+    convertUIDataToSelectionData,
     getDisplayTimes,
     getMaxNumChars,
     getSelectionStateInfoForViewer,
 } from "../selectors";
+
+const mockDisplayData = [
+    {
+        name: "name1",
+        displayStates: [{ name: "state1", id: "id1" }],
+        color: "color1",
+    },
+];
 
 describe("ViewerPanel selectors", () => {
     describe("getSelectionStateInfoForViewer", () => {
@@ -22,17 +31,32 @@ describe("ViewerPanel selectors", () => {
         });
     });
 
-    describe("convertUIDataToColorMap", () => {
-        it("converts UI display data to color map where the agent name is the key, and the color is the value", () => {
-            const mockDisplayData = [
+    describe("convertUIDataToSelectionData", () => {
+        it("converts UI display data to map with agent name as the key, and an array of display state names is the value (adding the empty string for unmodified state", () => {
+            const result = convertUIDataToSelectionData(mockDisplayData);
+            expect(result).toEqual({ name1: ["", "state1"] });
+        });
+        it("returns an array with just the agent name if there are no display states for an agent", () => {
+            const mockDisplayDataNoStates = [
                 {
-                    name: "name",
-                    displayStates: [{ name: "state1", id: "id" }],
-                    color: "color",
+                    name: "name1",
+                    displayStates: [],
+                    color: "color1",
                 },
             ];
+            const result = convertUIDataToSelectionData(
+                mockDisplayDataNoStates
+            );
+            expect(result).toEqual({
+                name1: ["name1"],
+            });
+        });
+    });
+
+    describe("convertUIDataToColorMap", () => {
+        it("converts UI display data to color map where the agent name is the key, and the color is the value", () => {
             const result = convertUIDataToColorMap(mockDisplayData);
-            expect(result).toEqual({ name: "color" });
+            expect(result).toEqual({ name1: "color1" });
         });
         it("returns an empty object if no ui data present", () => {
             const result = convertUIDataToColorMap([]);
