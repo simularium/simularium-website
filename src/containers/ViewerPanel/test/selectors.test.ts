@@ -4,9 +4,24 @@ import {
     convertUIDataToColorMap,
     getDisplayTimes,
     getMaxNumChars,
+    getSelectionStateInfoForViewer,
 } from "../selectors";
 
 describe("ViewerPanel selectors", () => {
+    describe("getSelectionStateInfoForViewer", () => {
+        it("gathers the highlighted agents and hidden agents", () => {
+            /**
+             * Only need to test the shape of the data, the selectors that
+             * generate the contents of the two lists are tested in state
+             */
+            const result = getSelectionStateInfoForViewer({ ...initialState });
+            expect(result).toEqual({
+                hiddenAgents: [],
+                highlightedAgents: [],
+            });
+        });
+    });
+
     describe("convertUIDataToColorMap", () => {
         it("converts UI display data to color map where the agent name is the key, and the color is the value", () => {
             const mockDisplayData = [
