@@ -13,20 +13,23 @@ module.exports = {
     },
     coverageThreshold: {
         "global": {
-            "branches": 50,
-            "functions": 50,
             "lines": 50,
             "statements": 50
         },
         "./src/state/*/selectors.ts": {
-            // "branches": 80,
             "lines": 60,
         },
         "./src/containers/*/selectors.ts": {
-            "branches": 50,
-            "functions": 50,
-            "lines": 50,
-            "statements": 50
+            "branches": 100,
+            "functions": 100,
+            "lines": 100,
+            "statements": 100
+        },
+        "./src/util": {
+            "branches": 100,
+            "functions": 100,
+            "lines": 100,
+            "statements": 100
         }
     }
 };

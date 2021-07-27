@@ -251,6 +251,15 @@ describe("User Url handling", () => {
 
             expect(getGoogleDriveFileId("url", id)).toEqual(id);
         });
+        it("returns undefined if not google drive url", () => {
+            const id = "id";
+            const urls = [
+                `https://blah/${id}/view`,
+                `https://amazon.com/${id}`,
+            ];
+            const result = urls.map((url) => getGoogleDriveFileId(url));
+            expect(result).toEqual(Array(urls.length).fill(undefined));
+        });
     });
 
     describe("getFileIdFromUrl", () => {
