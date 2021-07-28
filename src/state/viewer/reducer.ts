@@ -13,7 +13,7 @@ import {
     SET_IS_PLAYING,
 } from "./constants";
 import {
-    StatusStateBranch,
+    ViewerStateBranch,
     SetViewerStatusAction,
     DragOverViewerAction,
     ResetDragOverViewerAction,
@@ -32,7 +32,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
     [SET_VIEWER_STATUS]: {
         accepts: (action: AnyAction): action is SetViewerStatusAction =>
             action.type === SET_VIEWER_STATUS,
-        perform: (state: StatusStateBranch, action: SetViewerStatusAction) => ({
+        perform: (state: ViewerStateBranch, action: SetViewerStatusAction) => ({
             ...state,
             viewerStatus: action.payload.status,
             viewerError:
@@ -48,7 +48,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
     [DRAG_OVER_VIEWER]: {
         accepts: (action: AnyAction): action is DragOverViewerAction =>
             action.type === DRAG_OVER_VIEWER,
-        perform: (state: StatusStateBranch) => ({
+        perform: (state: ViewerStateBranch) => ({
             ...state,
             draggedOverViewer: true,
         }),
@@ -56,7 +56,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
     [RESET_DRAG_OVER_VIEWER]: {
         accepts: (action: AnyAction): action is ResetDragOverViewerAction =>
             action.type === RESET_DRAG_OVER_VIEWER,
-        perform: (state: StatusStateBranch) => ({
+        perform: (state: ViewerStateBranch) => ({
             ...state,
             draggedOverViewer: false,
         }),
@@ -64,7 +64,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
     [SET_BUFFERING]: {
         accepts: (action: AnyAction): action is ResetDragOverViewerAction =>
             action.type === SET_BUFFERING,
-        perform: (state: StatusStateBranch, action: ToggleAction) => ({
+        perform: (state: ViewerStateBranch, action: ToggleAction) => ({
             ...state,
             isBuffering: action.payload,
         }),
@@ -72,11 +72,11 @@ const actionToConfigMap: TypeToDescriptionMap = {
     [SET_IS_PLAYING]: {
         accepts: (action: AnyAction): action is ToggleAction =>
             action.type === SET_IS_PLAYING,
-        perform: (state: StatusStateBranch, action: ToggleAction) => ({
+        perform: (state: ViewerStateBranch, action: ToggleAction) => ({
             ...state,
             isPlaying: action.payload,
         }),
     },
 };
 
-export default makeReducer<StatusStateBranch>(actionToConfigMap, initialState);
+export default makeReducer<ViewerStateBranch>(actionToConfigMap, initialState);

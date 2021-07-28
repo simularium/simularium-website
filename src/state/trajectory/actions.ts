@@ -4,7 +4,6 @@ import {
     RECEIVE_AGENT_IDS,
     RECEIVE_AGENT_NAMES,
     RECEIVE_SIMULARIUM_FILE,
-    SET_SIMULARIUM_CONTROLLER,
     LOAD_LOCAL_FILE_IN_VIEWER,
     LOAD_NETWORKED_FILE_IN_VIEWER,
     REQUEST_PLOT_DATA,
@@ -15,7 +14,6 @@ import {
     TrajectoryStateBranch,
     ReceiveAction,
     RequestAction,
-    SetSimulariumControllerAction,
     LocalSimFile,
     NetworkedSimFile,
     RequestCachedPlotAction,
@@ -45,15 +43,6 @@ export function requestCachedPlotData(payload: {
     return {
         payload,
         type: REQUEST_PLOT_DATA,
-    };
-}
-
-export function setSimulariumController(
-    payload: SimulariumController
-): SetSimulariumControllerAction {
-    return {
-        payload,
-        type: SET_SIMULARIUM_CONTROLLER,
     };
 }
 

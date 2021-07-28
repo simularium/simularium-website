@@ -5,7 +5,7 @@ import {
     VIEWER_SUCCESS,
 } from "./constants";
 
-export interface StatusStateBranch {
+export interface ViewerStateBranch {
     [key: string]: any;
 }
 

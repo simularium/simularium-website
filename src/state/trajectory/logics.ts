@@ -4,7 +4,22 @@ import queryString from "query-string";
 // NOTE: importing @aics/simularium-viewer here currently breaks ability to compile in testing setup
 // TODO: work on test babel setup, or switch to jest?
 
+import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
+import { getUserTrajectoryUrl } from "../../util/userUrlHandling";
+import {
+    VIEWER_LOADING,
+    VIEWER_EMPTY,
+    VIEWER_ERROR,
+} from "../viewer/constants";
+import { FrontEndError } from "../viewer/types";
+import {
+    changeTime,
+    resetAgentSelectionsAndHighlights,
+} from "../selection/actions";
+import { initialState as initialSelectionState } from "../selection/reducer";
+import { setViewerStatus, setIsPlaying } from "../viewer/actions";
 import { ReduxLogicDeps } from "../types";
+import { batchActions } from "../util";
 
 import { getSimulariumController, getSimulariumFile } from "./selectors";
 import {
@@ -16,26 +31,13 @@ import {
 } from "./actions";
 import {
     LOAD_LOCAL_FILE_IN_VIEWER,
-    VIEWER_LOADING,
     LOAD_NETWORKED_FILE_IN_VIEWER,
     REQUEST_PLOT_DATA,
     CLEAR_SIMULARIUM_FILE,
-    VIEWER_EMPTY,
     LOAD_FILE_VIA_URL,
 } from "./constants";
-import { ReceiveAction, LocalSimFile, FrontEndError } from "./types";
-import { VIEWER_ERROR } from "./constants";
-import { setViewerStatus } from "./actions";
-import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
-import { batchActions } from "../util";
+import { ReceiveAction, LocalSimFile } from "./types";
 import { initialState } from "./reducer";
-import {
-    changeTime,
-    resetAgentSelectionsAndHighlights,
-    setIsPlaying,
-} from "../selection/actions";
-import { initialState as initialSelectionState } from "../selection/reducer";
-import { getUserTrajectoryUrl } from "../../util/userUrlHandling";
 
 const netConnectionSettings = {
     serverIp: process.env.BACKEND_SERVER_IP,

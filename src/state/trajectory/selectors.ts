@@ -26,8 +26,6 @@ export const getSimulariumFile = (state: State) =>
     state.trajectory.simulariumFile;
 export const getSimulariumController = (state: State) =>
     state.trajectory.simulariumController;
-export const getViewerStatus = (state: State) => state.trajectory.viewerStatus;
-export const getViewerError = (state: State) => state.trajectory.viewerError;
 
 // COMPOSED SELECTORS
 export const getIsNetworkedFile = createSelector(
