@@ -13,7 +13,9 @@ import ViewerPanel from "../ViewerPanel";
 import { State } from "../../state/types";
 
 import TrajectoryStateBranch from "../../state/trajectory";
-import selectionStateBranch from "../../state/selection";
+import SelectionStateBranch from "../../state/selection";
+import ViewerStateBranch from "../../state/viewer";
+import SimulariumStateBranch from "../../state/simularium";
 import {
     URL_PARAM_KEY_FILE_NAME,
     URL_PARAM_KEY_USER_URL,
@@ -23,15 +25,15 @@ import {
     LocalSimFile,
     RequestLocalFileAction,
     RequestNetworkFileAction,
-    SetSimulariumControllerAction,
-    SetViewerStatusAction,
 } from "../../state/trajectory/types";
+import { SetViewerStatusAction } from "../../state/viewer/types";
+import { SetSimulariumControllerAction } from "../../state/simularium/types";
 import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
 import {
     DragOverViewerAction,
     ResetDragOverViewerAction,
-} from "../../state/selection/types";
-import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/trajectory/constants";
+} from "../../state/viewer/types";
+import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/viewer/constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { clearUrlParams } from "../../util";
@@ -227,27 +229,27 @@ function mapStateToProps(state: State) {
         simulariumFile: TrajectoryStateBranch.selectors.getSimulariumFile(
             state
         ),
-        simulariumController: TrajectoryStateBranch.selectors.getSimulariumController(
+        simulariumController: SimulariumStateBranch.selectors.getSimulariumController(
             state
         ),
-        fileIsDraggedOverViewer: selectionStateBranch.selectors.getFileDraggedOverViewer(
+        fileIsDraggedOverViewer: ViewerStateBranch.selectors.getFileDraggedOverViewer(
             state
         ),
-        viewerStatus: TrajectoryStateBranch.selectors.getViewerStatus(state),
+        viewerStatus: ViewerStateBranch.selectors.getViewerStatus(state),
     };
 }
 
 const dispatchToPropsMap = {
-    onSidePanelCollapse: selectionStateBranch.actions.onSidePanelCollapse,
+    onSidePanelCollapse: SelectionStateBranch.actions.onSidePanelCollapse,
     changeToLocalSimulariumFile:
         TrajectoryStateBranch.actions.changeToLocalSimulariumFile,
     setSimulariumController:
-        TrajectoryStateBranch.actions.setSimulariumController,
+        SimulariumStateBranch.actions.setSimulariumController,
     changeToNetworkedFile: TrajectoryStateBranch.actions.changeToNetworkedFile,
-    resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
-    dragOverViewer: selectionStateBranch.actions.dragOverViewer,
+    resetDragOverViewer: ViewerStateBranch.actions.resetDragOverViewer,
+    dragOverViewer: ViewerStateBranch.actions.dragOverViewer,
     loadViaUrl: TrajectoryStateBranch.actions.loadViaUrl,
-    setViewerStatus: TrajectoryStateBranch.actions.setViewerStatus,
+    setViewerStatus: ViewerStateBranch.actions.setViewerStatus,
 };
 
 export default connect(

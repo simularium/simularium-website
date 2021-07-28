@@ -17,12 +17,13 @@ import {
     resetAgentSelectionsAndHighlights,
 } from "../selection/actions";
 import { setSimulariumController } from "../simularium/actions";
+import { getSimulariumController } from "../simularium/selectors";
 import { initialState as initialSelectionState } from "../selection/reducer";
 import { setViewerStatus, setIsPlaying } from "../viewer/actions";
 import { ReduxLogicDeps } from "../types";
 import { batchActions } from "../util";
 
-import { getSimulariumController, getSimulariumFile } from "./selectors";
+import { getSimulariumFile } from "./selectors";
 import {
     changeToLocalSimulariumFile,
     receiveMetadata,
@@ -196,7 +197,7 @@ const loadLocalFile = createLogic({
                 lastSimulariumFile.name === simulariumFile.name &&
                 lastSimulariumFile.lastModified === simulariumFile.lastModified
             ) {
-                // exact same file loaded again, dont need to reload anything
+                // exact same file loaded again, don't need to reload anything
                 return;
             }
         }

@@ -9,9 +9,9 @@ import {
 } from "../../state/trajectory/actions";
 import {
     getUiDisplayDataTree,
-    getViewerStatus,
     getIsNetworkedFile,
 } from "../../state/trajectory/selectors";
+import { getViewerStatus } from "../../state/viewer/selectors";
 import { State } from "../../state/types";
 import {
     getVisibleAgentsNamesAndTags,
@@ -40,13 +40,11 @@ import {
     VIEWER_ERROR,
     VIEWER_LOADING,
     VIEWER_SUCCESS,
-} from "../../state/trajectory/constants";
+} from "../../state/viewer/constants";
 import NoTrajectoriesText from "../../components/NoTrajectoriesText";
 import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
-import {
-    ViewerStatus,
-    RequestNetworkFileAction,
-} from "../../state/trajectory/types";
+import { RequestNetworkFileAction } from "../../state/trajectory/types";
+import { ViewerStatus } from "../../state/viewer/types";
 import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFileFailedText";
 
 const styles = require("./style.css");

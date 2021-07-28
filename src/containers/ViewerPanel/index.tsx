@@ -14,25 +14,31 @@ import { Modal } from "antd";
 import Bowser from "bowser";
 
 import { State } from "../../state/types";
-import selectionStateBranch from "../../state/selection";
+import SelectionStateBranch from "../../state/selection";
 import TrajectoryStateBranch from "../../state/trajectory";
-import { VIEWER_EMPTY, VIEWER_SUCCESS } from "../../state/trajectory/constants";
+import ViewerStateBranch from "../../state/viewer";
+import {
+    VIEWER_EMPTY,
+    VIEWER_SUCCESS,
+    VIEWER_ERROR,
+} from "../../state/viewer/constants";
 import {
     ChangeTimeAction,
-    ResetDragOverViewerAction,
-    DragOverViewerAction,
     SetVisibleAction,
     SetAllColorsAction,
-    ToggleAction,
 } from "../../state/selection/types";
+import {
+    ResetDragOverViewerAction,
+    DragOverViewerAction,
+    ToggleAction,
+    SetViewerStatusAction,
+    ViewerError,
+} from "../../state/viewer/types";
 import {
     ReceiveAction,
     LocalSimFile,
-    SetViewerStatusAction,
-    ViewerError,
     TimeUnits,
 } from "../../state/trajectory/types";
-import { VIEWER_ERROR } from "../../state/trajectory/constants";
 import { batchActions } from "../../state/util";
 import PlaybackControls from "../../components/PlaybackControls";
 import CameraControls from "../../components/CameraControls";
@@ -421,8 +427,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
 function mapStateToProps(state: State) {
     return {
-        time: selectionStateBranch.selectors.getCurrentTime(state),
-        numberPanelsCollapsed: selectionStateBranch.selectors.getNumberCollapsed(
+        time: SelectionStateBranch.selectors.getCurrentTime(state),
+        numberPanelsCollapsed: SelectionStateBranch.selectors.getNumberCollapsed(
             state
         ),
         firstFrameTime: TrajectoryStateBranch.selectors.getFirstFrameTimeOfCachedSimulation(
@@ -436,29 +442,29 @@ function mapStateToProps(state: State) {
         displayTimes: getDisplayTimes(state),
         timeUnits: TrajectoryStateBranch.selectors.getTimeUnits(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
-        viewerStatus: TrajectoryStateBranch.selectors.getViewerStatus(state),
-        viewerError: TrajectoryStateBranch.selectors.getViewerError(state),
-        fileIsDraggedOverViewer: selectionStateBranch.selectors.getFileDraggedOverViewer(
+        viewerStatus: ViewerStateBranch.selectors.getViewerStatus(state),
+        viewerError: ViewerStateBranch.selectors.getViewerError(state),
+        fileIsDraggedOverViewer: ViewerStateBranch.selectors.getFileDraggedOverViewer(
             state
         ),
-        isBuffering: selectionStateBranch.selectors.getIsBuffering(state),
-        isPlaying: selectionStateBranch.selectors.getIsPlaying(state),
+        isBuffering: ViewerStateBranch.selectors.getIsBuffering(state),
+        isPlaying: ViewerStateBranch.selectors.getIsPlaying(state),
     };
 }
 
 const dispatchToPropsMap = {
-    changeTime: selectionStateBranch.actions.changeTime,
+    changeTime: SelectionStateBranch.actions.changeTime,
+    setAgentsVisible: SelectionStateBranch.actions.setAgentsVisible,
+    setAllAgentColors: SelectionStateBranch.actions.setAllAgentColors,
     receiveMetadata: TrajectoryStateBranch.actions.receiveMetadata,
     receiveAgentTypeIds: TrajectoryStateBranch.actions.receiveAgentTypeIds,
     receiveAgentNamesAndStates:
         TrajectoryStateBranch.actions.receiveAgentNamesAndStates,
-    setAgentsVisible: selectionStateBranch.actions.setAgentsVisible,
-    setViewerStatus: TrajectoryStateBranch.actions.setViewerStatus,
-    dragOverViewer: selectionStateBranch.actions.dragOverViewer,
-    resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
-    setAllAgentColors: selectionStateBranch.actions.setAllAgentColors,
-    setBuffering: selectionStateBranch.actions.setBuffering,
-    setIsPlaying: selectionStateBranch.actions.setIsPlaying,
+    setViewerStatus: ViewerStateBranch.actions.setViewerStatus,
+    dragOverViewer: ViewerStateBranch.actions.dragOverViewer,
+    resetDragOverViewer: ViewerStateBranch.actions.resetDragOverViewer,
+    setBuffering: ViewerStateBranch.actions.setBuffering,
+    setIsPlaying: ViewerStateBranch.actions.setIsPlaying,
 };
 
 export default connect(

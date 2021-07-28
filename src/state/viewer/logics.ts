@@ -1,7 +1,7 @@
 import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
 import { createLogic } from "redux-logic";
 
-import { getSimulariumController } from "../trajectory/selectors";
+import { getSimulariumController } from "../simularium/selectors";
 import { ReduxLogicDeps } from "../types";
 
 import { SET_IS_PLAYING } from "./constants";

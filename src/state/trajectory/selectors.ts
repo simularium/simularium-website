@@ -24,8 +24,6 @@ export const getTimeUnits = (state: State) => state.trajectory.timeUnits;
 export const getAgentIds = (state: State) => state.trajectory.agentIds;
 export const getSimulariumFile = (state: State) =>
     state.trajectory.simulariumFile;
-export const getSimulariumController = (state: State) =>
-    state.trajectory.simulariumController;
 
 // COMPOSED SELECTORS
 export const getIsNetworkedFile = createSelector(

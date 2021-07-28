@@ -17,7 +17,7 @@ import HelpMenu from "../../components/HelpMenu";
 import { AicsLogo } from "../../components/Icons";
 import { State } from "../../state/types";
 import TrajectoryStateBranch from "../../state/trajectory";
-import selectionStateBranch from "../../state/selection";
+import ViewerStateBranch from "../../state/viewer";
 
 const styles = require("./style.css");
 
@@ -81,7 +81,7 @@ function mapStateToProps(state: State) {
         simulariumFile: TrajectoryStateBranch.selectors.getSimulariumFile(
             state
         ),
-        isBuffering: selectionStateBranch.selectors.getIsBuffering(state),
+        isBuffering: ViewerStateBranch.selectors.getIsBuffering(state),
     };
 }
 
