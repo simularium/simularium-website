@@ -96,9 +96,7 @@ export const getDisplayTimes = createSelector(
         let roundedTimeStep = 0;
 
         if (timeUnits) {
-            roundedTime = time
-                ? roundTimeForDisplay(time * timeUnits.magnitude)
-                : 0;
+            roundedTime = roundTimeForDisplay(time * timeUnits.magnitude);
             roundedFirstFrameTime = roundTimeForDisplay(
                 firstFrameTime * timeUnits.magnitude
             );

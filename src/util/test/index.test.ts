@@ -150,6 +150,9 @@ describe("General utilities", () => {
         it("returns a float with the requisite number of sig figs as is", () => {
             expect(roundTimeForDisplay(1.23)).toBe(1.23);
         });
+        it("returns zero if given zero", () => {
+            expect(roundTimeForDisplay(0)).toBe(0);
+        });
         it("returns a float with less than the requisite number of sig figs as is", () => {
             expect(roundTimeForDisplay(1.2)).toBe(1.2);
         });
@@ -247,6 +250,15 @@ describe("User Url handling", () => {
             const id = "id";
 
             expect(getGoogleDriveFileId("url", id)).toEqual(id);
+        });
+        it("returns undefined if not google drive url", () => {
+            const id = "id";
+            const urls = [
+                `https://blah/${id}/view`,
+                `https://amazon.com/${id}`,
+            ];
+            const result = urls.map((url) => getGoogleDriveFileId(url));
+            expect(result).toEqual(Array(urls.length).fill(undefined));
         });
     });
 
