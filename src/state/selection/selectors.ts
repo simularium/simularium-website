@@ -17,13 +17,8 @@ export const getVisibleAgentsNamesAndTags = (state: State) =>
     state.selection.visibleAgentKeys;
 export const getHighlightedAgentsNamesAndTags = (state: State) =>
     state.selection.highlightedAgentKeys;
-
 export const getNumberCollapsed = (state: State) =>
     state.selection.numberPanelsCollapsed;
-export const getFileDraggedOverViewer = (state: State) =>
-    state.selection.draggedOverViewer;
-export const getIsBuffering = (state: State) => state.selection.isBuffering;
-export const getIsPlaying = (state: State) => state.selection.isPlaying;
 
 // COMPOSED SELECTORS
 

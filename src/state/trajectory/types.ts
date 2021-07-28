@@ -67,8 +67,3 @@ export interface TimeUnits {
     magnitude: number;
     name: string;
 }
-
-export interface SetSimulariumControllerAction {
-    payload: SimulariumController;
-    type: string;
-}

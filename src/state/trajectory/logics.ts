@@ -16,6 +16,7 @@ import {
     changeTime,
     resetAgentSelectionsAndHighlights,
 } from "../selection/actions";
+import { setSimulariumController } from "../simularium/actions";
 import { initialState as initialSelectionState } from "../selection/reducer";
 import { setViewerStatus, setIsPlaying } from "../viewer/actions";
 import { ReduxLogicDeps } from "../types";
@@ -27,7 +28,6 @@ import {
     receiveMetadata,
     receiveSimulariumFile,
     requestCachedPlotData,
-    setSimulariumController,
 } from "./actions";
 import {
     LOAD_LOCAL_FILE_IN_VIEWER,

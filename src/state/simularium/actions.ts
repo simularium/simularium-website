@@ -1,9 +1,13 @@
-import { RECEIVE_METADATA } from "./constants";
-import { TrajectoryStateBranch } from "./types";
+import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
 
-export function receiveMetadata(payload: TrajectoryStateBranch): ReceiveAction {
+import { SET_SIMULARIUM_CONTROLLER } from "./constants";
+import { SetSimulariumControllerAction } from "./types";
+
+export function setSimulariumController(
+    payload: SimulariumController
+): SetSimulariumControllerAction {
     return {
         payload,
-        type: RECEIVE_METADATA,
+        type: SET_SIMULARIUM_CONTROLLER,
     };
 }
