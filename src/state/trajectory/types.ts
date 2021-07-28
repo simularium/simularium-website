@@ -3,12 +3,12 @@ import {
     SimulariumController,
 } from "@aics/simularium-viewer/type-declarations";
 
-export interface MetadataStateBranch {
+export interface TrajectoryStateBranch {
     [key: string]: any;
 }
 
 export interface ReceiveAction {
-    payload: MetadataStateBranch;
+    payload: TrajectoryStateBranch;
     type: string;
 }
 

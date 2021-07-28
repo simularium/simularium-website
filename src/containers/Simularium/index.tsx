@@ -12,7 +12,7 @@ import ModelPanel from "../ModelPanel";
 import ViewerPanel from "../ViewerPanel";
 import { State } from "../../state/types";
 
-import metadataStateBranch from "../../state/trajectory";
+import TrajectoryStateBranch from "../../state/trajectory";
 import selectionStateBranch from "../../state/selection";
 import {
     URL_PARAM_KEY_FILE_NAME,
@@ -224,28 +224,30 @@ class App extends React.Component<AppProps, AppState> {
 
 function mapStateToProps(state: State) {
     return {
-        simulariumFile: metadataStateBranch.selectors.getSimulariumFile(state),
-        simulariumController: metadataStateBranch.selectors.getSimulariumController(
+        simulariumFile: TrajectoryStateBranch.selectors.getSimulariumFile(
+            state
+        ),
+        simulariumController: TrajectoryStateBranch.selectors.getSimulariumController(
             state
         ),
         fileIsDraggedOverViewer: selectionStateBranch.selectors.getFileDraggedOverViewer(
             state
         ),
-        viewerStatus: metadataStateBranch.selectors.getViewerStatus(state),
+        viewerStatus: TrajectoryStateBranch.selectors.getViewerStatus(state),
     };
 }
 
 const dispatchToPropsMap = {
     onSidePanelCollapse: selectionStateBranch.actions.onSidePanelCollapse,
     changeToLocalSimulariumFile:
-        metadataStateBranch.actions.changeToLocalSimulariumFile,
+        TrajectoryStateBranch.actions.changeToLocalSimulariumFile,
     setSimulariumController:
-        metadataStateBranch.actions.setSimulariumController,
-    changeToNetworkedFile: metadataStateBranch.actions.changeToNetworkedFile,
+        TrajectoryStateBranch.actions.setSimulariumController,
+    changeToNetworkedFile: TrajectoryStateBranch.actions.changeToNetworkedFile,
     resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
     dragOverViewer: selectionStateBranch.actions.dragOverViewer,
-    loadViaUrl: metadataStateBranch.actions.loadViaUrl,
-    setViewerStatus: metadataStateBranch.actions.setViewerStatus,
+    loadViaUrl: TrajectoryStateBranch.actions.loadViaUrl,
+    setViewerStatus: TrajectoryStateBranch.actions.setViewerStatus,
 };
 
 export default connect(

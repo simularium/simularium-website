@@ -3,7 +3,15 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 import { createLogicMiddleware } from "redux-logic";
 import { SinonStub } from "sinon";
 
-import { enableBatching, initialState, metadata, selection, State } from "../";
+import {
+    enableBatching,
+    initialState,
+    trajectory,
+    selection,
+    viewer,
+    simularium,
+    State,
+} from "../";
 
 export interface ReduxLogicDependencies {
     baseApiUrl: string;
@@ -13,11 +21,13 @@ export interface ReduxLogicDependencies {
 }
 
 const reducers = {
-    metadata: metadata.reducer,
+    trajectory: trajectory.reducer,
     selection: selection.reducer,
+    viewer: viewer.reducer,
+    simularium: simularium.reducer,
 };
 
-const logics = [...metadata.logics, ...selection.logics];
+const logics = [...trajectory.logics, ...selection.logics];
 
 export function createReduxStore(
     preloadedState: State,

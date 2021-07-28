@@ -15,7 +15,7 @@ import Bowser from "bowser";
 
 import { State } from "../../state/types";
 import selectionStateBranch from "../../state/selection";
-import metadataStateBranch from "../../state/trajectory";
+import TrajectoryStateBranch from "../../state/trajectory";
 import { VIEWER_EMPTY, VIEWER_SUCCESS } from "../../state/trajectory/constants";
 import {
     ChangeTimeAction,
@@ -425,19 +425,19 @@ function mapStateToProps(state: State) {
         numberPanelsCollapsed: selectionStateBranch.selectors.getNumberCollapsed(
             state
         ),
-        firstFrameTime: metadataStateBranch.selectors.getFirstFrameTimeOfCachedSimulation(
+        firstFrameTime: TrajectoryStateBranch.selectors.getFirstFrameTimeOfCachedSimulation(
             state
         ),
-        lastFrameTime: metadataStateBranch.selectors.getLastFrameTimeOfCachedSimulation(
+        lastFrameTime: TrajectoryStateBranch.selectors.getLastFrameTimeOfCachedSimulation(
             state
         ),
-        numFrames: metadataStateBranch.selectors.getNumFrames(state),
-        timeStep: metadataStateBranch.selectors.getTimeStep(state),
+        numFrames: TrajectoryStateBranch.selectors.getNumFrames(state),
+        timeStep: TrajectoryStateBranch.selectors.getTimeStep(state),
         displayTimes: getDisplayTimes(state),
-        timeUnits: metadataStateBranch.selectors.getTimeUnits(state),
+        timeUnits: TrajectoryStateBranch.selectors.getTimeUnits(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
-        viewerStatus: metadataStateBranch.selectors.getViewerStatus(state),
-        viewerError: metadataStateBranch.selectors.getViewerError(state),
+        viewerStatus: TrajectoryStateBranch.selectors.getViewerStatus(state),
+        viewerError: TrajectoryStateBranch.selectors.getViewerError(state),
         fileIsDraggedOverViewer: selectionStateBranch.selectors.getFileDraggedOverViewer(
             state
         ),
@@ -448,12 +448,12 @@ function mapStateToProps(state: State) {
 
 const dispatchToPropsMap = {
     changeTime: selectionStateBranch.actions.changeTime,
-    receiveMetadata: metadataStateBranch.actions.receiveMetadata,
-    receiveAgentTypeIds: metadataStateBranch.actions.receiveAgentTypeIds,
+    receiveMetadata: TrajectoryStateBranch.actions.receiveMetadata,
+    receiveAgentTypeIds: TrajectoryStateBranch.actions.receiveAgentTypeIds,
     receiveAgentNamesAndStates:
-        metadataStateBranch.actions.receiveAgentNamesAndStates,
+        TrajectoryStateBranch.actions.receiveAgentNamesAndStates,
     setAgentsVisible: selectionStateBranch.actions.setAgentsVisible,
-    setViewerStatus: metadataStateBranch.actions.setViewerStatus,
+    setViewerStatus: TrajectoryStateBranch.actions.setViewerStatus,
     dragOverViewer: selectionStateBranch.actions.dragOverViewer,
     resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
     setAllAgentColors: selectionStateBranch.actions.setAllAgentColors,

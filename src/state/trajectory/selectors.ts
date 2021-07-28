@@ -5,7 +5,7 @@ import { State } from "../types";
 import {
     isNetworkSimFileInterface,
     LocalSimFile,
-    MetadataStateBranch,
+    TrajectoryStateBranch,
     NetworkedSimFile,
 } from "./types";
 import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
@@ -45,7 +45,7 @@ export const getIsNetworkedFile = createSelector(
 
 export const getKeysOfMetadata = createSelector(
     [getMetadata],
-    (metadata: MetadataStateBranch): string[] => Object.keys(metadata)
+    (metadata: TrajectoryStateBranch): string[] => Object.keys(metadata)
 );
 
 export const getAgentDisplayNamesAndStates = (state: State) =>

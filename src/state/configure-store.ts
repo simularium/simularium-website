@@ -4,14 +4,29 @@ import { createLogicMiddleware } from "redux-logic";
 
 import { BASE_API_URL, DATA_BUCKET_URL } from "../constants";
 
-import { enableBatching, initialState, metadata, selection, State } from "./";
+import {
+    enableBatching,
+    initialState,
+    trajectory,
+    selection,
+    viewer,
+    simularium,
+    State,
+} from "./";
 
 const reducers = {
-    metadata: metadata.reducer,
+    trajectory: trajectory.reducer,
     selection: selection.reducer,
+    viewer: viewer.reducer,
+    simularium: simularium.reducer,
 };
 
-const logics = [...metadata.logics, ...selection.logics];
+const logics = [
+    ...trajectory.logics,
+    ...selection.logics,
+    ...viewer.logics,
+    ...simularium.logics,
+];
 
 const reduxLogicDependencies = {
     baseApiUrl: BASE_API_URL,

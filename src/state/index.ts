@@ -6,7 +6,7 @@ import { initialState as simulariumInitialState } from "./simularium/reducer";
 import { State } from "./types";
 
 export const initialState: State = Object.freeze({
-    metadata: trajectoryInitialState,
+    trajectory: trajectoryInitialState,
     selection: selectionInitialState,
     viewer: viewerInitialState,
     simularium: simulariumInitialState,

@@ -16,7 +16,7 @@ import ViewerTitle from "../../components/ViewerTitle";
 import HelpMenu from "../../components/HelpMenu";
 import { AicsLogo } from "../../components/Icons";
 import { State } from "../../state/types";
-import metadataStateBranch from "../../state/trajectory";
+import TrajectoryStateBranch from "../../state/trajectory";
 import selectionStateBranch from "../../state/selection";
 
 const styles = require("./style.css");
@@ -78,15 +78,17 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
 
 function mapStateToProps(state: State) {
     return {
-        simulariumFile: metadataStateBranch.selectors.getSimulariumFile(state),
+        simulariumFile: TrajectoryStateBranch.selectors.getSimulariumFile(
+            state
+        ),
         isBuffering: selectionStateBranch.selectors.getIsBuffering(state),
     };
 }
 
 const dispatchToPropsMap = {
     changeToLocalSimulariumFile:
-        metadataStateBranch.actions.changeToLocalSimulariumFile,
-    changeToNetworkedFile: metadataStateBranch.actions.changeToNetworkedFile,
+        TrajectoryStateBranch.actions.changeToLocalSimulariumFile,
+    changeToNetworkedFile: TrajectoryStateBranch.actions.changeToNetworkedFile,
 };
 
 export default connect(

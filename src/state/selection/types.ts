@@ -1,4 +1,4 @@
-import { MetadataStateBranch } from "../trajectory/types";
+import { TrajectoryStateBranch } from "../trajectory/types";
 
 export interface SelectionStateBranch {
     [key: string]: any;
@@ -10,7 +10,7 @@ export interface ChangeAgentsRenderingStateAction {
 }
 
 export interface SelectMetadataAction {
-    key: keyof MetadataStateBranch;
+    key: keyof TrajectoryStateBranch;
     payload: string | number;
     type: string;
 }

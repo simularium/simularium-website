@@ -1,7 +1,7 @@
 import { RECEIVE_METADATA } from "./constants";
-import { MetadataStateBranch } from "./types";
+import { TrajectoryStateBranch } from "./types";
 
-export function receiveMetadata(payload: MetadataStateBranch): ReceiveAction {
+export function receiveMetadata(payload: TrajectoryStateBranch): ReceiveAction {
     return {
         payload,
         type: RECEIVE_METADATA,
