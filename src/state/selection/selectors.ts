@@ -4,7 +4,7 @@ import { reduce } from "lodash";
 import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
 import { SelectionEntry } from "@aics/simularium-viewer/type-declarations/simularium/SelectionInterface";
 
-import { getAgentDisplayNamesAndStates } from "../metadata/selectors";
+import { getAgentDisplayNamesAndStates } from "../trajectory/selectors";
 import { VisibilitySelectionMap } from "./types";
 
 // BASIC SELECTORS

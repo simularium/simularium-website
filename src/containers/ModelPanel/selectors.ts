@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 import { AgentDisplayNode } from "../../components/CheckBoxTree";
-import { getUiDisplayDataTree } from "../../state/metadata/selectors";
+import { getUiDisplayDataTree } from "../../state/trajectory/selectors";
 import { getVisibleAgentsNamesAndTags } from "../../state/selection/selectors";
 import { VisibilitySelectionMap } from "../../state/selection/types";
 

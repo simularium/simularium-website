@@ -1,4 +1,4 @@
-import { MetadataStateBranch } from "../metadata/types";
+import { MetadataStateBranch } from "../trajectory/types";
 
 export interface SelectionStateBranch {
     [key: string]: any;

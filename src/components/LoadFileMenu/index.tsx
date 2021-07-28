@@ -8,7 +8,7 @@ import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import {
     RequestLocalFileAction,
     RequestNetworkFileAction,
-} from "../../state/metadata/types";
+} from "../../state/trajectory/types";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
 import LocalFileUpload from "../LocalFileUpload";

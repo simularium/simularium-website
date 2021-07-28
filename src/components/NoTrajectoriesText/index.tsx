@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { ActionCreator } from "redux";
 
-import { RequestNetworkFileAction } from "../../state/metadata/types";
+import { RequestNetworkFileAction } from "../../state/trajectory/types";
 import { URL_PARAM_KEY_FILE_NAME, DATA_BUCKET_URL } from "../../constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";

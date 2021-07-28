@@ -12,22 +12,22 @@ import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 
 // BASIC SELECTORS
-export const getMetadata = (state: State) => state.metadata;
-export const getPlotData = (state: State) => state.metadata.plotData;
+export const getMetadata = (state: State) => state.trajectory;
+export const getPlotData = (state: State) => state.trajectory.plotData;
 export const getFirstFrameTimeOfCachedSimulation = (state: State) =>
-    state.metadata.firstFrameTime;
+    state.trajectory.firstFrameTime;
 export const getLastFrameTimeOfCachedSimulation = (state: State) =>
-    state.metadata.lastFrameTime;
-export const getNumFrames = (state: State) => state.metadata.numFrames;
-export const getTimeStep = (state: State) => state.metadata.timeStep;
-export const getTimeUnits = (state: State) => state.metadata.timeUnits;
-export const getAgentIds = (state: State) => state.metadata.agentIds;
+    state.trajectory.lastFrameTime;
+export const getNumFrames = (state: State) => state.trajectory.numFrames;
+export const getTimeStep = (state: State) => state.trajectory.timeStep;
+export const getTimeUnits = (state: State) => state.trajectory.timeUnits;
+export const getAgentIds = (state: State) => state.trajectory.agentIds;
 export const getSimulariumFile = (state: State) =>
-    state.metadata.simulariumFile;
+    state.trajectory.simulariumFile;
 export const getSimulariumController = (state: State) =>
-    state.metadata.simulariumController;
-export const getViewerStatus = (state: State) => state.metadata.viewerStatus;
-export const getViewerError = (state: State) => state.metadata.viewerError;
+    state.trajectory.simulariumController;
+export const getViewerStatus = (state: State) => state.trajectory.viewerStatus;
+export const getViewerError = (state: State) => state.trajectory.viewerError;
 
 // COMPOSED SELECTORS
 export const getIsNetworkedFile = createSelector(
@@ -49,7 +49,7 @@ export const getKeysOfMetadata = createSelector(
 );
 
 export const getAgentDisplayNamesAndStates = (state: State) =>
-    state.metadata.agentUiNames;
+    state.trajectory.agentUiNames;
 
 export const getAllTags = createSelector(
     [getAgentDisplayNamesAndStates],

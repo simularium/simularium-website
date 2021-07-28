@@ -12,7 +12,7 @@ import {
     LOAD_FILE_VIA_URL,
 } from "./constants";
 import {
-    MetadataStateBranch,
+    TrajectoryStateBranch,
     ReceiveAction,
     RequestAction,
     SetSimulariumControllerAction,
@@ -26,7 +26,7 @@ import {
 } from "./types";
 import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
 
-export function receiveMetadata(payload: MetadataStateBranch): ReceiveAction {
+export function receiveMetadata(payload: TrajectoryStateBranch): ReceiveAction {
     return {
         payload,
         type: RECEIVE_METADATA,
@@ -58,7 +58,7 @@ export function setSimulariumController(
 }
 
 export function receiveAgentTypeIds(
-    payload: MetadataStateBranch
+    payload: TrajectoryStateBranch
 ): ReceiveAction {
     return {
         payload,
@@ -67,7 +67,7 @@ export function receiveAgentTypeIds(
 }
 
 export function receiveAgentNamesAndStates(
-    payload: MetadataStateBranch
+    payload: TrajectoryStateBranch
 ): ReceiveAction {
     return {
         payload,

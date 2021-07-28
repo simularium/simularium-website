@@ -1,7 +1,7 @@
 import { AxiosInstance } from "axios";
 import { AnyAction } from "redux";
 
-import { MetadataStateBranch } from "./metadata/types";
+import { MetadataStateBranch } from "./trajectory/types";
 import { SelectionStateBranch } from "./selection/types";
 
 export interface ActionDescription {

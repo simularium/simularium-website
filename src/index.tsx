@@ -19,11 +19,11 @@ const { Header } = Layout;
 
 import "./style.css";
 import { setIsPlaying } from "./state/selection/actions";
-import { clearSimulariumFile } from "./state/metadata/actions";
+import { clearSimulariumFile } from "./state/trajectory/actions";
 import {
     getSimulariumController,
     getSimulariumFile,
-} from "./state/metadata/selectors";
+} from "./state/trajectory/selectors";
 
 export const store = createReduxStore();
 interface LocationWithState extends Location {

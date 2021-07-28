@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Upload, message, Button } from "antd";
-import { RequestLocalFileAction } from "../../state/metadata/types";
+import { RequestLocalFileAction } from "../../state/trajectory/types";
 import { UploadChangeParam } from "antd/lib/upload";
 
 import customRequest from "./custom-request-upload";

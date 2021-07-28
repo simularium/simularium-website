@@ -10,13 +10,13 @@ import {
     NetworkedSimFile,
     RequestLocalFileAction,
     RequestNetworkFileAction,
-} from "../../state/metadata/types";
+} from "../../state/trajectory/types";
 import LoadFileMenu from "../../components/LoadFileMenu";
 import ViewerTitle from "../../components/ViewerTitle";
 import HelpMenu from "../../components/HelpMenu";
 import { AicsLogo } from "../../components/Icons";
 import { State } from "../../state/types";
-import metadataStateBranch from "../../state/metadata";
+import metadataStateBranch from "../../state/trajectory";
 import selectionStateBranch from "../../state/selection";
 
 const styles = require("./style.css");

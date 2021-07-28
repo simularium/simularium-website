@@ -25,7 +25,7 @@ import {
 } from "./constants";
 import { ReceiveAction, LocalSimFile, FrontEndError } from "./types";
 import { VIEWER_ERROR } from "./constants";
-import { setViewerStatus } from "../metadata/actions";
+import { setViewerStatus } from "./actions";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import { batchActions } from "../util";
 import { initialState } from "./reducer";

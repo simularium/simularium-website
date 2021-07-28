@@ -5,7 +5,7 @@ import {
     getTimeUnits,
     getTimeStep,
     getFirstFrameTimeOfCachedSimulation,
-} from "../../state/metadata/selectors";
+} from "../../state/trajectory/selectors";
 import {
     getAgentsToHide,
     getCurrentTime,

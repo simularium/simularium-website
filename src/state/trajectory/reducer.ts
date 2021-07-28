@@ -11,7 +11,7 @@ import {
     CLEAR_SIMULARIUM_FILE,
 } from "./constants";
 import {
-    MetadataStateBranch,
+    TrajectoryStateBranch,
     ReceiveAction,
     ClearSimFileDataAction,
 } from "./types";
@@ -35,7 +35,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
     [RECEIVE_METADATA]: {
         accepts: (action: AnyAction): action is ReceiveAction =>
             action.type === RECEIVE_METADATA,
-        perform: (state: MetadataStateBranch, action: ReceiveAction) => ({
+        perform: (state: TrajectoryStateBranch, action: ReceiveAction) => ({
             ...state,
             ...action.payload,
         }),
@@ -43,7 +43,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
     [RECEIVE_AGENT_IDS]: {
         accepts: (action: AnyAction): action is ReceiveAction =>
             action.type === RECEIVE_AGENT_IDS,
-        perform: (state: MetadataStateBranch, action: ReceiveAction) => ({
+        perform: (state: TrajectoryStateBranch, action: ReceiveAction) => ({
             ...state,
             agentIds: action.payload,
         }),
@@ -51,7 +51,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
     [RECEIVE_AGENT_NAMES]: {
         accepts: (action: AnyAction): action is ReceiveAction =>
             action.type === RECEIVE_AGENT_NAMES,
-        perform: (state: MetadataStateBranch, action: ReceiveAction) => ({
+        perform: (state: TrajectoryStateBranch, action: ReceiveAction) => ({
             ...state,
             agentUiNames: action.payload,
         }),
@@ -59,7 +59,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
     [RECEIVE_SIMULARIUM_FILE]: {
         accepts: (action: AnyAction): action is ReceiveAction =>
             action.type === RECEIVE_SIMULARIUM_FILE,
-        perform: (state: MetadataStateBranch, action: ReceiveAction) => ({
+        perform: (state: TrajectoryStateBranch, action: ReceiveAction) => ({
             ...state,
             simulariumFile: action.payload,
         }),
@@ -67,14 +67,14 @@ const actionToConfigMap: TypeToDescriptionMap = {
     [CLEAR_SIMULARIUM_FILE]: {
         accepts: (action: AnyAction): action is ClearSimFileDataAction =>
             action.type === CLEAR_SIMULARIUM_FILE,
-        perform: (state: MetadataStateBranch) => ({
+        perform: (state: TrajectoryStateBranch) => ({
             ...state,
             simulariumFile: initialState.simulariumFile,
         }),
     },
 };
 
-export default makeReducer<MetadataStateBranch>(
+export default makeReducer<TrajectoryStateBranch>(
     actionToConfigMap,
     initialState
 );

@@ -12,7 +12,7 @@ import ModelPanel from "../ModelPanel";
 import ViewerPanel from "../ViewerPanel";
 import { State } from "../../state/types";
 
-import metadataStateBranch from "../../state/metadata";
+import metadataStateBranch from "../../state/trajectory";
 import selectionStateBranch from "../../state/selection";
 import {
     URL_PARAM_KEY_FILE_NAME,
@@ -25,13 +25,13 @@ import {
     RequestNetworkFileAction,
     SetSimulariumControllerAction,
     SetViewerStatusAction,
-} from "../../state/metadata/types";
+} from "../../state/trajectory/types";
 import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
 import {
     DragOverViewerAction,
     ResetDragOverViewerAction,
 } from "../../state/selection/types";
-import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/metadata/constants";
+import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/trajectory/constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { clearUrlParams } from "../../util";

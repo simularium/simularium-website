@@ -15,8 +15,8 @@ import Bowser from "bowser";
 
 import { State } from "../../state/types";
 import selectionStateBranch from "../../state/selection";
-import metadataStateBranch from "../../state/metadata";
-import { VIEWER_EMPTY, VIEWER_SUCCESS } from "../../state/metadata/constants";
+import metadataStateBranch from "../../state/trajectory";
+import { VIEWER_EMPTY, VIEWER_SUCCESS } from "../../state/trajectory/constants";
 import {
     ChangeTimeAction,
     ResetDragOverViewerAction,
@@ -31,8 +31,8 @@ import {
     SetViewerStatusAction,
     ViewerError,
     TimeUnits,
-} from "../../state/metadata/types";
-import { VIEWER_ERROR } from "../../state/metadata/constants";
+} from "../../state/trajectory/types";
+import { VIEWER_ERROR } from "../../state/trajectory/constants";
 import { batchActions } from "../../state/util";
 import PlaybackControls from "../../components/PlaybackControls";
 import CameraControls from "../../components/CameraControls";
