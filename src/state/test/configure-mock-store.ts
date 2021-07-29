@@ -27,7 +27,12 @@ const reducers = {
     simularium: simularium.reducer,
 };
 
-const logics = [...trajectory.logics, ...selection.logics];
+const logics = [
+    ...trajectory.logics,
+    ...selection.logics,
+    ...viewer.logics,
+    ...simularium.logics,
+];
 
 export function createReduxStore(
     preloadedState: State,

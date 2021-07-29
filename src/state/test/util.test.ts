@@ -91,7 +91,7 @@ describe("state utilities", () => {
             value: boolean;
         }
 
-        const TOGGLE_BURRITO_INGREDIENT = "TOGGLE_BURRITO_INGREDIENT";
+        const TOGGLE_BURRITO_INGREDIENT = "TOGGLE_BURRITO_INGRED";
 
         const toggleBurritoIngredientCreator = (
             key: keyof MockState,
