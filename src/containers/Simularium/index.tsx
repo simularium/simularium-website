@@ -12,10 +12,10 @@ import ModelPanel from "../ModelPanel";
 import ViewerPanel from "../ViewerPanel";
 import { State } from "../../state/types";
 
-import TrajectoryStateBranch from "../../state/trajectory";
-import SelectionStateBranch from "../../state/selection";
-import ViewerStateBranch from "../../state/viewer";
-import SimulariumStateBranch from "../../state/simularium";
+import trajectoryStateBranch from "../../state/trajectory";
+import selectionStateBranch from "../../state/selection";
+import viewerStateBranch from "../../state/viewer";
+import simulariumStateBranch from "../../state/simularium";
 import {
     URL_PARAM_KEY_FILE_NAME,
     URL_PARAM_KEY_USER_URL,
@@ -226,30 +226,30 @@ class App extends React.Component<AppProps, AppState> {
 
 function mapStateToProps(state: State) {
     return {
-        simulariumFile: TrajectoryStateBranch.selectors.getSimulariumFile(
+        simulariumFile: trajectoryStateBranch.selectors.getSimulariumFile(
             state
         ),
-        simulariumController: SimulariumStateBranch.selectors.getSimulariumController(
+        simulariumController: simulariumStateBranch.selectors.getSimulariumController(
             state
         ),
-        fileIsDraggedOverViewer: ViewerStateBranch.selectors.getFileDraggedOverViewer(
+        fileIsDraggedOverViewer: viewerStateBranch.selectors.getFileDraggedOverViewer(
             state
         ),
-        viewerStatus: ViewerStateBranch.selectors.getViewerStatus(state),
+        viewerStatus: viewerStateBranch.selectors.getViewerStatus(state),
     };
 }
 
 const dispatchToPropsMap = {
-    onSidePanelCollapse: SelectionStateBranch.actions.onSidePanelCollapse,
+    onSidePanelCollapse: selectionStateBranch.actions.onSidePanelCollapse,
     changeToLocalSimulariumFile:
-        TrajectoryStateBranch.actions.changeToLocalSimulariumFile,
+        trajectoryStateBranch.actions.changeToLocalSimulariumFile,
     setSimulariumController:
-        SimulariumStateBranch.actions.setSimulariumController,
-    changeToNetworkedFile: TrajectoryStateBranch.actions.changeToNetworkedFile,
-    resetDragOverViewer: ViewerStateBranch.actions.resetDragOverViewer,
-    dragOverViewer: ViewerStateBranch.actions.dragOverViewer,
-    loadViaUrl: TrajectoryStateBranch.actions.loadViaUrl,
-    setViewerStatus: ViewerStateBranch.actions.setViewerStatus,
+        simulariumStateBranch.actions.setSimulariumController,
+    changeToNetworkedFile: trajectoryStateBranch.actions.changeToNetworkedFile,
+    resetDragOverViewer: viewerStateBranch.actions.resetDragOverViewer,
+    dragOverViewer: viewerStateBranch.actions.dragOverViewer,
+    loadViaUrl: trajectoryStateBranch.actions.loadViaUrl,
+    setViewerStatus: viewerStateBranch.actions.setViewerStatus,
 };
 
 export default connect(

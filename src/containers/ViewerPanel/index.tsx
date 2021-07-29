@@ -14,9 +14,9 @@ import { Modal } from "antd";
 import Bowser from "bowser";
 
 import { State } from "../../state/types";
-import SelectionStateBranch from "../../state/selection";
-import TrajectoryStateBranch from "../../state/trajectory";
-import ViewerStateBranch from "../../state/viewer";
+import selectionStateBranch from "../../state/selection";
+import trajectoryStateBranch from "../../state/trajectory";
+import viewerStateBranch from "../../state/viewer";
 import {
     VIEWER_EMPTY,
     VIEWER_SUCCESS,
@@ -427,44 +427,44 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
 function mapStateToProps(state: State) {
     return {
-        time: SelectionStateBranch.selectors.getCurrentTime(state),
-        numberPanelsCollapsed: SelectionStateBranch.selectors.getNumberCollapsed(
+        time: selectionStateBranch.selectors.getCurrentTime(state),
+        numberPanelsCollapsed: selectionStateBranch.selectors.getNumberCollapsed(
             state
         ),
-        firstFrameTime: TrajectoryStateBranch.selectors.getFirstFrameTimeOfCachedSimulation(
+        firstFrameTime: trajectoryStateBranch.selectors.getFirstFrameTimeOfCachedSimulation(
             state
         ),
-        lastFrameTime: TrajectoryStateBranch.selectors.getLastFrameTimeOfCachedSimulation(
+        lastFrameTime: trajectoryStateBranch.selectors.getLastFrameTimeOfCachedSimulation(
             state
         ),
-        numFrames: TrajectoryStateBranch.selectors.getNumFrames(state),
-        timeStep: TrajectoryStateBranch.selectors.getTimeStep(state),
+        numFrames: trajectoryStateBranch.selectors.getNumFrames(state),
+        timeStep: trajectoryStateBranch.selectors.getTimeStep(state),
         displayTimes: getDisplayTimes(state),
-        timeUnits: TrajectoryStateBranch.selectors.getTimeUnits(state),
+        timeUnits: trajectoryStateBranch.selectors.getTimeUnits(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
-        viewerStatus: ViewerStateBranch.selectors.getViewerStatus(state),
-        viewerError: ViewerStateBranch.selectors.getViewerError(state),
-        fileIsDraggedOverViewer: ViewerStateBranch.selectors.getFileDraggedOverViewer(
+        viewerStatus: viewerStateBranch.selectors.getViewerStatus(state),
+        viewerError: viewerStateBranch.selectors.getViewerError(state),
+        fileIsDraggedOverViewer: viewerStateBranch.selectors.getFileDraggedOverViewer(
             state
         ),
-        isBuffering: ViewerStateBranch.selectors.getIsBuffering(state),
-        isPlaying: ViewerStateBranch.selectors.getIsPlaying(state),
+        isBuffering: viewerStateBranch.selectors.getIsBuffering(state),
+        isPlaying: viewerStateBranch.selectors.getIsPlaying(state),
     };
 }
 
 const dispatchToPropsMap = {
-    changeTime: SelectionStateBranch.actions.changeTime,
-    setAgentsVisible: SelectionStateBranch.actions.setAgentsVisible,
-    setAllAgentColors: SelectionStateBranch.actions.setAllAgentColors,
-    receiveMetadata: TrajectoryStateBranch.actions.receiveMetadata,
-    receiveAgentTypeIds: TrajectoryStateBranch.actions.receiveAgentTypeIds,
+    changeTime: selectionStateBranch.actions.changeTime,
+    setAgentsVisible: selectionStateBranch.actions.setAgentsVisible,
+    setAllAgentColors: selectionStateBranch.actions.setAllAgentColors,
+    receiveMetadata: trajectoryStateBranch.actions.receiveMetadata,
+    receiveAgentTypeIds: trajectoryStateBranch.actions.receiveAgentTypeIds,
     receiveAgentNamesAndStates:
-        TrajectoryStateBranch.actions.receiveAgentNamesAndStates,
-    setViewerStatus: ViewerStateBranch.actions.setViewerStatus,
-    dragOverViewer: ViewerStateBranch.actions.dragOverViewer,
-    resetDragOverViewer: ViewerStateBranch.actions.resetDragOverViewer,
-    setBuffering: ViewerStateBranch.actions.setBuffering,
-    setIsPlaying: ViewerStateBranch.actions.setIsPlaying,
+        trajectoryStateBranch.actions.receiveAgentNamesAndStates,
+    setViewerStatus: viewerStateBranch.actions.setViewerStatus,
+    dragOverViewer: viewerStateBranch.actions.dragOverViewer,
+    resetDragOverViewer: viewerStateBranch.actions.resetDragOverViewer,
+    setBuffering: viewerStateBranch.actions.setBuffering,
+    setIsPlaying: viewerStateBranch.actions.setIsPlaying,
 };
 
 export default connect(
