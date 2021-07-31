@@ -16,10 +16,9 @@ module.exports = {
             "lines": 50,
             "statements": 50
         },
-        // TODO: Bring this back and change to 100% once the basic selectors are successfully ignored
-        // "./src/state/*/selectors.ts": {
-        //     "lines": 60,
-        // },
+        "./src/state/*/selectors/index.ts": {
+            "lines": 100,
+        },
         "./src/containers/*/selectors.ts": {
             "branches": 100,
             "functions": 100,
