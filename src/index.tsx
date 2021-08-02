@@ -18,12 +18,10 @@ import AppHeader from "./containers/AppHeader";
 const { Header } = Layout;
 
 import "./style.css";
-import { setIsPlaying } from "./state/selection/actions";
-import { clearSimulariumFile } from "./state/metadata/actions";
-import {
-    getSimulariumController,
-    getSimulariumFile,
-} from "./state/metadata/selectors";
+import { setIsPlaying } from "./state/viewer/actions";
+import { clearSimulariumFile } from "./state/trajectory/actions";
+import { getSimulariumFile } from "./state/trajectory/selectors";
+import { getSimulariumController } from "./state/simularium/selectors";
 
 export const store = createReduxStore();
 interface LocationWithState extends Location {

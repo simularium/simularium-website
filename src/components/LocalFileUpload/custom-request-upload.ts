@@ -1,6 +1,6 @@
 import { RcCustomRequestOptions } from "antd/lib/upload/interface";
-import { LocalSimFile } from "../../state/metadata/types";
-import { CLEAR_SIMULARIUM_FILE } from "../../state/metadata/constants";
+import { LocalSimFile } from "../../state/trajectory/types";
+import { CLEAR_SIMULARIUM_FILE } from "../../state/trajectory/constants";
 import { store } from "../..";
 export default (
     { file, onSuccess, onError }: RcCustomRequestOptions,

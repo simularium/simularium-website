@@ -28,8 +28,8 @@ const mockUIDisplayData = [
 
 const mockState: State = {
     ...initialState,
-    metadata: {
-        ...initialState.metadata,
+    trajectory: {
+        ...initialState.trajectory,
         agentUiNames: mockUIDisplayData,
     },
 };

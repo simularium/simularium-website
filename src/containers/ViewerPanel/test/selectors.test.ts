@@ -123,7 +123,7 @@ describe("ViewerPanel selectors", () => {
     describe("getDisplayTimes", () => {
         it("returns default values when timeUnits doesn't exist", () => {
             const mockState: State = initialState;
-            expect(mockState.metadata.timeUnits).toBe(null);
+            expect(mockState.trajectory.timeUnits).toBe(null);
 
             const displayTimes = getDisplayTimes(mockState);
 
@@ -142,8 +142,8 @@ describe("ViewerPanel selectors", () => {
                     ...initialState.selection,
                     time: 3.0001,
                 },
-                metadata: {
-                    ...initialState.metadata,
+                trajectory: {
+                    ...initialState.trajectory,
                     timeUnits: {
                         magnitude: 1,
                         name: "s",
@@ -171,8 +171,8 @@ describe("ViewerPanel selectors", () => {
                     ...initialState.selection,
                     time: 3.0001,
                 },
-                metadata: {
-                    ...initialState.metadata,
+                trajectory: {
+                    ...initialState.trajectory,
                     timeUnits: {
                         magnitude: 2,
                         name: "ns",
@@ -200,8 +200,8 @@ describe("ViewerPanel selectors", () => {
                     ...initialState.selection,
                     time: 3.0001,
                 },
-                metadata: {
-                    ...initialState.metadata,
+                trajectory: {
+                    ...initialState.trajectory,
                     timeUnits: {
                         magnitude: 1,
                         name: "ns",

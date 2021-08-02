@@ -5,7 +5,7 @@ import classNames from "classnames";
 import { TOOLTIP_COLOR } from "../../constants/index";
 import Icons from "../Icons";
 import { DisplayTimes } from "../../containers/ViewerPanel/types";
-import { TimeUnits } from "../../state/metadata/types";
+import { TimeUnits } from "../../state/trajectory/types";
 
 const styles = require("./style.css");
 interface PlayBackProps {

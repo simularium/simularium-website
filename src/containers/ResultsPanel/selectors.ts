@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 import { Layout, Data } from "plotly.js";
 
-import { getPlotData } from "../../state/metadata/selectors";
+import { getPlotData } from "../../state/trajectory/selectors";
 import { wrapText } from "../../util";
 
 import { PLOT_STYLE, AXIS_ATTRIBUTES } from "./constants";

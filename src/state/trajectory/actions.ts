@@ -1,27 +1,22 @@
 import {
-    RECEIVE_METADATA,
-    REQUEST_METADATA,
+    RECEIVE_TRAJECTORY,
+    REQUEST_TRAJECTORY,
     RECEIVE_AGENT_IDS,
     RECEIVE_AGENT_NAMES,
     RECEIVE_SIMULARIUM_FILE,
-    SET_SIMULARIUM_CONTROLLER,
     LOAD_LOCAL_FILE_IN_VIEWER,
-    SET_VIEWER_STATUS,
     LOAD_NETWORKED_FILE_IN_VIEWER,
     REQUEST_PLOT_DATA,
     CLEAR_SIMULARIUM_FILE,
     LOAD_FILE_VIA_URL,
 } from "./constants";
 import {
-    MetadataStateBranch,
+    TrajectoryStateBranch,
     ReceiveAction,
     RequestAction,
-    SetSimulariumControllerAction,
     LocalSimFile,
     NetworkedSimFile,
     RequestCachedPlotAction,
-    ViewerStatusInfo,
-    SetViewerStatusAction,
     RequestNetworkFileAction,
     RequestLocalFileAction,
     ClearSimFileDataAction,
@@ -29,16 +24,18 @@ import {
 } from "./types";
 import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
 
-export function receiveMetadata(payload: MetadataStateBranch): ReceiveAction {
+export function receiveTrajectory(
+    payload: TrajectoryStateBranch
+): ReceiveAction {
     return {
         payload,
-        type: RECEIVE_METADATA,
+        type: RECEIVE_TRAJECTORY,
     };
 }
 
-export function requestMetadata(): RequestAction {
+export function requestTrajectory(): RequestAction {
     return {
-        type: REQUEST_METADATA,
+        type: REQUEST_TRAJECTORY,
     };
 }
 
@@ -51,17 +48,8 @@ export function requestCachedPlotData(payload: {
     };
 }
 
-export function setSimulariumController(
-    payload: SimulariumController
-): SetSimulariumControllerAction {
-    return {
-        payload,
-        type: SET_SIMULARIUM_CONTROLLER,
-    };
-}
-
 export function receiveAgentTypeIds(
-    payload: MetadataStateBranch
+    payload: TrajectoryStateBranch
 ): ReceiveAction {
     return {
         payload,
@@ -70,7 +58,7 @@ export function receiveAgentTypeIds(
 }
 
 export function receiveAgentNamesAndStates(
-    payload: MetadataStateBranch
+    payload: TrajectoryStateBranch
 ): ReceiveAction {
     return {
         payload,
@@ -115,15 +103,6 @@ export function clearSimulariumFile(payload: {
     return {
         payload,
         type: CLEAR_SIMULARIUM_FILE,
-    };
-}
-
-export function setViewerStatus(
-    payload: ViewerStatusInfo
-): SetViewerStatusAction {
-    return {
-        payload,
-        type: SET_VIEWER_STATUS,
     };
 }
 

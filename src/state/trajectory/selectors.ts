@@ -5,29 +5,25 @@ import { State } from "../types";
 import {
     isNetworkSimFileInterface,
     LocalSimFile,
-    MetadataStateBranch,
+    TrajectoryStateBranch,
     NetworkedSimFile,
 } from "./types";
 import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 
 // BASIC SELECTORS
-export const getMetadata = (state: State) => state.metadata;
-export const getPlotData = (state: State) => state.metadata.plotData;
+export const getTrajectory = (state: State) => state.trajectory;
+export const getPlotData = (state: State) => state.trajectory.plotData;
 export const getFirstFrameTimeOfCachedSimulation = (state: State) =>
-    state.metadata.firstFrameTime;
+    state.trajectory.firstFrameTime;
 export const getLastFrameTimeOfCachedSimulation = (state: State) =>
-    state.metadata.lastFrameTime;
-export const getNumFrames = (state: State) => state.metadata.numFrames;
-export const getTimeStep = (state: State) => state.metadata.timeStep;
-export const getTimeUnits = (state: State) => state.metadata.timeUnits;
-export const getAgentIds = (state: State) => state.metadata.agentIds;
+    state.trajectory.lastFrameTime;
+export const getNumFrames = (state: State) => state.trajectory.numFrames;
+export const getTimeStep = (state: State) => state.trajectory.timeStep;
+export const getTimeUnits = (state: State) => state.trajectory.timeUnits;
+export const getAgentIds = (state: State) => state.trajectory.agentIds;
 export const getSimulariumFile = (state: State) =>
-    state.metadata.simulariumFile;
-export const getSimulariumController = (state: State) =>
-    state.metadata.simulariumController;
-export const getViewerStatus = (state: State) => state.metadata.viewerStatus;
-export const getViewerError = (state: State) => state.metadata.viewerError;
+    state.trajectory.simulariumFile;
 
 // COMPOSED SELECTORS
 export const getIsNetworkedFile = createSelector(
@@ -43,13 +39,13 @@ export const getIsNetworkedFile = createSelector(
     }
 );
 
-export const getKeysOfMetadata = createSelector(
-    [getMetadata],
-    (metadata: MetadataStateBranch): string[] => Object.keys(metadata)
+export const getKeysOfTrajectory = createSelector(
+    [getTrajectory],
+    (trajectory: TrajectoryStateBranch): string[] => Object.keys(trajectory)
 );
 
 export const getAgentDisplayNamesAndStates = (state: State) =>
-    state.metadata.agentUiNames;
+    state.trajectory.agentUiNames;
 
 export const getAllTags = createSelector(
     [getAgentDisplayNamesAndStates],

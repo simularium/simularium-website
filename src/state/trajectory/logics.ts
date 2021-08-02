@@ -4,38 +4,41 @@ import queryString from "query-string";
 // NOTE: importing @aics/simularium-viewer here currently breaks ability to compile in testing setup
 // TODO: work on test babel setup, or switch to jest?
 
-import { ReduxLogicDeps } from "../types";
-
-import { getSimulariumController, getSimulariumFile } from "./selectors";
-import {
-    changeToLocalSimulariumFile,
-    receiveMetadata,
-    receiveSimulariumFile,
-    requestCachedPlotData,
-    setSimulariumController,
-} from "./actions";
-import {
-    LOAD_LOCAL_FILE_IN_VIEWER,
-    VIEWER_LOADING,
-    LOAD_NETWORKED_FILE_IN_VIEWER,
-    REQUEST_PLOT_DATA,
-    CLEAR_SIMULARIUM_FILE,
-    VIEWER_EMPTY,
-    LOAD_FILE_VIA_URL,
-} from "./constants";
-import { ReceiveAction, LocalSimFile, FrontEndError } from "./types";
-import { VIEWER_ERROR } from "./constants";
-import { setViewerStatus } from "../metadata/actions";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
-import { batchActions } from "../util";
-import { initialState } from "./reducer";
+import { getUserTrajectoryUrl } from "../../util/userUrlHandling";
+import {
+    VIEWER_LOADING,
+    VIEWER_EMPTY,
+    VIEWER_ERROR,
+} from "../viewer/constants";
+import { FrontEndError } from "../viewer/types";
 import {
     changeTime,
     resetAgentSelectionsAndHighlights,
-    setIsPlaying,
 } from "../selection/actions";
+import { setSimulariumController } from "../simularium/actions";
+import { getSimulariumController } from "../simularium/selectors";
 import { initialState as initialSelectionState } from "../selection/reducer";
-import { getUserTrajectoryUrl } from "../../util/userUrlHandling";
+import { setViewerStatus, setIsPlaying } from "../viewer/actions";
+import { ReduxLogicDeps } from "../types";
+import { batchActions } from "../util";
+
+import { getSimulariumFile } from "./selectors";
+import {
+    changeToLocalSimulariumFile,
+    receiveTrajectory,
+    receiveSimulariumFile,
+    requestCachedPlotData,
+} from "./actions";
+import {
+    LOAD_LOCAL_FILE_IN_VIEWER,
+    LOAD_NETWORKED_FILE_IN_VIEWER,
+    REQUEST_PLOT_DATA,
+    CLEAR_SIMULARIUM_FILE,
+    LOAD_FILE_VIA_URL,
+} from "./constants";
+import { ReceiveAction, LocalSimFile } from "./types";
+import { initialState } from "./reducer";
 
 const netConnectionSettings = {
     serverIp: process.env.BACKEND_SERVER_IP,
@@ -50,7 +53,7 @@ const resetSimulariumFileState = createLogic({
         const resetTime = changeTime(initialSelectionState.time);
         const resetVisibility = resetAgentSelectionsAndHighlights();
         const stopPlay = setIsPlaying(false);
-        let clearMetaData;
+        let clearTrajectory;
 
         const actions = [resetTime, resetVisibility, stopPlay];
 
@@ -59,7 +62,7 @@ const resetSimulariumFileState = createLogic({
             if (controller) {
                 controller.clearFile();
             }
-            clearMetaData = receiveMetadata({
+            clearTrajectory = receiveTrajectory({
                 plotData: initialState.plotData,
                 firstFrameTime: initialState.firstFrameTime,
                 lastFrameTime: initialState.lastFrameTime,
@@ -78,11 +81,11 @@ const resetSimulariumFileState = createLogic({
             );
             // plot data is a separate request, clear it out to avoid
             // wrong plot data sticking around if the request fails
-            clearMetaData = receiveMetadata({
+            clearTrajectory = receiveTrajectory({
                 plotData: initialState.plotData,
             });
         }
-        actions.push(clearMetaData);
+        actions.push(clearTrajectory);
         dispatch(batchActions(actions));
         done();
     },
@@ -98,8 +101,8 @@ const requestPlotDataLogic = createLogic({
         const { baseApiUrl, plotDataUrl, httpClient, action } = deps;
         httpClient
             .get(`${plotDataUrl}${baseApiUrl}/${action.payload.url}`)
-            .then((metadata: AxiosResponse) => {
-                dispatch(receiveMetadata({ plotData: metadata.data.data }));
+            .then((trajectory: AxiosResponse) => {
+                dispatch(receiveTrajectory({ plotData: trajectory.data.data }));
             })
             .catch((reason) => {
                 console.log(reason);
@@ -194,7 +197,7 @@ const loadLocalFile = createLogic({
                 lastSimulariumFile.name === simulariumFile.name &&
                 lastSimulariumFile.lastModified === simulariumFile.lastModified
             ) {
-                // exact same file loaded again, dont need to reload anything
+                // exact same file loaded again, don't need to reload anything
                 return;
             }
         }
@@ -213,7 +216,7 @@ const loadLocalFile = createLogic({
             })
             .then(() => {
                 dispatch(
-                    receiveMetadata({
+                    receiveTrajectory({
                         plotData: simulariumFile.data.plotData.data,
                     })
                 );

@@ -9,14 +9,10 @@ import {
     SIDE_PANEL_COLLAPSED,
     TURN_AGENTS_ON_BY_KEY,
     HIGHLIGHT_AGENTS_BY_KEY,
-    DRAG_OVER_VIEWER,
-    RESET_DRAG_OVER_VIEWER,
     SET_AGENTS_VISIBLE,
     SET_ALL_AGENT_COLORS,
     CHANGE_AGENT_COLOR,
-    SET_BUFFERING,
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
-    SET_IS_PLAYING,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -24,11 +20,8 @@ import {
     SelectMetadataAction,
     ChangeTimeAction,
     ChangeNumberCollapsedPanelsAction,
-    DragOverViewerAction,
-    ResetDragOverViewerAction,
     SetVisibleAction,
     SetAllColorsAction,
-    ToggleAction,
     ResetAction,
 } from "./types";
 
@@ -37,10 +30,7 @@ export const initialState = {
     numberPanelsCollapsed: 0,
     visibleAgentKeys: {},
     highlightedAgentKeys: {},
-    draggedOverViewer: false,
     agentColors: {},
-    isBuffering: false,
-    isPlaying: false,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -151,38 +141,6 @@ const actionToConfigMap: TypeToDescriptionMap = {
                 ...state.agentColors,
                 ...action.payload,
             },
-        }),
-    },
-    [DRAG_OVER_VIEWER]: {
-        accepts: (action: AnyAction): action is DragOverViewerAction =>
-            action.type === DRAG_OVER_VIEWER,
-        perform: (state: SelectionStateBranch) => ({
-            ...state,
-            draggedOverViewer: true,
-        }),
-    },
-    [RESET_DRAG_OVER_VIEWER]: {
-        accepts: (action: AnyAction): action is ResetDragOverViewerAction =>
-            action.type === RESET_DRAG_OVER_VIEWER,
-        perform: (state: SelectionStateBranch) => ({
-            ...state,
-            draggedOverViewer: false,
-        }),
-    },
-    [SET_BUFFERING]: {
-        accepts: (action: AnyAction): action is ResetDragOverViewerAction =>
-            action.type === SET_BUFFERING,
-        perform: (state: SelectionStateBranch, action: ToggleAction) => ({
-            ...state,
-            isBuffering: action.payload,
-        }),
-    },
-    [SET_IS_PLAYING]: {
-        accepts: (action: AnyAction): action is ToggleAction =>
-            action.type === SET_IS_PLAYING,
-        perform: (state: SelectionStateBranch, action: ToggleAction) => ({
-            ...state,
-            isPlaying: action.payload,
         }),
     },
 };

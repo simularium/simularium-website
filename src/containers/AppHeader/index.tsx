@@ -10,14 +10,14 @@ import {
     NetworkedSimFile,
     RequestLocalFileAction,
     RequestNetworkFileAction,
-} from "../../state/metadata/types";
+} from "../../state/trajectory/types";
 import LoadFileMenu from "../../components/LoadFileMenu";
 import ViewerTitle from "../../components/ViewerTitle";
 import HelpMenu from "../../components/HelpMenu";
 import { AicsLogo } from "../../components/Icons";
 import { State } from "../../state/types";
-import metadataStateBranch from "../../state/metadata";
-import selectionStateBranch from "../../state/selection";
+import trajectoryStateBranch from "../../state/trajectory";
+import viewerStateBranch from "../../state/viewer";
 
 const styles = require("./style.css");
 
@@ -78,15 +78,17 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
 
 function mapStateToProps(state: State) {
     return {
-        simulariumFile: metadataStateBranch.selectors.getSimulariumFile(state),
-        isBuffering: selectionStateBranch.selectors.getIsBuffering(state),
+        simulariumFile: trajectoryStateBranch.selectors.getSimulariumFile(
+            state
+        ),
+        isBuffering: viewerStateBranch.selectors.getIsBuffering(state),
     };
 }
 
 const dispatchToPropsMap = {
     changeToLocalSimulariumFile:
-        metadataStateBranch.actions.changeToLocalSimulariumFile,
-    changeToNetworkedFile: metadataStateBranch.actions.changeToNetworkedFile,
+        trajectoryStateBranch.actions.changeToLocalSimulariumFile,
+    changeToNetworkedFile: trajectoryStateBranch.actions.changeToNetworkedFile,
 };
 
 export default connect(

@@ -2,19 +2,13 @@ import {
     SimulariumFileFormat,
     SimulariumController,
 } from "@aics/simularium-viewer/type-declarations";
-import {
-    VIEWER_LOADING,
-    VIEWER_ERROR,
-    VIEWER_EMPTY,
-    VIEWER_SUCCESS,
-} from "./constants";
 
-export interface MetadataStateBranch {
+export interface TrajectoryStateBranch {
     [key: string]: any;
 }
 
 export interface ReceiveAction {
-    payload: MetadataStateBranch;
+    payload: TrajectoryStateBranch;
     type: string;
 }
 
@@ -72,41 +66,4 @@ export const isNetworkSimFileInterface = (
 export interface TimeUnits {
     magnitude: number;
     name: string;
-}
-
-export interface SetSimulariumControllerAction {
-    payload: SimulariumController;
-    type: string;
-}
-
-type VIEWER_LOADING = typeof VIEWER_LOADING;
-type VIEWER_ERROR = typeof VIEWER_ERROR;
-type VIEWER_EMPTY = typeof VIEWER_EMPTY;
-type VIEWER_SUCCESS = typeof VIEWER_SUCCESS;
-export type ViewerStatus =
-    | VIEWER_LOADING
-    | VIEWER_ERROR
-    | VIEWER_EMPTY
-    | VIEWER_SUCCESS;
-
-export interface SetViewerStatusAction {
-    payload: ViewerStatusInfo;
-    type: string;
-}
-
-export interface ViewerStatusInfo {
-    htmlData?: string;
-    errorMessage?: string;
-    status: ViewerStatus;
-    onClose?: () => void;
-}
-
-export interface ViewerError {
-    htmlData?: string;
-    message: string;
-    onClose?: () => void;
-}
-
-export interface FrontEndError extends Error {
-    htmlData?: string;
 }

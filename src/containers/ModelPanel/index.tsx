@@ -4,14 +4,14 @@ import { connect } from "react-redux";
 
 import SideBarContents from "../../components/SideBarContents";
 import {
-    requestMetadata,
+    requestTrajectory,
     changeToNetworkedFile,
-} from "../../state/metadata/actions";
+} from "../../state/trajectory/actions";
 import {
     getUiDisplayDataTree,
-    getViewerStatus,
     getIsNetworkedFile,
-} from "../../state/metadata/selectors";
+} from "../../state/trajectory/selectors";
+import { getViewerStatus } from "../../state/viewer/selectors";
 import { State } from "../../state/types";
 import {
     getVisibleAgentsNamesAndTags,
@@ -40,13 +40,11 @@ import {
     VIEWER_ERROR,
     VIEWER_LOADING,
     VIEWER_SUCCESS,
-} from "../../state/metadata/constants";
+} from "../../state/viewer/constants";
 import NoTrajectoriesText from "../../components/NoTrajectoriesText";
 import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
-import {
-    ViewerStatus,
-    RequestNetworkFileAction,
-} from "../../state/metadata/types";
+import { RequestNetworkFileAction } from "../../state/trajectory/types";
+import { ViewerStatus } from "../../state/viewer/types";
 import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFileFailedText";
 
 const styles = require("./style.css");
@@ -142,7 +140,7 @@ function mapStateToProps(state: State) {
 }
 
 const dispatchToPropsMap = {
-    requestMetadata,
+    requestTrajectory,
     changeToNetworkedFile,
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,

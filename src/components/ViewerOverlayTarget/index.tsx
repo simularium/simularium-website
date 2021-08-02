@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Upload, message } from "antd";
 import { ActionCreator } from "redux";
-import { LocalSimFile } from "../../state/metadata/types";
+import { LocalSimFile } from "../../state/trajectory/types";
 import { UploadChangeParam } from "antd/lib/upload";
 
-import { ResetDragOverViewerAction } from "../../state/selection/types";
+import { ResetDragOverViewerAction } from "../../state/viewer/types";
 import { Loading, UploadFile } from "../Icons";
 import customRequest from "../LocalFileUpload/custom-request-upload";
 
