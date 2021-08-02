@@ -4,7 +4,7 @@ import { TypeToDescriptionMap } from "../types";
 import { makeReducer } from "../util";
 
 import {
-    RECEIVE_METADATA,
+    RECEIVE_TRAJECTORY,
     RECEIVE_AGENT_IDS,
     RECEIVE_AGENT_NAMES,
     RECEIVE_SIMULARIUM_FILE,
@@ -32,9 +32,9 @@ export const initialState = {
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
-    [RECEIVE_METADATA]: {
+    [RECEIVE_TRAJECTORY]: {
         accepts: (action: AnyAction): action is ReceiveAction =>
-            action.type === RECEIVE_METADATA,
+            action.type === RECEIVE_TRAJECTORY,
         perform: (state: TrajectoryStateBranch, action: ReceiveAction) => ({
             ...state,
             ...action.payload,

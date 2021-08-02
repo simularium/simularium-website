@@ -26,7 +26,7 @@ import { batchActions } from "../util";
 import { getSimulariumFile } from "./selectors";
 import {
     changeToLocalSimulariumFile,
-    receiveMetadata,
+    receiveTrajectory,
     receiveSimulariumFile,
     requestCachedPlotData,
 } from "./actions";
@@ -62,7 +62,7 @@ const resetSimulariumFileState = createLogic({
             if (controller) {
                 controller.clearFile();
             }
-            clearMetaData = receiveMetadata({
+            clearMetaData = receiveTrajectory({
                 plotData: initialState.plotData,
                 firstFrameTime: initialState.firstFrameTime,
                 lastFrameTime: initialState.lastFrameTime,
@@ -81,7 +81,7 @@ const resetSimulariumFileState = createLogic({
             );
             // plot data is a separate request, clear it out to avoid
             // wrong plot data sticking around if the request fails
-            clearMetaData = receiveMetadata({
+            clearMetaData = receiveTrajectory({
                 plotData: initialState.plotData,
             });
         }
@@ -102,7 +102,7 @@ const requestPlotDataLogic = createLogic({
         httpClient
             .get(`${plotDataUrl}${baseApiUrl}/${action.payload.url}`)
             .then((metadata: AxiosResponse) => {
-                dispatch(receiveMetadata({ plotData: metadata.data.data }));
+                dispatch(receiveTrajectory({ plotData: metadata.data.data }));
             })
             .catch((reason) => {
                 console.log(reason);
@@ -216,7 +216,7 @@ const loadLocalFile = createLogic({
             })
             .then(() => {
                 dispatch(
-                    receiveMetadata({
+                    receiveTrajectory({
                         plotData: simulariumFile.data.plotData.data,
                     })
                 );

@@ -1,5 +1,5 @@
 import {
-    RECEIVE_METADATA,
+    RECEIVE_TRAJECTORY,
     REQUEST_METADATA,
     RECEIVE_AGENT_IDS,
     RECEIVE_AGENT_NAMES,
@@ -24,10 +24,12 @@ import {
 } from "./types";
 import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
 
-export function receiveMetadata(payload: TrajectoryStateBranch): ReceiveAction {
+export function receiveTrajectory(
+    payload: TrajectoryStateBranch
+): ReceiveAction {
     return {
         payload,
-        type: RECEIVE_METADATA,
+        type: RECEIVE_TRAJECTORY,
     };
 }
 

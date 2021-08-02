@@ -3,7 +3,7 @@ const BRANCH_NAME = "trajectory";
 const makeTrajectoryConstant = (constant: string) =>
     makeConstant(BRANCH_NAME, constant);
 
-export const RECEIVE_METADATA = makeTrajectoryConstant("receive");
+export const RECEIVE_TRAJECTORY = makeTrajectoryConstant("receive");
 export const REQUEST_METADATA = makeTrajectoryConstant("request");
 export const RECEIVE_AGENT_IDS = makeTrajectoryConstant("receive-ids");
 export const RECEIVE_AGENT_NAMES = makeTrajectoryConstant(

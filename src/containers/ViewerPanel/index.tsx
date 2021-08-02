@@ -73,7 +73,7 @@ interface ViewerPanelProps {
     simulariumController: SimulariumController;
     changeTime: ActionCreator<ChangeTimeAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
-    receiveMetadata: ActionCreator<ReceiveAction>;
+    receiveTrajectory: ActionCreator<ReceiveAction>;
     receiveAgentNamesAndStates: ActionCreator<ReceiveAction>;
     selectionStateInfoForViewer: SelectionStateInfo;
     setIsPlaying: ActionCreator<ToggleAction>;
@@ -244,7 +244,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
-        const { receiveMetadata, simulariumController } = this.props;
+        const { receiveTrajectory, simulariumController } = this.props;
         const tickIntervalLength = simulariumController.tickIntervalLength;
 
         let scaleBarLabelNumber =
@@ -252,7 +252,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         scaleBarLabelNumber = parseFloat(scaleBarLabelNumber.toPrecision(2));
         const scaleBarLabelUnit = data.spatialUnits.name;
 
-        receiveMetadata({
+        receiveTrajectory({
             numFrames: data.totalSteps,
             timeStep: data.timeStepSize,
             timeUnits: data.timeUnits,
@@ -272,12 +272,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             lastFrameTime,
             numFrames,
             timeStep,
-            receiveMetadata,
+            receiveTrajectory,
             setBuffering,
         } = this.props;
 
         if (this.state.isInitialPlay) {
-            receiveMetadata({
+            receiveTrajectory({
                 firstFrameTime: timeData.time,
                 lastFrameTime: (numFrames - 1) * timeStep + timeData.time,
             });
@@ -456,7 +456,7 @@ const dispatchToPropsMap = {
     changeTime: selectionStateBranch.actions.changeTime,
     setAgentsVisible: selectionStateBranch.actions.setAgentsVisible,
     setAllAgentColors: selectionStateBranch.actions.setAllAgentColors,
-    receiveMetadata: trajectoryStateBranch.actions.receiveMetadata,
+    receiveTrajectory: trajectoryStateBranch.actions.receiveTrajectory,
     receiveAgentTypeIds: trajectoryStateBranch.actions.receiveAgentTypeIds,
     receiveAgentNamesAndStates:
         trajectoryStateBranch.actions.receiveAgentNamesAndStates,
