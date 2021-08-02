@@ -53,7 +53,7 @@ const resetSimulariumFileState = createLogic({
         const resetTime = changeTime(initialSelectionState.time);
         const resetVisibility = resetAgentSelectionsAndHighlights();
         const stopPlay = setIsPlaying(false);
-        let clearMetaData;
+        let clearTrajectory;
 
         const actions = [resetTime, resetVisibility, stopPlay];
 
@@ -62,7 +62,7 @@ const resetSimulariumFileState = createLogic({
             if (controller) {
                 controller.clearFile();
             }
-            clearMetaData = receiveTrajectory({
+            clearTrajectory = receiveTrajectory({
                 plotData: initialState.plotData,
                 firstFrameTime: initialState.firstFrameTime,
                 lastFrameTime: initialState.lastFrameTime,
@@ -81,11 +81,11 @@ const resetSimulariumFileState = createLogic({
             );
             // plot data is a separate request, clear it out to avoid
             // wrong plot data sticking around if the request fails
-            clearMetaData = receiveTrajectory({
+            clearTrajectory = receiveTrajectory({
                 plotData: initialState.plotData,
             });
         }
-        actions.push(clearMetaData);
+        actions.push(clearTrajectory);
         dispatch(batchActions(actions));
         done();
     },
@@ -101,8 +101,8 @@ const requestPlotDataLogic = createLogic({
         const { baseApiUrl, plotDataUrl, httpClient, action } = deps;
         httpClient
             .get(`${plotDataUrl}${baseApiUrl}/${action.payload.url}`)
-            .then((metadata: AxiosResponse) => {
-                dispatch(receiveTrajectory({ plotData: metadata.data.data }));
+            .then((trajectory: AxiosResponse) => {
+                dispatch(receiveTrajectory({ plotData: trajectory.data.data }));
             })
             .catch((reason) => {
                 console.log(reason);
