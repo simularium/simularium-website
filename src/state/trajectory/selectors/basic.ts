@@ -1,6 +1,6 @@
 import { State } from "../../types";
 
-export const getMetadata = (state: State) => state.trajectory;
+export const getTrajectory = (state: State) => state.trajectory;
 export const getPlotData = (state: State) => state.trajectory.plotData;
 export const getFirstFrameTimeOfCachedSimulation = (state: State) =>
     state.trajectory.firstFrameTime;
