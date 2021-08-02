@@ -12,7 +12,7 @@ import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 
 // BASIC SELECTORS
-export const getMetadata = (state: State) => state.trajectory;
+export const getTrajectory = (state: State) => state.trajectory;
 export const getPlotData = (state: State) => state.trajectory.plotData;
 export const getFirstFrameTimeOfCachedSimulation = (state: State) =>
     state.trajectory.firstFrameTime;
@@ -39,9 +39,9 @@ export const getIsNetworkedFile = createSelector(
     }
 );
 
-export const getKeysOfMetadata = createSelector(
-    [getMetadata],
-    (metadata: TrajectoryStateBranch): string[] => Object.keys(metadata)
+export const getKeysOfTrajectory = createSelector(
+    [getTrajectory],
+    (trajectory: TrajectoryStateBranch): string[] => Object.keys(trajectory)
 );
 
 export const getAgentDisplayNamesAndStates = (state: State) =>
