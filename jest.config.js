@@ -17,7 +17,7 @@ module.exports = {
             "statements": 50
         },
         "./src/state/*/selectors/index.ts": {
-            "lines": 100,
+            "lines": 40,
         },
         "./src/containers/*/selectors.ts": {
             "branches": 100,
