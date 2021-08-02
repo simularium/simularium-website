@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import SideBarContents from "../../components/SideBarContents";
 import {
-    requestMetadata,
+    requestTrajectory,
     changeToNetworkedFile,
 } from "../../state/trajectory/actions";
 import {
@@ -140,7 +140,7 @@ function mapStateToProps(state: State) {
 }
 
 const dispatchToPropsMap = {
-    requestMetadata,
+    requestTrajectory,
     changeToNetworkedFile,
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,

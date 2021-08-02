@@ -1,6 +1,6 @@
 import {
     RECEIVE_TRAJECTORY,
-    REQUEST_METADATA,
+    REQUEST_TRAJECTORY,
     RECEIVE_AGENT_IDS,
     RECEIVE_AGENT_NAMES,
     RECEIVE_SIMULARIUM_FILE,
@@ -33,9 +33,9 @@ export function receiveTrajectory(
     };
 }
 
-export function requestMetadata(): RequestAction {
+export function requestTrajectory(): RequestAction {
     return {
-        type: REQUEST_METADATA,
+        type: REQUEST_TRAJECTORY,
     };
 }
 
