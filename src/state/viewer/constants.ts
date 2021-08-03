@@ -3,7 +3,7 @@ const BRANCH_NAME = "viewer";
 const makeViewerConstant = (constant: string) =>
     makeConstant(BRANCH_NAME, constant);
 
-export const SET_VIEWER_STATUS = makeViewerConstant("set-viewer-status");
+export const SET_STATUS = makeViewerConstant("set-status");
 export const DRAG_OVER_VIEWER = makeViewerConstant("drag-over-viewer");
 export const RESET_DRAG_OVER_VIEWER = makeViewerConstant("drag-off-viewer");
 export const SET_BUFFERING = makeViewerConstant("set-buffering");

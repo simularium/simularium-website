@@ -4,7 +4,7 @@ import { TypeToDescriptionMap } from "../types";
 import { makeReducer } from "../util";
 
 import {
-    SET_VIEWER_STATUS,
+    SET_STATUS,
     VIEWER_ERROR,
     VIEWER_EMPTY,
     DRAG_OVER_VIEWER,
@@ -29,9 +29,9 @@ export const initialState = {
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
-    [SET_VIEWER_STATUS]: {
+    [SET_STATUS]: {
         accepts: (action: AnyAction): action is SetViewerStatusAction =>
-            action.type === SET_VIEWER_STATUS,
+            action.type === SET_STATUS,
         perform: (state: ViewerStateBranch, action: SetViewerStatusAction) => ({
             ...state,
             status: action.payload.status,

@@ -1,5 +1,5 @@
 import {
-    SET_VIEWER_STATUS,
+    SET_STATUS,
     DRAG_OVER_VIEWER,
     RESET_DRAG_OVER_VIEWER,
     SET_BUFFERING,
@@ -16,7 +16,7 @@ import {
 export function setStatus(payload: ViewerStatusInfo): SetViewerStatusAction {
     return {
         payload,
-        type: SET_VIEWER_STATUS,
+        type: SET_STATUS,
     };
 }
 
