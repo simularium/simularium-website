@@ -83,7 +83,7 @@ interface ViewerPanelProps {
     setAgentsVisible: ActionCreator<SetVisibleAction>;
     setStatus: ActionCreator<SetViewerStatusAction>;
     setAllAgentColors: ActionCreator<SetAllColorsAction>;
-    viewerError: ViewerError;
+    error: ViewerError;
     setBuffering: ActionCreator<ToggleAction>;
 }
 
@@ -127,7 +127,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public componentDidMount() {
-        const { viewerError } = this.props;
+        const { error } = this.props;
         const browser = Bowser.getParser(window.navigator.userAgent);
         // Versions from https://caniuse.com/webgl2
         const isBrowserSupported = browser.satisfies({
@@ -167,27 +167,27 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             }, 200);
         }
 
-        if (viewerError) {
+        if (error) {
             return errorNotification({
-                message: viewerError.message,
-                htmlData: viewerError.htmlData,
-                onClose: viewerError.onClose,
+                message: error.message,
+                htmlData: error.htmlData,
+                onClose: error.onClose,
             });
         }
     }
 
     public componentDidUpdate(prevProps: ViewerPanelProps) {
-        const { status, viewerError } = this.props;
+        const { status, error } = this.props;
         const current = this.centerContent.current;
         if (
             status === VIEWER_ERROR &&
             prevProps.status !== VIEWER_ERROR &&
-            viewerError.message
+            error.message
         ) {
             return errorNotification({
-                message: viewerError.message,
-                htmlData: viewerError.htmlData,
-                onClose: viewerError.onClose,
+                message: error.message,
+                htmlData: error.htmlData,
+                onClose: error.onClose,
             });
         }
         if (
@@ -443,7 +443,7 @@ function mapStateToProps(state: State) {
         timeUnits: trajectoryStateBranch.selectors.getTimeUnits(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
         status: viewerStateBranch.selectors.getStatus(state),
-        viewerError: viewerStateBranch.selectors.getViewerError(state),
+        error: viewerStateBranch.selectors.getError(state),
         fileIsDraggedOverViewer: viewerStateBranch.selectors.getFileDraggedOverViewer(
             state
         ),

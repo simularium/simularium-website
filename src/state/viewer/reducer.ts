@@ -22,7 +22,7 @@ import {
 
 export const initialState = {
     status: VIEWER_EMPTY,
-    viewerError: null,
+    error: null,
     draggedOverViewer: false,
     isBuffering: false,
     isPlaying: false,
@@ -35,7 +35,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: ViewerStateBranch, action: SetViewerStatusAction) => ({
             ...state,
             status: action.payload.status,
-            viewerError:
+            error:
                 action.payload.status === VIEWER_ERROR
                     ? {
                           message: action.payload.errorMessage,
