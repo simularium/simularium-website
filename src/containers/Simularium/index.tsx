@@ -249,7 +249,7 @@ const dispatchToPropsMap = {
     resetDragOverViewer: viewerStateBranch.actions.resetDragOverViewer,
     dragOverViewer: viewerStateBranch.actions.dragOverViewer,
     loadViaUrl: trajectoryStateBranch.actions.loadViaUrl,
-    setViewerStatus: viewerStateBranch.actions.setViewerStatus,
+    setViewerStatus: viewerStateBranch.actions.setStatus,
 };
 
 export default connect(

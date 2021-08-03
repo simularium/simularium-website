@@ -19,7 +19,7 @@ import {
 import { setSimulariumController } from "../simularium/actions";
 import { getSimulariumController } from "../simularium/selectors";
 import { initialState as initialSelectionState } from "../selection/reducer";
-import { setViewerStatus, setIsPlaying } from "../viewer/actions";
+import { setStatus, setIsPlaying } from "../viewer/actions";
 import { ReduxLogicDeps } from "../types";
 import { batchActions } from "../util";
 
@@ -69,13 +69,13 @@ const resetSimulariumFileState = createLogic({
                 timeStep: initialState.timeStep,
                 agentUiNames: initialState.agentUiNames,
             });
-            const setViewerStatusAction = setViewerStatus({
+            const setViewerStatusAction = setStatus({
                 status: VIEWER_EMPTY,
             });
             actions.push(setViewerStatusAction);
         } else {
             dispatch(
-                setViewerStatus({
+                setStatus({
                     status: VIEWER_LOADING,
                 })
             );
@@ -119,7 +119,7 @@ const loadNetworkedFile = createLogic({
 
         const simulariumFile = action.payload;
         dispatch(
-            setViewerStatus({
+            setStatus({
                 status: VIEWER_LOADING,
             })
         );
@@ -161,7 +161,7 @@ const loadNetworkedFile = createLogic({
             .then(done)
             .catch((error: Error) => {
                 dispatch(
-                    setViewerStatus({
+                    setStatus({
                         status: VIEWER_ERROR,
                         errorMessage: error.message,
                     })
@@ -224,7 +224,7 @@ const loadLocalFile = createLogic({
             .then(done)
             .catch((error: FrontEndError) => {
                 dispatch(
-                    setViewerStatus({
+                    setStatus({
                         status: VIEWER_ERROR,
                         errorMessage: error.message,
                         htmlData: error.htmlData || "",
@@ -242,7 +242,7 @@ const loadFileViaUrl = createLogic({
 
         const currentState = getState();
         dispatch(
-            setViewerStatus({
+            setStatus({
                 status: VIEWER_LOADING,
             })
         );
@@ -287,7 +287,7 @@ const loadFileViaUrl = createLogic({
                         "<br/><br/>Try uploading your trajectory file from a Dropbox, Google Drive, or Amazon S3 link instead.";
                 }
                 dispatch(
-                    setViewerStatus({
+                    setStatus({
                         status: VIEWER_ERROR,
                         errorMessage: error.message,
                         htmlData: errorDetails,

@@ -13,9 +13,7 @@ import {
     ToggleAction,
 } from "./types";
 
-export function setViewerStatus(
-    payload: ViewerStatusInfo
-): SetViewerStatusAction {
+export function setStatus(payload: ViewerStatusInfo): SetViewerStatusAction {
     return {
         payload,
         type: SET_VIEWER_STATUS,

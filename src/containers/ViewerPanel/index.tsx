@@ -81,7 +81,7 @@ interface ViewerPanelProps {
     dragOverViewer: ActionCreator<DragOverViewerAction>;
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
     setAgentsVisible: ActionCreator<SetVisibleAction>;
-    setViewerStatus: ActionCreator<SetViewerStatusAction>;
+    setStatus: ActionCreator<SetViewerStatusAction>;
     setAllAgentColors: ActionCreator<SetAllColorsAction>;
     viewerError: ViewerError;
     setBuffering: ActionCreator<ToggleAction>;
@@ -267,7 +267,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     public receiveTimeChange(timeData: TimeData) {
         const {
             changeTime,
-            setViewerStatus,
+            setStatus,
             status,
             lastFrameTime,
             numFrames,
@@ -290,7 +290,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         ];
 
         if (status !== VIEWER_SUCCESS) {
-            actions.push(setViewerStatus({ status: VIEWER_SUCCESS }));
+            actions.push(setStatus({ status: VIEWER_SUCCESS }));
         }
 
         const atLastFrame =
@@ -360,7 +360,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             lastFrameTime,
             simulariumController,
             selectionStateInfoForViewer,
-            setViewerStatus,
+            setStatus,
             timeStep,
             timeUnits,
             displayTimes,
@@ -387,7 +387,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     agentColors={AGENT_COLORS}
                     loadInitialData={false}
                     onError={(error) => {
-                        setViewerStatus({
+                        setStatus({
                             status: VIEWER_ERROR,
                             errorMessage: error,
                         });
@@ -460,7 +460,7 @@ const dispatchToPropsMap = {
     receiveAgentTypeIds: trajectoryStateBranch.actions.receiveAgentTypeIds,
     receiveAgentNamesAndStates:
         trajectoryStateBranch.actions.receiveAgentNamesAndStates,
-    setViewerStatus: viewerStateBranch.actions.setViewerStatus,
+    setStatus: viewerStateBranch.actions.setStatus,
     dragOverViewer: viewerStateBranch.actions.dragOverViewer,
     resetDragOverViewer: viewerStateBranch.actions.resetDragOverViewer,
     setBuffering: viewerStateBranch.actions.setBuffering,
