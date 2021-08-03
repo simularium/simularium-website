@@ -66,7 +66,7 @@ interface ViewerPanelProps {
     displayTimes: DisplayTimes;
     timeUnits: TimeUnits;
     isPlaying: boolean;
-    fileIsDraggedOverViewer: boolean;
+    fileIsDraggedOver: boolean;
     status: string;
     numFrames: number;
     isBuffering: boolean;
@@ -444,7 +444,7 @@ function mapStateToProps(state: State) {
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
         status: viewerStateBranch.selectors.getStatus(state),
         error: viewerStateBranch.selectors.getError(state),
-        fileIsDraggedOverViewer: viewerStateBranch.selectors.getFileDraggedOverViewer(
+        fileIsDraggedOver: viewerStateBranch.selectors.getFileDraggedOver(
             state
         ),
         isBuffering: viewerStateBranch.selectors.getIsBuffering(state),

@@ -201,7 +201,7 @@ class App extends React.Component<AppProps, AppState> {
                             loadLocalFile={changeToLocalSimulariumFile}
                             isLoading={viewerStatus === VIEWER_LOADING}
                             resetDragOverViewer={resetDragOverViewer}
-                            fileIsDraggedOverViewer={fileIsDraggedOverViewer}
+                            fileIsDraggedOver={fileIsDraggedOverViewer}
                         />
                         <SideBar onCollapse={this.onPanelCollapse} type="left">
                             <ModelPanel />
@@ -232,7 +232,7 @@ function mapStateToProps(state: State) {
         simulariumController: simulariumStateBranch.selectors.getSimulariumController(
             state
         ),
-        fileIsDraggedOverViewer: viewerStateBranch.selectors.getFileDraggedOverViewer(
+        fileIsDraggedOverViewer: viewerStateBranch.selectors.getFileDraggedOver(
             state
         ),
         viewerStatus: viewerStateBranch.selectors.getStatus(state),

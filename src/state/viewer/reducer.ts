@@ -23,7 +23,7 @@ import {
 export const initialState = {
     status: VIEWER_EMPTY,
     error: null,
-    draggedOverViewer: false,
+    fileDraggedOver: false,
     isBuffering: false,
     isPlaying: false,
 };
@@ -50,7 +50,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
             action.type === DRAG_OVER_VIEWER,
         perform: (state: ViewerStateBranch) => ({
             ...state,
-            draggedOverViewer: true,
+            fileDraggedOver: true,
         }),
     },
     [RESET_DRAG_OVER_VIEWER]: {
@@ -58,7 +58,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
             action.type === RESET_DRAG_OVER_VIEWER,
         perform: (state: ViewerStateBranch) => ({
             ...state,
-            draggedOverViewer: false,
+            fileDraggedOver: false,
         }),
     },
     [SET_BUFFERING]: {
