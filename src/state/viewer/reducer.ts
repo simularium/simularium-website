@@ -21,7 +21,7 @@ import {
 } from "./types";
 
 export const initialState = {
-    viewerStatus: VIEWER_EMPTY,
+    status: VIEWER_EMPTY,
     viewerError: null,
     draggedOverViewer: false,
     isBuffering: false,
@@ -34,7 +34,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
             action.type === SET_VIEWER_STATUS,
         perform: (state: ViewerStateBranch, action: SetViewerStatusAction) => ({
             ...state,
-            viewerStatus: action.payload.status,
+            status: action.payload.status,
             viewerError:
                 action.payload.status === VIEWER_ERROR
                     ? {

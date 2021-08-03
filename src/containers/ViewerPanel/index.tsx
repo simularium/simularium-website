@@ -67,7 +67,7 @@ interface ViewerPanelProps {
     timeUnits: TimeUnits;
     isPlaying: boolean;
     fileIsDraggedOverViewer: boolean;
-    viewerStatus: string;
+    status: string;
     numFrames: number;
     isBuffering: boolean;
     simulariumController: SimulariumController;
@@ -177,11 +177,11 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public componentDidUpdate(prevProps: ViewerPanelProps) {
-        const { viewerStatus, viewerError } = this.props;
+        const { status, viewerError } = this.props;
         const current = this.centerContent.current;
         if (
-            viewerStatus === VIEWER_ERROR &&
-            prevProps.viewerStatus !== VIEWER_ERROR &&
+            status === VIEWER_ERROR &&
+            prevProps.status !== VIEWER_ERROR &&
             viewerError.message
         ) {
             return errorNotification({
@@ -268,7 +268,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const {
             changeTime,
             setViewerStatus,
-            viewerStatus,
+            status,
             lastFrameTime,
             numFrames,
             timeStep,
@@ -289,7 +289,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setBuffering(false),
         ];
 
-        if (viewerStatus !== VIEWER_SUCCESS) {
+        if (status !== VIEWER_SUCCESS) {
             actions.push(setViewerStatus({ status: VIEWER_SUCCESS }));
         }
 
@@ -366,7 +366,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             displayTimes,
             isBuffering,
             isPlaying,
-            viewerStatus,
+            status,
         } = this.props;
         return (
             <div
@@ -410,7 +410,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     firstFrameTime={firstFrameTime}
                     lastFrameTime={lastFrameTime}
                     loading={isBuffering}
-                    isEmpty={viewerStatus === VIEWER_EMPTY}
+                    isEmpty={status === VIEWER_EMPTY}
                 />
                 <ScaleBar label={this.state.scaleBarLabel} />
                 <CameraControls
@@ -442,7 +442,7 @@ function mapStateToProps(state: State) {
         displayTimes: getDisplayTimes(state),
         timeUnits: trajectoryStateBranch.selectors.getTimeUnits(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
-        viewerStatus: viewerStateBranch.selectors.getViewerStatus(state),
+        status: viewerStateBranch.selectors.getViewerStatus(state),
         viewerError: viewerStateBranch.selectors.getViewerError(state),
         fileIsDraggedOverViewer: viewerStateBranch.selectors.getFileDraggedOverViewer(
             state
