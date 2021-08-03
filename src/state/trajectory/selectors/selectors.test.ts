@@ -53,25 +53,5 @@ describe("trajectory composed selectors", () => {
         });
     });
 
-    // describe("getKeysOfTrajectory", () => {
-    //     const mockTrajectory = {
-    //         firstKey: "red",
-    //         secondKey: "blue",
-    //         thirdKey: { a: "papaya", b: "mango" }
-    //     }
-    //     const mockState: State = {
-    //         ...initialState,
-    //         trajectory: mockTrajectory,
-    //     };
-    //     it("returns all keys in the trajectory state object", () => {
-    //         const expected = ["firstKey", "secondKey", "thirdKey"];
-    //         expect(getKeysOfTrajectory(mockState)).toStrictEqual(expected);
-    //     });
-    // });
-
-    // describe("getAllTags", () => {
-
-    // });
-
     describe("getUiDisplayDataTree", () => {});
 });

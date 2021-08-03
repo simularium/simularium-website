@@ -1,20 +1,15 @@
 import { createSelector } from "reselect";
-import { uniq, find } from "lodash";
+import { find } from "lodash";
+import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
 
 import {
     isNetworkSimFileInterface,
     LocalSimFile,
-    TrajectoryStateBranch,
     NetworkedSimFile,
 } from "../types";
-import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
 import TRAJECTORIES from "../../../constants/networked-trajectories";
 
-import {
-    getSimulariumFile,
-    getTrajectory,
-    getAgentDisplayNamesAndStates,
-} from "./basic";
+import { getSimulariumFile, getAgentDisplayNamesAndStates } from "./basic";
 
 export const getIsNetworkedFile = createSelector(
     [getSimulariumFile],
@@ -28,31 +23,6 @@ export const getIsNetworkedFile = createSelector(
         );
     }
 );
-
-// export const getKeysOfTrajectory = createSelector(
-//     [getTrajectory],
-//     (trajectory: TrajectoryStateBranch): string[] => Object.keys(trajectory)
-// );
-
-// export const getAllTags = createSelector(
-//     [getAgentDisplayNamesAndStates],
-//     (uiDisplayData: UIDisplayData) => {
-//         return uniq(
-//             uiDisplayData.reduce(
-//                 (acc, currentAgent) => {
-//                     acc = [
-//                         ...acc,
-//                         ...currentAgent.displayStates.map(
-//                             (state) => state.name
-//                         ),
-//                     ];
-//                     return acc;
-//                 },
-//                 [] as string[]
-//             )
-//         );
-//     }
-// );
 
 export const getUiDisplayDataTree = createSelector(
     [getAgentDisplayNamesAndStates],
