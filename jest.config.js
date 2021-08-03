@@ -17,8 +17,10 @@ module.exports = {
             "statements": 50
         },
         "./src/state/*/selectors/index.ts": {
-            // TODO: Change to 100%
-            "lines": 40,
+            "branches": 70,
+            "functions": 70,
+            "lines": 70,
+            "statements": 70,
         },
         "./src/containers/*/selectors.ts": {
             "branches": 100,

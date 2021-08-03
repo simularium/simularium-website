@@ -29,30 +29,30 @@ export const getIsNetworkedFile = createSelector(
     }
 );
 
-export const getKeysOfTrajectory = createSelector(
-    [getTrajectory],
-    (trajectory: TrajectoryStateBranch): string[] => Object.keys(trajectory)
-);
+// export const getKeysOfTrajectory = createSelector(
+//     [getTrajectory],
+//     (trajectory: TrajectoryStateBranch): string[] => Object.keys(trajectory)
+// );
 
-export const getAllTags = createSelector(
-    [getAgentDisplayNamesAndStates],
-    (uiDisplayData: UIDisplayData) => {
-        return uniq(
-            uiDisplayData.reduce(
-                (acc, currentAgent) => {
-                    acc = [
-                        ...acc,
-                        ...currentAgent.displayStates.map(
-                            (state) => state.name
-                        ),
-                    ];
-                    return acc;
-                },
-                [] as string[]
-            )
-        );
-    }
-);
+// export const getAllTags = createSelector(
+//     [getAgentDisplayNamesAndStates],
+//     (uiDisplayData: UIDisplayData) => {
+//         return uniq(
+//             uiDisplayData.reduce(
+//                 (acc, currentAgent) => {
+//                     acc = [
+//                         ...acc,
+//                         ...currentAgent.displayStates.map(
+//                             (state) => state.name
+//                         ),
+//                     ];
+//                     return acc;
+//                 },
+//                 [] as string[]
+//             )
+//         );
+//     }
+// );
 
 export const getUiDisplayDataTree = createSelector(
     [getAgentDisplayNamesAndStates],
