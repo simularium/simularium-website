@@ -7,8 +7,8 @@ import {
     SET_STATUS,
     VIEWER_ERROR,
     VIEWER_EMPTY,
-    DRAG_OVER_VIEWER,
-    RESET_DRAG_OVER_VIEWER,
+    DRAG_FILE_OVER,
+    RESET_DRAG_FILE_OVER,
     SET_BUFFERING,
     SET_IS_PLAYING,
 } from "./constants";
@@ -45,17 +45,17 @@ const actionToConfigMap: TypeToDescriptionMap = {
                     : "",
         }),
     },
-    [DRAG_OVER_VIEWER]: {
+    [DRAG_FILE_OVER]: {
         accepts: (action: AnyAction): action is DragOverViewerAction =>
-            action.type === DRAG_OVER_VIEWER,
+            action.type === DRAG_FILE_OVER,
         perform: (state: ViewerStateBranch) => ({
             ...state,
             fileDraggedOver: true,
         }),
     },
-    [RESET_DRAG_OVER_VIEWER]: {
+    [RESET_DRAG_FILE_OVER]: {
         accepts: (action: AnyAction): action is ResetDragOverViewerAction =>
-            action.type === RESET_DRAG_OVER_VIEWER,
+            action.type === RESET_DRAG_FILE_OVER,
         perform: (state: ViewerStateBranch) => ({
             ...state,
             fileDraggedOver: false,

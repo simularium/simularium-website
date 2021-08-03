@@ -1,7 +1,7 @@
 import {
     SET_STATUS,
-    DRAG_OVER_VIEWER,
-    RESET_DRAG_OVER_VIEWER,
+    DRAG_FILE_OVER,
+    RESET_DRAG_FILE_OVER,
     SET_BUFFERING,
     SET_IS_PLAYING,
 } from "./constants";
@@ -22,13 +22,13 @@ export function setStatus(payload: ViewerStatusInfo): SetViewerStatusAction {
 
 export function dragOverViewer(): DragOverViewerAction {
     return {
-        type: DRAG_OVER_VIEWER,
+        type: DRAG_FILE_OVER,
     };
 }
 
 export function resetDragOverViewer(): ResetDragOverViewerAction {
     return {
-        type: RESET_DRAG_OVER_VIEWER,
+        type: RESET_DRAG_FILE_OVER,
     };
 }
 
