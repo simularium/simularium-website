@@ -1,12 +1,12 @@
-import { initialState } from "../../../state/index";
-import { State } from "../../../state/types";
+import { initialState } from "../../state";
+import { State } from "../../state/types";
 import {
     convertUIDataToColorMap,
     convertUIDataToSelectionData,
     getDisplayTimes,
     getMaxNumChars,
     getSelectionStateInfoForViewer,
-} from "../selectors";
+} from "./selectors";
 
 const mockDisplayData = [
     {
