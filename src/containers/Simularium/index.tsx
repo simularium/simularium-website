@@ -235,7 +235,7 @@ function mapStateToProps(state: State) {
         fileIsDraggedOverViewer: viewerStateBranch.selectors.getFileDraggedOverViewer(
             state
         ),
-        viewerStatus: viewerStateBranch.selectors.getViewerStatus(state),
+        viewerStatus: viewerStateBranch.selectors.getStatus(state),
     };
 }
 

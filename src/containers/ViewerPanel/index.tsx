@@ -442,7 +442,7 @@ function mapStateToProps(state: State) {
         displayTimes: getDisplayTimes(state),
         timeUnits: trajectoryStateBranch.selectors.getTimeUnits(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
-        status: viewerStateBranch.selectors.getViewerStatus(state),
+        status: viewerStateBranch.selectors.getStatus(state),
         viewerError: viewerStateBranch.selectors.getViewerError(state),
         fileIsDraggedOverViewer: viewerStateBranch.selectors.getFileDraggedOverViewer(
             state
