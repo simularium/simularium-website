@@ -58,7 +58,7 @@ The Redux state tree in simularium-website is currently divided into 4 branches:
 * selection - selections made by the user through the UI, such as `time` and `numberPanelsCollapsed`
 * simularium - the Simularium controller
 * trajectory - current trajectory data, such as `timeStep` and `simulariumFile`
-* viewer - viewer status, such as `isBuffering` or `viewerError`
+* viewer - viewer status, such as `isBuffering` or `error`
 
 ### Glossary
 

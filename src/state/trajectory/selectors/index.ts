@@ -1,12 +1,12 @@
 import { createSelector } from "reselect";
 import { find } from "lodash";
-import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
 
 import {
     isNetworkSimFileInterface,
     LocalSimFile,
     NetworkedSimFile,
 } from "../types";
+import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
 import TRAJECTORIES from "../../../constants/networked-trajectories";
 
 import { getSimulariumFile, getAgentDisplayNamesAndStates } from "./basic";

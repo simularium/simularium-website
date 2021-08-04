@@ -16,18 +16,18 @@ interface ViewerOverlayTargetProps {
     loadLocalFile: (localFile: LocalSimFile) => void;
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
     isLoading: boolean;
-    fileIsDraggedOverViewer: boolean;
+    fileIsDraggedOver: boolean;
 }
 const ViewerOverlayTarget = ({
     resetDragOverViewer,
     loadLocalFile,
     isLoading,
-    fileIsDraggedOverViewer,
+    fileIsDraggedOver,
 }: ViewerOverlayTargetProps): JSX.Element | null => {
     const [showTarget, setVisibility] = useState(false);
-    if (fileIsDraggedOverViewer && !showTarget) {
+    if (fileIsDraggedOver && !showTarget) {
         setVisibility(true);
-    } else if (!fileIsDraggedOverViewer && showTarget) {
+    } else if (!fileIsDraggedOver && showTarget) {
         setVisibility(false);
     }
 
