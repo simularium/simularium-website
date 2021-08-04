@@ -1,26 +1,15 @@
-import { State } from "../types";
 import { createSelector } from "reselect";
 import { reduce } from "lodash";
 import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
 import { SelectionEntry } from "@aics/simularium-viewer/type-declarations/simularium/SelectionInterface";
 
-import { getAgentDisplayNamesAndStates } from "../trajectory/selectors";
-import { VisibilitySelectionMap } from "./types";
+import { getAgentDisplayNamesAndStates } from "../../trajectory/selectors";
+import { VisibilitySelectionMap } from "../types";
 
-// BASIC SELECTORS
-export const getSelections = (state: State) => state.selection;
-export const getSelectedFiles = (state: State) => state.selection.files;
-export const getCurrentTime = (state: State) => state.selection.time;
-export const getAgentsOnById = (state: State) => state.selection.agentIdsOn;
-export const getAgentColors = (state: State) => state.selection.agentColors;
-export const getVisibleAgentsNamesAndTags = (state: State) =>
-    state.selection.visibleAgentKeys;
-export const getHighlightedAgentsNamesAndTags = (state: State) =>
-    state.selection.highlightedAgentKeys;
-export const getNumberCollapsed = (state: State) =>
-    state.selection.numberPanelsCollapsed;
-
-// COMPOSED SELECTORS
+import {
+    getHighlightedAgentsNamesAndTags,
+    getVisibleAgentsNamesAndTags,
+} from "./basic";
 
 export const getHightLightedAgents = createSelector(
     [getHighlightedAgentsNamesAndTags, getAgentDisplayNamesAndStates],
@@ -113,3 +102,5 @@ export const getAgentsToHide = createSelector(
         );
     }
 );
+
+export * from "./basic";

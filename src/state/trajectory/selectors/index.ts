@@ -1,31 +1,21 @@
 import { createSelector } from "reselect";
 import { uniq, find } from "lodash";
-import { State } from "../types";
 
 import {
     isNetworkSimFileInterface,
     LocalSimFile,
     TrajectoryStateBranch,
     NetworkedSimFile,
-} from "./types";
+} from "../types";
 import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
-import TRAJECTORIES from "../../constants/networked-trajectories";
+import TRAJECTORIES from "../../../constants/networked-trajectories";
 
-// BASIC SELECTORS
-export const getTrajectory = (state: State) => state.trajectory;
-export const getPlotData = (state: State) => state.trajectory.plotData;
-export const getFirstFrameTimeOfCachedSimulation = (state: State) =>
-    state.trajectory.firstFrameTime;
-export const getLastFrameTimeOfCachedSimulation = (state: State) =>
-    state.trajectory.lastFrameTime;
-export const getNumFrames = (state: State) => state.trajectory.numFrames;
-export const getTimeStep = (state: State) => state.trajectory.timeStep;
-export const getTimeUnits = (state: State) => state.trajectory.timeUnits;
-export const getAgentIds = (state: State) => state.trajectory.agentIds;
-export const getSimulariumFile = (state: State) =>
-    state.trajectory.simulariumFile;
+import {
+    getSimulariumFile,
+    getTrajectory,
+    getAgentDisplayNamesAndStates,
+} from "./basic";
 
-// COMPOSED SELECTORS
 export const getIsNetworkedFile = createSelector(
     [getSimulariumFile],
     (simFile: LocalSimFile | NetworkedSimFile): boolean => {
@@ -43,9 +33,6 @@ export const getKeysOfTrajectory = createSelector(
     [getTrajectory],
     (trajectory: TrajectoryStateBranch): string[] => Object.keys(trajectory)
 );
-
-export const getAgentDisplayNamesAndStates = (state: State) =>
-    state.trajectory.agentUiNames;
 
 export const getAllTags = createSelector(
     [getAgentDisplayNamesAndStates],
@@ -91,3 +78,5 @@ export const getUiDisplayDataTree = createSelector(
         }));
     }
 );
+
+export * from "./basic";
