@@ -11,7 +11,7 @@ import {
     getVisibleAgentsNamesAndTags,
 } from "./basic";
 
-export const getHightLightedAgents = createSelector(
+export const getHighLightedAgents = createSelector(
     [getHighlightedAgentsNamesAndTags, getAgentDisplayNamesAndStates],
     (
         highlightedAgents: VisibilitySelectionMap,
