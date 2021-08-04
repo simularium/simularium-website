@@ -66,8 +66,8 @@ interface ViewerPanelProps {
     displayTimes: DisplayTimes;
     timeUnits: TimeUnits;
     isPlaying: boolean;
-    fileIsDraggedOverViewer: boolean;
-    viewerStatus: string;
+    fileIsDraggedOver: boolean;
+    status: string;
     numFrames: number;
     isBuffering: boolean;
     simulariumController: SimulariumController;
@@ -81,9 +81,9 @@ interface ViewerPanelProps {
     dragOverViewer: ActionCreator<DragOverViewerAction>;
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
     setAgentsVisible: ActionCreator<SetVisibleAction>;
-    setViewerStatus: ActionCreator<SetViewerStatusAction>;
+    setStatus: ActionCreator<SetViewerStatusAction>;
     setAllAgentColors: ActionCreator<SetAllColorsAction>;
-    viewerError: ViewerError;
+    error: ViewerError;
     setBuffering: ActionCreator<ToggleAction>;
 }
 
@@ -127,7 +127,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public componentDidMount() {
-        const { viewerError } = this.props;
+        const { error } = this.props;
         const browser = Bowser.getParser(window.navigator.userAgent);
         // Versions from https://caniuse.com/webgl2
         const isBrowserSupported = browser.satisfies({
@@ -167,27 +167,27 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             }, 200);
         }
 
-        if (viewerError) {
+        if (error) {
             return errorNotification({
-                message: viewerError.message,
-                htmlData: viewerError.htmlData,
-                onClose: viewerError.onClose,
+                message: error.message,
+                htmlData: error.htmlData,
+                onClose: error.onClose,
             });
         }
     }
 
     public componentDidUpdate(prevProps: ViewerPanelProps) {
-        const { viewerStatus, viewerError } = this.props;
+        const { status, error } = this.props;
         const current = this.centerContent.current;
         if (
-            viewerStatus === VIEWER_ERROR &&
-            prevProps.viewerStatus !== VIEWER_ERROR &&
-            viewerError.message
+            status === VIEWER_ERROR &&
+            prevProps.status !== VIEWER_ERROR &&
+            error.message
         ) {
             return errorNotification({
-                message: viewerError.message,
-                htmlData: viewerError.htmlData,
-                onClose: viewerError.onClose,
+                message: error.message,
+                htmlData: error.htmlData,
+                onClose: error.onClose,
             });
         }
         if (
@@ -267,8 +267,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     public receiveTimeChange(timeData: TimeData) {
         const {
             changeTime,
-            setViewerStatus,
-            viewerStatus,
+            setStatus,
+            status,
             lastFrameTime,
             numFrames,
             timeStep,
@@ -289,8 +289,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setBuffering(false),
         ];
 
-        if (viewerStatus !== VIEWER_SUCCESS) {
-            actions.push(setViewerStatus({ status: VIEWER_SUCCESS }));
+        if (status !== VIEWER_SUCCESS) {
+            actions.push(setStatus({ status: VIEWER_SUCCESS }));
         }
 
         const atLastFrame =
@@ -360,13 +360,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             lastFrameTime,
             simulariumController,
             selectionStateInfoForViewer,
-            setViewerStatus,
+            setStatus,
             timeStep,
             timeUnits,
             displayTimes,
             isBuffering,
             isPlaying,
-            viewerStatus,
+            status,
         } = this.props;
         return (
             <div
@@ -387,7 +387,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     agentColors={AGENT_COLORS}
                     loadInitialData={false}
                     onError={(error) => {
-                        setViewerStatus({
+                        setStatus({
                             status: VIEWER_ERROR,
                             errorMessage: error,
                         });
@@ -410,7 +410,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     firstFrameTime={firstFrameTime}
                     lastFrameTime={lastFrameTime}
                     loading={isBuffering}
-                    isEmpty={viewerStatus === VIEWER_EMPTY}
+                    isEmpty={status === VIEWER_EMPTY}
                 />
                 <ScaleBar label={this.state.scaleBarLabel} />
                 <CameraControls
@@ -442,9 +442,9 @@ function mapStateToProps(state: State) {
         displayTimes: getDisplayTimes(state),
         timeUnits: trajectoryStateBranch.selectors.getTimeUnits(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
-        viewerStatus: viewerStateBranch.selectors.getViewerStatus(state),
-        viewerError: viewerStateBranch.selectors.getViewerError(state),
-        fileIsDraggedOverViewer: viewerStateBranch.selectors.getFileDraggedOverViewer(
+        status: viewerStateBranch.selectors.getStatus(state),
+        error: viewerStateBranch.selectors.getError(state),
+        fileIsDraggedOver: viewerStateBranch.selectors.getFileDraggedOver(
             state
         ),
         isBuffering: viewerStateBranch.selectors.getIsBuffering(state),
@@ -460,7 +460,7 @@ const dispatchToPropsMap = {
     receiveAgentTypeIds: trajectoryStateBranch.actions.receiveAgentTypeIds,
     receiveAgentNamesAndStates:
         trajectoryStateBranch.actions.receiveAgentNamesAndStates,
-    setViewerStatus: viewerStateBranch.actions.setViewerStatus,
+    setStatus: viewerStateBranch.actions.setStatus,
     dragOverViewer: viewerStateBranch.actions.dragOverViewer,
     resetDragOverViewer: viewerStateBranch.actions.resetDragOverViewer,
     setBuffering: viewerStateBranch.actions.setBuffering,

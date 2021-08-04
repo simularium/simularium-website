@@ -11,7 +11,7 @@ import {
     getUiDisplayDataTree,
     getIsNetworkedFile,
 } from "../../state/trajectory/selectors";
-import { getViewerStatus } from "../../state/viewer/selectors";
+import { getStatus } from "../../state/viewer/selectors";
 import { State } from "../../state/types";
 import {
     getVisibleAgentsNamesAndTags,
@@ -134,7 +134,7 @@ function mapStateToProps(state: State) {
         payloadForSelectNone: convertUITreeDataToSelectNone(state),
         checkAllIsIntermediate: getCheckboxAllIsIntermediate(state),
         agentColors: getAgentColors(state),
-        viewerStatus: getViewerStatus(state),
+        viewerStatus: getStatus(state),
         isNetworkedFile: getIsNetworkedFile(state),
     };
 }

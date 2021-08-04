@@ -1,7 +1,7 @@
 import {
-    SET_VIEWER_STATUS,
-    DRAG_OVER_VIEWER,
-    RESET_DRAG_OVER_VIEWER,
+    SET_STATUS,
+    DRAG_FILE_OVER,
+    RESET_DRAG_FILE_OVER,
     SET_BUFFERING,
     SET_IS_PLAYING,
 } from "./constants";
@@ -13,24 +13,22 @@ import {
     ToggleAction,
 } from "./types";
 
-export function setViewerStatus(
-    payload: ViewerStatusInfo
-): SetViewerStatusAction {
+export function setStatus(payload: ViewerStatusInfo): SetViewerStatusAction {
     return {
         payload,
-        type: SET_VIEWER_STATUS,
+        type: SET_STATUS,
     };
 }
 
 export function dragOverViewer(): DragOverViewerAction {
     return {
-        type: DRAG_OVER_VIEWER,
+        type: DRAG_FILE_OVER,
     };
 }
 
 export function resetDragOverViewer(): ResetDragOverViewerAction {
     return {
-        type: RESET_DRAG_OVER_VIEWER,
+        type: RESET_DRAG_FILE_OVER,
     };
 }
 
