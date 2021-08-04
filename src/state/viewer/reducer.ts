@@ -4,11 +4,11 @@ import { TypeToDescriptionMap } from "../types";
 import { makeReducer } from "../util";
 
 import {
-    SET_VIEWER_STATUS,
+    SET_STATUS,
     VIEWER_ERROR,
     VIEWER_EMPTY,
-    DRAG_OVER_VIEWER,
-    RESET_DRAG_OVER_VIEWER,
+    DRAG_FILE_OVER,
+    RESET_DRAG_FILE_OVER,
     SET_BUFFERING,
     SET_IS_PLAYING,
 } from "./constants";
@@ -21,21 +21,21 @@ import {
 } from "./types";
 
 export const initialState = {
-    viewerStatus: VIEWER_EMPTY,
-    viewerError: null,
-    draggedOverViewer: false,
+    status: VIEWER_EMPTY,
+    error: null,
+    fileDraggedOver: false,
     isBuffering: false,
     isPlaying: false,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
-    [SET_VIEWER_STATUS]: {
+    [SET_STATUS]: {
         accepts: (action: AnyAction): action is SetViewerStatusAction =>
-            action.type === SET_VIEWER_STATUS,
+            action.type === SET_STATUS,
         perform: (state: ViewerStateBranch, action: SetViewerStatusAction) => ({
             ...state,
-            viewerStatus: action.payload.status,
-            viewerError:
+            status: action.payload.status,
+            error:
                 action.payload.status === VIEWER_ERROR
                     ? {
                           message: action.payload.errorMessage,
@@ -45,20 +45,20 @@ const actionToConfigMap: TypeToDescriptionMap = {
                     : "",
         }),
     },
-    [DRAG_OVER_VIEWER]: {
+    [DRAG_FILE_OVER]: {
         accepts: (action: AnyAction): action is DragOverViewerAction =>
-            action.type === DRAG_OVER_VIEWER,
+            action.type === DRAG_FILE_OVER,
         perform: (state: ViewerStateBranch) => ({
             ...state,
-            draggedOverViewer: true,
+            fileDraggedOver: true,
         }),
     },
-    [RESET_DRAG_OVER_VIEWER]: {
+    [RESET_DRAG_FILE_OVER]: {
         accepts: (action: AnyAction): action is ResetDragOverViewerAction =>
-            action.type === RESET_DRAG_OVER_VIEWER,
+            action.type === RESET_DRAG_FILE_OVER,
         perform: (state: ViewerStateBranch) => ({
             ...state,
-            draggedOverViewer: false,
+            fileDraggedOver: false,
         }),
     },
     [SET_BUFFERING]: {
