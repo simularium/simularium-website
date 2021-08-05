@@ -114,7 +114,7 @@ describe("selection composed selectors", () => {
         });
     });
     describe("getAgentsToHide", () => {
-        it("returns an array of agent names that are not currently selected", () => {
+        it("returns an array of agent names and states that are not currently visible", () => {
             const stateWithSelection = {
                 ...mockState,
                 selection: {
@@ -122,41 +122,19 @@ describe("selection composed selectors", () => {
                     agentVisibilityMap: {
                         agent1: ["agent1", "v-agent2-state2"],
                         agent2: [""],
+                        agent3: [],
                     },
                 },
             };
-            const hiddenNames = getAgentsToHide(stateWithSelection);
-            expect(hiddenNames).toBeInstanceOf(Array);
-            expect(hiddenNames).toEqual([
+            const agentsToHide = getAgentsToHide(stateWithSelection);
+            expect(agentsToHide).toBeInstanceOf(Array);
+            expect(agentsToHide).toEqual([
                 { name: "agent1", tags: ["state1", ""] },
                 { name: "agent2", tags: ["state1", "state2"] },
+                { name: "agent3", tags: [] },
             ]);
         });
-        it("returns an array containing the agent name and no tags if the visible agent has no display states and no states that are supposed to be visible", () => {
-            const stateWithSelection = {
-                ...mockState,
-                selection: {
-                    ...mockState.selection,
-                    agentVisibilityMap: { agent3: [] },
-                },
-            };
-            const hiddenNames = getAgentsToHide(stateWithSelection);
-            expect(hiddenNames).toBeInstanceOf(Array);
-            expect(hiddenNames).toEqual([{ name: "agent3", tags: [] }]);
-        });
-        it("returns an empty array if the visible agent has no display states but has a state that is supposed to be visible", () => {
-            const stateWithSelection = {
-                ...mockState,
-                selection: {
-                    ...mockState.selection,
-                    agentVisibilityMap: { agent3: ["made-up-state"] },
-                },
-            };
-            const hiddenNames = getAgentsToHide(stateWithSelection);
-            expect(hiddenNames).toBeInstanceOf(Array);
-            expect(hiddenNames).toEqual([]);
-        });
-        it("returns an empty array if all states of agents are visible", () => {
+        it("returns an empty array if all agents and their states are visible", () => {
             const stateWithSelection = {
                 ...mockState,
                 selection: {
@@ -164,12 +142,50 @@ describe("selection composed selectors", () => {
                     agentVisibilityMap: {
                         agent1: ["state1", ""],
                         agent2: ["state1", "state2", ""],
+                        agent3: [""],
                     },
                 },
             };
-            const hiddenNames = getAgentsToHide(stateWithSelection);
-            expect(hiddenNames).toBeInstanceOf(Array);
-            expect(hiddenNames).toEqual([]);
+            const agentsToHide = getAgentsToHide(stateWithSelection);
+            expect(agentsToHide).toBeInstanceOf(Array);
+            expect(agentsToHide).toEqual([]);
+        });
+        it("does not include an agent in the return array if the agent has no display states but has a state that is supposed to be visible", () => {
+            const stateWithSelection = {
+                ...mockState,
+                selection: {
+                    ...mockState.selection,
+                    agentVisibilityMap: {
+                        agent1: ["state1"],
+                        agent2: ["state1", "state2"],
+                        agent3: ["made-up-state"],
+                    },
+                },
+            };
+            const agentsToHide = getAgentsToHide(stateWithSelection);
+            expect(agentsToHide).toBeInstanceOf(Array);
+            expect(agentsToHide).toEqual([
+                { name: "agent1", tags: [""] },
+                { name: "agent2", tags: [""] },
+            ]);
+        });
+        it("does not include an agent in the return array if the agent is not in the agentVisibilityMap for some reason", () => {
+            const stateWithSelection = {
+                ...mockState,
+                selection: {
+                    ...mockState.selection,
+                    agentVisibilityMap: {
+                        agent1: ["state1"],
+                        agent2: ["state1", "state2"],
+                    },
+                },
+            };
+            const agentsToHide = getAgentsToHide(stateWithSelection);
+            expect(agentsToHide).toBeInstanceOf(Array);
+            expect(agentsToHide).toEqual([
+                { name: "agent1", tags: [""] },
+                { name: "agent2", tags: [""] },
+            ]);
         });
     });
 });
