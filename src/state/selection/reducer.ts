@@ -54,7 +54,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
         ) => {
             return {
                 ...state,
-                visibleAgentsNamesAndTags: action.payload,
+                agentVisibilityMap: action.payload,
             };
         },
     },
@@ -69,8 +69,8 @@ const actionToConfigMap: TypeToDescriptionMap = {
         ) => {
             return {
                 ...state,
-                visibleAgentsNamesAndTags: {
-                    ...state.visibleAgentsNamesAndTags,
+                agentVisibilityMap: {
+                    ...state.agentVisibilityMap,
                     ...action.payload,
                 },
             };
