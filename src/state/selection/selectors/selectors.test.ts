@@ -45,7 +45,7 @@ describe("selection composed selectors", () => {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
-                    highlightedAgentKeys: {
+                    highlightedAgentsNamesAndTags: {
                         agent1: ["state1", "hl-agent2-state2"],
                     },
                 },
@@ -56,12 +56,12 @@ describe("selection composed selectors", () => {
                 { name: "agent1", tags: ["state1"] },
             ]);
         });
-        it("returns an array of agent names when a highlighted agent has no display states", () => {
+        it("returns an array of agent names when a highlighted agent has no display states but has a tag", () => {
             const stateWithSelection = {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
-                    highlightedAgentKeys: {
+                    highlightedAgentsNamesAndTags: {
                         agent3: ["agent3"],
                     },
                 },
@@ -70,12 +70,26 @@ describe("selection composed selectors", () => {
             expect(highlightedNames).toBeInstanceOf(Array);
             expect(highlightedNames).toEqual([{ name: "agent3", tags: [] }]);
         });
+        it("returns an empty array when the agent has no display states and no tags", () => {
+            const stateWithSelection = {
+                ...mockState,
+                selection: {
+                    ...mockState.selection,
+                    highlightedAgentsNamesAndTags: {
+                        agent3: [],
+                    },
+                },
+            };
+            const highlightedNames = getHighLightedAgents(stateWithSelection);
+            expect(highlightedNames).toBeInstanceOf(Array);
+            expect(highlightedNames).toEqual([]);
+        });
         it("returns an array of agent names and tags, including an unmodified tag if present", () => {
             const stateWithSelection = {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
-                    highlightedAgentKeys: {
+                    highlightedAgentsNamesAndTags: {
                         agent2: ["", "state1"],
                     },
                 },
@@ -91,7 +105,7 @@ describe("selection composed selectors", () => {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
-                    highlightedAgentKeys: { agent1: ["blah"] },
+                    highlightedAgentsNamesAndTags: { agent1: ["blah"] },
                 },
             };
             const highlightedNames = getHighLightedAgents(stateWithSelection);
@@ -99,20 +113,63 @@ describe("selection composed selectors", () => {
             expect(highlightedNames).toEqual([]);
         });
     });
-    describe("getAgentNamesToHide", () => {
+    describe("getAgentsToHide", () => {
         it("returns an array of agent names that are not currently selected", () => {
             const stateWithSelection = {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
-                    visibleAgentKeys: { agent1: ["agent1", "v-agent2-state2"] },
+                    visibleAgentsNamesAndTags: {
+                        agent1: ["agent1", "v-agent2-state2"],
+                        agent2: [""],
+                    },
                 },
             };
             const hiddenNames = getAgentsToHide(stateWithSelection);
             expect(hiddenNames).toBeInstanceOf(Array);
             expect(hiddenNames).toEqual([
                 { name: "agent1", tags: ["state1", ""] },
+                { name: "agent2", tags: ["state1", "state2"] },
             ]);
+        });
+        it("returns an array containing the agent name and no tags if the visible agent has no display states and no states that are supposed to be visible", () => {
+            const stateWithSelection = {
+                ...mockState,
+                selection: {
+                    ...mockState.selection,
+                    visibleAgentsNamesAndTags: { agent3: [] },
+                },
+            };
+            const hiddenNames = getAgentsToHide(stateWithSelection);
+            expect(hiddenNames).toBeInstanceOf(Array);
+            expect(hiddenNames).toEqual([{ name: "agent3", tags: [] }]);
+        });
+        it("returns an empty array if the visible agent has no display states but has a state that is supposed to be visible", () => {
+            const stateWithSelection = {
+                ...mockState,
+                selection: {
+                    ...mockState.selection,
+                    visibleAgentsNamesAndTags: { agent3: ["made-up-state"] },
+                },
+            };
+            const hiddenNames = getAgentsToHide(stateWithSelection);
+            expect(hiddenNames).toBeInstanceOf(Array);
+            expect(hiddenNames).toEqual([]);
+        });
+        it("returns an empty array if all states of agents are visible", () => {
+            const stateWithSelection = {
+                ...mockState,
+                selection: {
+                    ...mockState.selection,
+                    visibleAgentsNamesAndTags: {
+                        agent1: ["state1", ""],
+                        agent2: ["state1", "state2", ""],
+                    },
+                },
+            };
+            const hiddenNames = getAgentsToHide(stateWithSelection);
+            expect(hiddenNames).toBeInstanceOf(Array);
+            expect(hiddenNames).toEqual([]);
         });
     });
 });
