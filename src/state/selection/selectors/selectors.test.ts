@@ -45,7 +45,7 @@ describe("selection composed selectors", () => {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
-                    highlightedAgentsNamesAndTags: {
+                    agentHighlightMap: {
                         agent1: ["state1", "hl-agent2-state2"],
                     },
                 },
@@ -61,7 +61,7 @@ describe("selection composed selectors", () => {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
-                    highlightedAgentsNamesAndTags: {
+                    agentHighlightMap: {
                         agent3: ["agent3"],
                     },
                 },
@@ -75,7 +75,7 @@ describe("selection composed selectors", () => {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
-                    highlightedAgentsNamesAndTags: {
+                    agentHighlightMap: {
                         agent3: [],
                     },
                 },
@@ -89,7 +89,7 @@ describe("selection composed selectors", () => {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
-                    highlightedAgentsNamesAndTags: {
+                    agentHighlightMap: {
                         agent2: ["", "state1"],
                     },
                 },
@@ -105,7 +105,7 @@ describe("selection composed selectors", () => {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
-                    highlightedAgentsNamesAndTags: { agent1: ["blah"] },
+                    agentHighlightMap: { agent1: ["blah"] },
                 },
             };
             const highlightedNames = getHighLightedAgents(stateWithSelection);
@@ -119,7 +119,7 @@ describe("selection composed selectors", () => {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
-                    visibleAgentsNamesAndTags: {
+                    agentVisibilityMap: {
                         agent1: ["agent1", "v-agent2-state2"],
                         agent2: [""],
                     },
@@ -137,7 +137,7 @@ describe("selection composed selectors", () => {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
-                    visibleAgentsNamesAndTags: { agent3: [] },
+                    agentVisibilityMap: { agent3: [] },
                 },
             };
             const hiddenNames = getAgentsToHide(stateWithSelection);
@@ -149,7 +149,7 @@ describe("selection composed selectors", () => {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
-                    visibleAgentsNamesAndTags: { agent3: ["made-up-state"] },
+                    agentVisibilityMap: { agent3: ["made-up-state"] },
                 },
             };
             const hiddenNames = getAgentsToHide(stateWithSelection);
@@ -161,7 +161,7 @@ describe("selection composed selectors", () => {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
-                    visibleAgentsNamesAndTags: {
+                    agentVisibilityMap: {
                         agent1: ["state1", ""],
                         agent2: ["state1", "state2", ""],
                     },

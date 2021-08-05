@@ -6,13 +6,10 @@ import { SelectionEntry } from "@aics/simularium-viewer/type-declarations/simula
 import { getAgentDisplayNamesAndStates } from "../../trajectory/selectors";
 import { VisibilitySelectionMap } from "../types";
 
-import {
-    getHighlightedAgentsNamesAndTags,
-    getVisibleAgentsNamesAndTags,
-} from "./basic";
+import { getAgentHighlightMap, getAgentVisibilityMap } from "./basic";
 
 export const getHighLightedAgents = createSelector(
-    [getHighlightedAgentsNamesAndTags, getAgentDisplayNamesAndStates],
+    [getAgentHighlightMap, getAgentDisplayNamesAndStates],
     (
         highlightedAgents: VisibilitySelectionMap,
         allAgents: UIDisplayData
@@ -58,21 +55,24 @@ export const getHighLightedAgents = createSelector(
 );
 
 export const getAgentsToHide = createSelector(
-    [getVisibleAgentsNamesAndTags, getAgentDisplayNamesAndStates],
+    [getAgentVisibilityMap, getAgentDisplayNamesAndStates],
     (
-        currentlyOn: VisibilitySelectionMap,
-        allAgents: UIDisplayData
+        agentVisibilityMap: VisibilitySelectionMap,
+        agentDisplayData: UIDisplayData
     ): SelectionEntry[] => {
         const init: SelectionEntry[] = [];
         return reduce(
-            allAgents,
+            agentDisplayData,
             (acc, agent) => {
-                if (!currentlyOn[agent.name]) {
+                // Theoretically, this block should never be hit because `agentVisibilityMap`
+                // should always contain all the agents in `agentDisplayData`
+                if (!agentVisibilityMap[agent.name]) {
                     return acc;
                 }
+
                 if (!agent.displayStates.length) {
                     // if no tags and nothing is on, include agent name
-                    if (!currentlyOn[agent.name].length) {
+                    if (!agentVisibilityMap[agent.name].length) {
                         acc.push({
                             name: agent.name,
                             tags: [],
@@ -81,11 +81,12 @@ export const getAgentsToHide = createSelector(
                 } else {
                     const hiddenTags = agent.displayStates
                         .filter(
-                            (tag) => !currentlyOn[agent.name].includes(tag.id)
+                            (tag) =>
+                                !agentVisibilityMap[agent.name].includes(tag.id)
                         )
                         .map((displayState) => displayState.id);
                     // if unmodified state isn't checked, add to hidden tags
-                    if (!currentlyOn[agent.name].includes("")) {
+                    if (!agentVisibilityMap[agent.name].includes("")) {
                         hiddenTags.push("");
                     }
                     if (hiddenTags.length) {

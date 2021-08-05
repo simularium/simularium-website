@@ -28,8 +28,8 @@ import {
 export const initialState = {
     time: 0,
     numberPanelsCollapsed: 0,
-    visibleAgentsNamesAndTags: {},
-    highlightedAgentsNamesAndTags: {},
+    agentVisibilityMap: {},
+    agentHighlightMap: {},
     agentColors: {},
 };
 
@@ -40,10 +40,8 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: SelectionStateBranch) => {
             return {
                 ...state,
-                visibleAgentsNamesAndTags:
-                    initialState.visibleAgentsNamesAndTags,
-                highlightedAgentsNamesAndTags:
-                    initialState.highlightedAgentsNamesAndTags,
+                agentVisibilityMap: initialState.agentVisibilityMap,
+                agentHighlightMap: initialState.agentHighlightMap,
             };
         },
     },
@@ -120,8 +118,8 @@ const actionToConfigMap: TypeToDescriptionMap = {
             action: ChangeAgentsRenderingStateAction
         ) => ({
             ...state,
-            highlightedAgentsNamesAndTags: {
-                ...state.highlightedAgentsNamesAndTags,
+            agentHighlightMap: {
+                ...state.agentHighlightMap,
                 ...action.payload,
             },
         }),

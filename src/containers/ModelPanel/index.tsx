@@ -14,8 +14,8 @@ import {
 import { getStatus } from "../../state/viewer/selectors";
 import { State } from "../../state/types";
 import {
-    getVisibleAgentsNamesAndTags,
-    getHighlightedAgentsNamesAndTags,
+    getAgentVisibilityMap,
+    getAgentHighlightMap,
     getAgentColors,
 } from "../../state/selection/selectors";
 import {
@@ -51,8 +51,8 @@ const styles = require("./style.css");
 
 interface ModelPanelProps {
     uiDisplayDataTree: AgentDisplayNode[];
-    highlightedAgentsNamesAndTags: VisibilitySelectionMap;
-    visibleAgentsNamesAndTags: VisibilitySelectionMap;
+    agentHighlightMap: VisibilitySelectionMap;
+    agentVisibilityMap: VisibilitySelectionMap;
     turnAgentsOnByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
     highlightAgentsByDisplayKey: ActionCreator<
         ChangeAgentsRenderingStateAction
@@ -70,11 +70,11 @@ interface ModelPanelProps {
 class ModelPanel extends React.Component<ModelPanelProps, {}> {
     public render(): JSX.Element {
         const {
-            visibleAgentsNamesAndTags,
+            agentVisibilityMap,
             uiDisplayDataTree,
             turnAgentsOnByDisplayKey,
             highlightAgentsByDisplayKey,
-            highlightedAgentsNamesAndTags,
+            agentHighlightMap,
             setAgentsVisible,
             payloadForSelectAll,
             payloadForSelectNone,
@@ -88,9 +88,9 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
             <CheckBoxTree
                 treeData={uiDisplayDataTree}
                 handleAgentCheck={turnAgentsOnByDisplayKey}
-                agentsChecked={visibleAgentsNamesAndTags}
+                agentsChecked={agentVisibilityMap}
                 handleHighlight={highlightAgentsByDisplayKey}
-                agentsHighlighted={highlightedAgentsNamesAndTags}
+                agentsHighlighted={agentHighlightMap}
                 setAgentsVisible={setAgentsVisible}
                 payloadForSelectAll={payloadForSelectAll}
                 payloadForSelectNone={payloadForSelectNone}
@@ -127,8 +127,8 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
 
 function mapStateToProps(state: State) {
     return {
-        visibleAgentsNamesAndTags: getVisibleAgentsNamesAndTags(state),
-        highlightedAgentsNamesAndTags: getHighlightedAgentsNamesAndTags(state),
+        agentVisibilityMap: getAgentVisibilityMap(state),
+        agentHighlightMap: getAgentHighlightMap(state),
         uiDisplayDataTree: getUiDisplayDataTree(state),
         payloadForSelectAll: convertUITreeDataToSelectAll(state),
         payloadForSelectNone: convertUITreeDataToSelectNone(state),
