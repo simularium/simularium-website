@@ -51,8 +51,8 @@ const styles = require("./style.css");
 
 interface ModelPanelProps {
     uiDisplayDataTree: AgentDisplayNode[];
-    highlightedAgentKeys: VisibilitySelectionMap;
-    visibleAgentKeys: VisibilitySelectionMap;
+    highlightedAgentsNamesAndTags: VisibilitySelectionMap;
+    visibleAgentsNamesAndTags: VisibilitySelectionMap;
     turnAgentsOnByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
     highlightAgentsByDisplayKey: ActionCreator<
         ChangeAgentsRenderingStateAction
@@ -70,11 +70,11 @@ interface ModelPanelProps {
 class ModelPanel extends React.Component<ModelPanelProps, {}> {
     public render(): JSX.Element {
         const {
-            visibleAgentKeys,
+            visibleAgentsNamesAndTags,
             uiDisplayDataTree,
             turnAgentsOnByDisplayKey,
             highlightAgentsByDisplayKey,
-            highlightedAgentKeys,
+            highlightedAgentsNamesAndTags,
             setAgentsVisible,
             payloadForSelectAll,
             payloadForSelectNone,
@@ -88,9 +88,9 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
             <CheckBoxTree
                 treeData={uiDisplayDataTree}
                 handleAgentCheck={turnAgentsOnByDisplayKey}
-                agentsChecked={visibleAgentKeys}
+                agentsChecked={visibleAgentsNamesAndTags}
                 handleHighlight={highlightAgentsByDisplayKey}
-                agentsHighlighted={highlightedAgentKeys}
+                agentsHighlighted={highlightedAgentsNamesAndTags}
                 setAgentsVisible={setAgentsVisible}
                 payloadForSelectAll={payloadForSelectAll}
                 payloadForSelectNone={payloadForSelectNone}
@@ -127,8 +127,8 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
 
 function mapStateToProps(state: State) {
     return {
-        visibleAgentKeys: getVisibleAgentsNamesAndTags(state),
-        highlightedAgentKeys: getHighlightedAgentsNamesAndTags(state),
+        visibleAgentsNamesAndTags: getVisibleAgentsNamesAndTags(state),
+        highlightedAgentsNamesAndTags: getHighlightedAgentsNamesAndTags(state),
         uiDisplayDataTree: getUiDisplayDataTree(state),
         payloadForSelectAll: convertUITreeDataToSelectAll(state),
         payloadForSelectNone: convertUITreeDataToSelectNone(state),
