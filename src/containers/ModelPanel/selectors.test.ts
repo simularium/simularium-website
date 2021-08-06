@@ -29,6 +29,10 @@ const mockUiDisplayData = [
                 label: "<unmodified>",
                 value: "",
             },
+            {
+                label: "G0/G1 phase",
+                value: "G0/G1 phase",
+            },
         ],
     },
     {
@@ -46,7 +50,7 @@ describe("ModelPanel selectors", () => {
             );
             const expected = {
                 Macrophage: ["", "G0/G1 phase"],
-                Neutrophil: [""],
+                Neutrophil: ["", "G0/G1 phase"],
                 "Dendritic cell": ["Dendritic cell"],
             };
             expect(result).toStrictEqual(expected);
@@ -68,12 +72,24 @@ describe("ModelPanel selectors", () => {
     });
 
     describe("getIsSharedCheckboxIndeterminate", () => {
-        const mockAgentVisibilityMap = {
-            Macrophage: [""],
-            Neutrophil: [],
-            "Dendritic cell": [],
-        };
         it("Returns true if an agent has children in indeterminate state", () => {
+            const mockAgentVisibilityMap = {
+                Macrophage: [""],
+                Neutrophil: [],
+                "Dendritic cell": [],
+            };
+            const result = getIsSharedCheckboxIndeterminate.resultFunc(
+                mockUiDisplayData,
+                mockAgentVisibilityMap
+            );
+            expect(result).toBe(true);
+        });
+        it("Returns true if one agent is invisible but all states of the other agents are visible", () => {
+            const mockAgentVisibilityMap = {
+                Macrophage: ["", "G0/G1 phase"],
+                Neutrophil: ["", "G0/G1 phase"],
+                "Dendritic cell": [],
+            };
             const result = getIsSharedCheckboxIndeterminate.resultFunc(
                 mockUiDisplayData,
                 mockAgentVisibilityMap
