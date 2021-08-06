@@ -34,22 +34,28 @@ export const getSelectNoneVisibilityMap = createSelector(
     }
 );
 
-// Determine if the shared checkbox should be partially checked (in "indeterminate" state)
+// Determines if the shared checkbox should be partially checked (in "indeterminate" state)
 export const getIsSharedCheckboxIndeterminate = createSelector(
     [getUiDisplayDataTree, getAgentVisibilityMap],
-    (treeData, agentVisibilityMap): boolean => {
+    (
+        treeData: AgentDisplayNode[],
+        agentVisibilityMap: VisibilitySelectionMap
+    ): boolean => {
         let childrenIndeterminate = false;
 
         // iterate through, check items with children, and also get list of
         // agents with no children
         const agentsWithNoChildren = treeData.filter((agent) => {
-            if (agentVisibilityMap[agent.key] && agent.children.length) {
-                childrenIndeterminate =
-                    agentVisibilityMap[agent.key].length <
-                        agent.children.length &&
-                    agentVisibilityMap[agent.key].length > 0;
+            const visibleStates = agentVisibilityMap[agent.key];
+            if (visibleStates && agent.children.length) {
+                const someStatesVisible =
+                    visibleStates.length < agent.children.length &&
+                    visibleStates.length > 0;
+                if (someStatesVisible) {
+                    childrenIndeterminate = true;
+                }
                 return false;
-            } else if (agentVisibilityMap[agent.key]) {
+            } else if (visibleStates) {
                 return true;
             }
         });

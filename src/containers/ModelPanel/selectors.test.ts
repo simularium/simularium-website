@@ -68,6 +68,17 @@ describe("ModelPanel selectors", () => {
     });
 
     describe("getIsSharedCheckboxIndeterminate", () => {
-        it("", () => {});
+        const mockAgentVisibilityMap = {
+            Macrophage: [""],
+            Neutrophil: [],
+            "Dendritic cell": [],
+        };
+        it("Returns true if an agent has children in indeterminate state", () => {
+            const result = getIsSharedCheckboxIndeterminate.resultFunc(
+                mockUiDisplayData,
+                mockAgentVisibilityMap
+            );
+            expect(result).toBe(true);
+        });
     });
 });
