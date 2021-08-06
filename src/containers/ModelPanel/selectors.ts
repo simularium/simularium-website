@@ -34,7 +34,7 @@ export const convertUITreeDataToSelectNone = createSelector(
     }
 );
 
-// Determine if the shared checkbox should be partially checked
+// Determine if the shared checkbox should be partially checked (in "indeterminate" state)
 export const getIsSharedCheckboxIndeterminate = createSelector(
     [getUiDisplayDataTree, getAgentVisibilityMap],
     (treeData, visibleAgents): boolean => {
@@ -54,7 +54,7 @@ export const getIsSharedCheckboxIndeterminate = createSelector(
         });
 
         if (childrenIndeterminate) {
-            // if there are children in intermediate state, just return that, no other checks needed
+            // if there are children in indeterminate state, just return that, no other checks needed
             return childrenIndeterminate;
         }
         // otherwise, check agentsWithNoChildren, see if they're not all on or all off
