@@ -84,7 +84,19 @@ describe("ModelPanel selectors", () => {
             );
             expect(result).toBe(true);
         });
-        it("Returns true if one agent is invisible but all states of the other agents are visible", () => {
+        it("Returns true if one agent with display states is invisible but all states of the other agents are visible", () => {
+            const mockAgentVisibilityMap = {
+                Macrophage: ["", "G0/G1 phase"],
+                Neutrophil: [],
+                "Dendritic cell": ["Dendritic cell"],
+            };
+            const result = getIsSharedCheckboxIndeterminate.resultFunc(
+                mockUiDisplayData,
+                mockAgentVisibilityMap
+            );
+            expect(result).toBe(true);
+        });
+        it("Returns true if one agent without display states is invisible but all states of the other agents are visible", () => {
             const mockAgentVisibilityMap = {
                 Macrophage: ["", "G0/G1 phase"],
                 Neutrophil: ["", "G0/G1 phase"],
@@ -95,6 +107,30 @@ describe("ModelPanel selectors", () => {
                 mockAgentVisibilityMap
             );
             expect(result).toBe(true);
+        });
+        it("Returns false if all states of all agents are visible", () => {
+            const mockAgentVisibilityMap = {
+                Macrophage: ["", "G0/G1 phase"],
+                Neutrophil: ["", "G0/G1 phase"],
+                "Dendritic cell": ["Dendritic cell"],
+            };
+            const result = getIsSharedCheckboxIndeterminate.resultFunc(
+                mockUiDisplayData,
+                mockAgentVisibilityMap
+            );
+            expect(result).toBe(false);
+        });
+        it("Returns false if all states of all agents are invisible", () => {
+            const mockAgentVisibilityMap = {
+                Macrophage: [],
+                Neutrophil: [],
+                "Dendritic cell": [],
+            };
+            const result = getIsSharedCheckboxIndeterminate.resultFunc(
+                mockUiDisplayData,
+                mockAgentVisibilityMap
+            );
+            expect(result).toBe(false);
         });
     });
 });
