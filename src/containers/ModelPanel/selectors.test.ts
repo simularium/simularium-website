@@ -1,8 +1,8 @@
 import { initialState } from "../../state";
 import { State } from "../../state/types";
 import {
-    convertUITreeDataToSelectAll,
-    convertUITreeDataToSelectNone,
+    getSelectAllVisibilityMap,
+    getSelectNoneVisibilityMap,
     getIsSharedCheckboxIndeterminate,
 } from "./selectors";
 
@@ -39,9 +39,9 @@ const mockUiDisplayData = [
 ];
 
 describe("ModelPanel selectors", () => {
-    describe("convertUITreeDataToSelectAll", () => {
+    describe("getSelectAllVisibilityMap", () => {
         it("Returns an agent visibility map with all possible states", () => {
-            const result = convertUITreeDataToSelectAll.resultFunc(
+            const result = getSelectAllVisibilityMap.resultFunc(
                 mockUiDisplayData
             );
             const expected = {
@@ -52,9 +52,10 @@ describe("ModelPanel selectors", () => {
             expect(result).toStrictEqual(expected);
         });
     });
-    describe("convertUITreeDataToSelectNone", () => {
+
+    describe("getSelectNoneVisibilityMap", () => {
         it("Returns an agent visibility map with none of the possible states", () => {
-            const result = convertUITreeDataToSelectNone.resultFunc(
+            const result = getSelectNoneVisibilityMap.resultFunc(
                 mockUiDisplayData
             );
             const expected = {
@@ -65,6 +66,7 @@ describe("ModelPanel selectors", () => {
             expect(result).toStrictEqual(expected);
         });
     });
+
     describe("getIsSharedCheckboxIndeterminate", () => {
         it("", () => {});
     });

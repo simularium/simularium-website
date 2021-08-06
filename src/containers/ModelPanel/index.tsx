@@ -31,8 +31,8 @@ import {
 } from "../../state/selection/types";
 import CheckBoxTree, { AgentDisplayNode } from "../../components/CheckBoxTree";
 import {
-    convertUITreeDataToSelectAll,
-    convertUITreeDataToSelectNone,
+    getSelectAllVisibilityMap,
+    getSelectNoneVisibilityMap,
     getIsSharedCheckboxIndeterminate,
 } from "./selectors";
 import {
@@ -130,8 +130,8 @@ function mapStateToProps(state: State) {
         agentVisibilityMap: getAgentVisibilityMap(state),
         agentHighlightMap: getAgentHighlightMap(state),
         uiDisplayDataTree: getUiDisplayDataTree(state),
-        payloadForSelectAll: convertUITreeDataToSelectAll(state),
-        payloadForSelectNone: convertUITreeDataToSelectNone(state),
+        payloadForSelectAll: getSelectAllVisibilityMap(state),
+        payloadForSelectNone: getSelectNoneVisibilityMap(state),
         isSharedCheckboxIndeterminate: getIsSharedCheckboxIndeterminate(state),
         agentColors: getAgentColors(state),
         viewerStatus: getStatus(state),

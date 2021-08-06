@@ -5,7 +5,7 @@ import { getAgentVisibilityMap } from "../../state/selection/selectors";
 import { VisibilitySelectionMap } from "../../state/selection/types";
 
 // Returns an agent visibility map that indicates all states should be visible
-export const convertUITreeDataToSelectAll = createSelector(
+export const getSelectAllVisibilityMap = createSelector(
     [getUiDisplayDataTree],
     (treeData: AgentDisplayNode[]): VisibilitySelectionMap => {
         const returnData: VisibilitySelectionMap = {};
@@ -23,7 +23,7 @@ export const convertUITreeDataToSelectAll = createSelector(
 );
 
 // Returns an agent visibility map that indicates no states should be visible
-export const convertUITreeDataToSelectNone = createSelector(
+export const getSelectNoneVisibilityMap = createSelector(
     [getUiDisplayDataTree],
     (treeData: AgentDisplayNode[]): VisibilitySelectionMap => {
         const returnData: VisibilitySelectionMap = {};
@@ -37,18 +37,19 @@ export const convertUITreeDataToSelectNone = createSelector(
 // Determine if the shared checkbox should be partially checked (in "indeterminate" state)
 export const getIsSharedCheckboxIndeterminate = createSelector(
     [getUiDisplayDataTree, getAgentVisibilityMap],
-    (treeData, visibleAgents): boolean => {
+    (treeData, agentVisibilityMap): boolean => {
         let childrenIndeterminate = false;
 
         // iterate through, check items with children, and also get list of
         // agents with no children
         const agentsWithNoChildren = treeData.filter((agent) => {
-            if (visibleAgents[agent.key] && agent.children.length) {
+            if (agentVisibilityMap[agent.key] && agent.children.length) {
                 childrenIndeterminate =
-                    visibleAgents[agent.key].length < agent.children.length &&
-                    visibleAgents[agent.key].length > 0;
+                    agentVisibilityMap[agent.key].length <
+                        agent.children.length &&
+                    agentVisibilityMap[agent.key].length > 0;
                 return false;
-            } else if (visibleAgents[agent.key]) {
+            } else if (agentVisibilityMap[agent.key]) {
                 return true;
             }
         });
@@ -59,7 +60,7 @@ export const getIsSharedCheckboxIndeterminate = createSelector(
         }
         // otherwise, check agentsWithNoChildren, see if they're not all on or all off
         const agentsWithNoChildrenOn = agentsWithNoChildren.filter((agent) => {
-            return visibleAgents[agent.key].length === 1; // only top level agent, and it's checked
+            return agentVisibilityMap[agent.key].length === 1; // only top level agent, and it's checked
         });
         return (
             agentsWithNoChildrenOn.length > 0 &&
