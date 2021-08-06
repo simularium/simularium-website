@@ -33,7 +33,7 @@ import CheckBoxTree, { AgentDisplayNode } from "../../components/CheckBoxTree";
 import {
     convertUITreeDataToSelectAll,
     convertUITreeDataToSelectNone,
-    getCheckboxAllIsIntermediate,
+    getIsSharedCheckboxIndeterminate,
 } from "./selectors";
 import {
     VIEWER_EMPTY,
@@ -60,7 +60,7 @@ interface ModelPanelProps {
     setAgentsVisible: ActionCreator<SetVisibleAction>;
     payloadForSelectAll: VisibilitySelectionMap;
     payloadForSelectNone: VisibilitySelectionMap;
-    checkAllIsIntermediate: boolean;
+    isSharedCheckboxIndeterminate: boolean;
     agentColors: AgentColorMap;
     viewerStatus: ViewerStatus;
     isNetworkedFile: boolean;
@@ -78,7 +78,7 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
             setAgentsVisible,
             payloadForSelectAll,
             payloadForSelectNone,
-            checkAllIsIntermediate,
+            isSharedCheckboxIndeterminate,
             agentColors,
             viewerStatus,
             isNetworkedFile,
@@ -94,7 +94,7 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
                 setAgentsVisible={setAgentsVisible}
                 payloadForSelectAll={payloadForSelectAll}
                 payloadForSelectNone={payloadForSelectNone}
-                checkAllIsIntermediate={checkAllIsIntermediate}
+                isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
                 agentColors={agentColors}
             />
         );
@@ -132,7 +132,7 @@ function mapStateToProps(state: State) {
         uiDisplayDataTree: getUiDisplayDataTree(state),
         payloadForSelectAll: convertUITreeDataToSelectAll(state),
         payloadForSelectNone: convertUITreeDataToSelectNone(state),
-        checkAllIsIntermediate: getCheckboxAllIsIntermediate(state),
+        isSharedCheckboxIndeterminate: getIsSharedCheckboxIndeterminate(state),
         agentColors: getAgentColors(state),
         viewerStatus: getStatus(state),
         isNetworkedFile: getIsNetworkedFile(state),
