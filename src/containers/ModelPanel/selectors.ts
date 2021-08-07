@@ -1,4 +1,6 @@
 import { createSelector } from "reselect";
+import { isEmpty } from "lodash";
+
 import { AgentDisplayNode } from "../../components/CheckBoxTree";
 import { getUiDisplayDataTree } from "../../state/trajectory/selectors";
 import { getAgentVisibilityMap } from "../../state/selection/selectors";
@@ -41,13 +43,16 @@ export const getIsSharedCheckboxIndeterminate = createSelector(
         treeData: AgentDisplayNode[],
         agentVisibilityMap: VisibilitySelectionMap
     ): boolean => {
+        if (isEmpty(agentVisibilityMap)) return false;
+
         let childrenIndeterminate = false;
+        let numInvisibleAgents = 0;
 
         // iterate through, check items with children, and also get list of
         // agents with no children
         const agentsWithNoChildren = treeData.filter((agent) => {
             const visibleStates = agentVisibilityMap[agent.key];
-            if (visibleStates && agent.children.length) {
+            if (visibleStates.length && agent.children.length) {
                 const someStatesVisible =
                     visibleStates.length < agent.children.length &&
                     visibleStates.length > 0;
@@ -55,7 +60,10 @@ export const getIsSharedCheckboxIndeterminate = createSelector(
                     childrenIndeterminate = true;
                 }
                 return false;
-            } else if (visibleStates) {
+            } else if (agent.children.length && !visibleStates.length) {
+                numInvisibleAgents++;
+                return false;
+            } else if (!agent.children.length) {
                 return true;
             }
         });
@@ -65,12 +73,11 @@ export const getIsSharedCheckboxIndeterminate = createSelector(
             return childrenIndeterminate;
         }
         // otherwise, check agentsWithNoChildren, see if they're not all on or all off
-        const agentsWithNoChildrenOn = agentsWithNoChildren.filter((agent) => {
-            return agentVisibilityMap[agent.key].length === 1; // only top level agent, and it's checked
+        agentsWithNoChildren.forEach((agent) => {
+            if (agentVisibilityMap[agent.key].length === 0) {
+                numInvisibleAgents++;
+            }
         });
-        return (
-            agentsWithNoChildrenOn.length > 0 &&
-            agentsWithNoChildren.length !== agentsWithNoChildrenOn.length
-        );
+        return numInvisibleAgents > 0 && numInvisibleAgents < treeData.length;
     }
 );

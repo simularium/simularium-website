@@ -1,5 +1,3 @@
-import { initialState } from "../../state";
-import { State } from "../../state/types";
 import {
     getSelectAllVisibilityMap,
     getSelectNoneVisibilityMap,
