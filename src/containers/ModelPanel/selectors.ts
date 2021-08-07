@@ -45,7 +45,7 @@ export const getIsSharedCheckboxIndeterminate = createSelector(
     ): boolean => {
         if (isEmpty(agentVisibilityMap)) return false;
 
-        let childrenIndeterminate = false;
+        let isAgentPartiallyVisible = false;
         let numInvisibleAgents = 0;
 
         // iterate through, check items with children, and also get list of
@@ -57,7 +57,7 @@ export const getIsSharedCheckboxIndeterminate = createSelector(
                     visibleStates.length < agent.children.length &&
                     visibleStates.length > 0;
                 if (someStatesVisible) {
-                    childrenIndeterminate = true;
+                    isAgentPartiallyVisible = true;
                 }
                 return false;
             } else if (agent.children.length && !visibleStates.length) {
@@ -68,9 +68,9 @@ export const getIsSharedCheckboxIndeterminate = createSelector(
             }
         });
 
-        if (childrenIndeterminate) {
+        if (isAgentPartiallyVisible) {
             // if there are children in indeterminate state, just return that, no other checks needed
-            return childrenIndeterminate;
+            return true;
         }
         // otherwise, check agentsWithNoChildren, see if they're not all on or all off
         agentsWithNoChildren.forEach((agent) => {
