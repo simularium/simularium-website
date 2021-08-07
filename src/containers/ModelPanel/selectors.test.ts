@@ -130,5 +130,13 @@ describe("ModelPanel selectors", () => {
             );
             expect(result).toBe(false);
         });
+        it("Returns false if no visibility information is supplied", () => {
+            const mockAgentVisibilityMap = {};
+            const result = getIsSharedCheckboxIndeterminate.resultFunc(
+                mockUiDisplayData,
+                mockAgentVisibilityMap
+            );
+            expect(result).toBe(false);
+        });
     });
 });

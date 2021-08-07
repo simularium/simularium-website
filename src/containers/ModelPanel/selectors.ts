@@ -48,36 +48,33 @@ export const getIsSharedCheckboxIndeterminate = createSelector(
         let isAgentPartiallyVisible = false;
         let numInvisibleAgents = 0;
 
-        // iterate through, check items with children, and also get list of
-        // agents with no children
-        const agentsWithNoChildren = treeData.filter((agent) => {
+        // Loop through each agent and count how many are invisible. If an agent is partially
+        // visible, break out of loop and just return true
+        for (let i = 0; i < treeData.length; i++) {
+            const agent = treeData[i];
             const visibleStates = agentVisibilityMap[agent.key];
-            if (visibleStates.length && agent.children.length) {
-                const someStatesVisible =
-                    visibleStates.length < agent.children.length &&
-                    visibleStates.length > 0;
-                if (someStatesVisible) {
-                    isAgentPartiallyVisible = true;
-                }
-                return false;
-            } else if (agent.children.length && !visibleStates.length) {
+
+            if (!agent.children.length && visibleStates.length === 0) {
+                // Agent has no children and is not visible
                 numInvisibleAgents++;
-                return false;
-            } else if (!agent.children.length) {
-                return true;
+            } else if (agent.children.length && !visibleStates.length) {
+                // Agent has children and none are visible
+                numInvisibleAgents++;
+            } else if (
+                visibleStates.length &&
+                visibleStates.length < agent.children.length
+            ) {
+                // Agent is partially visible (only some children are visible)
+                isAgentPartiallyVisible = true;
+                break;
             }
-        });
+        }
 
         if (isAgentPartiallyVisible) {
-            // if there are children in indeterminate state, just return that, no other checks needed
             return true;
         }
-        // otherwise, check agentsWithNoChildren, see if they're not all on or all off
-        agentsWithNoChildren.forEach((agent) => {
-            if (agentVisibilityMap[agent.key].length === 0) {
-                numInvisibleAgents++;
-            }
-        });
+
+        // Return true if some but not all agents are visible
         return numInvisibleAgents > 0 && numInvisibleAgents < treeData.length;
     }
 );
