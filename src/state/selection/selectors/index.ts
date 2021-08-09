@@ -8,7 +8,7 @@ import { VisibilitySelectionMap } from "../types";
 
 import { getAgentHighlightMap, getAgentVisibilityMap } from "./basic";
 
-export const getHighLightedAgents = createSelector(
+export const getHighlightedAgents = createSelector(
     [getAgentHighlightMap, getAgentDisplayNamesAndStates],
     (
         highlightedAgents: VisibilitySelectionMap,
