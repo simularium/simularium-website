@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 import { AgentDisplayNode } from "../../components/CheckBoxTree";
 import { getUiDisplayDataTree } from "../../state/trajectory/selectors";
-import { getVisibleAgentsNamesAndTags } from "../../state/selection/selectors";
+import { getAgentVisibilityMap } from "../../state/selection/selectors";
 import { VisibilitySelectionMap } from "../../state/selection/types";
 
 export const convertUITreeDataToSelectAll = createSelector(
@@ -33,7 +33,7 @@ export const convertUITreeDataToSelectNone = createSelector(
 );
 
 export const getCheckboxAllIsIntermediate = createSelector(
-    [getUiDisplayDataTree, getVisibleAgentsNamesAndTags],
+    [getUiDisplayDataTree, getAgentVisibilityMap],
     (treeData, visibleAgents) => {
         let childrenIntermediate = false;
 
