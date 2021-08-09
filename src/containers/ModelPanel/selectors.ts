@@ -45,11 +45,10 @@ export const getIsSharedCheckboxIndeterminate = createSelector(
     ): boolean => {
         if (isEmpty(agentVisibilityMap)) return false;
 
-        let isAgentPartiallyVisible = false;
         let numInvisibleAgents = 0;
 
         // Loop through each agent and count how many are invisible. If an agent is partially
-        // visible, break out of loop and just return true
+        // visible, just return true
         for (let i = 0; i < allAgents.length; i++) {
             const agent = allAgents[i];
             const visibleStates = agentVisibilityMap[agent.key];
@@ -57,13 +56,8 @@ export const getIsSharedCheckboxIndeterminate = createSelector(
             if (!visibleStates.length) {
                 numInvisibleAgents++;
             } else if (visibleStates.length < agent.children.length) {
-                isAgentPartiallyVisible = true;
-                break;
+                return true;
             }
-        }
-
-        if (isAgentPartiallyVisible) {
-            return true;
         }
 
         // Return true if some but not all agents are visible
