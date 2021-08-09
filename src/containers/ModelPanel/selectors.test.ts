@@ -138,5 +138,17 @@ describe("ModelPanel selectors", () => {
             );
             expect(result).toBe(false);
         });
+        it("Instead of crashing, skips a check for an agent if it is missing from agentVisibilityMap for some reason", () => {
+            const mockAgentVisibilityMap = {
+                Macrophage: [],
+                Neutrophil: [],
+                // Missing "Dendritic cell"
+            };
+            const result = getIsSharedCheckboxIndeterminate.resultFunc(
+                mockUiDisplayData,
+                mockAgentVisibilityMap
+            );
+            expect(result).toBe(true);
+        });
     });
 });

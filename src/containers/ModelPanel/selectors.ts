@@ -53,6 +53,16 @@ export const getIsSharedCheckboxIndeterminate = createSelector(
             const agent = allAgents[i];
             const visibleStates = agentVisibilityMap[agent.key];
 
+            if (visibleStates === undefined) {
+                // This should theoretically never happen
+                console.warn(
+                    `Skipping agent ${
+                        agent.key
+                    } in getIsSharedCheckboxIndeterminate because it doesn't exist in agentVisibilityMap`
+                );
+                continue;
+            }
+
             if (!visibleStates.length) {
                 numInvisibleAgents++;
             } else if (visibleStates.length < agent.children.length) {
