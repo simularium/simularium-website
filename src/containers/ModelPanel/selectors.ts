@@ -54,16 +54,10 @@ export const getIsSharedCheckboxIndeterminate = createSelector(
             const agent = treeData[i];
             const visibleStates = agentVisibilityMap[agent.key];
 
-            if (!agent.children.length && visibleStates.length === 0) {
-                // Agent has no children and is not visible
+            if (!visibleStates.length) {
+                // Agent has no visible states
                 numInvisibleAgents++;
-            } else if (agent.children.length && !visibleStates.length) {
-                // Agent has children and none are visible
-                numInvisibleAgents++;
-            } else if (
-                visibleStates.length &&
-                visibleStates.length < agent.children.length
-            ) {
+            } else if (visibleStates.length < agent.children.length) {
                 // Agent is partially visible (only some children are visible)
                 isAgentPartiallyVisible = true;
                 break;
