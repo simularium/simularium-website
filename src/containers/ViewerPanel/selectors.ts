@@ -9,7 +9,7 @@ import {
 import {
     getAgentsToHide,
     getCurrentTime,
-    getHighLightedAgents,
+    getHighlightedAgents,
 } from "../../state/selection/selectors";
 import {
     AgentColorMap,
@@ -19,7 +19,7 @@ import { roundTimeForDisplay } from "../../util";
 import { DisplayTimes } from "./types";
 
 export const getSelectionStateInfoForViewer = createSelector(
-    [getHighLightedAgents, getAgentsToHide],
+    [getHighlightedAgents, getAgentsToHide],
     (highlightedAgents, hiddenAgents) => ({
         highlightedAgents,
         hiddenAgents,

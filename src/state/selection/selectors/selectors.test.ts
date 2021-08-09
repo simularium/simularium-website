@@ -1,6 +1,6 @@
 import { initialState } from "../../index";
 import { State } from "../../types";
-import { getHighLightedAgents, getAgentsToHide } from ".";
+import { getHighlightedAgents, getAgentsToHide } from ".";
 const mockUIDisplayData = [
     {
         name: "agent1",
@@ -39,7 +39,7 @@ const mockState: State = {
 };
 
 describe("selection composed selectors", () => {
-    describe("getHighLightedNames", () => {
+    describe("getHighlightedAgents", () => {
         it("returns an array of agent names ignoring state tags", () => {
             const stateWithSelection = {
                 ...mockState,
@@ -50,7 +50,7 @@ describe("selection composed selectors", () => {
                     },
                 },
             };
-            const highlightedNames = getHighLightedAgents(stateWithSelection);
+            const highlightedNames = getHighlightedAgents(stateWithSelection);
             expect(highlightedNames).toBeInstanceOf(Array);
             expect(highlightedNames).toEqual([
                 { name: "agent1", tags: ["state1"] },
@@ -66,7 +66,7 @@ describe("selection composed selectors", () => {
                     },
                 },
             };
-            const highlightedNames = getHighLightedAgents(stateWithSelection);
+            const highlightedNames = getHighlightedAgents(stateWithSelection);
             expect(highlightedNames).toBeInstanceOf(Array);
             expect(highlightedNames).toEqual([{ name: "agent3", tags: [] }]);
         });
@@ -80,7 +80,7 @@ describe("selection composed selectors", () => {
                     },
                 },
             };
-            const highlightedNames = getHighLightedAgents(stateWithSelection);
+            const highlightedNames = getHighlightedAgents(stateWithSelection);
             expect(highlightedNames).toBeInstanceOf(Array);
             expect(highlightedNames).toEqual([]);
         });
@@ -94,7 +94,7 @@ describe("selection composed selectors", () => {
                     },
                 },
             };
-            const highlightedNames = getHighLightedAgents(stateWithSelection);
+            const highlightedNames = getHighlightedAgents(stateWithSelection);
             expect(highlightedNames).toBeInstanceOf(Array);
             expect(highlightedNames).toEqual([
                 { name: "agent2", tags: ["state1", ""] },
@@ -108,7 +108,7 @@ describe("selection composed selectors", () => {
                     agentHighlightMap: { agent1: ["blah"] },
                 },
             };
-            const highlightedNames = getHighLightedAgents(stateWithSelection);
+            const highlightedNames = getHighlightedAgents(stateWithSelection);
             expect(highlightedNames).toBeInstanceOf(Array);
             expect(highlightedNames).toEqual([]);
         });
