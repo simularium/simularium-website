@@ -40,7 +40,7 @@ export const getSelectNoneVisibilityMap = createSelector(
 export const getIsSharedCheckboxIndeterminate = createSelector(
     [getUiDisplayDataTree, getAgentVisibilityMap],
     (
-        treeData: AgentDisplayNode[],
+        allAgents: AgentDisplayNode[],
         agentVisibilityMap: VisibilitySelectionMap
     ): boolean => {
         if (isEmpty(agentVisibilityMap)) return false;
@@ -50,8 +50,8 @@ export const getIsSharedCheckboxIndeterminate = createSelector(
 
         // Loop through each agent and count how many are invisible. If an agent is partially
         // visible, break out of loop and just return true
-        for (let i = 0; i < treeData.length; i++) {
-            const agent = treeData[i];
+        for (let i = 0; i < allAgents.length; i++) {
+            const agent = allAgents[i];
             const visibleStates = agentVisibilityMap[agent.key];
 
             if (!visibleStates.length) {
@@ -67,6 +67,6 @@ export const getIsSharedCheckboxIndeterminate = createSelector(
         }
 
         // Return true if some but not all agents are visible
-        return numInvisibleAgents > 0 && numInvisibleAgents < treeData.length;
+        return numInvisibleAgents > 0 && numInvisibleAgents < allAgents.length;
     }
 );
