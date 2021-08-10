@@ -83,7 +83,8 @@ Automatically builds from `main`
     * Something nice
     * Something else nice
 
-    * **Good bug fix** - Description
+    * Fixed a bug that causes x to do x
+    * Fixed xyz abc
 
     ### 🔧 Behind the Scenes
     Maintenance tasks that got done
