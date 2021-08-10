@@ -1,4 +1,6 @@
 import {
+    getPlotHeight,
+    getTopMargin,
     configureLayout,
     // configureData,
     // getShouldRenderTimeIndicator,
@@ -9,22 +11,40 @@ import { Layout } from "./types";
 
 const mockInputLayout: Layout = {
     title: "My Plot Title",
-    xaxis: { title: "x-axis label" },
-    yaxis: { title: "y-axis label" },
+    xaxis: { title: "x-axis title" },
+    yaxis: { title: "y-axis title" },
 };
 
 describe("ResultsPanel selectors and their helper functions", () => {
-    describe("configureLayout", () => {
-        it("Uses the default plot height if there is only 1 plot trace and the title is not long enough to wrap", () => {
-            const result = configureLayout(mockInputLayout, 1);
-            expect(result.height).toEqual(PLOT_STYLE.height);
+    describe("getPlotHeight", () => {
+        it("Returns the default plot height if there is only 1 plot trace and the title is not long enough to wrap", () => {
+            const result = getPlotHeight(1, 1);
+            expect(result).toEqual(PLOT_STYLE.height);
         });
         it("Calculates correct plot height when there are multiple plot traces", () => {
-            const result = configureLayout(mockInputLayout, 3);
-            expect(result.height).toEqual(
-                PLOT_STYLE.height + PLOT_STYLE.legendItemHeight * 3
-            );
+            const result = getPlotHeight(3, 1);
+            const expected =
+                PLOT_STYLE.height + PLOT_STYLE.legendItemHeight * 3;
+            expect(result).toEqual(expected);
         });
+        it("Calculates correct plot height when the title is multi-line", () => {
+            const result = getPlotHeight(1, 3);
+            const expected =
+                PLOT_STYLE.height + PLOT_STYLE.titleHeightPerLine * 2;
+            expect(result).toEqual(expected);
+        });
+    });
+
+    describe("getTopMargin", () => {
+        it("Calculates the correct top margin", () => {
+            const result = getTopMargin(4);
+            const expected =
+                PLOT_STYLE.marginTop + PLOT_STYLE.titleHeightPerLine * 3;
+            expect(result).toEqual(expected);
+        });
+    });
+
+    describe("configureLayout", () => {
         it("Transfers the plot title and axis titles correctly into the Plotly layout object", () => {
             const result = configureLayout(mockInputLayout, 1);
             const expectedTitle = {
@@ -36,17 +56,29 @@ describe("ResultsPanel selectors and their helper functions", () => {
                 y: PLOT_STYLE.titlePositionY,
                 yanchor: "top",
             };
-            const expectedXAxisTitle = {
-                ...AXIS_ATTRIBUTES.title,
-                text: "x-axis label",
+            const expectedXAxis = {
+                ...AXIS_ATTRIBUTES,
+                title: {
+                    ...AXIS_ATTRIBUTES.title,
+                    text: "x-axis title",
+                },
+                ticks: "inside",
+                tickcolor: PLOT_STYLE.textColor,
+                hoverformat: ".1f",
             };
-            const expectedYAxisTitle = {
-                ...AXIS_ATTRIBUTES.title,
-                text: "y-axis label",
+            const expectedYAxis = {
+                ...AXIS_ATTRIBUTES,
+                title: {
+                    ...AXIS_ATTRIBUTES.title,
+                    text: "y-axis title",
+                },
+                ticks: "inside",
+                tickcolor: PLOT_STYLE.textColor,
+                hoverformat: ".2f",
             };
-            expect(result.title).toEqual(expectedTitle);
-            // expect(result.xaxis?.title).toStrictEqual(expectedXAxisTitle);
-            // expect(result.yaxis?.title).toStrictEqual(expectedYAxisTitle);
+            expect(result.title).toStrictEqual(expectedTitle);
+            expect(result.xaxis).toStrictEqual(expectedXAxis);
+            expect(result.yaxis).toStrictEqual(expectedYAxis);
         });
     });
     // describe("configureData", () => {

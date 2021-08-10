@@ -13,30 +13,48 @@ import {
     Layout as InputLayout,
 } from "./types";
 
-// Add Plotly layout and styling attributes to raw input plot data
-// Plotly reference: https://plotly.com/javascript/reference/index/
-export const configureLayout = (
-    layout: InputLayout,
-    numTraces: number
-): Partial<Layout> => {
+// Calculate the appropriate height for a given plot
+export const getPlotHeight = (
+    numTraces: number,
+    numLinesInTitle: number
+): number => {
     // Give plots with a legend (multi-trace plots) more vertical room
     let plotHeight =
         numTraces > 1
             ? PLOT_STYLE.height + PLOT_STYLE.legendItemHeight * numTraces
             : PLOT_STYLE.height;
 
+    // Just increasing the topMargin to make room for a wrapped title squishes
+    // the plot, so also need to increase plotHeight by the same amount
+    plotHeight += PLOT_STYLE.titleHeightPerLine * (numLinesInTitle - 1);
+
+    return plotHeight;
+};
+
+// Calculate the appropriate top margin for a given plot
+export const getTopMargin = (numLinesInTitle: number) => {
+    // Make more room for each extra line in a wrapped title
+    return (
+        PLOT_STYLE.marginTop +
+        PLOT_STYLE.titleHeightPerLine * (numLinesInTitle - 1)
+    );
+};
+
+// Add Plotly layout and styling attributes to raw input plot data
+// Plotly reference: https://plotly.com/javascript/reference/index/
+export const configureLayout = (
+    layout: InputLayout,
+    numTraces: number
+): Partial<Layout> => {
     // Manually wrap the title because Plotly currently does not offer automatic wrapping:
     // https://github.com/plotly/plotly.js/issues/2053
     // https://github.com/plotly/plotly.js/issues/382
     // https://stackoverflow.com/questions/35185143/how-to-create-new-line-in-plot-ly-js-title
     const wrappedTitle = wrapText(layout.title, PLOT_STYLE.titleMaxCharPerLine);
+
     const numLinesInTitle = wrappedTitle.numLines;
-    // Make more room for each extra line in a wrapped title
-    const topMargin =
-        PLOT_STYLE.marginTop +
-        PLOT_STYLE.titleHeightPerLine * (numLinesInTitle - 1);
-    // Just increasing the topMargin squishes the plot, so also need to increase plotHeight by the same amount
-    plotHeight += PLOT_STYLE.titleHeightPerLine * (numLinesInTitle - 1);
+    const topMargin = getTopMargin(numLinesInTitle);
+    const plotHeight = getPlotHeight(numTraces, numLinesInTitle);
 
     return {
         ...layout,
