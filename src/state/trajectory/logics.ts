@@ -62,13 +62,7 @@ const resetSimulariumFileState = createLogic({
             if (controller) {
                 controller.clearFile();
             }
-            clearTrajectory = receiveTrajectory({
-                plotData: initialState.plotData,
-                firstFrameTime: initialState.firstFrameTime,
-                lastFrameTime: initialState.lastFrameTime,
-                timeStep: initialState.timeStep,
-                agentUiNames: initialState.agentUiNames,
-            });
+            clearTrajectory = receiveTrajectory(initialState);
             const setViewerStatusAction = setStatus({
                 status: VIEWER_EMPTY,
             });
