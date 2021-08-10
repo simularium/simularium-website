@@ -62,7 +62,7 @@ const resetSimulariumFileState = createLogic({
             if (controller) {
                 controller.clearFile();
             }
-            clearTrajectory = receiveTrajectory(initialState);
+            clearTrajectory = receiveTrajectory({...initialState});
             const setViewerStatusAction = setStatus({
                 status: VIEWER_EMPTY,
             });
