@@ -2,12 +2,12 @@ import {
     getPlotHeight,
     getTopMargin,
     configureLayout,
-    // configureData,
-    // getShouldRenderTimeIndicator,
+    configureData,
+    getShouldRenderTimeIndicator,
     // getPlotDataConfiguredForPlotly,
 } from "./selectors";
-import { PLOT_STYLE, AXIS_ATTRIBUTES } from "./constants";
-import { Layout } from "./types";
+import { PLOT_STYLE, AXIS_ATTRIBUTES, DATA_STYLE } from "./constants";
+import { Layout, ScatterTrace, HistogramTrace, RawPlotParams } from "./types";
 
 const mockInputLayout: Layout = {
     title: "My Plot Title",
@@ -45,7 +45,7 @@ describe("ResultsPanel selectors and their helper functions", () => {
     });
 
     describe("configureLayout", () => {
-        it("Transfers the plot title and axis titles correctly into the Plotly layout object", () => {
+        it("Transforms the plot title and axis titles correctly into the Plotly layout object", () => {
             const result = configureLayout(mockInputLayout, 1);
             const expectedTitle = {
                 text: "My Plot Title",
@@ -81,14 +81,89 @@ describe("ResultsPanel selectors and their helper functions", () => {
             expect(result.yaxis).toStrictEqual(expectedYAxis);
         });
     });
-    // describe("configureData", () => {
-    //     it("Returns an agent visibility map with all possible states", () => {
-    //     });
-    // });
-    // describe("getShouldRenderTimeIndicator", () => {
-    //     it("Returns an agent visibility map with all possible states", () => {
-    //     });
-    // });
+
+    describe("configureData", () => {
+        it("Adds line and marker styling to plot data in Plotly format", () => {
+            const mockPlotData: (ScatterTrace | HistogramTrace)[] = [
+                {
+                    x: [1, 2, 3],
+                    y: [1, 2, 3],
+                    mode: "markers",
+                    type: "scatter",
+                },
+            ];
+            const result = configureData(mockPlotData);
+            const expected = [
+                {
+                    x: [1, 2, 3],
+                    y: [1, 2, 3],
+                    mode: "markers",
+                    type: "scatter",
+                    line: {
+                        width: DATA_STYLE.lineWidth,
+                    },
+                    marker: {
+                        size: DATA_STYLE.markerSize,
+                        line: {
+                            color: PLOT_STYLE.backgroundColor,
+                            width: DATA_STYLE.markerLineWidth,
+                        },
+                    },
+                },
+            ];
+            expect(result).toStrictEqual(expected);
+        });
+    });
+
+    describe("getShouldRenderTimeIndicator", () => {
+        it("Returns false if the plot is a histogram", () => {
+            const mockPlotParams: RawPlotParams = {
+                data: [
+                    {
+                        x: [1, 2, 3],
+                        y: [1, 2, 3],
+                        type: "histogram",
+                    },
+                ],
+                layout: mockInputLayout,
+            };
+            expect(getShouldRenderTimeIndicator(mockPlotParams)).toBe(false);
+        });
+        it("Returns false if the plot is a scatter plot but not a time series", () => {
+            const mockPlotParams: RawPlotParams = {
+                data: [
+                    {
+                        x: [1, 2, 3],
+                        y: [1, 2, 3],
+                        mode: "markers",
+                        type: "scatter",
+                    },
+                ],
+                layout: mockInputLayout,
+            };
+            expect(getShouldRenderTimeIndicator(mockPlotParams)).toBe(false);
+        });
+        it("Returns true if the plot is a scatter plot of a time series", () => {
+            const mockLayout: Layout = {
+                title: "My Plot Title",
+                xaxis: { title: "Time since mitosis (ns)" },
+                yaxis: { title: "y-axis title" },
+            };
+            const mockPlotParams: RawPlotParams = {
+                data: [
+                    {
+                        x: [1, 2, 3],
+                        y: [1, 2, 3],
+                        mode: "markers",
+                        type: "scatter",
+                    },
+                ],
+                layout: mockLayout,
+            };
+            expect(getShouldRenderTimeIndicator(mockPlotParams)).toBe(true);
+        });
+    });
+
     // describe("getPlotDataConfiguredForPlotly", () => {
     //     it("Returns an agent visibility map with all possible states", () => {
     //     });

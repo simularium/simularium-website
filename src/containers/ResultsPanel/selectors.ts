@@ -4,7 +4,7 @@ import { Layout, Data } from "plotly.js";
 import { getPlotData } from "../../state/trajectory/selectors";
 import { wrapText } from "../../util";
 
-import { PLOT_STYLE, AXIS_ATTRIBUTES } from "./constants";
+import { PLOT_STYLE, AXIS_ATTRIBUTES, DATA_STYLE } from "./constants";
 import {
     PlotConfig,
     RawPlotParams,
@@ -137,13 +137,13 @@ export const configureData = (
         return {
             ...traceData,
             line: {
-                width: 1,
+                width: DATA_STYLE.lineWidth,
             },
             marker: {
-                size: 3,
+                size: DATA_STYLE.markerSize,
                 line: {
                     color: PLOT_STYLE.backgroundColor,
-                    width: 0.5,
+                    width: DATA_STYLE.markerLineWidth,
                 },
             },
         };

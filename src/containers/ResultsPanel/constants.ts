@@ -56,3 +56,9 @@ export const AXIS_ATTRIBUTES = {
     zeroline: false,
     /* cSpell:enable */
 };
+
+export const DATA_STYLE = {
+    lineWidth: 1,
+    markerSize: 3,
+    markerLineWidth: 0.5,
+};
