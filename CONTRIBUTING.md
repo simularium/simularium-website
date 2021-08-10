@@ -70,6 +70,27 @@ Automatically builds from `main`
 
 [changelog]: CHANGELOG.md
 
+#### Suggested release notes template:
+
+    ### ✨ New Features
+    Just one new feature for this release, so describing it here.
+
+    * **Shiny new feature 1** - Description
+    * **Shiny new feature 2** - Description
+
+    ### 🐛 Bug Fixes and Improvements
+    Updated [simularium-viewer](https://github.com/allen-cell-animated/simularium-viewer) to from vx.x.x to vx.x.x, which includes:
+    * Something nice
+    * Something else nice
+
+    * **Good bug fix** - Description
+
+    ### 🔧 Behind the Scenes
+    Maintenance tasks that got done
+    
+    * Lots of maintenance tasks so here are some bullets
+    * Another task
+
 ## Questions or Thoughts?
 
 Feel free to submit a GitHub issue or talk to us on the [Allen Cell Discussion Form - Simularium][community].
