@@ -19,7 +19,8 @@
         "lint": "eslint src/**/*.{ts,tsx}",
         "typeCheck": "tsc -p tsconfig.json --noEmit",
         "update-viewer": "npm i @aics/simularium-viewer@latest",
-        "test": "jest --coverage"
+        "test": "jest --coverage",
+        "test-watch": "jest --coverage --watchAll"
     },
     "devDependencies": {
         "@babel/cli": "7.2.3",

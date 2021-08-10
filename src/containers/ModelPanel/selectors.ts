@@ -1,10 +1,13 @@
 import { createSelector } from "reselect";
+import { isEmpty } from "lodash";
+
 import { AgentDisplayNode } from "../../components/CheckBoxTree";
 import { getUiDisplayDataTree } from "../../state/trajectory/selectors";
 import { getAgentVisibilityMap } from "../../state/selection/selectors";
 import { VisibilitySelectionMap } from "../../state/selection/types";
 
-export const convertUITreeDataToSelectAll = createSelector(
+// Returns an agent visibility map that indicates all states should be visible
+export const getSelectAllVisibilityMap = createSelector(
     [getUiDisplayDataTree],
     (treeData: AgentDisplayNode[]): VisibilitySelectionMap => {
         const returnData: VisibilitySelectionMap = {};
@@ -21,7 +24,8 @@ export const convertUITreeDataToSelectAll = createSelector(
     }
 );
 
-export const convertUITreeDataToSelectNone = createSelector(
+// Returns an agent visibility map that indicates no states should be visible
+export const getSelectNoneVisibilityMap = createSelector(
     [getUiDisplayDataTree],
     (treeData: AgentDisplayNode[]): VisibilitySelectionMap => {
         const returnData: VisibilitySelectionMap = {};
@@ -32,35 +36,41 @@ export const convertUITreeDataToSelectNone = createSelector(
     }
 );
 
-export const getCheckboxAllIsIntermediate = createSelector(
+// Determines if the shared checkbox should be partially checked (in "indeterminate" state)
+export const getIsSharedCheckboxIndeterminate = createSelector(
     [getUiDisplayDataTree, getAgentVisibilityMap],
-    (treeData, visibleAgents) => {
-        let childrenIntermediate = false;
+    (
+        allAgents: AgentDisplayNode[],
+        agentVisibilityMap: VisibilitySelectionMap
+    ): boolean => {
+        if (isEmpty(agentVisibilityMap)) return false;
 
-        // iterate through, check items with children, and also get list of
-        // agents with no children
-        const agentsWithNoChildren = treeData.filter((agent) => {
-            if (visibleAgents[agent.key] && agent.children.length) {
-                childrenIntermediate =
-                    visibleAgents[agent.key].length < agent.children.length &&
-                    visibleAgents[agent.key].length > 0;
-                return false;
-            } else if (visibleAgents[agent.key]) {
+        let numInvisibleAgents = 0;
+
+        // Loop through each agent and count how many are invisible. If an agent is partially
+        // visible, just return true
+        for (let i = 0; i < allAgents.length; i++) {
+            const agent = allAgents[i];
+            const visibleStates = agentVisibilityMap[agent.key];
+
+            if (visibleStates === undefined) {
+                // This should theoretically never happen
+                console.warn(
+                    `Skipping agent ${
+                        agent.key
+                    } in getIsSharedCheckboxIndeterminate because it doesn't exist in agentVisibilityMap`
+                );
+                continue;
+            }
+
+            if (!visibleStates.length) {
+                numInvisibleAgents++;
+            } else if (visibleStates.length < agent.children.length) {
                 return true;
             }
-        });
-
-        if (childrenIntermediate) {
-            // if there are children in intermediate state, just return that, no other checks needed
-            return childrenIntermediate;
         }
-        // otherwise, check agentsWithNoChildren, see if they're not all on or all off
-        const agentsWithNoChildrenOn = agentsWithNoChildren.filter((agent) => {
-            return visibleAgents[agent.key].length === 1; // only top level agent, and it's checked
-        });
-        return (
-            agentsWithNoChildrenOn.length > 0 &&
-            agentsWithNoChildren.length !== agentsWithNoChildrenOn.length
-        );
+
+        // Return true if some but not all agents are visible
+        return numInvisibleAgents > 0 && numInvisibleAgents < allAgents.length;
     }
 );
