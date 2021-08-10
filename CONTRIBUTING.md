@@ -66,6 +66,9 @@ Automatically builds from `main`
 1. Make a new version: `npm version [patch/minor/major]`
 2. Push the new package.json version: `git push origin main`
 3. Push the new tag: `git push origin [NEW_TAG]`
+4. Go to the [releases page](https://github.com/allen-cell-animated/simularium-website/releases) and write the release notes for the new version. You can refer to the auto-generated [CHANGELOG.md][changelog] for a list of changes.
+
+[changelog]: CHANGELOG.md
 
 ## Questions or Thoughts?
 
