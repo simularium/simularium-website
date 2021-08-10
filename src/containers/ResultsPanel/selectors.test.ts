@@ -4,7 +4,7 @@ import {
     configureLayout,
     configureData,
     getShouldRenderTimeIndicator,
-    // getPlotDataConfiguredForPlotly,
+    getPlotDataConfiguredForPlotly,
 } from "./selectors";
 import { PLOT_STYLE, AXIS_ATTRIBUTES, DATA_STYLE } from "./constants";
 import { Layout, ScatterTrace, HistogramTrace, RawPlotParams } from "./types";
@@ -13,6 +13,18 @@ const mockInputLayout: Layout = {
     title: "My Plot Title",
     xaxis: { title: "x-axis title" },
     yaxis: { title: "y-axis title" },
+};
+
+const mockScatterTracePlotParams: RawPlotParams = {
+    data: [
+        {
+            x: [1, 2, 3],
+            y: [1, 2, 3],
+            mode: "markers",
+            type: "scatter",
+        },
+    ],
+    layout: mockInputLayout,
 };
 
 describe("ResultsPanel selectors and their helper functions", () => {
@@ -80,6 +92,10 @@ describe("ResultsPanel selectors and their helper functions", () => {
             expect(result.xaxis).toStrictEqual(expectedXAxis);
             expect(result.yaxis).toStrictEqual(expectedYAxis);
         });
+        it("Sets showLegend to true if there are multiple plot traces", () => {
+            const result = configureLayout(mockInputLayout, 3);
+            expect(result.showlegend).toBe(true);
+        });
     });
 
     describe("configureData", () => {
@@ -130,18 +146,10 @@ describe("ResultsPanel selectors and their helper functions", () => {
             expect(getShouldRenderTimeIndicator(mockPlotParams)).toBe(false);
         });
         it("Returns false if the plot is a scatter plot but not a time series", () => {
-            const mockPlotParams: RawPlotParams = {
-                data: [
-                    {
-                        x: [1, 2, 3],
-                        y: [1, 2, 3],
-                        mode: "markers",
-                        type: "scatter",
-                    },
-                ],
-                layout: mockInputLayout,
-            };
-            expect(getShouldRenderTimeIndicator(mockPlotParams)).toBe(false);
+            const result = getShouldRenderTimeIndicator(
+                mockScatterTracePlotParams
+            );
+            expect(result).toBe(false);
         });
         it("Returns true if the plot is a scatter plot of a time series", () => {
             const mockLayout: Layout = {
@@ -150,22 +158,26 @@ describe("ResultsPanel selectors and their helper functions", () => {
                 yaxis: { title: "y-axis title" },
             };
             const mockPlotParams: RawPlotParams = {
-                data: [
-                    {
-                        x: [1, 2, 3],
-                        y: [1, 2, 3],
-                        mode: "markers",
-                        type: "scatter",
-                    },
-                ],
+                ...mockScatterTracePlotParams,
                 layout: mockLayout,
             };
             expect(getShouldRenderTimeIndicator(mockPlotParams)).toBe(true);
         });
     });
 
-    // describe("getPlotDataConfiguredForPlotly", () => {
-    //     it("Returns an agent visibility map with all possible states", () => {
-    //     });
-    // });
+    describe("getPlotDataConfiguredForPlotly", () => {
+        // All the components of this function have been tested individually already
+        it("Converts an array of RawPlotParams objects to an array of PlotConfig objects", () => {
+            const result = getPlotDataConfiguredForPlotly.resultFunc([
+                mockScatterTracePlotParams,
+            ]);
+            expect(result.length).toEqual(1);
+            expect(Object.keys(result[0])).toEqual([
+                "key",
+                "data",
+                "layout",
+                "shouldRenderTimeIndicator",
+            ]);
+        });
+    });
 });

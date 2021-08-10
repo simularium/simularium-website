@@ -167,7 +167,6 @@ export const getShouldRenderTimeIndicator = (plot: RawPlotParams): boolean => {
 export const getPlotDataConfiguredForPlotly = createSelector(
     [getPlotData],
     (plotData: RawPlotParams[]): PlotConfig[] => {
-        if (!plotData) return [];
         return plotData.map((plot: RawPlotParams) => {
             const layout: Partial<Layout> = configureLayout(
                 plot.layout,
