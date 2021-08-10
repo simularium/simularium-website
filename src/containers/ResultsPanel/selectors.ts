@@ -15,7 +15,7 @@ import {
 
 // Add Plotly layout and styling attributes to raw input plot data
 // Plotly reference: https://plotly.com/javascript/reference/index/
-const configureLayout = (
+export const configureLayout = (
     layout: InputLayout,
     numTraces: number
 ): Partial<Layout> => {
@@ -47,10 +47,10 @@ const configureLayout = (
         title: {
             text: wrappedTitle.formattedText,
             font: {
-                size: 16,
+                size: PLOT_STYLE.titleFontSize,
             },
-            x: 0.03,
-            y: 0.94,
+            x: PLOT_STYLE.titlePositionX,
+            y: PLOT_STYLE.titlePositionY,
             yanchor: "top",
         },
         hoverlabel: {
@@ -112,7 +112,7 @@ const configureLayout = (
 };
 
 // Add line and marker styling to data
-const configureData = (
+export const configureData = (
     inputData: (ScatterTrace | HistogramTrace)[]
 ): Data[] => {
     return inputData.map((traceData: ScatterTrace | HistogramTrace) => {
@@ -132,7 +132,7 @@ const configureData = (
     });
 };
 
-const getShouldRenderTimeIndicator = (plot: RawPlotParams): boolean => {
+export const getShouldRenderTimeIndicator = (plot: RawPlotParams): boolean => {
     // Type guard for checking if a plot is a scatter plot
     const isScatterPlot = (
         data: (ScatterTrace | HistogramTrace)[]

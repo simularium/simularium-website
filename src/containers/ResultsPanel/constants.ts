@@ -18,6 +18,9 @@ export const PLOT_STYLE = {
     timeIndicatorColor: COLORS.whiteTwo,
     fontFamily: "Overpass",
     fontSize: 11,
+    titleFontSize: 16,
+    titlePositionX: 0.03,
+    titlePositionY: 0.94,
     legendItemHeight: 19, // Dependent on fontSize and fontFamily
     titleMaxCharPerLine: 33,
     titleHeightPerLine: 20.02, // Dependent on fontSize and fontFamily
