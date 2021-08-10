@@ -139,6 +139,12 @@ describe("ModelPanel selectors", () => {
             expect(result).toBe(false);
         });
         it("Instead of crashing, skips a check for an agent if it is missing from agentVisibilityMap for some reason", () => {
+            // No need to print out the console.warn from getIsSharedCheckboxIndeterminate
+            // in the Jest test results
+            jest.spyOn(global.console, "warn").mockImplementation(() =>
+                jest.fn()
+            );
+
             const mockAgentVisibilityMap = {
                 agentWithChildren1: [],
                 agentWithChildren2: [],
