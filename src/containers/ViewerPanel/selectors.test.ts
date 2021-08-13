@@ -106,6 +106,20 @@ describe("ViewerPanel selectors", () => {
             expect(maxNumChars).toBe("44.1".length);
         });
 
+        it("returns length of firstFrameTime + timeStep when time step is a lengthy float and firstFrameTime is 0", () => {
+            const firstFrameTime = 0;
+            const lastFrameTime = 5;
+            const timeStep = 0.005;
+
+            const maxNumChars = getMaxNumChars(
+                firstFrameTime,
+                lastFrameTime,
+                timeStep
+            );
+
+            expect(maxNumChars).toBe("0.005".length);
+        });
+
         it("returns length of firstFrameTime when it is longer than lastFrameTime + timeStep", () => {
             const firstFrameTime = 0.00001;
             const lastFrameTime = 44.1;
