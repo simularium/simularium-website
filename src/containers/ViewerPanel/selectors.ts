@@ -60,16 +60,18 @@ export const getMaxNumChars = (
     lastFrameTime: number,
     timeStep: number
 ) => {
-    // If lastFrameTime is 15 and step size is 0.2 then 15.2 is probably going to have
-    // the max number of characters for this trajectory
-    const refTimeValue = lastFrameTime + timeStep;
-    const roundedRefTime = roundTimeForDisplay(refTimeValue).toString();
+    // These two time values are likely to have the most digits
+    const refTime1Value = firstFrameTime + timeStep;
+    const refTime2Value = lastFrameTime + timeStep;
+    const roundedRefTime1 = roundTimeForDisplay(refTime1Value).toString();
+    const roundedRefTime2 = roundTimeForDisplay(refTime2Value).toString();
 
     // Edge case: If firstFrameTime is a very small but long number like 0.000008,
     // we need to accommodate that.
     const maxNumChars = Math.max(
         firstFrameTime.toString().length,
-        roundedRefTime.length
+        roundedRefTime1.length,
+        roundedRefTime2.length
     );
 
     return maxNumChars;
