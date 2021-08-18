@@ -54,6 +54,7 @@ import {
 } from "./selectors";
 import { AGENT_COLORS } from "./constants";
 import { DisplayTimes } from "./types";
+import { noop } from "lodash";
 
 const styles = require("./style.css");
 
@@ -105,7 +106,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.startPlay = this.startPlay.bind(this);
         this.pause = this.pause.bind(this);
         this.receiveTimeChange = this.receiveTimeChange.bind(this);
-        this.handleJsonMeshData = this.handleJsonMeshData.bind(this);
         this.onTrajectoryFileInfoChanged = this.onTrajectoryFileInfoChanged.bind(
             this
         );
@@ -211,12 +211,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.skipToTime(time - timeStep);
     }
 
-    public handleJsonMeshData(jsonData: any) {
-        const { receiveAgentTypeIds } = this.props;
-        const particleTypeIds = Object.keys(jsonData);
-        receiveAgentTypeIds(particleTypeIds);
-    }
-
     // timeOverride is passed in when the user manipulates the playback slider
     // because this.props.time sometimes doesn't get updated in time before mouseUp
     public startPlay(timeOverride?: number) {
@@ -244,7 +238,11 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
-        const { receiveTrajectory, simulariumController } = this.props;
+        const {
+            receiveTrajectory,
+            simulariumController,
+            receiveAgentTypeIds,
+        } = this.props;
         const tickIntervalLength = simulariumController.tickIntervalLength;
 
         let scaleBarLabelNumber =
@@ -262,6 +260,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             scaleBarLabel: scaleBarLabelNumber + " " + scaleBarLabelUnit,
             isInitialPlay: true,
         });
+        const particleTypeIds = Object.keys(data.typeMapping);
+        receiveAgentTypeIds(particleTypeIds);
     }
 
     public receiveTimeChange(timeData: TimeData) {
@@ -380,7 +380,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     loggerLevel="off"
                     onTimeChange={this.receiveTimeChange}
                     simulariumController={simulariumController}
-                    onJsonDataArrived={this.handleJsonMeshData}
+                    onJsonDataArrived={() => noop} // TODO: remove this when we don't have this in the viewer anymore
                     onUIDisplayDataChanged={this.handleUiDisplayDataChanged}
                     selectionStateInfo={selectionStateInfoForViewer}
                     showCameraControls={false}
