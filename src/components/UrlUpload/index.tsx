@@ -4,7 +4,6 @@ import { Upload, message, Button } from "antd";
 import { RequestLocalFileAction } from "../../state/trajectory/types";
 import { UploadChangeParam } from "antd/lib/upload";
 
-import customRequest from "./custom-request-upload";
 import { ActionCreator } from "redux";
 import { VIEWER_PATHNAME } from "../../routes";
 interface FileUploadProps {
@@ -13,12 +12,7 @@ interface FileUploadProps {
 
 const styles = require("./style.css");
 
-const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
-    const onChange = ({ file }: UploadChangeParam) => {
-        if (file.status === "error") {
-            message.error(`${file.name} file upload failed.`);
-        }
-    };
+const UrlUpload = () => {
     return (
         <Link
             // used to decide whether to clear out the viewer
@@ -27,18 +21,9 @@ const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
                 state: { localFile: true },
             }}
         >
-            <Upload
-                onChange={onChange}
-                showUploadList={false}
-                customRequest={(options) =>
-                    customRequest(options, loadLocalFile)
-                }
-                className={styles.container}
-            >
-                <Button type="ghost">From your device</Button>
-            </Upload>
+            <Button type="ghost">From a URL</Button>
         </Link>
     );
 };
 
-export default LocalFileUpload;
+export default UrlUpload;
