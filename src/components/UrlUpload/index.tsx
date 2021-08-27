@@ -34,19 +34,24 @@ const UrlUpload = () => {
                 From a URL
             </Button>
             <Modal
-                title="title"
+                title="Load model from a URL"
                 visible={isModalVisible}
                 footer={null}
                 onCancel={handleCancel}
+                width={700}
             >
-                <Form>
-                    <Form.Item>
+                <Form layout="vertical">
+                    <Form.Item label="Provide the URL to your public Simularium file:">
                         <Input placeholder="your URL here" allowClear />
                     </Form.Item>
                     <Form.Item>
                         <Button type="primary">Submit</Button>
                     </Form.Item>
                 </Form>
+                <p>
+                    (We currently support public Dropbox, Google Drive, and
+                    Amazon S3 links. <a href="#">Learn more.</a>)
+                </p>
             </Modal>
         </Link>
     );
