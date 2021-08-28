@@ -4,10 +4,7 @@ import { Button, Form, Input, Modal } from "antd";
 import { RequestLocalFileAction } from "../../state/trajectory/types";
 
 import { ActionCreator } from "redux";
-import { VIEWER_PATHNAME } from "../../routes";
-interface FileUploadProps {
-    loadLocalFile: ActionCreator<RequestLocalFileAction>;
-}
+import { TUTORIAL_PATHNAME, VIEWER_PATHNAME } from "../../routes";
 
 const styles = require("./style.css");
 
@@ -23,13 +20,14 @@ const UrlUpload = () => {
     };
 
     return (
-        <Link
-            // used to decide whether to clear out the viewer
-            to={{
-                pathname: VIEWER_PATHNAME,
-                state: { localFile: true }, // FIXME:
-            }}
-        >
+        // <Link
+        //     // used to decide whether to clear out the viewer
+        //     to={{
+        //         pathname: VIEWER_PATHNAME,
+        //         state: { localFile: true }, // FIXME:
+        //     }}
+        // />
+        <>
             <Button type="ghost" onClick={showModal}>
                 From a URL
             </Button>
@@ -45,15 +43,24 @@ const UrlUpload = () => {
                         <Input placeholder="your URL here" allowClear />
                     </Form.Item>
                     <Form.Item>
-                        <Button type="primary">Submit</Button>
+                        <Button type="primary">Load</Button>
                     </Form.Item>
                 </Form>
                 <p>
                     (We currently support public Dropbox, Google Drive, and
-                    Amazon S3 links. <a href="#">Learn more.</a>)
+                    Amazon S3 links.{" "}
+                    <a
+                        href={`${TUTORIAL_PATHNAME}#share-a-link`}
+                        onClick={handleCancel}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Learn more.
+                    </a>
+                    )
                 </p>
             </Modal>
-        </Link>
+        </>
     );
 };
 
