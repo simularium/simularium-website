@@ -45,14 +45,14 @@ const UrlUpload = () => {
                 onCancel={handleCancel}
                 width={700}
             >
+                <p>Provide the URL to your public Simularium file:</p>
                 <Form
-                    layout="vertical"
+                    layout="inline"
                     requiredMark={false}
                     onFinish={handleButtonClick}
                     onFinishFailed={handleFinishFailed}
                 >
                     <Form.Item
-                        label="Provide the URL to your public Simularium file:"
                         name="url"
                         rules={[
                             {
