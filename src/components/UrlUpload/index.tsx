@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { Button, Form, Input, Modal } from "antd";
-import { RequestLocalFileAction } from "../../state/trajectory/types";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
-import { ActionCreator } from "redux";
 import { TUTORIAL_PATHNAME, VIEWER_PATHNAME } from "../../routes";
 
 const styles = require("./style.css");
@@ -11,29 +9,21 @@ const styles = require("./style.css");
 const UrlUpload = () => {
     // TODO: change to false
     const [isModalVisible, setIsModalVisible] = useState(true);
+    let history = useHistory();
 
     const showModal = () => {
         setIsModalVisible(true);
     };
-    const handleCancel = () => {
+    const closeModal = () => {
         setIsModalVisible(false);
     };
 
     const handleButtonClick = (values: any) => {
-        console.log(values.url);
-    };
-    const handleFinishFailed = (error: any) => {
-        console.log(error);
+        history.push(`${VIEWER_PATHNAME}?trajUrl=${values.url}`);
+        closeModal();
     };
 
     return (
-        // <Link
-        //     // used to decide whether to clear out the viewer
-        //     to={{
-        //         pathname: VIEWER_PATHNAME,
-        //         state: { localFile: true }, // FIXME:
-        //     }}
-        // />
         <>
             <Button type="ghost" onClick={showModal}>
                 From a URL
@@ -43,7 +33,7 @@ const UrlUpload = () => {
                 title="Load model from a URL"
                 visible={isModalVisible}
                 footer={null}
-                onCancel={handleCancel}
+                onCancel={closeModal}
                 width={700}
             >
                 <p>Provide the URL to your public Simularium file:</p>
@@ -51,7 +41,6 @@ const UrlUpload = () => {
                     layout="inline"
                     requiredMark={false}
                     onFinish={handleButtonClick}
-                    onFinishFailed={handleFinishFailed}
                 >
                     <Form.Item
                         name="url"
@@ -75,7 +64,7 @@ const UrlUpload = () => {
                     Amazon S3 links.{" "}
                     <a
                         href={`${TUTORIAL_PATHNAME}#share-a-link`}
-                        onClick={handleCancel}
+                        onClick={closeModal}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
