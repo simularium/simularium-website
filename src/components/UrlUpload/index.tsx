@@ -34,11 +34,12 @@ const UrlUpload = () => {
         //         state: { localFile: true }, // FIXME:
         //     }}
         // />
-        <div className={styles.container}>
+        <>
             <Button type="ghost" onClick={showModal}>
                 From a URL
             </Button>
             <Modal
+                className={styles.modal}
                 title="Load model from a URL"
                 visible={isModalVisible}
                 footer={null}
@@ -69,7 +70,7 @@ const UrlUpload = () => {
                         </Button>
                     </Form.Item>
                 </Form>
-                <p>
+                <p className={styles.currentlySupport}>
                     (We currently support public Dropbox, Google Drive, and
                     Amazon S3 links.{" "}
                     <a
@@ -78,12 +79,12 @@ const UrlUpload = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        Learn more.
+                        Learn more
                     </a>
                     )
                 </p>
             </Modal>
-        </div>
+        </>
     );
 };
 

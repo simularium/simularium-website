@@ -1,0 +1,11 @@
+.modal input {
+    width: 500px;
+}
+
+.modal :global(.ant-form-item-with-help) {
+    margin-bottom: 0;
+}
+
+.modal .currently-support {
+    margin-top: 1.75rem;
+}
