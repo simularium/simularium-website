@@ -19,6 +19,13 @@ const UrlUpload = () => {
         setIsModalVisible(false);
     };
 
+    const handleButtonClick = (values: any) => {
+        console.log(values.url);
+    };
+    const handleFinishFailed = (error: any) => {
+        console.log(error);
+    };
+
     return (
         // <Link
         //     // used to decide whether to clear out the viewer
@@ -27,7 +34,7 @@ const UrlUpload = () => {
         //         state: { localFile: true }, // FIXME:
         //     }}
         // />
-        <>
+        <div className={styles.container}>
             <Button type="ghost" onClick={showModal}>
                 From a URL
             </Button>
@@ -38,12 +45,28 @@ const UrlUpload = () => {
                 onCancel={handleCancel}
                 width={700}
             >
-                <Form layout="vertical">
-                    <Form.Item label="Provide the URL to your public Simularium file:">
-                        <Input placeholder="your URL here" allowClear />
+                <Form
+                    layout="vertical"
+                    requiredMark={false}
+                    onFinish={handleButtonClick}
+                    onFinishFailed={handleFinishFailed}
+                >
+                    <Form.Item
+                        label="Provide the URL to your public Simularium file:"
+                        name="url"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please input a URL",
+                            },
+                        ]}
+                    >
+                        <Input allowClear />
                     </Form.Item>
                     <Form.Item>
-                        <Button type="primary">Load</Button>
+                        <Button type="primary" htmlType="submit">
+                            Load
+                        </Button>
                     </Form.Item>
                 </Form>
                 <p>
@@ -60,7 +83,7 @@ const UrlUpload = () => {
                     )
                 </p>
             </Modal>
-        </>
+        </div>
     );
 };
 
