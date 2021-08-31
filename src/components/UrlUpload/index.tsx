@@ -7,8 +7,7 @@ import { TUTORIAL_PATHNAME, VIEWER_PATHNAME } from "../../routes";
 const styles = require("./style.css");
 
 const UrlUpload = () => {
-    // TODO: change to false
-    const [isModalVisible, setIsModalVisible] = useState(true);
+    const [isModalVisible, setIsModalVisible] = useState(false);
     let history = useHistory();
 
     const showModal = () => {
@@ -20,7 +19,7 @@ const UrlUpload = () => {
 
     const handleButtonClick = (values: any) => {
         history.push(`${VIEWER_PATHNAME}?trajUrl=${values.url}`);
-        closeModal();
+        location.reload();
     };
 
     return (
