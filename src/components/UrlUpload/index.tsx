@@ -53,7 +53,10 @@ const UrlUpload = () => {
                             },
                         ]}
                     >
-                        <Input allowClear />
+                        <Input
+                            allowClear
+                            placeholder="e.g., https://www.myfiles.com/1234567/my_trajectory.simularium"
+                        />
                     </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit">
