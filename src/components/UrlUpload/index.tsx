@@ -11,6 +11,9 @@ const UrlUpload = () => {
     let history = useHistory();
 
     const showModal = () => {
+        if (history.location.pathname !== VIEWER_PATHNAME) {
+            history.push(VIEWER_PATHNAME);
+        }
         setIsModalVisible(true);
     };
     const closeModal = () => {
