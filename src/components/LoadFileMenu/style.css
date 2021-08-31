@@ -7,6 +7,11 @@
     fill: var(--dark-theme-menu-text-color);
 }
 
+.menu :global(.ant-dropdown-menu-item) {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
 .menu :global(.ant-btn-ghost) {
     border: none;
     color: var(--dark-theme-menu-text-color);
