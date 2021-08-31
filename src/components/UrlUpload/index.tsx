@@ -20,7 +20,7 @@ const UrlUpload = () => {
         setIsModalVisible(false);
     };
 
-    const handleButtonClick = (values: any) => {
+    const loadTrajectory = (values: any) => {
         history.push(`${VIEWER_PATHNAME}?trajUrl=${values.url}`);
         location.reload();
     };
@@ -42,7 +42,7 @@ const UrlUpload = () => {
                 <Form
                     layout="inline"
                     requiredMark={false}
-                    onFinish={handleButtonClick}
+                    onFinish={loadTrajectory}
                 >
                     <Form.Item
                         name="url"
