@@ -1,11 +1,43 @@
 .modal input {
-    width: 500px;
+    width: 510px;
 }
 
-.modal .currently-support {
-    margin-top: 1.75rem;
+/* .modal p {
+    font-size: 16px;
+    color: var(--light-theme-modal-text);
+} */
+
+.modal .extra-info {
+    margin-top: .25rem;
+    color: var(--light-theme-modal-supplemental-text);
+    font-size: 14px;
+}
+
+.modal :global(.ant-modal-content) {
+    border-radius: 3px;
+}
+
+.modal :global(.ant-modal-header) {
+    border-radius: 3px;
+}
+
+.modal :global(.ant-modal-title) {
+    text-align: center;
+    font-weight: bold;
 }
 
 .modal :global(.ant-form-item-with-help) {
     margin-bottom: 0;
+}
+
+.modal :global(.ant-form-item-extra) {
+    margin-top: 0px;
+}
+
+.modal :global(.ant-input-affix-wrapper) {
+    border-radius: 3px;
+}
+
+.modal :global(.ant-input-suffix svg) {
+    color: var(--light-theme-modal-supplemental-text);
 }

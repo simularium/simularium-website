@@ -25,6 +25,27 @@ const UrlUpload = () => {
         location.reload();
     };
 
+    const extraInfo = (
+        <p className={styles.extraInfo}>
+            We currently support public Dropbox, Google Drive, and Amazon S3
+            links.{" "}
+            <a
+                href={`${TUTORIAL_PATHNAME}#share-a - link`}
+                onClick={closeModal}
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Learn more.
+            </a>
+        </p>
+    );
+
+    const submitButton = (
+        <Button type="primary" htmlType="submit">
+            Load
+        </Button>
+    );
+
     return (
         <>
             <Button type="ghost" onClick={showModal}>
@@ -34,18 +55,19 @@ const UrlUpload = () => {
                 className={styles.modal}
                 title="Load Model from URL"
                 visible={isModalVisible}
-                footer={null}
+                footer={submitButton}
                 onCancel={closeModal}
-                width={700}
+                width={600}
             >
-                <p>Enter the URL to a public .simularium file</p>
                 <Form
-                    layout="inline"
+                    layout="vertical"
                     requiredMark={false}
                     onFinish={loadTrajectory}
                 >
                     <Form.Item
                         name="url"
+                        label="Enter the URL to a public .simularium file"
+                        extra={extraInfo}
                         rules={[
                             {
                                 required: true,
@@ -56,26 +78,15 @@ const UrlUpload = () => {
                         <Input
                             allowClear
                             placeholder="https://.../example.simularium"
+                            size="large"
                         />
                     </Form.Item>
-                    <Form.Item>
+                    {/* <Form.Item>
                         <Button type="primary" htmlType="submit">
                             Load
                         </Button>
-                    </Form.Item>
+                    </Form.Item> */}
                 </Form>
-                <p className={styles.currentlySupport}>
-                    We currently support public Dropbox, Google Drive, and
-                    Amazon S3 links.{" "}
-                    <a
-                        href={`${TUTORIAL_PATHNAME}#share-a-link`}
-                        onClick={closeModal}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Learn more.
-                    </a>
-                </p>
             </Modal>
         </>
     );
