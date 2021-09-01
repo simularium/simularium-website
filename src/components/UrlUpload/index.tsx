@@ -30,8 +30,7 @@ const UrlUpload = () => {
             We currently support public Dropbox, Google Drive, and Amazon S3
             links.{" "}
             <a
-                href={`${TUTORIAL_PATHNAME}#share-a - link`}
-                onClick={closeModal}
+                href={`${TUTORIAL_PATHNAME}#share-a-link`}
                 target="_blank"
                 rel="noopener noreferrer"
             >
