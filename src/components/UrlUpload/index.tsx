@@ -32,13 +32,13 @@ const UrlUpload = () => {
             </Button>
             <Modal
                 className={styles.modal}
-                title="Load model from a URL"
+                title="Load Model from URL"
                 visible={isModalVisible}
                 footer={null}
                 onCancel={closeModal}
                 width={700}
             >
-                <p>Provide the URL to your public Simularium file:</p>
+                <p>Enter the URL to a public .simularium file</p>
                 <Form
                     layout="inline"
                     requiredMark={false}
@@ -55,7 +55,7 @@ const UrlUpload = () => {
                     >
                         <Input
                             allowClear
-                            placeholder="e.g., https://www.myfiles.com/1234567/my_trajectory.simularium"
+                            placeholder="https://.../example.simularium"
                         />
                     </Form.Item>
                     <Form.Item>
@@ -65,7 +65,7 @@ const UrlUpload = () => {
                     </Form.Item>
                 </Form>
                 <p className={styles.currentlySupport}>
-                    (We currently support public Dropbox, Google Drive, and
+                    We currently support public Dropbox, Google Drive, and
                     Amazon S3 links.{" "}
                     <a
                         href={`${TUTORIAL_PATHNAME}#share-a-link`}
@@ -73,9 +73,8 @@ const UrlUpload = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        Learn more
+                        Learn more.
                     </a>
-                    )
                 </p>
             </Modal>
         </>
