@@ -8,6 +8,7 @@ const styles = require("./style.css");
 
 const UrlUpload = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [userInput, setUserInput] = useState("");
     let history = useHistory();
 
     const showModal = () => {
@@ -39,6 +40,10 @@ const UrlUpload = () => {
         </p>
     );
 
+    const handleUserInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setUserInput(event.target.value);
+    };
+
     return (
         <>
             <Button type="ghost" onClick={showModal}>
@@ -61,21 +66,26 @@ const UrlUpload = () => {
                         name="url"
                         label="Enter the URL to a public .simularium file"
                         extra={extraInfo}
-                        rules={[
-                            {
-                                required: true,
-                                message: "Please input a URL",
-                            },
-                        ]}
+                        // rules={[
+                        //     {
+                        //         required: true,
+                        //         message: "Please input a URL",
+                        //     },
+                        // ]}
                     >
                         <Input
                             allowClear
                             placeholder="https://.../example.simularium"
                             size="large"
+                            onChange={handleUserInput}
                         />
                     </Form.Item>
                     <Form.Item className={styles.submitButton}>
-                        <Button type="primary" htmlType="submit">
+                        <Button
+                            type="default"
+                            htmlType="submit"
+                            disabled={!userInput}
+                        >
                             Load
                         </Button>
                     </Form.Item>
