@@ -14,6 +14,7 @@
     --transparent-white: rgba(255, 255, 255, 0.65);
     --dim-gray: #383838;
     --pale-grey: #ddd9ec;
+    --light-gray: #c3c3c3;
     --text-gray: #a0a0a0;
     --greyish-brown: #4a4a4a;
     --warm-gray: #979797;
@@ -29,6 +30,7 @@
     --footer-text: var(--warm-gray);
     --footer-text-border-bottom: var(--greyish-brown);
     --footer-link: var(--blue);
+    --input-border-highlight: var(--baby-purple);
     --dark-theme-primary-color: var(--baby-purple);
     --dark-theme-body-bg: var(--black);
     --dark-theme-header-bg: var(--dark-three);
@@ -66,5 +68,6 @@
     --light-theme-faint-text: var(--white-two);
     --light-theme-modal-text: var(--dark);
     --light-theme-modal-supplemental-text: var(--light-medium-gray);
+    --light-theme-btn-default-disabled-bg: var(--light-gray);
 }
 

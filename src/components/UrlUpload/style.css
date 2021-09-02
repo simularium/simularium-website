@@ -20,6 +20,11 @@
     flex: none;
 }
 
+.modal .submitButton button[disabled] {
+    background: var(--light-theme-btn-default-disabled-bg);
+    border: none;
+}
+
 .modal :global(.ant-modal-content) {
     border-radius: 3px;
 }
@@ -43,6 +48,7 @@
 
 .modal :global(.ant-input-affix-wrapper) {
     border-radius: 3px;
+    border-color: var(--input-border-highlight);
 }
 
 .modal :global(.ant-input-suffix svg) {
