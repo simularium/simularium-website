@@ -39,12 +39,6 @@ const UrlUpload = () => {
         </p>
     );
 
-    const submitButton = (
-        <Button type="primary" htmlType="submit">
-            Load
-        </Button>
-    );
-
     return (
         <>
             <Button type="ghost" onClick={showModal}>
@@ -54,7 +48,7 @@ const UrlUpload = () => {
                 className={styles.modal}
                 title="Load Model from URL"
                 visible={isModalVisible}
-                footer={submitButton}
+                footer={null}
                 onCancel={closeModal}
                 width={600}
             >
@@ -80,11 +74,11 @@ const UrlUpload = () => {
                             size="large"
                         />
                     </Form.Item>
-                    {/* <Form.Item>
+                    <Form.Item className={styles.submitButton}>
                         <Button type="primary" htmlType="submit">
                             Load
                         </Button>
-                    </Form.Item> */}
+                    </Form.Item>
                 </Form>
             </Modal>
         </>

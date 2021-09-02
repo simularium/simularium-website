@@ -2,15 +2,22 @@
     width: 510px;
 }
 
-/* .modal p {
-    font-size: 16px;
-    color: var(--light-theme-modal-text);
-} */
-
 .modal .extra-info {
     margin-top: .25rem;
     color: var(--light-theme-modal-supplemental-text);
     font-size: 14px;
+}
+
+.modal .submitButton {
+    margin-bottom: 0px;
+}
+
+.modal .submitButton :global(.ant-form-item-control-input) {
+    justify-content: flex-end;
+}
+
+.modal .submitButton :global(.ant-form-item-control-input-content) {
+    flex: none;
 }
 
 .modal :global(.ant-modal-content) {
