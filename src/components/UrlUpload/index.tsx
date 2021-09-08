@@ -67,12 +67,12 @@ const UrlUpload = () => {
                         name="url"
                         label="Enter the URL to a public .simularium file"
                         extra={extraInfo}
-                        // rules={[
-                        //     {
-                        //         required: true,
-                        //         message: "Please input a URL",
-                        //     },
-                        // ]}
+                        rules={[
+                            {
+                                type: "url",
+                                message: "Please input a valid URL",
+                            },
+                        ]}
                     >
                         <Input
                             allowClear
