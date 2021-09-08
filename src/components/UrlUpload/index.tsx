@@ -55,7 +55,8 @@ const UrlUpload = () => {
                 visible={isModalVisible}
                 footer={null}
                 onCancel={closeModal}
-                width={600}
+                width={525}
+                centered
             >
                 <Form
                     layout="vertical"

@@ -1,7 +1,3 @@
-.modal input {
-    width: 510px;
-}
-
 .modal .extra-info {
     margin-top: .25rem;
     color: var(--light-theme-modal-supplemental-text);
