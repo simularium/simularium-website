@@ -12,6 +12,7 @@ import {
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
 import LocalFileUpload from "../LocalFileUpload";
+import UrlUpload from "../UrlUpload";
 import { DownArrow } from "../Icons";
 
 const styles = require("./style.css");
@@ -38,11 +39,8 @@ const LoadFileMenu = ({
     };
     const menu = (
         <Menu theme="dark" className={styles.menu}>
-            <Menu.Item>
-                <LocalFileUpload loadLocalFile={loadLocalFile} />
-            </Menu.Item>
             <Menu.SubMenu
-                title="Load existing model"
+                title="From examples"
                 popupClassName={styles.submenu}
                 popupOffset={[-0.45, -4]}
             >
@@ -63,6 +61,12 @@ const LoadFileMenu = ({
                     </Menu.Item>
                 ))}
             </Menu.SubMenu>
+            <Menu.Item>
+                <UrlUpload />
+            </Menu.Item>
+            <Menu.Item>
+                <LocalFileUpload loadLocalFile={loadLocalFile} />
+            </Menu.Item>
         </Menu>
     );
     return (

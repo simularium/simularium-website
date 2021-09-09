@@ -11,8 +11,6 @@ interface FileUploadProps {
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
 }
 
-const styles = require("./style.css");
-
 const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
     const onChange = ({ file }: UploadChangeParam) => {
         if (file.status === "error") {
@@ -33,9 +31,8 @@ const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
                 customRequest={(options) =>
                     customRequest(options, loadLocalFile)
                 }
-                className={styles.container}
             >
-                <Button type="ghost">Import Simularium file...</Button>
+                <Button type="ghost">From your device</Button>
             </Upload>
         </Link>
     );
