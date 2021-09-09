@@ -4,19 +4,19 @@
     font-size: 14px;
 }
 
-.modal .submitButton {
+.modal .submit-button {
     margin-bottom: 0px;
 }
 
-.modal .submitButton :global(.ant-form-item-control-input) {
+.modal .submit-button :global(.ant-form-item-control-input) {
     justify-content: flex-end;
 }
 
-.modal .submitButton :global(.ant-form-item-control-input-content) {
+.modal .submit-button :global(.ant-form-item-control-input-content) {
     flex: none;
 }
 
-.modal .submitButton button[disabled] {
+.modal .submit-button button[disabled] {
     background: var(--light-theme-btn-default-disabled-bg);
     border: none;
 }
