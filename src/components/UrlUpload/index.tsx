@@ -70,7 +70,7 @@ const UrlUpload = () => {
                         rules={[
                             {
                                 type: "url",
-                                message: "Please input a valid URL",
+                                message: "!\u20DD Please input a valid URL",
                             },
                         ]}
                     >
