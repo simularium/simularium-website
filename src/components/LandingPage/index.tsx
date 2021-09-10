@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Layout } from "antd";
+import ReactMarkdown from "react-markdown";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import flowchartImg from "../../assets/overview-image.png";
@@ -9,17 +10,14 @@ import BlankCard from "../BlankCard";
 import Footer from "../Footer";
 import { TUTORIAL_PATHNAME } from "../../routes";
 import { CYTOSIM_URL, READDY_URL } from "../../constants";
+const markdown = require("../../../ACKNOWLEDGMENTS.md");
 
-// import Acknowledgments from "../../../ACKNOWLEDGMENTS.md";
+const styles = require("./style.css");
 
 const { Content } = Layout;
 const NUM_CARDS_PER_ROW = 3;
 
-const styles = require("./style.css");
-const acknowledgments = require("../../../ACKNOWLEDGMENTS.md");
-
 const LandingPage: React.FunctionComponent<{}> = () => {
-    console.log(acknowledgments);
     return (
         <React.Fragment>
             <Content className={styles.content}>
@@ -175,7 +173,7 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         contributions to Simularium
                     </h2>
                     <br />
-                    <p>testing</p>
+                    <ReactMarkdown>{markdown.default}</ReactMarkdown>
                 </div>
             </Content>
             <Footer />
