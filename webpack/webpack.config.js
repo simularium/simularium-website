@@ -120,6 +120,10 @@ module.exports = ({ analyze, env } = {}) => ({
                 test: /\.(png|jpg|gif|svg)$/i,
                 use: ["file-loader"],
             },
+            {
+                test: /\.md$/,
+                use: ["raw-loader"],
+            },
         ],
     },
     optimization: {

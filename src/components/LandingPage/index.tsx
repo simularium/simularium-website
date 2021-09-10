@@ -10,12 +10,16 @@ import Footer from "../Footer";
 import { TUTORIAL_PATHNAME } from "../../routes";
 import { CYTOSIM_URL, READDY_URL } from "../../constants";
 
+// import Acknowledgments from "../../../ACKNOWLEDGMENTS.md";
+
 const { Content } = Layout;
 const NUM_CARDS_PER_ROW = 3;
 
 const styles = require("./style.css");
+const acknowledgments = require("../../../ACKNOWLEDGMENTS.md");
 
 const LandingPage: React.FunctionComponent<{}> = () => {
+    console.log(acknowledgments);
     return (
         <React.Fragment>
             <Content className={styles.content}>
@@ -163,6 +167,15 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         integrate and test Simularium’s potential for use in
                         active learning classroom/lab/homework activities.
                     </p>
+                </div>
+                <div className={styles.panel}>
+                    <h1>Acknowledgments</h1>
+                    <h2>
+                        We'd like to thank the following people for their
+                        contributions to Simularium
+                    </h2>
+                    <br />
+                    <p>testing</p>
                 </div>
             </Content>
             <Footer />
