@@ -16,6 +16,8 @@ const styles = require("./style.css");
 
 const { Content } = Layout;
 const NUM_CARDS_PER_ROW = 3;
+// Add bullets to each heading
+const markdownProcessed = markdown.default.replaceAll("##", "## &bull;");
 
 const LandingPage: React.FunctionComponent<{}> = () => {
     return (
@@ -173,9 +175,9 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         contributions to Simularium
                     </h2>
                     <br />
-                    <div className={styles.markdown}>
-                        <ReactMarkdown>{markdown.default}</ReactMarkdown>
-                    </div>
+                    <ReactMarkdown className={styles.markdown}>
+                        {markdownProcessed}
+                    </ReactMarkdown>
                 </div>
             </Content>
             <Footer />
