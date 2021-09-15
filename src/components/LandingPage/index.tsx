@@ -171,7 +171,7 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                 <div className={styles.panel}>
                     <h1>Acknowledgments</h1>
                     <h2>
-                        We'd like to thank the following people for their
+                        We&apos;d like to thank the following people for their
                         contributions to Simularium
                     </h2>
                     <br />
