@@ -86,6 +86,20 @@ On smaller screens the width is 100% of parent div. */
     margin-bottom: 3em;
 }
 
+.markdown {
+    column-count: 2;
+}
+
+.markdown > * {
+    text-align: left;
+    font-size: 16px;
+}
+
+.markdown h2 {
+    font-weight: bold;
+    margin-top: 2em;
+}
+
 /* These will be useful if we ever bring a call-to-action button back */
 /* .call-to-action-panel :global(.ant-btn) {
     display: block;

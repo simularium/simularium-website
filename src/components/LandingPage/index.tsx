@@ -173,7 +173,9 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         contributions to Simularium
                     </h2>
                     <br />
-                    <ReactMarkdown>{markdown.default}</ReactMarkdown>
+                    <div className={styles.markdown}>
+                        <ReactMarkdown>{markdown.default}</ReactMarkdown>
+                    </div>
                 </div>
             </Content>
             <Footer />
