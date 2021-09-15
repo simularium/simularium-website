@@ -88,6 +88,7 @@ On smaller screens the width is 100% of parent div. */
 
 .markdown {
     column-count: 2;
+    height: 540px;
 }
 
 .markdown > * {
@@ -97,7 +98,10 @@ On smaller screens the width is 100% of parent div. */
 
 .markdown h2 {
     font-weight: bold;
-    margin-top: 2em;
+}
+
+.markdown p {
+    margin-bottom: 2em;
 }
 
 /* These will be useful if we ever bring a call-to-action button back */
