@@ -6,6 +6,7 @@ export default (
     { file, onSuccess, onError }: RcCustomRequestOptions,
     loadFunction: (simulariumFile: LocalSimFile) => void
 ) => {
+    console.log("custom request");
     // want the loading indicator to show without any lag time
     // as soon as user hits "Open" button, and not have to have this action called
     // multiple places in the code.
