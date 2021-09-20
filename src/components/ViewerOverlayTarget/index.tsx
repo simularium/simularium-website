@@ -55,6 +55,7 @@ const ViewerOverlayTarget = ({
             showUploadList={false}
             openFileDialogOnClick={false}
             customRequest={(options) => customRequest(options, loadLocalFile)}
+            multiple={true}
         >
             <p className="ant-upload-drag-icon">
                 {isLoading ? Loading : UploadFile}
