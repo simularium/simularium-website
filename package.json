@@ -83,7 +83,7 @@
         "webpack-dev-server": "^3.11.0"
     },
     "dependencies": {
-        "@aics/simularium-viewer": "^2.9.7",
+        "@aics/simularium-viewer": "file:../simularium-viewer",
         "@ant-design/css-animation": "^1.7.3",
         "@ant-design/icons": "^4.0.6",
         "antd": "^4.0.0-rc.6",
