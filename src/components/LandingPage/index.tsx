@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Layout } from "antd";
+import ReactMarkdown from "react-markdown";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import flowchartImg from "../../assets/overview-image.png";
@@ -9,11 +10,13 @@ import BlankCard from "../BlankCard";
 import Footer from "../Footer";
 import { TUTORIAL_PATHNAME } from "../../routes";
 import { CYTOSIM_URL, READDY_URL } from "../../constants";
+const markdown = require("../../../ACKNOWLEDGMENTS.md");
+const styles = require("./style.css");
 
 const { Content } = Layout;
 const NUM_CARDS_PER_ROW = 3;
-
-const styles = require("./style.css");
+// Add bullets to each heading
+const markdownProcessed = markdown.default.replaceAll("##", "## &bull;");
 
 const LandingPage: React.FunctionComponent<{}> = () => {
     return (
@@ -163,6 +166,17 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         integrate and test Simularium’s potential for use in
                         active learning classroom/lab/homework activities.
                     </p>
+                </div>
+                <div className={styles.panel}>
+                    <h1>Acknowledgments</h1>
+                    <h2>
+                        We&apos;d like to thank the following people for their
+                        contributions to Simularium
+                    </h2>
+                    <br />
+                    <ReactMarkdown className={styles.markdown}>
+                        {markdownProcessed}
+                    </ReactMarkdown>
                 </div>
             </Content>
             <Footer />
