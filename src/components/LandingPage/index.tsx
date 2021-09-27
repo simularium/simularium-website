@@ -25,17 +25,18 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                 <div className={styles.panel}>
                     <h1>Simularium {BetaTag}</h1>
                     <h2>
-                        Visualize, analyze, interrogate & share biological
-                        simulations
+                        Share, visualize, & interrogate biological simulations
+                        online
                     </h2>
                     <br />
                     <p>
-                        Simularium makes it easy to share and analyze spatial
-                        simulations directly in a web browser. Its primary goal
-                        is to facilitate collaborations between experimental
-                        biologists and computational biologists by removing
-                        major challenges to accessing, running, sharing, and
-                        analyzing simulation results.
+                        The Simularium Viewer makes it easy to share and
+                        interrogate interactive 3D visualizations of biological
+                        simulation trajectories and related plots directly in a
+                        web browser. Its primary goal is to facilitate
+                        collaborations among experimental and computational
+                        biologists by removing major challenges to sharing,
+                        accessing, and comparing simulation results.
                     </p>
                 </div>
                 <div
