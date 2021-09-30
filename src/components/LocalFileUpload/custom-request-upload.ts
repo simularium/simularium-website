@@ -1,12 +1,21 @@
 import { SimulariumFileFormat } from "@aics/simularium-viewer";
+import { findIndex } from "lodash";
 import { RcCustomRequestOptions } from "antd/lib/upload/interface";
 
 import { LocalSimFile } from "../../state/trajectory/types";
 import { CLEAR_SIMULARIUM_FILE } from "../../state/trajectory/constants";
 import { store } from "../..";
 
+// Typescript's File definition is missing this function
+//  which is part of the HTML standard on all browsers
+//  and needed below
+interface FileHTML extends File {
+    text(): Promise<string>;
+}
+
 export default (
-    { file, onSuccess, onError }: RcCustomRequestOptions,
+    { onSuccess, onError }: RcCustomRequestOptions,
+    droppedFiles: File[],
     loadFunction: (simulariumFile: LocalSimFile) => void
 ) => {
     console.log("custom request");
@@ -17,27 +26,41 @@ export default (
         payload: { newFile: true },
         type: CLEAR_SIMULARIUM_FILE,
     });
-    file.text()
-        .then((text: string) => JSON.parse(text))
-        .then((data: SimulariumFileFormat) => {
-            loadFunction({
-                lastModified: file.lastModified,
-                name: file.name,
-                data,
-            });
-        })
-        .then(() =>
+
+    const filesArr: FileHTML[] = Array.from(droppedFiles) as FileHTML[];
+
+    Promise.all(filesArr.map((item: FileHTML) => item.text())).then(
+        (parsedFiles: string[]) => {
+            const simulariumFileIndex = findIndex(filesArr, (file) =>
+                file.name.includes(".simularium")
+            );
+            const simulariumFile = JSON.parse(parsedFiles[simulariumFileIndex]);
+            const fileName: string = filesArr[simulariumFileIndex].name;
+            const geoAssets = filesArr.reduce((acc, cur, index) => {
+                if (index !== simulariumFileIndex) {
+                    acc[cur.name] = parsedFiles[index];
+                }
+                return acc;
+            }, {});
+            try {
+                loadFunction({
+                    lastModified: simulariumFile.lastModified,
+                    name: fileName,
+                    data: simulariumFile,
+                    geoAssets: geoAssets,
+                });
+            } catch (error) {
+                console.log(error);
+                onError(error);
+            }
             onSuccess(
                 {
-                    name: file.name,
+                    name: fileName,
                     status: "done",
                     url: "",
                 },
-                file
-            )
-        )
-        .catch((error: Error) => {
-            console.log(error);
-            onError(error);
-        });
+                simulariumFile
+            );
+        }
+    );
 };

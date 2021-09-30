@@ -6,7 +6,7 @@ import { ActionCreator } from "redux";
 import { LocalSimFile } from "../../state/trajectory/types";
 import { ResetDragOverViewerAction } from "../../state/viewer/types";
 import { Loading, UploadFile } from "../Icons";
-import loadLocalFiles from "../LocalFileUpload/load-local-files";
+import customRequest from "../LocalFileUpload/custom-request-upload";
 
 const { Dragger } = Upload;
 
@@ -26,6 +26,8 @@ const ViewerOverlayTarget = ({
     fileIsDraggedOver,
 }: ViewerOverlayTargetProps): JSX.Element | null => {
     const [showTarget, setVisibility] = useState(false);
+    const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
+
     if (fileIsDraggedOver && !showTarget) {
         setVisibility(true);
     } else if (!fileIsDraggedOver && showTarget) {
@@ -44,7 +46,8 @@ const ViewerOverlayTarget = ({
     };
 
     const handleDrop = (event: React.DragEvent) => {
-        loadLocalFiles(event.dataTransfer.files, loadLocalFile);
+        setDroppedFiles([...event.dataTransfer.files]);
+        console.log("handleDrop");
     };
 
     const loadingOverlay = (
@@ -60,7 +63,9 @@ const ViewerOverlayTarget = ({
             onDrop={handleDrop}
             showUploadList={false}
             openFileDialogOnClick={false}
-            // customRequest={(options) => customRequest(options, loadLocalFile)}
+            customRequest={(options) =>
+                customRequest(options, droppedFiles, loadLocalFile)
+            }
             multiple
             directory
         >
