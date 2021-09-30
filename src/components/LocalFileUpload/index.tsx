@@ -32,6 +32,7 @@ const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
                 customRequest={(options) =>
                     customRequest(options, loadLocalFile)
                 }
+                multiple={true}
             >
                 <Button type="ghost">From your device</Button>
             </Upload>
