@@ -18,6 +18,7 @@ const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
         }
     };
     return (
+        // FIXME: Link breaks upload popup
         <Link
             // used to decide whether to clear out the viewer
             to={{
@@ -31,7 +32,6 @@ const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
                 customRequest={(options) =>
                     customRequest(options, loadLocalFile)
                 }
-                multiple={true}
             >
                 <Button type="ghost">From your device</Button>
             </Upload>

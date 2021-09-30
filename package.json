@@ -87,7 +87,7 @@
         "@aics/simularium-viewer": "^3.0.0",
         "@ant-design/css-animation": "^1.7.3",
         "@ant-design/icons": "^4.0.6",
-        "antd": "^4.0.0-rc.6",
+        "antd": "^4.16.0",
         "axios": "^0.21.1",
         "bowser": "^2.11.0",
         "classnames": "2.2.5",
