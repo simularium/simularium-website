@@ -51,6 +51,7 @@ export interface LocalSimFile {
     name: string;
     data: SimulariumFileFormat;
     lastModified: number;
+    geoAssets?: { [key: string]: string };
 }
 
 export interface NetworkedSimFile {

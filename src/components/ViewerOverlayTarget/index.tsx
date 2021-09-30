@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Upload, message } from "antd";
-import { ActionCreator } from "redux";
-import { LocalSimFile } from "../../state/trajectory/types";
 import { UploadChangeParam } from "antd/lib/upload";
+import { ActionCreator } from "redux";
 
+import { LocalSimFile } from "../../state/trajectory/types";
 import { ResetDragOverViewerAction } from "../../state/viewer/types";
 import { Loading, UploadFile } from "../Icons";
-import customRequest from "../LocalFileUpload/custom-request-upload";
+import loadLocalFiles from "../LocalFileUpload/load-local-files";
 
 const { Dragger } = Upload;
 
@@ -18,6 +18,7 @@ interface ViewerOverlayTargetProps {
     isLoading: boolean;
     fileIsDraggedOver: boolean;
 }
+
 const ViewerOverlayTarget = ({
     resetDragOverViewer,
     loadLocalFile,
@@ -42,6 +43,10 @@ const ViewerOverlayTarget = ({
         }
     };
 
+    const handleDrop = (event: React.DragEvent) => {
+        loadLocalFiles(event.dataTransfer.files, loadLocalFile);
+    };
+
     const loadingOverlay = (
         <div className={styles.container}>
             <p className="loading-icon">{Loading}</p>
@@ -52,10 +57,12 @@ const ViewerOverlayTarget = ({
         <Dragger
             className={styles.container}
             onChange={onChange}
+            onDrop={handleDrop}
             showUploadList={false}
             openFileDialogOnClick={false}
-            customRequest={(options) => customRequest(options, loadLocalFile)}
-            multiple={true}
+            // customRequest={(options) => customRequest(options, loadLocalFile)}
+            multiple
+            directory
         >
             <p className="ant-upload-drag-icon">
                 {isLoading ? Loading : UploadFile}
