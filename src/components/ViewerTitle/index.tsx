@@ -44,7 +44,7 @@ const ViewerTitle: React.FunctionComponent<ViewerTitleProps> = (
         lastModified && lastModified - Date.now() < 0;
     if (shouldShowModifiedDate) {
         tagText = `modified: ${moment(lastModified).format(
-            "YYYY-MM-DD, h:m A"
+            "YYYY-MM-DD, h:mm A"
         )}`;
     } else if (version) {
         tagText = `v${version}`;
