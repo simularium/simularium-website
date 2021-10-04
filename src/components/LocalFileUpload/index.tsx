@@ -15,13 +15,18 @@ const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
     const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
 
     const onChange = ({ file }: UploadChangeParam) => {
-        if (file.status === "error") {
+        if (file.status === "done") {
+            setDroppedFiles([]);
+        } else if (file.status === "error") {
             message.error(`${file.name} file upload failed.`);
+            setDroppedFiles([]);
         }
     };
 
-    const beforeUpload = (file, fileList) => {
-        setDroppedFiles([...fileList]);
+    const beforeUpload = (file: File, fileList: File[]) => {
+        if (droppedFiles.length === 0) {
+            setDroppedFiles([...fileList]);
+        }
     };
 
     return (

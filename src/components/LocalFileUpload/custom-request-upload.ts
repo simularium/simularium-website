@@ -13,15 +13,18 @@ interface FileHTML extends File {
     text(): Promise<string>;
 }
 
+let numCustomRequests = 0;
+
 export default (
     { onSuccess, onError }: RcCustomRequestOptions,
     droppedFiles: File[],
-    numCustomRequests: number,
     loadFunction: (simulariumFile: LocalSimFile) => void
 ) => {
+    numCustomRequests++;
     if (numCustomRequests !== 1) {
         return;
     }
+
     console.log("custom request");
 
     // want the loading indicator to show without any lag time
@@ -73,6 +76,7 @@ export default (
                 },
                 simulariumFile
             );
+            numCustomRequests = 0;
         }
     );
 };
