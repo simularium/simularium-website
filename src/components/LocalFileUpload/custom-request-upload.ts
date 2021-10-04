@@ -42,7 +42,12 @@ export default (
                 }
                 return acc;
             }, {});
+
             try {
+                // if array of files,
+                // stash instead of loadLocalFile until all files are
+                // gathered, then call loadLocalFile
+                console.log("loadFunction");
                 loadFunction({
                     lastModified: simulariumFile.lastModified,
                     name: fileName,
