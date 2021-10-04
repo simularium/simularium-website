@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Upload, message, Button } from "antd";
 import { RequestLocalFileAction } from "../../state/trajectory/types";
@@ -12,31 +12,39 @@ interface FileUploadProps {
 }
 
 const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
+    const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
+
     const onChange = ({ file }: UploadChangeParam) => {
         if (file.status === "error") {
             message.error(`${file.name} file upload failed.`);
         }
     };
+
+    const beforeUpload = (file, fileList) => {
+        setDroppedFiles([...fileList]);
+    };
+
     return (
         // FIXME: Link breaks upload popup
-        <Link
-            // used to decide whether to clear out the viewer
-            to={{
-                pathname: VIEWER_PATHNAME,
-                state: { localFile: true },
-            }}
+        // <Link
+        //     // used to decide whether to clear out the viewer
+        //     to={{
+        //         pathname: VIEWER_PATHNAME,
+        //         state: { localFile: true },
+        //     }}
+        // >
+        <Upload
+            onChange={onChange}
+            beforeUpload={beforeUpload}
+            showUploadList={false}
+            customRequest={(options) =>
+                customRequest(options, droppedFiles, loadLocalFile)
+            }
+            multiple={true}
         >
-            <Upload
-                onChange={onChange}
-                showUploadList={false}
-                customRequest={(options) =>
-                    customRequest(options, loadLocalFile)
-                }
-                multiple={true}
-            >
-                <Button type="ghost">From your device</Button>
-            </Upload>
-        </Link>
+            <Button type="ghost">From your device</Button>
+        </Upload>
+        // </Link>
     );
 };
 
