@@ -16,9 +16,14 @@ interface FileHTML extends File {
 export default (
     { onSuccess, onError }: RcCustomRequestOptions,
     droppedFiles: File[],
+    numCustomRequests: number,
     loadFunction: (simulariumFile: LocalSimFile) => void
 ) => {
+    if (numCustomRequests !== 1) {
+        return;
+    }
     console.log("custom request");
+
     // want the loading indicator to show without any lag time
     // as soon as user hits "Open" button, and not have to have this action called
     // multiple places in the code.
@@ -34,7 +39,9 @@ export default (
             const simulariumFileIndex = findIndex(filesArr, (file) =>
                 file.name.includes(".simularium")
             );
-            const simulariumFile = JSON.parse(parsedFiles[simulariumFileIndex]);
+            const simulariumFile: SimulariumFileFormat = JSON.parse(
+                parsedFiles[simulariumFileIndex]
+            );
             const fileName: string = filesArr[simulariumFileIndex].name;
             const geoAssets = filesArr.reduce((acc, cur, index) => {
                 if (index !== simulariumFileIndex) {
@@ -49,7 +56,7 @@ export default (
                 // gathered, then call loadLocalFile
                 console.log("loadFunction");
                 loadFunction({
-                    lastModified: simulariumFile.lastModified,
+                    lastModified: filesArr[simulariumFileIndex].lastModified,
                     name: fileName,
                     data: simulariumFile,
                     geoAssets: geoAssets,

@@ -27,6 +27,7 @@ const ViewerOverlayTarget = ({
 }: ViewerOverlayTargetProps): JSX.Element | null => {
     const [showTarget, setVisibility] = useState(false);
     const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
+    const [numCustomRequests, setNumCustomRequests] = useState(0);
 
     if (fileIsDraggedOver && !showTarget) {
         setVisibility(true);
@@ -38,6 +39,7 @@ const ViewerOverlayTarget = ({
         if (file.status === "done") {
             resetDragOverViewer();
             setVisibility(false);
+            setNumCustomRequests(0);
         } else if (file.status === "error") {
             setVisibility(false);
             message.error(`${file.name} file upload failed.`);
@@ -47,7 +49,10 @@ const ViewerOverlayTarget = ({
 
     const handleDrop = (event: React.DragEvent) => {
         setDroppedFiles([...event.dataTransfer.files]);
-        console.log("handleDrop");
+    };
+
+    const beforeUpload = () => {
+        setNumCustomRequests(numCustomRequests + 1);
     };
 
     const loadingOverlay = (
@@ -61,10 +66,16 @@ const ViewerOverlayTarget = ({
             className={styles.container}
             onChange={onChange}
             onDrop={handleDrop}
+            beforeUpload={beforeUpload}
             showUploadList={false}
             openFileDialogOnClick={false}
             customRequest={(options) =>
-                customRequest(options, droppedFiles, loadLocalFile)
+                customRequest(
+                    options,
+                    droppedFiles,
+                    numCustomRequests,
+                    loadLocalFile
+                )
             }
             multiple
             directory
