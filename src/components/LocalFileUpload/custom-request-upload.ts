@@ -41,12 +41,12 @@ export default (
         type: CLEAR_SIMULARIUM_FILE,
     });
 
-    const filesArr: FileHTML[] = Array.from(droppedFiles) as FileHTML[];
+    const files: FileHTML[] = Array.from(droppedFiles) as FileHTML[];
 
-    Promise.all(filesArr.map((item: FileHTML) => item.text())).then(
+    Promise.all(files.map((file: FileHTML) => file.text())).then(
         (parsedFiles: string[]) => {
             try {
-                const simulariumFileIndex = findIndex(filesArr, (file) =>
+                const simulariumFileIndex = findIndex(files, (file) =>
                     file.name.includes(".simularium")
                 );
                 // TODO: handle when user doesn't load a .simularium file
@@ -54,11 +54,11 @@ export default (
                 //    throw new Error("Please upload a .simularium file.")
                 // }
 
-                const simulariumFile: File = filesArr[simulariumFileIndex];
+                const simulariumFile: File = files[simulariumFileIndex];
                 const simulariumFileJson: SimulariumFileFormat = JSON.parse(
                     parsedFiles[simulariumFileIndex]
                 );
-                const geoAssets = filesArr.reduce(
+                const geoAssets: { [name: string]: string } = files.reduce(
                     (acc: { [name: string]: string }, cur, index) => {
                         if (index !== simulariumFileIndex) {
                             acc[cur.name] = parsedFiles[index];
@@ -74,8 +74,8 @@ export default (
                     data: simulariumFileJson,
                     geoAssets: geoAssets,
                 });
+                // TS thinks onSuccess might be undefined
                 if (onSuccess) {
-                    // TS thinks onSuccess might be undefined
                     onSuccess(
                         {
                             name: simulariumFile.name,
@@ -88,10 +88,12 @@ export default (
                 isLoading = false;
             } catch (error) {
                 console.log(error);
+
+                // TS thinks onError might be undefined
+                //
                 // FIXME: I think this only handles XMLHttpRequest errors
                 // (failed to upload to server), need to do our own error handling
                 if (onError) {
-                    // TS thinks onError might be undefined
                     onError(error as UploadRequestError);
                 }
             }
