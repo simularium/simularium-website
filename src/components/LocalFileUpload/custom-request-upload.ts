@@ -54,10 +54,10 @@ export default (
                 //    throw new Error("Please upload a .simularium file.")
                 // }
 
-                const simulariumFile: SimulariumFileFormat = JSON.parse(
+                const simulariumFile: File = filesArr[simulariumFileIndex];
+                const simulariumFileJson: SimulariumFileFormat = JSON.parse(
                     parsedFiles[simulariumFileIndex]
                 );
-                const fileName: string = filesArr[simulariumFileIndex].name;
                 const geoAssets = filesArr.reduce(
                     (acc: { [name: string]: string }, cur, index) => {
                         if (index !== simulariumFileIndex) {
@@ -69,19 +69,20 @@ export default (
                 );
 
                 loadFunction({
-                    lastModified: filesArr[simulariumFileIndex].lastModified,
-                    name: fileName,
-                    data: simulariumFile,
+                    lastModified: simulariumFile.lastModified,
+                    name: simulariumFile.name,
+                    data: simulariumFileJson,
                     geoAssets: geoAssets,
                 });
                 if (onSuccess) {
+                    // TS thinks onSuccess might be undefined
                     onSuccess(
                         {
-                            name: fileName,
+                            name: simulariumFile.name,
                             status: "done",
                             url: "",
                         },
-                        new XMLHttpRequest()
+                        new XMLHttpRequest() // onSuccess needs an XMLHttpRequest arg
                     );
                 }
                 isLoading = false;
@@ -89,7 +90,10 @@ export default (
                 console.log(error);
                 // FIXME: I think this only handles XMLHttpRequest errors
                 // (failed to upload to server), need to do our own error handling
-                if (onError) onError(error as UploadRequestError);
+                if (onError) {
+                    // TS thinks onError might be undefined
+                    onError(error as UploadRequestError);
+                }
             }
         }
     );
