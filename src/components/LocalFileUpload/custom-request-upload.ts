@@ -25,8 +25,6 @@ export default (
         return;
     }
 
-    console.log("custom request");
-
     // want the loading indicator to show without any lag time
     // as soon as user hits "Open" button, and not have to have this action called
     // multiple places in the code.
@@ -39,44 +37,45 @@ export default (
 
     Promise.all(filesArr.map((item: FileHTML) => item.text())).then(
         (parsedFiles: string[]) => {
-            const simulariumFileIndex = findIndex(filesArr, (file) =>
-                file.name.includes(".simularium")
-            );
-            const simulariumFile: SimulariumFileFormat = JSON.parse(
-                parsedFiles[simulariumFileIndex]
-            );
-            const fileName: string = filesArr[simulariumFileIndex].name;
-            const geoAssets = filesArr.reduce((acc, cur, index) => {
-                if (index !== simulariumFileIndex) {
-                    acc[cur.name] = parsedFiles[index];
-                }
-                return acc;
-            }, {});
-
             try {
-                // if array of files,
-                // stash instead of loadLocalFile until all files are
-                // gathered, then call loadLocalFile
-                console.log("loadFunction");
+                const simulariumFileIndex = findIndex(filesArr, (file) =>
+                    file.name.includes(".simularium")
+                );
+                // TODO: handle when user doesn't load a .simularium file
+                // if (simulariumFileIndex === -1) {
+                //    throw new Error("Please upload a .simularium file.")
+                // }
+
+                const simulariumFile: SimulariumFileFormat = JSON.parse(
+                    parsedFiles[simulariumFileIndex]
+                );
+                const fileName: string = filesArr[simulariumFileIndex].name;
+                const geoAssets = filesArr.reduce((acc, cur, index) => {
+                    if (index !== simulariumFileIndex) {
+                        acc[cur.name] = parsedFiles[index];
+                    }
+                    return acc;
+                }, {});
+
                 loadFunction({
                     lastModified: filesArr[simulariumFileIndex].lastModified,
                     name: fileName,
                     data: simulariumFile,
                     geoAssets: geoAssets,
                 });
+                onSuccess(
+                    {
+                        name: fileName,
+                        status: "done",
+                        url: "",
+                    },
+                    simulariumFile
+                );
+                numCustomRequests = 0;
             } catch (error) {
                 console.log(error);
                 onError(error);
             }
-            onSuccess(
-                {
-                    name: fileName,
-                    status: "done",
-                    url: "",
-                },
-                simulariumFile
-            );
-            numCustomRequests = 0;
         }
     );
 };
