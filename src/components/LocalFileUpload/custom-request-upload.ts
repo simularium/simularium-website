@@ -18,7 +18,18 @@ interface FileHTML extends File {
 
 let isLoading = false;
 
-// TODO: what does this function do
+/*
+A "custom request" for an Antd Upload component is a function that overrides
+the default POST request that happens when the user uploads files. The Antd
+Upload is a wrapper around the Upload component from react-component (rc-upload).
+- Antd docs: https://ant.design/components/upload/#API
+- rc-upload docs: https://github.com/react-component/upload#customrequest
+
+This custom request function takes in an array of all the files loaded by the
+user, finds and processes the .simularium file and any geometry files separately, 
+then tells the app to load the trajectory with its associated geometry files 
+into the viewer.
+*/
 export default (
     { onSuccess, onError }: UploadRequestOption,
     droppedFiles: File[],
