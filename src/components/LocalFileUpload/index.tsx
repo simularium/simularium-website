@@ -11,6 +11,17 @@ interface FileUploadProps {
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
 }
 
+/*
+Order of operations for this Antd Upload component:
+
+1. User selects file(s) and clicks "Open" in system file upload dialog
+2. beforeUpload is called n times (n = number of files)
+3. customRequest is called n times
+4. If customRequest results in success (onSuccess), file.status changes to "done".
+   If customRequest results in error, file.status changes to "error".
+   These two changes trigger onChange.
+*/
+
 const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
     const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
 

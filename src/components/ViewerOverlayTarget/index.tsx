@@ -19,6 +19,17 @@ interface ViewerOverlayTargetProps {
     fileIsDraggedOver: boolean;
 }
 
+/*
+Order of operations for the Antd Upload (Dragger) component:
+
+1. User drag and drops file(s) into the viewer dragAndDropOverlay
+2. handleDrop is called once
+3. customRequest is called n times (n = number of files)
+4. If customRequest results in success (onSuccess), file.status changes to "done".
+   If customRequest results in error, file.status changes to "error".
+   These two changes trigger onChange.
+*/
+
 const ViewerOverlayTarget = ({
     resetDragOverViewer,
     loadLocalFile,
@@ -45,7 +56,6 @@ const ViewerOverlayTarget = ({
         }
     };
 
-    // Called once immediately after drag and drop
     const handleDrop = (event: React.DragEvent) => {
         setDroppedFiles([...event.dataTransfer.files]);
     };
@@ -63,7 +73,6 @@ const ViewerOverlayTarget = ({
             onDrop={handleDrop}
             showUploadList={false}
             openFileDialogOnClick={false}
-            // Called n times (n = number of files)
             customRequest={(options) =>
                 customRequest(options, droppedFiles, loadLocalFile)
             }
