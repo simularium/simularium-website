@@ -1,6 +1,9 @@
 import { SimulariumFileFormat } from "@aics/simularium-viewer";
 import { findIndex } from "lodash";
-import { RcCustomRequestOptions } from "antd/lib/upload/interface";
+import {
+    UploadRequestOption,
+    UploadRequestError,
+} from "rc-upload/lib/interface";
 
 import { LocalSimFile } from "../../state/trajectory/types";
 import { CLEAR_SIMULARIUM_FILE } from "../../state/trajectory/constants";
@@ -16,7 +19,7 @@ interface FileHTML extends File {
 let numCustomRequests = 0;
 
 export default (
-    { onSuccess, onError }: RcCustomRequestOptions,
+    { onSuccess, onError }: UploadRequestOption,
     droppedFiles: File[],
     loadFunction: (simulariumFile: LocalSimFile) => void
 ) => {
@@ -50,12 +53,15 @@ export default (
                     parsedFiles[simulariumFileIndex]
                 );
                 const fileName: string = filesArr[simulariumFileIndex].name;
-                const geoAssets = filesArr.reduce((acc, cur, index) => {
-                    if (index !== simulariumFileIndex) {
-                        acc[cur.name] = parsedFiles[index];
-                    }
-                    return acc;
-                }, {});
+                const geoAssets = filesArr.reduce(
+                    (acc: { [name: string]: string }, cur, index) => {
+                        if (index !== simulariumFileIndex) {
+                            acc[cur.name] = parsedFiles[index];
+                        }
+                        return acc;
+                    },
+                    {}
+                );
 
                 loadFunction({
                     lastModified: filesArr[simulariumFileIndex].lastModified,
@@ -63,18 +69,22 @@ export default (
                     data: simulariumFile,
                     geoAssets: geoAssets,
                 });
-                onSuccess(
-                    {
-                        name: fileName,
-                        status: "done",
-                        url: "",
-                    },
-                    simulariumFile
-                );
+                if (onSuccess) {
+                    onSuccess(
+                        {
+                            name: fileName,
+                            status: "done",
+                            url: "",
+                        },
+                        new XMLHttpRequest()
+                    );
+                }
                 numCustomRequests = 0;
             } catch (error) {
                 console.log(error);
-                onError(error);
+                // FIXME: I think this only handles XMLHttpRequest errors
+                // (failed to upload to server), need to do our own error handling
+                if (onError) onError(error as UploadRequestError);
             }
         }
     );
