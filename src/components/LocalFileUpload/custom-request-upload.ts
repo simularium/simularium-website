@@ -16,15 +16,20 @@ interface FileHTML extends File {
     text(): Promise<string>;
 }
 
-let numCustomRequests = 0;
+let isLoading = false;
 
+// TODO: what does this function do
 export default (
     { onSuccess, onError }: UploadRequestOption,
     droppedFiles: File[],
     loadFunction: (simulariumFile: LocalSimFile) => void
 ) => {
-    numCustomRequests++;
-    if (numCustomRequests !== 1) {
+    if (isLoading === false) {
+        isLoading = true;
+    } else {
+        // If the user loads multiple files at once (.simularium file + geometry file(s)),
+        // this function is called multiple times, but we only need to process
+        // and load the trajectory once
         return;
     }
 
@@ -79,7 +84,7 @@ export default (
                         new XMLHttpRequest()
                     );
                 }
-                numCustomRequests = 0;
+                isLoading = false;
             } catch (error) {
                 console.log(error);
                 // FIXME: I think this only handles XMLHttpRequest errors

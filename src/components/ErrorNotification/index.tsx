@@ -13,7 +13,7 @@ const errorNotification = ({
     htmlData,
     onClose,
 }: ErrorNotificationProps) => {
-    // FIXME: Sometimes the message that comes in at runtime is an entire
+    // Sometimes the message that comes in at runtime is an entire
     // Error object instead of a string
     if (typeof message !== "string") {
         const error: Error = message;
