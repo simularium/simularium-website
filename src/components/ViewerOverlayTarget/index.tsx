@@ -68,7 +68,8 @@ const ViewerOverlayTarget = ({
                 customRequest(options, droppedFiles, loadLocalFile)
             }
             multiple
-            directory
+            // TODO: enable directory upload
+            // directory
         >
             <p className="ant-upload-drag-icon">
                 {isLoading ? Loading : UploadFile}

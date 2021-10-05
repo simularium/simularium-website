@@ -30,14 +30,6 @@ const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
     };
 
     return (
-        // FIXME: Link breaks upload popup
-        // <Link
-        //     // used to decide whether to clear out the viewer
-        //     to={{
-        //         pathname: VIEWER_PATHNAME,
-        //         state: { localFile: true },
-        //     }}
-        // >
         <Upload
             onChange={onChange}
             beforeUpload={beforeUpload}
@@ -45,11 +37,18 @@ const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
             customRequest={(options) =>
                 customRequest(options, droppedFiles, loadLocalFile)
             }
-            multiple={true}
+            multiple
         >
-            <Button type="ghost">From your device</Button>
+            <Link
+                // Redirect to /viewer if necessary and/or clear out viewer
+                to={{
+                    pathname: VIEWER_PATHNAME,
+                    state: { localFile: true },
+                }}
+            >
+                <Button type="ghost">From your device</Button>
+            </Link>
         </Upload>
-        // </Link>
     );
 };
 
