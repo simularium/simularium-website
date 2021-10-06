@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Upload, message } from "antd";
-import { UploadChangeParam, RcFile } from "antd/lib/upload";
+import { UploadChangeParam } from "antd/lib/upload";
 import { ActionCreator } from "redux";
 
 import { LocalSimFile } from "../../state/trajectory/types";
@@ -20,7 +20,7 @@ interface ViewerOverlayTargetProps {
 }
 
 /*
-Order of operations for the Antd Upload (Dragger) component:
+Order of operations for this Antd Upload (Dragger) component:
 
 1. User drag and drops file(s) into the viewer dragAndDropOverlay
 2. handleDrop is called once
@@ -59,7 +59,7 @@ const ViewerOverlayTarget = ({
         }
     };
 
-    // TODO: Only idea I've come up with for directory upload, but problem:
+    // Only idea I've come up with for directory upload, but problem:
     // don't know how many files to expect from inside directory! Why does
     // fileList only contain one file at a time unlike in LocalFileUpload component??
     // const beforeUpload = (file, fileList) => {
@@ -96,7 +96,7 @@ const ViewerOverlayTarget = ({
                 customRequest(options, droppedFiles, loadLocalFile)
             }
             multiple
-            // TODO: enable directory upload
+            // TODO: enable directory upload?
             // directory
         >
             <p className="ant-upload-drag-icon">
