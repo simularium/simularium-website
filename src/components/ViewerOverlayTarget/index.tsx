@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Upload, message } from "antd";
-import { UploadChangeParam } from "antd/lib/upload";
+import { UploadChangeParam, RcFile } from "antd/lib/upload";
 import { ActionCreator } from "redux";
 
 import { LocalSimFile } from "../../state/trajectory/types";
@@ -24,8 +24,10 @@ Order of operations for the Antd Upload (Dragger) component:
 
 1. User drag and drops file(s) into the viewer dragAndDropOverlay
 2. handleDrop is called once
-3. customRequest is called n times (n = number of files)
-4. If customRequest results in success (onSuccess), file.status changes to "done".
+3. beforeUpload (if it's defined) is called once
+4. customRequest is is called once
+5. Steps 3-4 repeat for a total of n times (n = number of files)
+6. If customRequest results in success (onSuccess), file.status changes to "done".
    If customRequest results in error, file.status changes to "error".
    These two changes trigger onChange.
 */
@@ -38,6 +40,7 @@ const ViewerOverlayTarget = ({
 }: ViewerOverlayTargetProps): JSX.Element | null => {
     const [showTarget, setVisibility] = useState(false);
     const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
+    // const [isDirectory, setIsDirectory] = useState(false);
 
     if (fileIsDraggedOver && !showTarget) {
         setVisibility(true);
@@ -56,6 +59,21 @@ const ViewerOverlayTarget = ({
         }
     };
 
+    // TODO: Only idea I've come up with for directory upload, but problem:
+    // don't know how many files to expect from inside directory! Why does
+    // fileList only contain one file at a time unlike in LocalFileUpload component??
+    // const beforeUpload = (file, fileList) => {
+    //     console.log("beforeUpload")
+    //     console.log(fileList)
+    //     const isFileFromDirectory = file.webkitRelativePath.includes("/");
+    //     if (isFileFromDirectory && !droppedFiles[0].webkitRelativePath.includes("/")) {
+    //         setIsDirectory(true);
+    //         setDroppedFiles([...file]);
+    //     } else if (isFileFromDirectory) {
+    //         droppedFiles.push(file);
+    //     }
+    // }
+
     const handleDrop = (event: React.DragEvent) => {
         setDroppedFiles([...event.dataTransfer.files]);
     };
@@ -73,6 +91,7 @@ const ViewerOverlayTarget = ({
             onDrop={handleDrop}
             showUploadList={false}
             openFileDialogOnClick={false}
+            // beforeUpload={beforeUpload}
             customRequest={(options) =>
                 customRequest(options, droppedFiles, loadLocalFile)
             }
