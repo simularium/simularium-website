@@ -49,6 +49,7 @@ const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
                 customRequest(options, droppedFiles, loadLocalFile)
             }
             multiple
+            directory
         >
             <Link
                 // Redirect to /viewer if necessary and/or clear out viewer
