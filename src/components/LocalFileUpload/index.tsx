@@ -23,20 +23,20 @@ Order of operations for this Antd Upload component:
 */
 
 const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
-    const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
+    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
     const onChange = ({ file }: UploadChangeParam) => {
         if (file.status === "done") {
-            setDroppedFiles([]);
+            setSelectedFiles([]);
         } else if (file.status === "error") {
             message.error(`${file.name} file upload failed.`);
-            setDroppedFiles([]);
+            setSelectedFiles([]);
         }
     };
 
     const beforeUpload = (file: File, fileList: File[]) => {
-        if (droppedFiles.length === 0) {
-            setDroppedFiles([...fileList]);
+        if (selectedFiles.length === 0) {
+            setSelectedFiles([...fileList]);
         }
     };
 
@@ -46,7 +46,7 @@ const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
             beforeUpload={beforeUpload}
             showUploadList={false}
             customRequest={(options) =>
-                customRequest(options, droppedFiles, loadLocalFile)
+                customRequest(options, selectedFiles, loadLocalFile)
             }
             multiple
         >

@@ -32,7 +32,7 @@ into the viewer.
 */
 export default (
     { onSuccess, onError }: UploadRequestOption,
-    droppedFiles: File[],
+    selectedFiles: File[],
     loadFunction: (simulariumFile: LocalSimFile) => void
 ) => {
     if (isLoading === false) {
@@ -52,7 +52,7 @@ export default (
         type: CLEAR_SIMULARIUM_FILE,
     });
 
-    const files: FileHTML[] = Array.from(droppedFiles) as FileHTML[];
+    const files: FileHTML[] = Array.from(selectedFiles) as FileHTML[];
 
     Promise.all(files.map((file: FileHTML) => file.text())).then(
         (parsedFiles: string[]) => {
