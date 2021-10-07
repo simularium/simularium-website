@@ -16,7 +16,7 @@ interface FileHTML extends File {
     text(): Promise<string>;
 }
 
-let isLoading = false;
+let numCustomRequests = 0;
 
 /*
 A "custom request" for an Antd Upload component is a function that overrides
@@ -35,22 +35,23 @@ export default (
     selectedFiles: File[],
     loadFunction: (simulariumFile: LocalSimFile) => void
 ) => {
-    if (isLoading === false) {
-        isLoading = true;
-    } else {
+    numCustomRequests++;
+    if (numCustomRequests === 1) {
+        // want the loading indicator to show without any lag time
+        // as soon as user hits "Open" button or drops files,
+        // and not have to have this action called multiple places in the code.
+        store.dispatch({
+            payload: { newFile: true },
+            type: CLEAR_SIMULARIUM_FILE,
+        });
+    }
+    if (numCustomRequests < selectedFiles.length) {
         // If the user loads multiple files at once (.simularium file + geometry file(s)),
         // this function is called multiple times, but we only need to process
-        // and load the trajectory once
+        // and load the trajectory once. So we just return until it's the last
+        // function call.
         return;
     }
-
-    // want the loading indicator to show without any lag time
-    // as soon as user hits "Open" button, and not have to have this action called
-    // multiple places in the code.
-    store.dispatch({
-        payload: { newFile: true },
-        type: CLEAR_SIMULARIUM_FILE,
-    });
 
     const files: FileHTML[] = Array.from(selectedFiles) as FileHTML[];
 
@@ -96,7 +97,7 @@ export default (
                         new XMLHttpRequest() // onSuccess needs an XMLHttpRequest arg
                     );
                 }
-                isLoading = false;
+                numCustomRequests = 0;
             } catch (error) {
                 console.log(error);
 
