@@ -125,7 +125,7 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                             </li>
                             <li>
                                 Multi-sphere: provide Protein Databank .pdb
-                                files or PDB IDs
+                                files
                             </li>
                             <li>
                                 Line representations for fibers, filaments, or
