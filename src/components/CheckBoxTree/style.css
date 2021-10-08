@@ -14,6 +14,10 @@
     width: 53px;
 }
 
+.checkbox-set :global(.ant-checkbox) {
+    top: 12px;
+}
+
 .container .checkbox-labels {
     display: flex;
     flex-direction: column;
