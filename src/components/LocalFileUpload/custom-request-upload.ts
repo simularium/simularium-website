@@ -46,7 +46,9 @@ export default (
             numCustomRequests = 0;
         }
         return;
-    } else if (selectedFiles.length === 1) {
+    } 
+    
+    if (selectedFiles.length === 1) {
         // numCustomRequests and selectedFiles.length are both 1, so reset
         numCustomRequests = 0;
     }
