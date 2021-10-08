@@ -62,7 +62,7 @@ const resetSimulariumFileState = createLogic({
             if (controller) {
                 controller.clearFile();
             }
-            clearTrajectory = receiveTrajectory({...initialState});
+            clearTrajectory = receiveTrajectory({ ...initialState });
             const setViewerStatusAction = setStatus({
                 status: VIEWER_EMPTY,
             });
@@ -202,6 +202,7 @@ const loadLocalFile = createLogic({
             .changeFile(
                 {
                     simulariumFile: simulariumFile.data,
+                    geoAssets: simulariumFile.geoAssets,
                 },
                 simulariumFile.name
             )

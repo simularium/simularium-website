@@ -43,6 +43,7 @@ const LoadFileMenu = ({
                 title="From examples"
                 popupClassName={styles.submenu}
                 popupOffset={[-0.45, -4]}
+                key="from-examples"
             >
                 {TRAJECTORIES.map((trajectory) => (
                     <Menu.Item key={trajectory.id}>
@@ -61,10 +62,10 @@ const LoadFileMenu = ({
                     </Menu.Item>
                 ))}
             </Menu.SubMenu>
-            <Menu.Item>
+            <Menu.Item key="url-upload">
                 <UrlUpload />
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item key="local-file-upload">
                 <LocalFileUpload loadLocalFile={loadLocalFile} />
             </Menu.Item>
         </Menu>
