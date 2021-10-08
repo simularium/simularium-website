@@ -44,12 +44,15 @@ export default (
             payload: { newFile: true },
             type: CLEAR_SIMULARIUM_FILE,
         });
-    }
-    if (numCustomRequests < selectedFiles.length) {
+    } else {
         // If the user loads multiple files at once (.simularium file + geometry file(s)),
         // this function is called multiple times, but we only need to process
-        // and load the trajectory once. So we just return until it's the last
-        // function call.
+        // and load the trajectory once.
+        if (numCustomRequests === selectedFiles.length) {
+            // We're at the last customRequest for this batch of files,
+            // so reset counter
+            numCustomRequests = 0;
+        }
         return;
     }
 
