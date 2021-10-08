@@ -36,15 +36,7 @@ export default (
     loadFunction: (simulariumFile: LocalSimFile) => void
 ) => {
     numCustomRequests++;
-    if (numCustomRequests === 1) {
-        // want the loading indicator to show without any lag time
-        // as soon as user hits "Open" button or drops files,
-        // and not have to have this action called multiple places in the code.
-        store.dispatch({
-            payload: { newFile: true },
-            type: CLEAR_SIMULARIUM_FILE,
-        });
-    } else {
+    if (numCustomRequests !== 1) {
         // If the user loads multiple files at once (.simularium file + geometry file(s)),
         // this function is called multiple times, but we only need to process
         // and load the trajectory once.
@@ -54,7 +46,18 @@ export default (
             numCustomRequests = 0;
         }
         return;
+    } else if (selectedFiles.length === 1) {
+        // numCustomRequests and selectedFiles.length are both 1, so reset
+        numCustomRequests = 0;
     }
+
+    // want the loading indicator to show without any lag time
+    // as soon as user hits "Open" button or drops files,
+    // and not have to have this action called multiple places in the code.
+    store.dispatch({
+        payload: { newFile: true },
+        type: CLEAR_SIMULARIUM_FILE,
+    });
 
     const files: FileHTML[] = Array.from(selectedFiles) as FileHTML[];
 
@@ -100,7 +103,6 @@ export default (
                         new XMLHttpRequest() // onSuccess needs an XMLHttpRequest arg
                     );
                 }
-                numCustomRequests = 0;
             } catch (error) {
                 console.log(error);
 
