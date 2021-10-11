@@ -54,7 +54,7 @@ const ViewerOverlayTarget = ({
             setVisibility(false);
         } else if (file.status === "error") {
             setVisibility(false);
-            message.error(`${file.name} file upload failed.`);
+            message.error(`${file.name} failed to load.`);
             resetDragOverViewer();
         }
     };

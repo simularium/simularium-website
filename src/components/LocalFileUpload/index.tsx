@@ -29,7 +29,7 @@ const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
         if (file.status === "done") {
             setSelectedFiles([]);
         } else if (file.status === "error") {
-            message.error(`${file.name} file upload failed.`);
+            message.error(`${file.name} failed to load.`);
             setSelectedFiles([]);
         }
     };
