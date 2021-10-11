@@ -76,6 +76,12 @@ describe("General utilities", () => {
                 "All lowercase. All lowercase"
             );
         });
+        it("does not capitalize a letter immediately following a period", () => {
+            const startingString = "like a .simularium file extension";
+            expect(convertToSentenceCase(startingString)).toBe(
+                "Like a .simularium file extension"
+            );
+        });
         it("ignores camelcase", () => {
             const startingString = "all lowercase. has camelCase";
             expect(convertToSentenceCase(startingString)).toBe(
