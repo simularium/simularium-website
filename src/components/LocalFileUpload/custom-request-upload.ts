@@ -109,14 +109,16 @@ export default (
                 }
             } catch (error) {
                 console.log(error);
-                store.dispatch({
-                    payload: {
-                        status: VIEWER_ERROR,
-                        errorMessage: error.message,
-                        htmlData: error.htmlData || "",
-                    },
-                    type: SET_STATUS,
-                });
+                if (error instanceof Error) {
+                    store.dispatch({
+                        payload: {
+                            status: VIEWER_ERROR,
+                            errorMessage: error.message,
+                            htmlData: "",
+                        },
+                        type: SET_STATUS,
+                    });
+                }
 
                 // TS thinks onError might be undefined
                 if (onError) {
