@@ -5,10 +5,10 @@ Johannes Schöneberg, Moritz Hoffmann, Christoph Fröhner, Frank Noé, François
 Mohsen Sadeghi, Matthew Akamatsu, Daniel Serwas, Leslie Loew, Aniruddha Chattaraj, Jessica Yu, Julie Cass, and Jonathan Alberts
 
 ## For their guidance over Simularium's goals and progress as part of the project advisory committee:
-Ron Vale, Torsten Moeller, Omar Quintaro, Tom Goddard, and David Goodsell
+Ron Vale, Torsten Moeller, Omar Quintero, Tom Goddard, and David Goodsell
 
 ## For their input on how Simularium could be used for education:
-Omar Quintaro, Derek Applewhite, Le Paliulis, Erin Dolan, Lalitha Jayant, and Carlos Goller
+Omar Quintero, Derek Applewhite, Le Paliulis, Erin Dolan, Lalitha Jayant, and Carlos Goller
 
 ## For participating in user tests to improve the Viewer and other prototypes:
 Matthew Akamatsu, Lindsay Case, Alyssa Harker, Kristen Verhey, Daniel Cortes, Andrew Nguyen, Cuncheng Zhu, and Karthik Vegesna
