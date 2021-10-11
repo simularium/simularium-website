@@ -29,7 +29,7 @@ const errorNotification = ({
                     }}
                 />
             ) || "",
-        duration: htmlData ? 0 : 4.5,
+        duration: htmlData ? 0 : 10,
         onClose: onClose,
     });
 };
