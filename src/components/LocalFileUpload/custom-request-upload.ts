@@ -8,6 +8,7 @@ import {
 import { LocalSimFile } from "../../state/trajectory/types";
 import { CLEAR_SIMULARIUM_FILE } from "../../state/trajectory/constants";
 import { store } from "../..";
+import { SET_STATUS, VIEWER_ERROR } from "../../state/viewer/constants";
 
 // Typescript's File definition is missing this function
 //  which is part of the HTML standard on all browsers
@@ -46,8 +47,8 @@ export default (
             numCustomRequests = 0;
         }
         return;
-    } 
-    
+    }
+
     if (selectedFiles.length === 1) {
         // numCustomRequests and selectedFiles.length are both 1, so reset
         numCustomRequests = 0;
@@ -69,10 +70,11 @@ export default (
                 const simulariumFileIndex = findIndex(files, (file) =>
                     file.name.includes(".simularium")
                 );
-                // TODO: handle when user doesn't load a .simularium file
-                // if (simulariumFileIndex === -1) {
-                //    throw new Error("Please upload a .simularium file.")
-                // }
+                if (simulariumFileIndex === -1) {
+                    throw new Error(
+                        "Please load a trajectory file in the .simularium format."
+                    );
+                }
 
                 const simulariumFile: File = files[simulariumFileIndex];
                 const simulariumFileJson: SimulariumFileFormat = JSON.parse(
@@ -107,11 +109,16 @@ export default (
                 }
             } catch (error) {
                 console.log(error);
+                store.dispatch({
+                    payload: {
+                        status: VIEWER_ERROR,
+                        errorMessage: error.message,
+                        htmlData: error.htmlData || "",
+                    },
+                    type: SET_STATUS,
+                });
 
                 // TS thinks onError might be undefined
-                //
-                // FIXME: I think this only handles XMLHttpRequest errors
-                // (failed to upload to server), need to do our own error handling
                 if (onError) {
                     onError(error as UploadRequestError);
                 }
