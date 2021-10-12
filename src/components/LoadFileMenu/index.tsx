@@ -6,6 +6,7 @@ import { Menu, Dropdown, Button } from "antd";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import {
+    ClearSimFileDataAction,
     RequestLocalFileAction,
     RequestNetworkFileAction,
 } from "../../state/trajectory/types";
@@ -21,12 +22,14 @@ const styles = require("./style.css");
 interface LoadFileMenuProps {
     isBuffering: boolean;
     selectFile: ActionCreator<RequestNetworkFileAction>;
+    clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
 }
 
 const LoadFileMenu = ({
     isBuffering,
+    clearSimulariumFile,
     loadLocalFile,
     selectFile,
     setViewerStatus,
@@ -70,6 +73,7 @@ const LoadFileMenu = ({
             </Menu.Item>
             <Menu.Item key="local-file-upload">
                 <LocalFileUpload
+                    clearSimulariumFile={clearSimulariumFile}
                     loadLocalFile={loadLocalFile}
                     setViewerStatus={setViewerStatus}
                 />

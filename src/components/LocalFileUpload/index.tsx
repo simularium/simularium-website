@@ -4,7 +4,10 @@ import { Upload, message, Button } from "antd";
 import { UploadChangeParam } from "antd/lib/upload";
 import { ActionCreator } from "redux";
 
-import { RequestLocalFileAction } from "../../state/trajectory/types";
+import {
+    ClearSimFileDataAction,
+    RequestLocalFileAction,
+} from "../../state/trajectory/types";
 import { SetViewerStatusAction } from "../../state/viewer/types";
 import { VIEWER_PATHNAME } from "../../routes";
 import customRequest from "./custom-request-upload";
@@ -12,6 +15,7 @@ import customRequest from "./custom-request-upload";
 interface FileUploadProps {
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
+    clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
 }
 
 /*
@@ -28,6 +32,7 @@ Order of operations for this Antd Upload component:
 const LocalFileUpload = ({
     loadLocalFile,
     setViewerStatus,
+    clearSimulariumFile,
 }: FileUploadProps) => {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
@@ -55,6 +60,7 @@ const LocalFileUpload = ({
                 customRequest(
                     options,
                     selectedFiles,
+                    clearSimulariumFile,
                     loadLocalFile,
                     setViewerStatus
                 )

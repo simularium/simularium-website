@@ -6,8 +6,6 @@ import {
 } from "rc-upload/lib/interface";
 
 import { LocalSimFile } from "../../state/trajectory/types";
-import { CLEAR_SIMULARIUM_FILE } from "../../state/trajectory/constants";
-import { store } from "../..";
 import { VIEWER_ERROR } from "../../state/viewer/constants";
 import { ViewerStatusInfo } from "../../state/viewer/types";
 
@@ -35,6 +33,7 @@ into the viewer.
 export default (
     { onSuccess, onError }: UploadRequestOption,
     selectedFiles: File[],
+    clearSimulariumFile: (isNewFile: { newFile: boolean }) => void,
     loadFunction: (simulariumFile: LocalSimFile) => void,
     setViewerStatus: (status: ViewerStatusInfo) => void
 ) => {
@@ -59,10 +58,7 @@ export default (
     // want the loading indicator to show without any lag time
     // as soon as user hits "Open" button or drops files,
     // and not have to have this action called multiple places in the code.
-    store.dispatch({
-        payload: { newFile: true },
-        type: CLEAR_SIMULARIUM_FILE,
-    });
+    clearSimulariumFile({ newFile: true });
 
     const files: FileHTML[] = Array.from(selectedFiles) as FileHTML[];
 

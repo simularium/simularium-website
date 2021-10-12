@@ -4,6 +4,7 @@ import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 
 import {
+    ClearSimFileDataAction,
     isLocalFileInterface,
     isNetworkSimFileInterface,
     LocalSimFile,
@@ -25,6 +26,7 @@ const styles = require("./style.css");
 interface AppHeaderProps {
     simulariumFile: LocalSimFile | NetworkedSimFile;
     isBuffering: boolean;
+    clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
     changeToLocalSimulariumFile: ActionCreator<RequestLocalFileAction>;
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
@@ -38,6 +40,7 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
             changeToLocalSimulariumFile: loadLocalFile,
             changeToNetworkedFile: loadNetworkFile,
             setViewerStatus,
+            clearSimulariumFile,
         } = this.props;
         let lastModified = 0;
         let displayName = "";
@@ -69,6 +72,7 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
                     <LoadFileMenu
                         key="select"
                         selectFile={loadNetworkFile}
+                        clearSimulariumFile={clearSimulariumFile}
                         loadLocalFile={loadLocalFile}
                         setViewerStatus={setViewerStatus}
                         isBuffering={isBuffering}
@@ -93,6 +97,7 @@ const dispatchToPropsMap = {
     changeToLocalSimulariumFile:
         trajectoryStateBranch.actions.changeToLocalSimulariumFile,
     changeToNetworkedFile: trajectoryStateBranch.actions.changeToNetworkedFile,
+    clearSimulariumFile: trajectoryStateBranch.actions.clearSimulariumFile,
     setViewerStatus: viewerStateBranch.actions.setStatus,
 };
 

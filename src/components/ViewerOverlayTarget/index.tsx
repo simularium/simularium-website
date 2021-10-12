@@ -3,7 +3,10 @@ import { Upload, message } from "antd";
 import { UploadChangeParam } from "antd/lib/upload";
 import { ActionCreator } from "redux";
 
-import { LocalSimFile } from "../../state/trajectory/types";
+import {
+    ClearSimFileDataAction,
+    LocalSimFile,
+} from "../../state/trajectory/types";
 import { ResetDragOverViewerAction } from "../../state/viewer/types";
 import { Loading, UploadFile } from "../Icons";
 import customRequest from "../LocalFileUpload/custom-request-upload";
@@ -14,6 +17,7 @@ const { Dragger } = Upload;
 const styles = require("./style.css");
 
 interface ViewerOverlayTargetProps {
+    clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
     loadLocalFile: (localFile: LocalSimFile) => void;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
@@ -37,6 +41,7 @@ Order of operations for this Antd Upload (Dragger) component:
 const ViewerOverlayTarget = ({
     resetDragOverViewer,
     loadLocalFile,
+    clearSimulariumFile,
     isLoading,
     fileIsDraggedOver,
     setViewerStatus,
@@ -99,6 +104,7 @@ const ViewerOverlayTarget = ({
                 customRequest(
                     options,
                     droppedFiles,
+                    clearSimulariumFile,
                     loadLocalFile,
                     setViewerStatus
                 )
