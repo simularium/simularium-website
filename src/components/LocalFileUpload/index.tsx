@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Upload, message, Button } from "antd";
-import { RequestLocalFileAction } from "../../state/trajectory/types";
 import { UploadChangeParam } from "antd/lib/upload";
-
-import customRequest from "./custom-request-upload";
 import { ActionCreator } from "redux";
+
+import { RequestLocalFileAction } from "../../state/trajectory/types";
+import { SetViewerStatusAction } from "../../state/viewer/types";
 import { VIEWER_PATHNAME } from "../../routes";
+import customRequest from "./custom-request-upload";
+
 interface FileUploadProps {
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
+    setViewerStatus: ActionCreator<SetViewerStatusAction>;
 }
 
 /*
@@ -22,7 +25,10 @@ Order of operations for this Antd Upload component:
    These two changes trigger onChange.
 */
 
-const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
+const LocalFileUpload = ({
+    loadLocalFile,
+    setViewerStatus,
+}: FileUploadProps) => {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
     const onChange = ({ file }: UploadChangeParam) => {
@@ -46,7 +52,12 @@ const LocalFileUpload = ({ loadLocalFile }: FileUploadProps) => {
             beforeUpload={beforeUpload}
             showUploadList={false}
             customRequest={(options) =>
-                customRequest(options, selectedFiles, loadLocalFile)
+                customRequest(
+                    options,
+                    selectedFiles,
+                    loadLocalFile,
+                    setViewerStatus
+                )
             }
             multiple
         >

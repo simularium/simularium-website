@@ -14,6 +14,7 @@ import { VIEWER_PATHNAME } from "../../routes";
 import LocalFileUpload from "../LocalFileUpload";
 import UrlUpload from "../UrlUpload";
 import { DownArrow } from "../Icons";
+import { SetViewerStatusAction } from "../../state/viewer/types";
 
 const styles = require("./style.css");
 
@@ -21,12 +22,14 @@ interface LoadFileMenuProps {
     isBuffering: boolean;
     selectFile: ActionCreator<RequestNetworkFileAction>;
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
+    setViewerStatus: ActionCreator<SetViewerStatusAction>;
 }
 
 const LoadFileMenu = ({
     isBuffering,
     loadLocalFile,
     selectFile,
+    setViewerStatus,
 }: LoadFileMenuProps) => {
     const location = useLocation();
     const onClick = (trajectoryData: TrajectoryDisplayData) => {
@@ -66,7 +69,10 @@ const LoadFileMenu = ({
                 <UrlUpload />
             </Menu.Item>
             <Menu.Item key="local-file-upload">
-                <LocalFileUpload loadLocalFile={loadLocalFile} />
+                <LocalFileUpload
+                    loadLocalFile={loadLocalFile}
+                    setViewerStatus={setViewerStatus}
+                />
             </Menu.Item>
         </Menu>
     );

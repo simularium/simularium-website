@@ -18,6 +18,7 @@ import { AicsLogo } from "../../components/Icons";
 import { State } from "../../state/types";
 import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
+import { SetViewerStatusAction } from "../../state/viewer/types";
 
 const styles = require("./style.css");
 
@@ -26,6 +27,7 @@ interface AppHeaderProps {
     isBuffering: boolean;
     changeToLocalSimulariumFile: ActionCreator<RequestLocalFileAction>;
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
+    setViewerStatus: ActionCreator<SetViewerStatusAction>;
 }
 
 class AppHeader extends React.Component<AppHeaderProps, {}> {
@@ -35,6 +37,7 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
             isBuffering,
             changeToLocalSimulariumFile: loadLocalFile,
             changeToNetworkedFile: loadNetworkFile,
+            setViewerStatus,
         } = this.props;
         let lastModified = 0;
         let displayName = "";
@@ -67,6 +70,7 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
                         key="select"
                         selectFile={loadNetworkFile}
                         loadLocalFile={loadLocalFile}
+                        setViewerStatus={setViewerStatus}
                         isBuffering={isBuffering}
                     />
                     <HelpMenu key="help" />
@@ -89,6 +93,7 @@ const dispatchToPropsMap = {
     changeToLocalSimulariumFile:
         trajectoryStateBranch.actions.changeToLocalSimulariumFile,
     changeToNetworkedFile: trajectoryStateBranch.actions.changeToNetworkedFile,
+    setViewerStatus: viewerStateBranch.actions.setStatus,
 };
 
 export default connect(

@@ -191,6 +191,7 @@ class App extends React.Component<AppProps, AppState> {
             resetDragOverViewer,
             viewerStatus,
             fileIsDraggedOverViewer,
+            setViewerStatus,
         } = this.props;
         return (
             <Layout className={styles.container}>
@@ -202,6 +203,7 @@ class App extends React.Component<AppProps, AppState> {
                             isLoading={viewerStatus === VIEWER_LOADING}
                             resetDragOverViewer={resetDragOverViewer}
                             fileIsDraggedOver={fileIsDraggedOverViewer}
+                            setViewerStatus={setViewerStatus}
                         />
                         <SideBar onCollapse={this.onPanelCollapse} type="left">
                             <ModelPanel />

@@ -7,6 +7,7 @@ import { LocalSimFile } from "../../state/trajectory/types";
 import { ResetDragOverViewerAction } from "../../state/viewer/types";
 import { Loading, UploadFile } from "../Icons";
 import customRequest from "../LocalFileUpload/custom-request-upload";
+import { SetViewerStatusAction } from "../../state/viewer/types";
 
 const { Dragger } = Upload;
 
@@ -14,6 +15,7 @@ const styles = require("./style.css");
 
 interface ViewerOverlayTargetProps {
     loadLocalFile: (localFile: LocalSimFile) => void;
+    setViewerStatus: ActionCreator<SetViewerStatusAction>;
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
     isLoading: boolean;
     fileIsDraggedOver: boolean;
@@ -37,6 +39,7 @@ const ViewerOverlayTarget = ({
     loadLocalFile,
     isLoading,
     fileIsDraggedOver,
+    setViewerStatus,
 }: ViewerOverlayTargetProps): JSX.Element | null => {
     const [showTarget, setVisibility] = useState(false);
     const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
@@ -93,7 +96,12 @@ const ViewerOverlayTarget = ({
             openFileDialogOnClick={false}
             // beforeUpload={beforeUpload}
             customRequest={(options) =>
-                customRequest(options, droppedFiles, loadLocalFile)
+                customRequest(
+                    options,
+                    droppedFiles,
+                    loadLocalFile,
+                    setViewerStatus
+                )
             }
             multiple
             // TODO: enable directory upload?
