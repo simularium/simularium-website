@@ -71,7 +71,7 @@ export default (
             );
             if (simulariumFileIndex === -1) {
                 throw new Error(
-                    "Please load a trajectory file in the .simularium format."
+                    "Trajectory file was not found; please make sure it has a .simularium extension."
                 );
             }
 
