@@ -179,11 +179,14 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     public componentDidUpdate(prevProps: ViewerPanelProps) {
         const { status, error } = this.props;
         const current = this.centerContent.current;
-        if (
-            status === VIEWER_ERROR &&
-            prevProps.status !== VIEWER_ERROR &&
-            error.message
-        ) {
+        const isNewError =
+            (status === VIEWER_ERROR &&
+                prevProps.status !== VIEWER_ERROR &&
+                error.message) ||
+            (status === VIEWER_ERROR &&
+                error.message !== prevProps.error.message);
+
+        if (isNewError) {
             return errorNotification({
                 message: error.message,
                 htmlData: error.htmlData,
