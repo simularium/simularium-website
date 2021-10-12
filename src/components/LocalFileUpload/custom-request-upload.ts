@@ -64,67 +64,68 @@ export default (
 
     const files: FileHTML[] = Array.from(selectedFiles) as FileHTML[];
 
-    Promise.all(files.map((file: FileHTML) => file.text())).then(
-        (parsedFiles: string[]) => {
-            try {
-                const simulariumFileIndex = findIndex(files, (file) =>
-                    file.name.includes(".simularium")
+    Promise.all(files.map((file: FileHTML) => file.text()))
+        .then((parsedFiles: string[]) => {
+            const simulariumFileIndex = findIndex(files, (file) =>
+                file.name.includes(".simularium")
+            );
+            if (simulariumFileIndex === -1) {
+                throw new Error(
+                    "Please load a trajectory file in the .simularium format."
                 );
-                if (simulariumFileIndex === -1) {
-                    throw new Error(
-                        "Please load a trajectory file in the .simularium format."
-                    );
-                }
-
-                const simulariumFile: File = files[simulariumFileIndex];
-                const simulariumFileJson: SimulariumFileFormat = JSON.parse(
-                    parsedFiles[simulariumFileIndex]
-                );
-                const geoAssets: { [name: string]: string } = files.reduce(
-                    (acc: { [name: string]: string }, cur, index) => {
-                        if (index !== simulariumFileIndex) {
-                            acc[cur.name] = parsedFiles[index];
-                        }
-                        return acc;
-                    },
-                    {}
-                );
-
-                loadFunction({
-                    lastModified: simulariumFile.lastModified,
-                    name: simulariumFile.name,
-                    data: simulariumFileJson,
-                    geoAssets: geoAssets,
-                });
-                // TS thinks onSuccess might be undefined
-                if (onSuccess) {
-                    onSuccess(
-                        {
-                            name: simulariumFile.name,
-                            status: "done",
-                            url: "",
-                        },
-                        new XMLHttpRequest() // onSuccess needs an XMLHttpRequest arg
-                    );
-                }
-            } catch (error) {
-                console.log(error);
-                if (error instanceof Error) {
-                    store.dispatch({
-                        payload: {
-                            status: VIEWER_ERROR,
-                            errorMessage: error.message,
-                            htmlData: "",
-                        },
-                        type: SET_STATUS,
-                    });
-                }
-
-                // TS thinks onError might be undefined
-                if (onError) {
-                    onError(error as UploadRequestError);
-                }
             }
-        }
-    );
+
+            const simulariumFile: File = files[simulariumFileIndex];
+            const simulariumFileJson: SimulariumFileFormat = JSON.parse(
+                parsedFiles[simulariumFileIndex]
+            );
+            const geoAssets: { [name: string]: string } = files.reduce(
+                (acc: { [name: string]: string }, cur, index) => {
+                    if (index !== simulariumFileIndex) {
+                        acc[cur.name] = parsedFiles[index];
+                    }
+                    return acc;
+                },
+                {}
+            );
+
+            loadFunction({
+                lastModified: simulariumFile.lastModified,
+                name: simulariumFile.name,
+                data: simulariumFileJson,
+                geoAssets: geoAssets,
+            });
+            // TS thinks onSuccess might be undefined
+            if (onSuccess) {
+                onSuccess(
+                    {
+                        name: simulariumFile.name,
+                        status: "done",
+                        url: "",
+                    },
+                    new XMLHttpRequest() // onSuccess needs an XMLHttpRequest arg
+                );
+            }
+        })
+        .catch((error) => {
+            let message = error.message;
+            if (error instanceof DOMException) {
+                message =
+                    "Please load a collection of single files that does not include a folder.";
+            }
+
+            store.dispatch({
+                payload: {
+                    status: VIEWER_ERROR,
+                    errorMessage: message,
+                    htmlData: "",
+                },
+                type: SET_STATUS,
+            });
+
+            // TS thinks onError might be undefined
+            if (onError) {
+                onError(error as UploadRequestError);
+            }
+        });
 };
