@@ -5,7 +5,7 @@ import { Layout, Typography } from "antd";
 import dragDropImage from "../../assets/drag-drop.gif";
 import { VIEWER_PATHNAME } from "../../routes";
 import VisualGlossary from "../VisualGlossary";
-import { SUPPORTED_ENGINES } from "../../constants";
+import { SUPPORTED_ENGINES, DATA_BUCKET_URL } from "../../constants";
 import Footer from "../Footer";
 
 const { Content } = Layout;
@@ -21,7 +21,9 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                 <VisualGlossary />
                 <p className={styles.intro}>
                     To try out the Simularium Viewer, either{" "}
-                    <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium">
+                    <a
+                        href={`${DATA_BUCKET_URL}/trajectory/endocytosis.simularium`}
+                    >
                         download
                     </a>{" "}
                     our example data or <a href="#convert-your-data">convert</a>{" "}
@@ -43,7 +45,9 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                     <ol>
                         <li>
                             Download the example data{" "}
-                            <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium">
+                            <a
+                                href={`${DATA_BUCKET_URL}/trajectory/endocytosis.simularium`}
+                            >
                                 here
                             </a>
                             .
@@ -112,7 +116,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                                 <li>
                                     These{" "}
                                     <a
-                                        href="https://github.com/allen-cell-animated/simulariumio/tree/master/examples"
+                                        href="https://github.com/allen-cell-animated/simulariumio/tree/main/examples"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                     >
@@ -153,7 +157,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                                         {SUPPORTED_ENGINES.map(
                                             (engine: string[]) => {
                                                 const name = engine[0];
-                                                const url = `https://github.com/allen-cell-animated/simulariumio/blob/master/examples/Tutorial_${name.toLowerCase()}.ipynb`;
+                                                const url = `https://github.com/allen-cell-animated/simulariumio/blob/main/examples/Tutorial_${name.toLowerCase()}.ipynb`;
                                                 return (
                                                     <li key={name}>
                                                         <a
@@ -174,7 +178,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                                     your data, choose the notebook for
                                     converting{" "}
                                     <a
-                                        href="https://github.com/allen-cell-animated/simulariumio/blob/master/examples/Tutorial_custom.ipynb"
+                                        href="https://github.com/allen-cell-animated/simulariumio/blob/main/examples/Tutorial_custom.ipynb"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                     >
@@ -209,8 +213,9 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                     <ol>
                         <li>
                             Upload your Simularium file to one of the supported
-                            public cloud providers, currently Dropbox or Amazon
-                            S3, and get a publicly accessible link to the file.
+                            public cloud providers, currently Dropbox, Google
+                            Drive, or Amazon S3, and get a publicly accessible
+                            link to the file.
                         </li>
                         <li>
                             In a supported browser, navigate to{" "}

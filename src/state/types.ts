@@ -1,8 +1,10 @@
 import { AxiosInstance } from "axios";
 import { AnyAction } from "redux";
 
-import { MetadataStateBranch } from "./metadata/types";
+import { TrajectoryStateBranch } from "./trajectory/types";
 import { SelectionStateBranch } from "./selection/types";
+import { ViewerStateBranch } from "./viewer/types";
+import { SimulariumStateBranch } from "./simularium/types";
 
 export interface ActionDescription {
     accepts: (action: AnyAction) => boolean;
@@ -27,8 +29,10 @@ export interface ReduxLogicDeps {
 export type ReduxLogicNextCb = (action: AnyAction) => void;
 
 export interface State {
-    metadata: MetadataStateBranch;
+    trajectory: TrajectoryStateBranch;
     selection: SelectionStateBranch;
+    viewer: ViewerStateBranch;
+    simularium: SimulariumStateBranch;
 }
 
 export interface TypeToDescriptionMap {

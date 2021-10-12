@@ -14,9 +14,11 @@
     --transparent-white: rgba(255, 255, 255, 0.65);
     --dim-gray: #383838;
     --pale-grey: #ddd9ec;
+    --heather: #bab5c9;
     --text-gray: #a0a0a0;
     --greyish-brown: #4a4a4a;
     --warm-gray: #979797;
+    --charcoal-grey: #3b3649;
     --dark-blue-grey: #2d224d;
     --background-dark-gray: #131313;
     --baby-purple: #b59ff6;
@@ -28,6 +30,7 @@
     --footer-text: var(--warm-gray);
     --footer-text-border-bottom: var(--greyish-brown);
     --footer-link: var(--blue);
+    --input-border-highlight: var(--baby-purple);
     --dark-theme-primary-color: var(--baby-purple);
     --dark-theme-body-bg: var(--black);
     --dark-theme-header-bg: var(--dark-three);
@@ -63,5 +66,7 @@
     --light-theme-version-badge-purple: var(--allen-purple);
     --light-theme-background-off-white: var(--off-white);
     --light-theme-faint-text: var(--white-two);
+    --light-theme-modal-supplemental-text: var(--charcoal-grey);
+    --light-theme-btn-default-disabled-bg: var(--heather);
 }
 

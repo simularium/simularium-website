@@ -74,5 +74,14 @@ export const wrapText = (
 };
 
 export const clearUrlParams = () => {
+    // Removes the query string from the current URL shown in the browser
+    // ex) https://mysite.com/path?city=seattle -> https://mysite.com/path
     history.replaceState({}, "", `${location.origin}${location.pathname}`);
+};
+
+export const roundTimeForDisplay = (time: number): number => {
+    if (time === 0) {
+        return 0;
+    }
+    return parseFloat(time.toPrecision(3));
 };

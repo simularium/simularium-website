@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Layout } from "antd";
+import ReactMarkdown from "react-markdown";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import flowchartImg from "../../assets/overview-image.png";
@@ -9,10 +10,13 @@ import BlankCard from "../BlankCard";
 import Footer from "../Footer";
 import { TUTORIAL_PATHNAME } from "../../routes";
 import { CYTOSIM_URL, READDY_URL } from "../../constants";
+const markdown = require("../../../ACKNOWLEDGMENTS.md");
+const styles = require("./style.css");
 
 const { Content } = Layout;
-
-const styles = require("./style.css");
+const NUM_CARDS_PER_ROW = 3;
+// Add bullets to each heading
+const markdownProcessed = markdown.default.replaceAll("##", "## &bull;");
 
 const LandingPage: React.FunctionComponent<{}> = () => {
     return (
@@ -21,17 +25,18 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                 <div className={styles.panel}>
                     <h1>Simularium {BetaTag}</h1>
                     <h2>
-                        Visualize, analyze, interrogate & share biological
-                        simulations
+                        Share, visualize, & interrogate biological simulations
+                        online
                     </h2>
                     <br />
                     <p>
-                        Simularium makes it easy to share and analyze spatial
-                        simulations directly in a web browser. Its primary goal
-                        is to facilitate collaborations between experimental
-                        biologists and computational biologists by removing
-                        major challenges to accessing, running, sharing, and
-                        analyzing simulation results.
+                        The Simularium Viewer makes it easy to share and
+                        interrogate interactive 3D visualizations of biological
+                        simulation trajectories and related plots directly in a
+                        web browser. Its primary goal is to facilitate
+                        collaborations among experimental and computational
+                        biologists by removing major challenges to sharing,
+                        accessing, and comparing simulation results.
                     </p>
                 </div>
                 <div
@@ -50,15 +55,27 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         related plots.
                     </p>
                     <div className={styles.cards}>
-                        {TRAJECTORIES.map((trajectory) => {
-                            return (
-                                <ModelCard
-                                    key={trajectory.id}
-                                    trajectory={trajectory}
-                                />
-                            );
-                        })}
+                        {TRAJECTORIES.slice(0, NUM_CARDS_PER_ROW - 1).map(
+                            (trajectory) => {
+                                return (
+                                    <ModelCard
+                                        key={trajectory.id}
+                                        trajectory={trajectory}
+                                    />
+                                );
+                            }
+                        )}
                         <BlankCard />
+                        {TRAJECTORIES.slice(NUM_CARDS_PER_ROW - 1).map(
+                            (trajectory) => {
+                                return (
+                                    <ModelCard
+                                        key={trajectory.id}
+                                        trajectory={trajectory}
+                                    />
+                                );
+                            }
+                        )}
                     </div>
                     <div className={styles.caption}>
                         Click on any of the examples above to interact with
@@ -95,6 +112,38 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         alt="A flowchart summarizing how Simularium currently works"
                         src={flowchartImg}
                     />
+                    <p>
+                        Current object representation options:
+                        <ul>
+                            <li>
+                                Spheres: by default, each agent in a scene is
+                                represented as a single sphere
+                            </li>
+                            <li>
+                                Mesh surfaces: represent each agent as a mesh
+                                file, e.g. coarse molecular surfaces
+                            </li>
+                            <li>
+                                Multi-sphere: provide Protein Databank .pdb
+                                files
+                            </li>
+                            <li>
+                                Line representations for fibers, filaments, or
+                                bonds
+                            </li>
+                        </ul>
+                        Planned for future:
+                        <ul>
+                            <li>
+                                Volume rendering for RDME or PDE-based
+                                simulation results
+                            </li>
+                            <li>
+                                Support for .cif files and coarse-grain
+                                sphereTree files for multi-sphere rendering
+                            </li>
+                        </ul>
+                    </p>
                 </div>
                 <div className={styles.panel}>
                     <h1>Connect with us</h1>
@@ -150,6 +199,17 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         integrate and test Simularium’s potential for use in
                         active learning classroom/lab/homework activities.
                     </p>
+                </div>
+                <div className={styles.panel}>
+                    <h1>Acknowledgments</h1>
+                    <h2>
+                        We&apos;d like to thank the following people for their
+                        contributions to Simularium
+                    </h2>
+                    <br />
+                    <ReactMarkdown className={styles.markdown}>
+                        {markdownProcessed}
+                    </ReactMarkdown>
                 </div>
             </Content>
             <Footer />

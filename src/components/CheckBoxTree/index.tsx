@@ -34,7 +34,7 @@ interface CheckBoxTreeProps {
     setAgentsVisible: ActionCreator<SetVisibleAction>;
     payloadForSelectAll: VisibilitySelectionMap;
     payloadForSelectNone: VisibilitySelectionMap;
-    checkAllIsIntermediate: boolean;
+    isSharedCheckboxIndeterminate: boolean;
     agentColors: AgentColorMap;
 }
 const CHECKBOX_SPAN_NO = 2;
@@ -98,7 +98,11 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
     };
 
     renderCheckAllButton = () => {
-        const { agentsChecked, treeData, checkAllIsIntermediate } = this.props;
+        const {
+            agentsChecked,
+            treeData,
+            isSharedCheckboxIndeterminate,
+        } = this.props;
         const checkedList = filter(
             map(
                 agentsChecked,
@@ -113,7 +117,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                     showLabel={true}
                     options={map(treeData, "key" as string)}
                     onTopLevelCheck={this.toggleAllOnOff}
-                    indeterminate={checkAllIsIntermediate}
+                    indeterminate={isSharedCheckboxIndeterminate}
                     checkedList={checkedList}
                     isHeader={false}
                 />

@@ -8,10 +8,11 @@ import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import {
     RequestLocalFileAction,
     RequestNetworkFileAction,
-} from "../../state/metadata/types";
+} from "../../state/trajectory/types";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
 import LocalFileUpload from "../LocalFileUpload";
+import UrlUpload from "../UrlUpload";
 import { DownArrow } from "../Icons";
 
 const styles = require("./style.css");
@@ -38,13 +39,11 @@ const LoadFileMenu = ({
     };
     const menu = (
         <Menu theme="dark" className={styles.menu}>
-            <Menu.Item>
-                <LocalFileUpload loadLocalFile={loadLocalFile} />
-            </Menu.Item>
             <Menu.SubMenu
-                title="Load existing model"
+                title="From examples"
                 popupClassName={styles.submenu}
                 popupOffset={[-0.45, -4]}
+                key="from-examples"
             >
                 {TRAJECTORIES.map((trajectory) => (
                     <Menu.Item key={trajectory.id}>
@@ -58,10 +57,17 @@ const LoadFileMenu = ({
                             }}
                         >
                             {trajectory.title}
+                            {trajectory.subtitle && `: ${trajectory.subtitle}`}
                         </Link>
                     </Menu.Item>
                 ))}
             </Menu.SubMenu>
+            <Menu.Item key="url-upload">
+                <UrlUpload />
+            </Menu.Item>
+            <Menu.Item key="local-file-upload">
+                <LocalFileUpload loadLocalFile={loadLocalFile} />
+            </Menu.Item>
         </Menu>
     );
     return (

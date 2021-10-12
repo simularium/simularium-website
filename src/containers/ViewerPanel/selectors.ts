@@ -4,20 +4,22 @@ import {
     getLastFrameTimeOfCachedSimulation,
     getTimeUnits,
     getTimeStep,
-} from "../../state/metadata/selectors";
+    getFirstFrameTimeOfCachedSimulation,
+} from "../../state/trajectory/selectors";
 import {
     getAgentsToHide,
     getCurrentTime,
-    getHightLightedAgents,
+    getHighlightedAgents,
 } from "../../state/selection/selectors";
 import {
     AgentColorMap,
     VisibilitySelectionMap,
 } from "../../state/selection/types";
+import { roundTimeForDisplay } from "../../util";
 import { DisplayTimes } from "./types";
 
 export const getSelectionStateInfoForViewer = createSelector(
-    [getHightLightedAgents, getAgentsToHide],
+    [getHighlightedAgents, getAgentsToHide],
     (highlightedAgents, hiddenAgents) => ({
         highlightedAgents,
         hiddenAgents,
@@ -52,32 +54,73 @@ export const convertUIDataToColorMap = (
     }, returnData);
 };
 
+// Determine the likely max number of characters for the time input box
+export const getMaxNumChars = (
+    firstFrameTime: number,
+    lastFrameTime: number,
+    timeStep: number
+) => {
+    // These two time values are likely to have the most digits
+    const refTime1Value = firstFrameTime + timeStep;
+    const refTime2Value = lastFrameTime + timeStep;
+    const roundedRefTime1 = roundTimeForDisplay(refTime1Value).toString();
+    const roundedRefTime2 = roundTimeForDisplay(refTime2Value).toString();
+
+    // Edge case: If firstFrameTime is a very small but long number like 0.000008,
+    // we need to accommodate that.
+    const maxNumChars = Math.max(
+        firstFrameTime.toString().length,
+        roundedRefTime1.length,
+        roundedRefTime2.length
+    );
+
+    return maxNumChars;
+};
+
 export const getDisplayTimes = createSelector(
     [
         getCurrentTime,
         getTimeUnits,
         getTimeStep,
+        getFirstFrameTimeOfCachedSimulation,
         getLastFrameTimeOfCachedSimulation,
     ],
-    (time, timeUnits, timeStep, lastFrameTime): DisplayTimes => {
-        const roundNumber = (num: number) =>
-            parseFloat(Number(num).toPrecision(3));
+    (
+        time,
+        timeUnits,
+        timeStep,
+        firstFrameTime,
+        lastFrameTime
+    ): DisplayTimes => {
         let roundedTime = 0;
+        let roundedFirstFrameTime = 0;
         let roundedLastFrameTime = 0;
         let roundedTimeStep = 0;
 
         if (timeUnits) {
-            roundedTime = time ? roundNumber(time * timeUnits.magnitude) : 0;
-            roundedLastFrameTime = roundNumber(
+            roundedTime = roundTimeForDisplay(time * timeUnits.magnitude);
+            roundedFirstFrameTime = roundTimeForDisplay(
+                firstFrameTime * timeUnits.magnitude
+            );
+            roundedLastFrameTime = roundTimeForDisplay(
                 lastFrameTime * timeUnits.magnitude
             );
-            roundedTimeStep = roundNumber(timeStep * timeUnits.magnitude);
+            roundedTimeStep = roundTimeForDisplay(
+                timeStep * timeUnits.magnitude
+            );
         }
+
+        const maxNumChars = getMaxNumChars(
+            roundedFirstFrameTime,
+            roundedLastFrameTime,
+            roundedTimeStep
+        );
 
         return {
             roundedTime: roundedTime,
             roundedLastFrameTime: roundedLastFrameTime,
             roundedTimeStep: roundedTimeStep,
+            maxNumChars: maxNumChars,
         };
     }
 );

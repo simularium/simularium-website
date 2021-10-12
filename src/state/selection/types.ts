@@ -1,15 +1,7 @@
-import { MetadataStateBranch } from "../metadata/types";
+import { TrajectoryStateBranch } from "../trajectory/types";
 
 export interface SelectionStateBranch {
     [key: string]: any;
-}
-
-export interface DragOverViewerAction {
-    type: string;
-}
-
-export interface ResetDragOverViewerAction {
-    type: string;
 }
 
 export interface ChangeAgentsRenderingStateAction {
@@ -18,7 +10,7 @@ export interface ChangeAgentsRenderingStateAction {
 }
 
 export interface SelectMetadataAction {
-    key: keyof MetadataStateBranch;
+    key: keyof TrajectoryStateBranch;
     payload: string | number;
     type: string;
 }
@@ -35,11 +27,6 @@ export interface ChangeNumberCollapsedPanelsAction {
 
 export interface HighlightAgentAction {
     payload: string;
-    type: string;
-}
-
-export interface ToggleAction {
-    payload: boolean;
     type: string;
 }
 

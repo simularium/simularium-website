@@ -4,18 +4,18 @@ import { connect } from "react-redux";
 
 import SideBarContents from "../../components/SideBarContents";
 import {
-    requestMetadata,
+    requestTrajectory,
     changeToNetworkedFile,
-} from "../../state/metadata/actions";
+} from "../../state/trajectory/actions";
 import {
     getUiDisplayDataTree,
-    getViewerStatus,
     getIsNetworkedFile,
-} from "../../state/metadata/selectors";
+} from "../../state/trajectory/selectors";
+import { getStatus } from "../../state/viewer/selectors";
 import { State } from "../../state/types";
 import {
-    getVisibleAgentsNamesAndTags,
-    getHighlightedAgentsNamesAndTags,
+    getAgentVisibilityMap,
+    getAgentHighlightMap,
     getAgentColors,
 } from "../../state/selection/selectors";
 import {
@@ -31,30 +31,28 @@ import {
 } from "../../state/selection/types";
 import CheckBoxTree, { AgentDisplayNode } from "../../components/CheckBoxTree";
 import {
-    convertUITreeDataToSelectAll,
-    convertUITreeDataToSelectNone,
-    getCheckboxAllIsIntermediate,
+    getSelectAllVisibilityMap,
+    getSelectNoneVisibilityMap,
+    getIsSharedCheckboxIndeterminate,
 } from "./selectors";
 import {
     VIEWER_EMPTY,
     VIEWER_ERROR,
     VIEWER_LOADING,
     VIEWER_SUCCESS,
-} from "../../state/metadata/constants";
+} from "../../state/viewer/constants";
 import NoTrajectoriesText from "../../components/NoTrajectoriesText";
 import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
-import {
-    ViewerStatus,
-    RequestNetworkFileAction,
-} from "../../state/metadata/types";
+import { RequestNetworkFileAction } from "../../state/trajectory/types";
+import { ViewerStatus } from "../../state/viewer/types";
 import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFileFailedText";
 
 const styles = require("./style.css");
 
 interface ModelPanelProps {
     uiDisplayDataTree: AgentDisplayNode[];
-    highlightedAgentKeys: VisibilitySelectionMap;
-    visibleAgentKeys: VisibilitySelectionMap;
+    agentHighlightMap: VisibilitySelectionMap;
+    agentVisibilityMap: VisibilitySelectionMap;
     turnAgentsOnByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
     highlightAgentsByDisplayKey: ActionCreator<
         ChangeAgentsRenderingStateAction
@@ -62,7 +60,7 @@ interface ModelPanelProps {
     setAgentsVisible: ActionCreator<SetVisibleAction>;
     payloadForSelectAll: VisibilitySelectionMap;
     payloadForSelectNone: VisibilitySelectionMap;
-    checkAllIsIntermediate: boolean;
+    isSharedCheckboxIndeterminate: boolean;
     agentColors: AgentColorMap;
     viewerStatus: ViewerStatus;
     isNetworkedFile: boolean;
@@ -72,15 +70,15 @@ interface ModelPanelProps {
 class ModelPanel extends React.Component<ModelPanelProps, {}> {
     public render(): JSX.Element {
         const {
-            visibleAgentKeys,
+            agentVisibilityMap,
             uiDisplayDataTree,
             turnAgentsOnByDisplayKey,
             highlightAgentsByDisplayKey,
-            highlightedAgentKeys,
+            agentHighlightMap,
             setAgentsVisible,
             payloadForSelectAll,
             payloadForSelectNone,
-            checkAllIsIntermediate,
+            isSharedCheckboxIndeterminate,
             agentColors,
             viewerStatus,
             isNetworkedFile,
@@ -90,13 +88,13 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
             <CheckBoxTree
                 treeData={uiDisplayDataTree}
                 handleAgentCheck={turnAgentsOnByDisplayKey}
-                agentsChecked={visibleAgentKeys}
+                agentsChecked={agentVisibilityMap}
                 handleHighlight={highlightAgentsByDisplayKey}
-                agentsHighlighted={highlightedAgentKeys}
+                agentsHighlighted={agentHighlightMap}
                 setAgentsVisible={setAgentsVisible}
                 payloadForSelectAll={payloadForSelectAll}
                 payloadForSelectNone={payloadForSelectNone}
-                checkAllIsIntermediate={checkAllIsIntermediate}
+                isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
                 agentColors={agentColors}
             />
         );
@@ -129,20 +127,20 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
 
 function mapStateToProps(state: State) {
     return {
-        visibleAgentKeys: getVisibleAgentsNamesAndTags(state),
-        highlightedAgentKeys: getHighlightedAgentsNamesAndTags(state),
+        agentVisibilityMap: getAgentVisibilityMap(state),
+        agentHighlightMap: getAgentHighlightMap(state),
         uiDisplayDataTree: getUiDisplayDataTree(state),
-        payloadForSelectAll: convertUITreeDataToSelectAll(state),
-        payloadForSelectNone: convertUITreeDataToSelectNone(state),
-        checkAllIsIntermediate: getCheckboxAllIsIntermediate(state),
+        payloadForSelectAll: getSelectAllVisibilityMap(state),
+        payloadForSelectNone: getSelectNoneVisibilityMap(state),
+        isSharedCheckboxIndeterminate: getIsSharedCheckboxIndeterminate(state),
         agentColors: getAgentColors(state),
-        viewerStatus: getViewerStatus(state),
+        viewerStatus: getStatus(state),
         isNetworkedFile: getIsNetworkedFile(state),
     };
 }
 
 const dispatchToPropsMap = {
-    requestMetadata,
+    requestTrajectory,
     changeToNetworkedFile,
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,

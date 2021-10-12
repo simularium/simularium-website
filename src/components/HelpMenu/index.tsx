@@ -29,13 +29,13 @@ const HelpMenu: React.FunctionComponent<{}> = () => {
         );
     const menu = (
         <Menu theme="dark" className={styles.menu}>
-            <Menu.Item>{tutorialLink}</Menu.Item>
-            <Menu.Item>
+            <Menu.Item key="tutorial">{tutorialLink}</Menu.Item>
+            <Menu.Item key="forum">
                 <a href={FORUM_URL} target="_blank" rel="noopener noreferrer">
                     Forum
                 </a>
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item key="github">
                 <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
                     GitHub
                 </a>
@@ -44,8 +44,9 @@ const HelpMenu: React.FunctionComponent<{}> = () => {
                 title="Submit issue"
                 popupClassName={styles.submenu}
                 popupOffset={[-0.45, -4]}
+                key="submit-issue"
             >
-                <Menu.Item key="github">
+                <Menu.Item key="submit-issue-github">
                     <a
                         href={ISSUE_URL}
                         target="_blank"

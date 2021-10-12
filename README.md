@@ -15,20 +15,20 @@ simularium-website is the front end Simularium website, which allows users to vi
 
 ---
 
-## Quick Start
-To run this application in development: 
-#### With Gradle
-1. `$ ./gradlew start`
+## Support
 
-#### With npm
+Submit a GitHub issue with any bug reports or feature requests, or talk to us on the [Allen Cell Discussion Form - Simularium][community].
+
+[community]: https://forum.allencell.org/c/software-code/simularium/
+
+## Development
+
+To run this application in development: 
+
 1. `npm i` to install dependencies 
 2. `npm start`
 
 This will start `webpack-dev-server`, running by default
 on the port specified in `webpack/constants.js`. To view, visit `http://localhost:{PORT}`. Webpack-dev-server will watch all relevant project files, and reload the browser automatically when those files change.
 
----
-
-## Development
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for information related to developing the code.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for more information related to development.

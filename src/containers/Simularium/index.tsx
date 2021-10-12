@@ -12,8 +12,10 @@ import ModelPanel from "../ModelPanel";
 import ViewerPanel from "../ViewerPanel";
 import { State } from "../../state/types";
 
-import metadataStateBranch from "../../state/metadata";
+import trajectoryStateBranch from "../../state/trajectory";
 import selectionStateBranch from "../../state/selection";
+import viewerStateBranch from "../../state/viewer";
+import simulariumStateBranch from "../../state/simularium";
 import {
     URL_PARAM_KEY_FILE_NAME,
     URL_PARAM_KEY_USER_URL,
@@ -23,19 +25,23 @@ import {
     LocalSimFile,
     RequestLocalFileAction,
     RequestNetworkFileAction,
-    SetSimulariumControllerAction,
-    SetViewerStatusAction,
-} from "../../state/metadata/types";
+} from "../../state/trajectory/types";
+import { SetViewerStatusAction } from "../../state/viewer/types";
+import { SetSimulariumControllerAction } from "../../state/simularium/types";
 import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
 import {
     DragOverViewerAction,
     ResetDragOverViewerAction,
-} from "../../state/selection/types";
-import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/metadata/constants";
+} from "../../state/viewer/types";
+import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/viewer/constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { clearUrlParams } from "../../util";
-import { getFileIdFromUrl, urlCheck } from "../../util/userUrlHandling";
+import {
+    getFileIdFromUrl,
+    urlCheck,
+    getRedirectUrl,
+} from "../../util/userUrlHandling";
 const { Content } = Layout;
 
 const styles = require("./style.css");
@@ -79,12 +85,13 @@ class App extends React.Component<AppProps, AppState> {
             setViewerStatus,
         } = this.props;
         const current = this.interactiveContent.current;
+        const controller = simulariumController || new SimulariumController({});
 
         const parsed = queryString.parse(location.search);
         const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
         const userTrajectoryUrl = parsed[URL_PARAM_KEY_USER_URL];
-        const controller = simulariumController || new SimulariumController({});
-        if (fileName) {
+
+        const loadNetworkedFile = (fileName: string | string[]) => {
             const networkedFile = find(TRAJECTORIES, { id: fileName });
             if (networkedFile) {
                 const fileData = networkedFile as TrajectoryDisplayData;
@@ -102,10 +109,20 @@ class App extends React.Component<AppProps, AppState> {
                 clearUrlParams();
                 setSimulariumController(controller);
             }
-        } else if (userTrajectoryUrl) {
+        };
+
+        const loadUserTrajectoryUrl = (
+            userTrajectoryUrl: string | string[]
+        ) => {
             const verifiedUrl = urlCheck(userTrajectoryUrl);
             const fileId = getFileIdFromUrl(verifiedUrl, parsed.id);
-            if (verifiedUrl) {
+            const redirectUrl = getRedirectUrl(verifiedUrl, fileId);
+
+            if (redirectUrl) {
+                // Edge case where we want to redirect to a networked file
+                history.replaceState({}, "", redirectUrl);
+                loadNetworkedFile(fileId as string);
+            } else if (verifiedUrl) {
                 loadViaUrl(verifiedUrl, controller, fileId);
             } else {
                 // if the url doesn't pass the regEx check, notify the user and then clear the url
@@ -119,6 +136,14 @@ class App extends React.Component<AppProps, AppState> {
                 });
                 setSimulariumController(controller);
             }
+        };
+
+        if (fileName) {
+            // URL has trajFileName param
+            loadNetworkedFile(fileName);
+        } else if (userTrajectoryUrl) {
+            // URL has trajUrl param
+            loadUserTrajectoryUrl(userTrajectoryUrl);
         } else {
             setSimulariumController(controller);
         }
@@ -176,7 +201,7 @@ class App extends React.Component<AppProps, AppState> {
                             loadLocalFile={changeToLocalSimulariumFile}
                             isLoading={viewerStatus === VIEWER_LOADING}
                             resetDragOverViewer={resetDragOverViewer}
-                            fileIsDraggedOverViewer={fileIsDraggedOverViewer}
+                            fileIsDraggedOver={fileIsDraggedOverViewer}
                         />
                         <SideBar onCollapse={this.onPanelCollapse} type="left">
                             <ModelPanel />
@@ -201,28 +226,30 @@ class App extends React.Component<AppProps, AppState> {
 
 function mapStateToProps(state: State) {
     return {
-        simulariumFile: metadataStateBranch.selectors.getSimulariumFile(state),
-        simulariumController: metadataStateBranch.selectors.getSimulariumController(
+        simulariumFile: trajectoryStateBranch.selectors.getSimulariumFile(
             state
         ),
-        fileIsDraggedOverViewer: selectionStateBranch.selectors.getFileDraggedOverViewer(
+        simulariumController: simulariumStateBranch.selectors.getSimulariumController(
             state
         ),
-        viewerStatus: metadataStateBranch.selectors.getViewerStatus(state),
+        fileIsDraggedOverViewer: viewerStateBranch.selectors.getFileDraggedOver(
+            state
+        ),
+        viewerStatus: viewerStateBranch.selectors.getStatus(state),
     };
 }
 
 const dispatchToPropsMap = {
     onSidePanelCollapse: selectionStateBranch.actions.onSidePanelCollapse,
     changeToLocalSimulariumFile:
-        metadataStateBranch.actions.changeToLocalSimulariumFile,
+        trajectoryStateBranch.actions.changeToLocalSimulariumFile,
     setSimulariumController:
-        metadataStateBranch.actions.setSimulariumController,
-    changeToNetworkedFile: metadataStateBranch.actions.changeToNetworkedFile,
-    resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
-    dragOverViewer: selectionStateBranch.actions.dragOverViewer,
-    loadViaUrl: metadataStateBranch.actions.loadViaUrl,
-    setViewerStatus: metadataStateBranch.actions.setViewerStatus,
+        simulariumStateBranch.actions.setSimulariumController,
+    changeToNetworkedFile: trajectoryStateBranch.actions.changeToNetworkedFile,
+    resetDragOverViewer: viewerStateBranch.actions.resetDragOverViewer,
+    dragOverViewer: viewerStateBranch.actions.dragOverViewer,
+    loadViaUrl: trajectoryStateBranch.actions.loadViaUrl,
+    setViewerStatus: viewerStateBranch.actions.setStatus,
 };
 
 export default connect(
