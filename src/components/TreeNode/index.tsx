@@ -42,7 +42,6 @@ const TreeNode = ({
                 {children && (
                     <Button
                         className={buttonClassNames}
-                        ghost
                         shape="circle"
                         icon={CaretRight}
                         onClick={onToggle}
