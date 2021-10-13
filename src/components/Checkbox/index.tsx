@@ -21,9 +21,9 @@ interface TooltipOffsets {
 }
 
 const tooltipOffsets: TooltipOffsets = {
-    default: [-11, -1],
-    top: [-22, -3],
-    shared: [-8, 8],
+    default: [0, -3],
+    top: [0, -3],
+    shared: [0, -3],
 };
 
 const Checkbox: React.FunctionComponent<CheckboxTypeProps> = (
