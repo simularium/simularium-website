@@ -6,6 +6,10 @@
     flex-flow: row;
 }
 
+.sub-menu :global(.ant-col-offset-3) {
+    margin-left: 13.4%;
+}
+
 .header-label {
     margin-left: 8px;
 }
