@@ -199,8 +199,26 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                         </li>
                         <li>
                             Drag the resulting file from your file browser onto
-                            the window or use the file upload dialogue to choose
-                            your file.
+                            the window or choose Load model &gt; From your
+                            device, and select your file from the file upload
+                            dialogue.
+                            <ul>
+                                <li>
+                                    If you&apos;re using local geometry files,
+                                    like .obj or .pdb files, load them at the
+                                    same time as you load your .simularium file,
+                                    either by dragging and dropping a collection
+                                    of files, or by choosing multiple files in
+                                    the upload dialogue.
+                                </li>
+                                <li>
+                                    Currently the Viewer does not support
+                                    loading folders of files, so make sure you
+                                    are loading a collection of single files
+                                    that does not include a folder. We&apos;re
+                                    working to improve this.
+                                </li>
+                            </ul>
                         </li>
                     </ol>
                 </ul>
@@ -213,19 +231,39 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                     <ol>
                         <li>
                             Upload your Simularium file to one of the supported
-                            public cloud providers, currently Dropbox, Google
+                            public cloud providers, including Dropbox, Google
                             Drive, or Amazon S3, and get a publicly accessible
                             link to the file.
                         </li>
                         <li>
                             In a supported browser, navigate to{" "}
-                            <Text code>
-                                https://simularium.allencell.org/viewer?trajUrl=[link
-                                to your file]
-                            </Text>
-                            . You can share this link with collaborators or post
-                            it on your website so that others can interactively
-                            view your results.
+                            <Link
+                                to="/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                https://simularium.allencell.org/
+                            </Link>
+                            .
+                        </li>
+                        <li>
+                            Choose Load model &gt; From a URL. In the dialog,
+                            provide the URL to your Simularium file and choose
+                            Load.
+                        </li>
+                        <ul>
+                            <li>
+                                If your file uses geometry files, like .obj or
+                                .pdb files, make sure you&apos;ve provided the
+                                full public URL to the geometry files in your
+                                .simularium file.
+                            </li>
+                        </ul>
+                        <li>
+                            Once the file is loaded, you can copy the page URL
+                            and share this link with collaborators or post it on
+                            your website so that others can interactively view
+                            your results.
                         </li>
                     </ol>
                 </ul>

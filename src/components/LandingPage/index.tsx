@@ -112,38 +112,34 @@ const LandingPage: React.FunctionComponent<{}> = () => {
                         alt="A flowchart summarizing how Simularium currently works"
                         src={flowchartImg}
                     />
-                    <p>
-                        Current object representation options:
-                        <ul>
-                            <li>
-                                Spheres: by default, each agent in a scene is
-                                represented as a single sphere
-                            </li>
-                            <li>
-                                Mesh surfaces: represent each agent as a mesh
-                                file, e.g. coarse molecular surfaces
-                            </li>
-                            <li>
-                                Multi-sphere: provide Protein Databank .pdb
-                                files
-                            </li>
-                            <li>
-                                Line representations for fibers, filaments, or
-                                bonds
-                            </li>
-                        </ul>
-                        Planned for future:
-                        <ul>
-                            <li>
-                                Volume rendering for RDME or PDE-based
-                                simulation results
-                            </li>
-                            <li>
-                                Support for .cif files and coarse-grain
-                                sphereTree files for multi-sphere rendering
-                            </li>
-                        </ul>
-                    </p>
+                    <p>Current object representation options:</p>
+                    <ul>
+                        <li>
+                            Spheres: by default, each agent in a scene is
+                            represented as a single sphere
+                        </li>
+                        <li>
+                            Mesh surfaces: represent each agent as a mesh file,
+                            e.g. coarse molecular surfaces
+                        </li>
+                        <li>
+                            Multi-sphere: provide Protein Databank .pdb files
+                        </li>
+                        <li>
+                            Line representations for fibers, filaments, or bonds
+                        </li>
+                    </ul>
+                    <p>Planned for future:</p>
+                    <ul>
+                        <li>
+                            Volume rendering for RDME or PDE-based simulation
+                            results
+                        </li>
+                        <li>
+                            Support for .cif files and coarse-grain sphereTree
+                            files for multi-sphere rendering
+                        </li>
+                    </ul>
                 </div>
                 <div className={styles.panel}>
                     <h1>Connect with us</h1>
