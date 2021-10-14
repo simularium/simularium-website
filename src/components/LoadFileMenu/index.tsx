@@ -6,6 +6,7 @@ import { Menu, Dropdown, Button } from "antd";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import {
+    ClearSimFileDataAction,
     RequestLocalFileAction,
     RequestNetworkFileAction,
 } from "../../state/trajectory/types";
@@ -14,19 +15,24 @@ import { VIEWER_PATHNAME } from "../../routes";
 import LocalFileUpload from "../LocalFileUpload";
 import UrlUpload from "../UrlUpload";
 import { DownArrow } from "../Icons";
+import { SetViewerStatusAction } from "../../state/viewer/types";
 
 const styles = require("./style.css");
 
 interface LoadFileMenuProps {
     isBuffering: boolean;
     selectFile: ActionCreator<RequestNetworkFileAction>;
+    clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
+    setViewerStatus: ActionCreator<SetViewerStatusAction>;
 }
 
 const LoadFileMenu = ({
     isBuffering,
+    clearSimulariumFile,
     loadLocalFile,
     selectFile,
+    setViewerStatus,
 }: LoadFileMenuProps) => {
     const location = useLocation();
     const onClick = (trajectoryData: TrajectoryDisplayData) => {
@@ -66,7 +72,11 @@ const LoadFileMenu = ({
                 <UrlUpload />
             </Menu.Item>
             <Menu.Item key="local-file-upload">
-                <LocalFileUpload loadLocalFile={loadLocalFile} />
+                <LocalFileUpload
+                    clearSimulariumFile={clearSimulariumFile}
+                    loadLocalFile={loadLocalFile}
+                    setViewerStatus={setViewerStatus}
+                />
             </Menu.Item>
         </Menu>
     );

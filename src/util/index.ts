@@ -24,7 +24,7 @@ export function convertToSentenceCase(string: string): string {
         .replace(/\s\w/g, function(c) {
             return c.toLowerCase();
         })
-        .replace(/(^\s*\w|[\.\!\?]\s*\w)/g, function(c) {
+        .replace(/(^\s*\w|[\.\!\?]\s+\w)/g, function(c) {
             return c.toUpperCase();
         });
 }

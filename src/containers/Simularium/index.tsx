@@ -21,6 +21,7 @@ import {
     URL_PARAM_KEY_USER_URL,
 } from "../../constants";
 import {
+    ClearSimFileDataAction,
     LoadViaUrlAction,
     LocalSimFile,
     RequestLocalFileAction,
@@ -59,6 +60,7 @@ interface AppProps {
     viewerStatus: string;
     loadViaUrl: ActionCreator<LoadViaUrlAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
+    clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
 }
 
 interface AppState {
@@ -191,6 +193,8 @@ class App extends React.Component<AppProps, AppState> {
             resetDragOverViewer,
             viewerStatus,
             fileIsDraggedOverViewer,
+            setViewerStatus,
+            clearSimulariumFile,
         } = this.props;
         return (
             <Layout className={styles.container}>
@@ -198,10 +202,12 @@ class App extends React.Component<AppProps, AppState> {
                     <Layout className={styles.content}>
                         <ViewerOverlayTarget
                             key="drop"
+                            clearSimulariumFile={clearSimulariumFile}
                             loadLocalFile={changeToLocalSimulariumFile}
                             isLoading={viewerStatus === VIEWER_LOADING}
                             resetDragOverViewer={resetDragOverViewer}
                             fileIsDraggedOver={fileIsDraggedOverViewer}
+                            setViewerStatus={setViewerStatus}
                         />
                         <SideBar onCollapse={this.onPanelCollapse} type="left">
                             <ModelPanel />
@@ -243,12 +249,13 @@ const dispatchToPropsMap = {
     onSidePanelCollapse: selectionStateBranch.actions.onSidePanelCollapse,
     changeToLocalSimulariumFile:
         trajectoryStateBranch.actions.changeToLocalSimulariumFile,
+    changeToNetworkedFile: trajectoryStateBranch.actions.changeToNetworkedFile,
+    loadViaUrl: trajectoryStateBranch.actions.loadViaUrl,
+    clearSimulariumFile: trajectoryStateBranch.actions.clearSimulariumFile,
     setSimulariumController:
         simulariumStateBranch.actions.setSimulariumController,
-    changeToNetworkedFile: trajectoryStateBranch.actions.changeToNetworkedFile,
     resetDragOverViewer: viewerStateBranch.actions.resetDragOverViewer,
     dragOverViewer: viewerStateBranch.actions.dragOverViewer,
-    loadViaUrl: trajectoryStateBranch.actions.loadViaUrl,
     setViewerStatus: viewerStateBranch.actions.setStatus,
 };
 

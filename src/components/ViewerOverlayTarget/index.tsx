@@ -3,17 +3,23 @@ import { Upload, message } from "antd";
 import { UploadChangeParam } from "antd/lib/upload";
 import { ActionCreator } from "redux";
 
-import { LocalSimFile } from "../../state/trajectory/types";
+import {
+    ClearSimFileDataAction,
+    LocalSimFile,
+} from "../../state/trajectory/types";
 import { ResetDragOverViewerAction } from "../../state/viewer/types";
 import { Loading, UploadFile } from "../Icons";
 import customRequest from "../LocalFileUpload/custom-request-upload";
+import { SetViewerStatusAction } from "../../state/viewer/types";
 
 const { Dragger } = Upload;
 
 const styles = require("./style.css");
 
 interface ViewerOverlayTargetProps {
+    clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
     loadLocalFile: (localFile: LocalSimFile) => void;
+    setViewerStatus: ActionCreator<SetViewerStatusAction>;
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
     isLoading: boolean;
     fileIsDraggedOver: boolean;
@@ -35,8 +41,10 @@ Order of operations for this Antd Upload (Dragger) component:
 const ViewerOverlayTarget = ({
     resetDragOverViewer,
     loadLocalFile,
+    clearSimulariumFile,
     isLoading,
     fileIsDraggedOver,
+    setViewerStatus,
 }: ViewerOverlayTargetProps): JSX.Element | null => {
     const [showTarget, setVisibility] = useState(false);
     const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
@@ -54,7 +62,7 @@ const ViewerOverlayTarget = ({
             setVisibility(false);
         } else if (file.status === "error") {
             setVisibility(false);
-            message.error(`${file.name} file upload failed.`);
+            message.error(`Failed to load ${file.name}`);
             resetDragOverViewer();
         }
     };
@@ -93,7 +101,13 @@ const ViewerOverlayTarget = ({
             openFileDialogOnClick={false}
             // beforeUpload={beforeUpload}
             customRequest={(options) =>
-                customRequest(options, droppedFiles, loadLocalFile)
+                customRequest(
+                    options,
+                    droppedFiles,
+                    clearSimulariumFile,
+                    loadLocalFile,
+                    setViewerStatus
+                )
             }
             multiple
             // TODO: enable directory upload?

@@ -6,8 +6,8 @@ import {
 } from "rc-upload/lib/interface";
 
 import { LocalSimFile } from "../../state/trajectory/types";
-import { CLEAR_SIMULARIUM_FILE } from "../../state/trajectory/constants";
-import { store } from "../..";
+import { VIEWER_ERROR } from "../../state/viewer/constants";
+import { ViewerStatusInfo } from "../../state/viewer/types";
 
 // Typescript's File definition is missing this function
 //  which is part of the HTML standard on all browsers
@@ -33,7 +33,9 @@ into the viewer.
 export default (
     { onSuccess, onError }: UploadRequestOption,
     selectedFiles: File[],
-    loadFunction: (simulariumFile: LocalSimFile) => void
+    clearSimulariumFile: (isNewFile: { newFile: boolean }) => void,
+    loadFunction: (simulariumFile: LocalSimFile) => void,
+    setViewerStatus: (status: ViewerStatusInfo) => void
 ) => {
     numCustomRequests++;
     if (numCustomRequests !== 1) {
@@ -46,8 +48,8 @@ export default (
             numCustomRequests = 0;
         }
         return;
-    } 
-    
+    }
+
     if (selectedFiles.length === 1) {
         // numCustomRequests and selectedFiles.length are both 1, so reset
         numCustomRequests = 0;
@@ -56,66 +58,68 @@ export default (
     // want the loading indicator to show without any lag time
     // as soon as user hits "Open" button or drops files,
     // and not have to have this action called multiple places in the code.
-    store.dispatch({
-        payload: { newFile: true },
-        type: CLEAR_SIMULARIUM_FILE,
-    });
+    clearSimulariumFile({ newFile: true });
 
     const files: FileHTML[] = Array.from(selectedFiles) as FileHTML[];
 
-    Promise.all(files.map((file: FileHTML) => file.text())).then(
-        (parsedFiles: string[]) => {
-            try {
-                const simulariumFileIndex = findIndex(files, (file) =>
-                    file.name.includes(".simularium")
+    Promise.all(files.map((file: FileHTML) => file.text()))
+        .then((parsedFiles: string[]) => {
+            const simulariumFileIndex = findIndex(files, (file) =>
+                file.name.includes(".simularium")
+            );
+            if (simulariumFileIndex === -1) {
+                throw new Error(
+                    "Trajectory file was not found; please make sure it has a .simularium extension."
                 );
-                // TODO: handle when user doesn't load a .simularium file
-                // if (simulariumFileIndex === -1) {
-                //    throw new Error("Please upload a .simularium file.")
-                // }
-
-                const simulariumFile: File = files[simulariumFileIndex];
-                const simulariumFileJson: SimulariumFileFormat = JSON.parse(
-                    parsedFiles[simulariumFileIndex]
-                );
-                const geoAssets: { [name: string]: string } = files.reduce(
-                    (acc: { [name: string]: string }, cur, index) => {
-                        if (index !== simulariumFileIndex) {
-                            acc[cur.name] = parsedFiles[index];
-                        }
-                        return acc;
-                    },
-                    {}
-                );
-
-                loadFunction({
-                    lastModified: simulariumFile.lastModified,
-                    name: simulariumFile.name,
-                    data: simulariumFileJson,
-                    geoAssets: geoAssets,
-                });
-                // TS thinks onSuccess might be undefined
-                if (onSuccess) {
-                    onSuccess(
-                        {
-                            name: simulariumFile.name,
-                            status: "done",
-                            url: "",
-                        },
-                        new XMLHttpRequest() // onSuccess needs an XMLHttpRequest arg
-                    );
-                }
-            } catch (error) {
-                console.log(error);
-
-                // TS thinks onError might be undefined
-                //
-                // FIXME: I think this only handles XMLHttpRequest errors
-                // (failed to upload to server), need to do our own error handling
-                if (onError) {
-                    onError(error as UploadRequestError);
-                }
             }
-        }
-    );
+
+            const simulariumFile: File = files[simulariumFileIndex];
+            const simulariumFileJson: SimulariumFileFormat = JSON.parse(
+                parsedFiles[simulariumFileIndex]
+            );
+            const geoAssets: { [name: string]: string } = files.reduce(
+                (acc: { [name: string]: string }, cur, index) => {
+                    if (index !== simulariumFileIndex) {
+                        acc[cur.name] = parsedFiles[index];
+                    }
+                    return acc;
+                },
+                {}
+            );
+
+            loadFunction({
+                lastModified: simulariumFile.lastModified,
+                name: simulariumFile.name,
+                data: simulariumFileJson,
+                geoAssets: geoAssets,
+            });
+            // TS thinks onSuccess might be undefined
+            if (onSuccess) {
+                onSuccess(
+                    {
+                        name: simulariumFile.name,
+                        status: "done",
+                        url: "",
+                    },
+                    new XMLHttpRequest() // onSuccess needs an XMLHttpRequest arg
+                );
+            }
+        })
+        .catch((error) => {
+            let message = error.message;
+            if (error instanceof DOMException) {
+                message =
+                    "Please load a collection of single files that does not include a folder.";
+            }
+            setViewerStatus({
+                status: VIEWER_ERROR,
+                errorMessage: message,
+                htmlData: "",
+            });
+
+            // TS thinks onError might be undefined
+            if (onError) {
+                onError(error as UploadRequestError);
+            }
+        });
 };
