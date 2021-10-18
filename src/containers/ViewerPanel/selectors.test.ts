@@ -11,7 +11,7 @@ import {
 const mockDisplayData = [
     {
         name: "name1",
-        displayStates: [{ name: "state1", id: "id1" }],
+        displayStates: [{ name: "state1", id: "id1", color: "" }],
         color: "color1",
     },
 ];
