@@ -45,7 +45,7 @@ export interface ToggleAllVisibleAction {
 }
 
 export interface AgentColorMap {
-    [key: string]: string;
+    [key: string]: string | number;
 }
 
 export interface SetAllColorsAction {

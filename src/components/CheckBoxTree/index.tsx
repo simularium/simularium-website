@@ -19,10 +19,15 @@ import { CHECKBOX_TYPE_STAR } from "../../constants";
 import ColorSwatch from "../ColorSwatch";
 import NoTypeMappingText from "../NoTrajectoriesText/NoTypeMappingText";
 
+interface CheckBoxWithColor extends CheckboxOptionType {
+    color: string;
+}
+
 export interface AgentDisplayNode {
     title: string;
     key: string;
-    children: CheckboxOptionType[];
+    children: CheckBoxWithColor[];
+    color: string;
 }
 
 interface CheckBoxTreeProps {
@@ -236,9 +241,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                         : this.renderRowWithNoChildren(
                                               nodeData
                                           )}{" "}
-                                    <ColorSwatch
-                                        color={agentColors[nodeData.title]}
-                                    />
+                                    <ColorSwatch color={nodeData.color} />
                                     <label className={styles.headerLabel}>
                                         {nodeData.title}
                                     </label>
@@ -296,9 +299,8 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                                 >
                                                     <ColorSwatch
                                                         color={
-                                                            agentColors[
-                                                                nodeData.title
-                                                            ]
+                                                            value.color ||
+                                                            nodeData.color
                                                         }
                                                     />
                                                     <label
