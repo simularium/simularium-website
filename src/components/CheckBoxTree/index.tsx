@@ -6,7 +6,6 @@ import { map, filter, isEmpty } from "lodash";
 import classNames from "classnames";
 
 import {
-    AgentColorMap,
     ChangeAgentsRenderingStateAction,
     SetVisibleAction,
     VisibilitySelectionMap,
@@ -40,7 +39,6 @@ interface CheckBoxTreeProps {
     payloadForSelectAll: VisibilitySelectionMap;
     payloadForSelectNone: VisibilitySelectionMap;
     isSharedCheckboxIndeterminate: boolean;
-    agentColors: AgentColorMap;
 }
 const CHECKBOX_SPAN_NO = 2;
 const LABEL_SPAN_NO = 6;
@@ -206,12 +204,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
         </Row>
     );
     render() {
-        const {
-            agentsHighlighted,
-            treeData,
-            agentsChecked,
-            agentColors,
-        } = this.props;
+        const { agentsHighlighted, treeData, agentsChecked } = this.props;
         return treeData.length > 0 ? (
             <div className={styles.container}>
                 <Row className={styles.colLabels}>
