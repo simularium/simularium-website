@@ -11,10 +11,7 @@ import {
     getCurrentTime,
     getHighlightedAgents,
 } from "../../state/selection/selectors";
-import {
-    AgentColorMap,
-    VisibilitySelectionMap,
-} from "../../state/selection/types";
+import { VisibilitySelectionMap } from "../../state/selection/types";
 import { roundTimeForDisplay } from "../../util";
 import { DisplayTimes } from "./types";
 
@@ -40,16 +37,6 @@ export const convertUIDataToSelectionData = (
         } else {
             acc[agent.name] = [agent.name];
         }
-        return acc;
-    }, returnData);
-};
-
-export const convertUIDataToColorMap = (
-    uiData: UIDisplayData
-): AgentColorMap => {
-    const returnData: AgentColorMap = {};
-    return uiData.reduce((acc, agent) => {
-        acc[agent.name] = agent.color;
         return acc;
     }, returnData);
 };

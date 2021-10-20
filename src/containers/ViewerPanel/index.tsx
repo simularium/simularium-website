@@ -25,7 +25,6 @@ import {
 import {
     ChangeTimeAction,
     SetVisibleAction,
-    SetAllColorsAction,
 } from "../../state/selection/types";
 import {
     ResetDragOverViewerAction,
@@ -47,7 +46,6 @@ import { TUTORIAL_PATHNAME } from "../../routes";
 import errorNotification from "../../components/ErrorNotification";
 
 import {
-    convertUIDataToColorMap,
     convertUIDataToSelectionData,
     getDisplayTimes,
     getSelectionStateInfoForViewer,
@@ -82,7 +80,6 @@ interface ViewerPanelProps {
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
     setAgentsVisible: ActionCreator<SetVisibleAction>;
     setStatus: ActionCreator<SetViewerStatusAction>;
-    setAllAgentColors: ActionCreator<SetAllColorsAction>;
     error: ViewerError;
     setBuffering: ActionCreator<ToggleAction>;
 }
@@ -328,17 +325,11 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
-        const {
-            receiveAgentNamesAndStates,
-            setAgentsVisible,
-            setAllAgentColors,
-        } = this.props;
+        const { receiveAgentNamesAndStates, setAgentsVisible } = this.props;
 
         const selectedAgents = convertUIDataToSelectionData(uiData);
-        const agentColors = convertUIDataToColorMap(uiData);
         const actions = [
             receiveAgentNamesAndStates(uiData),
-            setAllAgentColors(agentColors),
             setAgentsVisible(selectedAgents),
         ];
         batchActions(actions);
@@ -455,7 +446,6 @@ function mapStateToProps(state: State) {
 const dispatchToPropsMap = {
     changeTime: selectionStateBranch.actions.changeTime,
     setAgentsVisible: selectionStateBranch.actions.setAgentsVisible,
-    setAllAgentColors: selectionStateBranch.actions.setAllAgentColors,
     receiveTrajectory: trajectoryStateBranch.actions.receiveTrajectory,
     receiveAgentTypeIds: trajectoryStateBranch.actions.receiveAgentTypeIds,
     receiveAgentNamesAndStates:

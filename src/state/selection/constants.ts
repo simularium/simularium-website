@@ -15,8 +15,6 @@ export const TURN_AGENTS_ON_BY_KEY = makeSelectConstant(
     "turn-agents-on-by-name"
 );
 export const SET_AGENTS_VISIBLE = makeSelectConstant("set-agents-visible");
-export const SET_ALL_AGENT_COLORS = makeSelectConstant("set-all-agent-colors");
-export const CHANGE_AGENT_COLOR = makeSelectConstant("change-agent-color");
 export const RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS = makeSelectConstant(
     "reset-selections-and-highlighted-agents"
 );
