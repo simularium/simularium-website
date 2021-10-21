@@ -10,8 +10,6 @@ import {
     TURN_AGENTS_ON_BY_KEY,
     HIGHLIGHT_AGENTS_BY_KEY,
     SET_AGENTS_VISIBLE,
-    SET_ALL_AGENT_COLORS,
-    CHANGE_AGENT_COLOR,
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
 } from "./constants";
 import {
@@ -21,7 +19,6 @@ import {
     ChangeTimeAction,
     ChangeNumberCollapsedPanelsAction,
     SetVisibleAction,
-    SetAllColorsAction,
     ResetAction,
 } from "./types";
 
@@ -30,7 +27,6 @@ export const initialState = {
     numberPanelsCollapsed: 0,
     agentVisibilityMap: {},
     agentHighlightMap: {},
-    agentColors: {},
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -120,25 +116,6 @@ const actionToConfigMap: TypeToDescriptionMap = {
             ...state,
             agentHighlightMap: {
                 ...state.agentHighlightMap,
-                ...action.payload,
-            },
-        }),
-    },
-    [SET_ALL_AGENT_COLORS]: {
-        accepts: (action: AnyAction): action is SetAllColorsAction =>
-            action.type === SET_ALL_AGENT_COLORS,
-        perform: (state: SelectionStateBranch, action: SetAllColorsAction) => ({
-            ...state,
-            agentColors: action.payload,
-        }),
-    },
-    [CHANGE_AGENT_COLOR]: {
-        accepts: (action: AnyAction): action is SetAllColorsAction =>
-            action.type === CHANGE_AGENT_COLOR,
-        perform: (state: SelectionStateBranch, action: SetAllColorsAction) => ({
-            ...state,
-            agentColors: {
-                ...state.agentColors,
                 ...action.payload,
             },
         }),

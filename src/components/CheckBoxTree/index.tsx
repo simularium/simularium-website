@@ -6,7 +6,6 @@ import { map, filter, isEmpty } from "lodash";
 import classNames from "classnames";
 
 import {
-    AgentColorMap,
     ChangeAgentsRenderingStateAction,
     SetVisibleAction,
     VisibilitySelectionMap,
@@ -19,10 +18,15 @@ import { CHECKBOX_TYPE_STAR } from "../../constants";
 import ColorSwatch from "../ColorSwatch";
 import NoTypeMappingText from "../NoTrajectoriesText/NoTypeMappingText";
 
+interface CheckBoxWithColor extends CheckboxOptionType {
+    color: string;
+}
+
 export interface AgentDisplayNode {
     title: string;
     key: string;
-    children: CheckboxOptionType[];
+    children: CheckBoxWithColor[];
+    color: string;
 }
 
 interface CheckBoxTreeProps {
@@ -35,7 +39,6 @@ interface CheckBoxTreeProps {
     payloadForSelectAll: VisibilitySelectionMap;
     payloadForSelectNone: VisibilitySelectionMap;
     isSharedCheckboxIndeterminate: boolean;
-    agentColors: AgentColorMap;
 }
 const CHECKBOX_SPAN_NO = 2;
 const LABEL_SPAN_NO = 6;
@@ -201,12 +204,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
         </Row>
     );
     render() {
-        const {
-            agentsHighlighted,
-            treeData,
-            agentsChecked,
-            agentColors,
-        } = this.props;
+        const { agentsHighlighted, treeData, agentsChecked } = this.props;
         return treeData.length > 0 ? (
             <div className={styles.container}>
                 <Row className={styles.colLabels}>
@@ -236,9 +234,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                         : this.renderRowWithNoChildren(
                                               nodeData
                                           )}{" "}
-                                    <ColorSwatch
-                                        color={agentColors[nodeData.title]}
-                                    />
+                                    <ColorSwatch color={nodeData.color} />
                                     <label className={styles.headerLabel}>
                                         {nodeData.title}
                                     </label>
@@ -296,9 +292,8 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                                 >
                                                     <ColorSwatch
                                                         color={
-                                                            agentColors[
-                                                                nodeData.title
-                                                            ]
+                                                            value.color ||
+                                                            nodeData.color
                                                         }
                                                     />
                                                     <label

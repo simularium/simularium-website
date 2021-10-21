@@ -5,8 +5,6 @@ import {
     TURN_AGENTS_ON_BY_KEY,
     HIGHLIGHT_AGENTS_BY_KEY,
     SET_AGENTS_VISIBLE,
-    SET_ALL_AGENT_COLORS,
-    CHANGE_AGENT_COLOR,
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
 } from "./constants";
 import {
@@ -15,8 +13,6 @@ import {
     ChangeTimeAction,
     SetVisibleAction,
     VisibilitySelectionMap,
-    AgentColorMap,
-    SetAllColorsAction,
     ResetAction,
 } from "./types";
 
@@ -58,24 +54,6 @@ export function highlightAgentsByDisplayKey(
     return {
         payload: agentNames,
         type: HIGHLIGHT_AGENTS_BY_KEY,
-    };
-}
-
-export function setAllAgentColors(
-    agentColorMap: AgentColorMap
-): SetAllColorsAction {
-    return {
-        payload: agentColorMap,
-        type: SET_ALL_AGENT_COLORS,
-    };
-}
-
-export function changeAgentColor(
-    agentColorMap: AgentColorMap
-): SetAllColorsAction {
-    return {
-        payload: agentColorMap,
-        type: CHANGE_AGENT_COLOR,
     };
 }
 

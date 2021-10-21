@@ -8,34 +8,41 @@ const mockUiDisplayData = [
     {
         title: "agentWithChildren1",
         key: "agentWithChildren1",
+        color: "",
         children: [
             {
                 label: "<unmodified>",
                 value: "",
+                color: "",
             },
             {
                 label: "state1",
                 value: "state1",
+                color: "",
             },
         ],
     },
     {
         title: "agentWithChildren2",
         key: "agentWithChildren2",
+        color: "",
         children: [
             {
                 label: "<unmodified>",
                 value: "",
+                color: "",
             },
             {
                 label: "state1",
                 value: "state1",
+                color: "",
             },
         ],
     },
     {
         title: "agentWithoutChildren",
         key: "agentWithoutChildren",
+        color: "",
         children: [],
     },
 ];

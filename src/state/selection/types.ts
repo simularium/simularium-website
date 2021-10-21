@@ -44,15 +44,6 @@ export interface ToggleAllVisibleAction {
     type: string;
 }
 
-export interface AgentColorMap {
-    [key: string]: string;
-}
-
-export interface SetAllColorsAction {
-    payload: AgentColorMap;
-    type: string;
-}
-
 export interface ResetAction {
     type: string;
 }

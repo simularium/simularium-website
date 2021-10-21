@@ -16,7 +16,6 @@ import { State } from "../../state/types";
 import {
     getAgentVisibilityMap,
     getAgentHighlightMap,
-    getAgentColors,
 } from "../../state/selection/selectors";
 import {
     turnAgentsOnByDisplayKey,
@@ -24,7 +23,6 @@ import {
     setAgentsVisible,
 } from "../../state/selection/actions";
 import {
-    AgentColorMap,
     ChangeAgentsRenderingStateAction,
     SetVisibleAction,
     VisibilitySelectionMap,
@@ -61,7 +59,6 @@ interface ModelPanelProps {
     payloadForSelectAll: VisibilitySelectionMap;
     payloadForSelectNone: VisibilitySelectionMap;
     isSharedCheckboxIndeterminate: boolean;
-    agentColors: AgentColorMap;
     viewerStatus: ViewerStatus;
     isNetworkedFile: boolean;
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
@@ -79,7 +76,6 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
             payloadForSelectAll,
             payloadForSelectNone,
             isSharedCheckboxIndeterminate,
-            agentColors,
             viewerStatus,
             isNetworkedFile,
             changeToNetworkedFile: loadNetworkFile,
@@ -95,7 +91,6 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
                 payloadForSelectAll={payloadForSelectAll}
                 payloadForSelectNone={payloadForSelectNone}
                 isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
-                agentColors={agentColors}
             />
         );
         const contentMap = {
@@ -133,7 +128,6 @@ function mapStateToProps(state: State) {
         payloadForSelectAll: getSelectAllVisibilityMap(state),
         payloadForSelectNone: getSelectNoneVisibilityMap(state),
         isSharedCheckboxIndeterminate: getIsSharedCheckboxIndeterminate(state),
-        agentColors: getAgentColors(state),
         viewerStatus: getStatus(state),
         isNetworkedFile: getIsNetworkedFile(state),
     };

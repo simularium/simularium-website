@@ -51,17 +51,21 @@ describe("trajectory composed selectors", () => {
                         {
                             name: "agent1",
                             displayStates: [],
+                            color: "#bbbbbb",
                         },
                         {
                             name: "agent2",
+                            color: "#aaaaaa",
                             displayStates: [
                                 {
                                     name: "state1",
                                     id: "state1_id",
+                                    color: "#000000",
                                 },
                                 {
                                     name: "state2",
                                     id: "state2_id",
+                                    color: "#000000",
                                 },
                             ],
                         },
@@ -74,20 +78,25 @@ describe("trajectory composed selectors", () => {
                     title: "agent1",
                     key: "agent1",
                     children: [],
+                    color: "#bbbbbb",
                 },
                 {
                     title: "agent2",
                     key: "agent2",
+                    color: "#aaaaaa",
                     children: [
                         {
+                            color: "#aaaaaa",
                             label: "<unmodified>",
                             value: "",
                         },
                         {
+                            color: "#000000",
                             label: "state1",
                             value: "state1_id",
                         },
                         {
+                            color: "#000000",
                             label: "state2",
                             value: "state2_id",
                         },

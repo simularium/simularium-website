@@ -33,15 +33,18 @@ export const getUiDisplayDataTree = createSelector(
         return uiDisplayData.map((agent) => ({
             title: agent.name,
             key: agent.name,
+            color: agent.color,
             children: agent.displayStates.length
                 ? [
                       {
                           label: "<unmodified>",
                           value: "",
+                          color: agent.color,
                       },
                       ...agent.displayStates.map((state) => ({
                           label: state.name,
                           value: state.id,
+                          color: state.color,
                       })),
                   ]
                 : [],

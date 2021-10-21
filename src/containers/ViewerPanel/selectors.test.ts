@@ -1,7 +1,6 @@
 import { initialState } from "../../state";
 import { State } from "../../state/types";
 import {
-    convertUIDataToColorMap,
     convertUIDataToSelectionData,
     getDisplayTimes,
     getMaxNumChars,
@@ -11,7 +10,7 @@ import {
 const mockDisplayData = [
     {
         name: "name1",
-        displayStates: [{ name: "state1", id: "id1" }],
+        displayStates: [{ name: "state1", id: "id1", color: "" }],
         color: "color1",
     },
 ];
@@ -53,16 +52,6 @@ describe("ViewerPanel selectors", () => {
         });
     });
 
-    describe("convertUIDataToColorMap", () => {
-        it("converts UI display data to color map where the agent name is the key, and the color is the value", () => {
-            const result = convertUIDataToColorMap(mockDisplayData);
-            expect(result).toEqual({ name1: "color1" });
-        });
-        it("returns an empty object if no ui data present", () => {
-            const result = convertUIDataToColorMap([]);
-            expect(result).toEqual({});
-        });
-    });
     describe("getMaxNumChars", () => {
         it("returns length of lastFrameTime + timeStep when time values are integers", () => {
             const firstFrameTime = 0;
