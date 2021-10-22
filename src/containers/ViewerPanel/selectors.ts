@@ -30,10 +30,7 @@ export const convertUIDataToSelectionData = (
     return uiData.reduce((acc, agent) => {
         acc[agent.name] = [];
         if (agent.displayStates && agent.displayStates.length > 0) {
-            acc[agent.name] = [
-                "", // unmodified state
-                ...agent.displayStates.map((state) => state.name),
-            ];
+            acc[agent.name] = [...agent.displayStates.map((state) => state.id)];
         } else {
             acc[agent.name] = [agent.name];
         }

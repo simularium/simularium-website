@@ -86,11 +86,6 @@ describe("trajectory composed selectors", () => {
                     color: "#aaaaaa",
                     children: [
                         {
-                            color: "#aaaaaa",
-                            label: "<unmodified>",
-                            value: "",
-                        },
-                        {
                             color: "#000000",
                             label: "state1",
                             value: "state1_id",
