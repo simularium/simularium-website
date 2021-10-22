@@ -31,7 +31,7 @@ describe("ViewerPanel selectors", () => {
     });
 
     describe("convertUIDataToSelectionData", () => {
-        it("converts UI display data to map with agent name as the key, and an array of display state names is the value (adding the empty string for unmodified state", () => {
+        it("converts UI display data to map with agent name as the key, and an array of display state ids is the value", () => {
             const result = convertUIDataToSelectionData(mockDisplayData);
             expect(result).toEqual({ name1: ["id1"] });
         });
