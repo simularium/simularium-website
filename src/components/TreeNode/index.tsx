@@ -10,6 +10,7 @@ import collapseAnimation from "./collapseMotion";
 interface TreeNodeProps extends React.PropsWithChildren<any> {
     actions?: ReactNode[];
     headerContent: ReactNode;
+    expandByDefault?: boolean;
 }
 const styles = require("./style.css");
 
@@ -17,8 +18,9 @@ const TreeNode = ({
     children,
     actions = [],
     headerContent,
+    expandByDefault,
 }: TreeNodeProps): JSX.Element => {
-    const [isExpanded, setExpanded] = useState<boolean>(false);
+    const [isExpanded, setExpanded] = useState<boolean>(!!expandByDefault);
     const ref = React.createRef<HTMLDivElement>();
     const onToggle = () => {
         const isOpening = !isExpanded;
