@@ -240,6 +240,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                     </label>
                                 </>
                             }
+                            expandByDefault={!nodeData.color}
                             key={nodeData.key}
                         >
                             {nodeData.children.length > 0 && (
