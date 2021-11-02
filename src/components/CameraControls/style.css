@@ -6,14 +6,26 @@
     right: 20px;
     justify-content: space-evenly;
     margin-bottom: 20px;
-    height: 100px;
 }
 
-.zoomButtons {
+.radio-group {
+    display: flex;
+    flex-flow: column;
+}
+.zoom-buttons {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     height: 60px;
+    margin-bottom: 4px;
+
+}
+
+.move-buttons {
+    display: flex;
+    height: 84px;
+    flex-flow: column;
+    justify-content: space-evenly;
 }
 
 .btn {
@@ -22,7 +34,41 @@
     border-radius: 3px!important;
 }
 
-.btn:hover, .btn:active {
+.radio-btn {
+    border-color: var(--dark-theme-btn-bg)!important;
+    background-color: black!important;
+    padding: 0 2px!important;
+    width: 24px;
+    height: 24px;
+    font-size: 18px;
+    line-height: 18px;
+    border-left-width: 1px;
+}
+
+.radio-group .radio-btn:first-child {
+    border-radius: 3px 3px 0px 0px;
+}
+
+.radio-group .radio-btn:last-child {
+    border-radius: 0px 0px 3px 3px;
+}
+ 
+.radio-btn.active {
+    color: var(--dark-theme-btn-color) !important;
+    background-color: var(--dark-theme-btn-bg) !important;
+}
+
+.radio-group .radio-btn:not(:first-child) {
+    border-top: 0px;
+}
+
+.radio-btn:hover {
+    color: var(--dark-theme-btn-color);
+    background-color: var(--dark-theme-btn-hover-bg)!important;
+}
+
+.btn:hover,
+.btn:active {
     color: var(--dark-theme-btn-color);
     background-color: var(--dark-theme-btn-hover-bg);
 }
@@ -36,4 +82,16 @@
     background-color: var(--dark-theme-btn-disabled-bg);
     color: var(--dark-theme-btn-disabled-color);
 
+}
+
+.rotate::after {
+    content: "\e909";
+}
+
+.pan::after {
+    content: "\e908";
+}
+
+.focus::after {
+    content: "\e90a";
 }

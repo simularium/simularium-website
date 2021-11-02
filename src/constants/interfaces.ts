@@ -3,6 +3,7 @@ export interface TrajectoryDisplayData {
     id: string;
     title: string;
     subtitle?: string;
+    version?: string;
     totalSimulatedTime: string;
     authors: string;
     publication: {
@@ -12,7 +13,14 @@ export interface TrajectoryDisplayData {
         url: string;
     };
     description: string;
+    code?: string;
     legalese?: string;
     imageFile: string;
     gifFile: string;
+}
+
+export interface VisualGlossaryItem {
+    label: string;
+    description: string;
+    bulletItems?: string[];
 }

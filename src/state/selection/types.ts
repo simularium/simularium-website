@@ -1,15 +1,7 @@
-import { MetadataStateBranch } from "../metadata/types";
+import { TrajectoryStateBranch } from "../trajectory/types";
 
 export interface SelectionStateBranch {
     [key: string]: any;
-}
-
-export interface DragOverViewerAction {
-    type: string;
-}
-
-export interface ResetDragOverViewerAction {
-    type: string;
 }
 
 export interface ChangeAgentsRenderingStateAction {
@@ -18,7 +10,7 @@ export interface ChangeAgentsRenderingStateAction {
 }
 
 export interface SelectMetadataAction {
-    key: keyof MetadataStateBranch;
+    key: keyof TrajectoryStateBranch;
     payload: string | number;
     type: string;
 }
@@ -38,11 +30,6 @@ export interface HighlightAgentAction {
     type: string;
 }
 
-export interface ToggleAction {
-    payload: boolean;
-    type: string;
-}
-
 export interface VisibilitySelectionMap {
     [key: string]: string[];
 }
@@ -54,15 +41,6 @@ export interface SetVisibleAction {
 
 export interface ToggleAllVisibleAction {
     payload: boolean;
-    type: string;
-}
-
-export interface AgentColorMap {
-    [key: string]: string;
-}
-
-export interface SetAllColorsAction {
-    payload: AgentColorMap;
     type: string;
 }
 

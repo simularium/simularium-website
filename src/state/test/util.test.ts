@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { AnyAction } from "redux";
 
 import { TypeToDescriptionMap } from "../types";
@@ -14,10 +13,10 @@ describe("state utilities", () => {
         it("returns a string in the form 'APP_NAMESPACE/REDUCER/ACTION_TYPE'", () => {
             const constant = makeConstant("foo", "bar");
             const [namespace, reducer, type] = constant.split("/");
-            expect(constant).to.be.a("string");
-            expect(namespace).to.equal("agentviz-ui");
-            expect(reducer).to.equal("FOO");
-            expect(type).to.equal("BAR");
+            expect(typeof constant).toBe("string");
+            expect(namespace).toBe("simularium-ui");
+            expect(reducer).toBe("FOO");
+            expect(type).toBe("BAR");
         });
     });
 
@@ -55,17 +54,17 @@ describe("state utilities", () => {
         });
 
         it("returns a reducer function", () => {
-            expect(reducer).to.be.a("function");
+            expect(reducer).toBeInstanceOf(Function);
         });
 
         it("returns given state if action type does not match key in typeToDescriptionMap", () => {
             const fakeAction = { type: "FAKE", arbitraryProp: true };
-            expect(reducer(initialState, fakeAction)).to.equal(initialState);
+            expect(reducer(initialState, fakeAction)).toBe(initialState);
         });
 
         it("returns given state if action does not pass type assertion", () => {
             const fakeAction = { type: ACTION_CONSTANT, payload: "Also fake" };
-            expect(reducer(initialState, fakeAction)).to.equal(initialState);
+            expect(reducer(initialState, fakeAction)).toBe(initialState);
         });
 
         it("returns the output of ActionDescription.perform if the type assertion passes", () => {
@@ -74,8 +73,8 @@ describe("state utilities", () => {
                 ACTION_CONSTANT
             ].perform(initialState, realAction);
             const nextState = reducer(initialState, realAction);
-            expect(nextState).to.not.equal(initialState);
-            expect(nextState).to.deep.equal(expectedOutput);
+            expect(nextState).not.toBe(initialState);
+            expect(nextState).toEqual(expectedOutput);
         });
     });
 
@@ -144,7 +143,7 @@ describe("state utilities", () => {
                     initialState,
                     batchActions([enableBeans, enableCheese])
                 )
-            ).to.deep.equal(expectedState);
+            ).toEqual(expectedState);
         });
 
         it("applies non-batched actions as usual", () => {
@@ -156,8 +155,8 @@ describe("state utilities", () => {
             };
 
             const result = batchingReducer(initialState, enableBeans);
-            expect(result).to.deep.equal(reducer(initialState, enableBeans));
-            expect(result).to.deep.equal(expectedState);
+            expect(result).toEqual(reducer(initialState, enableBeans));
+            expect(result).toEqual(expectedState);
         });
     });
 });

@@ -8,9 +8,13 @@ https://github.com/ant-design/ant-design/blob/master/components/style/themes/def
 @white-six: #e7e7e7;
 @baby-purple: #b59ff6;
 @dark-purple: #3b3649;
+@allen-purple: #8d87aa;
 @greyish-brown: #4a4a4a;
 @highlight-green: #b2d030;
 @blue: #0094FF;
+@medium-dark-gray: #8b8b8b;
+@pale-grey: #ddd9ec;
+@warm-grey: #979797;
 
 // -------- Colors -----------
 @primary-color : @baby-purple;
@@ -95,9 +99,9 @@ https://github.com/ant-design/ant-design/blob/master/components/style/themes/def
 @btn-primary-bg         : @primary-color;
 @btn-primary-border     : @primary-color;
 
-@btn-default-color      : @text-color;
-@btn-default-bg         : @background-color;
-@btn-default-border     : @border-color-base;
+@btn-default-color      : @normal-color;
+@btn-default-bg         : @dark-two;
+@btn-default-border     : @dark-two;
 
 @btn-danger-color       : @error-color;
 @btn-danger-bg          : @background-color-base;
@@ -136,10 +140,29 @@ https://github.com/ant-design/ant-design/blob/master/components/style/themes/def
 @checkbox-group-item-margin-right: 8px;
 
 // Radio buttons
-@radio-button-bg           : @btn-default-bg;
-@radio-button-color        : @btn-default-color;
-@radio-button-hover-color  : #fff;
-@radio-button-active-color : #fff;
+@radio-button-bg: @black;
+@radio-button-checked-bg: @dark-three;
+@radio-button-color: @greyish-brown;
+@radio-button-hover-color: @primary-5;
+@radio-button-active-color: @dark-three;
+@radio-disabled-button-checked-bg: tint(@black, 90%);
+@radio-disabled-button-checked-color: @disabled-color;
+@radio-wrapper-margin-right: 8px;
+
+// Form
+// ---
+// @label-required-color: @highlight-color;
+@label-color: @dark;
+// @form-warning-input-bg: @input-bg;
+// @form-item-margin-bottom: 0px;
+// @form-item-trailing-colon: true;
+@form-vertical-label-padding: 0 0 4px;
+// @form-vertical-label-margin: 0;
+@form-item-label-font-size: 16px;
+// @form-item-label-height: @input-height-base;
+// @form-item-label-colon-margin-right: 8px;
+// @form-item-label-colon-margin-left: 2px;
+// @form-error-input-bg: @input-bg;
 
 // Input
 // ---
@@ -153,14 +176,39 @@ https://github.com/ant-design/ant-design/blob/master/components/style/themes/def
 //@input-padding-vertical-base : 4px;
 //@input-padding-vertical-sm   : 1px;
 //@input-padding-vertical-lg   : 6px;
-//@input-placeholder-color     : hsv(0, 0, 75%);
+@input-placeholder-color     : @medium-dark-gray;
 //@input-color                 : @primary-color;
-//@input-border-color          : @border-color-base;
-//@input-bg                    : @white-six;
+@input-border-color          : @medium-dark-gray;
+@input-bg                    : @component-background;
 //@input-addon-bg              : @background-color-light;
-//@input-hover-border-color    : @primary-color;
+@input-hover-border-color    : @baby-purple;
 //@input-disabled-bg           : @disabled-bg;
 //@input-outline-offset        : 0 0;
+
+// Modal
+// --
+// @modal-header-padding-vertical: @padding-md;
+// @modal-header-padding-horizontal: @padding-lg;
+// @modal-body-padding: @padding-lg;
+@modal-header-bg: @dark-four;
+// @modal-header-padding: @modal-header-padding-vertical @modal-header-padding-horizontal;
+@modal-header-border-width: 0px;
+// @modal-header-border-style: @border-style-base;
+// @modal-header-title-line-height: 22px;
+// @modal-header-title-font-size: @font-size-lg;
+// @modal-header-border-color-split: @border-color-split;
+// @modal-header-close-size: 56px;
+@modal-content-bg: @pale-grey;
+@modal-heading-color: #fff;
+@modal-close-color: @warm-grey;
+// @modal-footer-bg: transparent;
+// @modal-footer-border-color-split: @border-color-split;
+// @modal-footer-border-style: @border-style-base;
+@modal-footer-padding-vertical: 16px;
+@modal-footer-padding-horizontal: 20px;
+@modal-footer-border-width: 0px;
+// @modal-mask-bg: fade(@black, 45%);
+// @modal-confirm-body-padding: 32px 32px 24px;
 
 // Collapse
 // ---
@@ -212,3 +260,7 @@ https://github.com/ant-design/ant-design/blob/master/components/style/themes/def
 @menu-dark-selected-item-icon-color: @white;
 @menu-dark-selected-item-text-color: @white;
 @menu-dark-item-hover-bg: transparent;
+
+// Tag
+@tag-default-bg: @allen-purple;
+@tag-default-color: @white-six;

@@ -3,10 +3,17 @@
     padding: 15px 15px 5px 15px;
     background-color: var(--light-theme-card-bg-white);
     border: none;
+    display: flex;
+    flex-direction: column;
 }
 
 .card :global(.ant-card-body) {
     padding: 0px;
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
 .animated-thumbnail {
@@ -21,14 +28,45 @@
     display: none;
 }
 
-.card-text {
+.trajectory-description {
     font-size: 16px;
 }
 
-.simulated-time {
+.stretch {
+    flex-grow: 2;
+}
+
+.version-and-time {
+    display: flex;
+    justify-content: space-between;
     margin-top: 4px;
-    text-align: right;
+    margin-bottom: 8px;
     font-size: 16px;
+}
+
+.load-your-data {
+    font-size: 16px;
+    flex-grow: 2;
+}
+
+/* Necessary to make flexbox spacing work */
+.version-tag, .simulated-time {
+    margin: 0 !important;
+}
+
+.version-tag {
+    border-radius: 2px;
+    padding-right: 3px;
+    padding-left: 3px;
+    height: 20px;
+    font-size: 16px;
+    color: white;
+    border-color: var(--light-theme-version-badge-purple);
+}
+
+/* Remove Antd hover effect for Tags */
+.version-tag:hover {
+    opacity: 1;
 }
 
 .card-title {

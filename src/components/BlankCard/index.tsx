@@ -17,8 +17,8 @@ const BlankCard: React.FunctionComponent<{}> = () => {
                 </Link>
             }
         >
-            <div className={styles.cardText}>
-                <p className={styles.simulatedTime}>&nbsp;</p>
+            <div className={styles.loadYourData}>
+                <p className={styles.versionAndTime}>&nbsp;</p>
                 <Link to={VIEWER_PATHNAME}>
                     <p className={styles.cardTitle}>Load your data</p>
                 </Link>

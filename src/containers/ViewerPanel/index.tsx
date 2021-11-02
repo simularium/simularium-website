@@ -4,47 +4,54 @@ import SimulariumViewer, {
     SimulariumController,
     UIDisplayData,
     SelectionStateInfo,
+    compareTimes,
 } from "@aics/simularium-viewer";
 // import "@aics/simularium-viewer/style/style.css";
 import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/simularium";
 import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
 import { connect } from "react-redux";
-import { notification, Modal } from "antd";
+import { Modal } from "antd";
 import Bowser from "bowser";
-const si = require("si-prefix");
 
 import { State } from "../../state/types";
 import selectionStateBranch from "../../state/selection";
-import metadataStateBranch from "../../state/metadata";
-import { VIEWER_EMPTY, VIEWER_SUCCESS } from "../../state/metadata/constants";
+import trajectoryStateBranch from "../../state/trajectory";
+import viewerStateBranch from "../../state/viewer";
+import {
+    VIEWER_EMPTY,
+    VIEWER_SUCCESS,
+    VIEWER_ERROR,
+} from "../../state/viewer/constants";
 import {
     ChangeTimeAction,
+    SetVisibleAction,
+} from "../../state/selection/types";
+import {
     ResetDragOverViewerAction,
     DragOverViewerAction,
-    SetVisibleAction,
-    SetAllColorsAction,
     ToggleAction,
-} from "../../state/selection/types";
+    SetViewerStatusAction,
+    ViewerError,
+} from "../../state/viewer/types";
 import {
     ReceiveAction,
     LocalSimFile,
-    SetViewerStatusAction,
-    ViewerError,
-} from "../../state/metadata/types";
-import { VIEWER_ERROR } from "../../state/metadata/constants";
+    TimeUnits,
+} from "../../state/trajectory/types";
 import { batchActions } from "../../state/util";
 import PlaybackControls from "../../components/PlaybackControls";
 import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
-import { convertToSentenceCase } from "../../util";
 import { TUTORIAL_PATHNAME } from "../../routes";
+import errorNotification from "../../components/ErrorNotification";
 
 import {
-    convertUIDataToColorMap,
     convertUIDataToSelectionData,
+    getDisplayTimes,
     getSelectionStateInfoForViewer,
 } from "./selectors";
 import { AGENT_COLORS } from "./constants";
+import { DisplayTimes } from "./types";
 
 const styles = require("./style.css");
 
@@ -54,15 +61,17 @@ interface ViewerPanelProps {
     timeStep: number;
     firstFrameTime: number;
     lastFrameTime: number;
+    displayTimes: DisplayTimes;
+    timeUnits: TimeUnits;
     isPlaying: boolean;
-    fileIsDraggedOverViewer: boolean;
-    viewerStatus: string;
+    fileIsDraggedOver: boolean;
+    status: string;
     numFrames: number;
     isBuffering: boolean;
     simulariumController: SimulariumController;
     changeTime: ActionCreator<ChangeTimeAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
-    receiveMetadata: ActionCreator<ReceiveAction>;
+    receiveTrajectory: ActionCreator<ReceiveAction>;
     receiveAgentNamesAndStates: ActionCreator<ReceiveAction>;
     selectionStateInfoForViewer: SelectionStateInfo;
     setIsPlaying: ActionCreator<ToggleAction>;
@@ -70,15 +79,13 @@ interface ViewerPanelProps {
     dragOverViewer: ActionCreator<DragOverViewerAction>;
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
     setAgentsVisible: ActionCreator<SetVisibleAction>;
-    setViewerStatus: ActionCreator<SetViewerStatusAction>;
-    setAllAgentColors: ActionCreator<SetAllColorsAction>;
-    viewerError: ViewerError;
+    setStatus: ActionCreator<SetViewerStatusAction>;
+    error: ViewerError;
     setBuffering: ActionCreator<ToggleAction>;
 }
 
 interface ViewerPanelState {
     isInitialPlay: boolean;
-    highlightId: number;
     particleTypeIds: string[];
     height: number;
     width: number;
@@ -103,7 +110,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.resize = this.resize.bind(this);
         this.state = {
             isInitialPlay: true,
-            highlightId: -1,
             particleTypeIds: [],
             height: 0,
             width: 0,
@@ -118,6 +124,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public componentDidMount() {
+        const { error } = this.props;
         const browser = Bowser.getParser(window.navigator.userAgent);
         // Versions from https://caniuse.com/webgl2
         const isBrowserSupported = browser.satisfies({
@@ -156,27 +163,28 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 this.resize(current);
             }, 200);
         }
+
+        if (error) {
+            return errorNotification({
+                message: error.message,
+                htmlData: error.htmlData,
+                onClose: error.onClose,
+            });
+        }
     }
 
     public componentDidUpdate(prevProps: ViewerPanelProps) {
-        const { viewerStatus, viewerError } = this.props;
+        const { status, error } = this.props;
         const current = this.centerContent.current;
-        if (
-            viewerStatus === VIEWER_ERROR &&
-            prevProps.viewerStatus !== VIEWER_ERROR &&
-            viewerError.message
-        ) {
-            notification.error({
-                message: convertToSentenceCase(viewerError.message),
-                description:
-                    (
-                        <div
-                            dangerouslySetInnerHTML={{
-                                __html: viewerError.htmlData as string,
-                            }}
-                        />
-                    ) || "",
-                duration: viewerError.htmlData ? 0 : 4.5,
+        const isNewError: boolean =
+            status === VIEWER_ERROR &&
+            error.message !== prevProps.error.message;
+
+        if (isNewError) {
+            return errorNotification({
+                message: error.message,
+                htmlData: error.htmlData,
+                onClose: error.onClose,
             });
         }
         if (
@@ -206,13 +214,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         receiveAgentTypeIds(particleTypeIds);
     }
 
-    // TODO: remove this (old function)
-    public highlightParticleType(typeId: number) {
-        const highlightId = typeId;
-        this.setState({ highlightId });
-    }
-
-    public startPlay() {
+    // timeOverride is passed in when the user manipulates the playback slider
+    // because this.props.time sometimes doesn't get updated in time before mouseUp
+    public startPlay(timeOverride?: number) {
         const {
             time,
             timeStep,
@@ -222,7 +226,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setBuffering,
             setIsPlaying,
         } = this.props;
-        let newTime = time;
+        let newTime = timeOverride !== undefined ? timeOverride : time;
         if (newTime + timeStep >= lastFrameTime) {
             newTime = firstFrameTime;
         }
@@ -237,49 +241,40 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
-        const { receiveMetadata, simulariumController } = this.props;
-        const { spatialUnitFactorMeters } = data;
-
+        const { receiveTrajectory, simulariumController } = this.props;
         const tickIntervalLength = simulariumController.tickIntervalLength;
-        // Format scale bar length and unit so that it's more readable, e.g.:
-        // 0.000000015 m -> [15, "nm"]
-        const scaleBarLabelArray = si.meter.convert(
-            tickIntervalLength * spatialUnitFactorMeters
-        );
-        const scaleBarLabelNumber: number = parseFloat(
-            scaleBarLabelArray[0].toPrecision(2)
-        );
-        // The si-prefix library abbreviates "micro" as "mc", so swap it out with "µ"
-        const scaleBarLabelUnit: string = scaleBarLabelArray[1].replace(
-            "mc",
-            "µ"
-        );
+
+        let scaleBarLabelNumber =
+            tickIntervalLength * data.spatialUnits.magnitude;
+        scaleBarLabelNumber = parseFloat(scaleBarLabelNumber.toPrecision(2));
+        const scaleBarLabelUnit = data.spatialUnits.name;
+
+        receiveTrajectory({
+            numFrames: data.totalSteps,
+            timeStep: data.timeStepSize,
+            timeUnits: data.timeUnits,
+        });
 
         this.setState({
             scaleBarLabel: scaleBarLabelNumber + " " + scaleBarLabelUnit,
             isInitialPlay: true,
-        });
-
-        receiveMetadata({
-            numFrames: data.totalSteps,
-            timeStepSize: data.timeStepSize,
         });
     }
 
     public receiveTimeChange(timeData: TimeData) {
         const {
             changeTime,
-            setViewerStatus,
-            viewerStatus,
+            setStatus,
+            status,
             lastFrameTime,
             numFrames,
             timeStep,
-            receiveMetadata,
+            receiveTrajectory,
             setBuffering,
         } = this.props;
 
         if (this.state.isInitialPlay) {
-            receiveMetadata({
+            receiveTrajectory({
                 firstFrameTime: timeData.time,
                 lastFrameTime: (numFrames - 1) * timeStep + timeData.time,
             });
@@ -291,26 +286,37 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setBuffering(false),
         ];
 
-        if (viewerStatus !== VIEWER_SUCCESS) {
-            actions.push(setViewerStatus({ status: VIEWER_SUCCESS }));
+        if (status !== VIEWER_SUCCESS) {
+            actions.push(setStatus({ status: VIEWER_SUCCESS }));
         }
-        if (timeData.time + timeStep > lastFrameTime) {
+
+        const atLastFrame =
+            compareTimes(timeData.time, lastFrameTime, timeStep) === 0;
+        if (atLastFrame) {
             this.pause();
         }
+
         batchActions(actions);
     }
 
     public skipToTime(time: number) {
         const {
             simulariumController,
+            firstFrameTime,
             lastFrameTime,
+            timeStep,
             isBuffering,
             setBuffering,
         } = this.props;
         if (isBuffering) {
             return;
         }
-        if (time >= lastFrameTime) {
+
+        const isTimeGreaterThanLastFrameTime =
+            compareTimes(time, lastFrameTime, timeStep) === 1;
+        const isTimeLessThanFirstFrameTime =
+            compareTimes(time, firstFrameTime, timeStep) === -1;
+        if (isTimeGreaterThanLastFrameTime || isTimeLessThanFirstFrameTime) {
             return;
         }
 
@@ -319,17 +325,11 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
-        const {
-            receiveAgentNamesAndStates,
-            setAgentsVisible,
-            setAllAgentColors,
-        } = this.props;
+        const { receiveAgentNamesAndStates, setAgentsVisible } = this.props;
 
         const selectedAgents = convertUIDataToSelectionData(uiData);
-        const agentColors = convertUIDataToColorMap(uiData);
         const actions = [
             receiveAgentNamesAndStates(uiData),
-            setAllAgentColors(agentColors),
             setAgentsVisible(selectedAgents),
         ];
         batchActions(actions);
@@ -351,11 +351,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             lastFrameTime,
             simulariumController,
             selectionStateInfoForViewer,
-            setViewerStatus,
+            setStatus,
             timeStep,
+            timeUnits,
+            displayTimes,
             isBuffering,
             isPlaying,
-            viewerStatus,
+            status,
         } = this.props;
         return (
             <div
@@ -376,7 +378,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     agentColors={AGENT_COLORS}
                     loadInitialData={false}
                     onError={(error) => {
-                        setViewerStatus({
+                        setStatus({
                             status: VIEWER_ERROR,
                             errorMessage: error,
                         });
@@ -389,6 +391,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     playHandler={this.startPlay}
                     time={time}
                     timeStep={timeStep}
+                    displayTimes={displayTimes}
+                    timeUnits={timeUnits}
                     onTimeChange={this.skipToTime}
                     pauseHandler={this.pause}
                     prevHandler={this.playBackOne}
@@ -397,13 +401,15 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     firstFrameTime={firstFrameTime}
                     lastFrameTime={lastFrameTime}
                     loading={isBuffering}
-                    isEmpty={viewerStatus === VIEWER_EMPTY}
+                    isEmpty={status === VIEWER_EMPTY}
                 />
                 <ScaleBar label={this.state.scaleBarLabel} />
                 <CameraControls
                     resetCamera={simulariumController.resetCamera}
                     zoomIn={simulariumController.zoomIn}
                     zoomOut={simulariumController.zoomOut}
+                    setPanningMode={simulariumController.setPanningMode}
+                    setFocusMode={simulariumController.setFocusMode}
                 />
             </div>
         );
@@ -416,38 +422,39 @@ function mapStateToProps(state: State) {
         numberPanelsCollapsed: selectionStateBranch.selectors.getNumberCollapsed(
             state
         ),
-        firstFrameTime: metadataStateBranch.selectors.getFirstFrameTimeOfCachedSimulation(
+        firstFrameTime: trajectoryStateBranch.selectors.getFirstFrameTimeOfCachedSimulation(
             state
         ),
-        lastFrameTime: metadataStateBranch.selectors.getLastFrameTimeOfCachedSimulation(
+        lastFrameTime: trajectoryStateBranch.selectors.getLastFrameTimeOfCachedSimulation(
             state
         ),
-        numFrames: metadataStateBranch.selectors.getNumFrames(state),
-        timeStep: metadataStateBranch.selectors.getTimeStepSize(state),
+        numFrames: trajectoryStateBranch.selectors.getNumFrames(state),
+        timeStep: trajectoryStateBranch.selectors.getTimeStep(state),
+        displayTimes: getDisplayTimes(state),
+        timeUnits: trajectoryStateBranch.selectors.getTimeUnits(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
-        viewerStatus: metadataStateBranch.selectors.getViewerStatus(state),
-        viewerError: metadataStateBranch.selectors.getViewerError(state),
-        fileIsDraggedOverViewer: selectionStateBranch.selectors.getFileDraggedOverViewer(
+        status: viewerStateBranch.selectors.getStatus(state),
+        error: viewerStateBranch.selectors.getError(state),
+        fileIsDraggedOver: viewerStateBranch.selectors.getFileDraggedOver(
             state
         ),
-        isBuffering: selectionStateBranch.selectors.getIsBuffering(state),
-        isPlaying: selectionStateBranch.selectors.getIsPlaying(state),
+        isBuffering: viewerStateBranch.selectors.getIsBuffering(state),
+        isPlaying: viewerStateBranch.selectors.getIsPlaying(state),
     };
 }
 
 const dispatchToPropsMap = {
     changeTime: selectionStateBranch.actions.changeTime,
-    receiveMetadata: metadataStateBranch.actions.receiveMetadata,
-    receiveAgentTypeIds: metadataStateBranch.actions.receiveAgentTypeIds,
-    receiveAgentNamesAndStates:
-        metadataStateBranch.actions.receiveAgentNamesAndStates,
     setAgentsVisible: selectionStateBranch.actions.setAgentsVisible,
-    setViewerStatus: metadataStateBranch.actions.setViewerStatus,
-    dragOverViewer: selectionStateBranch.actions.dragOverViewer,
-    resetDragOverViewer: selectionStateBranch.actions.resetDragOverViewer,
-    setAllAgentColors: selectionStateBranch.actions.setAllAgentColors,
-    setBuffering: selectionStateBranch.actions.setBuffering,
-    setIsPlaying: selectionStateBranch.actions.setIsPlaying,
+    receiveTrajectory: trajectoryStateBranch.actions.receiveTrajectory,
+    receiveAgentTypeIds: trajectoryStateBranch.actions.receiveAgentTypeIds,
+    receiveAgentNamesAndStates:
+        trajectoryStateBranch.actions.receiveAgentNamesAndStates,
+    setStatus: viewerStateBranch.actions.setStatus,
+    dragOverViewer: viewerStateBranch.actions.dragOverViewer,
+    resetDragOverViewer: viewerStateBranch.actions.resetDragOverViewer,
+    setBuffering: viewerStateBranch.actions.setBuffering,
+    setIsPlaying: viewerStateBranch.actions.setIsPlaying,
 };
 
 export default connect(

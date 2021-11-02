@@ -1,3 +1,4 @@
+require('dotenv').config()
 const path = require('path');
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -5,7 +6,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const webpack = require('webpack');
 
@@ -27,6 +27,7 @@ const BASE_PLUGINS = [
     }),
     new webpack.EnvironmentPlugin({
         GH_BUILD: !!process.env.GH_BUILD,
+        GOOGLE_API_KEY: process.env.GOOGLE_API_KEY || "AIzaSyAZ3ow-AhfTcOsBml7e3oXZ7JwqIATcGwU"
     }),
 ];
 
@@ -49,9 +50,6 @@ const PLUGINS_BY_ENV = {
         })
     ],
     [Env.DEVELOPMENT]: [
-        new CopyWebpackPlugin([
-            { from: 'src/data', to: 'api/v1' }
-        ]),
         new webpack.EnvironmentPlugin({
             BACKEND_SERVER_IP: `dev-node1-agentviz-backend.cellexplore.net`
         })

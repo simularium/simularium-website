@@ -51,6 +51,7 @@ export default class SharedCheckbox extends React.Component<
             styles.container,
             { [styles.header]: isHeader, ["header-checkbox"]: isHeader },
         ]);
+
         return (
             <Checkbox
                 indeterminate={isIndeterminate}
@@ -61,6 +62,7 @@ export default class SharedCheckbox extends React.Component<
                 }}
                 className={checkboxClassNames}
                 checkboxType={checkboxType}
+                checkboxLevel={title === "All" ? "top" : "shared"}
             >
                 {showLabel ? title : ""}
             </Checkbox>

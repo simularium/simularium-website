@@ -1,29 +1,60 @@
 import { createSelector } from "reselect";
 import { Layout, Data } from "plotly.js";
 
-import { getPlotData } from "../../state/metadata/selectors";
-import { getCurrentTime } from "../../state/selection/selectors";
+import { getPlotData } from "../../state/trajectory/selectors";
+import { wrapText } from "../../util";
 
-import { PLOT_STYLE, AXIS_ATTRIBUTES } from "./constants";
+import { PLOT_STYLE, AXIS_ATTRIBUTES, DATA_STYLE } from "./constants";
 import {
-    PlotParamsWithKey,
+    PlotConfig,
     RawPlotParams,
     ScatterTrace,
     HistogramTrace,
     Layout as InputLayout,
 } from "./types";
 
-// Add Plotly layout and styling attributes to raw input plot data
-// Plotly reference: https://plotly.com/javascript/reference/index/
-const configureLayout = (
-    layout: InputLayout,
-    numTraces: number
-): Partial<Layout> => {
+// Calculate the appropriate height for a given plot
+export const getPlotHeight = (
+    numTraces: number,
+    numLinesInTitle: number
+): number => {
     // Give plots with a legend (multi-trace plots) more vertical room
-    const plotHeight =
+    let plotHeight =
         numTraces > 1
             ? PLOT_STYLE.height + PLOT_STYLE.legendItemHeight * numTraces
             : PLOT_STYLE.height;
+
+    // Just increasing the topMargin to make room for a wrapped title squishes
+    // the plot, so also need to increase plotHeight by the same amount
+    plotHeight += PLOT_STYLE.titleHeightPerLine * (numLinesInTitle - 1);
+
+    return plotHeight;
+};
+
+// Calculate the appropriate top margin for a given plot
+export const getTopMargin = (numLinesInTitle: number) => {
+    // Make more room for each extra line in a wrapped title
+    return (
+        PLOT_STYLE.marginTop +
+        PLOT_STYLE.titleHeightPerLine * (numLinesInTitle - 1)
+    );
+};
+
+// Add Plotly layout and styling attributes to raw input plot data
+// Plotly reference: https://plotly.com/javascript/reference/index/
+export const configureLayout = (
+    layout: InputLayout,
+    numTraces: number
+): Partial<Layout> => {
+    // Manually wrap the title because Plotly currently does not offer automatic wrapping:
+    // https://github.com/plotly/plotly.js/issues/2053
+    // https://github.com/plotly/plotly.js/issues/382
+    // https://stackoverflow.com/questions/35185143/how-to-create-new-line-in-plot-ly-js-title
+    const wrappedTitle = wrapText(layout.title, PLOT_STYLE.titleMaxCharPerLine);
+
+    const numLinesInTitle = wrappedTitle.numLines;
+    const topMargin = getTopMargin(numLinesInTitle);
+    const plotHeight = getPlotHeight(numTraces, numLinesInTitle);
 
     return {
         ...layout,
@@ -32,12 +63,13 @@ const configureLayout = (
         height: plotHeight,
         width: PLOT_STYLE.width,
         title: {
-            text: layout.title,
+            text: wrappedTitle.formattedText,
             font: {
-                size: 16,
+                size: PLOT_STYLE.titleFontSize,
             },
-            x: 0.03,
-            y: 0.97,
+            x: PLOT_STYLE.titlePositionX,
+            y: PLOT_STYLE.titlePositionY,
+            yanchor: "top",
         },
         hoverlabel: {
             font: {
@@ -78,7 +110,7 @@ const configureLayout = (
         },
         showlegend: numTraces > 1 ? true : false,
         margin: {
-            t: PLOT_STYLE.marginTop,
+            t: topMargin,
             l: PLOT_STYLE.marginLeft,
             b: PLOT_STYLE.marginBottom,
             r: PLOT_STYLE.marginRight,
@@ -97,30 +129,28 @@ const configureLayout = (
     };
 };
 
-const configureData = (
-    inputData: (ScatterTrace | HistogramTrace)[],
-    currentTime: number,
-    xAxisTitle: string
+// Add line and marker styling to data
+export const configureData = (
+    inputData: (ScatterTrace | HistogramTrace)[]
 ): Data[] => {
-    // Add line and marker styling to data
-    const data: Data[] = inputData.map(
-        (traceData: ScatterTrace | HistogramTrace) => {
-            return {
-                ...traceData,
+    return inputData.map((traceData: ScatterTrace | HistogramTrace) => {
+        return {
+            ...traceData,
+            line: {
+                width: DATA_STYLE.lineWidth,
+            },
+            marker: {
+                size: DATA_STYLE.markerSize,
                 line: {
-                    width: 1,
+                    color: PLOT_STYLE.backgroundColor,
+                    width: DATA_STYLE.markerLineWidth,
                 },
-                marker: {
-                    size: 3,
-                    line: {
-                        color: PLOT_STYLE.backgroundColor,
-                        width: 0.5,
-                    },
-                },
-            };
-        }
-    );
+            },
+        };
+    });
+};
 
+export const getShouldRenderTimeIndicator = (plot: RawPlotParams): boolean => {
     // Type guard for checking if a plot is a scatter plot
     const isScatterPlot = (
         data: (ScatterTrace | HistogramTrace)[]
@@ -129,48 +159,28 @@ const configureData = (
     };
     // Check if the x-axis label has the word "time" in it, separated from other
     // characters by whitespace and/or one or more special characters
-    const isTimePlot = /\btime\b/i.test(xAxisTitle);
+    const isTimePlot = /\btime\b/i.test(plot.layout.xaxis.title);
 
-    // Add time indicator line for scatter plots with time on x-axis
-    if (isScatterPlot(inputData) && isTimePlot && currentTime !== 0) {
-        data.push({
-            /* cSpell:disable */
-            mode: "lines",
-            x: [currentTime, currentTime],
-            y: [0, 1],
-            xaxis: "x",
-            yaxis: "y2",
-            line: {
-                width: 1,
-                color: PLOT_STYLE.timeIndicatorColor,
-            },
-            showlegend: false,
-            hoverinfo: "x",
-            /* cSpell:enable */
-        });
-    }
-
-    return data;
+    return isScatterPlot(plot.data) && isTimePlot;
 };
 
 export const getPlotDataConfiguredForPlotly = createSelector(
-    [getPlotData, getCurrentTime],
-    (plotData: RawPlotParams[], currentTime: number): PlotParamsWithKey[] => {
-        if (!plotData) return [];
+    [getPlotData],
+    (plotData: RawPlotParams[]): PlotConfig[] => {
         return plotData.map((plot: RawPlotParams) => {
             const layout: Partial<Layout> = configureLayout(
                 plot.layout,
                 plot.data.length
             );
-            const data: Data[] = configureData(
-                plot.data,
-                currentTime,
-                plot.layout.xaxis.title
+            const data: Data[] = configureData(plot.data);
+            const shouldRenderTimeIndicator = getShouldRenderTimeIndicator(
+                plot
             );
             return {
                 key: plot.layout.title,
                 data: data,
                 layout: layout,
+                shouldRenderTimeIndicator: shouldRenderTimeIndicator,
             };
         });
     }

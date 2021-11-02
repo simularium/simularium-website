@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Card } from "antd";
+import { Card, Tag } from "antd";
 import { Link } from "react-router-dom";
 
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
@@ -19,9 +19,11 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
         id,
         title,
         totalSimulatedTime,
+        version,
         authors,
         publication,
         description,
+        code,
         legalese,
         imageFile,
         gifFile,
@@ -53,8 +55,17 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                 </Link>
             }
         >
-            <div className={styles.cardText}>
-                <p className={styles.simulatedTime}>{totalSimulatedTime}</p>
+            <div className={styles.trajectoryDescription}>
+                <div className={styles.versionAndTime}>
+                    {version ? (
+                        <Tag className={styles.versionTag}>v{version}</Tag>
+                    ) : (
+                        <div />
+                    )}
+                    <span className={styles.simulatedTime}>
+                        {totalSimulatedTime}
+                    </span>
+                </div>
                 <Link
                     to={{
                         pathname: VIEWER_PATHNAME,
@@ -92,6 +103,10 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                     </p>
                 </a>
                 <p>{description}</p>
+                {code && <p dangerouslySetInnerHTML={{ __html: code }} />}
+            </div>
+            <div className={styles.stretch} />
+            <div>
                 {legalese && (
                     <p
                         className={styles.legalese}

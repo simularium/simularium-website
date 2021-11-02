@@ -6,6 +6,13 @@
 }
 
 .tag {
-    margin-left: 10px;
-    color: var(--dark-theme-text-color);
+    margin-left: 5px;
+    margin-right: 0px;
+    border-radius: 2px;
+    padding-right: 5px;
+    padding-left: 5px;
+    height: 20px;
+    font-size: 12px;
+    border-color: var(--dark-theme-version-badge-purple);
+    background-color: var(--dark-theme-version-badge-purple);
 }

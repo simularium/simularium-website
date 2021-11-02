@@ -1,0 +1,52 @@
+.modal .extra-info {
+    margin-top: .25rem;
+    color: var(--light-theme-modal-supplemental-text);
+    font-size: 14px;
+}
+
+.modal .submit-button {
+    margin-bottom: 0px;
+}
+
+.modal .submit-button :global(.ant-form-item-control-input) {
+    justify-content: flex-end;
+}
+
+.modal .submit-button :global(.ant-form-item-control-input-content) {
+    flex: none;
+}
+
+.modal .submit-button button[disabled] {
+    background: var(--light-theme-btn-default-disabled-bg);
+    border: none;
+}
+
+.modal :global(.ant-modal-content) {
+    border-radius: 3px;
+}
+
+.modal :global(.ant-modal-header) {
+    border-radius: 3px 3px 0 0;
+}
+
+.modal :global(.ant-modal-title) {
+    text-align: center;
+    font-weight: bold;
+}
+
+.modal :global(.ant-form-item-with-help) {
+    margin-bottom: 0;
+}
+
+.modal :global(.ant-form-item-extra) {
+    margin-top: 0px;
+}
+
+.modal :global(.ant-input-affix-wrapper) {
+    border-radius: 3px;
+    border-color: var(--input-border-highlight);
+}
+
+.modal :global(.ant-input-suffix svg) {
+    color: var(--light-theme-modal-supplemental-text);
+}

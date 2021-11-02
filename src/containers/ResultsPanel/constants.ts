@@ -2,6 +2,12 @@ const COLORS = {
     darkTwo: "#1e1b25",
     whiteTwo: "#d3d3d3",
     babyPurple: "#b59ff6",
+    lightGreen: "#c9e358",
+    cyan: "#12e9ff",
+    darkBlue: "#005097",
+    pink: "#ce729e",
+    burntOrange: "#ce7152",
+    green: "#54ce52",
 };
 
 export const PLOT_STYLE = {
@@ -12,20 +18,25 @@ export const PLOT_STYLE = {
     timeIndicatorColor: COLORS.whiteTwo,
     fontFamily: "Overpass",
     fontSize: 11,
+    titleFontSize: 16,
+    titlePositionX: 0.03,
+    titlePositionY: 0.94,
     legendItemHeight: 19, // Dependent on fontSize and fontFamily
-    marginTop: 40,
+    titleMaxCharPerLine: 33,
+    titleHeightPerLine: 20.02, // Dependent on fontSize and fontFamily
+    marginTop: 55,
     marginLeft: 50,
     marginBottom: 30,
     marginRight: 5,
     colorway: [
-        "#c9e358",
-        "#12e9ff",
-        "#005097",
+        COLORS.lightGreen,
+        COLORS.cyan,
+        COLORS.darkBlue,
         COLORS.babyPurple,
         COLORS.whiteTwo,
-        "#ce729e",
-        "#ce7152",
-        "#54ce52",
+        COLORS.pink,
+        COLORS.burntOrange,
+        COLORS.green,
     ],
     height: 240,
     width: 260,
@@ -44,4 +55,10 @@ export const AXIS_ATTRIBUTES = {
     showgrid: false,
     zeroline: false,
     /* cSpell:enable */
+};
+
+export const DATA_STYLE = {
+    lineWidth: 1,
+    markerSize: 3,
+    markerLineWidth: 0.5,
 };

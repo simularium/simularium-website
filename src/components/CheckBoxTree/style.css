@@ -6,12 +6,20 @@
     flex-flow: row;
 }
 
+.sub-menu :global(.ant-col-offset-3) {
+    margin-left: 13.4%;
+}
+
 .header-label {
     margin-left: 8px;
 }
 
 .checkbox-set {
     width: 53px;
+}
+
+.checkbox-set :global(.ant-checkbox) {
+    top: 12px;
 }
 
 .container .checkbox-labels {

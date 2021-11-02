@@ -5,7 +5,7 @@ import { Layout, Typography } from "antd";
 import dragDropImage from "../../assets/drag-drop.gif";
 import { VIEWER_PATHNAME } from "../../routes";
 import VisualGlossary from "../VisualGlossary";
-import { CYTOSIM_URL, PHYSICELL_URL, READDY_URL } from "../../constants";
+import { SUPPORTED_ENGINES, DATA_BUCKET_URL } from "../../constants";
 import Footer from "../Footer";
 
 const { Content } = Layout;
@@ -21,7 +21,9 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                 <VisualGlossary />
                 <p className={styles.intro}>
                     To try out the Simularium Viewer, either{" "}
-                    <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium">
+                    <a
+                        href={`${DATA_BUCKET_URL}/trajectory/endocytosis.simularium`}
+                    >
                         download
                     </a>{" "}
                     our example data or <a href="#convert-your-data">convert</a>{" "}
@@ -43,7 +45,9 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                     <ol>
                         <li>
                             Download the example data{" "}
-                            <a href="https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/endocytosis.simularium">
+                            <a
+                                href={`${DATA_BUCKET_URL}/trajectory/endocytosis.simularium`}
+                            >
                                 here
                             </a>
                             .
@@ -112,7 +116,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                                 <li>
                                     These{" "}
                                     <a
-                                        href="https://github.com/allen-cell-animated/simulariumio/tree/master/examples"
+                                        href="https://github.com/allen-cell-animated/simulariumio/tree/main/examples"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                     >
@@ -125,39 +129,24 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                                 <li>
                                     We support the following simulators:
                                     <ul>
-                                        <li>
-                                            ReaDDy (
-                                            <a
-                                                href={READDY_URL}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                {READDY_URL}
-                                            </a>
-                                            )
-                                        </li>
-                                        <li>
-                                            PhysiCell (
-                                            <a
-                                                href={PHYSICELL_URL}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                {PHYSICELL_URL}
-                                            </a>
-                                            )
-                                        </li>
-                                        <li>
-                                            CytoSim (
-                                            <a
-                                                href={CYTOSIM_URL}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                {CYTOSIM_URL}
-                                            </a>
-                                            )
-                                        </li>
+                                        {SUPPORTED_ENGINES.map(
+                                            (engine: string[]) => {
+                                                const [name, url] = engine;
+                                                return (
+                                                    <li key={name}>
+                                                        {name} (
+                                                        <a
+                                                            href={url}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                        >
+                                                            {url}
+                                                        </a>
+                                                        )
+                                                    </li>
+                                                );
+                                            }
+                                        )}
                                     </ul>
                                 </li>
                                 <li>
@@ -165,33 +154,23 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                                     to generate your data, choose the notebook
                                     for that simulator:
                                     <ul>
-                                        <li>
-                                            <a
-                                                href="https://github.com/allen-cell-animated/simulariumio/blob/master/examples/Tutorial_readdy.ipynb"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                ReaDDy
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="https://github.com/allen-cell-animated/simulariumio/blob/master/examples/Tutorial_physicell.ipynb"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                PhysiCell
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="https://github.com/allen-cell-animated/simulariumio/blob/master/examples/Tutorial_cytosim.ipynb"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                CytoSim
-                                            </a>
-                                        </li>
+                                        {SUPPORTED_ENGINES.map(
+                                            (engine: string[]) => {
+                                                const name = engine[0];
+                                                const url = `https://github.com/allen-cell-animated/simulariumio/blob/main/examples/Tutorial_${name.toLowerCase()}.ipynb`;
+                                                return (
+                                                    <li key={name}>
+                                                        <a
+                                                            href={url}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                        >
+                                                            {name}
+                                                        </a>
+                                                    </li>
+                                                );
+                                            }
+                                        )}
                                     </ul>
                                 </li>
                                 <li>
@@ -199,7 +178,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                                     your data, choose the notebook for
                                     converting{" "}
                                     <a
-                                        href="https://github.com/allen-cell-animated/simulariumio/blob/master/examples/Tutorial_custom.ipynb"
+                                        href="https://github.com/allen-cell-animated/simulariumio/blob/main/examples/Tutorial_custom.ipynb"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                     >
@@ -220,8 +199,71 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                         </li>
                         <li>
                             Drag the resulting file from your file browser onto
-                            the window or use the file upload dialogue to choose
-                            your file.
+                            the window or choose Load model &gt; From your
+                            device, and select your file from the file upload
+                            dialogue.
+                            <ul>
+                                <li>
+                                    If you&apos;re using local geometry files,
+                                    like .obj or .pdb files, load them at the
+                                    same time as you load your .simularium file,
+                                    either by dragging and dropping a collection
+                                    of files, or by choosing multiple files in
+                                    the upload dialogue.
+                                </li>
+                                <li>
+                                    Currently the Viewer does not support
+                                    loading folders of files, so make sure you
+                                    are loading a collection of single files
+                                    that does not include a folder. We&apos;re
+                                    working to improve this.
+                                </li>
+                            </ul>
+                        </li>
+                    </ol>
+                </ul>
+                <ul className={styles.approachBlock}>
+                    <li>
+                        <span id="share-a-link" className={styles.listHeader}>
+                            Share a link to your data
+                        </span>
+                    </li>
+                    <ol>
+                        <li>
+                            Upload your Simularium file to one of the supported
+                            public cloud providers, including Dropbox, Google
+                            Drive, or Amazon S3, and get a publicly accessible
+                            link to the file.
+                        </li>
+                        <li>
+                            In a supported browser, navigate to{" "}
+                            <Link
+                                to="/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                https://simularium.allencell.org/
+                            </Link>
+                            .
+                        </li>
+                        <li>
+                            Choose Load model &gt; From a URL. In the dialog,
+                            provide the URL to your Simularium file and choose
+                            Load.
+                        </li>
+                        <ul>
+                            <li>
+                                If your file uses geometry files, like .obj or
+                                .pdb files, make sure you&apos;ve provided the
+                                full public URL to the geometry files in your
+                                .simularium file.
+                            </li>
+                        </ul>
+                        <li>
+                            Once the file is loaded, you can copy the page URL
+                            and share this link with collaborators or post it on
+                            your website so that others can interactively view
+                            your results.
                         </li>
                     </ol>
                 </ul>

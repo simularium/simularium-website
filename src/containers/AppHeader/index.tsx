@@ -2,31 +2,34 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
-import { PageHeader } from "antd";
 
 import {
+    ClearSimFileDataAction,
     isLocalFileInterface,
     isNetworkSimFileInterface,
     LocalSimFile,
     NetworkedSimFile,
     RequestLocalFileAction,
     RequestNetworkFileAction,
-} from "../../state/metadata/types";
+} from "../../state/trajectory/types";
 import LoadFileMenu from "../../components/LoadFileMenu";
 import ViewerTitle from "../../components/ViewerTitle";
 import HelpMenu from "../../components/HelpMenu";
 import { AicsLogo } from "../../components/Icons";
 import { State } from "../../state/types";
-import metadataStateBranch from "../../state/metadata";
-import selectionStateBranch from "../../state/selection";
+import trajectoryStateBranch from "../../state/trajectory";
+import viewerStateBranch from "../../state/viewer";
+import { SetViewerStatusAction } from "../../state/viewer/types";
 
 const styles = require("./style.css");
 
 interface AppHeaderProps {
     simulariumFile: LocalSimFile | NetworkedSimFile;
     isBuffering: boolean;
+    clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
     changeToLocalSimulariumFile: ActionCreator<RequestLocalFileAction>;
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
+    setViewerStatus: ActionCreator<SetViewerStatusAction>;
 }
 
 class AppHeader extends React.Component<AppHeaderProps, {}> {
@@ -36,6 +39,8 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
             isBuffering,
             changeToLocalSimulariumFile: loadLocalFile,
             changeToNetworkedFile: loadNetworkFile,
+            setViewerStatus,
+            clearSimulariumFile,
         } = this.props;
         let lastModified = 0;
         let displayName = "";
@@ -47,51 +52,53 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
         }
 
         return (
-            <PageHeader
-                className={styles.pageHeader}
-                backIcon={
+            <div className={styles.pageHeader}>
+                <div>
                     <a href="https://allencell.org" title="Allen Cell Explorer">
                         {AicsLogo}
                     </a>
-                }
-                onBack={() => null}
-                title={
-                    <div key="home" className={styles.home}>
-                        <span className={styles.verticalBar}>|</span>
-                        <Link to="/">SIMULARIUM HOME</Link>
-                    </div>
-                }
-                subTitle={
+                    <span className={styles.verticalBar}>|</span>
+                    <Link to="/" className={styles.simulariumHome}>
+                        SIMULARIUM HOME
+                    </Link>
+                </div>
+                <div className={styles.viewerTitle}>
                     <ViewerTitle
                         simulariumFileName={displayName}
                         lastModified={lastModified}
                     />
-                }
-                extra={[
+                </div>
+                <div className={styles.buttons}>
                     <LoadFileMenu
                         key="select"
                         selectFile={loadNetworkFile}
+                        clearSimulariumFile={clearSimulariumFile}
                         loadLocalFile={loadLocalFile}
+                        setViewerStatus={setViewerStatus}
                         isBuffering={isBuffering}
-                    />,
-                    <HelpMenu key="help" />,
-                ]}
-            />
+                    />
+                    <HelpMenu key="help" />
+                </div>
+            </div>
         );
     }
 }
 
 function mapStateToProps(state: State) {
     return {
-        simulariumFile: metadataStateBranch.selectors.getSimulariumFile(state),
-        isBuffering: selectionStateBranch.selectors.getIsBuffering(state),
+        simulariumFile: trajectoryStateBranch.selectors.getSimulariumFile(
+            state
+        ),
+        isBuffering: viewerStateBranch.selectors.getIsBuffering(state),
     };
 }
 
 const dispatchToPropsMap = {
     changeToLocalSimulariumFile:
-        metadataStateBranch.actions.changeToLocalSimulariumFile,
-    changeToNetworkedFile: metadataStateBranch.actions.changeToNetworkedFile,
+        trajectoryStateBranch.actions.changeToLocalSimulariumFile,
+    changeToNetworkedFile: trajectoryStateBranch.actions.changeToNetworkedFile,
+    clearSimulariumFile: trajectoryStateBranch.actions.clearSimulariumFile,
+    setViewerStatus: viewerStateBranch.actions.setStatus,
 };
 
 export default connect(

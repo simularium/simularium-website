@@ -6,7 +6,6 @@ import { map, filter, isEmpty } from "lodash";
 import classNames from "classnames";
 
 import {
-    AgentColorMap,
     ChangeAgentsRenderingStateAction,
     SetVisibleAction,
     VisibilitySelectionMap,
@@ -19,10 +18,15 @@ import { CHECKBOX_TYPE_STAR } from "../../constants";
 import ColorSwatch from "../ColorSwatch";
 import NoTypeMappingText from "../NoTrajectoriesText/NoTypeMappingText";
 
+interface CheckBoxWithColor extends CheckboxOptionType {
+    color: string;
+}
+
 export interface AgentDisplayNode {
     title: string;
     key: string;
-    children: CheckboxOptionType[];
+    children: CheckBoxWithColor[];
+    color: string;
 }
 
 interface CheckBoxTreeProps {
@@ -34,8 +38,7 @@ interface CheckBoxTreeProps {
     setAgentsVisible: ActionCreator<SetVisibleAction>;
     payloadForSelectAll: VisibilitySelectionMap;
     payloadForSelectNone: VisibilitySelectionMap;
-    checkAllIsIntermediate: boolean;
-    agentColors: AgentColorMap;
+    isSharedCheckboxIndeterminate: boolean;
 }
 const CHECKBOX_SPAN_NO = 2;
 const LABEL_SPAN_NO = 6;
@@ -98,7 +101,11 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
     };
 
     renderCheckAllButton = () => {
-        const { agentsChecked, treeData, checkAllIsIntermediate } = this.props;
+        const {
+            agentsChecked,
+            treeData,
+            isSharedCheckboxIndeterminate,
+        } = this.props;
         const checkedList = filter(
             map(
                 agentsChecked,
@@ -113,7 +120,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                     showLabel={true}
                     options={map(treeData, "key" as string)}
                     onTopLevelCheck={this.toggleAllOnOff}
-                    indeterminate={checkAllIsIntermediate}
+                    indeterminate={isSharedCheckboxIndeterminate}
                     checkedList={checkedList}
                     isHeader={false}
                 />
@@ -197,12 +204,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
         </Row>
     );
     render() {
-        const {
-            agentsHighlighted,
-            treeData,
-            agentsChecked,
-            agentColors,
-        } = this.props;
+        const { agentsHighlighted, treeData, agentsChecked } = this.props;
         return treeData.length > 0 ? (
             <div className={styles.container}>
                 <Row className={styles.colLabels}>
@@ -232,14 +234,13 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                         : this.renderRowWithNoChildren(
                                               nodeData
                                           )}{" "}
-                                    <ColorSwatch
-                                        color={agentColors[nodeData.title]}
-                                    />
+                                    <ColorSwatch color={nodeData.color} />
                                     <label className={styles.headerLabel}>
                                         {nodeData.title}
                                     </label>
                                 </>
                             }
+                            expandByDefault={!nodeData.color}
                             key={nodeData.key}
                         >
                             {nodeData.children.length > 0 && (
@@ -292,9 +293,8 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                                 >
                                                     <ColorSwatch
                                                         color={
-                                                            agentColors[
-                                                                nodeData.title
-                                                            ]
+                                                            value.color ||
+                                                            nodeData.color
                                                         }
                                                     />
                                                     <label

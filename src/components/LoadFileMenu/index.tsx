@@ -6,26 +6,33 @@ import { Menu, Dropdown, Button } from "antd";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import {
+    ClearSimFileDataAction,
     RequestLocalFileAction,
     RequestNetworkFileAction,
-} from "../../state/metadata/types";
+} from "../../state/trajectory/types";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
 import LocalFileUpload from "../LocalFileUpload";
+import UrlUpload from "../UrlUpload";
 import { DownArrow } from "../Icons";
+import { SetViewerStatusAction } from "../../state/viewer/types";
 
 const styles = require("./style.css");
 
 interface LoadFileMenuProps {
     isBuffering: boolean;
     selectFile: ActionCreator<RequestNetworkFileAction>;
+    clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
+    setViewerStatus: ActionCreator<SetViewerStatusAction>;
 }
 
 const LoadFileMenu = ({
     isBuffering,
+    clearSimulariumFile,
     loadLocalFile,
     selectFile,
+    setViewerStatus,
 }: LoadFileMenuProps) => {
     const location = useLocation();
     const onClick = (trajectoryData: TrajectoryDisplayData) => {
@@ -38,13 +45,11 @@ const LoadFileMenu = ({
     };
     const menu = (
         <Menu theme="dark" className={styles.menu}>
-            <Menu.Item>
-                <LocalFileUpload loadLocalFile={loadLocalFile} />
-            </Menu.Item>
             <Menu.SubMenu
-                title="Load existing model"
+                title="From examples"
                 popupClassName={styles.submenu}
                 popupOffset={[-0.45, -4]}
+                key="from-examples"
             >
                 {TRAJECTORIES.map((trajectory) => (
                     <Menu.Item key={trajectory.id}>
@@ -58,10 +63,21 @@ const LoadFileMenu = ({
                             }}
                         >
                             {trajectory.title}
+                            {trajectory.subtitle && `: ${trajectory.subtitle}`}
                         </Link>
                     </Menu.Item>
                 ))}
             </Menu.SubMenu>
+            <Menu.Item key="url-upload">
+                <UrlUpload />
+            </Menu.Item>
+            <Menu.Item key="local-file-upload">
+                <LocalFileUpload
+                    clearSimulariumFile={clearSimulariumFile}
+                    loadLocalFile={loadLocalFile}
+                    setViewerStatus={setViewerStatus}
+                />
+            </Menu.Item>
         </Menu>
     );
     return (

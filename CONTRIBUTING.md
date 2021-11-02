@@ -24,16 +24,19 @@ ___
 1. Fork the repo on GitHub.
 2. Create a branch and make your edits on your branch, pushing back to your fork.
 3. Make sure `npm run typeCheck`, `npm run test` and `npm run lint` all exit without errors. Add tests and documentation as needed.
-4. Submit a pull request back to master via GitHub using template, include screen shots for visual changes. 
+4. Submit a pull request back to the main branch via GitHub.
 
 
 ### Structure
 src/<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;assets/<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;[components/](src/components/README.md)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;[constants/](src/constants/README.md)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;[containers/](src/containers/README.md)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;routes/<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;[state/](src/state/README.md)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;[styles/](src/styles/README.md)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;util/<br/>
 ___
 
 
@@ -46,7 +49,7 @@ ___
 
 Differences in builds by environment:
 
-| Target | Sources Maps | Uglification | NODE_ENV === 'production' |
+| Target | Sources Maps | Uglification | `NODE_ENV === 'production'` |
 | ------ | ------------ | ------------ |  ------------------------- |
 | dev    | true         | false |  false                     |
 | staging| true         | false |  false                      |
@@ -55,40 +58,42 @@ ___
 
 
 ### Deployment
-Once built, Webpack outputs (e.g., index.html, JS and CSS files) are put into a tar archive, gzipped, and stored in
-Artifactory in the `maven-snapshot-local` repo. From there, deployments involve: a) pulling a particular artifact (referenced by git tag) out of Artifactory
-and b) copying the contents of the artifact to an S3 website bucket. For both staging and production deployments, these 
-steps are captured in this project's Jenkinsfile and can be executed by setting the proper parameters for the Jenkins build.
 
 #### Staging deployment
-Automatically builds from `master`
+Automatically builds from `main`
 
 #### Production deployment
-Note: The final two steps require the AWS CLI as well as permissions on AWS to copy to the production S3 bucket and to run a Cloudfront invalidation.
-See https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html for details on installing the AWS CLI.
+1. Make a new version: `npm version [patch/minor/major]`
+2. Push the new package.json version: `git push origin main`
+3. Push the new tag: `git push origin [NEW_TAG]`
+4. Go to the [releases page](https://github.com/allen-cell-animated/simularium-website/releases) and write the release notes for the new version. You can refer to the auto-generated [CHANGELOG.md][changelog] for a list of changes.
 
-From the Jenkins UI:
-1. Go to this project's `master` branch pipeline page: https://jenkins.corp.alleninstitute.org/job/docker-images/job/docker-cell-feature-explorer/
-2. Select "Build with Parameters" on the left-hand-side navigation menu.
-3. Under the "JOB_TYPE" dropdown, select "PROMOTE_ARTIFACT".
-4. Ignore the "DEPLOYMENT_TYPE" dropdown for now.
-5. In the "GIT_TAG" selectbox, select the tag of the artifact you want to deploy.
-6. Hit "Build".
-7. Once the artifact promotion job has finished, return to the "Build with Parameters" page.
-8. Under the "JOB_TYPE" dropdown, select "DEPLOY_ARTIFACT".
-9. Under the "DEPLOYMENT_TYPE" dropdown, select "production".
-10. In the "GIT_TAG" selectbox, select the tag of the artifact that you just promoted.
-11. Hit "Build".
-13. Run the script "bust-cloudfront-cache.sh" found in this repo's `scripts` directory. That will ensure Cloudfront is serving the newly deployed artifacts.
+[changelog]: CHANGELOG.md
 
-### Docker image configuration
-| Env var | Required | Default | Notes |
-| ------- |-------- |---------|---------|
-| `PORT` | - | 80 | Port on which the app will run **inside** the container. |
-___
+#### Suggested release notes template:
+
+    ### ✨ New Features
+    Just one new feature for this release, so describing it here.
+
+    * **Shiny new feature 1** - Description
+    * **Shiny new feature 2** - Description
+
+    ### 🐛 Bug Fixes and Improvements
+    Updated [simularium-viewer](https://github.com/allen-cell-animated/simularium-viewer) to from vx.x.x to vx.x.x, which includes:
+    * Something nice
+    * Something else nice
+
+    * Fixed a bug that causes x to do x
+    * Fixed xyz abc
+
+    ### 🔧 Behind the Scenes
+    Maintenance tasks that got done
+    
+    * Lots of maintenance tasks so here are some bullets
+    * Another task
 
 ## Questions or Thoughts?
 
-Talk to us on [one of our community forums][community].
+Feel free to submit a GitHub issue or talk to us on the [Allen Cell Discussion Form - Simularium][community].
 
-[community]: https://forum.allencell.org/
+[community]: https://forum.allencell.org/c/software-code/simularium/
