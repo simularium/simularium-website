@@ -5,6 +5,7 @@ import SimulariumViewer, {
     UIDisplayData,
     SelectionStateInfo,
     compareTimes,
+    ErrorLevel,
 } from "@aics/simularium-viewer";
 // import "@aics/simularium-viewer/style/style.css";
 import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/simularium";
@@ -378,10 +379,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     agentColors={AGENT_COLORS}
                     loadInitialData={false}
                     onError={(error) => {
-                        setStatus({
-                            status: VIEWER_ERROR,
-                            errorMessage: error,
-                        });
+                        if (error.level === ErrorLevel.ERROR) {
+                            setStatus({
+                                status: VIEWER_ERROR,
+                                errorMessage: error,
+                            });
+                        }
                     }}
                     onTrajectoryFileInfoChanged={
                         this.onTrajectoryFileInfoChanged
