@@ -100,7 +100,7 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
             [VIEWER_ERROR]: isNetworkedFile ? (
                 <NetworkFileFailedText />
             ) : (
-                <NoTypeMappingText />
+                checkboxTree
             ),
         };
 
