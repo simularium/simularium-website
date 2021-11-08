@@ -1,3 +1,5 @@
+import { ErrorLevel } from "@aics/simularium-viewer";
+
 import {
     VIEWER_LOADING,
     VIEWER_ERROR,
@@ -23,25 +25,20 @@ export interface ToggleAction {
 }
 
 export interface SetViewerStatusAction {
-    payload: ViewerStatusInfo;
+    payload: { status: ViewerStatus };
     type: string;
 }
 
-export interface ViewerStatusInfo {
-    htmlData?: string;
-    errorMessage?: string;
-    status: ViewerStatus;
-    onClose?: () => void;
+export interface SetErrorAction {
+    payload: ViewerError;
+    type: string;
 }
 
 export interface ViewerError {
-    htmlData?: string;
+    level: ErrorLevel;
     message: string;
-    onClose?: () => void;
-}
-
-export interface FrontEndError extends Error {
     htmlData?: string;
+    onClose?: () => void;
 }
 
 type VIEWER_LOADING = typeof VIEWER_LOADING;

@@ -4,6 +4,7 @@ const makeViewerConstant = (constant: string) =>
     makeConstant(BRANCH_NAME, constant);
 
 export const SET_STATUS = makeViewerConstant("set-status");
+export const SET_ERROR = makeViewerConstant("set-error");
 export const DRAG_FILE_OVER = makeViewerConstant("drag-file-over");
 export const RESET_DRAG_FILE_OVER = makeViewerConstant("reset-drag-file-over");
 export const SET_BUFFERING = makeViewerConstant("set-buffering");

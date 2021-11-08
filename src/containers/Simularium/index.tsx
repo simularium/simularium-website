@@ -27,7 +27,10 @@ import {
     RequestLocalFileAction,
     RequestNetworkFileAction,
 } from "../../state/trajectory/types";
-import { SetViewerStatusAction } from "../../state/viewer/types";
+import {
+    SetErrorAction,
+    SetViewerStatusAction,
+} from "../../state/viewer/types";
 import { SetSimulariumControllerAction } from "../../state/simularium/types";
 import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
 import {
@@ -61,6 +64,7 @@ interface AppProps {
     loadViaUrl: ActionCreator<LoadViaUrlAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
+    setError: ActionCreator<SetErrorAction>;
 }
 
 interface AppState {
@@ -195,6 +199,7 @@ class App extends React.Component<AppProps, AppState> {
             fileIsDraggedOverViewer,
             setViewerStatus,
             clearSimulariumFile,
+            setError,
         } = this.props;
         return (
             <Layout className={styles.container}>
@@ -208,6 +213,7 @@ class App extends React.Component<AppProps, AppState> {
                             resetDragOverViewer={resetDragOverViewer}
                             fileIsDraggedOver={fileIsDraggedOverViewer}
                             setViewerStatus={setViewerStatus}
+                            setError={setError}
                         />
                         <SideBar onCollapse={this.onPanelCollapse} type="left">
                             <ModelPanel />

@@ -7,7 +7,10 @@ import {
     ClearSimFileDataAction,
     LocalSimFile,
 } from "../../state/trajectory/types";
-import { ResetDragOverViewerAction } from "../../state/viewer/types";
+import {
+    ResetDragOverViewerAction,
+    SetErrorAction,
+} from "../../state/viewer/types";
 import { Loading, UploadFile } from "../Icons";
 import customRequest from "../LocalFileUpload/custom-request-upload";
 import { SetViewerStatusAction } from "../../state/viewer/types";
@@ -21,6 +24,7 @@ interface ViewerOverlayTargetProps {
     loadLocalFile: (localFile: LocalSimFile) => void;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
+    setError: ActionCreator<SetErrorAction>;
     isLoading: boolean;
     fileIsDraggedOver: boolean;
 }
@@ -45,6 +49,7 @@ const ViewerOverlayTarget = ({
     isLoading,
     fileIsDraggedOver,
     setViewerStatus,
+    setError,
 }: ViewerOverlayTargetProps): JSX.Element | null => {
     const [showTarget, setVisibility] = useState(false);
     const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
@@ -106,7 +111,8 @@ const ViewerOverlayTarget = ({
                     droppedFiles,
                     clearSimulariumFile,
                     loadLocalFile,
-                    setViewerStatus
+                    setViewerStatus,
+                    setError
                 )
             }
             multiple

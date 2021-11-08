@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 import { createLogic } from "redux-logic";
 import queryString from "query-string";
+import { ErrorLevel, FrontEndError } from "@aics/simularium-viewer";
 // NOTE: importing @aics/simularium-viewer here currently breaks ability to compile in testing setup
 // TODO: work on test babel setup, or switch to jest?
 
@@ -10,8 +11,8 @@ import {
     VIEWER_LOADING,
     VIEWER_EMPTY,
     VIEWER_ERROR,
+    SET_STATUS,
 } from "../viewer/constants";
-import { FrontEndError } from "../viewer/types";
 import {
     changeTime,
     resetAgentSelectionsAndHighlights,
@@ -19,7 +20,7 @@ import {
 import { setSimulariumController } from "../simularium/actions";
 import { getSimulariumController } from "../simularium/selectors";
 import { initialState as initialSelectionState } from "../selection/reducer";
-import { setStatus, setIsPlaying } from "../viewer/actions";
+import { setStatus, setIsPlaying, setError } from "../viewer/actions";
 import { ReduxLogicDeps } from "../types";
 import { batchActions } from "../util";
 
@@ -153,11 +154,13 @@ const loadNetworkedFile = createLogic({
                 );
             })
             .then(done)
-            .catch((error: Error) => {
+            .catch((error: FrontEndError) => {
+                dispatch(setStatus({ status: VIEWER_ERROR }));
                 dispatch(
-                    setStatus({
-                        status: VIEWER_ERROR,
-                        errorMessage: error.message,
+                    setError({
+                        level: error.level,
+                        message: error.message,
+                        htmlData: error.htmlData,
                     })
                 );
             });
@@ -218,10 +221,11 @@ const loadLocalFile = createLogic({
             })
             .then(done)
             .catch((error: FrontEndError) => {
+                dispatch(setStatus({ status: VIEWER_ERROR }));
                 dispatch(
-                    setStatus({
-                        status: VIEWER_ERROR,
-                        errorMessage: error.message,
+                    setError({
+                        level: error.level,
+                        message: error.message,
                         htmlData: error.htmlData || "",
                     })
                 );
@@ -281,10 +285,11 @@ const loadFileViaUrl = createLogic({
                     errorDetails +=
                         "<br/><br/>Try uploading your trajectory file from a Dropbox, Google Drive, or Amazon S3 link instead.";
                 }
+                dispatch(setStatus({ status: VIEWER_ERROR }));
                 dispatch(
-                    setStatus({
-                        status: VIEWER_ERROR,
-                        errorMessage: error.message,
+                    setError({
+                        level: ErrorLevel.ERROR,
+                        message: error.message,
                         htmlData: errorDetails,
                         onClose: () =>
                             history.replaceState(

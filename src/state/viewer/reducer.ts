@@ -5,7 +5,7 @@ import { makeReducer } from "../util";
 
 import {
     SET_STATUS,
-    VIEWER_ERROR,
+    SET_ERROR,
     VIEWER_EMPTY,
     DRAG_FILE_OVER,
     RESET_DRAG_FILE_OVER,
@@ -18,6 +18,7 @@ import {
     DragOverViewerAction,
     ResetDragOverViewerAction,
     ToggleAction,
+    SetErrorAction,
 } from "./types";
 
 export const initialState = {
@@ -35,14 +36,19 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: ViewerStateBranch, action: SetViewerStatusAction) => ({
             ...state,
             status: action.payload.status,
-            error:
-                action.payload.status === VIEWER_ERROR
-                    ? {
-                          message: action.payload.errorMessage,
-                          htmlData: action.payload.htmlData,
-                          onClose: action.payload.onClose,
-                      }
-                    : "",
+        }),
+    },
+    [SET_ERROR]: {
+        accepts: (action: AnyAction): action is SetErrorAction =>
+            action.type === SET_ERROR,
+        perform: (state: ViewerStateBranch, action: SetErrorAction) => ({
+            ...state,
+            error: {
+                level: action.payload.level,
+                message: action.payload.message,
+                htmlData: action.payload.htmlData,
+                onClose: action.payload.onClose,
+            },
         }),
     },
     [DRAG_FILE_OVER]: {

@@ -32,6 +32,7 @@ import {
     ToggleAction,
     SetViewerStatusAction,
     ViewerError,
+    SetErrorAction,
 } from "../../state/viewer/types";
 import {
     ReceiveAction,
@@ -82,6 +83,7 @@ interface ViewerPanelProps {
     setStatus: ActionCreator<SetViewerStatusAction>;
     error: ViewerError;
     setBuffering: ActionCreator<ToggleAction>;
+    setError: ActionCreator<SetErrorAction>;
 }
 
 interface ViewerPanelState {
@@ -166,6 +168,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
         if (error) {
             return errorNotification({
+                level: error.level,
                 message: error.message,
                 htmlData: error.htmlData,
                 onClose: error.onClose,
@@ -182,6 +185,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
         if (isNewError) {
             return errorNotification({
+                level: error.level,
                 message: error.message,
                 htmlData: error.htmlData,
                 onClose: error.onClose,
@@ -358,6 +362,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             isBuffering,
             isPlaying,
             status,
+            setError,
         } = this.props;
         return (
             <div
@@ -379,11 +384,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     loadInitialData={false}
                     onError={(error) => {
                         if (error.level === ErrorLevel.ERROR) {
-                            setStatus({
-                                status: VIEWER_ERROR,
-                                errorMessage: error,
-                            });
+                            setStatus({ status: VIEWER_ERROR });
                         }
+                        setError({
+                            level: error.level,
+                            message: error.message,
+                            htmlData: error.htmlData,
+                        });
                     }}
                     onTrajectoryFileInfoChanged={
                         this.onTrajectoryFileInfoChanged
@@ -457,6 +464,7 @@ const dispatchToPropsMap = {
     resetDragOverViewer: viewerStateBranch.actions.resetDragOverViewer,
     setBuffering: viewerStateBranch.actions.setBuffering,
     setIsPlaying: viewerStateBranch.actions.setIsPlaying,
+    setError: viewerStateBranch.actions.setError,
 };
 
 export default connect(
