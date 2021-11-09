@@ -134,7 +134,6 @@ class App extends React.Component<AppProps, AppState> {
             } else {
                 // if the url doesn't pass the regEx check, notify the user and then clear the url
                 // and save the controller
-                setViewerStatus({ status: VIEWER_ERROR });
                 setError({
                     level: ErrorLevel.ERROR,
                     message: `${userTrajectoryUrl} does not seem like a url`,
@@ -142,6 +141,7 @@ class App extends React.Component<AppProps, AppState> {
                         "make sure to include 'http/https' at the beginning of the url, and check for typos",
                     onClose: clearUrlParams,
                 });
+                setViewerStatus({ status: VIEWER_ERROR });
                 setSimulariumController(controller);
             }
         };

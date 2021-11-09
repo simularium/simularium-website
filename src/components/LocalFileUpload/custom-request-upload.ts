@@ -112,12 +112,12 @@ export default (
                 message =
                     "Please load a collection of single files that does not include a folder.";
             }
-            setViewerStatus({ status: VIEWER_ERROR });
             setError({
                 level: error.level,
                 message: message,
                 htmlData: error.htmlData,
             });
+            setViewerStatus({ status: VIEWER_ERROR });
             // TS thinks onError might be undefined
             if (onError) {
                 onError(error as UploadRequestError);

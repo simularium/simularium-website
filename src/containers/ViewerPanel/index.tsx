@@ -44,7 +44,7 @@ import PlaybackControls from "../../components/PlaybackControls";
 import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
 import { TUTORIAL_PATHNAME } from "../../routes";
-import errorNotification from "../../components/ErrorNotification";
+import ErrorNotification from "../../components/ErrorNotification";
 
 import {
     convertUIDataToSelectionData,
@@ -167,7 +167,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
 
         if (error) {
-            return errorNotification({
+            return ErrorNotification({
                 level: error.level,
                 message: error.message,
                 htmlData: error.htmlData,
@@ -177,14 +177,24 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public componentDidUpdate(prevProps: ViewerPanelProps) {
-        const { status, error } = this.props;
+        const { error } = this.props;
         const current = this.centerContent.current;
-        const isNewError: boolean =
-            status === VIEWER_ERROR &&
-            error.message !== prevProps.error.message;
+        const isNewError = () => {
+            if (prevProps.error === null && error !== null) {
+                return true;
+            }
+            if (
+                prevProps &&
+                error &&
+                error.message !== prevProps.error.message
+            ) {
+                return true;
+            }
+            return false;
+        };
 
-        if (isNewError) {
-            return errorNotification({
+        if (isNewError()) {
+            return ErrorNotification({
                 level: error.level,
                 message: error.message,
                 htmlData: error.htmlData,
@@ -383,14 +393,14 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     agentColors={AGENT_COLORS}
                     loadInitialData={false}
                     onError={(error) => {
-                        if (error.level === ErrorLevel.ERROR) {
-                            setStatus({ status: VIEWER_ERROR });
-                        }
                         setError({
                             level: error.level,
                             message: error.message,
                             htmlData: error.htmlData,
                         });
+                        if (error.level === ErrorLevel.ERROR) {
+                            setStatus({ status: VIEWER_ERROR });
+                        }
                     }}
                     onTrajectoryFileInfoChanged={
                         this.onTrajectoryFileInfoChanged

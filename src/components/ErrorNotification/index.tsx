@@ -1,14 +1,18 @@
 import * as React from "react";
 import { notification } from "antd";
+import { ErrorLevel } from "@aics/simularium-viewer";
+
 import { convertToSentenceCase } from "../../util";
 
 interface ErrorNotificationProps {
     message: string;
+    level: ErrorLevel;
     htmlData?: string;
     onClose?: () => void;
 }
 
-const errorNotification = ({
+const ErrorNotification = ({
+    level,
     message,
     htmlData,
     onClose,
@@ -19,7 +23,7 @@ const errorNotification = ({
         const error: Error = message;
         message = error.message;
     }
-    return notification.error({
+    return notification[level]({
         message: convertToSentenceCase(message),
         description:
             (
@@ -34,4 +38,4 @@ const errorNotification = ({
     });
 };
 
-export default errorNotification;
+export default ErrorNotification;
