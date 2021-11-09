@@ -3,7 +3,7 @@ import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 import { Layout } from "antd";
 import queryString from "query-string";
-import { SimulariumController } from "@aics/simularium-viewer";
+import { SimulariumController, ErrorLevel } from "@aics/simularium-viewer";
 import { find } from "lodash";
 
 import SideBar from "../../components/SideBar";
@@ -89,6 +89,7 @@ class App extends React.Component<AppProps, AppState> {
             simulariumController,
             loadViaUrl,
             setViewerStatus,
+            setError,
         } = this.props;
         const current = this.interactiveContent.current;
         const controller = simulariumController || new SimulariumController({});
@@ -133,9 +134,10 @@ class App extends React.Component<AppProps, AppState> {
             } else {
                 // if the url doesn't pass the regEx check, notify the user and then clear the url
                 // and save the controller
-                setViewerStatus({
-                    status: VIEWER_ERROR,
-                    errorMessage: `${userTrajectoryUrl} does not seem like a url`,
+                setViewerStatus({ status: VIEWER_ERROR });
+                setError({
+                    level: ErrorLevel.ERROR,
+                    message: `${userTrajectoryUrl} does not seem like a url`,
                     htmlData:
                         "make sure to include 'http/https' at the beginning of the url, and check for typos",
                     onClose: clearUrlParams,
@@ -263,6 +265,7 @@ const dispatchToPropsMap = {
     resetDragOverViewer: viewerStateBranch.actions.resetDragOverViewer,
     dragOverViewer: viewerStateBranch.actions.dragOverViewer,
     setViewerStatus: viewerStateBranch.actions.setStatus,
+    setError: viewerStateBranch.actions.setError,
 };
 
 export default connect(
