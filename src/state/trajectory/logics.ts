@@ -2,8 +2,6 @@ import { AxiosResponse } from "axios";
 import { createLogic } from "redux-logic";
 import queryString from "query-string";
 import { ErrorLevel, FrontEndError } from "@aics/simularium-viewer";
-// NOTE: importing @aics/simularium-viewer here currently breaks ability to compile in testing setup
-// TODO: work on test babel setup, or switch to jest?
 
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import { getUserTrajectoryUrl } from "../../util/userUrlHandling";
