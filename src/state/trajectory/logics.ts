@@ -11,7 +11,6 @@ import {
     VIEWER_LOADING,
     VIEWER_EMPTY,
     VIEWER_ERROR,
-    SET_STATUS,
 } from "../viewer/constants";
 import {
     changeTime,
