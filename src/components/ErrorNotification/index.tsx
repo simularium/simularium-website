@@ -23,6 +23,16 @@ const ErrorNotification = ({
         const error: Error = message;
         message = error.message;
     }
+
+    const getDuration = () => {
+        if (htmlData) return 0; // Do not close automatically
+
+        // 10 seconds for errors
+        // 3 seconds for warnings and info messages
+        if (level === ErrorLevel.ERROR) return 10;
+        return 3;
+    };
+
     return notification[level]({
         message: convertToSentenceCase(message),
         description:
@@ -33,7 +43,7 @@ const ErrorNotification = ({
                     }}
                 />
             ) || "",
-        duration: htmlData ? 0 : 10,
+        duration: getDuration(),
         onClose: onClose,
     });
 };
