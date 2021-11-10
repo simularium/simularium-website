@@ -115,7 +115,7 @@ export default (
             setError({
                 level: error.level,
                 message: message,
-                htmlData: error.htmlData,
+                htmlData: "",
             });
             setViewerStatus({ status: VIEWER_ERROR });
             // TS thinks onError might be undefined

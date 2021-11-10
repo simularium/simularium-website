@@ -16,18 +16,18 @@ import {
     SetErrorAction,
 } from "./types";
 
-export function setStatus(status: {
+export function setStatus(payload: {
     status: ViewerStatus;
 }): SetViewerStatusAction {
     return {
-        payload: status,
+        payload,
         type: SET_STATUS,
     };
 }
 
-export function setError(error: ViewerError): SetErrorAction {
+export function setError(payload: ViewerError): SetErrorAction {
     return {
-        payload: error,
+        payload,
         type: SET_ERROR,
     };
 }
