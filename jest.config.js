@@ -1,7 +1,8 @@
 module.exports = {
     preset: "ts-jest",
     transform: {
-        "^.+\\.(ts|tsx|js|jsx)$": ["esbuild-jest"],
+        "^.+\\.(ts|tsx)?$": "ts-jest",
+        "^.+\\.(js|jsx)$": "esbuild-jest",
     },
     testEnvironment: "jsdom",
     
