@@ -1,4 +1,5 @@
 import { AxiosResponse } from "axios";
+import { batch } from "react-redux";
 import { createLogic } from "redux-logic";
 import queryString from "query-string";
 import { ErrorLevel, FrontEndError } from "@aics/simularium-viewer";
@@ -66,11 +67,10 @@ const resetSimulariumFileState = createLogic({
             });
             actions.push(setViewerStatusAction);
         } else {
-            dispatch(
-                setStatus({
-                    status: VIEWER_LOADING,
-                })
-            );
+            const setViewerStatusAction = setStatus({
+                status: VIEWER_LOADING,
+            });
+            actions.push(setViewerStatusAction);
             // plot data is a separate request, clear it out to avoid
             // wrong plot data sticking around if the request fails
             clearTrajectory = receiveTrajectory({
@@ -110,14 +110,16 @@ const loadNetworkedFile = createLogic({
         const currentState = getState();
 
         const simulariumFile = action.payload;
-        dispatch(
-            setStatus({
-                status: VIEWER_LOADING,
-            })
-        );
-        dispatch({
-            payload: { newFile: true },
-            type: CLEAR_SIMULARIUM_FILE,
+        batch(() => {
+            dispatch(
+                setStatus({
+                    status: VIEWER_LOADING,
+                })
+            );
+            dispatch({
+                payload: { newFile: true },
+                type: CLEAR_SIMULARIUM_FILE,
+            });
         });
 
         let simulariumController = getSimulariumController(currentState);
@@ -152,14 +154,16 @@ const loadNetworkedFile = createLogic({
             })
             .then(done)
             .catch((error: FrontEndError) => {
-                dispatch(setStatus({ status: VIEWER_ERROR }));
-                dispatch(
-                    setError({
-                        level: error.level,
-                        message: error.message,
-                        htmlData: error.htmlData,
-                    })
-                );
+                batch(() => {
+                    dispatch(setStatus({ status: VIEWER_ERROR }));
+                    dispatch(
+                        setError({
+                            level: error.level,
+                            message: error.message,
+                            htmlData: error.htmlData,
+                        })
+                    );
+                });
             });
     },
     type: LOAD_NETWORKED_FILE_IN_VIEWER,
@@ -218,14 +222,16 @@ const loadLocalFile = createLogic({
             })
             .then(done)
             .catch((error: FrontEndError) => {
-                dispatch(setStatus({ status: VIEWER_ERROR }));
-                dispatch(
-                    setError({
-                        level: error.level,
-                        message: error.message,
-                        htmlData: error.htmlData || "",
-                    })
-                );
+                batch(() => {
+                    dispatch(setStatus({ status: VIEWER_ERROR }));
+                    dispatch(
+                        setError({
+                            level: error.level,
+                            message: error.message,
+                            htmlData: error.htmlData || "",
+                        })
+                    );
+                });
                 done();
             });
     },
@@ -282,20 +288,22 @@ const loadFileViaUrl = createLogic({
                     errorDetails +=
                         "<br/><br/>Try uploading your trajectory file from a Dropbox, Google Drive, or Amazon S3 link instead.";
                 }
-                dispatch(setStatus({ status: VIEWER_ERROR }));
-                dispatch(
-                    setError({
-                        level: ErrorLevel.ERROR,
-                        message: error.message,
-                        htmlData: errorDetails,
-                        onClose: () =>
-                            history.replaceState(
-                                {},
-                                "",
-                                `${location.origin}${location.pathname}`
-                            ),
-                    })
-                );
+                batch(() => {
+                    dispatch(setStatus({ status: VIEWER_ERROR }));
+                    dispatch(
+                        setError({
+                            level: ErrorLevel.ERROR,
+                            message: error.message,
+                            htmlData: errorDetails,
+                            onClose: () =>
+                                history.replaceState(
+                                    {},
+                                    "",
+                                    `${location.origin}${location.pathname}`
+                                ),
+                        })
+                    );
+                });
                 done();
             });
     },
