@@ -53,12 +53,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
             action.type === SET_ERROR,
         perform: (state: ViewerStateBranch, action: SetErrorAction) => ({
             ...state,
-            error: {
-                level: action.payload.level,
-                message: action.payload.message,
-                htmlData: action.payload.htmlData,
-                onClose: action.payload.onClose,
-            },
+            error: { ...action.payload },
         }),
     },
     [DRAG_FILE_OVER]: {

@@ -167,12 +167,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
 
         if (error) {
-            return ErrorNotification({
-                level: error.level,
-                message: error.message,
-                htmlData: error.htmlData,
-                onClose: error.onClose,
-            });
+            return ErrorNotification({ ...error });
         }
     }
 
@@ -194,12 +189,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         };
 
         if (isNewError()) {
-            return ErrorNotification({
-                level: error.level,
-                message: error.message,
-                htmlData: error.htmlData,
-                onClose: error.onClose,
-            });
+            return ErrorNotification({ ...error });
         }
         if (
             current &&
