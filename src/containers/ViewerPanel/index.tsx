@@ -180,7 +180,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const { error } = this.props;
         const current = this.centerContent.current;
         const isNewError = () => {
-            if (prevProps.error === null && error !== null) {
+            if (!prevProps.error && error) {
                 return true;
             }
             if (
