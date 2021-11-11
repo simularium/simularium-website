@@ -1,4 +1,4 @@
-import { SimulariumFileFormat, ErrorLevel } from "@aics/simularium-viewer";
+import { SimulariumFileFormat } from "@aics/simularium-viewer";
 import { findIndex } from "lodash";
 import {
     UploadRequestOption,
