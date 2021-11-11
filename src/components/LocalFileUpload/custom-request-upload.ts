@@ -113,7 +113,7 @@ export default (
                     "Please load a collection of single files that does not include a folder.";
             }
             setError({
-                level: error.level || ErrorLevel.ERROR,
+                level: error.level,
                 message: message,
                 htmlData: "",
             });

@@ -23,6 +23,9 @@ const ErrorNotification = ({
         const error: Error = message;
         message = error.message;
     }
+    if (level === undefined) {
+        level = ErrorLevel.ERROR;
+    }
 
     const getDuration = () => {
         if (htmlData) return 0; // Do not close automatically

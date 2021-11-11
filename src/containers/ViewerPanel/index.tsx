@@ -394,7 +394,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     loadInitialData={false}
                     onError={(error) => {
                         setError({
-                            level: error.level || ErrorLevel.ERROR,
+                            level: error.level,
                             message: error.message,
                             htmlData: error.htmlData,
                         });
