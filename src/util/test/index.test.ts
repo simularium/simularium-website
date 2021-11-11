@@ -1,5 +1,8 @@
+import * as React from "react";
+
 import { USER_TRAJ_REDIRECTS } from "../../constants";
 import {
+    bindAll,
     convertToSentenceCase,
     roundTimeForDisplay,
     clearUrlParams,
@@ -16,6 +19,52 @@ import {
 
 process.env.GOOGLE_API_KEY = "key";
 describe("General utilities", () => {
+    describe("bindAll", () => {
+        it("binds class methods to a class", () => {
+            class Foo extends React.Component {
+                private message = "Hello from Foo";
+
+                constructor(props: any) {
+                    super(props);
+                    bindAll(this, [this.bar]);
+                }
+
+                public bar() {
+                    return this.message;
+                }
+            }
+
+            const foo = new Foo({});
+            const bar = foo.bar;
+            expect(foo.bar()).toBe(bar());
+        });
+
+        it("does not bind a method that it was not asked to bind", () => {
+            class Foo extends React.Component {
+                private message = "Hello from Foo";
+
+                constructor(props: {}) {
+                    super(props);
+                    bindAll(this, [this.bar]);
+                }
+
+                public bar() {
+                    return this.message;
+                }
+
+                public baz() {
+                    return this.message;
+                }
+            }
+
+            const foo = new Foo({});
+            const baz = foo.baz;
+
+            expect(foo.baz()).toBe("Hello from Foo");
+            expect(baz).toThrowError(TypeError);
+        });
+    });
+
     describe("toSentenceCase", () => {
         it("returns an empty string as is", () => {
             const startingString = "";
