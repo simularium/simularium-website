@@ -1,4 +1,4 @@
-import { SimulariumFileFormat } from "@aics/simularium-viewer";
+import { SimulariumFileFormat, ErrorLevel } from "@aics/simularium-viewer";
 import { findIndex } from "lodash";
 import {
     UploadRequestOption,
@@ -113,7 +113,7 @@ export default (
                     "Please load a collection of single files that does not include a folder.";
             }
             setError({
-                level: error.level,
+                level: error.level || ErrorLevel.ERROR,
                 message: message,
                 htmlData: "",
             });

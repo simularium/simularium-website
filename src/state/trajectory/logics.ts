@@ -158,7 +158,7 @@ const loadNetworkedFile = createLogic({
                     dispatch(setStatus({ status: VIEWER_ERROR }));
                     dispatch(
                         setError({
-                            level: error.level,
+                            level: error.level || ErrorLevel.ERROR,
                             message: error.message,
                             htmlData: error.htmlData,
                         })
@@ -226,7 +226,7 @@ const loadLocalFile = createLogic({
                     dispatch(setStatus({ status: VIEWER_ERROR }));
                     dispatch(
                         setError({
-                            level: error.level,
+                            level: error.level || ErrorLevel.ERROR,
                             message: error.message,
                             htmlData: error.htmlData || "",
                         })
