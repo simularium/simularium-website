@@ -11,6 +11,7 @@ import {
     RESET_DRAG_FILE_OVER,
     SET_BUFFERING,
     SET_IS_PLAYING,
+    VIEWER_ERROR,
 } from "./constants";
 import {
     ViewerStateBranch,
@@ -33,10 +34,19 @@ const actionToConfigMap: TypeToDescriptionMap = {
     [SET_STATUS]: {
         accepts: (action: AnyAction): action is SetViewerStatusAction =>
             action.type === SET_STATUS,
-        perform: (state: ViewerStateBranch, action: SetViewerStatusAction) => ({
-            ...state,
-            status: action.payload.status,
-        }),
+        perform: (state: ViewerStateBranch, action: SetViewerStatusAction) => {
+            if (action.payload.status !== VIEWER_ERROR) {
+                return {
+                    ...state,
+                    status: action.payload.status,
+                    error: "", // Clear out error
+                };
+            }
+            return {
+                ...state,
+                status: action.payload.status,
+            };
+        },
     },
     [SET_ERROR]: {
         accepts: (action: AnyAction): action is SetErrorAction =>
