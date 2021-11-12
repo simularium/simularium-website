@@ -7,6 +7,7 @@ import SimulariumViewer, {
     compareTimes,
     ErrorLevel,
 } from "@aics/simularium-viewer";
+import "@aics/simularium-viewer/style/style.css";
 import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/simularium";
 import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
 import { connect } from "react-redux";
