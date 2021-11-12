@@ -39,7 +39,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
                 return {
                     ...state,
                     status: action.payload.status,
-                    error: "", // Clear out error
+                    error: initialState.error, // Clear out error
                 };
             }
             return {
