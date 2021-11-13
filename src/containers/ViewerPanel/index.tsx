@@ -127,7 +127,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public componentDidMount() {
-        const { error } = this.props;
         const browser = Bowser.getParser(window.navigator.userAgent);
         // Versions from https://caniuse.com/webgl2
         const isBrowserSupported = browser.satisfies({
