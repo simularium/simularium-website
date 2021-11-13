@@ -43,6 +43,7 @@ import NoTrajectoriesText from "../../components/NoTrajectoriesText";
 import { RequestNetworkFileAction } from "../../state/trajectory/types";
 import { ViewerStatus } from "../../state/viewer/types";
 import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFileFailedText";
+import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
 
 const styles = require("./style.css");
 
@@ -99,7 +100,7 @@ class ModelPanel extends React.Component<ModelPanelProps, {}> {
             [VIEWER_ERROR]: isNetworkedFile ? (
                 <NetworkFileFailedText />
             ) : (
-                checkboxTree
+                <NoTypeMappingText />
             ),
         };
 

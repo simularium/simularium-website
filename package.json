@@ -51,6 +51,8 @@
         "css-loader": "2.1.0",
         "dotenv": "^10.0.0",
         "enzyme": "3.9.0",
+        "esbuild": "^0.13.12",
+        "esbuild-jest": "^0.5.0",
         "eslint": "5.14.1",
         "eslint-config-prettier": "4.0.0",
         "eslint-plugin-react": "7.12.4",
@@ -106,7 +108,7 @@
         "react-router-dom": "^5.2.0",
         "react-waypoint": "^9.0.3",
         "redux": "4.0.1",
-        "redux-logic": "^2.1.1",
+        "redux-logic": "^3.0.3",
         "reselect": "4.0.0",
         "url-loader": "^4.1.0"
     }

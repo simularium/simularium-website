@@ -51,7 +51,6 @@ const CameraControls = ({
         }, "");
     };
 
-
     useHotkeys(
         "*",
         (event) => {

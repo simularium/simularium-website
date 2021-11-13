@@ -15,7 +15,10 @@ import { VIEWER_PATHNAME } from "../../routes";
 import LocalFileUpload from "../LocalFileUpload";
 import UrlUpload from "../UrlUpload";
 import { DownArrow } from "../Icons";
-import { SetViewerStatusAction } from "../../state/viewer/types";
+import {
+    SetErrorAction,
+    SetViewerStatusAction,
+} from "../../state/viewer/types";
 
 const styles = require("./style.css");
 
@@ -25,6 +28,7 @@ interface LoadFileMenuProps {
     clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
+    setError: ActionCreator<SetErrorAction>;
 }
 
 const LoadFileMenu = ({
@@ -33,6 +37,7 @@ const LoadFileMenu = ({
     loadLocalFile,
     selectFile,
     setViewerStatus,
+    setError,
 }: LoadFileMenuProps) => {
     const location = useLocation();
     const onClick = (trajectoryData: TrajectoryDisplayData) => {
@@ -76,6 +81,7 @@ const LoadFileMenu = ({
                     clearSimulariumFile={clearSimulariumFile}
                     loadLocalFile={loadLocalFile}
                     setViewerStatus={setViewerStatus}
+                    setError={setError}
                 />
             </Menu.Item>
         </Menu>

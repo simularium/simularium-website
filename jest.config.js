@@ -2,7 +2,7 @@ module.exports = {
     preset: "ts-jest",
     transform: {
         "^.+\\.(ts|tsx)?$": "ts-jest",
-        "^.+\\.(js|jsx)$": "babel-jest",
+        "^.+\\.(js|jsx)$": "esbuild-jest",
     },
     testEnvironment: "jsdom",
     
@@ -34,5 +34,6 @@ module.exports = {
             "lines": 100,
             "statements": 100
         }
-    }
+    },
+    transformIgnorePatterns: ["<rootDir>/node_modules/three/examples/(?!jsm/)"],
 };

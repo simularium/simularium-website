@@ -4,19 +4,31 @@ import {
     RESET_DRAG_FILE_OVER,
     SET_BUFFERING,
     SET_IS_PLAYING,
+    SET_ERROR,
 } from "./constants";
 import {
-    ViewerStatusInfo,
+    ViewerStatus,
     SetViewerStatusAction,
     DragOverViewerAction,
     ResetDragOverViewerAction,
     ToggleAction,
+    ViewerError,
+    SetErrorAction,
 } from "./types";
 
-export function setStatus(payload: ViewerStatusInfo): SetViewerStatusAction {
+export function setStatus(payload: {
+    status: ViewerStatus;
+}): SetViewerStatusAction {
     return {
         payload,
         type: SET_STATUS,
+    };
+}
+
+export function setError(payload: ViewerError): SetErrorAction {
+    return {
+        payload,
+        type: SET_ERROR,
     };
 }
 

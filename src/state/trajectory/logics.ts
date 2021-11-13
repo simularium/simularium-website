@@ -1,8 +1,8 @@
 import { AxiosResponse } from "axios";
+import { batch } from "react-redux";
 import { createLogic } from "redux-logic";
 import queryString from "query-string";
-// NOTE: importing @aics/simularium-viewer here currently breaks ability to compile in testing setup
-// TODO: work on test babel setup, or switch to jest?
+import { ErrorLevel, FrontEndError } from "@aics/simularium-viewer";
 
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import { getUserTrajectoryUrl } from "../../util/userUrlHandling";
@@ -11,7 +11,6 @@ import {
     VIEWER_EMPTY,
     VIEWER_ERROR,
 } from "../viewer/constants";
-import { FrontEndError } from "../viewer/types";
 import {
     changeTime,
     resetAgentSelectionsAndHighlights,
@@ -19,7 +18,7 @@ import {
 import { setSimulariumController } from "../simularium/actions";
 import { getSimulariumController } from "../simularium/selectors";
 import { initialState as initialSelectionState } from "../selection/reducer";
-import { setStatus, setIsPlaying } from "../viewer/actions";
+import { setStatus, setIsPlaying, setError } from "../viewer/actions";
 import { ReduxLogicDeps } from "../types";
 import { batchActions } from "../util";
 
@@ -68,11 +67,10 @@ const resetSimulariumFileState = createLogic({
             });
             actions.push(setViewerStatusAction);
         } else {
-            dispatch(
-                setStatus({
-                    status: VIEWER_LOADING,
-                })
-            );
+            const setViewerStatusAction = setStatus({
+                status: VIEWER_LOADING,
+            });
+            actions.push(setViewerStatusAction);
             // plot data is a separate request, clear it out to avoid
             // wrong plot data sticking around if the request fails
             clearTrajectory = receiveTrajectory({
@@ -112,14 +110,16 @@ const loadNetworkedFile = createLogic({
         const currentState = getState();
 
         const simulariumFile = action.payload;
-        dispatch(
-            setStatus({
-                status: VIEWER_LOADING,
-            })
-        );
-        dispatch({
-            payload: { newFile: true },
-            type: CLEAR_SIMULARIUM_FILE,
+        batch(() => {
+            dispatch(
+                setStatus({
+                    status: VIEWER_LOADING,
+                })
+            );
+            dispatch({
+                payload: { newFile: true },
+                type: CLEAR_SIMULARIUM_FILE,
+            });
         });
 
         let simulariumController = getSimulariumController(currentState);
@@ -153,13 +153,17 @@ const loadNetworkedFile = createLogic({
                 );
             })
             .then(done)
-            .catch((error: Error) => {
-                dispatch(
-                    setStatus({
-                        status: VIEWER_ERROR,
-                        errorMessage: error.message,
-                    })
-                );
+            .catch((error: FrontEndError) => {
+                batch(() => {
+                    dispatch(setStatus({ status: VIEWER_ERROR }));
+                    dispatch(
+                        setError({
+                            level: error.level,
+                            message: error.message,
+                            htmlData: error.htmlData,
+                        })
+                    );
+                });
             });
     },
     type: LOAD_NETWORKED_FILE_IN_VIEWER,
@@ -218,13 +222,16 @@ const loadLocalFile = createLogic({
             })
             .then(done)
             .catch((error: FrontEndError) => {
-                dispatch(
-                    setStatus({
-                        status: VIEWER_ERROR,
-                        errorMessage: error.message,
-                        htmlData: error.htmlData || "",
-                    })
-                );
+                batch(() => {
+                    dispatch(setStatus({ status: VIEWER_ERROR }));
+                    dispatch(
+                        setError({
+                            level: error.level,
+                            message: error.message,
+                            htmlData: error.htmlData || "",
+                        })
+                    );
+                });
                 done();
             });
     },
@@ -281,19 +288,22 @@ const loadFileViaUrl = createLogic({
                     errorDetails +=
                         "<br/><br/>Try uploading your trajectory file from a Dropbox, Google Drive, or Amazon S3 link instead.";
                 }
-                dispatch(
-                    setStatus({
-                        status: VIEWER_ERROR,
-                        errorMessage: error.message,
-                        htmlData: errorDetails,
-                        onClose: () =>
-                            history.replaceState(
-                                {},
-                                "",
-                                `${location.origin}${location.pathname}`
-                            ),
-                    })
-                );
+                batch(() => {
+                    dispatch(setStatus({ status: VIEWER_ERROR }));
+                    dispatch(
+                        setError({
+                            level: ErrorLevel.ERROR,
+                            message: error.message,
+                            htmlData: errorDetails,
+                            onClose: () =>
+                                history.replaceState(
+                                    {},
+                                    "",
+                                    `${location.origin}${location.pathname}`
+                                ),
+                        })
+                    );
+                });
                 done();
             });
     },

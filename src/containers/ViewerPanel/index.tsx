@@ -5,6 +5,7 @@ import SimulariumViewer, {
     UIDisplayData,
     SelectionStateInfo,
     compareTimes,
+    ErrorLevel,
 } from "@aics/simularium-viewer";
 import "@aics/simularium-viewer/style/style.css";
 import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/simularium";
@@ -32,6 +33,7 @@ import {
     ToggleAction,
     SetViewerStatusAction,
     ViewerError,
+    SetErrorAction,
 } from "../../state/viewer/types";
 import {
     ReceiveAction,
@@ -43,7 +45,7 @@ import PlaybackControls from "../../components/PlaybackControls";
 import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
 import { TUTORIAL_PATHNAME } from "../../routes";
-import errorNotification from "../../components/ErrorNotification";
+import ErrorNotification from "../../components/ErrorNotification";
 
 import {
     convertUIDataToSelectionData,
@@ -82,6 +84,7 @@ interface ViewerPanelProps {
     setStatus: ActionCreator<SetViewerStatusAction>;
     error: ViewerError;
     setBuffering: ActionCreator<ToggleAction>;
+    setError: ActionCreator<SetErrorAction>;
 }
 
 interface ViewerPanelState {
@@ -165,27 +168,29 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
 
         if (error) {
-            return errorNotification({
-                message: error.message,
-                htmlData: error.htmlData,
-                onClose: error.onClose,
-            });
+            return ErrorNotification({ ...error });
         }
     }
 
     public componentDidUpdate(prevProps: ViewerPanelProps) {
-        const { status, error } = this.props;
+        const { error } = this.props;
         const current = this.centerContent.current;
-        const isNewError: boolean =
-            status === VIEWER_ERROR &&
-            error.message !== prevProps.error.message;
+        const isNewError = () => {
+            if (!prevProps.error && error) {
+                return true;
+            }
+            if (
+                prevProps &&
+                error &&
+                error.message !== prevProps.error.message
+            ) {
+                return true;
+            }
+            return false;
+        };
 
-        if (isNewError) {
-            return errorNotification({
-                message: error.message,
-                htmlData: error.htmlData,
-                onClose: error.onClose,
-            });
+        if (isNewError()) {
+            return ErrorNotification({ ...error });
         }
         if (
             current &&
@@ -358,6 +363,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             isBuffering,
             isPlaying,
             status,
+            setError,
         } = this.props;
         return (
             <div
@@ -378,10 +384,14 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     agentColors={AGENT_COLORS}
                     loadInitialData={false}
                     onError={(error) => {
-                        setStatus({
-                            status: VIEWER_ERROR,
-                            errorMessage: error,
+                        setError({
+                            level: error.level,
+                            message: error.message,
+                            htmlData: error.htmlData,
                         });
+                        if (error.level === ErrorLevel.ERROR) {
+                            setStatus({ status: VIEWER_ERROR });
+                        }
                     }}
                     onTrajectoryFileInfoChanged={
                         this.onTrajectoryFileInfoChanged
@@ -455,6 +465,7 @@ const dispatchToPropsMap = {
     resetDragOverViewer: viewerStateBranch.actions.resetDragOverViewer,
     setBuffering: viewerStateBranch.actions.setBuffering,
     setIsPlaying: viewerStateBranch.actions.setIsPlaying,
+    setError: viewerStateBranch.actions.setError,
 };
 
 export default connect(

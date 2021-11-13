@@ -7,7 +7,7 @@ import {
 
 import { LocalSimFile } from "../../state/trajectory/types";
 import { VIEWER_ERROR } from "../../state/viewer/constants";
-import { ViewerStatusInfo } from "../../state/viewer/types";
+import { ViewerError, ViewerStatus } from "../../state/viewer/types";
 
 // Typescript's File definition is missing this function
 //  which is part of the HTML standard on all browsers
@@ -35,7 +35,8 @@ export default (
     selectedFiles: File[],
     clearSimulariumFile: (isNewFile: { newFile: boolean }) => void,
     loadFunction: (simulariumFile: LocalSimFile) => void,
-    setViewerStatus: (status: ViewerStatusInfo) => void
+    setViewerStatus: (status: { status: ViewerStatus }) => void,
+    setError: (error: ViewerError) => void
 ) => {
     numCustomRequests++;
     if (numCustomRequests !== 1) {
@@ -111,12 +112,12 @@ export default (
                 message =
                     "Please load a collection of single files that does not include a folder.";
             }
-            setViewerStatus({
-                status: VIEWER_ERROR,
-                errorMessage: message,
+            setError({
+                level: error.level,
+                message: message,
                 htmlData: "",
             });
-
+            setViewerStatus({ status: VIEWER_ERROR });
             // TS thinks onError might be undefined
             if (onError) {
                 onError(error as UploadRequestError);

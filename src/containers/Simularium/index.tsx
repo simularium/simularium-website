@@ -3,7 +3,7 @@ import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 import { Layout } from "antd";
 import queryString from "query-string";
-import { SimulariumController } from "@aics/simularium-viewer";
+import { SimulariumController, ErrorLevel } from "@aics/simularium-viewer";
 import { find } from "lodash";
 
 import SideBar from "../../components/SideBar";
@@ -27,7 +27,10 @@ import {
     RequestLocalFileAction,
     RequestNetworkFileAction,
 } from "../../state/trajectory/types";
-import { SetViewerStatusAction } from "../../state/viewer/types";
+import {
+    SetErrorAction,
+    SetViewerStatusAction,
+} from "../../state/viewer/types";
 import { SetSimulariumControllerAction } from "../../state/simularium/types";
 import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
 import {
@@ -61,6 +64,7 @@ interface AppProps {
     loadViaUrl: ActionCreator<LoadViaUrlAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
+    setError: ActionCreator<SetErrorAction>;
 }
 
 interface AppState {
@@ -85,6 +89,7 @@ class App extends React.Component<AppProps, AppState> {
             simulariumController,
             loadViaUrl,
             setViewerStatus,
+            setError,
         } = this.props;
         const current = this.interactiveContent.current;
         const controller = simulariumController || new SimulariumController({});
@@ -129,13 +134,14 @@ class App extends React.Component<AppProps, AppState> {
             } else {
                 // if the url doesn't pass the regEx check, notify the user and then clear the url
                 // and save the controller
-                setViewerStatus({
-                    status: VIEWER_ERROR,
-                    errorMessage: `${userTrajectoryUrl} does not seem like a url`,
+                setError({
+                    level: ErrorLevel.ERROR,
+                    message: `${userTrajectoryUrl} does not seem like a url`,
                     htmlData:
                         "make sure to include 'http/https' at the beginning of the url, and check for typos",
                     onClose: clearUrlParams,
                 });
+                setViewerStatus({ status: VIEWER_ERROR });
                 setSimulariumController(controller);
             }
         };
@@ -195,6 +201,7 @@ class App extends React.Component<AppProps, AppState> {
             fileIsDraggedOverViewer,
             setViewerStatus,
             clearSimulariumFile,
+            setError,
         } = this.props;
         return (
             <Layout className={styles.container}>
@@ -208,6 +215,7 @@ class App extends React.Component<AppProps, AppState> {
                             resetDragOverViewer={resetDragOverViewer}
                             fileIsDraggedOver={fileIsDraggedOverViewer}
                             setViewerStatus={setViewerStatus}
+                            setError={setError}
                         />
                         <SideBar onCollapse={this.onPanelCollapse} type="left">
                             <ModelPanel />
@@ -257,6 +265,7 @@ const dispatchToPropsMap = {
     resetDragOverViewer: viewerStateBranch.actions.resetDragOverViewer,
     dragOverViewer: viewerStateBranch.actions.dragOverViewer,
     setViewerStatus: viewerStateBranch.actions.setStatus,
+    setError: viewerStateBranch.actions.setError,
 };
 
 export default connect(

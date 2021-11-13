@@ -5,12 +5,13 @@ import { makeReducer } from "../util";
 
 import {
     SET_STATUS,
-    VIEWER_ERROR,
+    SET_ERROR,
     VIEWER_EMPTY,
     DRAG_FILE_OVER,
     RESET_DRAG_FILE_OVER,
     SET_BUFFERING,
     SET_IS_PLAYING,
+    VIEWER_ERROR,
 } from "./constants";
 import {
     ViewerStateBranch,
@@ -18,6 +19,7 @@ import {
     DragOverViewerAction,
     ResetDragOverViewerAction,
     ToggleAction,
+    SetErrorAction,
 } from "./types";
 
 export const initialState = {
@@ -32,17 +34,26 @@ const actionToConfigMap: TypeToDescriptionMap = {
     [SET_STATUS]: {
         accepts: (action: AnyAction): action is SetViewerStatusAction =>
             action.type === SET_STATUS,
-        perform: (state: ViewerStateBranch, action: SetViewerStatusAction) => ({
+        perform: (state: ViewerStateBranch, action: SetViewerStatusAction) => {
+            if (action.payload.status !== VIEWER_ERROR) {
+                return {
+                    ...state,
+                    status: action.payload.status,
+                    error: initialState.error, // Clear out error
+                };
+            }
+            return {
+                ...state,
+                status: action.payload.status,
+            };
+        },
+    },
+    [SET_ERROR]: {
+        accepts: (action: AnyAction): action is SetErrorAction =>
+            action.type === SET_ERROR,
+        perform: (state: ViewerStateBranch, action: SetErrorAction) => ({
             ...state,
-            status: action.payload.status,
-            error:
-                action.payload.status === VIEWER_ERROR
-                    ? {
-                          message: action.payload.errorMessage,
-                          htmlData: action.payload.htmlData,
-                          onClose: action.payload.onClose,
-                      }
-                    : "",
+            error: { ...action.payload },
         }),
     },
     [DRAG_FILE_OVER]: {

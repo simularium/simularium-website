@@ -8,7 +8,10 @@ import {
     ClearSimFileDataAction,
     RequestLocalFileAction,
 } from "../../state/trajectory/types";
-import { SetViewerStatusAction } from "../../state/viewer/types";
+import {
+    SetErrorAction,
+    SetViewerStatusAction,
+} from "../../state/viewer/types";
 import { VIEWER_PATHNAME } from "../../routes";
 import customRequest from "./custom-request-upload";
 
@@ -16,6 +19,7 @@ interface FileUploadProps {
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
+    setError: ActionCreator<SetErrorAction>;
 }
 
 /*
@@ -33,6 +37,7 @@ const LocalFileUpload = ({
     loadLocalFile,
     setViewerStatus,
     clearSimulariumFile,
+    setError,
 }: FileUploadProps) => {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
@@ -62,7 +67,8 @@ const LocalFileUpload = ({
                     selectedFiles,
                     clearSimulariumFile,
                     loadLocalFile,
-                    setViewerStatus
+                    setViewerStatus,
+                    setError
                 )
             }
             multiple
