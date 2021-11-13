@@ -166,10 +166,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 this.resize(current);
             }, 200);
         }
-
-        if (error) {
-            return ErrorNotification({ ...error });
-        }
     }
 
     public componentDidUpdate(prevProps: ViewerPanelProps) {
