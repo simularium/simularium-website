@@ -127,7 +127,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public componentDidMount() {
-        const { error } = this.props;
         const browser = Bowser.getParser(window.navigator.userAgent);
         // Versions from https://caniuse.com/webgl2
         const isBrowserSupported = browser.satisfies({
@@ -165,10 +164,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 // wait for panel animation to finish.
                 this.resize(current);
             }, 200);
-        }
-
-        if (error) {
-            return ErrorNotification({ ...error });
         }
     }
 
