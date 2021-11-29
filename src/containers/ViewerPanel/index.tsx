@@ -70,6 +70,7 @@ interface ViewerPanelProps {
     status: string;
     numFrames: number;
     isBuffering: boolean;
+    scaleBarLabel: string;
     simulariumController: SimulariumController;
     changeTime: ActionCreator<ChangeTimeAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
@@ -92,7 +93,6 @@ interface ViewerPanelState {
     particleTypeIds: string[];
     height: number;
     width: number;
-    scaleBarLabel: string;
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -116,7 +116,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             particleTypeIds: [],
             height: 0,
             width: 0,
-            scaleBarLabel: "",
         };
     }
 
@@ -253,10 +252,10 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             numFrames: data.totalSteps,
             timeStep: data.timeStepSize,
             timeUnits: data.timeUnits,
+            scaleBarLabel: scaleBarLabelNumber + " " + scaleBarLabelUnit,
         });
 
         this.setState({
-            scaleBarLabel: scaleBarLabelNumber + " " + scaleBarLabelUnit,
             isInitialPlay: true,
         });
     }
@@ -359,6 +358,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             isPlaying,
             status,
             setError,
+            scaleBarLabel,
         } = this.props;
         return (
             <div
@@ -408,7 +408,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     loading={isBuffering}
                     isEmpty={status === VIEWER_EMPTY}
                 />
-                <ScaleBar label={this.state.scaleBarLabel} />
+                <ScaleBar label={scaleBarLabel} />
                 <CameraControls
                     resetCamera={simulariumController.resetCamera}
                     zoomIn={simulariumController.zoomIn}
@@ -437,6 +437,7 @@ function mapStateToProps(state: State) {
         timeStep: trajectoryStateBranch.selectors.getTimeStep(state),
         displayTimes: getDisplayTimes(state),
         timeUnits: trajectoryStateBranch.selectors.getTimeUnits(state),
+        scaleBarLabel: trajectoryStateBranch.selectors.getScaleBarLabel(state),
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
         status: viewerStateBranch.selectors.getStatus(state),
         error: viewerStateBranch.selectors.getError(state),

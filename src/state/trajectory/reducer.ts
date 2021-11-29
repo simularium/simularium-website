@@ -21,6 +21,7 @@ export const initialState = {
     lastFrameTime: 0,
     timeStep: 0,
     timeUnits: null,
+    scaleBarLabel: "",
     agentIds: [],
     agentUiNames: [],
     plotData: [],
