@@ -39,11 +39,6 @@ export default (
     setViewerStatus: (status: { status: ViewerStatus }) => void,
     setError: (error: ViewerError) => void
 ) => {
-    // want the loading indicator to show without any lag time
-    // as soon as user hits "Open" button or drops files,
-    // and not have to have this action called multiple places in the code.
-    clearSimulariumFile({ newFile: true });
-
     numCustomRequests++;
     if (numCustomRequests !== 1) {
         // If the user loads multiple files at once (.simularium file + geometry file(s)),
@@ -61,6 +56,11 @@ export default (
         // numCustomRequests and selectedFiles.length are both 1, so reset
         numCustomRequests = 0;
     }
+
+    // want the loading indicator to show without any lag time
+    // as soon as user hits "Open" button or drops files,
+    // and not have to have this action called multiple places in the code.
+    clearSimulariumFile({ newFile: true });
 
     const files: FileHTML[] = Array.from(selectedFiles) as FileHTML[];
 
