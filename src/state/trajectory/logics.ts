@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { batch } from "react-redux";
+import { batch, useDispatch } from "react-redux";
 import { createLogic } from "redux-logic";
 import queryString from "query-string";
 import { ErrorLevel, FrontEndError } from "@aics/simularium-viewer";
@@ -106,6 +106,28 @@ const requestPlotDataLogic = createLogic({
     type: REQUEST_PLOT_DATA,
 });
 
+const handleFileLoadError = (error: FrontEndError) => {
+    const dispatch = useDispatch();
+
+    batch(() => {
+        dispatch(
+            setError({
+                level: error.level,
+                message: error.message,
+                htmlData: error.htmlData || "",
+            })
+        );
+        if (error.level === ErrorLevel.ERROR) {
+            dispatch(setStatus({ status: VIEWER_ERROR }));
+            dispatch(clearSimulariumFile({ newFile: false }));
+        }
+    });
+
+    if (error.level === ErrorLevel.ERROR) {
+        clearUrlParams();
+    }
+};
+
 const loadNetworkedFile = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
@@ -156,16 +178,8 @@ const loadNetworkedFile = createLogic({
             })
             .then(done)
             .catch((error: FrontEndError) => {
-                batch(() => {
-                    dispatch(setStatus({ status: VIEWER_ERROR }));
-                    dispatch(
-                        setError({
-                            level: error.level,
-                            message: error.message,
-                            htmlData: error.htmlData,
-                        })
-                    );
-                });
+                handleFileLoadError(error);
+                done();
             });
     },
     type: LOAD_NETWORKED_FILE_IN_VIEWER,
@@ -224,16 +238,7 @@ const loadLocalFile = createLogic({
             })
             .then(done)
             .catch((error: FrontEndError) => {
-                batch(() => {
-                    dispatch(setStatus({ status: VIEWER_ERROR }));
-                    dispatch(
-                        setError({
-                            level: error.level,
-                            message: error.message,
-                            htmlData: error.htmlData || "",
-                        })
-                    );
-                });
+                handleFileLoadError(error);
                 done();
             });
     },
