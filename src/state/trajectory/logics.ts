@@ -5,6 +5,7 @@ import queryString from "query-string";
 import { ErrorLevel, FrontEndError } from "@aics/simularium-viewer";
 
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
+import { clearUrlParams } from "../../util";
 import { getUserTrajectoryUrl } from "../../util/userUrlHandling";
 import {
     VIEWER_LOADING,
@@ -28,6 +29,7 @@ import {
     receiveTrajectory,
     receiveSimulariumFile,
     requestCachedPlotData,
+    clearSimulariumFile,
 } from "./actions";
 import {
     LOAD_LOCAL_FILE_IN_VIEWER,
@@ -303,7 +305,9 @@ const loadFileViaUrl = createLogic({
                                 ),
                         })
                     );
+                    dispatch(clearSimulariumFile({ newFile: false }));
                 });
+                clearUrlParams();
                 done();
             });
     },
