@@ -141,7 +141,6 @@ class App extends React.Component<AppProps, AppState> {
                         "make sure to include 'http/https' at the beginning of the url, and check for typos",
                     onClose: clearUrlParams,
                 });
-                setViewerStatus({ status: VIEWER_ERROR });
                 setSimulariumController(controller);
             }
         };
