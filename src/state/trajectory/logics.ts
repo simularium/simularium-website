@@ -296,6 +296,7 @@ const loadFileViaUrl = createLogic({
                         "<br/><br/>Try uploading your trajectory file from a Dropbox, Google Drive, or Amazon S3 link instead.";
                 }
                 batch(() => {
+                    dispatch(setStatus({ status: VIEWER_ERROR }));
                     dispatch(
                         setError({
                             level: ErrorLevel.ERROR,

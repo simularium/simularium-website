@@ -6,6 +6,7 @@ import {
 } from "rc-upload/lib/interface";
 
 import { LocalSimFile } from "../../state/trajectory/types";
+import { VIEWER_ERROR } from "../../state/viewer/constants";
 import { ViewerError, ViewerStatus } from "../../state/viewer/types";
 import { clearUrlParams } from "../../util";
 
@@ -117,6 +118,7 @@ export default (
                 message: message,
                 htmlData: "",
             });
+            setViewerStatus({ status: VIEWER_ERROR });
             clearSimulariumFile({ newFile: false });
             clearUrlParams();
             // TS thinks onError might be undefined
