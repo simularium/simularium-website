@@ -8,6 +8,7 @@ import {
 import { LocalSimFile } from "../../state/trajectory/types";
 import { VIEWER_ERROR } from "../../state/viewer/constants";
 import { ViewerError, ViewerStatus } from "../../state/viewer/types";
+import { clearUrlParams } from "../../util";
 
 // Typescript's File definition is missing this function
 //  which is part of the HTML standard on all browsers
@@ -118,6 +119,8 @@ export default (
                 htmlData: "",
             });
             setViewerStatus({ status: VIEWER_ERROR });
+            clearSimulariumFile({ newFile: false });
+            clearUrlParams();
             // TS thinks onError might be undefined
             if (onError) {
                 onError(error as UploadRequestError);

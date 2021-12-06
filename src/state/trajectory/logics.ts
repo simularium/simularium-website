@@ -1,10 +1,11 @@
 import { AxiosResponse } from "axios";
-import { batch } from "react-redux";
+import { batch, useDispatch } from "react-redux";
 import { createLogic } from "redux-logic";
 import queryString from "query-string";
 import { ErrorLevel, FrontEndError } from "@aics/simularium-viewer";
 
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
+import { clearUrlParams } from "../../util";
 import { getUserTrajectoryUrl } from "../../util/userUrlHandling";
 import {
     VIEWER_LOADING,
@@ -28,6 +29,7 @@ import {
     receiveTrajectory,
     receiveSimulariumFile,
     requestCachedPlotData,
+    clearSimulariumFile,
 } from "./actions";
 import {
     LOAD_LOCAL_FILE_IN_VIEWER,
@@ -104,6 +106,28 @@ const requestPlotDataLogic = createLogic({
     type: REQUEST_PLOT_DATA,
 });
 
+const handleFileLoadError = (error: FrontEndError) => {
+    const dispatch = useDispatch();
+
+    batch(() => {
+        dispatch(
+            setError({
+                level: error.level,
+                message: error.message,
+                htmlData: error.htmlData || "",
+            })
+        );
+        if (error.level === ErrorLevel.ERROR) {
+            dispatch(setStatus({ status: VIEWER_ERROR }));
+            dispatch(clearSimulariumFile({ newFile: false }));
+        }
+    });
+
+    if (error.level === ErrorLevel.ERROR) {
+        clearUrlParams();
+    }
+};
+
 const loadNetworkedFile = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
@@ -154,16 +178,8 @@ const loadNetworkedFile = createLogic({
             })
             .then(done)
             .catch((error: FrontEndError) => {
-                batch(() => {
-                    dispatch(setStatus({ status: VIEWER_ERROR }));
-                    dispatch(
-                        setError({
-                            level: error.level,
-                            message: error.message,
-                            htmlData: error.htmlData,
-                        })
-                    );
-                });
+                handleFileLoadError(error);
+                done();
             });
     },
     type: LOAD_NETWORKED_FILE_IN_VIEWER,
@@ -222,16 +238,7 @@ const loadLocalFile = createLogic({
             })
             .then(done)
             .catch((error: FrontEndError) => {
-                batch(() => {
-                    dispatch(setStatus({ status: VIEWER_ERROR }));
-                    dispatch(
-                        setError({
-                            level: error.level,
-                            message: error.message,
-                            htmlData: error.htmlData || "",
-                        })
-                    );
-                });
+                handleFileLoadError(error);
                 done();
             });
     },
@@ -303,7 +310,9 @@ const loadFileViaUrl = createLogic({
                                 ),
                         })
                     );
+                    dispatch(clearSimulariumFile({ newFile: false }));
                 });
+                clearUrlParams();
                 done();
             });
     },
