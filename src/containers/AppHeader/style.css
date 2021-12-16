@@ -32,6 +32,11 @@
     margin-left: 12px;
 }
 
+.left-links {
+    white-space: nowrap;
+    margin-right: 2em;
+}
+
 .home {
     margin-left: 2px;
     margin-right: 20px;
@@ -48,6 +53,14 @@
     font-weight: 100;
 }
 
+.viewer-title {
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: calc(100vw - 562px);
+    /* text-overflow: ellipsis; */
+    /* display: inline-block; */
+}
+
 .buttons {
     display: flex;
     justify-content: flex-end;
@@ -61,7 +74,7 @@
     }
 
     .buttons {
-        min-width: 282px;
+        min-width: 305px;
     }
 }
 

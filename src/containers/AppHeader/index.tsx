@@ -58,7 +58,7 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
 
         return (
             <div className={styles.pageHeader}>
-                <div>
+                <div className={styles.leftLinks}>
                     <a href="https://allencell.org" title="Allen Cell Explorer">
                         {AicsLogo}
                     </a>
