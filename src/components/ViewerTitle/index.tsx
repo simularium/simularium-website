@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useLocation } from "react-router-dom";
-import { Tag } from "antd";
+import { Tag, Popover } from "antd";
 import moment from "moment";
 
 import { VIEWER_PATHNAME } from "../../routes";
@@ -55,11 +55,15 @@ const ViewerTitle: React.FunctionComponent<ViewerTitleProps> = (
             <span />
         );
 
+    const popover = title;
+
     return (
-        <div className={styles.container}>
-            <div className={styles.title}>{title}</div>
-            <div>{tag}</div>
-        </div>
+        <Popover content={popover}>
+            <div className={styles.container}>
+                <div className={styles.title}>{title}</div>
+                <div>{tag}</div>
+            </div>
+        </Popover>
     );
 };
 
