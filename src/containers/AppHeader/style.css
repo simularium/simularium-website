@@ -53,14 +53,6 @@
     font-weight: 100;
 }
 
-.viewer-title {
-    white-space: nowrap;
-    overflow: hidden;
-    max-width: calc(100vw - 562px);
-    /* text-overflow: ellipsis; */
-    /* display: inline-block; */
-}
-
 .buttons {
     display: flex;
     justify-content: flex-end;

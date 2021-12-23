@@ -67,12 +67,10 @@ class AppHeader extends React.Component<AppHeaderProps, {}> {
                         SIMULARIUM HOME
                     </Link>
                 </div>
-                <div className={styles.viewerTitle}>
-                    <ViewerTitle
-                        simulariumFileName={displayName}
-                        lastModified={lastModified}
-                    />
-                </div>
+                <ViewerTitle
+                    simulariumFileName={displayName}
+                    lastModified={lastModified}
+                />
                 <div className={styles.buttons}>
                     <LoadFileMenu
                         key="select"

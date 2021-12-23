@@ -19,11 +19,9 @@ const ViewerTitle: React.FunctionComponent<ViewerTitleProps> = (
     const { simulariumFileName, lastModified } = props;
     const location = useLocation();
     const title =
-        location.pathname.startsWith(VIEWER_PATHNAME) && simulariumFileName ? (
-            <span>{simulariumFileName}</span>
-        ) : (
-            <span />
-        );
+        location.pathname.startsWith(VIEWER_PATHNAME) && simulariumFileName
+            ? simulariumFileName
+            : "";
 
     // Grab the trajectory ID from the URL and find the corresponding trajectory object in
     // networked-trajectories.ts to get its version info
@@ -58,9 +56,10 @@ const ViewerTitle: React.FunctionComponent<ViewerTitleProps> = (
         );
 
     return (
-        <span className={styles.container}>
-            {title} {tag}
-        </span>
+        <div className={styles.container}>
+            <div className={styles.title}>{title}</div>
+            <div>{tag}</div>
+        </div>
     );
 };
 
