@@ -4,13 +4,11 @@
     font-weight: 400;
     display: flex;
     max-width: calc(100vw - 562px);
+    min-width: 0;
 }
 
 .title {
-    /* FIXME: if I turn this on, the ellipses show but the buttons on the
-    right get pushed out more easily. Without tag in the nav bar and
-    without this whitespace nowrap, things behave well. */
-    /* white-space: nowrap; */
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
