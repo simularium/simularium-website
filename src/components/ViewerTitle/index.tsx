@@ -57,7 +57,7 @@ const ViewerTitle: React.FunctionComponent<ViewerTitleProps> = (
 
     return (
         <div className={styles.container}>
-            <Popover content={title}>
+            <Popover content={title} mouseLeaveDelay={0}>
                 <div className={styles.title}>{title}</div>
             </Popover>
             <div>{tag}</div>
