@@ -55,15 +55,13 @@ const ViewerTitle: React.FunctionComponent<ViewerTitleProps> = (
             <span />
         );
 
-    const popover = title;
-
     return (
-        <Popover content={popover}>
-            <div className={styles.container}>
+        <div className={styles.container}>
+            <Popover content={title}>
                 <div className={styles.title}>{title}</div>
-                <div>{tag}</div>
-            </div>
-        </Popover>
+            </Popover>
+            <div>{tag}</div>
+        </div>
     );
 };
 
