@@ -1,6 +1,7 @@
 import React, { KeyboardEvent, useState } from "react";
 import { Button, Slider, Tooltip, InputNumber } from "antd";
 import classNames from "classnames";
+import { compareTimes } from "@aics/simularium-viewer";
 
 import { TOOLTIP_COLOR } from "../../constants/index";
 import Icons from "../Icons";
@@ -109,6 +110,13 @@ const PlayBackControls = ({
 
     const btnClassNames = classNames([styles.item, styles.btn]);
 
+    // Disable step back button if time - timeStep < firstFrameTime
+    const isStepBackDisabled =
+        compareTimes(time - timeStep, firstFrameTime, timeStep) === -1;
+    // Disable step forward button if time + timeStep > lastFrameTime
+    const isStepForwardDisabled =
+        compareTimes(time + timeStep, lastFrameTime, timeStep) === 1;
+
     return (
         <div className={styles.container}>
             <Tooltip
@@ -123,9 +131,7 @@ const PlayBackControls = ({
                     ])}
                     size="small"
                     onClick={prevHandler}
-                    disabled={
-                        time - timeStep < firstFrameTime || loading || isEmpty
-                    }
+                    disabled={isStepBackDisabled || loading || isEmpty}
                     loading={loading}
                 >
                     {/* if loading, antd will show loading icon, otherwise, show our custom svg */}
@@ -166,9 +172,7 @@ const PlayBackControls = ({
                     ])}
                     size="small"
                     onClick={nextHandler}
-                    disabled={
-                        time + timeStep > lastFrameTime || loading || isEmpty
-                    }
+                    disabled={isStepForwardDisabled || loading || isEmpty}
                     loading={loading}
                 >
                     {/* if loading, antd will show loading icon, otherwise, show our custom svg */}
