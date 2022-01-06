@@ -116,7 +116,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                                 <li>
                                     These{" "}
                                     <a
-                                        href="https://github.com/allen-cell-animated/simulariumio/tree/main/examples"
+                                        href="https://github.com/simularium/simulariumio/tree/main/examples"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                     >
@@ -157,7 +157,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                                         {SUPPORTED_ENGINES.map(
                                             (engine: string[]) => {
                                                 const name = engine[0];
-                                                const url = `https://github.com/allen-cell-animated/simulariumio/blob/main/examples/Tutorial_${name.toLowerCase()}.ipynb`;
+                                                const url = `https://github.com/simularium/simulariumio/blob/main/examples/Tutorial_${name.toLowerCase()}.ipynb`;
                                                 return (
                                                     <li key={name}>
                                                         <a
@@ -178,7 +178,7 @@ const TutorialPage: React.FunctionComponent<{}> = () => {
                                     your data, choose the notebook for
                                     converting{" "}
                                     <a
-                                        href="https://github.com/allen-cell-animated/simulariumio/blob/main/examples/Tutorial_custom.ipynb"
+                                        href="https://github.com/simularium/simulariumio/blob/main/examples/Tutorial_custom.ipynb"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                     >

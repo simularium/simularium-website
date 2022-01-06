@@ -66,7 +66,7 @@ Automatically builds from `main`
 1. Make a new version: `npm version [patch/minor/major]`
 2. Push the new package.json version: `git push origin main`
 3. Push the new tag: `git push origin [NEW_TAG]`
-4. Go to the [releases page](https://github.com/allen-cell-animated/simularium-website/releases) and write the release notes for the new version. You can refer to the auto-generated [CHANGELOG.md][changelog] for a list of changes.
+4. Go to the [releases page](https://github.com/simularium/simularium-website/releases) and write the release notes for the new version. You can refer to the auto-generated [CHANGELOG.md][changelog] for a list of changes.
 
 [changelog]: CHANGELOG.md
 
@@ -79,7 +79,7 @@ Automatically builds from `main`
     * **Shiny new feature 2** - Description
 
     ### 🐛 Bug Fixes and Improvements
-    Updated [simularium-viewer](https://github.com/allen-cell-animated/simularium-viewer) to from vx.x.x to vx.x.x, which includes:
+    Updated [simularium-viewer](https://github.com/simularium/simularium-viewer) to from vx.x.x to vx.x.x, which includes:
     * Something nice
     * Something else nice
 

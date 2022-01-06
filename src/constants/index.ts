@@ -18,9 +18,9 @@ export const FORUM_URL =
 // Note that below has "/tags/" unlike FORUM_URL
 export const FORUM_BUG_REPORT_URL =
     "https://forum.allencell.org/tags/c/software-code/simularium/15/bug-report";
-export const GITHUB_URL = "https://github.com/allen-cell-animated?q=simularium";
+export const GITHUB_URL = "https://github.com/simularium";
 export const ISSUE_URL =
-    "https://github.com/allen-cell-animated/simularium-website/issues";
+    "https://github.com/simularium/simularium-website/issues";
 export const CONTACT_FORM_URL = "https://forms.gle/mwoJjaj3PcbTVStU7";
 export const CYTOSIM_URL = "https://gitlab.com/f.nedelec/cytosim";
 export const PHYSICELL_URL = "http://physicell.org/";
@@ -41,7 +41,7 @@ export const SUPPORTED_ENGINES = [
 ];
 
 // If any these URLs are used as a trajUrl param, we want to redirect to a networked file
-// More info: https://github.com/allen-cell-animated/simularium-website/issues/213
+// More info: https://github.com/simularium/simularium-website/issues/213
 export const USER_TRAJ_REDIRECTS = [
     "https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/springsalad_condensate_formation_Below_Ksp.simularium",
     "https://aics-agentviz-data.s3.us-east-2.amazonaws.com/trajectory/springsalad_condensate_formation_At_Ksp.simularium",
