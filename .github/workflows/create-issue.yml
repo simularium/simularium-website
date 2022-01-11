@@ -1,0 +1,16 @@
+name: Create Issue
+
+on:
+  issues:
+    types: [opened, labeled]
+jobs:
+  createCard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create or Update Project Card
+        uses: peter-evans/create-or-update-project-card@v1
+        with:
+          token: ${{ secrets.SIMULARIUM }}
+          project-name: Simularium Web
+          column-name: Backlog
+          project-location: simularium
