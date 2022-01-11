@@ -2,7 +2,7 @@ name: Create Issue
 
 on:
   issues:
-    types: [opened, labeled]
+    types: [opened]
 jobs:
   createCard:
     runs-on: ubuntu-latest
