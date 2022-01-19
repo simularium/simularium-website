@@ -2,7 +2,15 @@
     text-align: center;
     font-size: 16px;
     font-weight: 400;
-    display: block;
+    display: flex;
+    max-width: calc(100vw - 562px);
+    min-width: 0;
+}
+
+.title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .tag {

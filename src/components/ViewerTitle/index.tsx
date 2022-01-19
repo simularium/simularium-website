@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useLocation } from "react-router-dom";
-import { Tag } from "antd";
+import { Tag, Popover } from "antd";
 import moment from "moment";
 
 import { VIEWER_PATHNAME } from "../../routes";
@@ -19,11 +19,9 @@ const ViewerTitle: React.FunctionComponent<ViewerTitleProps> = (
     const { simulariumFileName, lastModified } = props;
     const location = useLocation();
     const title =
-        location.pathname.startsWith(VIEWER_PATHNAME) && simulariumFileName ? (
-            <span>{simulariumFileName}</span>
-        ) : (
-            <span />
-        );
+        location.pathname.startsWith(VIEWER_PATHNAME) && simulariumFileName
+            ? simulariumFileName
+            : "";
 
     // Grab the trajectory ID from the URL and find the corresponding trajectory object in
     // networked-trajectories.ts to get its version info
@@ -58,9 +56,19 @@ const ViewerTitle: React.FunctionComponent<ViewerTitleProps> = (
         );
 
     return (
-        <span className={styles.container}>
-            {title} {tag}
-        </span>
+        <div className={styles.container}>
+            <Popover
+                content={title}
+                mouseEnterDelay={1}
+                mouseLeaveDelay={0}
+                align={{
+                    offset: [0, 10],
+                }}
+            >
+                <div className={styles.title}>{title}</div>
+            </Popover>
+            <div>{tag}</div>
+        </div>
     );
 };
 
