@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
-import { batch, useDispatch } from "react-redux";
+import { batch } from "react-redux";
 import { createLogic } from "redux-logic";
+import { ArgumentAction } from "redux-logic/definitions/action";
 import queryString from "query-string";
 import { ErrorLevel, FrontEndError } from "@aics/simularium-viewer";
 
@@ -106,9 +107,12 @@ const requestPlotDataLogic = createLogic({
     type: REQUEST_PLOT_DATA,
 });
 
-const handleFileLoadError = (error: FrontEndError) => {
-    const dispatch = useDispatch();
-
+const handleFileLoadError = (
+    error: FrontEndError,
+    dispatch: <T extends ArgumentAction<string, undefined, undefined>>(
+        action: T
+    ) => T
+) => {
     batch(() => {
         dispatch(
             setError({
@@ -178,7 +182,7 @@ const loadNetworkedFile = createLogic({
             })
             .then(done)
             .catch((error: FrontEndError) => {
-                handleFileLoadError(error);
+                handleFileLoadError(error, dispatch);
                 done();
             });
     },
@@ -238,7 +242,7 @@ const loadLocalFile = createLogic({
             })
             .then(done)
             .catch((error: FrontEndError) => {
-                handleFileLoadError(error);
+                handleFileLoadError(error, dispatch);
                 done();
             });
     },
