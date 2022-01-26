@@ -1,6 +1,6 @@
 name: Deploy AWS production
 env: 
-  NODE_VERSION: '12.x'
+  NODE_VERSION: '14.x'
 on:
   push:
     # Sequence of patterns matched against refs/tags
