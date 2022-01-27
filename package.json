@@ -16,7 +16,7 @@
         "gh-deploy": "gh-pages -d dist",
         "build:staging": "NODE_ENV=staging webpack --config ./webpack/webpack.config.js  --env.env staging",
         "build": "NODE_ENV=production webpack --config ./webpack/webpack.config.js  --env.env production",
-        "lint": "eslint src/**/*.{ts,tsx}",
+        "lint": "eslint 'src/**/*.{ts,tsx}'",
         "typeCheck": "tsc -p tsconfig.json --noEmit",
         "update-viewer": "npm i @aics/simularium-viewer@latest",
         "test": "jest --coverage",
