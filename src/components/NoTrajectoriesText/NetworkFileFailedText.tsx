@@ -3,7 +3,7 @@ import { FORUM_BUG_REPORT_URL, ISSUE_URL } from "../../constants";
 
 const styles = require("./style.css");
 
-const NetworkFileFailedText: React.FunctionComponent<{}> = () => {
+const NetworkFileFailedText = () => {
     return (
         <div className={styles.container}>
             <h3>Simulation failed to load</h3>

@@ -43,7 +43,7 @@ describe("General utilities", () => {
             class Foo extends React.Component {
                 private message = "Hello from Foo";
 
-                constructor(props: {}) {
+                constructor(props: Record<string, never>) {
                     super(props);
                     bindAll(this, [this.bar]);
                 }

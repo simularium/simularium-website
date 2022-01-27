@@ -13,7 +13,7 @@ import {
 
 const styles = require("./style.css");
 
-const HelpMenu: React.FunctionComponent<{}> = () => {
+const HelpMenu = () => {
     const location = useLocation();
     const tutorialLink =
         location.pathname === "/viewer" ? (

@@ -14,7 +14,10 @@ interface ResultsPanelProps {
     plotConfigs: PlotConfig[];
 }
 
-class ResultsPanel extends React.Component<ResultsPanelProps, {}> {
+class ResultsPanel extends React.Component<
+    ResultsPanelProps,
+    Record<string, never>
+> {
     public render(): JSX.Element {
         const { plotConfigs } = this.props;
         const content =

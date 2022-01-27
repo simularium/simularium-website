@@ -9,7 +9,7 @@ const styles = require("./style.css");
 const UrlUpload = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [userInput, setUserInput] = useState("");
-    let history = useHistory();
+    const history = useHistory();
 
     const showModal = () => {
         if (history.location.pathname !== VIEWER_PATHNAME) {
