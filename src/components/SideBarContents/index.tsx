@@ -10,7 +10,7 @@ interface SideBarContentsProps {
 
 export default class SideBarContents extends React.Component<
     SideBarContentsProps,
-    {}
+    Record<string, never>
 > {
     public render(): JSX.Element {
         const { mainTitle, content } = this.props;

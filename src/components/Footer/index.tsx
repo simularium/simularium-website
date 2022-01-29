@@ -6,7 +6,7 @@ const { Footer: AntdFooter } = Layout;
 
 const styles = require("./style.css");
 
-const Footer: React.FunctionComponent<{}> = () => {
+const Footer = () => {
     return (
         <AntdFooter className={styles.container}>
             <Row justify="space-around">

@@ -74,7 +74,7 @@ interface AppState {
 class App extends React.Component<AppProps, AppState> {
     public simulariumController: SimulariumController | undefined;
     private interactiveContent = React.createRef<HTMLDivElement>();
-    private endDragover: number = 0;
+    private endDragover = 0;
     constructor(props: AppProps) {
         super(props);
         this.onPanelCollapse = this.onPanelCollapse.bind(this);

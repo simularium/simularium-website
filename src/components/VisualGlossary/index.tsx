@@ -25,7 +25,7 @@ const renderGlossaryItems = visualGlossary.map((item: VisualGlossaryItem) => {
     );
 });
 
-const VisualGlossary: React.FunctionComponent<{}> = () => {
+const VisualGlossary = () => {
     return (
         <div className={styles.container}>
             <img src={visualGlossaryImage} />

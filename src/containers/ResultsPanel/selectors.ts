@@ -103,8 +103,8 @@ export const configureLayout = (
             visible: false,
         },
         legend: {
-            xanchor: "left" as "left",
-            yanchor: "top" as "top",
+            xanchor: "left",
+            yanchor: "top",
             x: 0,
             y: -0.2,
         },
@@ -121,9 +121,7 @@ export const configureLayout = (
             size: PLOT_STYLE.fontSize,
         },
         colorway: PLOT_STYLE.colorway,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         paper_bgcolor: PLOT_STYLE.backgroundColor,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         plot_bgcolor: PLOT_STYLE.backgroundColor,
         /* cSpell:enable */
     };

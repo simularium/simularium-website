@@ -13,7 +13,7 @@ const { Text } = Typography;
 
 const styles = require("./style.css");
 
-const TutorialPage: React.FunctionComponent<{}> = () => {
+const TutorialPage = () => {
     return (
         <>
             <Content className={styles.content}>

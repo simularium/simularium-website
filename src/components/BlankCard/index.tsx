@@ -7,7 +7,7 @@ import ImportThumbnail from "../../assets/import-thumbnail.svg";
 
 const styles = require("../ModelCard/style.css");
 
-const BlankCard: React.FunctionComponent<{}> = () => {
+const BlankCard = () => {
     return (
         <Card
             className={styles.card}

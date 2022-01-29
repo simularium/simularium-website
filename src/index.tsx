@@ -58,7 +58,7 @@ const RouterSwitch = () => {
     );
 };
 
-const App: React.FunctionComponent<{}> = () => {
+const App = () => {
     /**
      * Note for implementing redirect rules for SPA routing on AWS.
      * Currently we are just serving index.html as our 400 response. If we want to have an 404.html

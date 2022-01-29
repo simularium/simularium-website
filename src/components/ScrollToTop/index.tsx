@@ -9,7 +9,7 @@ Source: https://reactrouter.com/web/guides/scroll-restoration
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-const ScrollToTop: React.FunctionComponent<{}> = () => {
+const ScrollToTop = () => {
     const { pathname } = useLocation();
 
     useEffect(() => {

@@ -51,7 +51,8 @@ const PLUGINS_BY_ENV = {
     ],
     [Env.DEVELOPMENT]: [
         new webpack.EnvironmentPlugin({
-            BACKEND_SERVER_IP: `dev-node1-agentviz-backend.cellexplore.net`
+            // FIXME: make a dev server
+            BACKEND_SERVER_IP: `staging-node1-agentviz-backend.cellexplore.net`
         })
     ]
 };

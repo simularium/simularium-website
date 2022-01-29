@@ -36,7 +36,7 @@ interface AppHeaderProps {
     setError: ActionCreator<SetErrorAction>;
 }
 
-class AppHeader extends React.Component<AppHeaderProps, {}> {
+class AppHeader extends React.Component<AppHeaderProps, Record<string, never>> {
     public render(): JSX.Element {
         const {
             simulariumFile,
