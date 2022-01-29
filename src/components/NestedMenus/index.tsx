@@ -14,10 +14,7 @@ interface NestedMenusProps {
     content: (JSX.Element | null)[];
 }
 
-export default class NestedMenus extends React.Component<
-    NestedMenusProps,
-    Record<string, never>
-> {
+export default class NestedMenus extends React.Component<NestedMenusProps> {
     public render(): JSX.Element {
         const { panelKeys, mainTitle, subTitles, content } = this.props;
         return (

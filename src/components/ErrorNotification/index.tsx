@@ -16,7 +16,7 @@ const ErrorNotification = ({
     message,
     htmlData,
     onClose,
-}: ErrorNotificationProps) => {
+}: ErrorNotificationProps): JSX.Element => {
     // Sometimes the message that comes in at runtime is an entire
     // Error object instead of a string
     if (typeof message !== "string") {

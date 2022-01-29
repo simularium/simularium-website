@@ -31,7 +31,7 @@ const CameraControls = ({
     zoomOut,
     setPanningMode,
     setFocusMode,
-}: CameraControlsProps) => {
+}: CameraControlsProps): JSX.Element => {
     const [isFocused, saveFocusMode] = useState(true);
     const [mode, setMode] = useState(ROTATE);
     const [keyPressed, setKeyPressed] = useState("");

@@ -6,7 +6,7 @@ interface ColorSwatchProps {
     color: string;
 }
 
-const ColorSwatch = ({ color }: ColorSwatchProps) => {
+const ColorSwatch = ({ color }: ColorSwatchProps): JSX.Element => {
     return (
         <div className={styles.container} style={{ backgroundColor: color }} />
     );

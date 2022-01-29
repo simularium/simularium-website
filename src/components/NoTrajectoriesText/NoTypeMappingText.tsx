@@ -5,7 +5,7 @@ import { DATA_BUCKET_URL } from "../../constants";
 
 const styles = require("../NoTrajectoriesText/style.css");
 
-const NoTypeMappingText = () => {
+const NoTypeMappingText = (): JSX.Element => {
     return (
         <div className={styles.container}>
             <h3>Unable to load UI controls</h3>

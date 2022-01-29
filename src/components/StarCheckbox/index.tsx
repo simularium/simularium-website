@@ -10,13 +10,13 @@ import {
 
 const styles = require("./style.css");
 
-const StarCheckbox: React.FunctionComponent<CheckboxProps> = ({
+const StarCheckbox = ({
     checked,
     indeterminate,
     onChange,
     value,
     className,
-}: CheckboxProps) => {
+}: CheckboxProps): JSX.Element => {
     const parentClassnames = className ? className.split(" ") : [];
     const wrapperClassnames = classNames([...parentClassnames, styles.wrapper]);
     const checkboxClassNames = classNames(["icon-moon", styles.checkbox], {

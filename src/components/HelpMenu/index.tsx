@@ -13,7 +13,7 @@ import {
 
 const styles = require("./style.css");
 
-const HelpMenu = () => {
+const HelpMenu = (): JSX.Element => {
     const location = useLocation();
     const tutorialLink =
         location.pathname === "/viewer" ? (

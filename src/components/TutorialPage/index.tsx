@@ -13,7 +13,7 @@ const { Text } = Typography;
 
 const styles = require("./style.css");
 
-const TutorialPage = () => {
+const TutorialPage = (): JSX.Element => {
     return (
         <>
             <Content className={styles.content}>

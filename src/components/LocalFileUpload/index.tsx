@@ -38,7 +38,7 @@ const LocalFileUpload = ({
     setViewerStatus,
     clearSimulariumFile,
     setError,
-}: FileUploadProps) => {
+}: FileUploadProps): JSX.Element => {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
     const onChange = ({ file }: UploadChangeParam) => {
