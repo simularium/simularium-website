@@ -21,7 +21,7 @@ const CheckboxTreeSubmenu = ({
     options,
     onChange,
     checkboxType,
-}: CheckboxTreeSubmenuProps) => {
+}: CheckboxTreeSubmenuProps): JSX.Element => {
     const onCheckboxChange = ({ target }: CheckboxChangeEvent) => {
         const allowedValues = map(options, "value");
         const optionIndex = checkedAgents.indexOf(target.value);

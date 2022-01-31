@@ -26,9 +26,7 @@ const tooltipOffsets: TooltipOffsets = {
     shared: [0, -3],
 };
 
-const Checkbox: React.FunctionComponent<CheckboxTypeProps> = (
-    props: CheckboxTypeProps
-) => {
+const Checkbox = (props: CheckboxTypeProps): JSX.Element => {
     // removing props that are only needed at this level
     const childProps = { ...props, checkboxType: null, checkboxLevel: null };
     const checkboxLevel = props.checkboxLevel ? props.checkboxLevel : "default";

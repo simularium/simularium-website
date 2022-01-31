@@ -14,7 +14,7 @@ interface ModelCardProps {
 
 const ModelCard: React.FunctionComponent<ModelCardProps> = (
     props: ModelCardProps
-) => {
+): JSX.Element => {
     const {
         id,
         title,

@@ -38,7 +38,7 @@ const LoadFileMenu = ({
     selectFile,
     setViewerStatus,
     setError,
-}: LoadFileMenuProps) => {
+}: LoadFileMenuProps): JSX.Element => {
     const location = useLocation();
     const onClick = (trajectoryData: TrajectoryDisplayData) => {
         if (location.pathname === VIEWER_PATHNAME) {

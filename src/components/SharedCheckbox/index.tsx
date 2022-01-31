@@ -20,8 +20,7 @@ interface SharedCheckboxProps {
 }
 
 export default class SharedCheckbox extends React.Component<
-    SharedCheckboxProps,
-    Record<string, never>
+    SharedCheckboxProps
 > {
     constructor(props: SharedCheckboxProps) {
         super(props);

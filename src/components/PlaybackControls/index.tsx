@@ -41,7 +41,7 @@ const PlayBackControls = ({
     displayTimes,
     timeUnits,
     isEmpty,
-}: PlayBackProps) => {
+}: PlayBackProps): JSX.Element => {
     // Where to resume playing if simulation was playing before scrubbing
     const [
         timeToResumeAfterScrubbing,

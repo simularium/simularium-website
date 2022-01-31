@@ -11,6 +11,8 @@ interface ErrorNotificationProps {
     onClose?: () => void;
 }
 
+// Technically this function does not return a JSX.Element, but it is
+// like a React component
 const ErrorNotification = ({
     level,
     message,

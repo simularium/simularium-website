@@ -6,7 +6,7 @@ import { TUTORIAL_PATHNAME, VIEWER_PATHNAME } from "../../routes";
 
 const styles = require("./style.css");
 
-const UrlUpload = () => {
+const UrlUpload = (): JSX.Element => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [userInput, setUserInput] = useState("");
     const history = useHistory();

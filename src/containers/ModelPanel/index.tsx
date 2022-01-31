@@ -64,10 +64,7 @@ interface ModelPanelProps {
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
 }
 
-class ModelPanel extends React.Component<
-    ModelPanelProps,
-    Record<string, never>
-> {
+class ModelPanel extends React.Component<ModelPanelProps> {
     public render(): JSX.Element {
         const {
             agentVisibilityMap,

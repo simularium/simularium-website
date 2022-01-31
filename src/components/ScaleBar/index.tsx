@@ -7,7 +7,7 @@ interface ScaleBarProps {
     label: string;
 }
 
-const ScaleBar = (scaleBarProps: ScaleBarProps) => {
+const ScaleBar = (scaleBarProps: ScaleBarProps): JSX.Element => {
     const { label } = scaleBarProps;
     const scaleBarNode = label ? (
         <div className={styles.container}>

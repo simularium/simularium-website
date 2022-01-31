@@ -14,7 +14,9 @@ interface NoTrajectoriesTextProps {
     selectFile: ActionCreator<RequestNetworkFileAction>;
 }
 
-const NoTrajectoriesText = ({ selectFile }: NoTrajectoriesTextProps) => {
+const NoTrajectoriesText = ({
+    selectFile,
+}: NoTrajectoriesTextProps): JSX.Element => {
     const handleClick = (trajectoryData: TrajectoryDisplayData) => {
         selectFile({
             name: trajectoryData.id,

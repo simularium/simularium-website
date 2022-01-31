@@ -18,7 +18,7 @@ const NUM_CARDS_PER_ROW = 3;
 // Add bullets to each heading
 const markdownProcessed = markdown.default.replaceAll("##", "## &bull;");
 
-const LandingPage = () => {
+const LandingPage = (): JSX.Element => {
     return (
         <React.Fragment>
             <Content className={styles.content}>

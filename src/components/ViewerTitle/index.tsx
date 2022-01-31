@@ -15,7 +15,7 @@ interface ViewerTitleProps {
 
 const ViewerTitle: React.FunctionComponent<ViewerTitleProps> = (
     props: ViewerTitleProps
-) => {
+): JSX.Element => {
     const { simulariumFileName, lastModified } = props;
     const location = useLocation();
     const title =
