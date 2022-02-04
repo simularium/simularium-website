@@ -53,7 +53,7 @@ const LoadFileMenu = ({
             <Menu.SubMenu
                 title="From examples"
                 popupClassName={styles.submenu}
-                popupOffset={[-667, -4]}
+                popupOffset={[-0.45, -4]}
                 key="from-examples"
             >
                 {TRAJECTORIES.map((trajectory) => (
