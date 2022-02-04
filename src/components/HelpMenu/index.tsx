@@ -43,7 +43,7 @@ const HelpMenu = (): JSX.Element => {
             <Menu.SubMenu
                 title="Submit issue"
                 popupClassName={styles.submenu}
-                popupOffset={[-0.45, -4]}
+                popupOffset={[-377, -4]}
                 key="submit-issue"
             >
                 <Menu.Item key="submit-issue-github">
@@ -69,7 +69,7 @@ const HelpMenu = (): JSX.Element => {
     );
 
     return (
-        <Dropdown overlay={menu}>
+        <Dropdown overlay={menu} placement="bottomRight">
             <Button onClick={(e) => e.preventDefault()} type="ghost">
                 Help {DownArrow}
             </Button>
