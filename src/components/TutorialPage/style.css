@@ -11,6 +11,11 @@
     }
 }
 
+.text {
+    max-width: 1200px;
+    margin: auto;
+}
+
 .intro {
     margin-top: 1.5em;
     margin-bottom: 1.5em;
