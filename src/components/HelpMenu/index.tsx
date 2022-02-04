@@ -43,7 +43,7 @@ const HelpMenu = (): JSX.Element => {
             <Menu.SubMenu
                 title="Submit issue"
                 popupClassName={styles.submenu}
-                popupOffset={[-377, -4]}
+                popupOffset={[-0.45, -4]}
                 key="submit-issue"
             >
                 <Menu.Item key="submit-issue-github">
