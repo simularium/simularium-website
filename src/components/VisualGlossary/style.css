@@ -1,3 +1,9 @@
+.container {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
 .container img {
     max-width: 800px;
     display: block;
@@ -9,9 +15,7 @@
 .container :global(.ant-collapse) {
     max-width: 750px;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 2em;
+    margin: 1.5em auto 2em auto;
     background-color: var(--light-theme-background-purple);
     border: transparent;
     border-radius: 3px;
@@ -27,6 +31,8 @@
     background-color: var(--light-theme-background-off-white);
     font-size: 16px;
     border: none;
+    height: 400px;
+    overflow: scroll;
 }
 
 .topLevelList > li {
