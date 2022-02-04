@@ -2,6 +2,8 @@
     display: flex;
     align-items: flex-start;
     flex-wrap: wrap;
+    max-width: fit-content;
+    margin: auto;
 }
 
 .container img {
@@ -13,9 +15,9 @@
 }
 
 .container :global(.ant-collapse) {
-    max-width: 750px;
+    width: 750px;
     display: block;
-    margin: 1.5em auto 2em auto;
+    margin: 1em auto 2em auto;
     background-color: var(--light-theme-background-purple);
     border: transparent;
     border-radius: 3px;
@@ -31,7 +33,7 @@
     background-color: var(--light-theme-background-off-white);
     font-size: 16px;
     border: none;
-    height: 400px;
+    height: 423px;
     overflow: scroll;
 }
 
