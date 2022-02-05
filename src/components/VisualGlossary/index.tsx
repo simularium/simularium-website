@@ -26,20 +26,26 @@ const renderGlossaryItems = visualGlossary.map((item: VisualGlossaryItem) => {
 });
 
 const VisualGlossary = (): JSX.Element => {
-    const [isScreenWide, setIsScreenWide] = useState(
-        window.matchMedia("(min-width: 1650px)").matches
+    const [activeKey, setActiveKey] = useState(
+        window.matchMedia("(min-width: 1650px)").matches ? "1" : []
     );
 
     useEffect(() => {
         window
             .matchMedia("(min-width: 1650px)")
-            .addEventListener("change", (e) => setIsScreenWide(e.matches));
+            .addEventListener("change", (e) => {
+                if (e.matches) {
+                    setActiveKey("1");
+                } else {
+                    setActiveKey([]);
+                }
+            });
     }, []);
 
     return (
         <div className={styles.container}>
             <img src={visualGlossaryImage} />
-            <Collapse defaultActiveKey={isScreenWide ? "1" : []}>
+            <Collapse activeKey={activeKey}>
                 <Collapse.Panel header="Visual Glossary Key" key="1">
                     <ol className={styles.topLevelList}>
                         {renderGlossaryItems}
