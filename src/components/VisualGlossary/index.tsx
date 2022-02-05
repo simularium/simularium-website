@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { Collapse } from "antd";
 
 import visualGlossary from "../../constants/visual-glossary";
@@ -26,10 +26,20 @@ const renderGlossaryItems = visualGlossary.map((item: VisualGlossaryItem) => {
 });
 
 const VisualGlossary = (): JSX.Element => {
+    const [isScreenWide, setIsScreenWide] = useState(
+        window.matchMedia("(min-width: 1650px)").matches
+    );
+
+    useEffect(() => {
+        window
+            .matchMedia("(min-width: 1650px)")
+            .addEventListener("change", (e) => setIsScreenWide(e.matches));
+    }, []);
+
     return (
         <div className={styles.container}>
             <img src={visualGlossaryImage} />
-            <Collapse>
+            <Collapse defaultActiveKey={isScreenWide ? "1" : []}>
                 <Collapse.Panel header="Visual Glossary Key" key="1">
                     <ol className={styles.topLevelList}>
                         {renderGlossaryItems}
