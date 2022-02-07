@@ -27,12 +27,14 @@ const renderGlossaryItems = visualGlossary.map((item: VisualGlossaryItem) => {
 
 const VisualGlossary = (): JSX.Element => {
     const [isScreenWide, setIsScreenWide] = useState(
-        window.matchMedia("(min-width: 1650px)").matches
+        window.matchMedia("(min-width: 1622px)").matches
     );
 
+    // NOTE: Currently this doesn't do anything... defaultActiveKey seems to only
+    // matter at initial page load...
     useEffect(() => {
         window
-            .matchMedia("(min-width: 1650px)")
+            .matchMedia("(min-width: 1622px)")
             .addEventListener("change", (e) => setIsScreenWide(e.matches));
     }, []);
 
