@@ -20,6 +20,10 @@
         font-size: 0.8rem;
         margin-bottom: 1em;
     }
+
+    .content li {
+        font-size: 0.8rem;
+    }
 }
 
 .panel {
@@ -64,15 +68,6 @@
     background-color: var(--light-theme-background-purple);
 }
 
-/* On larger screens, the flowchart width is 60% of parent div or 600px, whichever is larger.
-On smaller screens the width is 100% of parent div. */
-@media screen and (min-width: 768px) {
-    .flowchart {
-        width: 60%;
-        min-width: 600px;
-    }
-}
-
 .future-simularium-panel {
     composes: panel;
     background-color: white;
@@ -80,10 +75,7 @@ On smaller screens the width is 100% of parent div. */
 
 .flowchart {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 2em;
-    margin-bottom: 3em;
+    margin: 2em auto;
 }
 
 .markdown {
@@ -94,6 +86,18 @@ On smaller screens the width is 100% of parent div. */
 .markdown > * {
     text-align: left;
     font-size: 16px;
+}
+
+@media screen and (max-width: 1010px) {
+    .markdown {
+        column-count: 1;
+        height: auto;
+        margin: auto 0.5em;
+    }
+    
+    .markdown > * {
+        font-size: 14px;
+    }
 }
 
 .markdown h2 {
