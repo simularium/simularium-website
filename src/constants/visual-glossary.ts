@@ -7,6 +7,11 @@ const visualGlossary: VisualGlossaryItem[] = [
             "Use this menu to choose an example model to view, or to select a file from a public cloud URL or from your local computer. You can also load a file locally from your computer by dragging it into the viewport.",
     },
     {
+        label: "CLICK TO SELECT & FOLLOW ANY OBJECT",
+        description:
+            "Left mouse clicking on any object in the 3D viewport will trigger the camera to point at it and to move to a helpful viewing distance. The camera will continue to Follow that object (outlined in bright green) until another another is selected, or all objects are deselected by clicking on an empty space in the viewport's background. It's easiest to pause the playback before attempting to CLICK on an object to follow.",
+    },
+    {
         label: "CAMERA CONTROLS, from top to bottom:",
         description: "",
         bulletItems: [
