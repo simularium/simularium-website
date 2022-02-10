@@ -15,7 +15,7 @@
 }
 
 .container :global(.ant-collapse) {
-    width: 750px;
+    width: 740px;
     display: block;
     margin: 1em auto 2em auto;
     background-color: var(--light-theme-background-purple);
@@ -33,7 +33,7 @@
     background-color: var(--light-theme-background-off-white);
     font-size: 16px;
     border: none;
-    height: 348px;
+    height: 417px;
     overflow: scroll;
 }
 
