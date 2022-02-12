@@ -26,22 +26,26 @@ const renderGlossaryItems = visualGlossary.map((item: VisualGlossaryItem) => {
 });
 
 const VisualGlossary = (): JSX.Element => {
-    const [isScreenWide, setIsScreenWide] = useState(
-        window.matchMedia("(min-width: 1622px)").matches
-    );
+    const wideScreenMinWidth = "1622px";
 
-    // NOTE: Currently this doesn't do anything... defaultActiveKey seems to only
-    // matter at initial page load...
+    // Lay out image and legend side-by-side when screen is wide enough
+    const [isScreenWide, setIsScreenWide] = useState(
+        window.matchMedia(`(min-width: ${wideScreenMinWidth})`).matches
+    );
     useEffect(() => {
         window
-            .matchMedia("(min-width: 1622px)")
+            .matchMedia(`(min-width: ${wideScreenMinWidth})`)
             .addEventListener("change", (e) => setIsScreenWide(e.matches));
     }, []);
+
+    // Legend box should be collapsed by default when underneath image
+    // and always in an open state when next to image
+    const collapseProps = isScreenWide && { activeKey: "1" };
 
     return (
         <div className={styles.container}>
             <img src={visualGlossaryImage} />
-            <Collapse defaultActiveKey={isScreenWide ? "1" : []}>
+            <Collapse {...collapseProps}>
                 <Collapse.Panel header="Visual Glossary Key" key="1">
                     <ol className={styles.topLevelList}>
                         {renderGlossaryItems}
