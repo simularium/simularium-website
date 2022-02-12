@@ -5,12 +5,6 @@
     font-size: 18px;
 }
 
-@media screen and (max-width: 1200px) {
-    .content {
-        max-width: 1010px;
-    }
-}
-
 .text {
     max-width: 1200px;
     margin: auto;
