@@ -24,18 +24,6 @@ const visualGlossary: VisualGlossaryItem[] = [
         ],
     },
     {
-        label: "CAMERA CONTROLS, from top to bottom:",
-        description: "",
-        bulletItems: [
-            "ROTATE: When this mode is active, click and drag to rotate the view in 3D. This mode is active by default.",
-            "PAN: When this mode is active, click and drag to pan around the view.",
-            "FOCUS: When this mode is active, the selected agent becomes the camera target and gets centered in the view. This mode is active by default.",
-            "ZOOM IN: Move the camera in towards the camera’s current target (either the camera look at position by default, or a followed object).",
-            "ZOOM OUT: Move the camera away from the camera’s target.",
-            "RESET CAMERA: Reset the 3D camera to the default (original) position and orientation.",
-        ],
-    },
-    {
         label: "PLAYBACK CONTROLS, from left to right:",
         description: "",
         bulletItems: [
