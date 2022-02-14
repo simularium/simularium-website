@@ -69,7 +69,7 @@ const HelpMenu = (): JSX.Element => {
     );
 
     return (
-        <Dropdown overlay={menu}>
+        <Dropdown overlay={menu} placement="bottomRight">
             <Button onClick={(e) => e.preventDefault()} type="ghost">
                 Help {DownArrow}
             </Button>
