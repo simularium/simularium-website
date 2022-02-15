@@ -49,49 +49,54 @@ const UrlUpload = (): JSX.Element => {
             <Button type="ghost" onClick={showModal}>
                 From a URL
             </Button>
-            <Modal
-                className={styles.modal}
-                title="Load Model from URL"
-                visible={isModalVisible}
-                footer={null}
-                onCancel={closeModal}
-                width={525}
-                centered
-            >
-                <Form
-                    layout="vertical"
-                    requiredMark={false}
-                    onFinish={loadTrajectory}
+            {/* Using isModalVisible this way instead of as a `visible` prop forces
+            Modal to re-render every time it is opened, resetting the form */}
+            {isModalVisible && (
+                <Modal
+                    className={styles.modal}
+                    title="Load Model from URL"
+                    visible
+                    footer={null}
+                    onCancel={closeModal}
+                    width={525}
+                    centered
                 >
-                    <Form.Item
-                        name="url"
-                        label="Enter the URL to a public .simularium file"
-                        extra={extraInfo}
-                        rules={[
-                            {
-                                type: "url",
-                                message: "!\u20DD Please input a valid URL",
-                            },
-                        ]}
+                    <Form
+                        layout="vertical"
+                        requiredMark={false}
+                        onFinish={loadTrajectory}
                     >
-                        <Input
-                            allowClear
-                            placeholder="https://.../example.simularium"
-                            size="large"
-                            onChange={handleUserInput}
-                        />
-                    </Form.Item>
-                    <Form.Item className={styles.submitButton}>
-                        <Button
-                            type="default"
-                            htmlType="submit"
-                            disabled={!userInput}
+                        <Form.Item
+                            name="url"
+                            label="Enter the URL to a public .simularium file"
+                            extra={extraInfo}
+                            rules={[
+                                {
+                                    type: "url",
+                                    message: "!\u20DD Please input a valid URL",
+                                },
+                            ]}
                         >
-                            Load
-                        </Button>
-                    </Form.Item>
-                </Form>
-            </Modal>
+                            <Input
+                                allowClear
+                                placeholder="https://.../example.simularium"
+                                size="large"
+                                onChange={handleUserInput}
+                                autoFocus
+                            />
+                        </Form.Item>
+                        <Form.Item className={styles.submitButton}>
+                            <Button
+                                type="default"
+                                htmlType="submit"
+                                disabled={!userInput}
+                            >
+                                Load
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </Modal>
+            )}
         </>
     );
 };
