@@ -1,3 +1,11 @@
+.container {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    max-width: fit-content;
+    margin: auto;
+}
+
 .container img {
     max-width: 800px;
     display: block;
@@ -7,11 +15,9 @@
 }
 
 .container :global(.ant-collapse) {
-    max-width: 750px;
+    width: 740px;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 2em;
+    margin: 1em auto 2em auto;
     background-color: var(--light-theme-background-purple);
     border: transparent;
     border-radius: 3px;
@@ -27,6 +33,8 @@
     background-color: var(--light-theme-background-off-white);
     font-size: 16px;
     border: none;
+    height: 417px;
+    overflow: scroll;
 }
 
 .topLevelList > li {

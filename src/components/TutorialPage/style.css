@@ -2,8 +2,12 @@
     display: block;
     margin: auto;
     padding: 2em;
-    max-width: 1010px;
     font-size: 18px;
+}
+
+.text {
+    max-width: 1200px;
+    margin: auto;
 }
 
 .intro {
