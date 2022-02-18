@@ -13,7 +13,7 @@ import {
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
 import LocalFileUpload from "../LocalFileUpload";
-import UrlUpload from "../UrlUpload";
+import UrlUploadModal from "../UrlUploadModal";
 import { DownArrow } from "../Icons";
 import {
     SetErrorAction,
@@ -90,12 +90,12 @@ const LoadFileMenu = ({
                 </Button>
             </Menu.Item>
             {/* 
-            1. Using isModalVisible this way instead of as a `visible` prop forces
-            Modal to re-render every time it is opened, resetting the form
-            2. Putting UrlUpload inside Menu.Item causes keyboard bugs
+            1. Putting UrlUploadModal inside Menu.Item causes keyboard bugs.
+            2. Conditionally rendering the modal this way instead of as a `visible` prop
+               forces it to re-render every time it is opened, resetting the form inside.
             */}
             {isModalVisible && (
-                <UrlUpload setIsModalVisible={setIsModalVisible} />
+                <UrlUploadModal setIsModalVisible={setIsModalVisible} />
             )}
             <Menu.Item key="local-file-upload">
                 <LocalFileUpload

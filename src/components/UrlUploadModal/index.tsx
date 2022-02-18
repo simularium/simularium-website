@@ -6,11 +6,13 @@ import { TUTORIAL_PATHNAME, VIEWER_PATHNAME } from "../../routes";
 
 const styles = require("./style.css");
 
-interface UrlUploadProps {
+interface UrlUploadModalProps {
     setIsModalVisible: (isModalVisible: boolean) => void;
 }
 
-const UrlUpload = ({ setIsModalVisible }: UrlUploadProps): JSX.Element => {
+const UrlUploadModal = ({
+    setIsModalVisible,
+}: UrlUploadModalProps): JSX.Element => {
     const [userInput, setUserInput] = useState("");
     const history = useHistory();
 
@@ -89,4 +91,4 @@ const UrlUpload = ({ setIsModalVisible }: UrlUploadProps): JSX.Element => {
     );
 };
 
-export default UrlUpload;
+export default UrlUploadModal;
