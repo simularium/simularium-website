@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { ActionCreator } from "redux";
 import { Menu, Dropdown, Button } from "antd";
 
@@ -39,7 +39,17 @@ const LoadFileMenu = ({
     setViewerStatus,
     setError,
 }: LoadFileMenuProps): JSX.Element => {
+    const [isModalVisible, setIsModalVisible] = useState(false);
     const location = useLocation();
+    const history = useHistory();
+
+    const showModal = () => {
+        if (history.location.pathname !== VIEWER_PATHNAME) {
+            history.push(VIEWER_PATHNAME);
+        }
+        setIsModalVisible(true);
+    };
+
     const onClick = (trajectoryData: TrajectoryDisplayData) => {
         if (location.pathname === VIEWER_PATHNAME) {
             selectFile({
@@ -48,6 +58,7 @@ const LoadFileMenu = ({
             });
         }
     };
+
     const menu = (
         <Menu theme="dark" className={styles.menu}>
             <Menu.SubMenu
@@ -74,8 +85,18 @@ const LoadFileMenu = ({
                 ))}
             </Menu.SubMenu>
             <Menu.Item key="url-upload">
-                <UrlUpload />
+                <Button type="ghost" onClick={showModal}>
+                    From a URL
+                </Button>
             </Menu.Item>
+            {/* 
+            1. Using isModalVisible this way instead of as a `visible` prop forces
+            Modal to re-render every time it is opened, resetting the form
+            2. Putting UrlUpload inside Menu.Item causes keyboard bugs
+            */}
+            {isModalVisible && (
+                <UrlUpload setIsModalVisible={setIsModalVisible} />
+            )}
             <Menu.Item key="local-file-upload">
                 <LocalFileUpload
                     clearSimulariumFile={clearSimulariumFile}
@@ -86,6 +107,7 @@ const LoadFileMenu = ({
             </Menu.Item>
         </Menu>
     );
+
     return (
         <Dropdown overlay={menu} placement="bottomRight" disabled={isBuffering}>
             <Button
