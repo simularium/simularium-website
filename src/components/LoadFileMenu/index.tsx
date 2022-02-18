@@ -91,6 +91,7 @@ const LoadFileMenu = ({
             </Menu.Item>
             {/* 
             1. Putting UrlUploadModal inside Menu.Item causes keyboard bugs.
+               https://github.com/ant-design/ant-design/issues/34125
             2. Conditionally rendering the modal this way instead of as a `visible` prop
                forces it to re-render every time it is opened, resetting the form inside.
             */}
