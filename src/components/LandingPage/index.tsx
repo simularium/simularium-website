@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import flowchartImg from "../../assets/overview-image.png";
+import agentRepOptionsImg from "../../assets/agent-rep-options.png";
 import { BetaTag } from "../Icons";
 import ModelCard from "../ModelCard";
 import BlankCard from "../BlankCard";
@@ -108,9 +109,14 @@ const LandingPage = (): JSX.Element => {
                         simulations.
                     </p>
                     <img
-                        className={styles.flowchart}
+                        className={styles.image}
                         alt="A flowchart summarizing how Simularium currently works"
                         src={flowchartImg}
+                    />
+                    <img
+                        className={styles.imageBottom}
+                        alt="Illustrations of different agent representation options"
+                        src={agentRepOptionsImg}
                     />
                     <p>Current object representation options:</p>
                     <ul>
