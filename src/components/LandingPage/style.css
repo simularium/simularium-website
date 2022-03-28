@@ -36,7 +36,7 @@
 }
 
 /* Prevents content from horizontally spreading too much when browser window is very wide */
-.panel * {
+.text-content {
     max-width: 1010px;
     margin-left: auto;
     margin-right: auto;
@@ -47,7 +47,7 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    align-items: stretch;
+    margin: auto;
 }
 
 .cards > * {
@@ -85,7 +85,6 @@
 
 .markdown {
     column-count: 2;
-    height: 540px;
 }
 
 .markdown > * {
