@@ -156,7 +156,7 @@ const LandingPage = (): JSX.Element => {
                                 src="https://media.springernature.com/w200/springer-static/cover-hires/journal/41592/19/3"
                             />
                         </div>
-                        <div>
+                        <div className={styles.citationText}>
                             <div className={styles.articleTitle}>
                                 <a
                                     target="_blank"

@@ -84,12 +84,15 @@
     justify-content: space-between;
 }
 
-.article-title {
-    margin-bottom: 2em;
+.citation-text{ 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .journal-cover {
-    margin: auto 2em auto auto;
+    margin: auto 1.5em auto auto;
+    width: 155px;
 }
 
 .image {
