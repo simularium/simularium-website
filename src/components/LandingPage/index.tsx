@@ -152,7 +152,7 @@ const LandingPage = (): JSX.Element => {
                     <div className={styles.articleTitle}>
                         <a
                             target="_blank"
-                            rel="noreferrer"
+                            rel="noopener noreferrer"
                             href="https://www.nature.com/articles/s41592-022-01442-1"
                         >
                             The Simularium Viewer: an interactive online tool
