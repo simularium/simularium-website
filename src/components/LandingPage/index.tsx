@@ -147,6 +147,28 @@ const LandingPage = (): JSX.Element => {
                         </li>
                     </ul>
                 </div>
+                <div className={styles.citationPanel}>
+                    <h1>Cite Simularium</h1>
+                    <div className={styles.articleTitle}>
+                        <a
+                            target="_blank"
+                            rel="noreferrer"
+                            href="https://www.nature.com/articles/s41592-022-01442-1"
+                        >
+                            The Simularium Viewer: an interactive online tool
+                            for sharing spatiotemporal biological models.
+                        </a>
+                    </div>
+                    <p>
+                        Blair Lyons, Eric Isaac, Na Hyung Choi, Thao P.
+                        Do, Justin Domingus, Janet Iwasa, Andrew Leonard, Megan
+                        Riel-Mehan, Emily Rodgers, Lisa Schaefbauer, Daniel
+                        Toloudis, Olivia Waltner, Lyndsay Wilhelm & Graham T.
+                        Johnson. Nature Methods (2022).
+                        <br />
+                        https://doi.org/10.1038/s41592-022-01442-1
+                    </p>
+                </div>
                 <div className={styles.panel}>
                     <h1>Connect with us</h1>
                     <h2>
