@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Layout } from "antd";
+import { Image, Layout } from "antd";
 import ReactMarkdown from "react-markdown";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
@@ -149,25 +149,37 @@ const LandingPage = (): JSX.Element => {
                 </div>
                 <div className={styles.citationPanel}>
                     <h1>Cite Simularium</h1>
-                    <div className={styles.articleTitle}>
-                        <a
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href="https://www.nature.com/articles/s41592-022-01442-1"
-                        >
-                            The Simularium Viewer: an interactive online tool
-                            for sharing spatiotemporal biological models.
-                        </a>
+                    <div className={styles.citationContent}>
+                        <div className={styles.journalCover}>
+                            <Image
+                                preview={false}
+                                src="https://media.springernature.com/w200/springer-static/cover-hires/journal/41592/19/3"
+                            />
+                        </div>
+                        <div>
+                            <div className={styles.articleTitle}>
+                                <a
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    href="https://www.nature.com/articles/s41592-022-01442-1"
+                                >
+                                    The Simularium Viewer: an interactive online
+                                    tool for sharing spatiotemporal biological
+                                    models.
+                                </a>
+                            </div>
+                            <p>
+                                Blair Lyons, Eric Isaac, Na Hyung Choi, Thao P.
+                                Do, Justin Domingus, Janet Iwasa, Andrew
+                                Leonard, Megan Riel-Mehan, Emily Rodgers, Lisa
+                                Schaefbauer, Daniel Toloudis, Olivia
+                                Waltner, Lyndsay Wilhelm & Graham T. Johnson.
+                                Nature Methods (2022).
+                                <br />
+                                https://doi.org/10.1038/s41592-022-01442-1
+                            </p>
+                        </div>
                     </div>
-                    <p>
-                        Blair Lyons, Eric Isaac, Na Hyung Choi, Thao P.
-                        Do, Justin Domingus, Janet Iwasa, Andrew Leonard, Megan
-                        Riel-Mehan, Emily Rodgers, Lisa Schaefbauer, Daniel
-                        Toloudis, Olivia Waltner, Lyndsay Wilhelm & Graham T.
-                        Johnson. Nature Methods (2022).
-                        <br />
-                        https://doi.org/10.1038/s41592-022-01442-1
-                    </p>
                 </div>
                 <div className={styles.panel}>
                     <h1>Connect with us</h1>
