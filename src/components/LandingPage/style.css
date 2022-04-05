@@ -73,6 +73,28 @@
     background-color: white;
 }
 
+.citation-panel {
+    composes: panel;
+    background-color: white;
+}
+
+.citation-content {
+    display: flex;
+    margin: 2em auto 1em auto;
+    justify-content: space-between;
+}
+
+.citation-text{ 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.journal-cover {
+    margin: auto 1.5em auto auto;
+    width: 155px;
+}
+
 .image {
     display: block;
     margin: 2em auto 1em auto;
