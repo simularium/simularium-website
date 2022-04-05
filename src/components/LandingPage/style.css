@@ -116,6 +116,12 @@
 }
 
 @media screen and (max-width: 1010px) {
+    .journal-cover {
+        margin-top: 0;
+    }
+    .citation-text p {
+        font-size: 14px;
+    }
     .markdown {
         column-count: 1;
         height: auto;
