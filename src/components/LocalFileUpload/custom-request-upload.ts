@@ -63,6 +63,11 @@ export default (
         const simulariumFileIndex = findIndex(filesArr, (file) =>
             file.name.includes(".simularium")
         );
+        if (simulariumFileIndex === -1) {
+            throw new Error(
+                "Trajectory file was not found; please make sure it has a .simularium extension."
+            );
+        }
         Promise.all<string | ISimulariumFile>(
             filesArr.map((element, index) => {
                 if (index !== simulariumFileIndex) {
@@ -107,25 +112,7 @@ export default (
                     );
                 }
             })
-            .catch((error) => {
-                let message = error.message;
-                if (error instanceof DOMException) {
-                    message =
-                        "Please load a collection of single files that does not include a folder.";
-                }
-                setError({
-                    level: error.level,
-                    message: message,
-                    htmlData: "",
-                });
-                setViewerStatus({ status: VIEWER_ERROR });
-                clearSimulariumFile({ newFile: false });
-                clearUrlParams();
-                // TS thinks onError might be undefined
-                if (onError) {
-                    onError(error as UploadRequestError);
-                }
-            });
+
     } catch (error) {
         let message = error.message;
         if (error instanceof DOMException) {
