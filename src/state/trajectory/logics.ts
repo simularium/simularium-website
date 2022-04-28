@@ -174,9 +174,8 @@ const loadNetworkedFile = createLogic({
             .then(() => {
                 return dispatch(
                     requestCachedPlotData({
-                        url: `${
-                            simulariumFile.name.split(".")[0]
-                        }/plot-data.json`, // placeholder for however we organize this data in s3
+                        url: `${simulariumFile.name.split(".")[0]
+                            }/plot-data.json`, // placeholder for however we organize this data in s3
                     })
                 );
             })
@@ -234,11 +233,13 @@ const loadLocalFile = createLogic({
                 dispatch(receiveSimulariumFile(simulariumFile));
             })
             .then(() => {
-                dispatch(
-                    receiveTrajectory({
-                        plotData: simulariumFile.data.plotData.data,
-                    })
-                );
+                if (simulariumFile.data.plotData) {
+                    dispatch(
+                        receiveTrajectory({
+                            plotData: simulariumFile.data.plotData.data,
+                        })
+                    );
+                }
             })
             .then(done)
             .catch((error: FrontEndError) => {
