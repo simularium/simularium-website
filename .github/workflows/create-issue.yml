@@ -4,13 +4,11 @@ on:
   issues:
     types: [opened]
 jobs:
-  createCard:
+  add-to-project:
+    name: Add issue to project
     runs-on: ubuntu-latest
     steps:
-      - name: Create or Update Project Card
-        uses: peter-evans/create-or-update-project-card@v1
+      - uses: actions/add-to-project@8f59162ff6331da7cfb994cdfdea456d39c0c9bf
         with:
-          token: ${{ secrets.SIMULARIUM }}
-          project-name: Simularium Web
-          column-name: Backlog
-          project-location: simularium
+          project-url: https://github.com/orgs/simularium/projects/5
+          github-token: ${{ secrets.SIMULARIUM }}
