@@ -1,5 +1,5 @@
 ---
-name: UX Design
+name: Usability Issue/Improvement
 about: '"User experience design work"'
 title: ''
 labels: ux
