@@ -7,11 +7,11 @@ assignees: ''
 
 ---
 
-## User Story
-As a _[type of user]_, I want to _[goal]_, so that _[benefit]_.
-
 ## Details
 _Provide any important background, context, known challenges, technical risks, or unknowns, etc_
+
+## User Story
+As a _[type of user]_, I want to _[goal]_, so that _[benefit]_.
 
 ## Stakeholder(s)
 _Who is directly involved in initiative (including developers if known) or the main internal point of contact?_
