@@ -10,9 +10,7 @@ assignees: ''
 ### Details
 _Provide any important background, context, known challenges, technical risks, or unknowns, etc_
 
-_Thank you for the feedback!_
-
-## Below line is for internal team use
+## Fields below are for internal team use
 
 ### User Story
 As a _[type of user]_, I want to _[goal]_, so that _[benefit]_.
