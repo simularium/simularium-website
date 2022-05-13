@@ -392,22 +392,24 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                         this.onTrajectoryFileInfoChanged
                     }
                 />
-                <PlaybackControls
-                    playHandler={this.startPlay}
-                    time={time}
-                    timeStep={timeStep}
-                    displayTimes={displayTimes}
-                    timeUnits={timeUnits}
-                    onTimeChange={this.skipToTime}
-                    pauseHandler={this.pause}
-                    prevHandler={this.playBackOne}
-                    nextHandler={this.playForwardOne}
-                    isPlaying={isPlaying}
-                    firstFrameTime={firstFrameTime}
-                    lastFrameTime={lastFrameTime}
-                    loading={isBuffering}
-                    isEmpty={status === VIEWER_EMPTY}
-                />
+                {firstFrameTime !== lastFrameTime && (
+                    <PlaybackControls
+                        playHandler={this.startPlay}
+                        time={time}
+                        timeStep={timeStep}
+                        displayTimes={displayTimes}
+                        timeUnits={timeUnits}
+                        onTimeChange={this.skipToTime}
+                        pauseHandler={this.pause}
+                        prevHandler={this.playBackOne}
+                        nextHandler={this.playForwardOne}
+                        isPlaying={isPlaying}
+                        firstFrameTime={firstFrameTime}
+                        lastFrameTime={lastFrameTime}
+                        loading={isBuffering}
+                        isEmpty={status === VIEWER_EMPTY}
+                    />
+                )}
                 <ScaleBar label={scaleBarLabel} />
                 <CameraControls
                     resetCamera={simulariumController.resetCamera}
