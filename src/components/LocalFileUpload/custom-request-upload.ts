@@ -1,4 +1,4 @@
-import { SimulariumFileFormat } from "@aics/simularium-viewer";
+import { ISimulariumFile, loadSimulariumFile } from "@aics/simularium-viewer";
 import { findIndex } from "lodash";
 import {
     UploadRequestOption,
@@ -9,13 +9,6 @@ import { LocalSimFile } from "../../state/trajectory/types";
 import { VIEWER_ERROR } from "../../state/viewer/constants";
 import { ViewerError, ViewerStatus } from "../../state/viewer/types";
 import { clearUrlParams } from "../../util";
-
-// Typescript's File definition is missing this function
-//  which is part of the HTML standard on all browsers
-//  and needed below
-interface FileHTML extends File {
-    text(): Promise<string>;
-}
 
 let numCustomRequests = 0;
 
@@ -62,68 +55,81 @@ export default (
     // and not have to have this action called multiple places in the code.
     clearSimulariumFile({ newFile: true });
 
-    const files: FileHTML[] = Array.from(selectedFiles) as FileHTML[];
+    const filesArr: File[] = Array.from(selectedFiles) as File[];
 
-    Promise.all(files.map((file: FileHTML) => file.text()))
-        .then((parsedFiles: string[]) => {
-            const simulariumFileIndex = findIndex(files, (file) =>
-                file.name.includes(".simularium")
+    try {
+        // Try to identify the simularium file.
+        // Put all the other files as text based geoAssets.
+        const simulariumFileIndex = findIndex(filesArr, (file) =>
+            file.name.includes(".simularium")
+        );
+        if (simulariumFileIndex === -1) {
+            throw new Error(
+                "Trajectory file was not found; please make sure it has a .simularium extension."
             );
-            if (simulariumFileIndex === -1) {
-                throw new Error(
-                    "Trajectory file was not found; please make sure it has a .simularium extension."
-                );
-            }
-
-            const simulariumFile: File = files[simulariumFileIndex];
-            const simulariumFileJson: SimulariumFileFormat = JSON.parse(
-                parsedFiles[simulariumFileIndex]
-            );
-            const geoAssets: { [name: string]: string } = files.reduce(
-                (acc: { [name: string]: string }, cur, index) => {
-                    if (index !== simulariumFileIndex) {
-                        acc[cur.name] = parsedFiles[index];
-                    }
-                    return acc;
-                },
-                {}
-            );
-
-            loadFunction({
-                lastModified: simulariumFile.lastModified,
-                name: simulariumFile.name,
-                data: simulariumFileJson,
-                geoAssets: geoAssets,
-            });
-            // TS thinks onSuccess might be undefined
-            if (onSuccess) {
-                onSuccess(
-                    {
-                        name: simulariumFile.name,
-                        status: "done",
-                        url: "",
+        }
+        Promise.all<string | ISimulariumFile>(
+            filesArr.map((element, index) => {
+                if (index !== simulariumFileIndex) {
+                    // is async call
+                    return element.text();
+                } else {
+                    return loadSimulariumFile(element);
+                }
+            })
+        )
+            .then((parsedFiles) => {
+                const simulariumFile = parsedFiles[
+                    simulariumFileIndex
+                ] as ISimulariumFile;
+                // build the geoAssets as mapping name-value pairs:
+                const geoAssets = filesArr.reduce(
+                    (acc, cur, index) => {
+                        if (index !== simulariumFileIndex) {
+                            acc[cur.name] = parsedFiles[index] as string;
+                        }
+                        return acc;
                     },
-                    new XMLHttpRequest() // onSuccess needs an XMLHttpRequest arg
+                    {} as { [key: string]: string }
                 );
-            }
-        })
-        .catch((error) => {
-            let message = error.message;
-            if (error instanceof DOMException) {
-                message =
-                    "Please load a collection of single files that does not include a folder.";
-            }
-            setError({
-                level: error.level,
-                message: message,
-                htmlData: "",
-            });
-            setViewerStatus({ status: VIEWER_ERROR });
-            clearSimulariumFile({ newFile: false });
-            clearUrlParams();
-            // TS thinks onError might be undefined
-            if (onError) {
-                onError(error as UploadRequestError);
-            }
+                const fileName = filesArr[simulariumFileIndex].name;
+
+                loadFunction({
+                    lastModified: filesArr[simulariumFileIndex].lastModified,
+                    name: fileName,
+                    data: simulariumFile,
+                    geoAssets: geoAssets,
+                });
+                // TS thinks onSuccess might be undefined
+                if (onSuccess) {
+                    onSuccess(
+                        {
+                            name: fileName,
+                            status: "done",
+                            url: "",
+                        },
+                        new XMLHttpRequest() // onSuccess needs an XMLHttpRequest arg
+                    );
+                }
+            })
+
+    } catch (error) {
+        let message = error.message;
+        if (error instanceof DOMException) {
+            message =
+                "Please load a collection of single files that does not include a folder.";
+        }
+        setError({
+            level: error.level,
+            message: message,
+            htmlData: "",
         });
+        setViewerStatus({ status: VIEWER_ERROR });
+        clearSimulariumFile({ newFile: false });
+        clearUrlParams();
+        // TS thinks onError might be undefined
+        if (onError) {
+            onError(error as UploadRequestError);
+        }
+    }
 };

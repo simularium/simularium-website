@@ -1,5 +1,5 @@
 import {
-    SimulariumFileFormat,
+    ISimulariumFile,
     SimulariumController,
 } from "@aics/simularium-viewer/type-declarations";
 
@@ -49,7 +49,7 @@ export interface LoadViaUrlAction {
 
 export interface LocalSimFile {
     name: string;
-    data: SimulariumFileFormat;
+    data: ISimulariumFile;
     lastModified: number;
     geoAssets?: { [key: string]: string };
 }
