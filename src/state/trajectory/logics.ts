@@ -3,7 +3,11 @@ import { batch } from "react-redux";
 import { createLogic } from "redux-logic";
 import { ArgumentAction } from "redux-logic/definitions/action";
 import queryString from "query-string";
-import { ErrorLevel, FrontEndError } from "@aics/simularium-viewer";
+import {
+    ErrorLevel,
+    FrontEndError,
+    loadSimulariumFile,
+} from "@aics/simularium-viewer";
 
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import { clearUrlParams } from "../../util";
@@ -174,8 +178,9 @@ const loadNetworkedFile = createLogic({
             .then(() => {
                 return dispatch(
                     requestCachedPlotData({
-                        url: `${simulariumFile.name.split(".")[0]
-                            }/plot-data.json`, // placeholder for however we organize this data in s3
+                        url: `${
+                            simulariumFile.name.split(".")[0]
+                        }/plot-data.json`, // placeholder for however we organize this data in s3
                     })
                 );
             })
@@ -272,18 +277,21 @@ const loadFileViaUrl = createLogic({
         fetch(url)
             .then((response) => {
                 if (response.ok) {
-                    return response.json();
+                    return response.blob();
                 } else {
                     // If there's a CORS error, this line of code is not reached because there is no response
                     throw new Error(`Failed to fetch - ${response.status}`);
                 }
             })
-            .then((json) => {
+            .then((blob) => {
+                return loadSimulariumFile(blob);
+            })
+            .then((simulariumFile) => {
                 dispatch(
                     changeToLocalSimulariumFile(
                         {
                             name: action.fileId, //TODO: add this to metadata about the file
-                            data: json,
+                            data: simulariumFile,
                             // Temp solution: Set lastModified to a date in the future to tell this apart
                             // from legitimate lastModified values
                             lastModified: Date.now() + 600000, //TODO: add this to metadata about the file
