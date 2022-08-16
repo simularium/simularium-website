@@ -15,7 +15,7 @@ _Context, goals, known challenges, technical risks, unknowns_
 ### User needs statement(s)
 As a _[type of user]_, I need/want to _[action(s)]_, so that I can _[goal]_.
 
-### Size [XS, SM, M, LG, XL]
+### Size [xs, sm, m, lg, xl]
 _Expected level of user research (includes discovery) and design effort_
 
 ### Deliverables (acceptance criteria)
