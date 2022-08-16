@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 ### Background
-_Context, goals, known challenges, technical risks, unknowns_
+_Context, goals, known challenges, technical risks, unknowns, etc_
 
 ## Fields below for internal team use
 
