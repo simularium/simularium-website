@@ -25,7 +25,7 @@ _Examples:_
 - _Solution for responsive design on small screen sizes_
 - _Align new feature to exising style_
 
-### Deliverables (acceptance criteria)
+### Deliverables
 _Examples:_
 - _High-fi designs + dev specifications_
 - _Interactive prototype (for testing)_
