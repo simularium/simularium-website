@@ -1,6 +1,6 @@
 ---
 name: Usability Issue/Improvement
-about: '"For AICS team use: User experience design work needed."'
+about: '"For AICS internal team use: User experience design work needed."'
 title: ''
 labels: ux
 assignees: ''
