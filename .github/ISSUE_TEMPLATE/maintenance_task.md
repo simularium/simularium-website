@@ -1,6 +1,6 @@
 ---
 name: Maintenance Task
-about: '"The code base needs cleanup, dependency updates, tests, etc...."'
+about: '"For AICS internal team use: The code base needs cleanup, dependency updates, tests, etc...."'
 title: ''
 labels: maintenance
 assignees: ''
