@@ -10,7 +10,7 @@ assignees: ''
 ### Background
 _Context, goals, known challenges, technical risks, unknowns_
 
-## Fields below are for internal team use
+## Fields below for internal team use
 
 ### User needs statement(s)
 As a _[type of user]_, I need/want to _[action(s)]_, so that I can _[goal]_.
