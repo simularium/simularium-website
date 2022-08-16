@@ -33,3 +33,9 @@ _Examples:_
 
 ### Stakeholder(s)
 _Who is directly involved? (developers, main points of contact, final approver)_
+
+### Timeline
+_Add completion date to ticket and any time specific notes here_
+
+### Notes
+_Add completion date to ticket and any time specific notes here_
