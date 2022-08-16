@@ -1,6 +1,6 @@
 ---
 name: Usability Issue/Improvement
-about: '"User experience design work needed"'
+about: '"User experience design work needed."'
 title: ''
 labels: ux
 assignees: ''
