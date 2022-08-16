@@ -16,7 +16,7 @@ _Context, goals, known challenges, technical risks, unknowns, etc_
 As a _[type of user]_, I need/want to _[action(s)]_, so that I can _[goal]_.
 
 ### Size [xs, sm, m, lg, xl]
-_Expected level of user research (includes discovery) and design effort_
+_Expected level of user research, discovery and design effort_
 
 ### Requirements
 _Expected level of user research (includes discovery) and design effort_
