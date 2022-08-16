@@ -19,7 +19,11 @@ As a _[type of user]_, I need/want to _[action(s)]_, so that I can _[goal]_.
 _Expected level of user research, discovery and design effort (xs, sm, m, lg, xl)_
 
 ### Requirements
-_Expected level of user research (includes discovery) and design effort_
+_Examples:_
+- _UI for ability to add, edit, and save_
+- _Error messaging for error states_
+- _Solution for responsive design on small screen sizes_
+- _Align new feature to exising style_
 
 ### Deliverables (acceptance criteria)
 _Examples:_
