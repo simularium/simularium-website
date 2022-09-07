@@ -59,6 +59,9 @@ ___
 
 ### Deployment
 
+#### Update Simularium Viewer module
+Run `npm update` to update dependencies, including simularium-viewer
+
 #### Staging deployment
 Automatically builds from `main`
 
