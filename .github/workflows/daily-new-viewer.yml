@@ -33,13 +33,6 @@ jobs:
           publish_dir: ./dist
           destination_dir: stable-release
 
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
             
       - run: npm ci
       - run: npm i https://github.com/simularium/simularium-viewer
