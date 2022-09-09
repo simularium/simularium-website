@@ -16,11 +16,13 @@ const BASE_PLUGINS = [
         tsconfig: path.resolve(__dirname, '../', 'tsconfig.json'),
         workers: ForkTsCheckerWebpackPlugin.TWO_CPUS_FREE,
     }),
-    new CleanWebpackPlugin(['dist'], {
+    new CleanWebpackPlugin(['dist', 'dev', 'stable'], {
         root: path.resolve(__dirname, '../'),
         watch: true,
     }),
-    new MiniCssExtractPlugin({ filename: 'style.[contenthash].css' }),
+    new MiniCssExtractPlugin({
+        filename: 'style.[contenthash].css'
+    }),
     new HtmlWebpackPlugin({
         favicon: './src/assets/AICS-logo.svg',
         template: path.resolve(__dirname, 'index.template.html')
@@ -31,7 +33,32 @@ const BASE_PLUGINS = [
     }),
 ];
 
-const BUNDLE_ANALYZER = [new BundleAnalyzerPlugin({ analyzerMode: 'static' })];
+const getBasePlugins = (dist) => {
+    return [new ForkTsCheckerWebpackPlugin({
+            tsconfig: path.resolve(__dirname, '../', 'tsconfig.json'),
+            workers: ForkTsCheckerWebpackPlugin.TWO_CPUS_FREE,
+        }),
+        new CleanWebpackPlugin([dist], {
+            root: path.resolve(__dirname, '../'),
+            watch: true,
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'style.[contenthash].css'
+        }),
+        new HtmlWebpackPlugin({
+            favicon: './src/assets/AICS-logo.svg',
+            template: path.resolve(__dirname, 'index.template.html')
+        }),
+        new webpack.EnvironmentPlugin({
+            GH_BUILD: !!process.env.GH_BUILD,
+            GOOGLE_API_KEY: process.env.GOOGLE_API_KEY || "AIzaSyAZ3ow-AhfTcOsBml7e3oXZ7JwqIATcGwU"
+        }),
+    ]
+}
+
+const BUNDLE_ANALYZER = [new BundleAnalyzerPlugin({
+    analyzerMode: 'static'
+})];
 
 const PLUGINS_BY_ENV = {
     [Env.PRODUCTION]: [
@@ -57,8 +84,8 @@ const PLUGINS_BY_ENV = {
     ]
 };
 
-module.exports = (env, analyzer) => [
-    ...BASE_PLUGINS,
+module.exports = (env, dist, analyzer ) => [
+    ...getBasePlugins(dist),
     ...(analyzer ? BUNDLE_ANALYZER : []),
     ...(PLUGINS_BY_ENV[env] || [])
 ];
