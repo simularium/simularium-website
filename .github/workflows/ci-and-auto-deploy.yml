@@ -1,4 +1,4 @@
-name: Auto deploy staging AWS
+name: lint/test/typeCheck, then deploy if on main
 env: 
   NODE_VERSION: '14.x'
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
