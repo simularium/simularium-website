@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row, Tooltip } from "antd";
+import { Col, Row, Typography } from "antd";
 import { ActionCreator } from "redux";
 import { CheckboxChangeEvent, CheckboxOptionType } from "antd/lib/checkbox";
 import { map, filter, isEmpty } from "lodash";
@@ -14,9 +14,11 @@ import SharedCheckbox from "../SharedCheckbox";
 import CheckboxTreeSubmenu from "../CheckboxTreeSubmenu";
 import TreeNode from "../TreeNode";
 import Checkbox from "../Checkbox";
-import { CHECKBOX_TYPE_STAR, LEFT_PANEL_TOOLTIP_COLOR } from "../../constants";
+import { CHECKBOX_TYPE_STAR } from "../../constants";
 import ColorSwatch from "../ColorSwatch";
 import NoTypeMappingText from "../NoTrajectoriesText/NoTypeMappingText";
+
+const { Text } = Typography;
 
 interface CheckBoxWithColor extends CheckboxOptionType {
     color: string;
@@ -235,19 +237,16 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                               nodeData
                                           )}{" "}
                                     <ColorSwatch color={nodeData.color} />
-                                    <Tooltip
-                                        title={
-                                            nodeData.title.length > 20
-                                                ? nodeData.title
-                                                : null
-                                        }
-                                        placement="top"
-                                        color={LEFT_PANEL_TOOLTIP_COLOR}
+                                    <Text
+                                        style={{ maxWidth: 143 }}
+                                        ellipsis={{
+                                            tooltip: nodeData.title,
+                                        }}
                                     >
                                         <label className={styles.headerLabel}>
                                             {nodeData.title}
                                         </label>
-                                    </Tooltip>
+                                    </Text>
                                 </>
                             }
                             expandByDefault={!nodeData.color}
