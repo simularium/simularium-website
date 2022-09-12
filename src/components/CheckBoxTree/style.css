@@ -12,6 +12,14 @@
 
 .header-label {
     margin-left: 8px;
+    max-width: 133px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.ruler {
+    visibility: hidden;
+    white-space: nowrap;
 }
 
 .checkbox-set {
