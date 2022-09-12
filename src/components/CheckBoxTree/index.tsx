@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row } from "antd";
+import { Col, Row, Tooltip } from "antd";
 import { ActionCreator } from "redux";
 import { CheckboxChangeEvent, CheckboxOptionType } from "antd/lib/checkbox";
 import { map, filter, isEmpty } from "lodash";
@@ -14,7 +14,7 @@ import SharedCheckbox from "../SharedCheckbox";
 import CheckboxTreeSubmenu from "../CheckboxTreeSubmenu";
 import TreeNode from "../TreeNode";
 import Checkbox from "../Checkbox";
-import { CHECKBOX_TYPE_STAR } from "../../constants";
+import { CHECKBOX_TYPE_STAR, LEFT_PANEL_TOOLTIP_COLOR } from "../../constants";
 import ColorSwatch from "../ColorSwatch";
 import NoTypeMappingText from "../NoTrajectoriesText/NoTypeMappingText";
 
@@ -235,9 +235,19 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                               nodeData
                                           )}{" "}
                                     <ColorSwatch color={nodeData.color} />
-                                    <label className={styles.headerLabel}>
-                                        {nodeData.title}
-                                    </label>
+                                    <Tooltip
+                                        title={
+                                            nodeData.title.length > 20
+                                                ? nodeData.title
+                                                : null
+                                        }
+                                        placement="top"
+                                        color={LEFT_PANEL_TOOLTIP_COLOR}
+                                    >
+                                        <label className={styles.headerLabel}>
+                                            {nodeData.title}
+                                        </label>
+                                    </Tooltip>
                                 </>
                             }
                             expandByDefault={!nodeData.color}
