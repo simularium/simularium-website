@@ -12,6 +12,7 @@
 
 .header-label {
     margin-left: 8px;
+    max-width: 120px;
 }
 
 .checkbox-set {
@@ -83,4 +84,18 @@
 .star-icon::after {
     content: "\e902";
     color: var(--white-two);
+}
+
+.container :global(.ant-typography-ellipsis) {
+    color: var(--dark-theme-sidebar-text)
+}
+
+/* Tooltip styling  */
+/* Has to be global because it's at the bottom of the dom */
+:global(.ant-tooltip-inner){
+    background-color: var(--side-panel-tooltip);
+}
+
+:global(.ant-tooltip-arrow-content){
+    background-color:  var(--side-panel-tooltip);
 }

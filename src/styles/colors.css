@@ -30,6 +30,7 @@
     --footer-text: var(--warm-gray);
     --footer-text-border-bottom: var(--greyish-brown);
     --footer-link: var(--blue);
+    --side-panel-tooltip: var(--charcoal-grey);
     --input-border-highlight: var(--baby-purple);
     --dark-theme-primary-color: var(--baby-purple);
     --dark-theme-body-bg: var(--black);
