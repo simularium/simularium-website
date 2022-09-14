@@ -426,6 +426,7 @@
     --footer-text: var(--warm-gray);
     --footer-text-border-bottom: var(--greyish-brown);
     --footer-link: var(--blue);
+    --side-panel-tooltip: var(--charcoal-grey);
     --input-border-highlight: var(--baby-purple);
     --dark-theme-primary-color: var(--baby-purple);
     --dark-theme-body-bg: var(--black);
@@ -768,6 +769,7 @@
 
 .style__header-label--2-vZj {
     margin-left: 8px;
+    max-width: 120px;
 }
 
 .style__checkbox-set--3QARo {
@@ -839,6 +841,20 @@
 .style__star-icon--2LIXF::after {
     content: "\e902";
     color: var(--white-two);
+}
+
+.style__container--SrsUo .ant-typography-ellipsis {
+    color: var(--dark-theme-sidebar-text)
+}
+
+/* Tooltip styling  */
+/* Has to be global because it's at the bottom of the dom */
+.ant-tooltip-inner{
+    background-color: var(--side-panel-tooltip);
+}
+
+.ant-tooltip-arrow-content{
+    background-color:  var(--side-panel-tooltip);
 }
 .style__container--3IWRx .ant-card-body {
     padding: 0 0 0 10px;
