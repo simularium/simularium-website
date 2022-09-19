@@ -4,13 +4,10 @@ on:
   schedule:
     - cron: "0 0 * * *"
   workflow_dispatch:
-    inputs: 
-      test:
-        description: 'Test'     
-        required: false
+    
 
 jobs:
-  build-stable:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -31,55 +28,24 @@ jobs:
       - run: npm ci
       - run: npm i @aics/simularium-viewer@latest
       - run: npm run gh-build:stable
-      - name: Upload stable-build
-        uses: actions/upload-artifact@v3
-        with:
-          name: stable-build
-          path: stable
-      # - name: Deploy
-      #   uses: peaceiris/actions-gh-pages@v3
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     publish_dir: ./dist
-      #     destination_dir: stable-release
-
-  build-development:
-    runs-on: ubuntu-latest
-    steps:  
-      - uses: actions/checkout@v3
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: "14.x"
-
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - run: npm ci
       - run: npm i https://github.com/simularium/simularium-viewer
       - run: npm run gh-build:dev
-      - name: Upload dev-build
+      - name: Upload
         uses: actions/upload-artifact@v3
         with:
-          name: dev-build
-          path: dev
+          name: daily-build
+          path: gh-pages/
 
-  download:
+  download-and-deploy:
+    runs-on: ubuntu-latest
+    needs: [build]
     steps:
       - uses: actions/checkout@v2
-
       - uses: actions/download-artifact@v3
-
       - name: Display structure of downloaded files
         run: ls -R
-      # - name: Deploy
-      #   uses: peaceiris/actions-gh-pages@v3
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     publish_dir: ./dist
-      #     destination_dir: development-head
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./daily-build
