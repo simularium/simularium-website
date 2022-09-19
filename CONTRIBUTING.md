@@ -62,6 +62,10 @@ ___
 #### Update Simularium Viewer module
 Run `npm update` to update dependencies, including simularium-viewer
 
+### Daily builds
+[Viewer at development head](https://simularium.github.io/simularium-website/dev)
+[Latest released stable viewer](https://simularium.github.io/simularium-website/stable)
+
 #### Staging deployment
 Automatically builds from `main`
 
