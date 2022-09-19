@@ -1,4 +1,4 @@
-name: Continuos Integration
+name: Continuous Integration
 env: 
   NODE_VERSION: '14.x'
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
