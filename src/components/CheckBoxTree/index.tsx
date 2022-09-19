@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row } from "antd";
+import { Col, Row, Typography } from "antd";
 import { ActionCreator } from "redux";
 import { CheckboxChangeEvent, CheckboxOptionType } from "antd/lib/checkbox";
 import { map, filter, isEmpty } from "lodash";
@@ -17,6 +17,8 @@ import Checkbox from "../Checkbox";
 import { CHECKBOX_TYPE_STAR } from "../../constants";
 import ColorSwatch from "../ColorSwatch";
 import NoTypeMappingText from "../NoTrajectoriesText/NoTypeMappingText";
+
+const { Text } = Typography;
 
 interface CheckBoxWithColor extends CheckboxOptionType {
     color: string;
@@ -235,9 +237,16 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                               nodeData
                                           )}{" "}
                                     <ColorSwatch color={nodeData.color} />
-                                    <label className={styles.headerLabel}>
-                                        {nodeData.title}
-                                    </label>
+                                    <Text
+                                        style={{ maxWidth: 143 }}
+                                        ellipsis={{
+                                            tooltip: nodeData.title,
+                                        }}
+                                    >
+                                        <label className={styles.headerLabel}>
+                                            {nodeData.title}
+                                        </label>
+                                    </Text>
                                 </>
                             }
                             expandByDefault={!nodeData.color}
