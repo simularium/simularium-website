@@ -28,7 +28,7 @@ jobs:
       - run: npm ci
       - run: npm i @aics/simularium-viewer@latest
       - run: npm run gh-build:stable
-      - run: npm i https://github.com/simularium/simularium-viewer
+      - run: npm i https://github.com/simularium/simularium-viewer#build
       - run: npm run gh-build:dev
       - name: Upload
         uses: actions/upload-artifact@v3
