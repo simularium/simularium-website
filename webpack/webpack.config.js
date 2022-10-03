@@ -10,10 +10,10 @@ const themeVariables = lessToJs(
 const { devServer, Env, stats } = require("./constants");
 const getPluginsByEnv = require("./plugins");
 
-module.exports = ({ analyze, env } = {}) => ({
+module.exports = ({ analyze, env, dest="dist" } = {}) => ({
     devtool: env !== Env.PRODUCTION && "source-map",
     devServer: {
-        contentBase: path.join(__dirname, "../", "dist"),
+        contentBase: path.join(__dirname, "../", dest),
         disableHostCheck: true,
         host: devServer.host,
         port: devServer.port,
@@ -139,11 +139,11 @@ module.exports = ({ analyze, env } = {}) => ({
         },
     },
     output: {
-        path: path.resolve(__dirname, "../", "dist"),
+        path: path.resolve(__dirname, "../", dest),
         filename: "[name].[chunkhash].js",
         publicPath: process.env.GH_BUILD ? "" : "/",
     },
-    plugins: getPluginsByEnv(env, analyze),
+    plugins: getPluginsByEnv(env, dest, analyze),
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
     },
