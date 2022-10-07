@@ -13,13 +13,14 @@ const getPluginsByEnv = require("./plugins");
 module.exports = ({ analyze, env, dest="dist" } = {}) => ({
     devtool: env !== Env.PRODUCTION && "source-map",
     devServer: {
-        contentBase: path.join(__dirname, "../", dest),
-        disableHostCheck: true,
+        static:{
+            directory: path.join(__dirname, "../", dest),
+            publicPath: "/"
+        },
+        allowedHosts: "all",
         host: devServer.host,
         port: devServer.port,
-        publicPath: "/",
         historyApiFallback: true,
-        stats,
     },
     entry: {
         app: "./src/index.tsx",
@@ -49,10 +50,11 @@ module.exports = ({ analyze, env, dest="dist" } = {}) => ({
                     {
                         loader: "css-loader",
                         options: {
-                            camelCase: true,
                             importLoaders: 1,
-                            localIdentName: "[name]__[local]--[hash:base64:5]",
-                            modules: true,
+                            modules:{
+                              exportLocalsConvention: "camelCase",
+                              localIdentName: "[name]__[local]--[hash:base64:5]",
+                            }
                         },
                     },
                     {
@@ -94,15 +96,20 @@ module.exports = ({ analyze, env, dest="dist" } = {}) => ({
                     {
                         loader: "css-loader",
                         options: {
-                            camelCase: true,
                             importLoaders: 1,
+                            modules:{
+                                exportLocalsConvention: "camelCase",
+                                localIdentName: "[name]__[local]--[hash:base64:5]",
+                              }
                         },
                     },
                     {
                         loader: "less-loader",
                         options: {
-                            javascriptEnabled: true,
-                            modifyVars: themeVariables,
+                            lessOptions:{
+                                javascriptEnabled: true,
+                                modifyVars: themeVariables,
+                            }
                         },
                     },
                 ],
@@ -127,6 +134,7 @@ module.exports = ({ analyze, env, dest="dist" } = {}) => ({
         ],
     },
     optimization: {
+        moduleIds: env === Env.STAGE ? 'named' : undefined,
         runtimeChunk: "single",
         splitChunks: {
             chunks: "all",

@@ -2,7 +2,7 @@ require('dotenv').config()
 const path = require('path');
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -13,13 +13,9 @@ const Env = require('./constants').Env;
 
 const getBasePlugins = (dist) => {
     return [new ForkTsCheckerWebpackPlugin({
-            tsconfig: path.resolve(__dirname, '../', 'tsconfig.json'),
-            workers: ForkTsCheckerWebpackPlugin.TWO_CPUS_FREE,
+            typescript: {configFile: path.resolve(__dirname, '../', 'tsconfig.json')},
         }),
-        new CleanWebpackPlugin([dist], {
-            root: path.resolve(__dirname, '../'),
-            watch: true,
-        }),
+        new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: 'style.[contenthash].css'
         }),
@@ -43,13 +39,12 @@ const PLUGINS_BY_ENV = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production'),
         }),
-        new webpack.HashedModuleIdsPlugin(),
+        new webpack.ids.HashedModuleIdsPlugin(),
         new webpack.EnvironmentPlugin({
             BACKEND_SERVER_IP: `production-node1-agentviz-backend.cellexplore.net`
         })
     ],
     [Env.STAGE]: [
-        new webpack.NamedModulesPlugin(),
         new webpack.EnvironmentPlugin({
             BACKEND_SERVER_IP: `staging-node1-agentviz-backend.cellexplore.net`
         })

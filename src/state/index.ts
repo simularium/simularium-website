@@ -3,7 +3,7 @@ import { initialState as selectionInitialState } from "./selection/reducer";
 import { initialState as viewerInitialState } from "./viewer/reducer";
 import { initialState as simulariumInitialState } from "./simularium/reducer";
 
-import { State } from "./types";
+import type { State } from "./types";
 
 export const initialState: State = Object.freeze({
     trajectory: trajectoryInitialState,
@@ -18,4 +18,4 @@ export { default as viewer } from "./viewer";
 export { default as simularium } from "./simularium";
 export { default as createReduxStore } from "./configure-store";
 export { enableBatching } from "./util";
-export { State } from "./types";
+export type { State } from "./types";

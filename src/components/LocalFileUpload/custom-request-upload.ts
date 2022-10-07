@@ -77,43 +77,38 @@ export default (
                     return loadSimulariumFile(element);
                 }
             })
-        )
-            .then((parsedFiles) => {
-                const simulariumFile = parsedFiles[
-                    simulariumFileIndex
-                ] as ISimulariumFile;
-                // build the geoAssets as mapping name-value pairs:
-                const geoAssets = filesArr.reduce(
-                    (acc, cur, index) => {
-                        if (index !== simulariumFileIndex) {
-                            acc[cur.name] = parsedFiles[index] as string;
-                        }
-                        return acc;
-                    },
-                    {} as { [key: string]: string }
-                );
-                const fileName = filesArr[simulariumFileIndex].name;
-
-                loadFunction({
-                    lastModified: filesArr[simulariumFileIndex].lastModified,
-                    name: fileName,
-                    data: simulariumFile,
-                    geoAssets: geoAssets,
-                });
-                // TS thinks onSuccess might be undefined
-                if (onSuccess) {
-                    onSuccess(
-                        {
-                            name: fileName,
-                            status: "done",
-                            url: "",
-                        },
-                        new XMLHttpRequest() // onSuccess needs an XMLHttpRequest arg
-                    );
+        ).then((parsedFiles) => {
+            const simulariumFile = parsedFiles[
+                simulariumFileIndex
+            ] as ISimulariumFile;
+            // build the geoAssets as mapping name-value pairs:
+            const geoAssets = filesArr.reduce((acc, cur, index) => {
+                if (index !== simulariumFileIndex) {
+                    acc[cur.name] = parsedFiles[index] as string;
                 }
-            })
+                return acc;
+            }, {} as { [key: string]: string });
+            const fileName = filesArr[simulariumFileIndex].name;
 
-    } catch (error) {
+            loadFunction({
+                lastModified: filesArr[simulariumFileIndex].lastModified,
+                name: fileName,
+                data: simulariumFile,
+                geoAssets: geoAssets,
+            });
+            // TS thinks onSuccess might be undefined
+            if (onSuccess) {
+                onSuccess(
+                    {
+                        name: fileName,
+                        status: "done",
+                        url: "",
+                    },
+                    new XMLHttpRequest() // onSuccess needs an XMLHttpRequest arg
+                );
+            }
+        });
+    } catch (error: any) {
         let message = error.message;
         if (error instanceof DOMException) {
             message =
