@@ -10,12 +10,12 @@ const themeVariables = lessToJs(
 const { devServer, Env, stats } = require("./constants");
 const getPluginsByEnv = require("./plugins");
 
-module.exports = ({ analyze, env, dest="dist" } = {}) => ({
+module.exports = ({ analyze, env, dest = "dist" } = {}) => ({
     devtool: env !== Env.PRODUCTION && "source-map",
     devServer: {
-        static:{
+        static: {
             directory: path.join(__dirname, "../", dest),
-            publicPath: "/"
+            publicPath: "/",
         },
         allowedHosts: "all",
         host: devServer.host,
@@ -51,24 +51,27 @@ module.exports = ({ analyze, env, dest="dist" } = {}) => ({
                         loader: "css-loader",
                         options: {
                             importLoaders: 1,
-                            modules:{
-                              exportLocalsConvention: "camelCase",
-                              localIdentName: "[name]__[local]--[hash:base64:5]",
-                            }
+                            modules: {
+                                exportLocalsConvention: "camelCase",
+                                localIdentName:
+                                    "[name]__[local]--[hash:base64:5]",
+                            },
                         },
                     },
                     {
                         loader: "postcss-loader",
                         options: {
-                            ident: "postcss",
-                            plugins: [
-                                require("postcss-flexbugs-fixes"),
-                                require("postcss-preset-env")({
-                                    autoprefixer: {
-                                        flexbox: "no-2009",
-                                    },
-                                }),
-                            ],
+                            postcssOptions: {
+                                ident: "postcss",
+                                plugins: [
+                                    require("postcss-flexbugs-fixes"),
+                                    require("postcss-preset-env")({
+                                        autoprefixer: {
+                                            flexbox: "no-2009",
+                                        },
+                                    }),
+                                ],
+                            },
                             sourceMap: env !== Env.PRODUCTION,
                         },
                     },
@@ -97,19 +100,20 @@ module.exports = ({ analyze, env, dest="dist" } = {}) => ({
                         loader: "css-loader",
                         options: {
                             importLoaders: 1,
-                            modules:{
+                            modules: {
                                 exportLocalsConvention: "camelCase",
-                                localIdentName: "[name]__[local]--[hash:base64:5]",
-                              }
+                                localIdentName:
+                                    "[name]__[local]--[hash:base64:5]",
+                            },
                         },
                     },
                     {
                         loader: "less-loader",
                         options: {
-                            lessOptions:{
+                            lessOptions: {
                                 javascriptEnabled: true,
                                 modifyVars: themeVariables,
-                            }
+                            },
                         },
                     },
                 ],
@@ -134,7 +138,7 @@ module.exports = ({ analyze, env, dest="dist" } = {}) => ({
         ],
     },
     optimization: {
-        moduleIds: env === Env.STAGE ? 'named' : undefined,
+        moduleIds: env === Env.STAGE ? "named" : undefined,
         runtimeChunk: "single",
         splitChunks: {
             chunks: "all",
