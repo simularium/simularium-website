@@ -86,10 +86,20 @@ module.exports = ({ analyze, env, dest = "dist" } = {}) => ({
                 include: [
                     path.resolve(__dirname, "../src", "style.css"),
                     path.resolve(__dirname, "../", "node_modules"),
+                    path.resolve(__dirname, "../", "../simularium-viewer"),
                 ],
                 use: [
                     { loader: MiniCssExtractPlugin.loader },
-                    { loader: "css-loader" },
+                    {
+                        loader: "css-loader",
+                        options: {
+                            modules: {
+                                exportLocalsConvention: "camelCase",
+                                localIdentName:
+                                    "[name]__[local]--[hash:base64:5]",
+                            },
+                        },
+                    },
                 ],
             },
             {

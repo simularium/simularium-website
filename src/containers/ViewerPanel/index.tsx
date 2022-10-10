@@ -106,9 +106,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.pause = this.pause.bind(this);
         this.receiveTimeChange = this.receiveTimeChange.bind(this);
         this.handleJsonMeshData = this.handleJsonMeshData.bind(this);
-        this.onTrajectoryFileInfoChanged = this.onTrajectoryFileInfoChanged.bind(
-            this
-        );
+        this.onTrajectoryFileInfoChanged =
+            this.onTrajectoryFileInfoChanged.bind(this);
         this.skipToTime = this.skipToTime.bind(this);
         this.resize = this.resize.bind(this);
         this.state = {
@@ -426,15 +425,16 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 function mapStateToProps(state: State) {
     return {
         time: selectionStateBranch.selectors.getCurrentTime(state),
-        numberPanelsCollapsed: selectionStateBranch.selectors.getNumberCollapsed(
-            state
-        ),
-        firstFrameTime: trajectoryStateBranch.selectors.getFirstFrameTimeOfCachedSimulation(
-            state
-        ),
-        lastFrameTime: trajectoryStateBranch.selectors.getLastFrameTimeOfCachedSimulation(
-            state
-        ),
+        numberPanelsCollapsed:
+            selectionStateBranch.selectors.getNumberCollapsed(state),
+        firstFrameTime:
+            trajectoryStateBranch.selectors.getFirstFrameTimeOfCachedSimulation(
+                state
+            ),
+        lastFrameTime:
+            trajectoryStateBranch.selectors.getLastFrameTimeOfCachedSimulation(
+                state
+            ),
         numFrames: trajectoryStateBranch.selectors.getNumFrames(state),
         timeStep: trajectoryStateBranch.selectors.getTimeStep(state),
         displayTimes: getDisplayTimes(state),
@@ -443,9 +443,8 @@ function mapStateToProps(state: State) {
         selectionStateInfoForViewer: getSelectionStateInfoForViewer(state),
         status: viewerStateBranch.selectors.getStatus(state),
         error: viewerStateBranch.selectors.getError(state),
-        fileIsDraggedOver: viewerStateBranch.selectors.getFileDraggedOver(
-            state
-        ),
+        fileIsDraggedOver:
+            viewerStateBranch.selectors.getFileDraggedOver(state),
         isBuffering: viewerStateBranch.selectors.getIsBuffering(state),
         isPlaying: viewerStateBranch.selectors.getIsPlaying(state),
     };
@@ -466,7 +465,4 @@ const dispatchToPropsMap = {
     setError: viewerStateBranch.actions.setError,
 };
 
-export default connect(
-    mapStateToProps,
-    dispatchToPropsMap
-)(ViewerPanel);
+export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);
