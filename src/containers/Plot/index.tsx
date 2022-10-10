@@ -2,6 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Waypoint } from "react-waypoint";
 import PlotlyPlot from "react-plotly.js";
+import { PlotData } from "plotly.js";
 // TODO: Use changeTime action to allow updating of app time by dragging the
 // time indicator bar
 // import { ActionCreator } from "redux";
@@ -71,7 +72,7 @@ class Plot extends React.Component<PlotProps, PlotState> {
             // plot trace in `data` because we pushed it to `data` in componentDidMount())
             const lastTrace = data[data.length - 1];
             if (lastTrace.name === TIME_INDICATOR_LINE) {
-                lastTrace.x = [time, time];
+                (lastTrace as PlotData).x = [time, time];
             }
         }
 
