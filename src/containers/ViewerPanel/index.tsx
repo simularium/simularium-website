@@ -55,7 +55,7 @@ import {
 import { AGENT_COLORS } from "./constants";
 import { DisplayTimes } from "./types";
 
-const styles = require("./style.css");
+import styles from "./style.css";
 
 interface ViewerPanelProps {
     time: number;

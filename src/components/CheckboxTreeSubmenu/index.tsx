@@ -14,7 +14,7 @@ interface CheckboxTreeSubmenuProps {
     onChange: (values: CheckboxValueType[]) => void;
     checkboxType?: CHECKBOX_TYPE_STAR;
 }
-const styles = require("./style.css");
+import styles from "./style.css";
 
 const CheckboxTreeSubmenu = ({
     checkedAgents,

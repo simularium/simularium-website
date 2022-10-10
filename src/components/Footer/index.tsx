@@ -4,7 +4,7 @@ import { Layout, Row, Button } from "antd";
 
 const { Footer: AntdFooter } = Layout;
 
-const styles = require("./style.css");
+import styles from "./style.css";
 
 const Footer = (): JSX.Element => {
     return (

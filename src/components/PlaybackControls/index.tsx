@@ -8,7 +8,7 @@ import Icons from "../Icons";
 import { DisplayTimes } from "../../containers/ViewerPanel/types";
 import { TimeUnits } from "../../state/trajectory/types";
 
-const styles = require("./style.css");
+import styles from "./style.css";
 interface PlayBackProps {
     playHandler: (timeOverride?: number) => void;
     time: number;

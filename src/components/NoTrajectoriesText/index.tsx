@@ -8,7 +8,7 @@ import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { TUTORIAL_PATHNAME } from "../../routes";
 
-const styles = require("./style.css");
+import styles from "./style.css";
 
 interface NoTrajectoriesTextProps {
     selectFile: ActionCreator<RequestNetworkFileAction>;
@@ -49,9 +49,7 @@ const NoTrajectoriesText = ({
                 <Link
                     onClick={() => handleClick(exampleTrajectory)}
                     to={{
-                        search: `?${URL_PARAM_KEY_FILE_NAME}=${
-                            exampleTrajectory.id
-                        }`,
+                        search: `?${URL_PARAM_KEY_FILE_NAME}=${exampleTrajectory.id}`,
                     }}
                 >
                     Load an example instead.

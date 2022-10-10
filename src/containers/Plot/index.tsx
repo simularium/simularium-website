@@ -24,7 +24,7 @@ interface PlotState {
     isInView: boolean;
 }
 
-const styles = require("./style.css");
+import styles from "./style.css";
 const TIME_INDICATOR_LINE = "timeIndicatorLine";
 
 class Plot extends React.Component<PlotProps, PlotState> {

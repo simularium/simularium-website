@@ -3,7 +3,7 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
-    "jsx": "React",
+    "jsx": "react",
     "lib": ["DOM", "ES2015", "ES6", "DOM.Iterable", "ScriptHost"],
     "moduleResolution": "Node",
     "skipLibCheck": true,
@@ -11,7 +11,13 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ES5"
+    "target": "ES5",
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+        
+      }
+    ]
   },
   "include": [
     "src/**/*"

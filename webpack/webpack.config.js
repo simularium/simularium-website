@@ -2,10 +2,10 @@ const path = require("path");
 const fs = require("fs");
 
 const lessToJs = require("less-vars-to-js");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const themeVariables = lessToJs(
     fs.readFileSync(path.join(__dirname, "../src/styles/ant-vars.less"), "utf8")
 );
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const { devServer, Env, stats } = require("./constants");
 const getPluginsByEnv = require("./plugins");

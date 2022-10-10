@@ -44,7 +44,7 @@ interface CheckBoxTreeProps {
 }
 const CHECKBOX_SPAN_NO = 2;
 const LABEL_SPAN_NO = 6;
-const styles = require("./style.css");
+import styles from "./style.css";
 
 class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
     onSubCheckboxChange = (key: string, values: string[]) => {
@@ -63,11 +63,8 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
     };
 
     toggleAllOnOff = (checkedKeys: { [key: string]: string[] }) => {
-        const {
-            setAgentsVisible,
-            payloadForSelectNone,
-            payloadForSelectAll,
-        } = this.props;
+        const { setAgentsVisible, payloadForSelectNone, payloadForSelectAll } =
+            this.props;
         if (!checkedKeys.All.length) {
             setAgentsVisible(payloadForSelectNone);
         } else {
@@ -103,15 +100,11 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
     };
 
     renderCheckAllButton = () => {
-        const {
-            agentsChecked,
-            treeData,
-            isSharedCheckboxIndeterminate,
-        } = this.props;
+        const { agentsChecked, treeData, isSharedCheckboxIndeterminate } =
+            this.props;
         const checkedList = filter(
-            map(
-                agentsChecked,
-                (value, key): string => (value.length ? key : "")
+            map(agentsChecked, (value, key): string =>
+                value.length ? key : ""
             )
         );
 
@@ -293,9 +286,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                         {nodeData.children.map((value) => {
                                             return (
                                                 <div
-                                                    key={`label-${
-                                                        nodeData.title
-                                                    }-${value.value}`}
+                                                    key={`label-${nodeData.title}-${value.value}`}
                                                     className={
                                                         styles.rowLabelContainer
                                                     }

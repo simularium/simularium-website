@@ -6,7 +6,7 @@ import moment from "moment";
 import { VIEWER_PATHNAME } from "../../routes";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 
-const styles = require("./style.css");
+import styles from "./style.css";
 
 interface ViewerTitleProps {
     simulariumFileName: string;

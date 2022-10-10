@@ -8,7 +8,7 @@ import {
     LEFT_PANEL_TOOLTIP_COLOR,
 } from "../../constants";
 
-const styles = require("./style.css");
+import styles from "./style.css";
 
 const StarCheckbox = ({
     checked,
