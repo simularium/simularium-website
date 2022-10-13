@@ -1,5 +1,5 @@
 import { Button, Form, Input, Modal } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import { TUTORIAL_PATHNAME, VIEWER_PATHNAME } from "../../routes";
@@ -15,6 +15,12 @@ const UrlUploadModal = ({
 }: UrlUploadModalProps): JSX.Element => {
     const [userInput, setUserInput] = useState("");
     const history = useHistory();
+
+    //focus on input field when modal is opened
+    useEffect(() => {
+        const input = document.getElementById("url");
+        if (input) input.focus();
+    }, []);
 
     const closeModal = () => {
         setIsModalVisible(false);
