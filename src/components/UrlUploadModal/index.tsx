@@ -18,7 +18,9 @@ const UrlUploadModal = ({
 
     //focus on input field when modal is opened
     useEffect(() => {
-        const input = document.getElementById("url");
+        const input = document.getElementsByClassName(
+            "ant-input"
+        )[1] as HTMLInputElement;
         if (input) input.focus();
     }, []);
 
