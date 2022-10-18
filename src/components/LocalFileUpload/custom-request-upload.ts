@@ -108,7 +108,7 @@ export default (
                 );
             }
         });
-    } catch (error: any) {
+    } catch (error) {
         let message = error.message;
         if (error instanceof DOMException) {
             message =
