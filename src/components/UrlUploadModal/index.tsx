@@ -1,5 +1,5 @@
 import { Button, Form, Input, Modal } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import { TUTORIAL_PATHNAME, VIEWER_PATHNAME } from "../../routes";
@@ -20,6 +20,23 @@ const UrlUploadModal = ({
         setIsModalVisible(false);
     };
 
+    //forces focus on input field when modal is opened
+    //if statement keeps tab targeting to the link
+    useEffect(() => {
+        const input = document.getElementsByClassName("ant-input")[
+            document.getElementsByClassName("ant-input").length - 1
+        ] as HTMLInputElement;
+        const inputFocus = setInterval(() => {
+            if (
+                input !== document.activeElement &&
+                document.activeElement &&
+                !document.activeElement.classList.contains("link")
+            )
+                input.focus();
+        }, 200);
+        return () => clearInterval(inputFocus);
+    });
+
     const loadTrajectory = (values: any) => {
         history.push(`${VIEWER_PATHNAME}?trajUrl=${values.url}`);
         location.reload();
@@ -30,6 +47,7 @@ const UrlUploadModal = ({
             We currently support public Dropbox, Google Drive, and Amazon S3
             links.{" "}
             <a
+                className="link"
                 href={`${TUTORIAL_PATHNAME}#share-a-link`}
                 target="_blank"
                 rel="noopener noreferrer"
