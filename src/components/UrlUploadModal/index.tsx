@@ -35,7 +35,7 @@ const UrlUploadModal = ({
                 input.focus();
         }, 200);
         return () => clearInterval(inputFocus);
-    });
+    }, []);
 
     const loadTrajectory = (values: any) => {
         history.push(`${VIEWER_PATHNAME}?trajUrl=${values.url}`);
