@@ -21,8 +21,22 @@ const UrlUploadModal = ({
     };
 
     //forces focus on input field when modal is opened
-    //if statement keeps tab targeting to the link
+    //if statement keeps tab targeting to other parts of the modal
     useEffect(() => {
+        const closeBtn = document.getElementsByClassName("ant-modal-close")[
+            document.getElementsByClassName("ant-modal-close").length - 1
+        ] as HTMLButtonElement;
+        const link = document
+            .getElementsByClassName(styles.extraInfo)
+            [
+                document.getElementsByClassName(styles.extraInfo).length - 1
+            ].querySelector("a");
+        if (link && closeBtn) {
+            link.classList.add("tabbable");
+            link.tabIndex = 2;
+            closeBtn.classList.add("tabbable");
+            closeBtn.tabIndex = 4;
+        }
         const input = document.getElementsByClassName("ant-input")[
             document.getElementsByClassName("ant-input").length - 1
         ] as HTMLInputElement;
@@ -30,10 +44,10 @@ const UrlUploadModal = ({
             if (
                 input !== document.activeElement &&
                 document.activeElement &&
-                !document.activeElement.classList.contains("link")
+                !document.activeElement.classList.contains("tabbable")
             )
                 input.focus();
-        }, 200);
+        }, 400);
         return () => clearInterval(inputFocus);
     }, []);
 
@@ -47,7 +61,6 @@ const UrlUploadModal = ({
             We currently support public Dropbox, Google Drive, and Amazon S3
             links.{" "}
             <a
-                className="link"
                 href={`${TUTORIAL_PATHNAME}#share-a-link`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -88,6 +101,7 @@ const UrlUploadModal = ({
                     ]}
                 >
                     <Input
+                        tabIndex={1}
                         allowClear
                         placeholder="https://.../example.simularium"
                         size="large"
@@ -97,6 +111,8 @@ const UrlUploadModal = ({
                 </Form.Item>
                 <Form.Item className={styles.submitButton}>
                     <Button
+                        tabIndex={3}
+                        className="tabbable"
                         type="default"
                         htmlType="submit"
                         disabled={!userInput}
