@@ -335,6 +335,30 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         imageFile: listeriaUltrapolarImage,
     },
     */
+    {
+        modelName: "Blood Plasma",
+        id: "blood-plasma-1.0.simularium",
+        title: "Blood Plasma",
+        totalSimulatedTime: "0s",
+        authors:
+            "Graham T Johnson, Ludovic Autin, Mostafa Al-Alusi, David S Goodsell, Michel F Sanner & Arthur J Olson",
+        publication: {
+            title:
+                "cellPACK: a virtual mesoscope to model and visualize structural systems biology",
+            journal: "Nature Methods",
+            year: 2015,
+            url: "https://www.nature.com/articles/nmeth.3204",
+        },
+        description:
+            "A cellPACK model of a 100 nm × 100 nm × 15 nm volume of human blood plasma based on a mesoscale recipe containing information for the most abundant macromolecules.",
+        code:
+            "Software used to generate this data is available <a href='https://github.com/mesoscope/cellpack'>here</a>.",
+        legalese: thirdPartyLicensing(
+            "https://github.com/mesoscope/cellpack/blob/main/LICENSE"
+        ),
+        imageFile: "",
+        gifFile: "",
+    },
 ];
 
 export default TRAJECTORIES;
