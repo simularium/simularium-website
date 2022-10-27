@@ -95,9 +95,6 @@ const LoadFileMenu = ({
             2. Conditionally rendering the modal this way instead of as a `visible` prop
                forces it to re-render every time it is opened, resetting the form inside.
             */}
-            {isModalVisible && (
-                <UrlUploadModal setIsModalVisible={setIsModalVisible} />
-            )}
             <Menu.Item key="local-file-upload">
                 <LocalFileUpload
                     clearSimulariumFile={clearSimulariumFile}
@@ -108,7 +105,9 @@ const LoadFileMenu = ({
             </Menu.Item>
         </Menu>
     );
-
+    if (isModalVisible) {
+        return <UrlUploadModal setIsModalVisible={setIsModalVisible} />;
+    }
     return (
         <Dropdown overlay={menu} placement="bottomRight" disabled={isBuffering}>
             <Button

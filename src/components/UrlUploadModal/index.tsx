@@ -20,37 +20,6 @@ const UrlUploadModal = ({
         setIsModalVisible(false);
     };
 
-    //forces focus on input field when modal is opened
-    //if statement keeps tab targeting to other parts of the modal
-    useEffect(() => {
-        const closeBtn = document.getElementsByClassName("ant-modal-close")[
-            document.getElementsByClassName("ant-modal-close").length - 1
-        ] as HTMLButtonElement;
-        const link = document
-            .getElementsByClassName(styles.extraInfo)
-            [
-                document.getElementsByClassName(styles.extraInfo).length - 1
-            ].querySelector("a");
-        if (link && closeBtn) {
-            link.classList.add("tabbable");
-            link.tabIndex = 2;
-            closeBtn.classList.add("tabbable");
-            closeBtn.tabIndex = 4;
-        }
-        const input = document.getElementsByClassName("ant-input")[
-            document.getElementsByClassName("ant-input").length - 1
-        ] as HTMLInputElement;
-        const inputFocus = setInterval(() => {
-            if (
-                input !== document.activeElement &&
-                document.activeElement &&
-                !document.activeElement.classList.contains("tabbable")
-            )
-                input.focus();
-        }, 400);
-        return () => clearInterval(inputFocus);
-    }, []);
-
     const loadTrajectory = (values: any) => {
         history.push(`${VIEWER_PATHNAME}?trajUrl=${values.url}`);
         location.reload();
@@ -101,18 +70,15 @@ const UrlUploadModal = ({
                     ]}
                 >
                     <Input
-                        tabIndex={1}
                         allowClear
                         placeholder="https://.../example.simularium"
                         size="large"
                         onChange={handleUserInput}
-                        // autofocus FIXME: this doesn't work
+                        autoFocus={true}
                     />
                 </Form.Item>
                 <Form.Item className={styles.submitButton}>
                     <Button
-                        tabIndex={3}
-                        className="tabbable"
                         type="default"
                         htmlType="submit"
                         disabled={!userInput}
