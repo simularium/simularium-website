@@ -1,5 +1,5 @@
 import { Button, Form, Input, Modal } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import { TUTORIAL_PATHNAME, VIEWER_PATHNAME } from "../../routes";
