@@ -340,6 +340,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         id: "blood-plasma-1.0.simularium",
         title: "Blood Plasma",
         totalSimulatedTime: "0s",
+        version: "1.0",
         authors:
             "Graham T Johnson, Ludovic Autin, Mostafa Al-Alusi, David S Goodsell, Michel F Sanner & Arthur J Olson",
         publication: {
