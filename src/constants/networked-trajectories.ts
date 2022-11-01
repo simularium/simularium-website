@@ -193,7 +193,6 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         imageFile: medyan2Image,
         gifFile: medyan2Gif,
     },
-    /*
     {
         modelName: "Vivarium E coli",
         id: "vivarium_ecoli.simularium",
@@ -206,15 +205,16 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
             year: 2020,
             url: "https://www.mdpi.com/1099-4300/22/10/1101",
         },
-        description: "Model of chemotactic E. coli using Vivarium.",
+        description:
+            "A multiscale model of chemotactic E. coli built using Vivarium.",
         code:
             "Software used to generate this data is available <a href='https://github.com/vivarium-collective/vivarium-chemotaxis'>here</a>.",
-        legalese:
-            thirdPartyLicensing("https://github.com/vivarium-collective/vivarium-chemotaxis/blob/master/LICENSE"),
-        imageFile: vivariumImage,
-        gifFile: vivariumGif,
+        legalese: thirdPartyLicensing(
+            "https://github.com/vivarium-collective/vivarium-chemotaxis/blob/master/LICENSE"
+        ),
+        imageFile: "",
+        gifFile: "",
     },
-    */
     {
         modelName: "Condensate Formation",
         id: "springsalad_condensate_formation_Below_Ksp.simularium",
@@ -357,6 +357,26 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         legalese: thirdPartyLicensing(
             "https://github.com/mesoscope/cellpack/blob/main/LICENSE"
         ),
+        imageFile: "",
+        gifFile: "",
+    },
+    {
+        modelName: "Red Blood Cell Cytoskeleton during Malaria Infection",
+        id: "readdy_malaria.simularium",
+        title: "Red Blood Cell Cytoskeleton during Malaria Infection",
+        totalSimulatedTime: "200 μs",
+        authors: "Julia Jäger et al",
+        publication: {
+            title:
+                "A particle-based computational model to analyse remodelling of the red blood cell cytoskeleton during malaria infections",
+            journal: "PLOS Computational Biology",
+            year: 2022,
+            url:
+                "https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1009509",
+        },
+        description: "",
+        code:
+            "Software used to generate this data is available <a href='https://github.com/usschwarz/networks'>here</a>.",
         imageFile: "",
         gifFile: "",
     },
