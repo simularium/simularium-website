@@ -18,4 +18,4 @@ export { default as viewer } from "./viewer";
 export { default as simularium } from "./simularium";
 export { default as createReduxStore } from "./configure-store";
 export { enableBatching } from "./util";
-export { State } from "./types";
+export type { State } from "./types";

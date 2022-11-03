@@ -78,7 +78,7 @@ const PlayBackControls = ({
 
     // Called after every keystroke
     const handleTimeInputChange = (
-        userInput: number | string | undefined
+        userInput: number | null
     ): void => {
         if (userInput !== undefined) {
             setTimeInput(userInput as number);
@@ -191,7 +191,7 @@ const PlayBackControls = ({
                 value={time}
                 onChange={handleTimeChange}
                 onAfterChange={handleSliderMouseUp}
-                tooltipVisible={false}
+                // tooltipVisible={false}
                 className={[styles.slider, styles.item].join(" ")}
                 step={timeStep}
                 min={firstFrameTime}

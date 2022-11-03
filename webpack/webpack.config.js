@@ -13,13 +13,18 @@ const getPluginsByEnv = require("./plugins");
 module.exports = ({ analyze, env, dest="dist" } = {}) => ({
     devtool: env !== Env.PRODUCTION && "source-map",
     devServer: {
-        contentBase: path.join(__dirname, "../", dest),
-        disableHostCheck: true,
+        allowedHosts: 'all',
         host: devServer.host,
         port: devServer.port,
-        publicPath: "/",
         historyApiFallback: true,
-        stats,
+        devMiddleware: {
+            stats,
+            publicPath: "/"
+        },
+        static: {
+            directory: path.join(__dirname, "../", dest),
+
+        }
     },
     entry: {
         app: "./src/index.tsx",
@@ -147,5 +152,4 @@ module.exports = ({ analyze, env, dest="dist" } = {}) => ({
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
     },
-    stats: analyze ? "none" : stats,
 });

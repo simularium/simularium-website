@@ -12,6 +12,7 @@ import { getCurrentTime } from "../../state/selection/selectors";
 // import { changeTime } from "../../state/selection/actions";
 // import { ChangeTimeAction } from "../../state/selection/types";
 import { PLOT_STYLE } from "../ResultsPanel/constants";
+import { PlotData } from "plotly.js";
 
 interface PlotProps {
     plotConfig: PlotConfig;
@@ -69,7 +70,7 @@ class Plot extends React.Component<PlotProps, PlotState> {
         if (shouldRenderTimeIndicator) {
             // Position the time indicator line at current time (the time indicator should be the last
             // plot trace in `data` because we pushed it to `data` in componentDidMount())
-            const lastTrace = data[data.length - 1];
+            const lastTrace = data[data.length - 1] as Partial<PlotData>;
             if (lastTrace.name === TIME_INDICATOR_LINE) {
                 lastTrace.x = [time, time];
             }

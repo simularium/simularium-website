@@ -11,10 +11,11 @@ const webpack = require('webpack');
 
 const Env = require('./constants').Env;
 
-const getBasePlugins = (dist) => {
+const getBasePlugins = (dist, env) => {
+    console.log(dist, env)
     return [new ForkTsCheckerWebpackPlugin({
             tsconfig: path.resolve(__dirname, '../', 'tsconfig.json'),
-            workers: ForkTsCheckerWebpackPlugin.TWO_CPUS_FREE,
+            workers: ForkTsCheckerWebpackPlugin.ONE_CPU,
         }),
         new CleanWebpackPlugin([dist], {
             root: path.resolve(__dirname, '../'),
@@ -43,13 +44,12 @@ const PLUGINS_BY_ENV = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production'),
         }),
-        new webpack.HashedModuleIdsPlugin(),
+        new webpack.ids.HashedModuleIdsPlugin(),
         new webpack.EnvironmentPlugin({
             BACKEND_SERVER_IP: `production-node1-agentviz-backend.cellexplore.net`
         })
     ],
     [Env.STAGE]: [
-        new webpack.NamedModulesPlugin(),
         new webpack.EnvironmentPlugin({
             BACKEND_SERVER_IP: `staging-node1-agentviz-backend.cellexplore.net`
         })
@@ -62,8 +62,8 @@ const PLUGINS_BY_ENV = {
     ]
 };
 
-module.exports = (env, dist, analyzer ) => [
-    ...getBasePlugins(dist),
+module.exports = (env, dist, analyzer) => [
+    ...getBasePlugins(dist, env),
     ...(analyzer ? BUNDLE_ANALYZER : []),
     ...(PLUGINS_BY_ENV[env] || [])
 ];
