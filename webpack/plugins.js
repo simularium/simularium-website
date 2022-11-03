@@ -14,8 +14,9 @@ const Env = require('./constants').Env;
 const getBasePlugins = (dist, env) => {
     console.log(dist, env)
     return [new ForkTsCheckerWebpackPlugin({
-            tsconfig: path.resolve(__dirname, '../', 'tsconfig.json'),
-            workers: ForkTsCheckerWebpackPlugin.ONE_CPU,
+            typescript: {
+                configFile: path.resolve(__dirname, "../", "tsconfig.json"),
+            },
         }),
         new CleanWebpackPlugin([dist], {
             root: path.resolve(__dirname, '../'),
