@@ -12,7 +12,6 @@ const webpack = require('webpack');
 const Env = require('./constants').Env;
 
 const getBasePlugins = (dist, env) => {
-    console.log(dist, env)
     return [new ForkTsCheckerWebpackPlugin({
             typescript: {
                 configFile: path.resolve(__dirname, "../", "tsconfig.json"),
@@ -64,7 +63,7 @@ const PLUGINS_BY_ENV = {
 };
 
 module.exports = (env, dist, analyzer) => [
-    ...getBasePlugins(dist, env),
+    ...getBasePlugins(dist),
     ...(analyzer ? BUNDLE_ANALYZER : []),
     ...(PLUGINS_BY_ENV[env] || [])
 ];
