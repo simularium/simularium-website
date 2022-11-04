@@ -1,4 +1,6 @@
 import { ISimulariumFile, loadSimulariumFile } from "@aics/simularium-viewer";
+import { ErrorLevel } from "@aics/simularium-viewer/type-declarations";
+import { FrontEndError } from "@aics/simularium-viewer/type-declarations";
 import { findIndex } from "lodash";
 import {
     UploadRequestOption,
@@ -109,13 +111,22 @@ export default (
             }
         });
     } catch (error) {
-        let message = error.message;
+        let message;
+        let level = ErrorLevel.ERROR;
         if (error instanceof DOMException) {
             message =
                 "Please load a collection of single files that does not include a folder.";
+        } else {
+            if (error instanceof FrontEndError) {
+                message = error.message;
+                level = error.level
+            }
+            else { 
+                message = String(error);
+            }
         }
         setError({
-            level: error.level,
+            level: level,
             message: message,
             htmlData: "",
         });
