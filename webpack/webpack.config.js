@@ -108,14 +108,6 @@ module.exports = ({ analyze, env, dest = "dist" } = {}) => ({
                     { loader: MiniCssExtractPlugin.loader },
                     {
                         loader: "css-loader",
-                        options: {
-                            importLoaders: 1,
-                            modules: {
-                                exportLocalsConvention: "camelCase",
-                                localIdentName:
-                                    "[name]__[local]--[hash:base64:5]",
-                            },
-                        },
                     },
                     {
                         loader: "less-loader",
