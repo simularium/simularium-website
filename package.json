@@ -87,6 +87,7 @@
         "ts-node": "10.9.1",
         "typescript": "^3.4.0",
         "typescript-plugin-css-modules": "3.4.0",
+        "url-loader": "^4.1.1",
         "webpack": "^5.64.2",
         "webpack-bundle-analyzer": "^4.6.1",
         "webpack-cli": "^4.9.1",
@@ -116,8 +117,7 @@
         "react-waypoint": "^9.0.3",
         "redux": "4.2.0",
         "redux-logic": "^3.0.3",
-        "reselect": "4.0.0",
-        "url-loader": "^4.1.0"
+        "reselect": "4.0.0"
     },
     "resolutions": {
         "react": "^16",

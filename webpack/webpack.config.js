@@ -92,13 +92,6 @@ module.exports = ({ analyze, env, dest = "dist" } = {}) => ({
                     { loader: MiniCssExtractPlugin.loader },
                     {
                         loader: "css-loader",
-                        options: {
-                            modules: {
-                                exportLocalsConvention: "camelCase",
-                                localIdentName:
-                                    "[name]__[local]--[hash:base64:5]",
-                            },
-                        },
                     },
                 ],
             },
@@ -121,7 +114,7 @@ module.exports = ({ analyze, env, dest = "dist" } = {}) => ({
                 ],
             },
             {
-                test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/,
+                test: /\.(eot|woff|woff2)([\?]?.*)$/,
                 include: [path.resolve(__dirname, "../src/assets/fonts")],
                 loader: "url-loader",
                 options: {
