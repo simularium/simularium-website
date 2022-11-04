@@ -1,6 +1,9 @@
-import { ISimulariumFile, loadSimulariumFile } from "@aics/simularium-viewer";
-import { ErrorLevel } from "@aics/simularium-viewer/type-declarations";
-import { FrontEndError } from "@aics/simularium-viewer/type-declarations";
+import {
+    ISimulariumFile,
+    loadSimulariumFile,
+    ErrorLevel,
+    FrontEndError,
+} from "@aics/simularium-viewer";
 import { findIndex } from "lodash";
 import {
     UploadRequestOption,
