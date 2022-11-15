@@ -24,6 +24,8 @@ import springSalad2Gif from "../assets/card-images/springsalad_at_thumb.gif";
 import springSalad3Image from "../assets/card-images/springsalad_above_thumb.png";
 import springSalad3Gif from "../assets/card-images/springsalad_above_thumb.gif";
 // import covid19Image from "../assets/card-images/card-image-4.png";
+import bloodPlasmaImage from "../assets/card-images/blood_plasma_thumb.png";
+import bloodPlasmaGif from "../assets/card-images/blood_plasma_thumb.gif";
 
 import { TrajectoryDisplayData } from "./interfaces";
 
@@ -357,8 +359,8 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         legalese: thirdPartyLicensing(
             "https://github.com/mesoscope/cellpack/blob/main/LICENSE"
         ),
-        imageFile: "",
-        gifFile: "",
+        imageFile: bloodPlasmaImage,
+        gifFile: bloodPlasmaGif,
     },
 ];
 
