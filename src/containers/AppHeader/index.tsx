@@ -24,7 +24,7 @@ import {
     SetErrorAction,
 } from "../../state/viewer/types";
 
-const styles = require("./style.css");
+import styles from "./style.css";
 
 interface AppHeaderProps {
     simulariumFile: LocalSimFile | NetworkedSimFile;
@@ -90,9 +90,8 @@ class AppHeader extends React.Component<AppHeaderProps> {
 
 function mapStateToProps(state: State) {
     return {
-        simulariumFile: trajectoryStateBranch.selectors.getSimulariumFile(
-            state
-        ),
+        simulariumFile:
+            trajectoryStateBranch.selectors.getSimulariumFile(state),
         isBuffering: viewerStateBranch.selectors.getIsBuffering(state),
     };
 }
@@ -106,7 +105,4 @@ const dispatchToPropsMap = {
     setError: viewerStateBranch.actions.setError,
 };
 
-export default connect(
-    mapStateToProps,
-    dispatchToPropsMap
-)(AppHeader);
+export default connect(mapStateToProps, dispatchToPropsMap)(AppHeader);

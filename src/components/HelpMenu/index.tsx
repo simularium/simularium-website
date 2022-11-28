@@ -11,7 +11,7 @@ import {
     ISSUE_URL,
 } from "../../constants";
 
-const styles = require("./style.css");
+import styles from "./style.css";
 
 const HelpMenu = (): JSX.Element => {
     const location = useLocation();

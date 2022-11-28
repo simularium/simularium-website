@@ -6,7 +6,7 @@ import Checkbox from "../Checkbox";
 import { CHECKBOX_TYPE_STAR } from "../../constants";
 import { isUndefined } from "lodash";
 
-const styles = require("./style.css");
+import styles from "./style.css";
 
 interface SharedCheckboxProps {
     options: string[];
@@ -19,9 +19,7 @@ interface SharedCheckboxProps {
     isHeader: boolean;
 }
 
-export default class SharedCheckbox extends React.Component<
-    SharedCheckboxProps
-> {
+export default class SharedCheckbox extends React.Component<SharedCheckboxProps> {
     constructor(props: SharedCheckboxProps) {
         super(props);
         this.onCheckAllChange = this.onCheckAllChange.bind(this);

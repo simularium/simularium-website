@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import { TUTORIAL_PATHNAME, VIEWER_PATHNAME } from "../../routes";
 
-const styles = require("./style.css");
+import styles from "./style.css";
 
 interface UrlUploadModalProps {
     setIsModalVisible: (isModalVisible: boolean) => void;

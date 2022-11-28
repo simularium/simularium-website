@@ -20,7 +20,7 @@ import {
     SetViewerStatusAction,
 } from "../../state/viewer/types";
 
-const styles = require("./style.css");
+import styles from "./style.css";
 
 interface LoadFileMenuProps {
     isBuffering: boolean;
@@ -73,9 +73,7 @@ const LoadFileMenu = ({
                             onClick={() => onClick(trajectory)}
                             to={{
                                 pathname: VIEWER_PATHNAME,
-                                search: `?${URL_PARAM_KEY_FILE_NAME}=${
-                                    trajectory.id
-                                }`,
+                                search: `?${URL_PARAM_KEY_FILE_NAME}=${trajectory.id}`,
                             }}
                         >
                             {trajectory.title}

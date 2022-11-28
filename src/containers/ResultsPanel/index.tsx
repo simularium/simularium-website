@@ -8,7 +8,7 @@ import Plot from "../Plot";
 import { PlotConfig } from "./types";
 import { getPlotDataConfiguredForPlotly } from "./selectors";
 
-const styles = require("./style.css");
+import styles from "./style.css";
 
 interface ResultsPanelProps {
     plotConfigs: PlotConfig[];

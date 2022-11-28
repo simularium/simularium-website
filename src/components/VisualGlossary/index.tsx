@@ -5,7 +5,7 @@ import visualGlossary from "../../constants/visual-glossary";
 import visualGlossaryImage from "../../assets/visual-glossary.png";
 import { VisualGlossaryItem } from "../../constants/interfaces";
 
-const styles = require("./style.css");
+import styles from "./style.css";
 
 const renderGlossaryItems = visualGlossary.map((item: VisualGlossaryItem) => {
     const { label, description, bulletItems } = item;

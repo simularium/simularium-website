@@ -91,7 +91,7 @@ To apply these CSS classes, in `index.tsx`:
 ```
 import * as React from "react";
 
-const styles = require("./style.css");
+import styles from "./style.css";
 
 const button = (props) => {
     return (

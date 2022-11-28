@@ -8,7 +8,7 @@ import Icons from "../Icons";
 import { DisplayTimes } from "../../containers/ViewerPanel/types";
 import { TimeUnits } from "../../state/trajectory/types";
 
-const styles = require("./style.css");
+import styles from "./style.css";
 interface PlayBackProps {
     playHandler: (timeOverride?: number) => void;
     time: number;
@@ -43,10 +43,8 @@ const PlayBackControls = ({
     isEmpty,
 }: PlayBackProps): JSX.Element => {
     // Where to resume playing if simulation was playing before scrubbing
-    const [
-        timeToResumeAfterScrubbing,
-        setTimeToResumeAfterScrubbing,
-    ] = useState(-1);
+    const [timeToResumeAfterScrubbing, setTimeToResumeAfterScrubbing] =
+        useState(-1);
     const [timeInput, setTimeInput] = useState(firstFrameTime);
 
     // - Gets called once when the user clicks on the slider to skip to a specific time
@@ -77,10 +75,8 @@ const PlayBackControls = ({
     };
 
     // Called after every keystroke
-    const handleTimeInputChange = (
-        userInput: number | string | undefined
-    ): void => {
-        if (userInput !== undefined) {
+    const handleTimeInputChange = (userInput: number | null): void => {
+        if (userInput !== null) {
             setTimeInput(userInput as number);
         }
     };
@@ -191,7 +187,7 @@ const PlayBackControls = ({
                 value={time}
                 onChange={handleTimeChange}
                 onAfterChange={handleSliderMouseUp}
-                tooltipVisible={false}
+                tooltip={{open : false}}
                 className={[styles.slider, styles.item].join(" ")}
                 step={timeStep}
                 min={firstFrameTime}

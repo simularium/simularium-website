@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { VIEWER_PATHNAME, TUTORIAL_PATHNAME } from "../../routes";
 import ImportThumbnail from "../../assets/import-thumbnail.svg";
 
-const styles = require("../ModelCard/style.css");
+import styles from "../ModelCard/style.css";
 
 const BlankCard = (): JSX.Element => {
     return (
