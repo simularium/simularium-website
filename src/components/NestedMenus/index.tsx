@@ -5,7 +5,7 @@ import { Card, Collapse } from "antd";
 
 const { Panel } = Collapse;
 
-const styles = require("./style.css");
+import styles from "./style.css";
 
 interface NestedMenusProps {
     panelKeys: string[];

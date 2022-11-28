@@ -45,16 +45,14 @@ import { ViewerStatus } from "../../state/viewer/types";
 import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFileFailedText";
 import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
 
-const styles = require("./style.css");
+import styles from "./style.css";
 
 interface ModelPanelProps {
     uiDisplayDataTree: AgentDisplayNode[];
     agentHighlightMap: VisibilitySelectionMap;
     agentVisibilityMap: VisibilitySelectionMap;
     turnAgentsOnByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
-    highlightAgentsByDisplayKey: ActionCreator<
-        ChangeAgentsRenderingStateAction
-    >;
+    highlightAgentsByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
     setAgentsVisible: ActionCreator<SetVisibleAction>;
     payloadForSelectAll: VisibilitySelectionMap;
     payloadForSelectNone: VisibilitySelectionMap;
@@ -141,7 +139,4 @@ const dispatchToPropsMap = {
     setAgentsVisible,
 };
 
-export default connect(
-    mapStateToProps,
-    dispatchToPropsMap
-)(ModelPanel);
+export default connect(mapStateToProps, dispatchToPropsMap)(ModelPanel);

@@ -12,8 +12,7 @@ import Footer from "../Footer";
 import { TUTORIAL_PATHNAME } from "../../routes";
 import { CYTOSIM_URL, READDY_URL } from "../../constants";
 const markdown = require("../../../ACKNOWLEDGMENTS.md");
-const styles = require("./style.css");
-
+import styles from "./style.css";
 const { Content } = Layout;
 const NUM_CARDS_PER_ROW = 3;
 // Add bullets to each heading

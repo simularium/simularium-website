@@ -15,6 +15,7 @@ module.exports = {
         "@typescript-eslint/explicit-member-accessibility": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-var-requires": "off",
+        "react/prop-types": ['off']
     },
     "settings": {
         "react": {

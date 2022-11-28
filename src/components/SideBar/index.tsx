@@ -6,7 +6,7 @@ import { PurpleArrow } from "../Icons";
 
 const { Sider } = Layout;
 
-const styles = require("./style.css");
+import styles from "./style.css";
 
 interface SiderProps {
     type: string;

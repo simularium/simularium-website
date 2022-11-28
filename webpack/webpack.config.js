@@ -2,24 +2,25 @@ const path = require("path");
 const fs = require("fs");
 
 const lessToJs = require("less-vars-to-js");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const themeVariables = lessToJs(
     fs.readFileSync(path.join(__dirname, "../src/styles/ant-vars.less"), "utf8")
 );
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const { devServer, Env, stats } = require("./constants");
 const getPluginsByEnv = require("./plugins");
 
-module.exports = ({ analyze, env, dest="dist" } = {}) => ({
+module.exports = ({ analyze, env, dest = "dist" } = {}) => ({
     devtool: env !== Env.PRODUCTION && "source-map",
     devServer: {
-        contentBase: path.join(__dirname, "../", dest),
-        disableHostCheck: true,
+        static: {
+            directory: path.join(__dirname, "../", dest),
+            publicPath: "/",
+        },
+        allowedHosts: "all",
         host: devServer.host,
         port: devServer.port,
-        publicPath: "/",
         historyApiFallback: true,
-        stats,
     },
     entry: {
         app: "./src/index.tsx",
@@ -49,24 +50,28 @@ module.exports = ({ analyze, env, dest="dist" } = {}) => ({
                     {
                         loader: "css-loader",
                         options: {
-                            camelCase: true,
                             importLoaders: 1,
-                            localIdentName: "[name]__[local]--[hash:base64:5]",
-                            modules: true,
+                            modules: {
+                                exportLocalsConvention: "camelCase",
+                                localIdentName:
+                                    "[name]__[local]--[hash:base64:5]",
+                            },
                         },
                     },
                     {
                         loader: "postcss-loader",
                         options: {
-                            ident: "postcss",
-                            plugins: [
-                                require("postcss-flexbugs-fixes"),
-                                require("postcss-preset-env")({
-                                    autoprefixer: {
-                                        flexbox: "no-2009",
-                                    },
-                                }),
-                            ],
+                            postcssOptions: {
+                                ident: "postcss",
+                                plugins: [
+                                    require("postcss-flexbugs-fixes"),
+                                    require("postcss-preset-env")({
+                                        autoprefixer: {
+                                            flexbox: "no-2009",
+                                        },
+                                    }),
+                                ],
+                            },
                             sourceMap: env !== Env.PRODUCTION,
                         },
                     },
@@ -81,10 +86,13 @@ module.exports = ({ analyze, env, dest="dist" } = {}) => ({
                 include: [
                     path.resolve(__dirname, "../src", "style.css"),
                     path.resolve(__dirname, "../", "node_modules"),
+                    path.resolve(__dirname, "../", "../simularium-viewer"),
                 ],
                 use: [
                     { loader: MiniCssExtractPlugin.loader },
-                    { loader: "css-loader" },
+                    {
+                        loader: "css-loader",
+                    },
                 ],
             },
             {
@@ -93,28 +101,22 @@ module.exports = ({ analyze, env, dest="dist" } = {}) => ({
                     { loader: MiniCssExtractPlugin.loader },
                     {
                         loader: "css-loader",
-                        options: {
-                            camelCase: true,
-                            importLoaders: 1,
-                        },
                     },
                     {
                         loader: "less-loader",
                         options: {
-                            javascriptEnabled: true,
-                            modifyVars: themeVariables,
+                            lessOptions: {
+                                javascriptEnabled: true,
+                                modifyVars: themeVariables,
+                            },
                         },
                     },
                 ],
             },
             {
-                test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/,
+                test: /\.(eot|woff|woff2)([\?]?.*)$/,
                 include: [path.resolve(__dirname, "../src/assets/fonts")],
-                loader: "url-loader",
-                options: {
-                    name: "[name].[ext]",
-                    esModule: false,
-                },
+                type: "asset/inline",
             },
             {
                 test: /\.(png|jpg|gif|svg)$/i,
@@ -127,6 +129,7 @@ module.exports = ({ analyze, env, dest="dist" } = {}) => ({
         ],
     },
     optimization: {
+        moduleIds: env === Env.STAGE ? "named" : undefined,
         runtimeChunk: "single",
         splitChunks: {
             chunks: "all",

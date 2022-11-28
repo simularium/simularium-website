@@ -11,7 +11,7 @@ import Footer from "../Footer";
 const { Content } = Layout;
 const { Text } = Typography;
 
-const styles = require("./style.css");
+import styles from "./style.css";
 
 const TutorialPage = (): JSX.Element => {
     return (

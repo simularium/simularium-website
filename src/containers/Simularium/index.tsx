@@ -48,7 +48,7 @@ import {
 } from "../../util/userUrlHandling";
 const { Content } = Layout;
 
-const styles = require("./style.css");
+import styles from "./style.css";
 
 interface AppProps {
     onSidePanelCollapse: (number: number) => void;
@@ -240,15 +240,12 @@ class App extends React.Component<AppProps, AppState> {
 
 function mapStateToProps(state: State) {
     return {
-        simulariumFile: trajectoryStateBranch.selectors.getSimulariumFile(
-            state
-        ),
-        simulariumController: simulariumStateBranch.selectors.getSimulariumController(
-            state
-        ),
-        fileIsDraggedOverViewer: viewerStateBranch.selectors.getFileDraggedOver(
-            state
-        ),
+        simulariumFile:
+            trajectoryStateBranch.selectors.getSimulariumFile(state),
+        simulariumController:
+            simulariumStateBranch.selectors.getSimulariumController(state),
+        fileIsDraggedOverViewer:
+            viewerStateBranch.selectors.getFileDraggedOver(state),
         viewerStatus: viewerStateBranch.selectors.getStatus(state),
     };
 }
@@ -268,7 +265,4 @@ const dispatchToPropsMap = {
     setError: viewerStateBranch.actions.setError,
 };
 
-export default connect(
-    mapStateToProps,
-    dispatchToPropsMap
-)(App);
+export default connect(mapStateToProps, dispatchToPropsMap)(App);

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const styles = require("./styles.css");
+import styles from "./styles.css";
 
 interface ColorSwatchProps {
     color: string;

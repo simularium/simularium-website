@@ -6,7 +6,7 @@ import { useHotkeys, useIsHotkeyPressed } from "react-hotkeys-hook";
 import { TOOLTIP_COLOR } from "../../constants/index";
 import Icons from "../Icons";
 
-const styles = require("./style.css");
+import styles from "./style.css";
 
 const PAN = "pan";
 const ROTATE = "rotate";
