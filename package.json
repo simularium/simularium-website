@@ -45,7 +45,7 @@
         "@types/sinon": "7.0.6",
         "@typescript-eslint/eslint-plugin": "^5.42.1",
         "@typescript-eslint/parser": "^5.42.1",
-        "@webpack-cli/serve": "^1.5.2",
+        "@webpack-cli/serve": "^1.7.0",
         "auto-changelog": "^2.3.0",
         "babel-jest": "^29.2.2",
         "babel-loader": "8.0.5",
