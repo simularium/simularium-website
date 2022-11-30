@@ -12,8 +12,6 @@
     "scripts": {
         "start": "webpack serve --config ./webpack/webpack.config.js --env env=dev",
         "gh-build": "cross-env GH_BUILD=true webpack --config ./webpack/webpack.config.js --env env=production",
-        "gh-build:stable": "cross-env GH_BUILD=true webpack --config ./webpack/webpack.config.js --env env=production --env dest=gh-pages/stable",
-        "gh-build:dev": "cross-env GH_BUILD=true webpack --config ./webpack/webpack.config.js --env env=production --env dest=gh-pages/dev",
         "pregh-deploy": "npm run gh-build",
         "gh-deploy": "gh-pages -d dist",
         "build:staging": "cross-env NODE_ENV=staging webpack --config ./webpack/webpack.config.js  --env env=staging",

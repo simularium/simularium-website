@@ -7,7 +7,7 @@ on:
     
 
 jobs:
-  build:
+  build-stable:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -15,7 +15,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: "14.x"
+          node-version: "16.x"
 
       - name: Cache dependencies
         uses: actions/cache@v1
@@ -27,25 +27,31 @@ jobs:
             
       - run: npm ci
       - run: npm i @aics/simularium-viewer@latest
-      - run: npm run gh-build:stable
-      - run: npm i https://github.com/simularium/simularium-viewer#build
-      - run: npm run gh-build:dev
-      - name: Upload
-        uses: actions/upload-artifact@v3
-        with:
-          name: daily-build
-          path: gh-pages/
+      - run: npm run build
+      - name: Copy files to nightly-released bucket
+        run: aws s3 sync ./dist/ s3://nightly-released.simularium.allencell.org --delete
 
-  download-and-deploy:
+  build-dev:
     runs-on: ubuntu-latest
-    needs: [build]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/download-artifact@v3
-      - name: Display structure of downloaded files
-        run: ls -R
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./daily-build
+          node-version: "16.x"
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            
+
+      - run: npm ci
+      - run: npm i https://github.com/simularium/simularium-viewer#build
+      - run: npm run build
+      - name: Copy files to dev bucket
+        run: aws s3 sync ./dist/ s3://nightly-dev.simularium.allencell.org --delete
