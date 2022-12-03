@@ -1,0 +1,564 @@
+/*
+ * @copyright 2016 Sean Connelly (@voidqk), http://syntheti.cc
+ * @license MIT
+ * @preserve Project Home: https://github.com/voidqk/polybooljs
+ */
+
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
+/*!
+	Copyright (c) 2018 Jed Watson.
+	Licensed under the MIT License (MIT), see
+	http://jedwatson.github.io/classnames
+*/
+
+/*!
+  Copyright (c) 2016 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+
+/*!
+ * @overview es6-promise - a tiny implementation of Promises/A+.
+ * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
+ * @license   Licensed under MIT license
+ *            See https://raw.githubusercontent.com/stefanpenner/es6-promise/master/LICENSE
+ * @version   v4.2.8+1e68dce6
+ */
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+ * @license  MIT
+ */
+
+/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+/*!
+ * pad-left <https://github.com/jonschlinkert/pad-left>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT license.
+ */
+
+/*!
+ * repeat-string <https://github.com/jonschlinkert/repeat-string>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
+
+/*!*********************!*\
+  !*** ./src/util.ts ***!
+  \*********************/
+
+/*!**********************!*\
+  !*** ./src/index.ts ***!
+  \**********************/
+
+/*!**************************!*\
+  !*** ./src/constants.ts ***!
+  \**************************/
+
+/*!********************************!*\
+  !*** ./src/viewport/index.tsx ***!
+  \********************************/
+
+/*!*********************************!*\
+  !*** ./src/controller/index.ts ***!
+  \*********************************/
+
+/*!*********************************!*\
+  !*** ./src/simularium/index.ts ***!
+  \*********************************/
+
+/*!*********************************!*\
+  !*** ./src/simularium/types.ts ***!
+  \*********************************/
+
+/*!**********************************!*\
+  !*** ./src/visGeometry/index.ts ***!
+  \**********************************/
+
+/*!**********************************!*\
+  !*** ./src/visGeometry/types.ts ***!
+  \**********************************/
+
+/*!***********************************!*\
+  !*** ./src/simularium/VisData.ts ***!
+  \***********************************/
+
+/*!************************************!*\
+  !*** ./src/simularium/VisTypes.ts ***!
+  \************************************/
+
+/*!*************************************!*\
+  !*** ./node_modules/react/index.js ***!
+  \*************************************/
+
+/*!*************************************!*\
+  !*** ./src/simularium/TaskQueue.ts ***!
+  \*************************************/
+
+/*!*************************************!*\
+  !*** ./src/visGeometry/PDBModel.ts ***!
+  \*************************************/
+
+/*!*************************************!*\
+  !*** ./src/visGeometry/VisAgent.ts ***!
+  \*************************************/
+
+/*!**************************************!*\
+  !*** ./src/simularium/ThreadUtil.ts ***!
+  \**************************************/
+
+/*!**************************************!*\
+  !*** ./src/visGeometry/agentPath.ts ***!
+  \**************************************/
+
+/*!**************************************!*\
+  !*** ./src/visGeometry/cifparser.ts ***!
+  \**************************************/
+
+/*!***************************************!*\
+  !*** ./node_modules/lodash/lodash.js ***!
+  \***************************************/
+
+/*!****************************************!*\
+  !*** ./node_modules/react-is/index.js ***!
+  \****************************************/
+
+/*!****************************************!*\
+  !*** ./src/visGeometry/color-utils.ts ***!
+  \****************************************/
+
+/*!*****************************************!*\
+  !*** ./node_modules/parse-pdb/index.js ***!
+  \*****************************************/
+
+/*!*****************************************!*\
+  !*** ./node_modules/si-prefix/index.js ***!
+  \*****************************************/
+
+/*!*****************************************!*\
+  !*** ./src/simularium/FrontEndError.ts ***!
+  \*****************************************/
+
+/*!******************************************!*\
+  !*** ./node_modules/prop-types/index.js ***!
+  \******************************************/
+
+/*!******************************************!*\
+  !*** ./src/simularium/JsonFileReader.ts ***!
+  \******************************************/
+
+/*!******************************************!*\
+  !*** ./src/visGeometry/GeometryStore.ts ***!
+  \******************************************/
+
+/*!*******************************************!*\
+  !*** ./src/simularium/ClientSimulator.ts ***!
+  \*******************************************/
+
+/*!*******************************************!*\
+  !*** ./src/simularium/RemoteSimulator.ts ***!
+  \*******************************************/
+
+/*!*******************************************!*\
+  !*** ./src/simularium/versionHandlers.ts ***!
+  \*******************************************/
+
+/*!*******************************************!*\
+  !*** ./src/visGeometry/rendering/SSAO.ts ***!
+  \*******************************************/
+
+/*!********************************************!*\
+  !*** ./node_modules/prop-types/lib/has.js ***!
+  \********************************************/
+
+/*!********************************************!*\
+  !*** ./node_modules/si-prefix/lib/unit.js ***!
+  \********************************************/
+
+/*!********************************************!*\
+  !*** ./src/simularium/BinaryFileReader.ts ***!
+  \********************************************/
+
+/*!*********************************************!*\
+  !*** ./node_modules/object-assign/index.js ***!
+  \*********************************************/
+
+/*!*********************************************!*\
+  !*** ./node_modules/si-prefix/lib/scale.js ***!
+  \*********************************************/
+
+/*!**********************************************!*\
+  !*** ./node_modules/js-logger/src/logger.js ***!
+  \**********************************************/
+
+/*!**********************************************!*\
+  !*** ./src/simularium/LocalFileSimulator.ts ***!
+  \**********************************************/
+
+/*!**********************************************!*\
+  !*** ./src/simularium/SelectionInterface.ts ***!
+  \**********************************************/
+
+/*!**********************************************!*\
+  !*** ./src/simularium/orchestrator/index.ts ***!
+  \**********************************************/
+
+/*!***********************************************!*\
+  !*** ./src/visGeometry/rendering/KMeans3d.ts ***!
+  \***********************************************/
+
+/*!**************************************************!*\
+  !*** ./node_modules/three/build/three.module.js ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./node_modules/tweakpane/dist/tweakpane.js ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./src/visGeometry/rendering/ContourPass.ts ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./src/visGeometry/rendering/GBufferPass.ts ***!
+  \**************************************************/
+
+/*!***************************************************!*\
+  !*** ./node_modules/comlink/dist/esm/comlink.mjs ***!
+  \***************************************************/
+
+/*!***************************************************!*\
+  !*** ./node_modules/prop-types/checkPropTypes.js ***!
+  \***************************************************/
+
+/*!***************************************************!*\
+  !*** ./src/visGeometry/rendering/GaussianBlur.ts ***!
+  \***************************************************/
+
+/*!***************************************************!*\
+  !*** ./src/visGeometry/rendering/MetaballMesh.ts ***!
+  \***************************************************/
+
+/*!****************************************************!*\
+  !*** ./src/visGeometry/rendering/CompositePass.ts ***!
+  \****************************************************/
+
+/*!****************************************************!*\
+  !*** ./src/visGeometry/rendering/HitTestHelper.ts ***!
+  \****************************************************/
+
+/*!****************************************************!*\
+  !*** ./src/visGeometry/rendering/InstancedMesh.ts ***!
+  \****************************************************/
+
+/*!*****************************************************!*\
+  !*** ./node_modules/react/cjs/react.development.js ***!
+  \*****************************************************/
+
+/*!*****************************************************!*\
+  !*** ./node_modules/regenerator-runtime/runtime.js ***!
+  \*****************************************************/
+
+/*!*****************************************************!*\
+  !*** ./src/visGeometry/rendering/DrawBufferPass.ts ***!
+  \*****************************************************/
+
+/*!*****************************************************!*\
+  !*** ./src/visGeometry/rendering/InstancedFiber.ts ***!
+  \*****************************************************/
+
+/*!*****************************************************!*\
+  !*** ./src/visGeometry/rendering/LegacyRenderer.ts ***!
+  \*****************************************************/
+
+/*!*****************************************************!*\
+  !*** ./src/visGeometry/rendering/RenderToBuffer.ts ***!
+  \*****************************************************/
+
+/*!********************************************************!*\
+  !*** ./src/visGeometry/rendering/PDBGBufferShaders.ts ***!
+  \********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./src/visGeometry/rendering/MetaballMeshShader.ts ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./src/visGeometry/rendering/MultipassMaterials.ts ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./src/visGeometry/rendering/SimulariumRenderer.ts ***!
+  \*********************************************************/
+
+/*!**********************************************************!*\
+  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
+  \**********************************************************/
+
+/*!**********************************************************!*\
+  !*** ./src/visGeometry/rendering/InstancedMeshShader.ts ***!
+  \**********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/typeof.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/react-is/cjs/react-is.development.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./src/visGeometry/rendering/InstancedFiberShader.ts ***!
+  \***********************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/prop-types/factoryWithTypeCheckers.js ***!
+  \************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/inherits.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
+  \*************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/construct.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/three/examples/jsm/libs/stats.module.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/three/examples/jsm/loaders/OBJLoader.js ***!
+  \**************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/three/examples/jsm/capabilities/WebGL.js ***!
+  \***************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/createClass.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./src/simularium/localSimulators/IClientSimulatorImpl.ts ***!
+  \****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/@fortawesome/react-fontawesome/index.es.js ***!
+  \*****************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/three/examples/jsm/objects/MarchingCubes.js ***!
+  \******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/defineProperty.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/three/examples/jsm/controls/OrbitControls.js ***!
+  \*******************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/iterableToArray.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/wrapNativeSuper.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/@fortawesome/fontawesome-svg-core/index.es.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/@fortawesome/free-solid-svg-icons/index.es.js ***!
+  \********************************************************************/
+
+/*!*********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js ***!
+  \*********************************************************************/
+
+/*!*********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js ***!
+  \*********************************************************************/
+
+/*!*********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/isNativeFunction.js ***!
+  \*********************************************************************/
+
+/*!**********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js ***!
+  \**********************************************************************/
+
+/*!**********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js ***!
+  \**********************************************************************/
+
+/*!**********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js ***!
+  \**********************************************************************/
+
+/*!*************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js ***!
+  \*************************************************************************/
+
+/*!**************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js ***!
+  \**************************************************************************/
+
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/isNativeReflectConstruct.js ***!
+  \*****************************************************************************/
+
+/*!******************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js ***!
+  \******************************************************************************/
+
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js ***!
+  \*******************************************************************************/
+
+/*!***************************************************************************************!*\
+  !*** ./node_modules/@tweakpane/plugin-essentials/dist/tweakpane-plugin-essentials.js ***!
+  \***************************************************************************************/
+
+/**
+ * @license React
+ * react-is.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * use-sync-external-store-shim.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * use-sync-external-store-shim/with-selector.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/** @license React v0.19.1
+ * scheduler.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/** @license React v16.13.1
+ * react-is.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/** @license React v16.14.0
+ * react-dom.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/** @license React v16.14.0
+ * react.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/** @license React v17.0.2
+ * react-is.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**! 
+ * hotkeys-js v3.9.4 
+ * A simple micro-library for defining and dispatching keyboard shortcuts. It has no dependencies. 
+ * 
+ * Copyright (c) 2022 kenny wong <wowohoo@qq.com> 
+ * http://jaywcjlove.github.io/hotkeys 
+ * Licensed under the MIT license 
+ */
+
+//! moment.js
+
+//! moment.js locale configuration
