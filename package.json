@@ -11,11 +11,7 @@
     "license": "ISC",
     "scripts": {
         "start": "webpack serve --config ./webpack/webpack.config.js --env env=dev",
-        "gh-build": "cross-env GH_BUILD=true webpack --config ./webpack/webpack.config.js --env env=production",
-        "gh-build:stable": "cross-env GH_BUILD=true webpack --config ./webpack/webpack.config.js --env env=production --env dest=gh-pages/stable",
-        "gh-build:dev": "cross-env GH_BUILD=true webpack --config ./webpack/webpack.config.js --env env=production --env dest=gh-pages/dev",
-        "pregh-deploy": "npm run gh-build",
-        "gh-deploy": "gh-pages -d dist",
+        "gh-deploy": "gh-pages -d gh-pages",
         "build:staging": "cross-env NODE_ENV=staging webpack --config ./webpack/webpack.config.js  --env env=staging",
         "build": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.js  --env env=production",
         "lint": "eslint src --ext .ts,.tsx",
