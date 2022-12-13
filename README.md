@@ -11,7 +11,9 @@ This repository is part of the Simularium project ([simularium.allencell.org](ht
 
 # Simularium Website
 
-simularium-website is the front end Simularium website, which allows users to visualize and analyze biological simulation results. Future functionality will include creating, modifying, and sharing simulations.
+[Links to staging and production releases](https://simularium.github.io/simularium-website/)
+
+simularium-website is containts the code for the front end [Simularium website](https://simularium.allencell.org/), which allows users to visualize and analyze biological simulation results. Future functionality will include creating, modifying, and sharing simulations.
 
 ---
 
