@@ -31,7 +31,10 @@ module.exports = ({ analyze, env, dest = "dist" } = {}) => ({
     entry: {
         app: "./src/index.tsx",
     },
-    mode: env === Env.PRODUCTION ? "production" : "development",
+    mode:
+        env === Env.PRODUCTION || env === Env.STAGE
+            ? "production"
+            : "development",
     module: {
         rules: [
             {
