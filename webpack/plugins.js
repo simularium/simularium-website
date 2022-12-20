@@ -54,9 +54,6 @@ const BUNDLE_ANALYZER = [
 
 const PLUGINS_BY_ENV = {
     [Env.PRODUCTION]: [
-        new webpack.DefinePlugin({
-            "process.env.NODE_ENV": JSON.stringify("production"),
-        }),
         new webpack.EnvironmentPlugin({
             BACKEND_SERVER_IP: `production-node1-agentviz-backend.cellexplore.net`,
         }),

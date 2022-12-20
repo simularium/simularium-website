@@ -138,7 +138,8 @@ module.exports = ({ analyze, env, dest = "dist" } = {}) => ({
         ],
     },
     optimization: {
-        moduleIds: env === Env.STAGE ? "named" : undefined,
+        moduleIds:
+            env === Env.STAGE || env === Env.PRODUCTION ? "named" : undefined,
         runtimeChunk: "single",
         splitChunks: {
             chunks: "all",
