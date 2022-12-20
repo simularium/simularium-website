@@ -21,6 +21,12 @@ module.exports = ({ analyze, env, dest = "dist" } = {}) => ({
         host: devServer.host,
         port: devServer.port,
         historyApiFallback: true,
+        client: {
+            overlay: {
+                errors: true,
+                warnings: false,
+            },
+        },
     },
     entry: {
         app: "./src/index.tsx",
