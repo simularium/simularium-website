@@ -86,6 +86,11 @@ const App = () => {
     );
 };
 
+// vars filled at build time using webpack DefinePlugin
+console.log("Welcome to Simularium " + SIMULARIUM_BUILD_ENVIRONMENT + " build");
+console.log("Simularium Website Version " + SIMULARIUM_WEBSITE_VERSION);
+console.log("Simularium Viewer Version " + SIMULARIUM_VIEWER_VERSION);
+
 const renderApp = () => render(<App />, document.getElementById(APP_ID));
 
 renderApp();

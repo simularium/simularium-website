@@ -21,11 +21,20 @@ module.exports = ({ analyze, env, dest = "dist" } = {}) => ({
         host: devServer.host,
         port: devServer.port,
         historyApiFallback: true,
+        client: {
+            overlay: {
+                errors: true,
+                warnings: false,
+            },
+        },
     },
     entry: {
         app: "./src/index.tsx",
     },
-    mode: env === Env.PRODUCTION ? "production" : "development",
+    mode:
+        env === Env.PRODUCTION || env === Env.STAGE
+            ? "production"
+            : "development",
     module: {
         rules: [
             {
@@ -129,7 +138,8 @@ module.exports = ({ analyze, env, dest = "dist" } = {}) => ({
         ],
     },
     optimization: {
-        moduleIds: env === Env.STAGE ? "named" : undefined,
+        moduleIds:
+            env === Env.STAGE || env === Env.PRODUCTION ? "named" : undefined,
         runtimeChunk: "single",
         splitChunks: {
             chunks: "all",
