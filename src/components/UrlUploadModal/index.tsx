@@ -74,7 +74,7 @@ const UrlUploadModal = ({
                         placeholder="https://.../example.simularium"
                         size="large"
                         onChange={handleUserInput}
-                        // autofocus FIXME: this doesn't work
+                        autoFocus={true}
                     />
                 </Form.Item>
                 <Form.Item className={styles.submitButton}>

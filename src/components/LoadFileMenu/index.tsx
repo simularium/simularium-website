@@ -87,15 +87,6 @@ const LoadFileMenu = ({
                     From a URL
                 </Button>
             </Menu.Item>
-            {/* 
-            1. Putting UrlUploadModal inside Menu.Item causes keyboard bugs.
-               https://github.com/ant-design/ant-design/issues/34125
-            2. Conditionally rendering the modal this way instead of as a `visible` prop
-               forces it to re-render every time it is opened, resetting the form inside.
-            */}
-            {isModalVisible && (
-                <UrlUploadModal setIsModalVisible={setIsModalVisible} />
-            )}
             <Menu.Item key="local-file-upload">
                 <LocalFileUpload
                     clearSimulariumFile={clearSimulariumFile}
@@ -108,15 +99,30 @@ const LoadFileMenu = ({
     );
 
     return (
-        <Dropdown overlay={menu} placement="bottomRight" disabled={isBuffering}>
-            <Button
-                className="ant-dropdown-link"
-                onClick={(e) => e.preventDefault()}
-                type="primary"
+        <>
+            <Dropdown
+                overlay={menu}
+                placement="bottomRight"
+                disabled={isBuffering}
             >
-                Load model {DownArrow}
-            </Button>
-        </Dropdown>
+                <Button
+                    className="ant-dropdown-link"
+                    onClick={(e) => e.preventDefault()}
+                    type="primary"
+                >
+                    Load model {DownArrow}
+                </Button>
+            </Dropdown>
+            {/* 
+            1. Putting UrlUploadModal inside Menu.Item causes keyboard bugs.
+               https://github.com/ant-design/ant-design/issues/34125
+            2. Conditionally rendering the modal this way instead of as a `visible` prop
+               forces it to re-render every time it is opened, resetting the form inside.
+            */}
+            {isModalVisible && (
+                <UrlUploadModal setIsModalVisible={setIsModalVisible} />
+            )}
+        </>
     );
 };
 
