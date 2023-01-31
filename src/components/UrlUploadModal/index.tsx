@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal } from "antd";
+import { Button, Form, Input, Modal, Tabs } from "antd";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -46,47 +46,52 @@ const UrlUploadModal = ({
     return (
         <Modal
             className={styles.modal}
-            title="Load Model from URL"
-            visible
+            title="Choose a Simularium file to load"
+            open
             footer={null}
             onCancel={closeModal}
             width={525}
             centered
         >
-            <Form
-                layout="vertical"
-                requiredMark={false}
-                onFinish={loadTrajectory}
-            >
-                <Form.Item
-                    name="url"
-                    label="Enter the URL to a public .simularium file"
-                    extra={extraInfo}
-                    rules={[
-                        {
-                            type: "url",
-                            message: "!\u20DD Please input a valid URL",
-                        },
-                    ]}
-                >
-                    <Input
-                        allowClear
-                        placeholder="https://.../example.simularium"
-                        size="large"
-                        onChange={handleUserInput}
-                        autoFocus={true}
-                    />
-                </Form.Item>
-                <Form.Item className={styles.submitButton}>
-                    <Button
-                        type="default"
-                        htmlType="submit"
-                        disabled={!userInput}
+            <Tabs defaultActiveKey="device" size="large">
+                <Tabs.TabPane tab="From your device" key="device">foo</Tabs.TabPane>
+                <Tabs.TabPane tab="From the web" key="web">
+                    <Form
+                        layout="vertical"
+                        requiredMark={false}
+                        onFinish={loadTrajectory}
                     >
-                        Load
-                    </Button>
-                </Form.Item>
-            </Form>
+                        <Form.Item
+                            name="url"
+                            label="Enter the URL to a public .simularium file"
+                            extra={extraInfo}
+                            rules={[
+                                {
+                                    type: "url",
+                                    message: "!\u20DD Please input a valid URL",
+                                },
+                            ]}
+                        >
+                            <Input
+                                allowClear
+                                placeholder="https://.../example.simularium"
+                                size="large"
+                                onChange={handleUserInput}
+                                autoFocus={true}
+                            />
+                        </Form.Item>
+                        <Form.Item className={styles.submitButton}>
+                            <Button
+                                type="default"
+                                htmlType="submit"
+                                disabled={!userInput}
+                            >
+                                Load
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </Tabs.TabPane>
+            </Tabs>
         </Modal>
     );
 };

@@ -54,3 +54,15 @@
 .modal :global(.ant-input-suffix svg) {
     color: var(--light-theme-modal-supplemental-text);
 }
+
+.modal :global(.ant-tabs-nav)::before {
+    content: none;
+}
+
+.modal :global(.ant-tabs .ant-tabs-tab) {
+    padding: 0;
+}
+
+.modal :global(.ant-tabs .ant-tabs-tab.ant-tabs-tab-active) {
+    font-weight: 600;
+}
