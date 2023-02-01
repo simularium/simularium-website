@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Tabs } from "antd";
+import { Button, Form, Input, Modal, Tabs, Upload } from "antd";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -10,18 +10,21 @@ interface UrlUploadModalProps {
     setIsModalVisible: (isModalVisible: boolean) => void;
 }
 
-const UrlUploadModal = ({
+type UrlFormValues = { url: string };
+
+const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
     setIsModalVisible,
-}: UrlUploadModalProps): JSX.Element => {
-    const [userInput, setUserInput] = useState("");
+}) => {
+    const [noUrlInput, setNoUrlInput] = useState(true);
+    const [urlForm] = Form.useForm<UrlFormValues>();
     const history = useHistory();
 
     const closeModal = () => {
         setIsModalVisible(false);
     };
 
-    const loadTrajectory = (values: any) => {
-        history.push(`${VIEWER_PATHNAME}?trajUrl=${values.url}`);
+    const loadTrajectoryUrl = ({ url }: UrlFormValues) => {
+        history.push(`${VIEWER_PATHNAME}?trajUrl=${url}`);
         location.reload();
     };
 
@@ -40,7 +43,7 @@ const UrlUploadModal = ({
     );
 
     const handleUserInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setUserInput(event.target.value);
+        setNoUrlInput(event.target.value.length === 0);
     };
 
     return (
@@ -48,18 +51,32 @@ const UrlUploadModal = ({
             className={styles.modal}
             title="Choose a Simularium file to load"
             open
-            footer={null}
+            footer={
+                <Button
+                    className={styles.submitButton}
+                    htmlType="submit"
+                    disabled={noUrlInput}
+                    onClick={urlForm.submit}
+                >
+                    Load
+                </Button>
+            }
             onCancel={closeModal}
             width={525}
             centered
         >
             <Tabs defaultActiveKey="device" size="large">
-                <Tabs.TabPane tab="From your device" key="device">foo</Tabs.TabPane>
+                <Tabs.TabPane tab="From your device" key="device">
+                    <Upload>
+                        <Button>Select file</Button>
+                    </Upload>
+                </Tabs.TabPane>
                 <Tabs.TabPane tab="From the web" key="web">
                     <Form
+                        form={urlForm}
                         layout="vertical"
                         requiredMark={false}
-                        onFinish={loadTrajectory}
+                        onFinish={loadTrajectoryUrl}
                     >
                         <Form.Item
                             name="url"
@@ -79,15 +96,6 @@ const UrlUploadModal = ({
                                 onChange={handleUserInput}
                                 autoFocus={true}
                             />
-                        </Form.Item>
-                        <Form.Item className={styles.submitButton}>
-                            <Button
-                                type="default"
-                                htmlType="submit"
-                                disabled={!userInput}
-                            >
-                                Load
-                            </Button>
                         </Form.Item>
                     </Form>
                 </Tabs.TabPane>

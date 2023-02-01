@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Upload, message, Button } from "antd";
+import { Upload, message } from "antd";
 import { UploadChangeParam } from "antd/lib/upload";
 import { ActionCreator } from "redux";
 
@@ -33,12 +33,13 @@ Order of operations for this Antd Upload component:
    These two changes trigger onChange.
 */
 
-const LocalFileUpload = ({
+const LocalFileUpload: React.FC<FileUploadProps> = ({
     loadLocalFile,
     setViewerStatus,
     clearSimulariumFile,
     setError,
-}: FileUploadProps): JSX.Element => {
+    children,
+}) => {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
     const onChange = ({ file }: UploadChangeParam) => {
@@ -80,7 +81,7 @@ const LocalFileUpload = ({
                     state: { localFile: true },
                 }}
             >
-                <Button type="ghost">From your device</Button>
+                {children}
             </Link>
         </Upload>
     );

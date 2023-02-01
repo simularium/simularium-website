@@ -68,6 +68,7 @@
     --light-theme-background-off-white: var(--off-white);
     --light-theme-faint-text: var(--white-two);
     --light-theme-modal-supplemental-text: var(--charcoal-grey);
+    --light-theme-modal-footer-bg: #f6f4ff;
     --light-theme-btn-default-disabled-bg: var(--heather);
 }
 
