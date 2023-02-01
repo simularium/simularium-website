@@ -8,17 +8,35 @@
     opacity: 0.7;
 }
 
-.modal button.submit-button[disabled] {
+.modal :global(.ant-btn) {
+    background-color: transparent;
+    border-color: var(--light-theme-modal-btn-default-color);
+    color: var(--light-theme-modal-btn-default-color);
+}
+
+.modal :global(.ant-btn-primary) {
+    background-color: var(--light-theme-modal-btn-default-color);
+    border: none;
+    color: #d8d8d8;
+}
+
+.modal :global(.ant-btn-primary[disabled]) {
     background: var(--light-theme-btn-default-disabled-bg);
     border: none;
 }
 
 .modal :global(.ant-modal-content) {
-    border-radius: 3px;
+    /* This just gets -content out of the way and ensures it doesn't render
+       under corners. Actual rounding is done in -header and -footer. */
+    border-radius: 4px;
 }
 
 .modal :global(.ant-modal-header) {
-    border-radius: 3px 3px 0 0;
+    border-radius: 2px 2px 0 0;
+}
+
+.modal :global(.ant-modal-footer) {
+    border-radius: 0 0 2px 2px;
 }
 
 .modal :global(.ant-modal-title) {
@@ -54,8 +72,5 @@
 
 .modal :global(.ant-tabs .ant-tabs-tab) {
     padding: 0;
-}
-
-.modal :global(.ant-tabs .ant-tabs-tab.ant-tabs-tab-active) {
     font-weight: 600;
 }

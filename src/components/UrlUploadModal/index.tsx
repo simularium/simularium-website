@@ -52,14 +52,17 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
             title="Choose a Simularium file to load"
             open
             footer={
-                <Button
-                    className={styles.submitButton}
-                    htmlType="submit"
-                    disabled={noUrlInput}
-                    onClick={urlForm.submit}
-                >
-                    Load
-                </Button>
+                <>
+                    <Button onClick={closeModal}>Cancel</Button>
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        disabled={noUrlInput}
+                        onClick={urlForm.submit}
+                    >
+                        Load
+                    </Button>
+                </>
             }
             onCancel={closeModal}
             width={525}
