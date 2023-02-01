@@ -28,7 +28,7 @@
 .modal :global(.ant-modal-content) {
     /* This just gets -content out of the way and ensures it doesn't render
        under corners. Actual rounding is done in -header and -footer. */
-    border-radius: 4px;
+    border-radius: 3px;
 }
 
 .modal :global(.ant-modal-header) {
