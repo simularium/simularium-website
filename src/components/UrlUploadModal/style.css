@@ -49,9 +49,6 @@
     color: var(--light-theme-modal-supplemental-text);
 }
 
-.modal :global(.ant-modal-footer) {
-}
-
 .modal :global(.ant-tabs-nav) {
     margin-bottom: 25px;
 }

@@ -2,9 +2,9 @@ import { Button, Form, Input, message, Modal, Tabs, Upload } from "antd";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload";
 import React, { useState } from "react";
 import { ActionCreator } from "redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import { TUTORIAL_PATHNAME, VIEWER_PATHNAME } from "../../routes";
+import { VIEWER_PATHNAME } from "../../routes";
 import {
     ClearSimFileDataAction,
     RequestLocalFileAction,
@@ -14,6 +14,7 @@ import {
     SetViewerStatusAction,
 } from "../../state/viewer/types";
 
+import UrlUploadForm from "./UrlUpload";
 import customRequest from "./custom-request-upload";
 import styles from "./style.css";
 
@@ -39,10 +40,13 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
     const [noUrlInput, setNoUrlInput] = useState(true);
 
     const [urlForm] = Form.useForm<UrlFormValues>();
-    const history = useHistory();
 
     const closeModal = () => {
         setIsModalVisible(false);
+    };
+
+    const handleUrlInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setNoUrlInput(event.target.value.length === 0);
     };
 
     // FILE LOADING METHODS
@@ -71,17 +75,6 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
         }
     };
 
-    // WEB LOADING METHODS
-
-    const handleUrlInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setNoUrlInput(event.target.value.length === 0);
-    };
-
-    const loadTrajectoryUrl = ({ url }: UrlFormValues) => {
-        history.push(`${VIEWER_PATHNAME}?trajUrl=${url}`);
-        location.reload();
-    };
-
     const loadBtnDisabled =
         currentTab === "device" ? fileList.length === 0 : noUrlInput;
     const onLoadClick = () => {
@@ -99,18 +92,50 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
         }
     };
 
-    const extraInfo = (
-        <p className={styles.extraInfo}>
-            We currently support public Dropbox, Google Drive, and Amazon S3
-            links.{" "}
-            <a
-                href={`${TUTORIAL_PATHNAME}#share-a-link`}
-                target="_blank"
-                rel="noopener noreferrer"
+    const tabItems = [
+        {
+            label: "From your device",
+            key: "device",
+            children: (
+                <Upload
+                    onChange={onUploadChange}
+                    onRemove={onRemoveFile}
+                    beforeUpload={beforeUpload}
+                    multiple
+                >
+                    <Link
+                        // Redirect to /viewer if necessary and/or clear out viewer
+                        to={{
+                            pathname: VIEWER_PATHNAME,
+                            state: { localFile: true },
+                        }}
+                    >
+                        <Button>Select file</Button>
+                    </Link>
+                </Upload>
+            ),
+        },
+        {
+            label: "From the web",
+            key: "web",
+            children: (
+                <UrlUploadForm form={urlForm} onInputChange={handleUrlInput} />
+            ),
+        },
+    ];
+
+    const footerButtons = (
+        <>
+            <Button onClick={closeModal}>Cancel</Button>
+            <Button
+                type="primary"
+                htmlType="submit"
+                disabled={loadBtnDisabled}
+                onClick={onLoadClick}
             >
-                Learn more.
-            </a>
-        </p>
+                Load
+            </Button>
+        </>
     );
 
     return (
@@ -118,75 +143,17 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
             className={styles.modal}
             title="Choose a Simularium file to load"
             open
-            footer={
-                <>
-                    <Button onClick={closeModal}>Cancel</Button>
-                    <Button
-                        type="primary"
-                        htmlType="submit"
-                        disabled={loadBtnDisabled}
-                        onClick={onLoadClick}
-                    >
-                        Load
-                    </Button>
-                </>
-            }
+            footer={footerButtons}
             onCancel={closeModal}
             width={525}
             centered
         >
             <Tabs
+                items={tabItems}
                 defaultActiveKey="device"
                 size="large"
                 onChange={setCurrentTab}
-            >
-                <Tabs.TabPane tab="From your device" key="device">
-                    <Upload
-                        onChange={onUploadChange}
-                        onRemove={onRemoveFile}
-                        beforeUpload={beforeUpload}
-                        multiple
-                    >
-                        <Link
-                            // Redirect to /viewer if necessary and/or clear out viewer
-                            to={{
-                                pathname: VIEWER_PATHNAME,
-                                state: { localFile: true },
-                            }}
-                        >
-                            <Button>Select file</Button>
-                        </Link>
-                    </Upload>
-                </Tabs.TabPane>
-                <Tabs.TabPane tab="From the web" key="web">
-                    <Form
-                        form={urlForm}
-                        layout="vertical"
-                        requiredMark={false}
-                        onFinish={loadTrajectoryUrl}
-                    >
-                        <Form.Item
-                            name="url"
-                            label="Enter the URL to a public .simularium file"
-                            extra={extraInfo}
-                            rules={[
-                                {
-                                    type: "url",
-                                    message: "!\u20DD Please input a valid URL",
-                                },
-                            ]}
-                        >
-                            <Input
-                                allowClear
-                                placeholder="https://.../example.simularium"
-                                size="large"
-                                onChange={handleUrlInput}
-                                autoFocus={true}
-                            />
-                        </Form.Item>
-                    </Form>
-                </Tabs.TabPane>
-            </Tabs>
+            />
         </Modal>
     );
 };
