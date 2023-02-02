@@ -1,4 +1,4 @@
-import { Button, Form, Input, message, Modal, Tabs, Upload } from "antd";
+import { Button, Form, message, Tabs, Upload } from "antd";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload";
 import React, { useState } from "react";
 import { ActionCreator } from "redux";
@@ -14,6 +14,7 @@ import {
     SetViewerStatusAction,
 } from "../../state/viewer/types";
 
+import CustomModal from "../CustomModal";
 import UrlUploadForm from "./UrlUpload";
 import customRequest from "./custom-request-upload";
 import styles from "./style.css";
@@ -139,8 +140,8 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
     );
 
     return (
-        <Modal
-            className={styles.modal}
+        <CustomModal
+            className={styles.uploadModal}
             title="Choose a Simularium file to load"
             open
             footer={footerButtons}
@@ -154,7 +155,7 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
                 size="large"
                 onChange={setCurrentTab}
             />
-        </Modal>
+        </CustomModal>
     );
 };
 

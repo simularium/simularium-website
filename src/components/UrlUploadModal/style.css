@@ -1,63 +1,35 @@
-.modal :global(.ant-btn) {
-    background-color: transparent;
-    border-color: var(--light-theme-modal-btn-default-color);
-    color: var(--light-theme-modal-btn-default-color);
-}
-
-.modal :global(.ant-btn-primary) {
-    background-color: var(--light-theme-modal-btn-default-color);
-    border: none;
-    color: #d8d8d8;
-}
-
-.modal :global(.ant-btn-primary[disabled]) {
-    background: var(--light-theme-btn-default-disabled-bg);
-    border: none;
-    color: #d8d8d8;
-}
-
-.modal :global(.ant-modal-content) {
-    /* prevents modal body color rendering under header/footer at corners */
-    border-radius: 3px;
-}
-
-.modal :global(.ant-modal-title) {
-    text-align: center;
-    font-weight: bold;
-}
-
-.modal .extra-info {
+.upload-modal .extra-info {
     margin-top: .25rem;
     color: var(--light-theme-modal-supplemental-text);
     font-size: 14px;
 }
 
-.modal .extra-info a:focus {
+.upload-modal .extra-info a:focus {
     opacity: 0.7;
 }
 
-.modal :global(.ant-form-item) {
+.upload-modal :global(.ant-form-item) {
     margin-bottom: 0;
 }
 
-.modal :global(.ant-input-affix-wrapper) {
+.upload-modal :global(.ant-input-affix-wrapper) {
     border-radius: 3px;
     border-color: var(--input-border-highlight);
 }
 
-.modal :global(.ant-input-suffix svg) {
+.upload-modal :global(.ant-input-suffix svg) {
     color: var(--light-theme-modal-supplemental-text);
 }
 
-.modal :global(.ant-tabs-nav) {
+.upload-modal :global(.ant-tabs-nav) {
     margin-bottom: 25px;
 }
 
-.modal :global(.ant-tabs-nav)::before {
+.upload-modal :global(.ant-tabs-nav)::before {
     content: none;
 }
 
-.modal :global(.ant-tabs .ant-tabs-tab) {
+.upload-modal :global(.ant-tabs .ant-tabs-tab) {
     padding: 0;
     font-weight: 600;
 }
