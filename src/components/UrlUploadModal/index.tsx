@@ -27,8 +27,6 @@ interface UrlUploadModalProps {
     setError: ActionCreator<SetErrorAction>;
 }
 
-type UrlFormValues = { url: string };
-
 const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
     setIsModalVisible,
     loadLocalFile,
@@ -37,10 +35,10 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
     setError,
 }) => {
     const [currentTab, setCurrentTab] = useState("device");
-    const [fileList, setFileList] = useState<File[]>([]);
+    const [fileList, setFileList] = useState<UploadFile[]>([]);
     const [noUrlInput, setNoUrlInput] = useState(true);
 
-    const [urlForm] = Form.useForm<UrlFormValues>();
+    const [urlForm] = Form.useForm();
 
     const closeModal = () => {
         setIsModalVisible(false);
@@ -50,17 +48,14 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
         setNoUrlInput(event.target.value.length === 0);
     };
 
-    // FILE LOADING METHODS
-
-    const beforeUpload = (_file: File, fileList: File[]) => {
-        setFileList([...fileList]);
+    const beforeUpload = (file: UploadFile, fileList: UploadFile[]) => {
+        setFileList([...fileList, file]);
         // defer upload until user presses "Load"
         return false;
     };
 
-    const onRemoveFile = ({ originFileObj }: UploadFile) => {
-        if (!originFileObj) return;
-        const index = fileList.indexOf(originFileObj);
+    const onRemoveFile = (file: UploadFile) => {
+        const index = fileList.indexOf(file);
         const newFileList = fileList.slice();
         newFileList.splice(index, 1);
         setFileList(newFileList);
@@ -78,6 +73,7 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
 
     const loadBtnDisabled =
         currentTab === "device" ? fileList.length === 0 : noUrlInput;
+
     const onLoadClick = () => {
         if (currentTab === "device") {
             customRequest(
@@ -102,6 +98,7 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
                     onChange={onUploadChange}
                     onRemove={onRemoveFile}
                     beforeUpload={beforeUpload}
+                    fileList={fileList}
                     multiple
                 >
                     <Link

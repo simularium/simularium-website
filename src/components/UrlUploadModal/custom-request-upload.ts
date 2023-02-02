@@ -4,6 +4,7 @@ import {
     ErrorLevel,
     FrontEndError,
 } from "@aics/simularium-viewer";
+import { UploadFile } from "antd";
 import { findIndex } from "lodash";
 import {
     UploadRequestOption,
@@ -32,7 +33,7 @@ into the viewer.
 export default (
     // TODO bring back this param?
     // { onSuccess, onError }: UploadRequestOption,
-    selectedFiles: File[],
+    selectedFiles: UploadFile[],
     clearSimulariumFile: (isNewFile: { newFile: boolean }) => void,
     loadFunction: (simulariumFile: LocalSimFile) => void,
     setViewerStatus: (status: { status: ViewerStatus }) => void,
@@ -61,7 +62,7 @@ export default (
     // and not have to have this action called multiple places in the code.
     clearSimulariumFile({ newFile: true });
 
-    const filesArr: File[] = Array.from(selectedFiles) as File[];
+    const filesArr: File[] = selectedFiles.map((file) => file.originFileObj!);
 
     try {
         // Try to identify the simularium file.
