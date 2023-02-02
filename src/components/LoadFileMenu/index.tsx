@@ -120,7 +120,13 @@ const LoadFileMenu = ({
                 forces it to re-render every time it is opened, resetting the form inside.
             */}
             {isModalVisible && (
-                <UrlUploadModal setIsModalVisible={setIsModalVisible} />
+                <UrlUploadModal
+                    setIsModalVisible={setIsModalVisible}
+                    clearSimulariumFile={clearSimulariumFile}
+                    loadLocalFile={loadLocalFile}
+                    setViewerStatus={setViewerStatus}
+                    setError={setError}
+                />
             )}
         </>
     );

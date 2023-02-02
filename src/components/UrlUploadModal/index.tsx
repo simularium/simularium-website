@@ -1,19 +1,37 @@
 import { Button, Form, Input, Modal, Tabs, Upload } from "antd";
 import React, { useState } from "react";
+import { ActionCreator } from "redux";
 import { useHistory } from "react-router-dom";
 
+import LocalFileUpload from "../LocalFileUpload";
 import { TUTORIAL_PATHNAME, VIEWER_PATHNAME } from "../../routes";
+import {
+    ClearSimFileDataAction,
+    RequestLocalFileAction,
+} from "../../state/trajectory/types";
+import {
+    SetErrorAction,
+    SetViewerStatusAction,
+} from "../../state/viewer/types";
 
 import styles from "./style.css";
 
 interface UrlUploadModalProps {
     setIsModalVisible: (isModalVisible: boolean) => void;
+    loadLocalFile: ActionCreator<RequestLocalFileAction>;
+    setViewerStatus: ActionCreator<SetViewerStatusAction>;
+    clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
+    setError: ActionCreator<SetErrorAction>;
 }
 
 type UrlFormValues = { url: string };
 
 const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
     setIsModalVisible,
+    loadLocalFile,
+    setViewerStatus,
+    clearSimulariumFile,
+    setError,
 }) => {
     const [noUrlInput, setNoUrlInput] = useState(true);
     const [urlForm] = Form.useForm<UrlFormValues>();
@@ -70,9 +88,14 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
         >
             <Tabs defaultActiveKey="device" size="large">
                 <Tabs.TabPane tab="From your device" key="device">
-                    <Upload>
+                    <LocalFileUpload
+                        clearSimulariumFile={clearSimulariumFile}
+                        loadLocalFile={loadLocalFile}
+                        setViewerStatus={setViewerStatus}
+                        setError={setError}
+                    >
                         <Button>Select file</Button>
-                    </Upload>
+                    </LocalFileUpload>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="From the web" key="web">
                     <Form
