@@ -1,9 +1,9 @@
-import { Button, Form, Input, Modal, Tabs, Upload } from "antd";
+import { Button, Form, Input, message, Modal, Tabs, Upload } from "antd";
+import { UploadChangeParam, UploadFile } from "antd/lib/upload";
 import React, { useState } from "react";
 import { ActionCreator } from "redux";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-import LocalFileUpload from "../LocalFileUpload";
 import { TUTORIAL_PATHNAME, VIEWER_PATHNAME } from "../../routes";
 import {
     ClearSimFileDataAction,
@@ -14,6 +14,7 @@ import {
     SetViewerStatusAction,
 } from "../../state/viewer/types";
 
+import customRequest from "./custom-request-upload";
 import styles from "./style.css";
 
 interface UrlUploadModalProps {
@@ -33,7 +34,9 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
     clearSimulariumFile,
     setError,
 }) => {
+    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [noUrlInput, setNoUrlInput] = useState(true);
+    const [currentTab, setCurrentTab] = useState("device");
     const [urlForm] = Form.useForm<UrlFormValues>();
     const history = useHistory();
 
@@ -41,9 +44,53 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
         setIsModalVisible(false);
     };
 
+    // FILE LOADING METHODS
+
+    const beforeUpload = (_file: File, fileList: File[]) => {
+        setSelectedFiles([...fileList]);
+        // defer upload until user presses "Load"
+        return false;
+    };
+
+    const onRemoveFile = ({ originFileObj }: UploadFile) => {
+        setSelectedFiles(
+            selectedFiles.filter((file) => file !== originFileObj)
+        );
+    };
+
+    const onUploadChange = ({ file }: UploadChangeParam) => {
+        if (file.status === "done") {
+            setSelectedFiles([]);
+        } else if (file.status === "error") {
+            message.error(`Failed to load ${file.name}`);
+            setSelectedFiles([]);
+        }
+    };
+
+    // WEB LOADING METHODS
+
+    const handleUrlInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setNoUrlInput(event.target.value.length === 0);
+    };
+
     const loadTrajectoryUrl = ({ url }: UrlFormValues) => {
         history.push(`${VIEWER_PATHNAME}?trajUrl=${url}`);
         location.reload();
+    };
+
+    const onLoadClick = () => {
+        if (currentTab === "device") {
+            customRequest(
+                selectedFiles,
+                clearSimulariumFile,
+                loadLocalFile,
+                setViewerStatus,
+                setError
+            );
+            closeModal();
+        } else {
+            urlForm.submit();
+        }
     };
 
     const extraInfo = (
@@ -60,10 +107,6 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
         </p>
     );
 
-    const handleUserInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setNoUrlInput(event.target.value.length === 0);
-    };
-
     return (
         <Modal
             className={styles.modal}
@@ -75,8 +118,12 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
                     <Button
                         type="primary"
                         htmlType="submit"
-                        disabled={noUrlInput}
-                        onClick={urlForm.submit}
+                        disabled={
+                            currentTab === "device"
+                                ? selectedFiles.length === 0
+                                : noUrlInput
+                        }
+                        onClick={onLoadClick}
                     >
                         Load
                     </Button>
@@ -86,16 +133,28 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
             width={525}
             centered
         >
-            <Tabs defaultActiveKey="device" size="large">
+            <Tabs
+                defaultActiveKey="device"
+                size="large"
+                onChange={setCurrentTab}
+            >
                 <Tabs.TabPane tab="From your device" key="device">
-                    <LocalFileUpload
-                        clearSimulariumFile={clearSimulariumFile}
-                        loadLocalFile={loadLocalFile}
-                        setViewerStatus={setViewerStatus}
-                        setError={setError}
+                    <Upload
+                        onChange={onUploadChange}
+                        onRemove={onRemoveFile}
+                        beforeUpload={beforeUpload}
+                        multiple
                     >
-                        <Button>Select file</Button>
-                    </LocalFileUpload>
+                        <Link
+                            // Redirect to /viewer if necessary and/or clear out viewer
+                            to={{
+                                pathname: VIEWER_PATHNAME,
+                                state: { localFile: true },
+                            }}
+                        >
+                            <Button>Select file</Button>
+                        </Link>
+                    </Upload>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="From the web" key="web">
                     <Form
@@ -119,7 +178,7 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
                                 allowClear
                                 placeholder="https://.../example.simularium"
                                 size="large"
-                                onChange={handleUserInput}
+                                onChange={handleUrlInput}
                                 autoFocus={true}
                             />
                         </Form.Item>

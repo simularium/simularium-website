@@ -23,6 +23,7 @@
 .modal :global(.ant-btn-primary[disabled]) {
     background: var(--light-theme-btn-default-disabled-bg);
     border: none;
+    color: #d8d8d8;
 }
 
 .modal :global(.ant-modal-content) {
