@@ -34,9 +34,10 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
     clearSimulariumFile,
     setError,
 }) => {
-    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-    const [noUrlInput, setNoUrlInput] = useState(true);
     const [currentTab, setCurrentTab] = useState("device");
+    const [fileList, setFileList] = useState<File[]>([]);
+    const [noUrlInput, setNoUrlInput] = useState(true);
+
     const [urlForm] = Form.useForm<UrlFormValues>();
     const history = useHistory();
 
@@ -47,23 +48,26 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
     // FILE LOADING METHODS
 
     const beforeUpload = (_file: File, fileList: File[]) => {
-        setSelectedFiles([...fileList]);
+        setFileList([...fileList]);
         // defer upload until user presses "Load"
         return false;
     };
 
     const onRemoveFile = ({ originFileObj }: UploadFile) => {
-        setSelectedFiles(
-            selectedFiles.filter((file) => file !== originFileObj)
-        );
+        if (!originFileObj) return;
+        const index = fileList.indexOf(originFileObj);
+        const newFileList = fileList.slice();
+        newFileList.splice(index, 1);
+        setFileList(newFileList);
     };
 
+    // TODO move to customRequest
     const onUploadChange = ({ file }: UploadChangeParam) => {
         if (file.status === "done") {
-            setSelectedFiles([]);
+            setFileList([]);
         } else if (file.status === "error") {
             message.error(`Failed to load ${file.name}`);
-            setSelectedFiles([]);
+            setFileList([]);
         }
     };
 
@@ -78,10 +82,12 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
         location.reload();
     };
 
+    const loadBtnDisabled =
+        currentTab === "device" ? fileList.length === 0 : noUrlInput;
     const onLoadClick = () => {
         if (currentTab === "device") {
             customRequest(
-                selectedFiles,
+                fileList,
                 clearSimulariumFile,
                 loadLocalFile,
                 setViewerStatus,
@@ -118,11 +124,7 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
                     <Button
                         type="primary"
                         htmlType="submit"
-                        disabled={
-                            currentTab === "device"
-                                ? selectedFiles.length === 0
-                                : noUrlInput
-                        }
+                        disabled={loadBtnDisabled}
                         onClick={onLoadClick}
                     >
                         Load

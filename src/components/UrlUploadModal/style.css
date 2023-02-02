@@ -1,13 +1,3 @@
-.modal .extra-info {
-    margin-top: .25rem;
-    color: var(--light-theme-modal-supplemental-text);
-    font-size: 14px;
-}
-
-.modal .extra-info a:focus {
-    opacity: 0.7;
-}
-
 .modal :global(.ant-btn) {
     background-color: transparent;
     border-color: var(--light-theme-modal-btn-default-color);
@@ -27,22 +17,23 @@
 }
 
 .modal :global(.ant-modal-content) {
-    /* This just gets -content out of the way and ensures it doesn't render
-       under corners. Actual rounding is done in -header and -footer. */
+    /* prevents modal body color rendering under header/footer at corners */
     border-radius: 3px;
-}
-
-.modal :global(.ant-modal-header) {
-    border-radius: 2px 2px 0 0;
-}
-
-.modal :global(.ant-modal-footer) {
-    border-radius: 0 0 2px 2px;
 }
 
 .modal :global(.ant-modal-title) {
     text-align: center;
     font-weight: bold;
+}
+
+.modal .extra-info {
+    margin-top: .25rem;
+    color: var(--light-theme-modal-supplemental-text);
+    font-size: 14px;
+}
+
+.modal .extra-info a:focus {
+    opacity: 0.7;
 }
 
 .modal :global(.ant-form-item) {
@@ -59,8 +50,6 @@
 }
 
 .modal :global(.ant-modal-footer) {
-    background-color: var(--light-theme-modal-footer-bg);
-    border-top: 1px solid var(--heather);
 }
 
 .modal :global(.ant-tabs-nav) {
