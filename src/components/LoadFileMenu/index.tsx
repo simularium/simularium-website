@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { ActionCreator } from "redux";
-import { Menu, Dropdown, Button } from "antd";
+import { Menu, Dropdown, Button, MenuProps } from "antd";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
@@ -58,41 +58,42 @@ const LoadFileMenu = ({
         }
     };
 
-    const menu = (
-        <Menu theme="dark" className={styles.menu}>
-            <Menu.SubMenu
-                title="From examples"
-                popupClassName={styles.submenu}
-                popupOffset={[-0.45, -4]}
-                key="from-examples"
-            >
-                {TRAJECTORIES.map((trajectory) => (
-                    <Menu.Item key={trajectory.id}>
-                        <Link
-                            onClick={() => onClick(trajectory)}
-                            to={{
-                                pathname: VIEWER_PATHNAME,
-                                search: `?${URL_PARAM_KEY_FILE_NAME}=${trajectory.id}`,
-                            }}
-                        >
-                            {trajectory.title}
-                            {trajectory.subtitle && `: ${trajectory.subtitle}`}
-                        </Link>
-                    </Menu.Item>
-                ))}
-            </Menu.SubMenu>
-            <Menu.Item key="url-upload">
+    const items: MenuProps["items"] = [
+        {
+            key: "from-examples",
+            label: "Example models",
+            popupClassName: styles.submenu,
+            popupOffset: [-0.45, -4],
+            children: TRAJECTORIES.map((trajectory) => ({
+                key: trajectory.id,
+                label: (
+                    <Link
+                        onClick={() => onClick(trajectory)}
+                        to={{
+                            pathname: VIEWER_PATHNAME,
+                            search: `?${URL_PARAM_KEY_FILE_NAME}=${trajectory.id}`,
+                        }}
+                    >
+                        {trajectory.title}
+                        {trajectory.subtitle && `: ${trajectory.subtitle}`}
+                    </Link>
+                ),
+            })),
+        },
+        {
+            key: "file-upload",
+            label: (
                 <Button type="ghost" onClick={showModal}>
                     Simularium file
                 </Button>
-            </Menu.Item>
-        </Menu>
-    );
+            ),
+        },
+    ];
 
     return (
         <>
             <Dropdown
-                overlay={menu}
+                menu={{ items, theme: "dark", className: styles.menu }}
                 placement="bottomRight"
                 disabled={isBuffering}
             >
