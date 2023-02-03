@@ -12,7 +12,6 @@ import {
 } from "../../state/trajectory/types";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
-import LocalFileUpload from "../LocalFileUpload";
 import UrlUploadModal from "../UrlUploadModal";
 import { DownArrow } from "../Icons";
 import {
@@ -84,18 +83,8 @@ const LoadFileMenu = ({
             </Menu.SubMenu>
             <Menu.Item key="url-upload">
                 <Button type="ghost" onClick={showModal}>
-                    From a URL
+                    Simularium file
                 </Button>
-            </Menu.Item>
-            <Menu.Item key="local-file-upload">
-                <LocalFileUpload
-                    clearSimulariumFile={clearSimulariumFile}
-                    loadLocalFile={loadLocalFile}
-                    setViewerStatus={setViewerStatus}
-                    setError={setError}
-                >
-                    <Button type="ghost">From your device</Button>
-                </LocalFileUpload>
             </Menu.Item>
         </Menu>
     );
