@@ -12,7 +12,7 @@ import {
 } from "../../state/trajectory/types";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
-import UrlUploadModal from "../UrlUploadModal";
+import FileUploadModal from "../FileUploadModal";
 import { DownArrow } from "../Icons";
 import {
     SetErrorAction,
@@ -110,7 +110,7 @@ const LoadFileMenu = ({
                 forces it to re-render every time it is opened, resetting the form inside.
             */}
             {isModalVisible && (
-                <UrlUploadModal
+                <FileUploadModal
                     setIsModalVisible={setIsModalVisible}
                     clearSimulariumFile={clearSimulariumFile}
                     loadLocalFile={loadLocalFile}

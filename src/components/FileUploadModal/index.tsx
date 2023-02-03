@@ -18,7 +18,7 @@ import LocalUpload from "./LocalUpload";
 import uploadFiles from "./upload-local-files";
 import styles from "./style.css";
 
-interface UrlUploadModalProps {
+interface FileUploadModalProps {
     setIsModalVisible: (isModalVisible: boolean) => void;
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
@@ -26,7 +26,7 @@ interface UrlUploadModalProps {
     setError: ActionCreator<SetErrorAction>;
 }
 
-const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
+const FileUploadModal: React.FC<FileUploadModalProps> = ({
     setIsModalVisible,
     loadLocalFile,
     setViewerStatus,
@@ -129,4 +129,4 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
     );
 };
 
-export default UrlUploadModal;
+export default FileUploadModal;
