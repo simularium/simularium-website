@@ -64,9 +64,11 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
                 message.error(`Failed to load ${file.name}`);
             }
         },
-        fileList: fileList,
+        fileList,
     };
 
+    // Load button is disabled if the current tab ("your device" or "the web")
+    // has nothing specified to upload
     const disableLoad = openTab === "dev" ? fileList.length === 0 : noUrlInput;
 
     const onLoadClick = () => {
@@ -121,9 +123,9 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
         >
             <Tabs
                 items={tabItems}
-                defaultActiveKey="dev"
-                size="large"
+                activeKey={openTab}
                 onChange={setOpenTab}
+                size="large"
             />
         </CustomModal>
     );
