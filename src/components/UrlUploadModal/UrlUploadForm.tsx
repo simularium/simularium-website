@@ -10,10 +10,10 @@ import styles from "./style.css";
 type UrlFormValues = { url: string };
 interface UrlUploadProps {
     form?: FormInstance<UrlFormValues>;
-    onInputChange?: React.ChangeEventHandler<HTMLInputElement>;
+    onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-const UrlUploadForm: React.FC<UrlUploadProps> = ({ form, onInputChange }) => {
+const UrlUploadForm: React.FC<UrlUploadProps> = ({ form, onChange }) => {
     const history = useHistory();
 
     const loadTrajectoryUrl = ({ url }: UrlFormValues) => {
@@ -57,7 +57,7 @@ const UrlUploadForm: React.FC<UrlUploadProps> = ({ form, onInputChange }) => {
                     allowClear
                     placeholder="https://.../example.simularium"
                     size="large"
-                    onChange={onInputChange}
+                    onChange={onChange}
                     autoFocus={true}
                 />
             </Form.Item>
