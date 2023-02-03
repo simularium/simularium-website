@@ -13,8 +13,8 @@ import {
 } from "../../state/viewer/types";
 
 import CustomModal from "../CustomModal";
-import UrlUploadForm from "./UrlUploadForm";
-import LocalUpload from "./LocalUpload";
+import UrlUploadForm from "./url-upload-form";
+import LocalUploadButton from "./local-upload-button";
 import uploadFiles from "./upload-local-files";
 import styles from "./style.css";
 
@@ -91,7 +91,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
         {
             label: "From your device",
             key: "dev",
-            children: <LocalUpload {...uploadProps} multiple />,
+            children: <LocalUploadButton {...uploadProps} multiple />,
         },
         {
             label: "From the web",

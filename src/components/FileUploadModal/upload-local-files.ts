@@ -22,9 +22,9 @@ Takes in an array of all the files loaded by the user, finds and processes the
 .simularium file and any geometry files separately, then tells the app to load
 the trajectory with its associated geometry files into the viewer.
 
-This function may also be used as a "custom request" for an Antd Upload 
-component, which overrides the default POST request that happens when the user
-uploads files. The Antd Upload wraps the Upload component from react-component.
+This function may be used as a "custom request" for an Antd Upload component,
+which overrides the default POST request that happens when the user uploads
+files. The Antd Upload wraps the Upload component from react-component.
 - Antd docs: https://ant.design/components/upload/#API
 - rc-upload docs: https://github.com/react-component/upload#customrequest
 */

@@ -4,7 +4,7 @@ import classNames from "classnames";
 
 import styles from "./style.css";
 
-/** Tiny wrapper component which applies additional styling to modals */
+/** Tiny wrapper component to keep modal styling consistent */
 const CustomModal: React.FC<ModalProps> = (props) => (
     <Modal {...props} className={classNames(styles.modal, props.className)} />
 );
