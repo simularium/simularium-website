@@ -4,7 +4,6 @@ import {
     ErrorLevel,
     FrontEndError,
 } from "@aics/simularium-viewer";
-import { UploadFile } from "antd";
 import { findIndex } from "lodash";
 import {
     UploadRequestOption,
@@ -22,13 +21,20 @@ let numRequests = 0;
 Takes in an array of all the files loaded by the user, finds and processes the
 .simularium file and any geometry files separately, then tells the app to load
 the trajectory with its associated geometry files into the viewer.
+
+This function may also be used as a "custom request" for an Antd Upload 
+component, which overrides the default POST request that happens when the user
+uploads files. The Antd Upload wraps the Upload component from react-component.
+- Antd docs: https://ant.design/components/upload/#API
+- rc-upload docs: https://github.com/react-component/upload#customrequest
 */
-export default (
+export default async (
     selectedFiles: File[],
     clearSimulariumFile: (isNewFile: { newFile: boolean }) => void,
     loadFunction: (simulariumFile: LocalSimFile) => void,
     setViewerStatus: (status: { status: ViewerStatus }) => void,
-    setError: (error: ViewerError) => void
+    setError: (error: ViewerError) => void,
+    rcRequest?: UploadRequestOption
 ) => {
     numRequests++;
     if (numRequests !== 1) {
@@ -64,7 +70,7 @@ export default (
                 "Trajectory file was not found; please make sure it has a .simularium extension."
             );
         }
-        Promise.all<string | ISimulariumFile>(
+        const parsedFiles = await Promise.all<string | ISimulariumFile>(
             selectedFiles.map((element, index) => {
                 if (index !== simulariumFileIndex) {
                     // is async call
@@ -73,26 +79,36 @@ export default (
                     return loadSimulariumFile(element);
                 }
             })
-        ).then((parsedFiles) => {
-            const simulariumFile = parsedFiles[
-                simulariumFileIndex
-            ] as ISimulariumFile;
-            // build the geoAssets as mapping name-value pairs:
-            const geoAssets = selectedFiles.reduce((acc, cur, index) => {
-                if (index !== simulariumFileIndex) {
-                    acc[cur.name] = parsedFiles[index] as string;
-                }
-                return acc;
-            }, {} as { [key: string]: string });
-            const fileName = selectedFiles[simulariumFileIndex].name;
+        );
 
-            loadFunction({
-                lastModified: selectedFiles[simulariumFileIndex].lastModified,
-                name: fileName,
-                data: simulariumFile,
-                geoAssets: geoAssets,
-            });
+        const simulariumFile = parsedFiles[
+            simulariumFileIndex
+        ] as ISimulariumFile;
+        // build the geoAssets as mapping name-value pairs:
+        const geoAssets = selectedFiles.reduce((acc, cur, index) => {
+            if (index !== simulariumFileIndex) {
+                acc[cur.name] = parsedFiles[index] as string;
+            }
+            return acc;
+        }, {} as { [key: string]: string });
+        const fileName = selectedFiles[simulariumFileIndex].name;
+
+        loadFunction({
+            lastModified: selectedFiles[simulariumFileIndex].lastModified,
+            name: fileName,
+            data: simulariumFile,
+            geoAssets: geoAssets,
         });
+        if (rcRequest?.onSuccess) {
+            rcRequest.onSuccess(
+                {
+                    name: fileName,
+                    status: "done",
+                    url: "",
+                },
+                new XMLHttpRequest() // onSuccess needs an XMLHttpRequest arg
+            );
+        }
     } catch (error) {
         let message;
         let level = ErrorLevel.ERROR;
@@ -107,13 +123,12 @@ export default (
                 message = String(error);
             }
         }
-        setError({
-            level: level,
-            message: message,
-            htmlData: "",
-        });
+        setError({ level, message, htmlData: "" });
         setViewerStatus({ status: VIEWER_ERROR });
         clearSimulariumFile({ newFile: false });
         clearUrlParams();
+        if (rcRequest?.onError) {
+            rcRequest.onError(error as UploadRequestError);
+        }
     }
 };

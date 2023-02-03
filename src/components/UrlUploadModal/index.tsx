@@ -1,5 +1,5 @@
-import { Button, Form, Tabs } from "antd";
-import { RcFile, UploadFile, UploadProps } from "antd/lib/upload";
+import { Button, Form, message, Tabs } from "antd";
+import { RcFile, UploadProps } from "antd/lib/upload";
 import React, { useState } from "react";
 import { ActionCreator } from "redux";
 
@@ -15,7 +15,7 @@ import {
 import CustomModal from "../CustomModal";
 import UrlUploadForm from "./UrlUploadForm";
 import LocalUpload from "./LocalUpload";
-import customRequest from "./custom-request-upload";
+import uploadFiles from "./upload-local-files";
 import styles from "./style.css";
 
 interface UrlUploadModalProps {
@@ -58,6 +58,12 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
             newFileList.splice(index, 1);
             setFileList(newFileList);
         },
+        onChange: ({ file }) => {
+            if (file.status === "error") {
+                setFileList([]);
+                message.error(`Failed to load ${file.name}`);
+            }
+        },
         fileList: fileList,
     };
 
@@ -65,17 +71,18 @@ const UrlUploadModal: React.FC<UrlUploadModalProps> = ({
 
     const onLoadClick = () => {
         if (openTab === "dev") {
-            console.log(fileList);
-            customRequest(
+            uploadFiles(
                 fileList,
                 clearSimulariumFile,
                 loadLocalFile,
                 setViewerStatus,
                 setError
             );
+            setFileList([]);
             closeModal();
         } else {
             urlForm.submit();
+            setNoUrlInput(true);
             // Modal closed by reload
         }
     };
