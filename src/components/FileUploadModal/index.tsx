@@ -1,6 +1,6 @@
-import { Button, Form, message, Tabs } from "antd";
-import { RcFile, UploadProps } from "antd/lib/upload";
-import React, { useState } from "react";
+import { Button, Form, Tabs } from "antd";
+import { RcFile } from "antd/lib/upload";
+import React, { useRef, useState } from "react";
 import { ActionCreator } from "redux";
 
 import {
@@ -14,8 +14,8 @@ import {
 
 import CustomModal from "../CustomModal";
 import UrlUploadForm from "./url-upload-form";
-import LocalUploadButton from "./local-upload-button";
-import uploadFiles from "./upload-local-files";
+import LocalFileUpload, { FileUploadRef } from "../LocalFileUpload";
+
 import styles from "./style.css";
 
 interface FileUploadModalProps {
@@ -28,15 +28,13 @@ interface FileUploadModalProps {
 
 const FileUploadModal: React.FC<FileUploadModalProps> = ({
     setIsModalVisible,
-    loadLocalFile,
-    setViewerStatus,
-    clearSimulariumFile,
-    setError,
+    ...uploadActions
 }) => {
-    const [openTab, setOpenTab] = useState("dev");
-    const [fileList, setFileList] = useState<RcFile[]>([]);
+    const [openTab, setOpenTab] = useState("device");
     const [noUrlInput, setNoUrlInput] = useState(true);
+    const [noFileInput, setNoFileInput] = useState(true);
     const [urlForm] = Form.useForm();
+    const fileUploadRef = useRef<FileUploadRef>(null);
 
     const closeModal = () => {
         setIsModalVisible(false);
@@ -46,45 +44,18 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
         setNoUrlInput(event.target.value.length === 0);
     };
 
-    const uploadProps: UploadProps = {
-        beforeUpload: (_file, fileList) => {
-            setFileList(fileList);
-            // defer upload until user presses "Load"
-            return false;
-        },
-        onRemove: (file) => {
-            const index = fileList.indexOf(file as RcFile);
-            const newFileList = fileList.slice();
-            newFileList.splice(index, 1);
-            setFileList(newFileList);
-        },
-        onChange: ({ file }) => {
-            if (file.status === "error") {
-                setFileList([]);
-                message.error(`Failed to load ${file.name}`);
-            }
-        },
-        fileList,
+    const onFileListChange = (fileList: RcFile[]) => {
+        setNoFileInput(fileList.length === 0);
     };
 
-    // Load button is disabled if the current tab ("your device" or "the web")
-    // has nothing specified to upload
-    const disableLoad = openTab === "dev" ? fileList.length === 0 : noUrlInput;
+    const disableLoad = openTab === "device" ? noFileInput : noUrlInput;
 
     const onLoadClick = () => {
-        if (openTab === "dev") {
-            uploadFiles(
-                fileList,
-                clearSimulariumFile,
-                loadLocalFile,
-                setViewerStatus,
-                setError
-            );
-            setFileList([]);
+        if (openTab === "device") {
+            fileUploadRef.current?.upload();
             closeModal();
         } else {
             urlForm.submit();
-            setNoUrlInput(true);
             // Modal closed by reload
         }
     };
@@ -92,8 +63,14 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     const tabItems = [
         {
             label: "From your device",
-            key: "dev",
-            children: <LocalUploadButton {...uploadProps} multiple />,
+            key: "device",
+            children: (
+                <LocalFileUpload
+                    onFileListChange={onFileListChange}
+                    ref={fileUploadRef}
+                    {...uploadActions}
+                />
+            ),
         },
         {
             label: "From the web",
