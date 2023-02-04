@@ -33,6 +33,16 @@ type FileUploadRenderFunction = React.ForwardRefRenderFunction<
     FileUploadProps
 >;
 
+/*
+Order of operations for this Antd Upload component (when not triggered externally):
+1. User selects file(s) and clicks "Open" in system file upload dialog
+2. beforeUpload is called n times (n = number of files)
+3. customRequest is called n times
+4. If customRequest results in success (onSuccess), file.status changes to "done".
+   If customRequest results in error, file.status changes to "error".
+   These two changes trigger onChange.
+*/
+
 const LocalFileUpload: FileUploadRenderFunction = (
     {
         onFileListChange,
@@ -113,11 +123,23 @@ const LocalFileUpload: FileUploadRenderFunction = (
                     state: { localFile: true },
                 }}
             >
-                <Button>Select file</Button>
+                {children || <Button>Select file</Button>}
             </Link>
-            {children}
         </Upload>
     );
 };
 
+/**
+ * UI for uploading local files.
+ *
+ * May either upload immediately when the user picks file(s) in the system
+ * dialog (default), or stage files until triggered to upload by a parent.
+ * To have the component list selected files and wait to load, pass in a ref:
+ *
+ * ```
+ * const uploadRef = React.useRef<FileUploadRef>(null);
+ * return <LocalFileUpload ref={uploadRef} {...otherProps}>;
+ * ```
+ * ...then call `uploadRef.current.upload();` to begin loading files.
+ */
 export default forwardRef(LocalFileUpload);
