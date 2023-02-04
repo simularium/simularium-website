@@ -33,11 +33,3 @@
     padding: 0;
     font-weight: 600;
 }
-
-.upload-modal :global(.ant-upload-list) {
-    min-height: 30px;
-}
-
-.upload-modal :global(.ant-upload-list-item-card-actions-btn) {
-    border: none;
-}

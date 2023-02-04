@@ -16,6 +16,8 @@ import {
 import { VIEWER_PATHNAME } from "../../routes";
 import uploadFiles from "./upload-local-files";
 
+import styles from "./style.css";
+
 interface FileUploadProps {
     onFileListChange: (fileList: RcFile[]) => void;
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
@@ -76,8 +78,10 @@ const LocalFileUpload: FileUploadRenderFunction = (
     }));
 
     const uploadProps: UploadProps = {
+        className: styles.fileUpload,
+        multiple: true,
         showUploadList: {
-            removeIcon: <CloseOutlined style={{ color: "#d14040" }} />,
+            removeIcon: <CloseOutlined />,
         },
         // Do not show Ant's paperclip icon next to listed files
         iconRender: () => null,
@@ -115,7 +119,7 @@ const LocalFileUpload: FileUploadRenderFunction = (
     };
 
     return (
-        <Upload {...uploadProps} multiple>
+        <Upload {...uploadProps}>
             <Link
                 // Redirect to /viewer if necessary and/or clear out viewer
                 to={{
