@@ -1,6 +1,6 @@
 import { Button, Form, Tabs } from "antd";
 import { RcFile } from "antd/lib/upload";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { ActionCreator } from "redux";
 
 import {
@@ -14,7 +14,8 @@ import {
 
 import CustomModal from "../CustomModal";
 import UrlUploadForm from "./url-upload-form";
-import LocalFileUpload, { FileUploadRef } from "../LocalFileUpload";
+import LocalFileUpload from "../LocalFileUpload";
+import uploadFiles from "./upload-local-files";
 
 import styles from "./style.css";
 
@@ -28,13 +29,15 @@ interface FileUploadModalProps {
 
 const FileUploadModal: React.FC<FileUploadModalProps> = ({
     setIsModalVisible,
-    ...uploadActions
+    clearSimulariumFile,
+    loadLocalFile,
+    setViewerStatus,
+    setError,
 }) => {
     const [openTab, setOpenTab] = useState("device");
     const [noUrlInput, setNoUrlInput] = useState(true);
-    const [noFileInput, setNoFileInput] = useState(true);
+    const [fileList, setFileList] = useState<RcFile[]>([]);
     const [urlForm] = Form.useForm();
-    const fileUploadRef = useRef<FileUploadRef>(null);
 
     const closeModal = () => {
         setIsModalVisible(false);
@@ -44,15 +47,18 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
         setNoUrlInput(event.target.value.length === 0);
     };
 
-    const onFileListChange = (fileList: RcFile[]) => {
-        setNoFileInput(fileList.length === 0);
-    };
-
-    const disableLoad = openTab === "device" ? noFileInput : noUrlInput;
+    const disableLoad =
+        openTab === "device" ? fileList.length === 0 : noUrlInput;
 
     const onLoadClick = () => {
         if (openTab === "device") {
-            fileUploadRef.current?.upload();
+            uploadFiles(
+                fileList,
+                clearSimulariumFile,
+                loadLocalFile,
+                setViewerStatus,
+                setError
+            );
             closeModal();
         } else {
             urlForm.submit();
@@ -66,9 +72,9 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
             key: "device",
             children: (
                 <LocalFileUpload
-                    onFileListChange={onFileListChange}
-                    ref={fileUploadRef}
-                    {...uploadActions}
+                    fileList={fileList}
+                    onFileListChange={setFileList}
+                    multiple
                 />
             ),
         },

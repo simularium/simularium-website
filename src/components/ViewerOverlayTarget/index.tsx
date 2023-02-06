@@ -12,7 +12,7 @@ import {
     SetErrorAction,
 } from "../../state/viewer/types";
 import { Loading, UploadFile } from "../Icons";
-import customRequest from "../LocalFileUpload/upload-local-files";
+import customRequest from "../FileUploadModal/upload-local-files";
 import { SetViewerStatusAction } from "../../state/viewer/types";
 
 const { Dragger } = Upload;
