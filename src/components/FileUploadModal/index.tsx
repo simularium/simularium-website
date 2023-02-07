@@ -19,6 +19,12 @@ import uploadFiles from "./upload-local-files";
 
 import styles from "./style.css";
 
+const enum UploadTab {
+    // this version of antd requires tab keys to be strings
+    Device = "d",
+    Web = "w",
+}
+
 interface FileUploadModalProps {
     setIsModalVisible: (isModalVisible: boolean) => void;
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
@@ -34,7 +40,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     setViewerStatus,
     setError,
 }) => {
-    const [openTab, setOpenTab] = useState("device");
+    const [openTab, setOpenTab] = useState<string>(UploadTab.Device);
     const [noUrlInput, setNoUrlInput] = useState(true);
     const [fileList, setFileList] = useState<RcFile[]>([]);
     const [urlForm] = Form.useForm();
@@ -44,14 +50,18 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     };
 
     const onUrlInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+        // Form subcomponent takes care of its own submit behavior
+        // all we care about is if input is present or not
         setNoUrlInput(event.target.value.length === 0);
     };
 
+    // Disable load button when the current tab does not yet have any input
+    // (device: no files have been selected; web: URL input box is empty)
     const disableLoad =
-        openTab === "device" ? fileList.length === 0 : noUrlInput;
+        openTab === UploadTab.Device ? fileList.length === 0 : noUrlInput;
 
     const onLoadClick = () => {
-        if (openTab === "device") {
+        if (openTab === UploadTab.Device) {
             uploadFiles(
                 fileList,
                 clearSimulariumFile,
@@ -69,7 +79,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     const tabItems = [
         {
             label: "From your device",
-            key: "device",
+            key: UploadTab.Device,
             children: (
                 <LocalFileUpload
                     fileList={fileList}
@@ -80,7 +90,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
         },
         {
             label: "From the web",
-            key: "web",
+            key: UploadTab.Web,
             children: <UrlUploadForm form={urlForm} onChange={onUrlInput} />,
         },
     ];
