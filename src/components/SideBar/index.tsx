@@ -2,6 +2,7 @@ import * as React from "react";
 import { Layout } from "antd";
 import classNames from "classnames";
 
+import { MOBILE_CUTOFF } from "../../constants";
 import { PurpleArrow } from "../Icons";
 
 const { Sider } = Layout;
@@ -9,7 +10,6 @@ const { Sider } = Layout;
 import styles from "./style.css";
 
 interface SiderProps {
-    defaultCollapsed: boolean;
     type: string;
     onCollapse: (open: boolean) => void;
 }
@@ -20,7 +20,7 @@ interface SiderState {
 
 export default class SideBar extends React.Component<SiderProps, SiderState> {
     state: SiderState = {
-        collapsed: this.props.defaultCollapsed,
+        collapsed: window.matchMedia(MOBILE_CUTOFF).matches,
     };
 
     handleTriggerClick = () => {
