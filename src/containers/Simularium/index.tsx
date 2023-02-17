@@ -203,6 +203,7 @@ class App extends React.Component<AppProps, AppState> {
             clearSimulariumFile,
             setError,
         } = this.props;
+        const isMobileScreen = window.matchMedia("(max-width: 900px)").matches;
         return (
             <Layout className={styles.container}>
                 <div ref={this.interactiveContent}>
@@ -217,7 +218,11 @@ class App extends React.Component<AppProps, AppState> {
                             setViewerStatus={setViewerStatus}
                             setError={setError}
                         />
-                        <SideBar onCollapse={this.onPanelCollapse} type="left">
+                        <SideBar
+                            onCollapse={this.onPanelCollapse}
+                            type="left"
+                            defaultCollapsed={isMobileScreen}
+                        >
                             <ModelPanel />
                         </SideBar>
                         <Content>
@@ -228,7 +233,11 @@ class App extends React.Component<AppProps, AppState> {
                                 />
                             )}
                         </Content>
-                        <SideBar onCollapse={this.onPanelCollapse} type="right">
+                        <SideBar
+                            onCollapse={this.onPanelCollapse}
+                            type="right"
+                            defaultCollapsed={isMobileScreen}
+                        >
                             <ResultsPanel />
                         </SideBar>
                     </Layout>

@@ -9,6 +9,7 @@ const { Sider } = Layout;
 import styles from "./style.css";
 
 interface SiderProps {
+    defaultCollapsed: boolean;
     type: string;
     onCollapse: (open: boolean) => void;
 }
@@ -19,7 +20,7 @@ interface SiderState {
 
 export default class SideBar extends React.Component<SiderProps, SiderState> {
     state: SiderState = {
-        collapsed: false,
+        collapsed: this.props.defaultCollapsed,
     };
 
     handleTriggerClick = () => {
