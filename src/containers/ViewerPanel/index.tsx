@@ -56,6 +56,7 @@ import { AGENT_COLORS } from "./constants";
 import { DisplayTimes } from "./types";
 
 import styles from "./style.css";
+import { MOBILE_CUTOFF } from "../../constants";
 
 interface ViewerPanelProps {
     time: number;
@@ -147,7 +148,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             });
         }
 
-        if (window.matchMedia("(max-width: 900px)").matches) {
+        if (window.matchMedia(MOBILE_CUTOFF).matches) {
             Modal.warning({
                 title: "Small screens are not supported",
                 content:
