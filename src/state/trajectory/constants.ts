@@ -21,3 +21,4 @@ export const LOAD_NETWORKED_FILE_IN_VIEWER = makeTrajectoryConstant(
 export const REQUEST_PLOT_DATA = makeTrajectoryConstant("request-plot-data");
 export const CLEAR_SIMULARIUM_FILE = makeTrajectoryConstant("clear-sim-file");
 export const LOAD_FILE_VIA_URL = makeTrajectoryConstant("load-file-via-url");
+export const CONVERT_FILE = makeTrajectoryConstant("convert-file");
