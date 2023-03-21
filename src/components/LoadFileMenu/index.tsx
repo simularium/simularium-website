@@ -29,11 +29,13 @@ interface LoadFileMenuProps {
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setError: ActionCreator<SetErrorAction>;
+    initializeFileConversion: ActionCreator<InitFileConversionAction>;
 }
 
 const LoadFileMenu = ({
-    isBuffering,
     clearSimulariumFile,
+    initializeFileConversion,
+    isBuffering,
     loadLocalFile,
     selectFile,
     setViewerStatus,
@@ -94,6 +96,12 @@ const LoadFileMenu = ({
                     setViewerStatus={setViewerStatus}
                     setError={setError}
                 />
+            </Menu.Item>
+            <Menu.Item>
+                {" "}
+                <Button type="ghost" onClick={initializeFileConversion}>
+                    Import other file type
+                </Button>
             </Menu.Item>
         </Menu>
     );
