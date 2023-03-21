@@ -9,6 +9,7 @@ import {
     REQUEST_PLOT_DATA,
     CLEAR_SIMULARIUM_FILE,
     LOAD_FILE_VIA_URL,
+    CONVERT_FILE,
 } from "./constants";
 import {
     TrajectoryStateBranch,
@@ -21,6 +22,7 @@ import {
     RequestLocalFileAction,
     ClearSimFileDataAction,
     LoadViaUrlAction,
+    ConvertFileAction,
 } from "./types";
 import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
 
@@ -116,5 +118,11 @@ export function loadViaUrl(
         controller,
         type: LOAD_FILE_VIA_URL,
         fileId,
+    };
+}
+
+export function convertFile(): ConvertFileAction {
+    return {
+        type: CONVERT_FILE,
     };
 }
