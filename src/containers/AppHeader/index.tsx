@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 
 import {
     ClearSimFileDataAction,
+    ConvertFileAction,
     isLocalFileInterface,
     isNetworkSimFileInterface,
     LocalSimFile,
@@ -34,6 +35,7 @@ interface AppHeaderProps {
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setError: ActionCreator<SetErrorAction>;
+    convertFile: ActionCreator<ConvertFileAction>;
 }
 
 class AppHeader extends React.Component<AppHeaderProps> {
@@ -43,6 +45,7 @@ class AppHeader extends React.Component<AppHeaderProps> {
             isBuffering,
             changeToLocalSimulariumFile: loadLocalFile,
             changeToNetworkedFile: loadNetworkFile,
+            convertFile,
             setViewerStatus,
             clearSimulariumFile,
             setError,
@@ -80,6 +83,7 @@ class AppHeader extends React.Component<AppHeaderProps> {
                         setViewerStatus={setViewerStatus}
                         isBuffering={isBuffering}
                         setError={setError}
+                        initializeFileConversion={convertFile}
                     />
                     <HelpMenu key="help" />
                 </div>
@@ -103,6 +107,7 @@ const dispatchToPropsMap = {
     clearSimulariumFile: trajectoryStateBranch.actions.clearSimulariumFile,
     setViewerStatus: viewerStateBranch.actions.setStatus,
     setError: viewerStateBranch.actions.setError,
+    convertFile: trajectoryStateBranch.actions.convertFile,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(AppHeader);

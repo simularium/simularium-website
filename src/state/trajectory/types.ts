@@ -47,6 +47,10 @@ export interface LoadViaUrlAction {
     fileId?: string;
 }
 
+export interface ConvertFileAction {
+    type: string;
+}
+
 export interface LocalSimFile {
     name: string;
     data: ISimulariumFile;

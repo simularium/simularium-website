@@ -7,6 +7,7 @@ import TRAJECTORIES from "../../constants/networked-trajectories";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import {
     ClearSimFileDataAction,
+    ConvertFileAction,
     RequestLocalFileAction,
     RequestNetworkFileAction,
 } from "../../state/trajectory/types";
@@ -28,7 +29,7 @@ interface LoadFileMenuProps {
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setError: ActionCreator<SetErrorAction>;
-    initializeFileConversion: ActionCreator<InitFileConversionAction>;
+    initializeFileConversion: ActionCreator<ConvertFileAction>;
 }
 
 const LoadFileMenu = ({
