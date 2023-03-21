@@ -34,6 +34,7 @@ interface LoadFileMenuProps {
 
 const LoadFileMenu = ({
     clearSimulariumFile,
+    initializeFileConversion,
     isBuffering,
     loadLocalFile,
     selectFile,
