@@ -50,7 +50,7 @@ export default async (
     }
 
     if (selectedFiles.length === 1) {
-        // numCustomRequests and selectedFiles.length are both 1, so reset
+        // numRequests and selectedFiles.length are both 1, so reset
         numRequests = 0;
     }
 
