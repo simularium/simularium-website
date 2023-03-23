@@ -63,7 +63,7 @@ export default async (
         // Try to identify the simularium file.
         // Put all the other files as text based geoAssets.
         const simulariumFileIndex = findIndex(selectedFiles, (file) =>
-            file.name.includes(".simularium")
+            file.name.endsWith(".simularium")
         );
         if (simulariumFileIndex === -1) {
             throw new Error(
