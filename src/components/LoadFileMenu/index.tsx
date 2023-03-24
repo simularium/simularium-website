@@ -11,6 +11,9 @@ import {
     RequestLocalFileAction,
     RequestNetworkFileAction,
 } from "../../state/trajectory/types";
+import { ViewerStatus } from "../../state/viewer/types";
+import { getStatus } from "../../state/viewer/selectors";
+import { State } from "../../state/types";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
 import LocalFileUpload from "../LocalFileUpload";
@@ -22,12 +25,15 @@ import {
 } from "../../state/viewer/types";
 
 import styles from "./style.css";
+import { connect } from "react-redux";
+import { VIEWER_IMPORTING } from "../../state/viewer/constants";
 
 interface LoadFileMenuProps {
     isBuffering: boolean;
     selectFile: ActionCreator<RequestNetworkFileAction>;
     clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
+    viewerStatus: ViewerStatus;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setError: ActionCreator<SetErrorAction>;
     initializeFileConversion: ActionCreator<ConvertFileAction>;
@@ -39,6 +45,7 @@ const LoadFileMenu = ({
     isBuffering,
     loadLocalFile,
     selectFile,
+    viewerStatus,
     setViewerStatus,
     setError,
 }: LoadFileMenuProps): JSX.Element => {
@@ -61,6 +68,11 @@ const LoadFileMenu = ({
             });
         }
     };
+
+    let isDisabled = false;
+    if (viewerStatus == VIEWER_IMPORTING || isBuffering) {
+        isDisabled = true;
+    }
 
     const menu = (
         <Menu theme="dark" className={styles.menu}>
@@ -112,7 +124,7 @@ const LoadFileMenu = ({
             <Dropdown
                 overlay={menu}
                 placement="bottomRight"
-                disabled={isBuffering}
+                disabled={isDisabled}
             >
                 <Button
                     className="ant-dropdown-link"
@@ -135,4 +147,10 @@ const LoadFileMenu = ({
     );
 };
 
-export default LoadFileMenu;
+function mapStateToProps(state: State) {
+    return {
+        viewerStatus: getStatus(state),
+    };
+}
+
+export default connect(mapStateToProps)(LoadFileMenu);

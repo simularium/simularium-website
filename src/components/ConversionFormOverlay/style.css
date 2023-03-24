@@ -1,0 +1,34 @@
+.container, .container:global(.ant-upload.ant-upload-drag){
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 300;
+    background-color: rgba(231, 228, 242, 1);
+    /* align-items: left; */
+    /* justify-content: left; */
+    text-align: left;
+    /* vertical-align: top; */
+    padding-left: 20px;
+}
+
+.container .loading-icon, .container.loading-text {
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.text-test {
+    position: top;
+    z-index: 500;
+    background-color: red;
+}
+
+p {
+    vertical-align: top;
+    color: red;
+}

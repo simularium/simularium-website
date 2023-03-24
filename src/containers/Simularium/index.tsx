@@ -33,6 +33,7 @@ import {
 } from "../../state/viewer/types";
 import { SetSimulariumControllerAction } from "../../state/simularium/types";
 import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
+import ConversionFormOverlay from "../../components/ConversionFormOverlay";
 import {
     DragOverViewerAction,
     ResetDragOverViewerAction,
@@ -217,10 +218,10 @@ class App extends React.Component<AppProps, AppState> {
                             setViewerStatus={setViewerStatus}
                             setError={setError}
                         />
-                        <SideBar
-                            onCollapse={this.onPanelCollapse}
-                            type="left"
-                        >
+                        <ConversionFormOverlay
+                            isLoading={false}
+                        ></ConversionFormOverlay>
+                        <SideBar onCollapse={this.onPanelCollapse} type="left">
                             <ModelPanel />
                         </SideBar>
                         <Content>
@@ -231,10 +232,7 @@ class App extends React.Component<AppProps, AppState> {
                                 />
                             )}
                         </Content>
-                        <SideBar
-                            onCollapse={this.onPanelCollapse}
-                            type="right"
-                        >
+                        <SideBar onCollapse={this.onPanelCollapse} type="right">
                             <ResultsPanel />
                         </SideBar>
                     </Layout>
