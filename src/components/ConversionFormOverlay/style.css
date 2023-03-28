@@ -12,17 +12,21 @@
     text-align: center;
 }
 
-.container {
-    /* display: flex;
-    flex-flow: column;
+.upload {
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: center; */
+}
+
+.uploadcontainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 
-
-.title {
-    display:inline-block; 
-    vertical-align:middle;
+.clearbutton {
+    background-color: rgba(231, 228, 242, 1);
+    border-color: black;
+    margin: 10px;
 }
-

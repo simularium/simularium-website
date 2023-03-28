@@ -11,9 +11,11 @@ import {
     ResetDragOverViewerAction,
     SetErrorAction,
 } from "../../state/viewer/types";
-import { Loading, UploadFile } from "../Icons";
+import { Loading } from "../Icons"; // removed UploadFile icon
 import customRequest from "../LocalFileUpload/custom-request-upload";
 import { SetViewerStatusAction } from "../../state/viewer/types";
+import { DownArrow } from "../Icons";
+import type { UploadFile } from "antd/es/upload/interface";
 
 const { Dragger } = Upload;
 
@@ -24,10 +26,25 @@ interface ConversionFormOverlayProps {
     isLoading: boolean;
 }
 
+const fileList: UploadFile[] = [
+    {
+        uid: "0",
+        name: "xxx.png",
+    },
+];
+
 const ConversionFormOverlay = ({
     isLoading, // why doesnt this work when i try to write isLoading: true
 }: ConversionFormOverlayProps): JSX.Element | null => {
     const [showTarget, setVisibility] = useState(true);
+    const [fileList, setFileList] = useState<UploadFile[]>([
+        {
+            uid: "-1",
+            name: "default.format",
+            status: "done",
+            url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+        },
+    ]);
 
     // taken from ViewerOverlayTarget
     const loadingOverlay = (
@@ -39,40 +56,46 @@ const ConversionFormOverlay = ({
 
     const conversionFormOverlay = (
         <div className={styles.container}>
-            {/* <p> HELLO</p> */}
-            <span className={styles.text}>
-                <h3 className={styles.title} style={{ fontSize: 36 }}>
-                    {" "}
-                    Import a non-native file type
-                </h3>
-                <h3>
-                    Convert and import a non-simularium file by providing the
-                    following information
-                </h3>
-                <h3> Provide file information (requried) </h3>
-                <h3>Simulation Engine</h3>
-            </span>
-
-            <Select
-                showArrow={true}
-                defaultValue="Smoldyn"
-                style={{ width: 200 }}
-                options={[
-                    { value: "cytosim", label: "cytosim" },
-                    { value: "cellPACK", label: "cellPACK" },
-                    { value: "Smoldyn", label: "Smoldyn" },
-                    { value: "SpringSaLaD", label: "SpringSaLaD" },
-                ]}
-            />
-            <Button
-                type="primary"
-                // onClick={handleUpload}
-                // disabled={fileList.length === 0}
-                // loading={uploading}
-                style={{ marginTop: 16 }}
-            >
-                Select file
-            </Button>
+            <h3 className={styles.title} style={{ fontSize: 30 }}>
+                Import a non-native file type
+            </h3>
+            <h3>
+                Convert and import a non-simularium file by providing the
+                following information
+            </h3>
+            <h3> Provide file information (required) </h3>
+            <h3 style={{ paddingBottom: 0 }}>Simulation Engine</h3>
+            <div className={styles.uploadcontainer}>
+                <Select
+                    showArrow={true} // this isn't working
+                    defaultValue="Smoldyn" // trying to add {DownArrow} isn't working, it works inside a Button
+                    style={{ width: 200 }}
+                    options={[
+                        { value: "cytosim", label: "cytosim" },
+                        { value: "cellPACK", label: "cellPACK" },
+                        { value: "Smoldyn", label: "Smoldyn" },
+                        { value: "SpringSaLaD", label: "SpringSaLaD" },
+                    ]}
+                />
+                <Upload
+                    className={styles.upload}
+                    // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    // listType="picture"
+                    // style={{width: 40}}
+                    defaultFileList={[...fileList]}
+                >
+                    <Button
+                        type="primary"
+                        className={styles.clearbutton}
+                        // onClick={handleUpload}
+                        // disabled={fileList.length === 0}
+                        // loading={uploading}
+                        style={{ marginTop: 16 }}
+                    >
+                        Select file
+                    </Button>
+                </Upload>
+            </div>
             {/* <p className="ant-upload-drag-icon">
                 {isLoading ? Loading : UploadFile}
             </p> */}
@@ -86,6 +109,7 @@ const ConversionFormOverlay = ({
             </Divider>
             <Button
                 type="primary"
+                className={styles.clearbutton}
                 // onClick={handleUpload}
                 // disabled={fileList.length === 0}
                 // loading={uploading}
@@ -95,6 +119,7 @@ const ConversionFormOverlay = ({
             </Button>
             <Button
                 type="primary"
+                className={styles.clearbutton}
                 // onClick={handleUpload}
                 // disabled={fileList.length === 0}
                 // loading={uploading}
@@ -102,35 +127,11 @@ const ConversionFormOverlay = ({
             >
                 Next
             </Button>
-            {/* <Dragger
-            className={styles.container}
-            // onChange={onChange}
-            // onDrop={handleDrop}
-            showUploadList={false}
-            openFileDialogOnClick={false}
-            // beforeUpload={beforeUpload}
-            // customRequest={(options) =>
-            //     customRequest(
-            //         options,
-            //         droppedFiles,
-            //         clearSimulariumFile,
-            //         loadLocalFile,
-            //         setViewerStatus,
-            //         setError
-            //     )
-            // }
-            multiple
-            // TODO: enable directory upload?
-            // directory
-        >
-           
-        </Dragger>
-        <p> HELLO</p> */}
         </div>
     );
 
     if (showTarget) {
-        return conversionFormOverlay; // whatever the component will return
+        return conversionFormOverlay;
     } else if (isLoading) {
         // return loadingOverlay;
         return null;
