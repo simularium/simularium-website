@@ -219,6 +219,7 @@ class App extends React.Component<AppProps, AppState> {
                             setError={setError}
                         />
                         <ConversionFormOverlay
+                            className="conversionform"
                             isLoading={false}
                         ></ConversionFormOverlay>
                         <SideBar onCollapse={this.onPanelCollapse} type="left">

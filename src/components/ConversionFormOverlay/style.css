@@ -4,11 +4,8 @@
     width: 100%;
     z-index: 300;
     background-color: rgba(231, 228, 242, 1);
-    /* align-items: left; */
-    /* justify-content: left; */
-    text-align: left;
-    /* vertical-align: top; */
-    padding-left: 20px;
+    padding-left: 30px;  
+    padding-top: 30px;
 }
 
 .container .loading-icon, .container.loading-text {
@@ -16,19 +13,16 @@
 }
 
 .container {
-    display: flex;
+    /* display: flex;
     flex-flow: column;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
 }
 
-.text-test {
-    position: top;
-    z-index: 500;
-    background-color: red;
+
+
+.title {
+    display:inline-block; 
+    vertical-align:middle;
 }
 
-p {
-    vertical-align: top;
-    color: red;
-}
