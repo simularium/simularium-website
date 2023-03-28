@@ -69,10 +69,8 @@ const LoadFileMenu = ({
         }
     };
 
-    let isDisabled = false;
-    if (viewerStatus == VIEWER_IMPORTING || isBuffering) {
-        isDisabled = true;
-    }
+    const isDisabled = (viewerStatus === VIEWER_IMPORTING || isBuffering) 
+
 
     const menu = (
         <Menu theme="dark" className={styles.menu}>
