@@ -12,7 +12,7 @@ import {
     SetErrorAction,
 } from "../../state/viewer/types";
 import { Loading, UploadFile } from "../Icons";
-import customRequest from "../LocalFileUpload/custom-request-upload";
+import customRequest from "../FileUploadModal/upload-local-files";
 import { SetViewerStatusAction } from "../../state/viewer/types";
 
 const { Dragger } = Upload;
@@ -107,12 +107,12 @@ const ViewerOverlayTarget = ({
             // beforeUpload={beforeUpload}
             customRequest={(options) =>
                 customRequest(
-                    options,
                     droppedFiles,
                     clearSimulariumFile,
                     loadLocalFile,
                     setViewerStatus,
-                    setError
+                    setError,
+                    options
                 )
             }
             multiple
