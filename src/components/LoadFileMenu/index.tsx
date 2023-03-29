@@ -68,10 +68,8 @@ const LoadFileMenu = ({
         }
     };
 
-    let isDisabled = false;
-    if (viewerStatus == VIEWER_IMPORTING || isBuffering) {
-        isDisabled = true;
-    }
+    const isDisabled = (viewerStatus === VIEWER_IMPORTING || isBuffering) 
+
 
     const items: MenuProps["items"] = [
         {
