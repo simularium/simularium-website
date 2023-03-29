@@ -24,6 +24,8 @@
     --baby-purple: #b59ff6;
     --allen-purple: #8d87aa;
     --blue: #0094FF;
+    --overlay-purple: #E7E4F2;
+    --true-gray: ##737373;
     --background-dim-gray: var(--dim-gray);
     --border-gray: var(--white-six);
     --footer-bg: var(--dark-three);
@@ -68,7 +70,15 @@
     --light-theme-background-off-white: var(--off-white);
     --light-theme-faint-text: var(--white-two);
     --light-theme-modal-supplemental-text: var(--charcoal-grey);
-    --light-theme-modal-btn-default-color: var(--dark-four);
+    --light-theme-btn-default-color: var(--dark-four);
     --light-theme-btn-default-disabled-bg: var(--heather);
+
+    --light-theme-btn-primary-color: var(--white-three);
+    --light-theme-btn-primary-disabled-color: var(--true-gray);
+    --light-theme-btn-primary-bg: var(--dark-four);
+    --light-theme-btn-primary-disabled-bg: var(--heather);
+    
+    
 }
+/* background color and color for deafult primary and primary disabled*/
 

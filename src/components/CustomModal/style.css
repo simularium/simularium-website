@@ -1,8 +1,8 @@
 /* Default and primary button colors differ within modals */
 .modal :global(.ant-btn-default) {
-    background-color: transparent;
+    background-color: var(--light-button-default-background);
     border-color: var(--light-theme-modal-btn-default-color);
-    color: var(--light-theme-modal-btn-default-color);
+    color: var(--light-button-default-color);
 }
 
 .modal :global(.ant-btn-primary) {

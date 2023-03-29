@@ -1,4 +1,4 @@
-.container, .container:global(.ant-upload.ant-upload-drag){
+.container{
     position: absolute;
     height: 100%;
     width: 100%;
@@ -18,15 +18,41 @@
     align-items: center;
 }
 
-.uploadcontainer {
+
+.upload-container {
     display: flex;
     flex-direction: row;
-    align-items: center;
 }
 
+.selector-box {
+    width: 200px;
+    margin-right: 20px;
+}
 
-.clearbutton {
-    background-color: rgba(231, 228, 242, 1);
-    border-color: black;
-    margin: 10px;
+.container button {
+    margin-right: 20px;
+    min-width: 80px;
+}
+
+.container span svg path {
+    fill: black
+}
+
+.title {
+    font-size: 30px;
+    padding-bottom: 0px;
+    margin-bottom: 0em;
+    font-weight: 600;
+    letter-spacing: .05rem;
+}
+
+.provide {
+    padding-top: 30px;
+    padding-bottom: 15px;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.selecttitle {
+    margin-bottom: 0px;
 }

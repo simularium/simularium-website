@@ -1,29 +1,14 @@
 import React, { useState } from "react";
-import { Upload, Select, Divider, message, Button } from "antd";
-import { UploadChangeParam } from "antd/lib/upload";
-import { ActionCreator } from "redux";
-
-import {
-    ClearSimFileDataAction,
-    LocalSimFile,
-} from "../../state/trajectory/types";
-import {
-    ResetDragOverViewerAction,
-    SetErrorAction,
-} from "../../state/viewer/types";
-import { Loading } from "../Icons"; // removed UploadFile icon
-import customRequest from "../LocalFileUpload/custom-request-upload";
-import { SetViewerStatusAction } from "../../state/viewer/types";
-import { DownArrow } from "../Icons";
+import { Upload, Select, Divider, Button } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
 
-const { Dragger } = Upload;
-
 import styles from "./style.css";
+import theme from "../CustomModal/light-theme.css";
+import classNames from "classnames";
 
 interface ConversionFormOverlayProps {
     [key: string]: any;
-    isLoading: boolean;
+    active: boolean;
 }
 
 const fileList: UploadFile[] = [
@@ -33,108 +18,87 @@ const fileList: UploadFile[] = [
     },
 ];
 
+const selectOptions = [
+    { value: "cytosim", label: "cytosim" },
+    { value: "cellPACK", label: "cellPACK" },
+    { value: "Smoldyn", label: "Smoldyn" },
+    { value: "SpringSaLaD", label: "SpringSaLaD" },
+];
+
 const ConversionFormOverlay = ({
-    isLoading, // why doesnt this work when i try to write isLoading: true
+    active,
 }: ConversionFormOverlayProps): JSX.Element | null => {
     const [showTarget, setVisibility] = useState(true);
-    const [fileList, setFileList] = useState<UploadFile[]>([
-        {
-            uid: "-1",
-            name: "default.format",
-            status: "done",
-            url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        },
-    ]);
+    const [fileList, setFileList] = useState<UploadFile[]>([]);
+    const [isFileLoaded, setFileLoaded] = useState<boolean>(false);
 
-    // taken from ViewerOverlayTarget
-    const loadingOverlay = (
-        <div className={styles.container}>
-            <p className="loading-icon">{Loading}</p>
-            <p className="loading-text">Loading Simularium Model</p>
-        </div>
-    );
+    const handleImport = () => {
+        //TODO
+        // this function will take the file type, file, and user specifications and make a fetch request
+        // do we need to do a POST or store the uploaded file on the server before sending it to simulariumio?
+        // define interface for request object
+        // diff interfaces for diff file types or is one possible...
+        // get file type
+        // each file type will have different requirements in simulariumio....
+        // get file
+        // get user options via menus
+        // build instace of interface
+        // make POST request with request data
+        // where to make request to
+        // toggle state to Loading/Importing
+        // render loading overlay screen
+        // render modals for cancellations or failure to import
+    };
 
     const conversionFormOverlay = (
-        <div className={styles.container}>
-            <h3 className={styles.title} style={{ fontSize: 30 }}>
-                Import a non-native file type
-            </h3>
+        <div className={classNames(styles.container, theme.lightTheme)}>
+            <h3 className={styles.title}>Import a non-native file type</h3>
             <h3>
                 Convert and import a non-simularium file by providing the
                 following information
             </h3>
-            <h3> Provide file information (required) </h3>
-            <h3 style={{ paddingBottom: 0 }}>Simulation Engine</h3>
-            <div className={styles.uploadcontainer}>
+            <h3 className={styles.provide}>
+                {" "}
+                Provide file information (required){" "}
+            </h3>
+            <h3 className={styles.selecttitle}>Simulation Engine</h3>
+            <div className={styles.uploadContainer}>
                 <Select
-                    showArrow={true} // this isn't working
-                    defaultValue="Smoldyn" // trying to add {DownArrow} isn't working, it works inside a Button
-                    style={{ width: 200 }}
-                    options={[
-                        { value: "cytosim", label: "cytosim" },
-                        { value: "cellPACK", label: "cellPACK" },
-                        { value: "Smoldyn", label: "Smoldyn" },
-                        { value: "SpringSaLaD", label: "SpringSaLaD" },
-                    ]}
+                    className={styles.selectorBox}
+                    bordered={true}
+                    defaultValue="Select"
+                    options={selectOptions}
                 />
                 <Upload
                     className={styles.upload}
-                    // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                    // listType="picture"
-                    // style={{width: 40}}
+                    listType="text"
+                    multiple={false}
+                    showUploadList={{
+                        showPreviewIcon: false,
+                        showDownloadIcon: false,
+                        showRemoveIcon: true,
+                    }}
                     defaultFileList={[...fileList]}
+                    onChange={() => {
+                        setFileLoaded(true);
+                        console.log(fileList);
+                    }}
                 >
-                    <Button
-                        type="primary"
-                        className={styles.clearbutton}
-                        // onClick={handleUpload}
-                        // disabled={fileList.length === 0}
-                        // loading={uploading}
-                        style={{ marginTop: 16 }}
-                    >
-                        Select file
-                    </Button>
+                    <Button type="default">Select file</Button>
                 </Upload>
             </div>
-            {/* <p className="ant-upload-drag-icon">
-                {isLoading ? Loading : UploadFile}
-            </p> */}
-            {/* <p className="ant-upload-text">
-                {isLoading
-                    ? "Loading Simularium file"
-                    : "This is the ConversionFormOverLay"}
-            </p> */}
             <Divider orientation="right" orientationMargin={400}>
                 {" "}
             </Divider>
-            <Button
-                type="primary"
-                className={styles.clearbutton}
-                // onClick={handleUpload}
-                // disabled={fileList.length === 0}
-                // loading={uploading}
-                style={{ marginTop: 16 }}
-            >
-                Cancel
-            </Button>
-            <Button
-                type="primary"
-                className={styles.clearbutton}
-                // onClick={handleUpload}
-                // disabled={fileList.length === 0}
-                // loading={uploading}
-                style={{ marginTop: 16 }}
-            >
+            <Button ghost>Cancel</Button>
+            <Button type="primary" disabled={!isFileLoaded}>
                 Next
             </Button>
         </div>
     );
 
-    if (showTarget) {
+    if (active) {
         return conversionFormOverlay;
-    } else if (isLoading) {
-        // return loadingOverlay;
-        return null;
     } else {
         return null;
     }

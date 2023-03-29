@@ -38,7 +38,11 @@ import {
     DragOverViewerAction,
     ResetDragOverViewerAction,
 } from "../../state/viewer/types";
-import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/viewer/constants";
+import {
+    VIEWER_ERROR,
+    VIEWER_IMPORTING,
+    VIEWER_LOADING,
+} from "../../state/viewer/constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { clearUrlParams } from "../../util";
@@ -220,7 +224,8 @@ class App extends React.Component<AppProps, AppState> {
                         />
                         <ConversionFormOverlay
                             className="conversionform"
-                            isLoading={false}
+                            // active={viewerStatus === VIEWER_IMPORTING}
+                            active={true}
                         ></ConversionFormOverlay>
                         <SideBar onCollapse={this.onPanelCollapse} type="left">
                             <ModelPanel />
