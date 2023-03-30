@@ -224,7 +224,8 @@ class App extends React.Component<AppProps, AppState> {
                         />
                         <ConversionFormOverlay
                             className="conversionform"
-                            active={viewerStatus === VIEWER_IMPORTING}
+                            // active={viewerStatus === VIEWER_IMPORTING}
+                            active={true}
                         ></ConversionFormOverlay>
                         <SideBar onCollapse={this.onPanelCollapse} type="left">
                             <ModelPanel />

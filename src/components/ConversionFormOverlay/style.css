@@ -56,3 +56,26 @@
 .selecttitle {
     margin-bottom: 0px;
 }
+
+:global(.ant-input) {
+    width: 200px;
+}
+
+/* :global(.ant-select-in-form-item) {
+    width: 200px;
+} */
+
+/* .particle-selector {
+    width: 200px;
+} */
+
+.my-form {
+    display: grid;
+    grid-template-columns: repeat(4, 200px);
+    grid-template-rows: auto auto;
+    grid-gap: 16px;
+}
+
+.my-select {
+    width: 100%;
+}

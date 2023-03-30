@@ -16,8 +16,6 @@ import { getStatus } from "../../state/viewer/selectors";
 import { State } from "../../state/types";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
-import LocalFileUpload from "../LocalFileUpload";
-// import UrlUploadModal from "../UrlUploadModal";
 import { DownArrow } from "../Icons";
 import {
     SetErrorAction,
@@ -102,14 +100,6 @@ const LoadFileMenu = ({
                     From a URL
                 </Button>
             </Menu.Item>
-            <Menu.Item key="local-file-upload">
-                {/* <LocalFileUpload
-                    clearSimulariumFile={clearSimulariumFile}
-                    loadLocalFile={loadLocalFile}
-                    setViewerStatus={setViewerStatus}
-                    setError={setError}
-                /> */}
-            </Menu.Item>
             <Menu.Item>
                 {" "}
                 <Button type="ghost" onClick={initializeFileConversion}>
@@ -134,15 +124,6 @@ const LoadFileMenu = ({
                     Load model {DownArrow}
                 </Button>
             </Dropdown>
-            {/* 
-            1. Putting UrlUploadModal inside Menu.Item causes keyboard bugs.
-               https://github.com/ant-design/ant-design/issues/34125
-            2. Conditionally rendering the modal this way instead of as a `visible` prop
-               forces it to re-render every time it is opened, resetting the form inside.
-            */}
-            {/* {isModalVisible && (
-                <UrlUploadModal setIsModalVisible={setIsModalVisible} />
-            )} */}
         </>
     );
 };

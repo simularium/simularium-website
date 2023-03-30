@@ -8,12 +8,12 @@
 .light-theme :global(.ant-btn-primary) {
     background-color: var(--light-theme-btn-primary-bg);
     border: none;
-    color: #d8d8d8;
+    color: var(--light-button-primary-color);
 }
 
 .light-theme :global(.ant-btn-primary[disabled]) {
     background: var(--light-button-disabled-background);
     border: none;
-    color: #d8d8d8;
+    color: var(--light-button-disabled-color);
 }
 
