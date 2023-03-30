@@ -1,0 +1,35 @@
+.upload-modal .extra-info {
+    margin-top: .25rem;
+    color: var(--light-theme-modal-supplemental-text);
+    font-size: 14px;
+}
+
+.upload-modal .extra-info a:focus {
+    opacity: 0.7;
+}
+
+.upload-modal :global(.ant-form-item) {
+    margin-bottom: 0;
+}
+
+.upload-modal :global(.ant-input-affix-wrapper) {
+    border-radius: 3px;
+    border-color: var(--input-border-highlight);
+}
+
+.upload-modal :global(.ant-input-suffix svg) {
+    color: var(--light-theme-modal-supplemental-text);
+}
+
+.upload-modal :global(.ant-tabs-nav) {
+    margin-bottom: 25px;
+}
+
+.upload-modal :global(.ant-tabs-nav)::before {
+    content: none;
+}
+
+.upload-modal :global(.ant-tabs .ant-tabs-tab) {
+    padding: 0;
+    font-weight: 600;
+}

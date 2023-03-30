@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { ActionCreator } from "redux";
-import { Menu, Dropdown, Button } from "antd";
+import { Dropdown, Button, MenuProps } from "antd";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
@@ -12,8 +12,7 @@ import {
 } from "../../state/trajectory/types";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
-import LocalFileUpload from "../LocalFileUpload";
-import UrlUploadModal from "../UrlUploadModal";
+import FileUploadModal from "../FileUploadModal";
 import { DownArrow } from "../Icons";
 import {
     SetErrorAction,
@@ -59,49 +58,42 @@ const LoadFileMenu = ({
         }
     };
 
-    const menu = (
-        <Menu theme="dark" className={styles.menu}>
-            <Menu.SubMenu
-                title="From examples"
-                popupClassName={styles.submenu}
-                popupOffset={[-0.45, -4]}
-                key="from-examples"
-            >
-                {TRAJECTORIES.map((trajectory) => (
-                    <Menu.Item key={trajectory.id}>
-                        <Link
-                            onClick={() => onClick(trajectory)}
-                            to={{
-                                pathname: VIEWER_PATHNAME,
-                                search: `?${URL_PARAM_KEY_FILE_NAME}=${trajectory.id}`,
-                            }}
-                        >
-                            {trajectory.title}
-                            {trajectory.subtitle && `: ${trajectory.subtitle}`}
-                        </Link>
-                    </Menu.Item>
-                ))}
-            </Menu.SubMenu>
-            <Menu.Item key="url-upload">
+    const items: MenuProps["items"] = [
+        {
+            key: "from-examples",
+            label: "Example models",
+            popupClassName: styles.submenu,
+            popupOffset: [-0.45, -4],
+            children: TRAJECTORIES.map((trajectory) => ({
+                key: trajectory.id,
+                label: (
+                    <Link
+                        onClick={() => onClick(trajectory)}
+                        to={{
+                            pathname: VIEWER_PATHNAME,
+                            search: `?${URL_PARAM_KEY_FILE_NAME}=${trajectory.id}`,
+                        }}
+                    >
+                        {trajectory.title}
+                        {trajectory.subtitle && `: ${trajectory.subtitle}`}
+                    </Link>
+                ),
+            })),
+        },
+        {
+            key: "file-upload",
+            label: (
                 <Button type="ghost" onClick={showModal}>
-                    From a URL
+                    Simularium file
                 </Button>
-            </Menu.Item>
-            <Menu.Item key="local-file-upload">
-                <LocalFileUpload
-                    clearSimulariumFile={clearSimulariumFile}
-                    loadLocalFile={loadLocalFile}
-                    setViewerStatus={setViewerStatus}
-                    setError={setError}
-                />
-            </Menu.Item>
-        </Menu>
-    );
+            ),
+        },
+    ];
 
     return (
         <>
             <Dropdown
-                overlay={menu}
+                menu={{ items, theme: "dark", className: styles.menu }}
                 placement="bottomRight"
                 disabled={isBuffering}
             >
@@ -114,13 +106,17 @@ const LoadFileMenu = ({
                 </Button>
             </Dropdown>
             {/* 
-            1. Putting UrlUploadModal inside Menu.Item causes keyboard bugs.
-               https://github.com/ant-design/ant-design/issues/34125
-            2. Conditionally rendering the modal this way instead of as a `visible` prop
-               forces it to re-render every time it is opened, resetting the form inside.
+                Conditionally rendering the modal this way instead of as a `visible` prop
+                forces it to re-render every time it is opened, resetting the form inside.
             */}
             {isModalVisible && (
-                <UrlUploadModal setIsModalVisible={setIsModalVisible} />
+                <FileUploadModal
+                    setIsModalVisible={setIsModalVisible}
+                    clearSimulariumFile={clearSimulariumFile}
+                    loadLocalFile={loadLocalFile}
+                    setViewerStatus={setViewerStatus}
+                    setError={setError}
+                />
             )}
         </>
     );

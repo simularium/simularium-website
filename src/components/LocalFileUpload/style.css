@@ -1,0 +1,11 @@
+.file-upload :global(.ant-upload-list) {
+    min-height: 30px;
+}
+
+.file-upload :global(.ant-upload-list-item-card-actions-btn) {
+    border: none;
+}
+
+.file-upload :global(.ant-upload-list-item-card-actions-btn) svg {
+    color: #d14040;
+}
