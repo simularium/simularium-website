@@ -334,7 +334,7 @@ const loadFileViaUrl = createLogic({
 });
 
 const fileConversionLogic = createLogic({
-    process(deps: ReduxLogicDeps, dispatch, done) {
+    process(deps: ReduxLogicDeps, dispatch) {
         dispatch(
             setStatus({
                 status: VIEWER_IMPORTING,
