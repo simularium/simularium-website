@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { ActionCreator } from "redux";
-import { Dropdown, Button, MenuProps } from "antd";
+import { Menu, Dropdown, Button } from "antd";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
@@ -16,7 +16,8 @@ import { getStatus } from "../../state/viewer/selectors";
 import { State } from "../../state/types";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
-import FileUploadModal from "../FileUploadModal";
+import LocalFileUpload from "../LocalFileUpload";
+import UrlUploadModal from "../UrlUploadModal";
 import { DownArrow } from "../Icons";
 import {
     SetErrorAction,
@@ -68,53 +69,60 @@ const LoadFileMenu = ({
         }
     };
 
-    const isDisabled = (viewerStatus === VIEWER_IMPORTING || isBuffering) 
+    let isDisabled = false;
+    if (viewerStatus == VIEWER_IMPORTING || isBuffering) {
+        isDisabled = true;
+    }
 
-
-    const items: MenuProps["items"] = [
-        {
-            key: "from-examples",
-            label: "Example models",
-            popupClassName: styles.submenu,
-            popupOffset: [-0.45, -4],
-            children: TRAJECTORIES.map((trajectory) => ({
-                key: trajectory.id,
-                label: (
-                    <Link
-                        onClick={() => onClick(trajectory)}
-                        to={{
-                            pathname: VIEWER_PATHNAME,
-                            search: `?${URL_PARAM_KEY_FILE_NAME}=${trajectory.id}`,
-                        }}
-                    >
-                        {trajectory.title}
-                        {trajectory.subtitle && `: ${trajectory.subtitle}`}
-                    </Link>
-                ),
-            })),
-        },
-        {
-            key: "file-upload",
-            label: (
+    const menu = (
+        <Menu theme="dark" className={styles.menu}>
+            <Menu.SubMenu
+                title="From examples"
+                popupClassName={styles.submenu}
+                popupOffset={[-0.45, -4]}
+                key="from-examples"
+            >
+                {TRAJECTORIES.map((trajectory) => (
+                    <Menu.Item key={trajectory.id}>
+                        <Link
+                            onClick={() => onClick(trajectory)}
+                            to={{
+                                pathname: VIEWER_PATHNAME,
+                                search: `?${URL_PARAM_KEY_FILE_NAME}=${trajectory.id}`,
+                            }}
+                        >
+                            {trajectory.title}
+                            {trajectory.subtitle && `: ${trajectory.subtitle}`}
+                        </Link>
+                    </Menu.Item>
+                ))}
+            </Menu.SubMenu>
+            <Menu.Item key="url-upload">
                 <Button type="ghost" onClick={showModal}>
-                    Simularium file
+                    From a URL
                 </Button>
-            ),
-        },
-        {
-            key: "import-file",
-            label: (
+            </Menu.Item>
+            <Menu.Item key="local-file-upload">
+                <LocalFileUpload
+                    clearSimulariumFile={clearSimulariumFile}
+                    loadLocalFile={loadLocalFile}
+                    setViewerStatus={setViewerStatus}
+                    setError={setError}
+                />
+            </Menu.Item>
+            <Menu.Item>
+                {" "}
                 <Button type="ghost" onClick={initializeFileConversion}>
                     Import other file type
                 </Button>
-            ),
-        },
-    ];
+            </Menu.Item>
+        </Menu>
+    );
 
     return (
         <>
             <Dropdown
-                menu={{ items, theme: "dark", className: styles.menu }}
+                overlay={menu}
                 placement="bottomRight"
                 disabled={isDisabled}
             >
@@ -127,17 +135,13 @@ const LoadFileMenu = ({
                 </Button>
             </Dropdown>
             {/* 
-                Conditionally rendering the modal this way instead of as a `visible` prop
-                forces it to re-render every time it is opened, resetting the form inside.
+            1. Putting UrlUploadModal inside Menu.Item causes keyboard bugs.
+               https://github.com/ant-design/ant-design/issues/34125
+            2. Conditionally rendering the modal this way instead of as a `visible` prop
+               forces it to re-render every time it is opened, resetting the form inside.
             */}
             {isModalVisible && (
-                <FileUploadModal
-                    setIsModalVisible={setIsModalVisible}
-                    clearSimulariumFile={clearSimulariumFile}
-                    loadLocalFile={loadLocalFile}
-                    setViewerStatus={setViewerStatus}
-                    setError={setError}
-                />
+                <UrlUploadModal setIsModalVisible={setIsModalVisible} />
             )}
         </>
     );
