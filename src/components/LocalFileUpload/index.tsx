@@ -1,78 +1,66 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { Upload, message, Button } from "antd";
-import { UploadChangeParam } from "antd/lib/upload";
-import { ActionCreator } from "redux";
+import { Button, message, Upload, UploadProps } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
+import { RcFile } from "antd/lib/upload";
 
-import {
-    ClearSimFileDataAction,
-    RequestLocalFileAction,
-} from "../../state/trajectory/types";
-import {
-    SetErrorAction,
-    SetViewerStatusAction,
-} from "../../state/viewer/types";
 import { VIEWER_PATHNAME } from "../../routes";
-import customRequest from "./custom-request-upload";
+
+import styles from "./style.css";
 
 interface FileUploadProps {
-    loadLocalFile: ActionCreator<RequestLocalFileAction>;
-    setViewerStatus: ActionCreator<SetViewerStatusAction>;
-    clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
-    setError: ActionCreator<SetErrorAction>;
+    fileList: RcFile[];
+    onFileListChange: (fileList: RcFile[]) => void;
+    // props that may be useful to pass down to `Upload`
+    accept?: string;
+    directory?: boolean;
+    disabled?: boolean;
+    maxCount?: number;
+    multiple?: boolean;
+    name?: string;
 }
 
-/*
-Order of operations for this Antd Upload component:
+/**
+ * UI for uploading local files.
+ * Does not upload on its own, but provides a file list
+ * to custom requests in the parent via `onFileListChange`.
+ */
+const LocalFileUpload: React.FC<FileUploadProps> = ({
+    fileList,
+    onFileListChange,
+    children,
+    ...uploadConfigProps
+}) => {
+    const uploadPresetProps: UploadProps = {
+        className: styles.fileUpload,
+        showUploadList: {
+            removeIcon: <CloseOutlined />,
+        },
+        // Do not show Ant's paperclip icon next to listed files
+        iconRender: () => null,
 
-1. User selects file(s) and clicks "Open" in system file upload dialog
-2. beforeUpload is called n times (n = number of files)
-3. customRequest is called n times
-4. If customRequest results in success (onSuccess), file.status changes to "done".
-   If customRequest results in error, file.status changes to "error".
-   These two changes trigger onChange.
-*/
-
-const LocalFileUpload = ({
-    loadLocalFile,
-    setViewerStatus,
-    clearSimulariumFile,
-    setError,
-}: FileUploadProps): JSX.Element => {
-    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-
-    const onChange = ({ file }: UploadChangeParam) => {
-        if (file.status === "done") {
-            setSelectedFiles([]);
-        } else if (file.status === "error") {
-            message.error(`Failed to load ${file.name}`);
-            setSelectedFiles([]);
-        }
-    };
-
-    const beforeUpload = (file: File, fileList: File[]) => {
-        if (selectedFiles.length === 0) {
-            setSelectedFiles([...fileList]);
-        }
+        beforeUpload: (_file, fileList) => {
+            onFileListChange([...fileList]);
+            // don't submit, just gather files in a list
+            return false;
+        },
+        onRemove: (file) => {
+            const index = fileList.indexOf(file as RcFile);
+            const newFileList = fileList.slice();
+            newFileList.splice(index, 1);
+            onFileListChange(newFileList);
+        },
+        onChange: ({ file }) => {
+            if (file.status === "error") {
+                message.error(`Failed to load ${file.name}`);
+                onFileListChange([]);
+            }
+        },
+        fileList,
     };
 
     return (
-        <Upload
-            onChange={onChange}
-            beforeUpload={beforeUpload}
-            showUploadList={false}
-            customRequest={(options) =>
-                customRequest(
-                    options,
-                    selectedFiles,
-                    clearSimulariumFile,
-                    loadLocalFile,
-                    setViewerStatus,
-                    setError
-                )
-            }
-            multiple
-        >
+        <Upload {...uploadPresetProps} {...uploadConfigProps}>
             <Link
                 // Redirect to /viewer if necessary and/or clear out viewer
                 to={{
@@ -80,7 +68,7 @@ const LocalFileUpload = ({
                     state: { localFile: true },
                 }}
             >
-                <Button type="ghost">From your device</Button>
+                {children || <Button>Select file</Button>}
             </Link>
         </Upload>
     );
