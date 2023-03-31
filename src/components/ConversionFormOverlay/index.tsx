@@ -7,6 +7,7 @@ import styles from "./style.css";
 import theme from "../CustomModal/light-theme.css";
 import classNames from "classnames";
 import ConversionFormSubmenu from "../ConversionFormSubmenu";
+import { Delete } from "../Icons";
 
 interface ConversionFormOverlayProps {
     [key: string]: any;
@@ -109,89 +110,15 @@ const ConversionFormOverlay = ({
                 </Divider>
             </div>
             <ConversionFormSubmenu
-                title="Submenu title"
-                subtitle="Submenu subtitle"
-                menu={
-                    <Form
-                        //   {...formItemLayout}
-                        labelCol={{ offset: 4 }}
-                        // wrapperCol={ {span: 14 }}
-                        layout="vertical"
-                        //   form={form}
-                        //   initialValues={{ layout: formLayout }}
-                        //   onValuesChange={onFormLayoutChange}
-                        style={{
-                            backgroundColor: "#F6F4FF",
-                            padding: 12,
-                            maxHeight: 200,
-                            maxWidth: 1000,
-                        }}
-                    >
-                        <Row gutter={100}>
-                            <Col span={5}>
-                                <div> Particle name</div>
-                                <Form.Item>
-                                    <Input placeholder="Start typing..." />
-                                </Form.Item>
-                            </Col>
-                            <Col span={5}>
-                                <div> Display name</div>
-                                <Form.Item>
-                                    <Input placeholder="input placeholder" />
-                                </Form.Item>
-                            </Col>
-                            <Col span={5}>
-                                <div> Display type</div>
-                                <Form.Item>
-                                    <Select
-                                        style={{ width: 200 }}
-                                        className={styles.particleSelector}
-                                        bordered={true}
-                                        defaultValue="Select"
-                                        options={selectOptions}
-                                    />
-                                </Form.Item>
-                            </Col>
-                            <Col span={5}>
-                                <div> Radius</div>
-                                <Form.Item>
-                                    <Input placeholder="input placeholder" />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row gutter={100}>
-                            <Col span={5}></Col>
-                            <Col span={5}>
-                                <div> Geometry URL</div>
-                                <Form.Item>
-                                    <Input placeholder="input placeholder" />
-                                </Form.Item>
-                            </Col>
-                            <Col span={5}>
-                                <div> Color</div>
-                                <Form.Item>
-                                    <Input placeholder="input placeholder" />
-                                </Form.Item>
-                            </Col>
-                            <Col span={5}>
-                                <div> Color</div>
-                                <Form.Item>
-                                    <Input placeholder="input placeholder" />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <p
-                            style={{
-                                position: "absolute",
-                                top: 0,
-                                right: 0,
-                            }}
-                        >
-                            icon
-                        </p>
-                    </Form>
-                }
+                // title="Particle display specification (recommended)"
+                // subtitle="Particle names must exactly match the particle names in your Smoldyn trajectory to be recognized."
+                option="particle"
             />
+            <ConversionFormSubmenu option="viewport" />
+            <ConversionFormSubmenu option="time" />
+            <ConversionFormSubmenu option="spatial" />
+            <Button type="default">Cancel</Button>
+            <Button type="primary">Import</Button>
         </div>
     );
 

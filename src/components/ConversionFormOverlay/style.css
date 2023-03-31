@@ -6,6 +6,7 @@
     background-color: rgba(231, 228, 242, 1);
     padding-left: 30px;  
     padding-top: 30px;
+    overflow: scroll;
 }
 
 .container .loading-icon, .container.loading-text {
@@ -58,7 +59,7 @@
 }
 
 :global(.ant-input) {
-    width: 200px;
+    width: 175px;
 }
 
 /* :global(.ant-select-in-form-item) {
@@ -78,4 +79,24 @@
 
 .my-select {
     width: 100%;
+}
+
+.form {
+    /* width: auto;
+    height: auto;
+    overflow: hidden; */
+}
+
+.icon {
+    top: 10px;
+    right: 15px;
+    position: absolute;
+    color: red;
+}
+
+.form-div {
+        width: 925px;
+        height: 200px;
+        overflow: hidden;
+        position: relative;
 }

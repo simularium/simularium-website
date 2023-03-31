@@ -10,6 +10,7 @@ import {
     MinusOutlined,
     HomeOutlined,
     CaretDownOutlined,
+    DeleteOutlined,
 } from "@ant-design/icons";
 
 import PurpleArrowPointingRight from "../../assets/open-arrow.svg";
@@ -29,7 +30,7 @@ export const Reset = <HomeOutlined />;
 export const ZoomIn = <PlusOutlined />;
 export const ZoomOut = <MinusOutlined />;
 export const CaretDown = <CaretDownOutlined />;
-
+export const Delete = <DeleteOutlined />;
 export const PurpleArrow = <img src={PurpleArrowPointingRight} />;
 export const AicsLogo = <img src={AicsLogoWhite} style={{ width: "140px" }} />;
 export const StepForward = <img src={ClockwiseArrow} />;
@@ -54,4 +55,5 @@ export default {
     ZoomOut,
     BetaTag,
     CaretDown,
+    Delete,
 };

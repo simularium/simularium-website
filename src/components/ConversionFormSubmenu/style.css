@@ -1,0 +1,12 @@
+.icon {
+    top: 10px;
+    right: 15px;
+    position: absolute;
+}
+
+.form-div {
+    width: 925px;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
