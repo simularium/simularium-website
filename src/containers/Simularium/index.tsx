@@ -208,6 +208,7 @@ class App extends React.Component<AppProps, AppState> {
             clearSimulariumFile,
             setError,
         } = this.props;
+        console.log("viewer status: " + viewerStatus);
         return (
             <Layout className={styles.container}>
                 <div ref={this.interactiveContent}>
@@ -222,10 +223,6 @@ class App extends React.Component<AppProps, AppState> {
                             setViewerStatus={setViewerStatus}
                             setError={setError}
                         />
-                        <ConversionFormOverlay
-                            className="conversionform"
-                            active={viewerStatus === VIEWER_IMPORTING}
-                        ></ConversionFormOverlay>
                         <SideBar onCollapse={this.onPanelCollapse} type="left">
                             <ModelPanel />
                         </SideBar>

@@ -334,12 +334,14 @@ const loadFileViaUrl = createLogic({
 });
 
 const fileConversionLogic = createLogic({
-    process(deps: ReduxLogicDeps, dispatch) {
+    process(deps: ReduxLogicDeps, dispatch, done) {
+        console.log("setting viewer importing");
         dispatch(
             setStatus({
                 status: VIEWER_IMPORTING,
             })
         );
+        done();
     },
     type: CONVERT_FILE,
 });
