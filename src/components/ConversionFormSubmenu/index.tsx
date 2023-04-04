@@ -40,16 +40,124 @@ interface MenuOptions {
     [key: string]: MenuOption;
 }
 
-const selectOptions = [
-    { value: "cytosim", label: "cytosim" },
-    { value: "cellPACK", label: "cellPACK" },
-    { value: "Smoldyn", label: "Smoldyn" },
-    { value: "SpringSaLaD", label: "SpringSaLaD" },
-];
+const selectOptions = [{ value: "sphere", label: "sphere" }];
 
 interface ElementMap {
     [key: string]: JSX.Element;
 }
+
+interface ParticleMenuProps {
+    index: number;
+    setParticleState: React.Dispatch<React.SetStateAction<number>>;
+    particleMenus: number;
+}
+
+const ParticleMenu = ({
+    index,
+    setParticleState,
+    particleMenus,
+}: ParticleMenuProps): JSX.Element | null => {
+    const [subMenuData, setSubMenuData] = useState<SubMenuData>({
+        input1: "",
+        input2: "",
+    });
+
+    const handleSubMenuInputChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const { name, value } = event.target;
+        setSubMenuData({ ...subMenuData, [name]: value });
+        console.log(subMenuData);
+    };
+
+    const particleMenu = (
+        <div className={styles.formDiv}>
+            <Form
+                labelCol={{ offset: 4 }}
+                className={styles.form}
+                layout="vertical"
+                key={index}
+                style={{
+                    backgroundColor: "#F6F4FF",
+                    padding: 12,
+                    maxHeight: 200,
+                    maxWidth: 1000,
+                }}
+            >
+                <Row gutter={100}>
+                    <Col span={5}>
+                        <div> Particle name</div>
+                        <Form.Item>
+                            <Input
+                                placeholder="Start typing..."
+                                type="text"
+                                name="input1"
+                                value={subMenuData.input1}
+                                onChange={handleSubMenuInputChange}
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col span={5}>
+                        <div> Display name</div>
+                        <Form.Item>
+                            <Input placeholder="input placeholder" />
+                        </Form.Item>
+                    </Col>
+                    <Col span={5}>
+                        <div> Display type</div>
+                        <Form.Item>
+                            <Select
+                                style={{ width: 200 }}
+                                className={styles.particleSelector}
+                                bordered={true}
+                                defaultValue="Sphere"
+                                options={selectOptions}
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col span={5}>
+                        <div> Radius</div>
+                        <Form.Item>
+                            <Input placeholder="input placeholder" />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={100}>
+                    <Col span={5}></Col>
+                    <Col span={5}>
+                        <div> Geometry URL</div>
+                        <Form.Item>
+                            <Input placeholder="input placeholder" />
+                        </Form.Item>
+                    </Col>
+                    <Col span={5}>
+                        <div> Color</div>
+                        <Form.Item>
+                            <Input placeholder="input placeholder" />
+                        </Form.Item>
+                    </Col>
+                    <Col span={5}>
+                        <div> Color</div>
+                        <Form.Item>
+                            <Input placeholder="input placeholder" />
+                        </Form.Item>
+                    </Col>
+                </Row>
+            </Form>
+            <div
+                className={styles.icon}
+                onClick={() => {
+                    // TODO retrieve menu id from props and have it deleted from the menus object
+                    setParticleState(particleMenus - 1);
+                }}
+            >
+                {Delete}
+            </div>
+        </div>
+    );
+
+    return particleMenu;
+};
 
 const ConversionFormSubmenu = ({
     option,
@@ -63,11 +171,14 @@ const ConversionFormSubmenu = ({
         input2: "",
     });
 
+    let keyIndex = 0;
+
     const handleSubMenuInputChange = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
         const { name, value } = event.target;
         setSubMenuData({ ...subMenuData, [name]: value });
+        console.log(subMenuData);
     };
 
     const menuOptions: MenuOptions = {
@@ -77,138 +188,46 @@ const ConversionFormSubmenu = ({
             menu: <div> viewport menu</div>,
         },
         time: {
-            title: "Viewport settings",
+            title: "Time units",
             subtitle: "",
             menu: <div>time menu</div>,
         },
         spatial: {
-            title: "Viewport settings",
+            title: "Spatial units",
             subtitle: "",
             menu: <div>spatial menu</div>,
         },
         particle: {
-            title: "Viewport settings",
+            title: "Particle display specification (recommended)",
             subtitle: "",
             menu: (
-                <div className={styles.formDiv}>
-                    <Form
-                        //   {...formItemLayout}
-                        labelCol={{ offset: 4 }}
-                        className={styles.form}
-                        // wrapperCol={ {span: 14 }}
-                        layout="vertical"
-                        //   form={form}
-                        //   initialValues={{ layout: formLayout }}
-                        //   onValuesChange={onFormLayoutChange}
-                        style={{
-                            backgroundColor: "#F6F4FF",
-                            padding: 12,
-                            maxHeight: 200,
-                            maxWidth: 1000,
-                        }}
-                    >
-                        <Row gutter={100}>
-                            <Col span={5}>
-                                <div> Particle name</div>
-                                <Form.Item>
-                                    <Input
-                                        placeholder="Start typing..."
-                                        type="text"
-                                        name="input1"
-                                        value={subMenuData.input1}
-                                        onChange={handleSubMenuInputChange}
-                                    />
-                                </Form.Item>
-                            </Col>
-                            <Col span={5}>
-                                <div> Display name</div>
-                                <Form.Item>
-                                    <Input placeholder="input placeholder" />
-                                </Form.Item>
-                            </Col>
-                            <Col span={5}>
-                                <div> Display type</div>
-                                <Form.Item>
-                                    <Select
-                                        style={{ width: 200 }}
-                                        className={styles.particleSelector}
-                                        bordered={true}
-                                        defaultValue="Select"
-                                        options={selectOptions}
-                                    />
-                                </Form.Item>
-                            </Col>
-                            <Col span={5}>
-                                <div> Radius</div>
-                                <Form.Item>
-                                    <Input placeholder="input placeholder" />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row gutter={100}>
-                            <Col span={5}></Col>
-                            <Col span={5}>
-                                <div> Geometry URL</div>
-                                <Form.Item>
-                                    <Input placeholder="input placeholder" />
-                                </Form.Item>
-                            </Col>
-                            <Col span={5}>
-                                <div> Color</div>
-                                <Form.Item>
-                                    <Input placeholder="input placeholder" />
-                                </Form.Item>
-                            </Col>
-                            <Col span={5}>
-                                <div> Color</div>
-                                <Form.Item>
-                                    <Input placeholder="input placeholder" />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                    </Form>
-                    <div
-                        className={styles.icon}
-                        onClick={() => {
-                            setParticleMenus(particleMenus - 1);
-                        }}
-                    >
-                        {Delete}
-                    </div>
-                </div>
+                <ParticleMenu
+                    index={keyIndex}
+                    setParticleState={setParticleMenus}
+                    particleMenus={particleMenus}
+                />
             ),
         },
     };
 
-    const handleImport = () => {
-        //TODO
-        // this function will take the file type, file, and user specifications and make a fetch request
-        // do we need to do a POST or store the uploaded file on the server before sending it to simulariumio?
-        // define interface for request object
-        // diff interfaces for diff file types or is one possible...
-        // get file type
-        // each file type will have different requirements in simulariumio....
-        // get file
-        // get user options via menus
-        // build instace of interface
-        // make POST request with request data
-        // where to make request to
-        // toggle state to Loading/Importing
-        // render loading overlay screen
-        // render modals for cancellations or failure to import
-    };
+    interface menus {
+        [key: number]: JSX.Element;
+    }
+    const menus: menus = {};
+    menus[keyIndex] = menuOptions[option].menu;
+    const menusArray: any[] = Array.from(Object.values(menus));
 
-    const menus = [];
-    for (let i = 0; i < particleMenus; i++) {
-        menus.push(menuOptions[option].menu);
+    for (let i = 0; i < Object.keys(menus).length; i++) {
+        // keyIndex++
+        // menusArray.push(menuOptions[option].menu);
+        // console.log("keyIndex: " + keyIndex)
+        console.log(menus);
     }
 
     const conversionFormSubmenu = (
         <div className={classNames(styles.container, theme.lightTheme)}>
             <h3
                 className={styles.title}
-                // this needs to change caret from sideways to down, and toggle state
-                // setVisibility(true)
                 onClick={() => {
                     showTarget === false
                         ? setVisibility(true)
@@ -228,13 +247,21 @@ const ConversionFormSubmenu = ({
             {showTarget === true ? (
                 <div>
                     <h3> {menuOptions[option].subtitle} </h3>
-                    {menus}
+                    {menusArray}
+                    {/* {menuOptions[option].menu} */}
                     {option === "particle" ? (
                         <Button
                             type="default"
                             onClick={() => {
-                                setParticleMenus(particleMenus + 1);
-                                console.log(particleMenus);
+                                keyIndex++;
+                                // console.log(menuOptions[option].menu)
+                                menus[keyIndex] = menuOptions[option].menu;
+                                // console.log(JSON.stringify(menus[1]))
+                                // console.log(keyIndex)
+                                // console.log(Object.values(menus))
+                                // console.log(menus[keyIndex])
+                                // setParticleMenus(particleMenus + 1);
+                                // console.log(particleMenus);
                             }}
                         >
                             Add new +

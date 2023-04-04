@@ -95,7 +95,7 @@ const ConversionFormOverlay = ({
             </Divider>
             {/* this div needs conditional rendering when Next button is hit */}
             <div>
-                <h3 className={styles.title}>
+                <h3 className={styles.provide}>
                     Provide display information (optional)
                 </h3>
                 <h3>
