@@ -17,7 +17,7 @@ import { State } from "../../state/types";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
 import LocalFileUpload from "../LocalFileUpload";
-import UrlUploadModal from "../UrlUploadModal";
+// import UrlUploadModal from "../UrlUploadModal";
 import { DownArrow } from "../Icons";
 import {
     SetErrorAction,
@@ -41,13 +41,13 @@ interface LoadFileMenuProps {
 
 const LoadFileMenu = ({
     clearSimulariumFile,
-    initializeFileConversion,
     isBuffering,
     loadLocalFile,
     selectFile,
     viewerStatus,
     setViewerStatus,
     setError,
+    initializeFileConversion,
 }: LoadFileMenuProps): JSX.Element => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const location = useLocation();
@@ -103,12 +103,12 @@ const LoadFileMenu = ({
                 </Button>
             </Menu.Item>
             <Menu.Item key="local-file-upload">
-                <LocalFileUpload
+                {/* <LocalFileUpload
                     clearSimulariumFile={clearSimulariumFile}
                     loadLocalFile={loadLocalFile}
                     setViewerStatus={setViewerStatus}
                     setError={setError}
-                />
+                /> */}
             </Menu.Item>
             <Menu.Item>
                 {" "}
@@ -140,9 +140,9 @@ const LoadFileMenu = ({
             2. Conditionally rendering the modal this way instead of as a `visible` prop
                forces it to re-render every time it is opened, resetting the form inside.
             */}
-            {isModalVisible && (
+            {/* {isModalVisible && (
                 <UrlUploadModal setIsModalVisible={setIsModalVisible} />
-            )}
+            )} */}
         </>
     );
 };
