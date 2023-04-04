@@ -16,6 +16,7 @@ import {
     VIEWER_LOADING,
     VIEWER_EMPTY,
     VIEWER_ERROR,
+    VIEWER_IMPORTING,
 } from "../viewer/constants";
 import {
     changeTime,
@@ -42,6 +43,7 @@ import {
     REQUEST_PLOT_DATA,
     CLEAR_SIMULARIUM_FILE,
     LOAD_FILE_VIA_URL,
+    CONVERT_FILE,
 } from "./constants";
 import { ReceiveAction, LocalSimFile } from "./types";
 import { initialState } from "./reducer";
@@ -209,9 +211,8 @@ const loadLocalFile = createLogic({
         const currentState = getState();
         const simulariumController =
             getSimulariumController(currentState) || action.controller;
-        const lastSimulariumFile: LocalSimFile = getSimulariumFile(
-            currentState
-        );
+        const lastSimulariumFile: LocalSimFile =
+            getSimulariumFile(currentState);
         const simulariumFile = action.payload;
 
         if (lastSimulariumFile) {
@@ -332,10 +333,22 @@ const loadFileViaUrl = createLogic({
     type: LOAD_FILE_VIA_URL,
 });
 
+const fileConversionLogic = createLogic({
+    process(deps: ReduxLogicDeps, dispatch) {
+        dispatch(
+            setStatus({
+                status: VIEWER_IMPORTING,
+            })
+        );
+    },
+    type: CONVERT_FILE,
+});
+
 export default [
     requestPlotDataLogic,
     loadLocalFile,
     loadNetworkedFile,
     resetSimulariumFileState,
     loadFileViaUrl,
+    fileConversionLogic,
 ];
