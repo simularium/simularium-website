@@ -37,13 +37,13 @@ interface LoadFileMenuProps {
 
 const LoadFileMenu = ({
     clearSimulariumFile,
-    initializeFileConversion,
     isBuffering,
     loadLocalFile,
     selectFile,
     setViewerStatus,
     setError,
     viewerStatus,
+    initializeFileConversion,
 }: LoadFileMenuProps): JSX.Element => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const location = useLocation();
