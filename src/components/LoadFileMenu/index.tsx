@@ -118,7 +118,7 @@ const LoadFileMenu = ({
             <Dropdown
                 menu={{ items, theme: "dark", className: styles.menu }}
                 placement="bottomRight"
-                disabled={viewerStatus === VIEWER_IMPORTING}
+                disabled={isBuffering || viewerStatus === VIEWER_IMPORTING}
             >
                 <Button
                     className="ant-dropdown-link"
