@@ -33,7 +33,8 @@
 }
 
 .container span svg path {
-    fill: black
+    /* this makes the down arrow in the select box visible  */
+    fill: var(--light-theme-btn-default-color);
 }
 
 .title {
@@ -51,6 +52,6 @@
     font-size: 20px;
 }
 
-.selecttitle {
+.select-title {
     margin-bottom: 0px;
 }

@@ -32,7 +32,7 @@ const ConversionFormOverlay =
                     {" "}
                     Provide file information (required){" "}
                 </h3>
-                <h3 className={styles.selecttitle}>Simulation Engine</h3>
+                <h3 className={styles.selectTitle}>Simulation Engine</h3>
                 <div className={styles.uploadContainer}>
                     <Select
                         className={styles.selectorBox}
