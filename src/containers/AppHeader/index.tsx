@@ -61,7 +61,6 @@ class AppHeader extends React.Component<AppHeaderProps> {
         } else if (isNetworkSimFileInterface(simulariumFile)) {
             displayName = simulariumFile.title;
         }
-        console.log("viewer status in app header: " + viewerStatus);
         return (
             <div className={styles.pageHeader}>
                 <div className={styles.leftLinks}>

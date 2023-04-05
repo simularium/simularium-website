@@ -64,7 +64,9 @@ const resetSimulariumFileState = createLogic({
         let clearTrajectory;
 
         const actions = [resetTime, resetVisibility, stopPlay];
-
+        console.log("in resetSimulariumFileState");
+        console.log(action);
+        console.log(action.payload.newFIle);
         if (!action.payload.newFile) {
             //only clear controller if not requesting new sim file
             if (controller) {
@@ -335,7 +337,6 @@ const loadFileViaUrl = createLogic({
 
 const fileConversionLogic = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
-        console.log("setting viewer importing");
         dispatch(
             setStatus({
                 status: VIEWER_IMPORTING,

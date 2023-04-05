@@ -105,7 +105,6 @@ const LoadFileMenu = ({
                     }}
                     onClick={() => {
                         initializeFileConversion();
-                        // setViewerStatus({status: VIEWER_IMPORTING})
                     }}
                 >
                     Import other file type
