@@ -32,6 +32,13 @@ const reduxLogicDependencies = {
     baseApiUrl: BASE_API_URL,
     plotDataUrl: DATA_BUCKET_URL,
     httpClient: axios,
+    smoldynTemplate: "smoldyn_data.json",
+    uiTemplateUrlRoot:
+        "https://api.github.com/repos/simularium/simulariumio/contents/ui-templates",
+    uiTemplateDownloadUrlRoot:
+        "https://raw.githubusercontent.com/simularium/simulariumio/main/ui-templates",
+    uiBaseTypes: "base_types.json",
+    uiCustomTypes: "custom-types",
 };
 
 export default function createReduxStore(preloadedState?: State) {

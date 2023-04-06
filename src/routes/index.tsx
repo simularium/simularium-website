@@ -1,7 +1,7 @@
 import TutorialPage from "../components/TutorialPage";
 import LandingPage from "../components/LandingPage";
 import Simularium from "../containers/Simularium";
-import ConversionFormOverlay from "../components/ConversionFormOverlay";
+import Conversion from "../containers/ConversionForm";
 
 export const VIEWER_PATHNAME = "/viewer";
 export const TUTORIAL_PATHNAME = "/tutorial";
@@ -25,7 +25,7 @@ export default [
     },
     {
         name: "Import other file type",
-        component: ConversionFormOverlay,
+        component: Conversion,
         path: IMPORT_PATHNAME,
     },
 ];

@@ -9,7 +9,10 @@ import {
     loadSimulariumFile,
 } from "@aics/simularium-viewer";
 
-import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
+import {
+    ENGINE_TO_TEMPLATE_MAP,
+    URL_PARAM_KEY_FILE_NAME,
+} from "../../constants";
 import { clearUrlParams } from "../../util";
 import { getUserTrajectoryUrl } from "../../util/userUrlHandling";
 import {
@@ -44,9 +47,18 @@ import {
     CLEAR_SIMULARIUM_FILE,
     LOAD_FILE_VIA_URL,
     CONVERT_FILE,
+    SET_CONVERSION_ENGINE,
 } from "./constants";
-import { ReceiveAction, LocalSimFile } from "./types";
+import {
+    ReceiveAction,
+    LocalSimFile,
+    BaseType,
+    CustomType,
+    AvailableEngines,
+    CustomTypeDownload,
+} from "./types";
 import { initialState } from "./reducer";
+import { map, reduce } from "lodash";
 
 const netConnectionSettings = {
     serverIp: process.env.BACKEND_SERVER_IP,
@@ -344,6 +356,81 @@ const fileConversionLogic = createLogic({
     type: CONVERT_FILE,
 });
 
+const setConversionEngineLogic = createLogic({
+    async process(deps: ReduxLogicDeps): Promise<{
+        engineType: any;
+        template: any;
+        templateData: any;
+    }> {
+        const {
+            httpClient,
+            action,
+            uiTemplateUrlRoot,
+            uiBaseTypes,
+            uiCustomTypes,
+            uiTemplateDownloadUrlRoot,
+        } = deps;
+        console.group("action : ", action);
+        const baseTypes = await httpClient
+            .get(`${uiTemplateDownloadUrlRoot}/${uiBaseTypes}`)
+            .then((baseTypesReturn: AxiosResponse) => {
+                console.log(baseTypesReturn);
+                return baseTypesReturn.data;
+            });
+
+        const customTypes = await httpClient
+            .get(`${uiTemplateUrlRoot}/${uiCustomTypes}`)
+            .then((customTypesReturn: AxiosResponse) => {
+                return customTypesReturn.data;
+            })
+            .then((fileRefs) =>
+                Promise.all(
+                    map(
+                        fileRefs,
+                        async (ref) =>
+                            await httpClient
+                                .get(ref.download_url)
+                                .then((file) => file.data)
+                    )
+                )
+            );
+        type TemplateMap = {
+            [key: string]: BaseType | CustomType;
+        };
+
+        const initTypeMap: TemplateMap = {};
+
+        const typeMap: TemplateMap = reduce(
+            customTypes,
+            (acc, cur: CustomTypeDownload) => {
+                //CustomType always has just one
+                const key = Object.keys(cur)[0] as string;
+                acc[key] = cur[key];
+                return acc;
+            },
+            initTypeMap
+        );
+        baseTypes["base_types"].forEach((type: BaseType) => {
+            typeMap[type.id] = { ...type, isBaseType: true };
+        });
+        // return typeMap;
+        const templateFileName =
+            ENGINE_TO_TEMPLATE_MAP[action.payload as AvailableEngines];
+
+        const engineTemplate = await httpClient
+            .get(`${uiTemplateDownloadUrlRoot}/${templateFileName}`)
+            .then((engineTemplateReturn) => engineTemplateReturn.data);
+        console.log(engineTemplate);
+        return {
+            engineType: action.payload,
+            template: engineTemplate.smoldyn_data,
+            templateData: typeMap,
+        };
+    },
+
+    type: SET_CONVERSION_ENGINE,
+});
+
 export default [
     requestPlotDataLogic,
     loadLocalFile,
@@ -351,4 +438,5 @@ export default [
     resetSimulariumFileState,
     loadFileViaUrl,
     fileConversionLogic,
+    setConversionEngineLogic,
 ];

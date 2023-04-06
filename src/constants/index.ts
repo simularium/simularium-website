@@ -1,3 +1,5 @@
+import { AvailableEngines } from "../state/trajectory/types";
+
 export const APP_ID = "simularium-ui";
 export const API_VERSION = "v1";
 export const HEADER_HEIGHT = 113;
@@ -39,6 +41,12 @@ export const SUPPORTED_ENGINES = [
     ["SpringSaLaD", SPRINGSALAD_URL],
     ["MEDYAN", MEDYAN_URL],
 ];
+export const ENGINE_TO_TEMPLATE_MAP: { [key in AvailableEngines]: string } = {
+    [AvailableEngines.Smoldyn]: "smoldyn_data.json",
+    [AvailableEngines.Cytosim]: "cytosim_data.json",
+    [AvailableEngines.CellPack]: "cellpack_data.json",
+    [AvailableEngines.SpringSalad]: "springsalad_data.json",
+};
 
 // If any these URLs are used as a trajUrl param, we want to redirect to a networked file
 // More info: https://github.com/simularium/simularium-website/issues/213
