@@ -35,7 +35,7 @@ export const initialState = {
     processingData: {
         engineType: "",
         template: null,
-        templateData: null,
+        templateMap: null,
         preConvertedFile: null,
     },
 };

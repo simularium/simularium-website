@@ -1,4 +1,4 @@
-import { AvailableEngines } from "../state/trajectory/types";
+import { AvailableEngines } from "../state/trajectory/conversion-data-types";
 
 export const APP_ID = "simularium-ui";
 export const API_VERSION = "v1";

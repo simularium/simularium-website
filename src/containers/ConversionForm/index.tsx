@@ -8,14 +8,15 @@ import theme from "../../components/theme/light-theme.css";
 import { State } from "../../state";
 import trajectoryStateBranch from "../../state/trajectory";
 import {
-    AvailableEngines,
     SetConversionEngineAction,
 } from "../../state/trajectory/types";
+import { AvailableEngines } from "../../state/trajectory/conversion-data-types";
 
 import styles from "./style.css";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
+    conversionProcessingData: any;
 }
 
 const selectOptions = Object.keys(AvailableEngines).map((engineName) => ({
@@ -25,9 +26,10 @@ const selectOptions = Object.keys(AvailableEngines).map((engineName) => ({
 
 const ConversionForm = ({
     setConversionEngine,
+    conversionProcessingData,
 }: ConversionProps): JSX.Element | null => {
     const [isFileLoaded, setFileLoaded] = useState<boolean>(false);
-
+    console.log("conversion form data", conversionProcessingData);
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
             <h3 className={styles.title}>Import a non-native file type</h3>
@@ -81,7 +83,9 @@ const ConversionForm = ({
 };
 
 function mapStateToProps(state: State) {
-    return {};
+    return {
+        conversionProcessingData: trajectoryStateBranch.selectors.getConversionProcessingData(state),
+    };
 }
 
 const dispatchToPropsMap = {

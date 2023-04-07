@@ -8,6 +8,7 @@ import {
     FrontEndError,
     loadSimulariumFile,
 } from "@aics/simularium-viewer";
+import { map, reduce } from "lodash";
 
 import {
     ENGINE_TO_TEMPLATE_MAP,
@@ -53,13 +54,9 @@ import {
 import {
     ReceiveAction,
     LocalSimFile,
-    BaseType,
-    AvailableEngines,
-    CustomTypeDownload,
-    TemplateMap,
 } from "./types";
 import { initialState } from "./reducer";
-import { map, reduce } from "lodash";
+import { TemplateMap, CustomTypeDownload, BaseType, AvailableEngines, Template } from "./conversion-data-types";
 
 const netConnectionSettings = {
     serverIp: process.env.BACKEND_SERVER_IP,
@@ -358,12 +355,10 @@ const fileConversionLogic = createLogic({
 });
 
 const setConversionEngineLogic = createLogic({
-    async process(
-        deps: ReduxLogicDeps,
-    ): Promise<{
-        engineType: any;
-        template: any;
-        templateData: any;
+    async process(deps: ReduxLogicDeps): Promise<{
+        engineType: AvailableEngines;
+        template: Template;
+        templateMap: TemplateMap;
     }> {
         const {
             httpClient,
@@ -422,7 +417,7 @@ const setConversionEngineLogic = createLogic({
         return {
             engineType: action.payload,
             template: engineTemplate[templateName],
-            templateData: typeMap,
+            templateMap: typeMap,
         };
     },
     processOptions: {

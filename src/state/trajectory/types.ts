@@ -2,6 +2,7 @@ import {
     ISimulariumFile,
     SimulariumController,
 } from "@aics/simularium-viewer/type-declarations";
+import { AvailableEngines, Template, TemplateMap } from "./conversion-data-types";
 
 export interface TrajectoryStateBranch {
     [key: string]: any;
@@ -59,8 +60,8 @@ export interface SetConversionEngineAction {
 export interface SetConversionTemplateData {
     payload: {
         engineType: AvailableEngines;
-        template: any;
-        templateData: TemplateMap;
+        template: Template;
+        templateMap: TemplateMap;
     };
     type: string;
 }
@@ -86,40 +87,3 @@ export interface TimeUnits {
     magnitude: number;
     name: string;
 }
-
-export enum AvailableEngines {
-    Cytosim = "cytosim",
-    CellPack = "cellPACK",
-    Smoldyn = "Smoldyn",
-    SpringSalad = "SpringSaLaD",
-}
-
-export interface CustomType {
-    "python::module": string;
-    "python::object": string;
-    parameters: CustomParameters;
-}
-
-export interface CustomTypeDownload {
-    [key: string]: CustomType;
-}
-
-export interface BaseType {
-    isBaseType: true;
-    id: string;
-    data: string;
-    match: string;
-}
-
-export interface CustomParameters {
-    name: string;
-    data_type: string;
-    description: string;
-    required: boolean;
-    help: string;
-    options?: string[];
-}
-
-export type TemplateMap = {
-    [key: string]: BaseType | CustomType;
-};

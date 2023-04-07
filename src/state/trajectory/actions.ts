@@ -12,6 +12,7 @@ import {
     CONVERT_FILE,
     SET_CONVERSION_ENGINE,
 } from "./constants";
+import { AvailableEngines } from "./conversion-data-types";
 import {
     TrajectoryStateBranch,
     ReceiveAction,
@@ -24,7 +25,6 @@ import {
     ClearSimFileDataAction,
     LoadViaUrlAction,
     ConvertFileAction,
-    AvailableEngines,
     SetConversionEngineAction,
 } from "./types";
 import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
