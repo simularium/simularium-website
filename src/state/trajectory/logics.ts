@@ -410,7 +410,6 @@ const setConversionEngineLogic = createLogic({
         });
         const templateName =
             ENGINE_TO_TEMPLATE_MAP[action.payload as AvailableEngines];
-
         const engineTemplate = await httpClient
             .get(`${uiTemplateDownloadUrlRoot}/${templateName}.json`)
             .then((engineTemplateReturn) => engineTemplateReturn.data);

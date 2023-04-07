@@ -52,6 +52,11 @@ export interface ConvertFileAction {
     type: string;
 }
 
+export interface ReceiveFileToConvertAction {
+    type: string;
+    payload: string;
+}
+
 export interface SetConversionEngineAction {
     payload: AvailableEngines;
     type: string;

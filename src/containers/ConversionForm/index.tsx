@@ -7,28 +7,45 @@ import { connect } from "react-redux";
 import theme from "../../components/theme/light-theme.css";
 import { State } from "../../state";
 import trajectoryStateBranch from "../../state/trajectory";
+import viewerStateBranch from "../../state/viewer";
 import {
+    ReceiveFileToConvertAction,
     SetConversionEngineAction,
 } from "../../state/trajectory/types";
-import { AvailableEngines } from "../../state/trajectory/conversion-data-types";
+import { AvailableEngines, Template, TemplateMap } from "../../state/trajectory/conversion-data-types";
 
 import styles from "./style.css";
+import customRequest from "./custom-request";
+import { SetErrorAction } from "../../state/viewer/types";
+import { UploadFile } from "antd/lib/upload";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
-    conversionProcessingData: any;
+    conversionProcessingData: {
+        template: Template;
+        templateMap: TemplateMap;
+        preConvertedFile: string;
+        engineType: AvailableEngines;
+    };
+    receiveFileToConvert: ActionCreator<ReceiveFileToConvertAction>;
+    setError: ActionCreator<SetErrorAction>;
 }
 
-const selectOptions = Object.keys(AvailableEngines).map((engineName) => ({
-    label: engineName,
-    value: engineName,
-}));
+const selectOptions = Object.keys(AvailableEngines).map((engineName: string, index) => {
+    const values = Object.values(AvailableEngines)
+    return {
+        label: engineName,
+        value: values[index],
+    };});
 
 const ConversionForm = ({
     setConversionEngine,
     conversionProcessingData,
-}: ConversionProps): JSX.Element | null => {
-    const [isFileLoaded, setFileLoaded] = useState<boolean>(false);
+    setError,
+    receiveFileToConvert,
+}: ConversionProps): JSX.Element => {
+    const [fileToConvert, setFileToConvert] = useState<UploadFile>();
+    // TODO: use conversion template data to render the form
     console.log("conversion form data", conversionProcessingData);
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
@@ -48,10 +65,7 @@ const ConversionForm = ({
                     bordered={true}
                     defaultValue="Select"
                     options={selectOptions}
-                    onChange={(value) => {
-                        console.log("select value: " + value);
-                        setConversionEngine(value);
-                    }}
+                    onChange={setConversionEngine}
                 />
                 <Upload
                     className={styles.upload}
@@ -62,9 +76,12 @@ const ConversionForm = ({
                         showDownloadIcon: false,
                         showRemoveIcon: true,
                     }}
-                    onChange={() => {
-                        setFileLoaded(true);
+                    onChange={({ file }) => {
+                        setFileToConvert(file);
                     }}
+                    customRequest={(options) =>
+                        customRequest(fileToConvert, receiveFileToConvert, setError, options)
+                    }
                 >
                     <Button type="default">Select file</Button>
                 </Upload>
@@ -73,7 +90,7 @@ const ConversionForm = ({
                 {" "}
             </Divider>
             <Button ghost>Cancel</Button>
-            <Button type="primary" disabled={!isFileLoaded}>
+            <Button type="primary" disabled={!fileToConvert}>
                 Next
             </Button>
         </div>
@@ -89,6 +106,8 @@ function mapStateToProps(state: State) {
 }
 
 const dispatchToPropsMap = {
+    receiveFileToConvert: trajectoryStateBranch.actions.receiveFileToConvert,
+    setError: viewerStateBranch.actions.setError,
     setConversionEngine: trajectoryStateBranch.actions.setConversionEngine,
 };
 
