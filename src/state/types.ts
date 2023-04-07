@@ -24,7 +24,6 @@ export interface ReduxLogicDeps {
     httpClient: AxiosInstance;
     getState: () => State;
     ctx?: any;
-    smoldynTemplate: string;
     uiTemplateUrlRoot: string;
     uiTemplateDownloadUrlRoot: string;
     uiBaseTypes: string;

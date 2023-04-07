@@ -10,6 +10,8 @@ export type CHECKBOX_TYPE_STAR = typeof CHECKBOX_TYPE_STAR;
 export const TOOLTIP_COLOR = "#141219";
 export const LEFT_PANEL_TOOLTIP_COLOR = "#3b3649";
 export const LEFT_PANEL_TOOLTIP_DELAY = 1; // in seconds
+export const URL_PARAM_BASE_TYPES = "base_types.json";
+export const URL_PARAM_CUSTOM_TYPES = "custom-types";
 
 // URLs
 export const BASE_API_URL = `/api/${API_VERSION}`;
@@ -31,6 +33,10 @@ export const MCELL_URL = "https://mcell.org/";
 export const SMOLDYN_URL = "http://www.smoldyn.org/";
 export const SPRINGSALAD_URL = "https://vcell.org/ssalad";
 export const MEDYAN_URL = "http://medyan.org/";
+export const UI_TEMPLATE_URL_ROOT =
+    "https://api.github.com/repos/simularium/simulariumio/contents/ui-templates";
+export const UI_TEMPLATE_DOWNLOAD_URL_ROOT =
+    "https://raw.githubusercontent.com/simularium/simulariumio/main/ui-templates";
 
 export const SUPPORTED_ENGINES = [
     ["ReaDDy", READDY_URL],

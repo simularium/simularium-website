@@ -56,6 +56,7 @@ import {
     CustomType,
     AvailableEngines,
     CustomTypeDownload,
+    TemplateMap,
 } from "./types";
 import { initialState } from "./reducer";
 import { map, reduce } from "lodash";
@@ -357,7 +358,11 @@ const fileConversionLogic = createLogic({
 });
 
 const setConversionEngineLogic = createLogic({
-    async process(deps: ReduxLogicDeps): Promise<{
+    async process(
+        deps: ReduxLogicDeps,
+        dispatch,
+        done
+    ): Promise<{
         engineType: any;
         template: any;
         templateData: any;
@@ -381,6 +386,7 @@ const setConversionEngineLogic = createLogic({
         const customTypes = await httpClient
             .get(`${uiTemplateUrlRoot}/${uiCustomTypes}`)
             .then((customTypesReturn: AxiosResponse) => {
+                console.log(customTypesReturn);
                 return customTypesReturn.data;
             })
             .then((fileRefs) =>
@@ -394,9 +400,6 @@ const setConversionEngineLogic = createLogic({
                     )
                 )
             );
-        type TemplateMap = {
-            [key: string]: BaseType | CustomType;
-        };
 
         const initTypeMap: TemplateMap = {};
 
@@ -421,13 +424,13 @@ const setConversionEngineLogic = createLogic({
             .get(`${uiTemplateDownloadUrlRoot}/${templateFileName}`)
             .then((engineTemplateReturn) => engineTemplateReturn.data);
         console.log(engineTemplate);
+        done();
         return {
             engineType: action.payload,
             template: engineTemplate.smoldyn_data,
             templateData: typeMap,
         };
     },
-
     type: SET_CONVERSION_ENGINE,
 });
 

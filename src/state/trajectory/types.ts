@@ -110,3 +110,7 @@ export interface CustomParameters {
     help: string;
     options?: string[];
 }
+
+export type TemplateMap = {
+    [key: string]: BaseType | CustomType;
+};
