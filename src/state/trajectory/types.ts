@@ -56,6 +56,15 @@ export interface SetConversionEngineAction {
     type: string;
 }
 
+export interface SetConversionTemplateData {
+    payload: {
+        engineType: AvailableEngines;
+        template: any;
+        templateData: TemplateMap;
+    };
+    type: string;
+}
+
 export interface LocalSimFile {
     name: string;
     data: ISimulariumFile;

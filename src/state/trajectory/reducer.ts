@@ -9,13 +9,13 @@ import {
     RECEIVE_AGENT_NAMES,
     RECEIVE_SIMULARIUM_FILE,
     CLEAR_SIMULARIUM_FILE,
-    SET_CONVERSION_ENGINE,
+    SET_CONVERSION_TEMPLATE,
 } from "./constants";
 import {
     TrajectoryStateBranch,
     ReceiveAction,
     ClearSimFileDataAction,
-    SetConversionEngineAction,
+    SetConversionTemplateData,
 } from "./types";
 
 export const initialState = {
@@ -31,6 +31,12 @@ export const initialState = {
         name: "",
         data: null,
         lastModified: null,
+    },
+    processingData: {
+        engineType: "",
+        template: null,
+        templateData: null,
+        preConvertedFile: null,
     },
 };
 
@@ -75,12 +81,15 @@ const actionToConfigMap: TypeToDescriptionMap = {
             simulariumFile: initialState.simulariumFile,
         }),
     },
-    [SET_CONVERSION_ENGINE]: {
-        accepts: (action: AnyAction): action is SetConversionEngineAction =>
-            action.type === SET_CONVERSION_ENGINE,
-        perform: (state: TrajectoryStateBranch, action: AnyAction) => ({
+    [SET_CONVERSION_TEMPLATE]: {
+        accepts: (action: AnyAction): action is SetConversionTemplateData =>
+            action.type === SET_CONVERSION_TEMPLATE,
+        perform: (
+            state: TrajectoryStateBranch,
+            action: SetConversionTemplateData
+        ) => ({
             ...state,
-            pendingFile: { ...action.payload },
+            processingData: { ...action.payload },
         }),
     },
 };

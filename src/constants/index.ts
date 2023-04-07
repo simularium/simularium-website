@@ -48,10 +48,10 @@ export const SUPPORTED_ENGINES = [
     ["MEDYAN", MEDYAN_URL],
 ];
 export const ENGINE_TO_TEMPLATE_MAP: { [key in AvailableEngines]: string } = {
-    [AvailableEngines.Smoldyn]: "smoldyn_data.json",
-    [AvailableEngines.Cytosim]: "cytosim_data.json",
-    [AvailableEngines.CellPack]: "cellpack_data.json",
-    [AvailableEngines.SpringSalad]: "springsalad_data.json",
+    [AvailableEngines.Smoldyn]: "smoldyn_data",
+    [AvailableEngines.Cytosim]: "cytosim_data",
+    [AvailableEngines.CellPack]: "cellpack_data",
+    [AvailableEngines.SpringSalad]: "springsalad_data",
 };
 
 // If any these URLs are used as a trajUrl param, we want to redirect to a networked file

@@ -24,3 +24,5 @@ export const CONVERT_FILE = makeTrajectoryConstant("convert-file");
 export const SET_CONVERSION_ENGINE = makeTrajectoryConstant(
     "set-conversion-engine"
 );
+export const SET_CONVERSION_TEMPLATE = makeTrajectoryConstant("set-conversion-template");
+

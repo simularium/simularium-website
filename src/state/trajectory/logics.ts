@@ -48,12 +48,12 @@ import {
     LOAD_FILE_VIA_URL,
     CONVERT_FILE,
     SET_CONVERSION_ENGINE,
+    SET_CONVERSION_TEMPLATE,
 } from "./constants";
 import {
     ReceiveAction,
     LocalSimFile,
     BaseType,
-    CustomType,
     AvailableEngines,
     CustomTypeDownload,
     TemplateMap,
@@ -360,8 +360,6 @@ const fileConversionLogic = createLogic({
 const setConversionEngineLogic = createLogic({
     async process(
         deps: ReduxLogicDeps,
-        dispatch,
-        done
     ): Promise<{
         engineType: any;
         template: any;
@@ -375,7 +373,6 @@ const setConversionEngineLogic = createLogic({
             uiCustomTypes,
             uiTemplateDownloadUrlRoot,
         } = deps;
-        console.group("action : ", action);
         const baseTypes = await httpClient
             .get(`${uiTemplateDownloadUrlRoot}/${uiBaseTypes}`)
             .then((baseTypesReturn: AxiosResponse) => {
@@ -416,20 +413,22 @@ const setConversionEngineLogic = createLogic({
         baseTypes["base_types"].forEach((type: BaseType) => {
             typeMap[type.id] = { ...type, isBaseType: true };
         });
-        // return typeMap;
-        const templateFileName =
+        const templateName =
             ENGINE_TO_TEMPLATE_MAP[action.payload as AvailableEngines];
 
         const engineTemplate = await httpClient
-            .get(`${uiTemplateDownloadUrlRoot}/${templateFileName}`)
+            .get(`${uiTemplateDownloadUrlRoot}/${templateName}.json`)
             .then((engineTemplateReturn) => engineTemplateReturn.data);
-        console.log(engineTemplate);
-        done();
         return {
             engineType: action.payload,
-            template: engineTemplate.smoldyn_data,
+            template: engineTemplate[templateName],
             templateData: typeMap,
         };
+    },
+    processOptions: {
+        dispatchReturn: true,
+        successType: SET_CONVERSION_TEMPLATE,
+        // failType: FETCH_POLLS_FAILED, // dispatch this failed action type
     },
     type: SET_CONVERSION_ENGINE,
 });
