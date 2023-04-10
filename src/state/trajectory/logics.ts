@@ -8,8 +8,12 @@ import {
     FrontEndError,
     loadSimulariumFile,
 } from "@aics/simularium-viewer";
+import { map, reduce } from "lodash";
 
-import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
+import {
+    ENGINE_TO_TEMPLATE_MAP,
+    URL_PARAM_KEY_FILE_NAME,
+} from "../../constants";
 import { clearUrlParams } from "../../util";
 import { getUserTrajectoryUrl } from "../../util/userUrlHandling";
 import {
@@ -44,9 +48,18 @@ import {
     CLEAR_SIMULARIUM_FILE,
     LOAD_FILE_VIA_URL,
     CONVERT_FILE,
+    SET_CONVERSION_ENGINE,
+    SET_CONVERSION_TEMPLATE,
 } from "./constants";
 import { ReceiveAction, LocalSimFile } from "./types";
 import { initialState } from "./reducer";
+import {
+    TemplateMap,
+    CustomTypeDownload,
+    BaseType,
+    AvailableEngines,
+    Template,
+} from "./conversion-data-types";
 
 const netConnectionSettings = {
     serverIp: process.env.BACKEND_SERVER_IP,
@@ -64,7 +77,6 @@ const resetSimulariumFileState = createLogic({
         let clearTrajectory;
 
         const actions = [resetTime, resetVisibility, stopPlay];
-
         if (!action.payload.newFile) {
             //only clear controller if not requesting new sim file
             if (controller) {
@@ -334,14 +346,88 @@ const loadFileViaUrl = createLogic({
 });
 
 const fileConversionLogic = createLogic({
-    process(deps: ReduxLogicDeps, dispatch) {
+    process(deps: ReduxLogicDeps, dispatch, done) {
         dispatch(
             setStatus({
                 status: VIEWER_IMPORTING,
             })
         );
+        done();
     },
     type: CONVERT_FILE,
+});
+
+const setConversionEngineLogic = createLogic({
+    async process(deps: ReduxLogicDeps): Promise<{
+        engineType: AvailableEngines;
+        template: Template;
+        templateMap: TemplateMap;
+    }> {
+        const {
+            httpClient,
+            action,
+            uiTemplateUrlRoot,
+            uiBaseTypes,
+            uiCustomTypes,
+            uiTemplateDownloadUrlRoot,
+        } = deps;
+        const baseTypes = await httpClient
+            .get(`${uiTemplateDownloadUrlRoot}/${uiBaseTypes}`)
+            .then((baseTypesReturn: AxiosResponse) => {
+                console.log(baseTypesReturn);
+                return baseTypesReturn.data;
+            });
+
+        const customTypes = await httpClient
+            .get(`${uiTemplateUrlRoot}/${uiCustomTypes}`)
+            .then((customTypesReturn: AxiosResponse) => {
+                console.log(customTypesReturn);
+                return customTypesReturn.data;
+            })
+            .then((fileRefs) =>
+                Promise.all(
+                    map(
+                        fileRefs,
+                        async (ref) =>
+                            await httpClient
+                                .get(ref.download_url)
+                                .then((file) => file.data)
+                    )
+                )
+            );
+
+        const initTypeMap: TemplateMap = {};
+
+        const typeMap: TemplateMap = reduce(
+            customTypes,
+            (acc, cur: CustomTypeDownload) => {
+                //CustomType always has just one
+                const key = Object.keys(cur)[0] as string;
+                acc[key] = cur[key];
+                return acc;
+            },
+            initTypeMap
+        );
+        baseTypes["base_types"].forEach((type: BaseType) => {
+            typeMap[type.id] = { ...type, isBaseType: true };
+        });
+        const templateName =
+            ENGINE_TO_TEMPLATE_MAP[action.payload as AvailableEngines];
+        const engineTemplate = await httpClient
+            .get(`${uiTemplateDownloadUrlRoot}/${templateName}.json`)
+            .then((engineTemplateReturn) => engineTemplateReturn.data);
+        return {
+            engineType: action.payload,
+            template: engineTemplate[templateName],
+            templateMap: typeMap,
+        };
+    },
+    processOptions: {
+        dispatchReturn: true,
+        successType: SET_CONVERSION_TEMPLATE,
+        // failType: FETCH_POLLS_FAILED, // dispatch this failed action type
+    },
+    type: SET_CONVERSION_ENGINE,
 });
 
 export default [
@@ -351,4 +437,5 @@ export default [
     resetSimulariumFileState,
     loadFileViaUrl,
     fileConversionLogic,
+    setConversionEngineLogic,
 ];

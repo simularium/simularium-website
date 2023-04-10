@@ -11,15 +11,16 @@ import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 import { APP_ID } from "./constants";
 
 import { createReduxStore } from "./state";
-import routes, { VIEWER_PATHNAME } from "./routes";
+import routes, { IMPORT_PATHNAME, VIEWER_PATHNAME } from "./routes";
 import ScrollToTop from "./components/ScrollToTop";
 import AppHeader from "./containers/AppHeader";
 
 const { Header } = Layout;
 
 import "./style.css";
-import { setIsPlaying } from "./state/viewer/actions";
+import { setIsPlaying, setStatus } from "./state/viewer/actions";
 import { clearSimulariumFile } from "./state/trajectory/actions";
+import { VIEWER_IMPORTING } from "./state/viewer/constants";
 
 export const store = createReduxStore();
 interface LocationWithState extends Location {
@@ -32,9 +33,13 @@ function useLocationChange() {
     const dispatch = useDispatch();
 
     React.useEffect(() => {
-        if (location.pathname !== VIEWER_PATHNAME) {
+        if (location.pathname === IMPORT_PATHNAME) {
             batch(() => {
-                // if we're navigating away from the viewer, stop playing and reset state
+                dispatch(setIsPlaying(false));
+                dispatch(setStatus({ status: VIEWER_IMPORTING }));
+            });
+        } else if (location.pathname !== VIEWER_PATHNAME) {
+            batch(() => {
                 dispatch(setIsPlaying(false));
                 dispatch(clearSimulariumFile({ newFile: false }));
             });

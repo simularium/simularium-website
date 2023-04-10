@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { ActionCreator } from "redux";
-import { Menu, Dropdown, Button } from "antd";
+import { Dropdown, Button, MenuProps } from "antd";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
@@ -11,19 +11,17 @@ import {
     RequestLocalFileAction,
     RequestNetworkFileAction,
 } from "../../state/trajectory/types";
-import { ViewerStatus } from "../../state/viewer/types";
-import { getStatus } from "../../state/viewer/selectors";
-import { State } from "../../state/types";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
-import { VIEWER_PATHNAME } from "../../routes";
+import { IMPORT_PATHNAME, VIEWER_PATHNAME } from "../../routes";
+import FileUploadModal from "../FileUploadModal";
 import { DownArrow } from "../Icons";
 import {
     SetErrorAction,
     SetViewerStatusAction,
+    ViewerStatus,
 } from "../../state/viewer/types";
 
 import styles from "./style.css";
-import { connect } from "react-redux";
 import { VIEWER_IMPORTING } from "../../state/viewer/constants";
 
 interface LoadFileMenuProps {
@@ -31,10 +29,10 @@ interface LoadFileMenuProps {
     selectFile: ActionCreator<RequestNetworkFileAction>;
     clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
-    viewerStatus: ViewerStatus;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setError: ActionCreator<SetErrorAction>;
     initializeFileConversion: ActionCreator<ConvertFileAction>;
+    viewerStatus: ViewerStatus;
 }
 
 const LoadFileMenu = ({
@@ -42,9 +40,9 @@ const LoadFileMenu = ({
     isBuffering,
     loadLocalFile,
     selectFile,
-    viewerStatus,
     setViewerStatus,
     setError,
+    viewerStatus,
     initializeFileConversion,
 }: LoadFileMenuProps): JSX.Element => {
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -67,54 +65,60 @@ const LoadFileMenu = ({
         }
     };
 
-    let isDisabled = false;
-    if (viewerStatus == VIEWER_IMPORTING || isBuffering) {
-        isDisabled = true;
-    }
-
-    const menu = (
-        <Menu theme="dark" className={styles.menu}>
-            <Menu.SubMenu
-                title="From examples"
-                popupClassName={styles.submenu}
-                popupOffset={[-0.45, -4]}
-                key="from-examples"
-            >
-                {TRAJECTORIES.map((trajectory) => (
-                    <Menu.Item key={trajectory.id}>
-                        <Link
-                            onClick={() => onClick(trajectory)}
-                            to={{
-                                pathname: VIEWER_PATHNAME,
-                                search: `?${URL_PARAM_KEY_FILE_NAME}=${trajectory.id}`,
-                            }}
-                        >
-                            {trajectory.title}
-                            {trajectory.subtitle && `: ${trajectory.subtitle}`}
-                        </Link>
-                    </Menu.Item>
-                ))}
-            </Menu.SubMenu>
-            <Menu.Item key="url-upload">
+    const items: MenuProps["items"] = [
+        {
+            key: "from-examples",
+            label: "Example models",
+            popupClassName: styles.submenu,
+            popupOffset: [-0.45, -4],
+            children: TRAJECTORIES.map((trajectory) => ({
+                key: trajectory.id,
+                label: (
+                    <Link
+                        onClick={() => onClick(trajectory)}
+                        to={{
+                            pathname: VIEWER_PATHNAME,
+                            search: `?${URL_PARAM_KEY_FILE_NAME}=${trajectory.id}`,
+                        }}
+                    >
+                        {trajectory.title}
+                        {trajectory.subtitle && `: ${trajectory.subtitle}`}
+                    </Link>
+                ),
+            })),
+        },
+        {
+            key: "file-upload",
+            label: (
                 <Button type="ghost" onClick={showModal}>
-                    From a URL
+                    Simularium file
                 </Button>
-            </Menu.Item>
-            <Menu.Item>
-                {" "}
-                <Button type="ghost" onClick={initializeFileConversion}>
+            ),
+        },
+        {
+            key: "file-convert",
+            label: (
+                <Link
+                    type="ghost"
+                    to={{
+                        pathname: IMPORT_PATHNAME,
+                    }}
+                    onClick={() => {
+                        initializeFileConversion();
+                    }}
+                >
                     Import other file type
-                </Button>
-            </Menu.Item>
-        </Menu>
-    );
+                </Link>
+            ),
+        },
+    ];
 
     return (
         <>
             <Dropdown
-                overlay={menu}
+                menu={{ items, theme: "dark", className: styles.menu }}
                 placement="bottomRight"
-                disabled={isDisabled}
+                disabled={isBuffering || viewerStatus === VIEWER_IMPORTING}
             >
                 <Button
                     className="ant-dropdown-link"
@@ -124,14 +128,21 @@ const LoadFileMenu = ({
                     Load model {DownArrow}
                 </Button>
             </Dropdown>
+            {/* 
+                Conditionally rendering the modal this way instead of as a `visible` prop
+                forces it to re-render every time it is opened, resetting the form inside.
+            */}
+            {isModalVisible && (
+                <FileUploadModal
+                    setIsModalVisible={setIsModalVisible}
+                    clearSimulariumFile={clearSimulariumFile}
+                    loadLocalFile={loadLocalFile}
+                    setViewerStatus={setViewerStatus}
+                    setError={setError}
+                />
+            )}
         </>
     );
 };
 
-function mapStateToProps(state: State) {
-    return {
-        viewerStatus: getStatus(state),
-    };
-}
-
-export default connect(mapStateToProps)(LoadFileMenu);
+export default LoadFileMenu;

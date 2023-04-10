@@ -2,6 +2,11 @@ import {
     ISimulariumFile,
     SimulariumController,
 } from "@aics/simularium-viewer/type-declarations";
+import {
+    AvailableEngines,
+    Template,
+    TemplateMap,
+} from "./conversion-data-types";
 
 export interface TrajectoryStateBranch {
     [key: string]: any;
@@ -48,6 +53,25 @@ export interface LoadViaUrlAction {
 }
 
 export interface ConvertFileAction {
+    type: string;
+}
+
+export interface ReceiveFileToConvertAction {
+    type: string;
+    payload: string;
+}
+
+export interface SetConversionEngineAction {
+    payload: AvailableEngines;
+    type: string;
+}
+
+export interface SetConversionTemplateData {
+    payload: {
+        engineType: AvailableEngines;
+        template: Template;
+        templateMap: TemplateMap;
+    };
     type: string;
 }
 

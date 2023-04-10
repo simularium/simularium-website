@@ -1,6 +1,6 @@
 ---
 name: Usability Issue/Improvement
-about: '"For AICS internal team use: User experience design work needed."'
+about: '"UX work to be done"'
 title: ''
 labels: ux
 assignees: ''
@@ -9,8 +9,6 @@ assignees: ''
 
 ### Background
 _Context, goals, known challenges, technical risks, unknowns, etc_
-
-## Fields below for internal team use
 
 ### User needs statement(s)
 As a _[type of user]_, I need/want to _[action(s)]_, so that I can _[goal]_.
@@ -38,4 +36,5 @@ _Who is directly involved? (developers, main points of contact, final approver)_
 _Add completion date to ticket and any time specific notes here_
 
 ### Notes
-_Add completion date to ticket and any time specific notes here_
+_Additional notes here_
+

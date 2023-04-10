@@ -33,16 +33,11 @@ import {
 } from "../../state/viewer/types";
 import { SetSimulariumControllerAction } from "../../state/simularium/types";
 import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
-import ConversionFormOverlay from "../../components/ConversionFormOverlay";
 import {
     DragOverViewerAction,
     ResetDragOverViewerAction,
 } from "../../state/viewer/types";
-import {
-    VIEWER_ERROR,
-    VIEWER_IMPORTING,
-    VIEWER_LOADING,
-} from "../../state/viewer/constants";
+import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/viewer/constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { clearUrlParams } from "../../util";
@@ -222,11 +217,6 @@ class App extends React.Component<AppProps, AppState> {
                             setViewerStatus={setViewerStatus}
                             setError={setError}
                         />
-                        <ConversionFormOverlay
-                            className="conversionform"
-                            // active={viewerStatus === VIEWER_IMPORTING}
-                            active={true}
-                        ></ConversionFormOverlay>
                         <SideBar onCollapse={this.onPanelCollapse} type="left">
                             <ModelPanel />
                         </SideBar>
