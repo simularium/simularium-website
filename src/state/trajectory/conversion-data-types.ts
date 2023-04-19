@@ -5,16 +5,6 @@ export enum AvailableEngines {
     SpringSalad = "SpringSaLaD",
 }
 
-export interface CustomType {
-    "python::module": string;
-    "python::object": string;
-    parameters: CustomParameters;
-}
-
-export interface CustomTypeDownload {
-    [key: string]: CustomType;
-}
-
 export interface BaseType {
     isBaseType: true;
     id: string;
@@ -22,7 +12,7 @@ export interface BaseType {
     match: string;
 }
 
-export interface CustomParameters {
+export interface CustomParameter {
     name: string;
     data_type: string;
     description: string;
@@ -31,10 +21,24 @@ export interface CustomParameters {
     options?: string[];
 }
 
+export interface CustomParameters {
+    [key: string]: CustomParameter;
+}
+
+export interface CustomType {
+    "python::module": string;
+    "python::object": string;
+    parameters: CustomParameters;
+}
+
 export type TemplateMap = {
     [key: string]: BaseType | CustomType;
 };
 
-export interface Template {
+export interface DownloadedCustomType {
+    [key: string]: CustomType;
+}
+
+export interface DownloadedTemplate {
     [key: string]: CustomType;
 }

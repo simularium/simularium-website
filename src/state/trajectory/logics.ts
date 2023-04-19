@@ -55,10 +55,10 @@ import { ReceiveAction, LocalSimFile } from "./types";
 import { initialState } from "./reducer";
 import {
     TemplateMap,
-    CustomTypeDownload,
+    DownloadedCustomType,
     BaseType,
     AvailableEngines,
-    Template,
+    DownloadedTemplate,
 } from "./conversion-data-types";
 
 const netConnectionSettings = {
@@ -360,7 +360,7 @@ const fileConversionLogic = createLogic({
 const setConversionEngineLogic = createLogic({
     async process(deps: ReduxLogicDeps): Promise<{
         engineType: AvailableEngines;
-        template: Template;
+        template: DownloadedTemplate;
         templateMap: TemplateMap;
     }> {
         const {
@@ -400,7 +400,7 @@ const setConversionEngineLogic = createLogic({
 
         const typeMap: TemplateMap = reduce(
             customTypes,
-            (acc, cur: CustomTypeDownload) => {
+            (acc, cur: DownloadedCustomType) => {
                 //CustomType always has just one
                 const key = Object.keys(cur)[0] as string;
                 acc[key] = cur[key];

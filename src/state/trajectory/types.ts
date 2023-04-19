@@ -4,7 +4,7 @@ import {
 } from "@aics/simularium-viewer/type-declarations";
 import {
     AvailableEngines,
-    Template,
+    DownloadedTemplate,
     TemplateMap,
 } from "./conversion-data-types";
 
@@ -69,7 +69,7 @@ export interface SetConversionEngineAction {
 export interface SetConversionTemplateData {
     payload: {
         engineType: AvailableEngines;
-        template: Template;
+        template: DownloadedTemplate;
         templateMap: TemplateMap;
     };
     type: string;

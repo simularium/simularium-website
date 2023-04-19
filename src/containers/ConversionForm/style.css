@@ -60,14 +60,6 @@
     width: 175px;
 }
 
-/* :global(.ant-select-in-form-item) {
-    width: 200px;
-} */
-
-/* .particle-selector {
-    width: 200px;
-} */
-
 .my-form {
     display: grid;
     grid-template-columns: repeat(4, 200px);
@@ -79,22 +71,22 @@
     width: 100%;
 }
 
-.form {
-    /* width: auto;
-    height: auto;
-    overflow: hidden; */
-}
-
-.icon {
+/* .icon {
     top: 10px;
     right: 15px;
     position: absolute;
     color: red;
-}
+} */
 
 .form-div {
         width: 925px;
         height: 200px;
         overflow: hidden;
         position: relative;
+}
+
+.divider {
+    border-top: 0 !important;
+    border-top-color: rgb(114, 113, 113) !important;
+    border-top-width: thin !important;
 }

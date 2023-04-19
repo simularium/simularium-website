@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Upload, Select, Divider, Button } from "antd";
+import { Upload, Select, Divider, Button, Input, Collapse } from "antd";
 import classNames from "classnames";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
@@ -14,7 +14,8 @@ import {
 } from "../../state/trajectory/types";
 import {
     AvailableEngines,
-    Template,
+    CustomType,
+    DownloadedTemplate,
     TemplateMap,
 } from "../../state/trajectory/conversion-data-types";
 
@@ -23,10 +24,14 @@ import customRequest from "./custom-request";
 import { SetErrorAction } from "../../state/viewer/types";
 import { UploadFile } from "antd/lib/upload";
 
+import InputForm from "../../components/ConversionFormFromViewer";
+
+const { Panel } = Collapse;
+
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
     conversionProcessingData: {
-        template: Template;
+        template: CustomType;
         templateMap: TemplateMap;
         preConvertedFile: string;
         engineType: AvailableEngines;
@@ -45,6 +50,8 @@ const selectOptions = Object.keys(AvailableEngines).map(
     }
 );
 
+const dividerMargin = window.innerWidth * 0.18;
+
 const ConversionForm = ({
     setConversionEngine,
     conversionProcessingData,
@@ -59,7 +66,7 @@ const ConversionForm = ({
             <h3 className={styles.title}>Import a non-native file type</h3>
             <h3>
                 Convert and import a non-simularium file by providing the
-                following information
+                following information.
             </h3>
             <h3 className={styles.provide}>
                 {" "}
@@ -98,12 +105,43 @@ const ConversionForm = ({
                     <Button type="default">Select file</Button>
                 </Upload>
             </div>
-            <Divider orientation="right" orientationMargin={400}>
+            <Divider
+                className={styles.divider}
+                orientation="right"
+                orientationMargin={dividerMargin}
+            >
                 {" "}
             </Divider>
+            {/* this div needs conditional rendering when Next button is hit */}
+            {fileToConvert ? (
+                <div>
+                    <h3 className={styles.provide}>
+                        Provide display information (optional)
+                    </h3>
+                    <h3>
+                        You can import your model now with defaults, or specify
+                        how you want your Smoldyn trajectory displayed below.
+                    </h3>
+                    <h3 className={styles.provide}> </h3>
+                    <h3 className={styles.selecttitle}>Trajectory title</h3>
+                    <Input placeholder="Start typing..." />
+                    <Divider
+                        className={styles.divider}
+                        orientation="right"
+                        orientationMargin={dividerMargin}
+                    >
+                        {" "}
+                    </Divider>
+                </div>
+            ) : null}
+            {conversionProcessingData.templateMap ? (
+                <InputForm
+                    conversionProcessingData={conversionProcessingData}
+                />
+            ) : null}
             <Button ghost>Cancel</Button>
             <Button type="primary" disabled={!fileToConvert}>
-                Next
+                {fileToConvert ? "Import" : "Next"}
             </Button>
         </div>
     );
