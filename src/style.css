@@ -1,5 +1,14 @@
 /* global styles
 css modules not applied */
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* Hide the scrollbars on html and body */
+}
 
 h1,
 h2 {

@@ -15,7 +15,9 @@
 
 :global(.ant-collapse) {
     background-color: var(--overlay-purple);
-    max-width: 2500px;
+}
+.ant-collapse-content > .ant-collapse-content-box {
+    padding: 0px;
 }
 
 :global(.ant-form-item) {
@@ -33,7 +35,7 @@ select {
 }
 
 .collection-menu {
-    background-color: #F6F4FF;
+    background-color: #f6f4ff;
     display: grid;
     grid-template-columns: 1fr 3fr;
     grid-gap: 10px;
@@ -41,6 +43,17 @@ select {
     margin-right: 0px !important;
     margin-bottom: 15px;
     padding: 10px;
+    position: relative;
+}
+
+.menu-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    margin-bottom: 15px;
+    /* padding: 10px; */
     position: relative;
 }
 
@@ -65,16 +78,21 @@ select {
 
 :global(.ant-collapse-header-text) {
     font-weight: 500;
-    font-size: 1.17em;
-    }
-
-.panel {
-    /* not sure this overflow property is ideal, it allows scroll since i can't get the ant collapse window to expand */
-    overflow: auto;
-    max-height: 4000px;
+    font-size: 16px;
 }
 
 .collapse {
     width: 82vw;
+    max-width: 1000px;
     border: none;
+}
+
+.formz {
+    padding: 12;
+    max-height: 200;
+    max-width: 1000;
+}
+
+.ant-icon svg {
+    height: 11px;
 }

@@ -134,7 +134,7 @@ class InputForm extends React.Component<InputFormProps> {
                             key="placeholder"
                             header=""
                             showArrow={false}
-                            disabled={true}
+                            collapsible="disabled"
                         ></Panel>
                     </Collapse>
                 </div>

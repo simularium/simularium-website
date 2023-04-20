@@ -82,13 +82,12 @@ const InputSwitch = (props: InputSwitchProps) => {
                 labelCol={{ offset: 4 }}
                 className={styles.form}
                 layout="horizontal"
-                style={{
-                    padding: 12,
-                    maxHeight: 200,
-                    maxWidth: 1000,
-                }}
             >
-                <>{fields}</>
+                <div className={styles.menuWrapper}>
+                    <div className={styles.collectionMenuRight}>
+                        <>{fields}</>
+                    </div>
+                </div>
             </Form>
         </div>
     );

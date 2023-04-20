@@ -1,10 +1,15 @@
 .container{
     height: 100vh;
-    width: 100%;
+    width: 100vw;
     background-color: rgba(231, 228, 242, 1);
     padding-left: 30px;  
     padding-top: 30px;
-    overflow: scroll;
+    padding-bottom: 20px;
+    position: relative;
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 .container .loading-icon, .container.loading-text {
@@ -47,13 +52,17 @@
 
 .provide {
     padding-top: 20px;
-    /* padding-bottom: 15px; */
     font-weight: 600;
     font-size: 20px;
 }
 
+.convert-text{
+    font-size: 16px;
+}
+
 .select-title {
     margin-bottom: 0px;
+    font-size: 16px;
 }
 
 :global(.ant-input) {
@@ -71,22 +80,23 @@
     width: 100%;
 }
 
-/* .icon {
-    top: 10px;
-    right: 15px;
-    position: absolute;
-    color: red;
-} */
-
 .form-div {
         width: 925px;
         height: 200px;
         overflow: hidden;
         position: relative;
+        padding: 0;
 }
 
 .divider {
     border-top: 0 !important;
     border-top-color: rgb(114, 113, 113) !important;
     border-top-width: thin !important;
+}
+
+.collapse {
+    width: 82vw;
+    max-width: 1000px;
+    border: none;
+    
 }

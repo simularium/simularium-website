@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Upload, Select, Divider, Button, Input, Collapse } from "antd";
+import { Upload, Select, Button, Input, Collapse } from "antd";
 import classNames from "classnames";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
@@ -15,7 +15,6 @@ import {
 import {
     AvailableEngines,
     CustomType,
-    DownloadedTemplate,
     TemplateMap,
 } from "../../state/trajectory/conversion-data-types";
 
@@ -50,8 +49,6 @@ const selectOptions = Object.keys(AvailableEngines).map(
     }
 );
 
-const dividerMargin = window.innerWidth * 0.18;
-
 const ConversionForm = ({
     setConversionEngine,
     conversionProcessingData,
@@ -64,7 +61,7 @@ const ConversionForm = ({
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
             <h3 className={styles.title}>Import a non-native file type</h3>
-            <h3>
+            <h3 className={styles.convertText}>
                 Convert and import a non-simularium file by providing the
                 following information.
             </h3>
@@ -105,33 +102,50 @@ const ConversionForm = ({
                     <Button type="default">Select file</Button>
                 </Upload>
             </div>
-            <Divider
-                className={styles.divider}
-                orientation="right"
-                orientationMargin={dividerMargin}
-            >
-                {" "}
-            </Divider>
-            {/* this div needs conditional rendering when Next button is hit */}
+            <Collapse accordion className={styles.collapse} bordered={false}>
+                <Panel
+                    key="placeholder"
+                    header=""
+                    showArrow={false}
+                    collapsible="disabled"
+                ></Panel>
+                <Panel
+                    key="placeholder"
+                    header=""
+                    showArrow={false}
+                    collapsible="disabled"
+                ></Panel>
+            </Collapse>
             {fileToConvert ? (
                 <div>
                     <h3 className={styles.provide}>
                         Provide display information (optional)
                     </h3>
-                    <h3>
+                    <h3 className={styles.convertText}>
                         You can import your model now with defaults, or specify
                         how you want your Smoldyn trajectory displayed below.
                     </h3>
                     <h3 className={styles.provide}> </h3>
-                    <h3 className={styles.selecttitle}>Trajectory title</h3>
+                    <h3 className={styles.convertText}>Trajectory title</h3>
                     <Input placeholder="Start typing..." />
-                    <Divider
-                        className={styles.divider}
-                        orientation="right"
-                        orientationMargin={dividerMargin}
+                    <Collapse
+                        accordion
+                        className={styles.collapse}
+                        bordered={false}
                     >
-                        {" "}
-                    </Divider>
+                        <Panel
+                            key="placeholder"
+                            header=""
+                            showArrow={false}
+                            // disabled={true}
+                        ></Panel>
+                        <Panel
+                            key="placeholder"
+                            header=""
+                            showArrow={false}
+                            // disabled={true}
+                        ></Panel>
+                    </Collapse>
                 </div>
             ) : null}
             {conversionProcessingData.templateMap ? (
