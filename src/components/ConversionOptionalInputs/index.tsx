@@ -23,7 +23,6 @@ interface ConversionOptionalInputsProps {
     templateMap: TemplateMap;
     preConvertedFile: string;
     engineType: AvailableEngines;
-    
 }
 
 class ConversionOptionalInputs extends React.Component<ConversionOptionalInputsProps> {
@@ -80,7 +79,7 @@ class ConversionOptionalInputs extends React.Component<ConversionOptionalInputsP
             const { parameters } = template;
             return (
                 <div className={styles.container}>
-                    <div>
+                    <div className={formStyles.section}>
                         <h2 className={formStyles.sectionTitle}>
                             Provide display information (optional)
                         </h2>

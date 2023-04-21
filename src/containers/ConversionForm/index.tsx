@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Divider, Upload, Select, Button } from "antd";
+import { Upload, Select, Button } from "antd";
 import classNames from "classnames";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
@@ -64,7 +64,7 @@ const ConversionForm = ({
                     Convert and import a non-simularium file by providing the
                     following information.
                 </h3>
-                <div className={styles.required}>
+                <div className={styles.section}>
                     <h2 className={styles.sectionTitle}>
                         Provide file information (required){" "}
                     </h2>
