@@ -137,13 +137,13 @@ const ConversionForm = ({
                             key="placeholder"
                             header=""
                             showArrow={false}
-                            // disabled={true}
+                            collapsible="disabled"
                         ></Panel>
                         <Panel
                             key="placeholder"
                             header=""
                             showArrow={false}
-                            // disabled={true}
+                            collapsible="disabled"
                         ></Panel>
                     </Collapse>
                 </div>
