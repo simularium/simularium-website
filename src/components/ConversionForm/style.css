@@ -4,7 +4,7 @@
     position: absolute;
 }
 
-.form-div :global(.ant-input) {
+.container :global(.ant-input) {
     width: 200px;
     height: 30px;
 }
@@ -13,26 +13,26 @@
     width: 75px !important;
 }
 
-.form-div :global(.ant-select) {
+.container :global(.ant-select) {
     width: 200px;
 }
 
-:global(.ant-collapse) {
+.container :global(.ant-collapse) {
     background-color: var(--overlay-purple);
 }
 .ant-collapse-content > .ant-collapse-content-box {
     padding: 0px;
 }
 
-:global(.ant-form-item) {
+.container :global(.ant-form-item) {
     padding: 3 3 3 3;
 }
 
-:global(.ant-form-horizontal) {
+.container :global(.ant-form-horizontal) {
     padding: 3 3 3 3;
 }
 
-input,
+.container input,
 select {
     padding: 4px 8px;
     margin: 4px 0;
@@ -81,11 +81,11 @@ select {
     padding: 10px;
 }
 
-:global(.ant-collapse-header-text) {
+.container :global(.ant-collapse-header-text) {
     font-weight: 500;
     font-size: 16px;
 }
-:global(.ant-collapse-header) {
+.container :global(.ant-collapse-header) {
     padding-left: 0px !important;
 }
 
@@ -95,7 +95,7 @@ select {
     border: none;
 }
 
-.formz {
+.form {
     padding: 12;
     max-height: 200;
     max-width: 1000;

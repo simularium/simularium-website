@@ -1,0 +1,30 @@
+.container .form {
+    padding: 12;
+    max-height: 200;
+    max-width: 1000;
+}
+
+.container :global(.ant-input) {
+    width: 200px;
+    height: 30px;
+}
+
+
+.menu-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.collection-menu-right {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-grow: 1;
+}
+
+

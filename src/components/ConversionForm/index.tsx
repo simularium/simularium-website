@@ -1,6 +1,6 @@
 import { map } from "lodash";
 import React from "react";
-import InputSwitch from "./InputSwitch";
+import InputSwitch from "../ConersionFormInputSwitch";
 import {
     AvailableEngines,
     TemplateMap,
@@ -17,11 +17,6 @@ import {
 const { Panel } = Collapse;
 
 interface InputFormProps {
-    // template: { [key: string]: any };
-    // templateData: { [key: string]: any };
-    // type: string;
-    // submitFile: (data: any) => void;
-    // onReturned: () => void;
     conversionProcessingData: {
         template: CustomType;
         templateMap: TemplateMap;
@@ -65,8 +60,6 @@ class InputForm extends React.Component<InputFormProps> {
         //     });
         // }
         // this.setState(newState);
-        //calling to remove linting error
-        this.handleChange(path, key, value);
     }
 
     handleSubmit(event: any) {
@@ -76,8 +69,6 @@ class InputForm extends React.Component<InputFormProps> {
         // };
         // console.log("submitting", payload);
         // this.props.submitFile(payload)
-        //calling to remove linting error
-        this.handleSubmit(event);
     }
 
     render() {
@@ -87,7 +78,7 @@ class InputForm extends React.Component<InputFormProps> {
         console.log("TEMPLATE", template);
         if (templateData) {
             return (
-                <div>
+                <div className={styles.container}>
                     <Collapse
                         accordion
                         className={styles.collapse}

@@ -1,6 +1,6 @@
 import { map, reduce } from "lodash";
 import React from "react";
-import BaseInput from "./BaseInput";
+import BaseInput from "../ConversionFormInput";
 import { CustomParameter } from "../../state/trajectory/conversion-data-types";
 import styles from "./style.css";
 import { Delete } from "../Icons";

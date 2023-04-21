@@ -1,10 +1,11 @@
 import { map } from "lodash";
 import React from "react";
-import BaseInput from "./BaseInput";
-import CollectionInput from "./CollectionInput";
+import { Form } from "antd";
+
+import BaseInput from "../ConversionFormInput";
+import CollectionInput from "../ConversionFormCollection";
 
 import styles from "./style.css";
-import { Form } from "antd";
 
 interface InputSwitchProps {
     handler: (path: string[], key: string, value: any) => void;
@@ -77,7 +78,7 @@ const InputSwitch = (props: InputSwitchProps) => {
         : [renderParameter(dataType, id, parameter, false)].filter(Boolean);
 
     return (
-        <div className={styles.formDiv}>
+        <div className={styles.container}>
             <Form
                 labelCol={{ offset: 4 }}
                 className={styles.form}
