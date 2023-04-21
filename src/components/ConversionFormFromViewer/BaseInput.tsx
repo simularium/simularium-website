@@ -23,13 +23,14 @@ const BaseInput = (props: BaseInputProps) => {
                     />
                 </label>
             );
-        case "number":
+        case "float":
             return (
                 <label className={styles.nestedChildContainer}>
                     {" "}
                     {props.name}
                     <Input
                         type="number"
+                        className={styles.numberInput}
                         onChange={(e) => props.handler(Number(e.target.value))}
                     />
                 </label>

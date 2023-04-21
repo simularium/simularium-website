@@ -93,7 +93,10 @@ class InputForm extends React.Component<InputFormProps> {
                         className={styles.collapse}
                         bordered={false}
                         expandIcon={({ isActive }) => (
-                            <CaretRightOutlined rotate={isActive ? 90 : 0} />
+                            <CaretRightOutlined
+                                style={{ fontSize: "16px", color: "#08c" }}
+                                rotate={isActive ? 90 : 0}
+                            />
                         )}
                     >
                         {map(
@@ -112,7 +115,7 @@ class InputForm extends React.Component<InputFormProps> {
                                 if (templateData[dataType]) {
                                     return (
                                         <Panel
-                                            header={parameter.name}
+                                            header={parameter.description}
                                             key={key}
                                             className={styles.panel}
                                         >
