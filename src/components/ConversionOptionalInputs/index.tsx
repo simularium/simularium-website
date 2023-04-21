@@ -1,32 +1,33 @@
 import { map } from "lodash";
 import React from "react";
-import InputSwitch from "../ConersionFormInputSwitch";
-import {
-    AvailableEngines,
-    TemplateMap,
-} from "../../state/trajectory/conversion-data-types";
-import { Collapse } from "antd";
+import { Collapse, Input } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 
-import styles from "./style.css";
 import {
     CustomParameter,
     CustomType,
 } from "../../state/trajectory/conversion-data-types";
+import {
+    AvailableEngines,
+    TemplateMap,
+} from "../../state/trajectory/conversion-data-types";
+import InputSwitch from "../ConversionFormInputSwitch";
+
+import formStyles from "../../containers/ConversionForm/style.css";
+import styles from "./style.css";
 
 const { Panel } = Collapse;
 
-interface InputFormProps {
-    conversionProcessingData: {
-        template: CustomType;
-        templateMap: TemplateMap;
-        preConvertedFile: string;
-        engineType: AvailableEngines;
-    };
+interface ConversionOptionalInputsProps {
+    template: CustomType;
+    templateMap: TemplateMap;
+    preConvertedFile: string;
+    engineType: AvailableEngines;
+    
 }
 
-class InputForm extends React.Component<InputFormProps> {
-    constructor(props: InputFormProps) {
+class ConversionOptionalInputs extends React.Component<ConversionOptionalInputsProps> {
+    constructor(props: ConversionOptionalInputsProps) {
         super(props);
         this.state = {};
         this.handleChange = this.handleChange.bind(this);
@@ -72,13 +73,25 @@ class InputForm extends React.Component<InputFormProps> {
     }
 
     render() {
-        const { template, templateMap: templateData } =
-            this.props.conversionProcessingData;
-        const { parameters } = template;
-        console.log("TEMPLATE", template);
-        if (templateData) {
+        const { template, templateMap, preConvertedFile } =
+            this.props;
+        if (templateMap && preConvertedFile) {
+            console.log("TEMPLATE", template);
+            const { parameters } = template;
             return (
                 <div className={styles.container}>
+                    <div>
+                        <h2 className={formStyles.sectionTitle}>
+                            Provide display information (optional)
+                        </h2>
+                        <h3 className={styles.convertText}>
+                            You can import your model now with defaults, or
+                            specify how you want your Smoldyn trajectory
+                            displayed below.
+                        </h3>
+                        <h3 className={styles.convertText}>Trajectory title</h3>
+                        <Input placeholder="Start typing..." />
+                    </div>
                     <Collapse
                         accordion
                         className={styles.collapse}
@@ -103,7 +116,7 @@ class InputForm extends React.Component<InputFormProps> {
                                 ) {
                                     return null;
                                 }
-                                if (templateData[dataType]) {
+                                if (templateMap[dataType]) {
                                     return (
                                         <Panel
                                             header={parameter.description}
@@ -113,7 +126,7 @@ class InputForm extends React.Component<InputFormProps> {
                                             <InputSwitch
                                                 handler={this.handleChange}
                                                 id={key}
-                                                templateData={templateData}
+                                                templateData={templateMap}
                                                 parameter={parameter}
                                                 dataType={dataType}
                                                 path={[key]}
@@ -139,4 +152,4 @@ class InputForm extends React.Component<InputFormProps> {
     }
 }
 
-export default InputForm;
+export default ConversionOptionalInputs;

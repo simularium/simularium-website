@@ -17,3 +17,6 @@
     color: var(--light-theme-btn-primary-color);
 }
 
+.light-theme :global(.ant-collapse), .light-theme :global(.ant-collapse-borderless) {
+    background-color: transparent;
+}
