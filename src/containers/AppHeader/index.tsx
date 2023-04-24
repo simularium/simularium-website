@@ -85,7 +85,7 @@ class AppHeader extends React.Component<AppHeaderProps> {
                         setViewerStatus={setViewerStatus}
                         isBuffering={isBuffering}
                         setError={setError}
-                        initializeFileConversion={convertFile}
+                        initializeFileConversionUI={convertFile}
                         viewerStatus={viewerStatus}
                     />
                     <HelpMenu key="help" />

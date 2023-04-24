@@ -51,12 +51,15 @@ import {
     SET_CONVERSION_ENGINE,
     SET_CONVERSION_TEMPLATE,
 } from "./constants";
-import {
-    ReceiveAction,
-    LocalSimFile,
-} from "./types";
+import { ReceiveAction, LocalSimFile } from "./types";
 import { initialState } from "./reducer";
-import { TemplateMap, CustomTypeDownload, BaseType, AvailableEngines, Template } from "./conversion-data-types";
+import {
+    TemplateMap,
+    CustomTypeDownload,
+    BaseType,
+    AvailableEngines,
+    Template,
+} from "./conversion-data-types";
 
 const netConnectionSettings = {
     serverIp: process.env.BACKEND_SERVER_IP,
@@ -371,14 +374,12 @@ const setConversionEngineLogic = createLogic({
         const baseTypes = await httpClient
             .get(`${uiTemplateDownloadUrlRoot}/${uiBaseTypes}`)
             .then((baseTypesReturn: AxiosResponse) => {
-                console.log(baseTypesReturn);
                 return baseTypesReturn.data;
             });
 
         const customTypes = await httpClient
             .get(`${uiTemplateUrlRoot}/${uiCustomTypes}`)
             .then((customTypesReturn: AxiosResponse) => {
-                console.log(customTypesReturn);
                 return customTypesReturn.data;
             })
             .then((fileRefs) =>

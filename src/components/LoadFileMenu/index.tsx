@@ -31,7 +31,7 @@ interface LoadFileMenuProps {
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setError: ActionCreator<SetErrorAction>;
-    initializeFileConversion: ActionCreator<ConvertFileAction>;
+    initializeFileConversionUI: ActionCreator<ConvertFileAction>;
     viewerStatus: ViewerStatus;
 }
 
@@ -43,7 +43,7 @@ const LoadFileMenu = ({
     setViewerStatus,
     setError,
     viewerStatus,
-    initializeFileConversion,
+    initializeFileConversionUI: initializeFileConversionUI,
 }: LoadFileMenuProps): JSX.Element => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const location = useLocation();
@@ -104,7 +104,7 @@ const LoadFileMenu = ({
                         pathname: IMPORT_PATHNAME,
                     }}
                     onClick={() => {
-                        initializeFileConversion();
+                        initializeFileConversionUI();
                     }}
                 >
                     Import other file type
