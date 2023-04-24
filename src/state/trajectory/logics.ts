@@ -423,7 +423,6 @@ const setConversionEngineLogic = createLogic({
     processOptions: {
         dispatchReturn: true,
         successType: SET_CONVERSION_TEMPLATE,
-        // failType: FETCH_POLLS_FAILED, // dispatch this failed action type
     },
     type: SET_CONVERSION_ENGINE,
 });
