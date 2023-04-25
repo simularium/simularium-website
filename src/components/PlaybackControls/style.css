@@ -95,3 +95,7 @@
 .step-forward::after {
     content: "\e907";
 }
+
+.remove-border{
+    border: none;
+}
