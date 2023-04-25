@@ -20,7 +20,7 @@ const { Header } = Layout;
 import "./style.css";
 import { setIsPlaying, setStatus } from "./state/viewer/actions";
 import { clearSimulariumFile } from "./state/trajectory/actions";
-import { VIEWER_IMPORTING } from "./state/viewer/constants";
+import { VIEWER_EMPTY, VIEWER_IMPORTING } from "./state/viewer/constants";
 
 export const store = createReduxStore();
 interface LocationWithState extends Location {
@@ -38,7 +38,12 @@ function useLocationChange() {
                 dispatch(setIsPlaying(false));
                 dispatch(setStatus({ status: VIEWER_IMPORTING }));
             });
-        } else if (location.pathname !== VIEWER_PATHNAME) {
+        } else if (location.pathname === VIEWER_PATHNAME) {
+            batch(() => {
+                dispatch(setIsPlaying(false));
+                dispatch(setStatus({ status: VIEWER_EMPTY }));
+            });
+        } else {
             batch(() => {
                 dispatch(setIsPlaying(false));
                 dispatch(clearSimulariumFile({ newFile: false }));

@@ -33,7 +33,7 @@
 
 .container span svg path {
     /* this makes the down arrow in the select box visible  */
-    fill: var(--light-theme-btn-default-color);
+    color: var(--light-theme-btn-default-color);
 }
 
 .title {
@@ -44,7 +44,7 @@
     letter-spacing: .05rem;
 }
 
-.provide {
+.section-header {
     padding-top: 30px;
     padding-bottom: 15px;
     font-weight: 600;

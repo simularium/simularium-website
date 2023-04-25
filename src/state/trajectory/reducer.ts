@@ -38,7 +38,7 @@ export const initialState = {
         engineType: "",
         template: null,
         templateMap: null,
-        preConvertedFile: null,
+        fileToConvert: null,
     },
 };
 
@@ -107,7 +107,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
             ...state,
             processingData: {
                 ...state.processingData,
-                preConvertedFile: action.payload,
+                fileToConvert: action.payload,
             },
         }),
     },

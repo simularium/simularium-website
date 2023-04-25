@@ -99,7 +99,6 @@ const LoadFileMenu = ({
             key: "file-convert",
             label: (
                 <Link
-                    type="ghost"
                     to={{
                         pathname: IMPORT_PATHNAME,
                     }}
