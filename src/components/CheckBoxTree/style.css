@@ -89,13 +89,3 @@
 .container :global(.ant-typography-ellipsis) {
     color: var(--dark-theme-sidebar-text)
 }
-
-/* Tooltip styling  */
-/* Has to be global because it's at the bottom of the dom */
-:global(.ant-tooltip-inner){
-    background-color: var(--side-panel-tooltip);
-}
-
-:global(.ant-tooltip-arrow-content){
-    background-color:  var(--side-panel-tooltip);
-}
