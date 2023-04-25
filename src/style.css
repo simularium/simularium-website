@@ -116,9 +116,7 @@ use the :after pseduo selector to input the content.
 
 .ant-tooltip-inner,
 .ant-popover-inner {
+    background: var(--charcoal-grey) 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 4px var(--black);
     opacity: 1;
-    border-radius: 3px;
-    padding-bottom: 0px;
-    line-height: 1.75;
 }
