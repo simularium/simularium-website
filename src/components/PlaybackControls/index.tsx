@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, useState } from "react";
+import React, { KeyboardEvent, useCallback, useState } from "react";
 import { Button, Slider, Tooltip, InputNumber } from "antd";
 import classNames from "classnames";
 import { compareTimes } from "@aics/simularium-viewer";
