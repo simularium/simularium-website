@@ -106,6 +106,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.playBackOne = this.playBackOne.bind(this);
         this.playForwardOne = this.playForwardOne.bind(this);
         this.startPlay = this.startPlay.bind(this);
+
         this.toggleLooping = this.toggleLooping.bind(this);
         this.pause = this.pause.bind(this);
         this.receiveTimeChange = this.receiveTimeChange.bind(this);
@@ -278,7 +279,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             timeStep,
             receiveTrajectory,
             setBuffering,
-            isLooping,
         } = this.props;
 
         if (this.state.isInitialPlay) {
@@ -302,6 +302,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             compareTimes(timeData.time, lastFrameTime, timeStep) === 0;
         if (atLastFrame && isLooping) {
             actions.push(changeTime(0));
+            this.startPlay(0);
+        } else if (atLastFrame) {
+        if (atLastFrame && isLooping) {
+            actions.push(changeTime(0));
+            actions.push(setBuffering(true));
+            actions.push(setIsPlaying(true));
             this.startPlay(0);
         } else if (atLastFrame) {
             this.pause();
