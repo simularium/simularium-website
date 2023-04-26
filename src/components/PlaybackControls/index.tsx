@@ -218,6 +218,7 @@ const PlayBackControls = ({
                 placement="top"
                 title={isLooping ? "Turn off looping" : "Turn on looping"}
                 color={TOOLTIP_COLOR}
+                arrowPointAtCenter
             >
                 <Button
                     className={
