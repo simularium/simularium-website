@@ -6,3 +6,4 @@ export const getFileDraggedOver = (state: State) =>
     state.viewer.fileDraggedOver;
 export const getIsBuffering = (state: State) => state.viewer.isBuffering;
 export const getIsPlaying = (state: State) => state.viewer.isPlaying;
+export const getIsLooping = (state: State) => state.viewer.isLooping;
