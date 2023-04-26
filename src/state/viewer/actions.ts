@@ -5,6 +5,7 @@ import {
     SET_BUFFERING,
     SET_IS_PLAYING,
     SET_ERROR,
+    SET_IS_LOOPING,
 } from "./constants";
 import {
     ViewerStatus,
@@ -55,5 +56,12 @@ export function setIsPlaying(isPlaying: boolean): ToggleAction {
     return {
         payload: isPlaying,
         type: SET_IS_PLAYING,
+    };
+}
+
+export function setIsLooping(isLooping: boolean): ToggleAction {
+    return {
+        payload: isLooping,
+        type: SET_IS_LOOPING,
     };
 }

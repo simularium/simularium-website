@@ -12,6 +12,7 @@ import {
     SET_BUFFERING,
     SET_IS_PLAYING,
     VIEWER_ERROR,
+    SET_IS_LOOPING,
 } from "./constants";
 import {
     ViewerStateBranch,
@@ -28,6 +29,7 @@ export const initialState = {
     fileDraggedOver: false,
     isBuffering: false,
     isPlaying: false,
+    isLooping: false,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -86,6 +88,14 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: ViewerStateBranch, action: ToggleAction) => ({
             ...state,
             isPlaying: action.payload,
+        }),
+    },
+    [SET_IS_LOOPING]: {
+        accepts: (action: AnyAction): action is ToggleAction =>
+            action.type === SET_IS_LOOPING,
+        perform: (state: ViewerStateBranch, action: ToggleAction) => ({
+            ...state,
+            isLooping: action.payload,
         }),
     },
 };
