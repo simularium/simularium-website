@@ -67,6 +67,7 @@ interface ViewerPanelProps {
     displayTimes: DisplayTimes;
     timeUnits: TimeUnits;
     isPlaying: boolean;
+    isLooping: boolean;
     fileIsDraggedOver: boolean;
     status: string;
     numFrames: number;
@@ -79,6 +80,7 @@ interface ViewerPanelProps {
     receiveAgentNamesAndStates: ActionCreator<ReceiveAction>;
     selectionStateInfoForViewer: SelectionStateInfo;
     setIsPlaying: ActionCreator<ToggleAction>;
+    setIsLooping: ActionCreator<ToggleAction>;
     loadLocalFile: (localSimFile: LocalSimFile) => void;
     dragOverViewer: ActionCreator<DragOverViewerAction>;
     resetDragOverViewer: ActionCreator<ResetDragOverViewerAction>;
@@ -104,6 +106,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.playBackOne = this.playBackOne.bind(this);
         this.playForwardOne = this.playForwardOne.bind(this);
         this.startPlay = this.startPlay.bind(this);
+        this.toggleLooping = this.toggleLooping.bind(this);
         this.pause = this.pause.bind(this);
         this.receiveTimeChange = this.receiveTimeChange.bind(this);
         this.handleJsonMeshData = this.handleJsonMeshData.bind(this);
@@ -239,6 +242,15 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         setIsPlaying(false);
     }
 
+    public toggleLooping() {
+        const { isLooping, setIsLooping } = this.props;
+        if (isLooping) {
+            setIsLooping(false);
+        } else {
+            setIsLooping(true);
+        }
+    }
+
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
         const { receiveTrajectory, simulariumController } = this.props;
         const tickIntervalLength = simulariumController.tickIntervalLength;
@@ -270,6 +282,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             timeStep,
             receiveTrajectory,
             setBuffering,
+            setIsPlaying,
+            isLooping,
         } = this.props;
 
         if (this.state.isInitialPlay) {
@@ -291,7 +305,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
         const atLastFrame =
             compareTimes(timeData.time, lastFrameTime, timeStep) === 0;
-        if (atLastFrame) {
+        if (atLastFrame && isLooping) {
+            actions.push(changeTime(0));
+            actions.push(setBuffering(true));
+            actions.push(setIsPlaying(true));
+            this.startPlay(0);
+        } else if (atLastFrame) {
             this.pause();
         }
 
@@ -356,6 +375,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             displayTimes,
             isBuffering,
             isPlaying,
+            isLooping,
             status,
             setError,
             scaleBarLabel,
@@ -404,6 +424,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                         prevHandler={this.playBackOne}
                         nextHandler={this.playForwardOne}
                         isPlaying={isPlaying}
+                        isLooping={isLooping}
+                        loopHandler={this.toggleLooping}
                         firstFrameTime={firstFrameTime}
                         lastFrameTime={lastFrameTime}
                         loading={isBuffering}
@@ -448,6 +470,7 @@ function mapStateToProps(state: State) {
             viewerStateBranch.selectors.getFileDraggedOver(state),
         isBuffering: viewerStateBranch.selectors.getIsBuffering(state),
         isPlaying: viewerStateBranch.selectors.getIsPlaying(state),
+        isLooping: viewerStateBranch.selectors.getIsLooping(state),
     };
 }
 
@@ -463,6 +486,7 @@ const dispatchToPropsMap = {
     resetDragOverViewer: viewerStateBranch.actions.resetDragOverViewer,
     setBuffering: viewerStateBranch.actions.setBuffering,
     setIsPlaying: viewerStateBranch.actions.setIsPlaying,
+    setIsLooping: viewerStateBranch.actions.setIsLooping,
     setError: viewerStateBranch.actions.setError,
 };
 

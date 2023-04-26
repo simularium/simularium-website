@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, useState } from "react";
+import React, { KeyboardEvent, useCallback, useState } from "react";
 import { Button, Slider, Tooltip, InputNumber } from "antd";
 import classNames from "classnames";
 import { compareTimes } from "@aics/simularium-viewer";
@@ -15,9 +15,11 @@ interface PlayBackProps {
     pauseHandler: () => void;
     prevHandler: () => void;
     nextHandler: () => void;
+    loopHandler: () => void;
     firstFrameTime: number;
     lastFrameTime: number;
     isPlaying: boolean;
+    isLooping: boolean;
     onTimeChange: (time: number) => void;
     loading: boolean;
     timeStep: number;
@@ -31,7 +33,9 @@ const PlayBackControls = ({
     playHandler,
     pauseHandler,
     prevHandler,
+    loopHandler,
     isPlaying,
+    isLooping,
     nextHandler,
     firstFrameTime,
     lastFrameTime,
@@ -187,7 +191,7 @@ const PlayBackControls = ({
                 value={time}
                 onChange={handleTimeChange}
                 onAfterChange={handleSliderMouseUp}
-                tooltip={{open : false}}
+                tooltip={{ open: false }}
                 className={[styles.slider, styles.item].join(" ")}
                 step={timeStep}
                 min={firstFrameTime}
@@ -210,6 +214,29 @@ const PlayBackControls = ({
                     {timeUnits ? timeUnits.name : "s"}
                 </span>
             </div>
+            <Tooltip
+                placement="top"
+                title={isLooping ? "Turn off looping" : "Turn on looping"}
+                color={TOOLTIP_COLOR}
+                arrowPointAtCenter
+            >
+                <Button
+                    className={
+                        isLooping
+                            ? btnClassNames
+                            : classNames([
+                                  styles.item,
+                                  styles.btn,
+                                  styles.removeBorder,
+                              ])
+                    }
+                    size="small"
+                    icon={Icons.LoopOutlined}
+                    onClick={loopHandler}
+                    loading={loading}
+                    disabled={isEmpty}
+                />
+            </Tooltip>
         </div>
     );
 };

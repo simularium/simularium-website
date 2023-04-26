@@ -6,6 +6,7 @@ import {
     SET_IS_PLAYING,
     SET_ERROR,
     SET_SERVER_HEALTH,
+    SET_IS_LOOPING,
 } from "./constants";
 import {
     ViewerStatus,
@@ -63,5 +64,12 @@ export function setServerHealth(payload: boolean): ToggleAction {
     return {
         payload,
         type: SET_SERVER_HEALTH,
+    };
+}
+
+export function setIsLooping(isLooping: boolean): ToggleAction {
+    return {
+        payload: isLooping,
+        type: SET_IS_LOOPING,
     };
 }

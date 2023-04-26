@@ -10,6 +10,7 @@ import {
     MinusOutlined,
     HomeOutlined,
     ExclamationCircleOutlined,
+    RetweetOutlined,
 } from "@ant-design/icons";
 
 import PurpleArrowPointingRight from "../../assets/open-arrow.svg";
@@ -30,6 +31,7 @@ export const ZoomIn = <PlusOutlined />;
 export const ZoomOut = <MinusOutlined />;
 export const RoundWarning = <ExclamationCircleOutlined />;
 export const UpRightArrow = <ArrowLeftOutlined rotate={135} />;
+export const LoopOutlined = <RetweetOutlined />;
 
 export const PurpleArrow = <img src={PurpleArrowPointingRight} />;
 export const AicsLogo = <img src={AicsLogoWhite} style={{ width: "140px" }} />;
@@ -56,4 +58,5 @@ export default {
     BetaTag,
     RoundWarning,
     UpRightArrow,
+    LoopOutlined,
 };

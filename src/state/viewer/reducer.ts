@@ -13,6 +13,7 @@ import {
     SET_IS_PLAYING,
     VIEWER_ERROR,
     SET_SERVER_HEALTH,
+    SET_IS_LOOPING,
 } from "./constants";
 import {
     ViewerStateBranch,
@@ -30,6 +31,7 @@ export const initialState = {
     isBuffering: false,
     isPlaying: false,
     serverHealth: true,
+    isLooping: false,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -96,6 +98,14 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: ViewerStateBranch, action: ToggleAction) => ({
             ...state,
             serverHealth: action.payload,
+        }),
+    },
+    [SET_IS_LOOPING]: {
+        accepts: (action: AnyAction): action is ToggleAction =>
+            action.type === SET_IS_LOOPING,
+        perform: (state: ViewerStateBranch, action: ToggleAction) => ({
+            ...state,
+            isLooping: action.payload,
         }),
     },
 };
