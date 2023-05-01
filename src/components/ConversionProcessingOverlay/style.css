@@ -1,0 +1,24 @@
+.container {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 300;
+    background-color: rgba(231, 228, 242);
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container .loading-icon, .container.loading-text {
+    text-align: center;
+}
+
+.spin {
+  margin: 20px 0;
+  margin-bottom: 20px;
+  padding: 30px 50px;
+  text-align: center;
+  border-radius: 4px;
+}
+

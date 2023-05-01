@@ -22,6 +22,7 @@ import styles from "./style.css";
 import customRequest from "./custom-request";
 import { SetErrorAction } from "../../state/viewer/types";
 import { UploadFile } from "antd/lib/upload";
+import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
@@ -57,58 +58,67 @@ const ConversionForm = ({
     console.log("conversion form data", conversionProcessingData);
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
-            <h3 className={styles.title}>Import a non-native file type</h3>
-            <h3>
-                Convert and import a non-simularium file by providing the
-                following information
-            </h3>
-            <h3 className={styles.sectionHeader}>
-                {" "}
-                Provide file information (required){" "}
-            </h3>
-            <h3 className={styles.selectTitle}>Simulation Engine</h3>
-            <div className={styles.uploadContainer}>
-                <Select
-                    className={styles.selectorBox}
-                    bordered={true}
-                    defaultValue="Select"
-                    options={selectOptions}
-                    onChange={() => {
-                        setConversionEngine();
-                        setEngineSelected(true);
-                    }}
-                />
-                <Upload
-                    className={styles.upload}
-                    listType="text"
-                    multiple={false}
-                    showUploadList={{
-                        showPreviewIcon: false,
-                        showDownloadIcon: false,
-                        showRemoveIcon: true,
-                    }}
-                    onChange={({ file }) => {
-                        setFileToConvert(file);
-                    }}
-                    customRequest={(options) =>
-                        customRequest(
-                            fileToConvert,
-                            receiveFileToConvert,
-                            setError,
-                            options
-                        )
-                    }
+            <ConversionProcessingOverlay
+                isProcessing={conversionProcessingData.fileToConvert !== ""}
+                fileName={fileToConvert ? fileToConvert?.name : null}
+            />
+            <div className={styles.formContent}>
+                <h3 className={styles.title}>Import a non-native file type</h3>
+                <h3>
+                    Convert and import a non-simularium file by providing the
+                    following information
+                </h3>
+                <h3 className={styles.sectionHeader}>
+                    {" "}
+                    Provide file information (required){" "}
+                </h3>
+                <h3 className={styles.selectTitle}>Simulation Engine</h3>
+                <div className={styles.uploadContainer}>
+                    <Select
+                        className={styles.selectorBox}
+                        bordered={true}
+                        defaultValue="Select"
+                        options={selectOptions}
+                        onChange={() => {
+                            setConversionEngine();
+                            setEngineSelected(true);
+                        }}
+                    />
+                    <Upload
+                        className={styles.upload}
+                        listType="text"
+                        multiple={false}
+                        showUploadList={{
+                            showPreviewIcon: false,
+                            showDownloadIcon: false,
+                            showRemoveIcon: true,
+                        }}
+                        onChange={({ file }) => {
+                            setFileToConvert(file);
+                        }}
+                        customRequest={(options) =>
+                            customRequest(
+                                fileToConvert,
+                                receiveFileToConvert,
+                                setError,
+                                options
+                            )
+                        }
+                    >
+                        <Button type="default">Select file</Button>
+                    </Upload>
+                </div>
+                <Divider orientation="right" orientationMargin={400}>
+                    {" "}
+                </Divider>
+                <Button ghost>Cancel</Button>
+                <Button
+                    type="primary"
+                    disabled={!fileToConvert || !engineSelected}
                 >
-                    <Button type="default">Select file</Button>
-                </Upload>
+                    Next
+                </Button>
             </div>
-            <Divider orientation="right" orientationMargin={400}>
-                {" "}
-            </Divider>
-            <Button ghost>Cancel</Button>
-            <Button type="primary" disabled={!fileToConvert || !engineSelected}>
-                Next
-            </Button>
         </div>
     );
 
