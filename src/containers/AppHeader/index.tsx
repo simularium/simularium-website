@@ -90,7 +90,6 @@ class AppHeader extends React.Component<AppHeaderProps> {
                         viewerStatus={viewerStatus}
                     />
                     <HelpMenu key="help" />
-                    <div className={styles.pipe}>|</div>
                     <DownloadTrajectoryMenu
                         isBuffering={isBuffering}
                         simulariumFile={simulariumFile}
