@@ -25,6 +25,7 @@ import {
 } from "../../state/viewer/types";
 
 import styles from "./style.css";
+import DownloadTrajectoryMenu from "../../components/DownloadTrajectoryMenu";
 
 interface AppHeaderProps {
     simulariumFile: LocalSimFile | NetworkedSimFile;
@@ -82,6 +83,10 @@ class AppHeader extends React.Component<AppHeaderProps> {
                         setError={setError}
                     />
                     <HelpMenu key="help" />
+                    <DownloadTrajectoryMenu
+                        isBuffering={isBuffering}
+                        simulariumFile={simulariumFile}
+                    />
                 </div>
             </div>
         );
