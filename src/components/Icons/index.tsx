@@ -10,7 +10,6 @@ import {
     MinusOutlined,
     HomeOutlined,
     DownloadOutlined,
-    RetweetOutlined,
 } from "@ant-design/icons";
 
 import PurpleArrowPointingRight from "../../assets/open-arrow.svg";
@@ -29,9 +28,6 @@ export const LeftArrow = <ArrowLeftOutlined />;
 export const Reset = <HomeOutlined />;
 export const ZoomIn = <PlusOutlined />;
 export const ZoomOut = <MinusOutlined />;
-export const UpRightArrow = <ArrowLeftOutlined rotate={135} />;
-export const LoopOutlined = <RetweetOutlined />;
-export const Download = <DownloadOutlined size={32} />;
 
 export const PurpleArrow = <img src={PurpleArrowPointingRight} />;
 export const AicsLogo = <img src={AicsLogoWhite} style={{ width: "140px" }} />;
@@ -56,7 +52,4 @@ export default {
     ZoomIn,
     ZoomOut,
     BetaTag,
-    UpRightArrow,
-    LoopOutlined,
-    Download,
 };
