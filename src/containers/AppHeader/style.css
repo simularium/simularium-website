@@ -59,6 +59,11 @@
     align-items: center;
 }
 
+.pipe {
+    padding-left: 20px;
+    color: var(--text-gray);
+}
+
 /* For large screens only */
 @media screen and (min-width: 768px) {
     .page-header {
