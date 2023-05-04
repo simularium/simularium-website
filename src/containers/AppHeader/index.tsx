@@ -83,6 +83,7 @@ class AppHeader extends React.Component<AppHeaderProps> {
                         setError={setError}
                     />
                     <HelpMenu key="help" />
+                    <div className={styles.pipe}>|</div>
                     <DownloadTrajectoryMenu
                         isBuffering={isBuffering}
                         simulariumFile={simulariumFile}
