@@ -25,7 +25,7 @@ export const Loading = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 export const Play = <CaretRightOutlined />;
 export const Pause = <PauseOutlined />;
 export const UploadFile = <ImportOutlined />;
-export const DownArrow = <DownOutlined />;
+export const DownArrow = <DownOutlined size={32} />;
 export const CaretRight = <CaretRightOutlined />;
 export const GoBack = <ArrowLeftOutlined />;
 export const Reset = <HomeOutlined />;
@@ -34,7 +34,7 @@ export const ZoomOut = <MinusOutlined />;
 export const Share = <ShareAltOutlined />;
 export const Warn = <WarningOutlined />;
 export const Link = <LinkOutlined />;
-export const Download = <DownloadOutlined />;
+export const Download = <DownloadOutlined size={32} />;
 
 export const PurpleArrow = <img src={PurpleArrowPointingRight} />;
 export const AicsLogo = <img src={AicsLogoWhite} style={{ width: "140px" }} />;

@@ -85,6 +85,7 @@ class AppHeader extends React.Component<AppHeaderProps> {
                     />
                     <HelpMenu key="help" />
                     <ShareTrajectoryButton simulariumFile={simulariumFile} />
+                    <div className={styles.pipe}>|</div>
                     <DownloadTrajectoryMenu
                         isBuffering={isBuffering}
                         simulariumFile={simulariumFile}
