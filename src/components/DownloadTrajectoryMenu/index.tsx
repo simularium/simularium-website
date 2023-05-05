@@ -16,6 +16,8 @@ const DownloadTrajectoryMenu = ({
     isBuffering,
     simulariumFile,
 }: DownloadTrajectoryMenuProps): JSX.Element => {
+    const [isDownloading, setIsDownloading] = React.useState(false);
+
     const isLocalSimFile = (
         file: LocalSimFile | NetworkedSimFile
     ): file is LocalSimFile => {
@@ -40,6 +42,7 @@ const DownloadTrajectoryMenu = ({
     const downloadFile = async (fileName: string): Promise<void> => {
         let blob: Blob = new Blob();
         let data: BlobPart = "";
+        setIsDownloading(true);
 
         if (!isLocalSimFile(simulariumFile)) {
             console.log("downloading networked file");
@@ -51,6 +54,7 @@ const DownloadTrajectoryMenu = ({
             } catch {
                 //QUESTION: should i be passing down and using the setError action?
                 console.log("error downloading file");
+                setIsDownloading(false);
                 return;
             }
         }
@@ -80,6 +84,7 @@ const DownloadTrajectoryMenu = ({
         downloadLink.click();
         document.body.removeChild(downloadLink);
         URL.revokeObjectURL(downloadLink.href);
+        setIsDownloading(false);
     };
 
     const onClick = () => {
@@ -95,7 +100,9 @@ const DownloadTrajectoryMenu = ({
             <Tooltip
                 placement="left"
                 title={
-                    simulariumFile.name
+                    isDownloading
+                        ? "Downloading..."
+                        : simulariumFile.name
                         ? "Download trajectory"
                         : "Load a trajectory to perform this action"
                 }
@@ -105,7 +112,9 @@ const DownloadTrajectoryMenu = ({
                     className={styles.downloadButton}
                     onClick={onClick}
                     type="primary"
-                    disabled={!simulariumFile.name || isBuffering}
+                    disabled={
+                        !simulariumFile.name || isBuffering || isDownloading
+                    }
                 >
                     Download {Download}
                 </Button>
