@@ -1,47 +1,21 @@
-import React, { useState } from "react";
-import { Link, useLocation, useHistory } from "react-router-dom";
-import { ActionCreator } from "redux";
-import { Dropdown, Button, MenuProps, Tooltip } from "antd";
+import React from "react";
+import { Button, Tooltip } from "antd";
 
-import TRAJECTORIES from "../../constants/networked-trajectories";
-import { TOOLTIP_COLOR, URL_PARAM_KEY_FILE_NAME } from "../../constants";
-import {
-    ClearSimFileDataAction,
-    NetworkedSimFile,
-    RequestLocalFileAction,
-    RequestNetworkFileAction,
-} from "../../state/trajectory/types";
-import { TrajectoryDisplayData } from "../../constants/interfaces";
-import { VIEWER_PATHNAME } from "../../routes";
-import FileUploadModal from "../FileUploadModal";
-import { DownArrow, Download } from "../Icons";
-import {
-    SetErrorAction,
-    SetViewerStatusAction,
-} from "../../state/viewer/types";
+import { DATA_BUCKET_URL, TOOLTIP_COLOR } from "../../constants";
+import { NetworkedSimFile, LocalSimFile } from "../../state/trajectory/types";
+import { Download } from "../Icons";
 
 import styles from "./style.css";
-import { LocalSimFile } from "../../state/trajectory/types";
 
 interface DownloadTrajectoryMenuProps {
     isBuffering: boolean;
-    simulariumFile: LocalSimFile | NetworkedSimFile; // NetworkedSimFile? i think this would only work with local file, but parent component will accept either
-    // selectFile: ActionCreator<RequestNetworkFileAction>;
-    // clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
-    // loadLocalFile: ActionCreator<RequestLocalFileAction>;
-    // setViewerStatus: ActionCreator<SetViewerStatusAction>;
-    // setError: ActionCreator<SetErrorAction>;
+    simulariumFile: LocalSimFile | NetworkedSimFile;
 }
 
 const DownloadTrajectoryMenu = ({
     isBuffering,
     simulariumFile,
-}: // clearSimulariumFile,
-// loadLocalFile,
-// selectFile,
-// setViewerStatus,
-// setError,
-DownloadTrajectoryMenuProps): JSX.Element => {
+}: DownloadTrajectoryMenuProps): JSX.Element => {
     const isLocalSimFile = (
         file: LocalSimFile | NetworkedSimFile
     ): file is LocalSimFile => {
@@ -51,14 +25,13 @@ DownloadTrajectoryMenuProps): JSX.Element => {
     const fetchFile = async (fileName: string): Promise<string> => {
         try {
             const response = await fetch(
-                //JOE QUESTION what URL to use
-                // `URLUNKOWN/download?file={${fileName}.simularium}`
-                `https://aics-simularium-data.s3.us-east-2.amazonaws.com/trajectory/BloodPlasma.simularium`
-                // `https://aics-simularium-data.s3.us-east-2.amazonaws.com/trajectory/{fileName}`
+                // `https://aics-simularium-data.s3.us-east-2.amazonaws.com/trajectory/BloodPlasma.simularium`
+                `${DATA_BUCKET_URL}/trajectory/${fileName}`
             );
             const data = await response.text();
             return data;
         } catch {
+            //QUESTION:should i be passing down and using the setError action?
             console.log("error fetching file");
             return "";
         }
@@ -72,17 +45,28 @@ DownloadTrajectoryMenuProps): JSX.Element => {
             console.log("downloading networked file");
             try {
                 data = await fetchFile(simulariumFile.name);
-                //JOE QUESTION: what is the appropriate type for the blob?
                 blob = new Blob([data], {
                     type: "text/plain;charset=utf-8",
                 });
             } catch {
+                //QUESTION: should i be passing down and using the setError action?
                 console.log("error downloading file");
+                return;
             }
         }
-        // if we have a local file, we can just download it, but how to make sure that we capture viewer state and selection?
+        // QUESTION:
+        // user selections of viewer options are not captured in the output
+        // is that necessary for MVP/acceptance on this feature?
         else {
             data = JSON.stringify(simulariumFile.data);
+            // QUESTION: dealing with some typing issues here, hence the slice call
+            // don't think this: data.slice(18, -1) is the most bulletproof or ideal way to do this,
+            // so curious what others think.
+            // the issue is that simularifumFile.data when stringified looks like this:
+            // {simulariumFile: {trajectory...
+            // but that first key "simulariumFile" is not present on the ISimulariumFile interface
+            // altering the interface to include it would be a breaking change that messes with other functions
+            // so for now, just slicing it off works, thoughts on best practices here?
             blob = new Blob([data.slice(18, -1)], {
                 type: "text/plain;charset=utf-8",
             });
@@ -99,6 +83,9 @@ DownloadTrajectoryMenuProps): JSX.Element => {
     };
 
     const onClick = () => {
+        if (!simulariumFile.name) {
+            return;
+        }
         console.log("sim file name", simulariumFile.name);
         downloadFile(simulariumFile.name);
     };
@@ -118,6 +105,7 @@ DownloadTrajectoryMenuProps): JSX.Element => {
                     className={styles.downloadButton}
                     onClick={onClick}
                     type="primary"
+                    disabled={!simulariumFile.name || isBuffering}
                 >
                     Download {Download}
                 </Button>
