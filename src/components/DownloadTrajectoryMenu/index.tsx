@@ -38,7 +38,7 @@ const DownloadTrajectoryMenu = ({
     };
 
     const downloadFile = async (fileName: string): Promise<void> => {
-        let blob: Blob | null = new Blob();
+        let blob: Blob = new Blob();
         let data: BlobPart = "";
 
         if (!isLocalSimFile(simulariumFile)) {
