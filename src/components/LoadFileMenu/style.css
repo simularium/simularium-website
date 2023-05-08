@@ -12,6 +12,11 @@
     padding-bottom: 3px;
 }
 
+.menu :global(.ant-dropdown-menu-submenu-title) {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
 .menu :global(.ant-btn-ghost) {
     border: none;
     color: var(--dark-theme-menu-text-color);
@@ -28,4 +33,9 @@
     box-shadow: 0 1px 3px black;
     padding: 0;
     width: fit-content;
+}
+
+.submenu-button {
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
