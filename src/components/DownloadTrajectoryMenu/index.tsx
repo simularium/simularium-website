@@ -27,13 +27,11 @@ const DownloadTrajectoryMenu = ({
     const fetchFile = async (fileName: string): Promise<string> => {
         try {
             const response = await fetch(
-                // `https://aics-simularium-data.s3.us-east-2.amazonaws.com/trajectory/BloodPlasma.simularium`
                 `${DATA_BUCKET_URL}/trajectory/${fileName}`
             );
             const data = await response.text();
             return data;
         } catch {
-            //QUESTION:should i be passing down and using the setError action?
             console.log("error fetching file");
             return "";
         }
@@ -52,25 +50,12 @@ const DownloadTrajectoryMenu = ({
                     type: "text/plain;charset=utf-8",
                 });
             } catch {
-                //QUESTION: should i be passing down and using the setError action?
                 console.log("error downloading file");
                 setIsDownloading(false);
                 return;
             }
-        }
-        // QUESTION:
-        // user selections of viewer options are not captured in the output
-        // is that necessary for MVP/acceptance on this feature?
-        else {
+        } else {
             data = JSON.stringify(simulariumFile.data);
-            // QUESTION: dealing with some typing issues here, hence the slice call
-            // don't think this: data.slice(18, -1) is the most bulletproof or ideal way to do this,
-            // so curious what others think.
-            // the issue is that simularifumFile.data when stringified looks like this:
-            // {simulariumFile: {trajectory...
-            // but that first key "simulariumFile" is not present on the ISimulariumFile interface
-            // altering the interface to include it would be a breaking change that messes with other functions
-            // so for now, just slicing it off works, thoughts on best practices here?
             blob = new Blob([data.slice(18, -1)], {
                 type: "text/plain;charset=utf-8",
             });
