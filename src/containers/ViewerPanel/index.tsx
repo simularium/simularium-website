@@ -306,8 +306,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         } else if (atLastFrame) {
         if (atLastFrame && isLooping) {
             actions.push(changeTime(0));
-            actions.push(setBuffering(true));
-            actions.push(setIsPlaying(true));
             this.startPlay(0);
         } else if (atLastFrame) {
             this.pause();
