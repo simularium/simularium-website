@@ -23,10 +23,11 @@ export const Pause = <PauseOutlined />;
 export const UploadFile = <ImportOutlined />;
 export const DownArrow = <DownOutlined />;
 export const CaretRight = <CaretRightOutlined />;
-export const GoBack = <ArrowLeftOutlined />;
+export const LeftArrow = <ArrowLeftOutlined />;
 export const Reset = <HomeOutlined />;
 export const ZoomIn = <PlusOutlined />;
 export const ZoomOut = <MinusOutlined />;
+export const UpRightArrow = <ArrowLeftOutlined rotate={135} />;
 
 export const PurpleArrow = <img src={PurpleArrowPointingRight} />;
 export const AicsLogo = <img src={AicsLogoWhite} style={{ width: "140px" }} />;
@@ -44,11 +45,12 @@ export default {
     DownArrow,
     CaretRight,
     ArrowLeftOutlined,
-    GoBack,
+    GoBack: LeftArrow,
     PurpleArrow,
     AicsLogo,
     Reset,
     ZoomIn,
     ZoomOut,
     BetaTag,
+    UpRightArrow,
 };

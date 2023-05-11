@@ -54,14 +54,22 @@ const ConversionForm = ({
 }: ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile>();
     const [engineSelected, setEngineSelected] = useState<boolean>(false);
+    const [isProcessing, setIsProcessing] = useState<boolean>(false);
+
+    const toggleProcessing = (value: boolean) => {
+        setIsProcessing(value);
+    };
+
     // TODO: use conversion template data to render the form
     console.log("conversion form data", conversionProcessingData);
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
-            <ConversionProcessingOverlay
-                isProcessing={conversionProcessingData.fileToConvert !== ""}
-                fileName={fileToConvert ? fileToConvert?.name : null}
-            />
+            {isProcessing ? (
+                <ConversionProcessingOverlay
+                    toggleProcessing={toggleProcessing}
+                    fileName={fileToConvert ? fileToConvert?.name : null}
+                />
+            ) : null}
             <div className={styles.formContent}>
                 <h3 className={styles.title}>Import a non-native file type</h3>
                 <h3>
@@ -115,6 +123,7 @@ const ConversionForm = ({
                 <Button
                     type="primary"
                     disabled={!fileToConvert || !engineSelected}
+                    onClick={() => setIsProcessing(true)}
                 >
                     Next
                 </Button>
