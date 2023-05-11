@@ -1,6 +1,6 @@
 .container {
     position: absolute;
-    height: 100%;
+    height: calc(100vh - var(--header-height));
     width: 100%;
     z-index: 300;
     background-color: rgba(231, 228, 242);
@@ -10,15 +10,52 @@
     justify-content: center;
 }
 
-.container .loading-icon, .container.loading-text {
-    text-align: center;
-}
-
 .spin {
   margin: 20px 0;
   margin-bottom: 20px;
-  padding: 30px 50px;
+  padding: 30px 50px 10px 50px;
   text-align: center;
   border-radius: 4px;
 }
 
+.divider-container {
+  width: 496px;
+}
+
+.divider-container :global(.ant-divider) {
+  background-color: var(--heather);
+}
+
+.go-back-button {
+  color: var(--blue);
+  font-size: 12px;
+}
+
+.go-back-button:hover {
+  cursor: pointer;
+}
+
+.go-back-button svg {
+  fill: var(--blue);
+}
+
+.container .cancel-button {
+  margin-right: 0px;
+  margin-top: 20px;
+}
+
+.container .tab-button {
+  margin-bottom: 20px;
+}
+
+.container .title-text {
+  font-weight: 700;
+}
+
+.container .medium-text {
+  font-weight: 500;
+}
+
+.container .processing-margin {
+  margin-bottom: 20px;
+}
