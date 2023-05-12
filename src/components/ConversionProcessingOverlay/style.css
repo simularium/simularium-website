@@ -3,7 +3,7 @@
     height: calc(100vh - var(--header-height));
     width: 100%;
     z-index: 300;
-    background-color: rgba(231, 228, 242);
+    background-color: var(--overlay-purple);
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -12,18 +12,17 @@
 
 .spin {
   margin: 20px 0;
-  margin-bottom: 20px;
-  padding: 30px 50px 10px 50px;
+  padding: 30px 50px 10px;
   text-align: center;
   border-radius: 4px;
 }
 
-.divider-container {
-  width: 496px;
+.container .title-text {
+  font-weight: 700;
 }
 
-.divider-container :global(.ant-divider) {
-  background-color: var(--heather);
+.container .center-text {
+  text-align: center;
 }
 
 .go-back-button {
@@ -39,23 +38,27 @@
   fill: var(--blue);
 }
 
-.container .cancel-button {
-  margin-right: 0px;
-  margin-top: 20px;
-}
-
-.container .tab-button {
+.container .processing-margin {
   margin-bottom: 20px;
 }
 
-.container .title-text {
-  font-weight: 700;
+.divider-container {
+  width: 496px;
+}
+
+.divider-container :global(.ant-divider) {
+  background-color: var(--heather);
 }
 
 .container .medium-text {
   font-weight: 500;
 }
 
-.container .processing-margin {
+.container .tab-button {
   margin-bottom: 20px;
+}
+
+.container .cancel-button {
+  margin-right: 0px;
+  margin-top: 20px;
 }
