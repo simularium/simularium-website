@@ -1,8 +1,9 @@
 import React from "react";
 import { Button, Divider, Spin } from "antd";
 
-import styles from "./style.css";
 import { UpRightArrow, LeftArrow } from "../Icons";
+
+import styles from "./style.css";
 
 interface ConversionProcessingOverlayProps {
     toggleProcessing: (value: boolean) => void;
@@ -21,11 +22,11 @@ const ConversionProcessingOverlay = ({
     const processingOverlay = (
         <div className={styles.container}>
             <h2 className={styles.titleText}> File conversion in progress </h2>
-            <p>
+            <p className={styles.centerText}>
                 {" "}
                 {fileName} is being converted and will load when complete.{" "}
                 <br></br>
-                Processing time will vary depending on file size.
+                <p>Processing time will vary depending on file size.</p>
             </p>
             <p className={styles.goBackButton} onClick={cancelImport}>
                 {" "}
