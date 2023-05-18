@@ -1,8 +1,13 @@
 import React from "react";
 import { Button, Tooltip } from "antd";
+import { ISimulariumFile } from "@aics/simularium-viewer/type-declarations";
 
 import { DATA_BUCKET_URL, TOOLTIP_COLOR } from "../../constants";
-import { NetworkedSimFile, LocalSimFile } from "../../state/trajectory/types";
+import {
+    NetworkedSimFile,
+    LocalSimFile,
+    isNetworkSimFileInterface,
+} from "../../state/trajectory/types";
 import { Download } from "../Icons";
 
 import styles from "./style.css";
@@ -17,54 +22,34 @@ const DownloadTrajectoryMenu = ({
     simulariumFile,
 }: DownloadTrajectoryMenuProps): JSX.Element => {
     const [isDownloading, setIsDownloading] = React.useState(false);
+    const fileIsLoaded = () => !!simulariumFile.name;
 
-    const isLocalSimFile = (
-        file: LocalSimFile | NetworkedSimFile
-    ): file is LocalSimFile => {
-        return (file as LocalSimFile).lastModified !== undefined;
-    };
-
-    const fetchFile = async (fileName: string): Promise<string> => {
-        try {
-            const response = await fetch(
-                `${DATA_BUCKET_URL}/trajectory/${fileName}`
-            );
-            const data = await response.text();
-            return data;
-        } catch {
-            console.log("error fetching file");
+    const getHref = () => {
+        if (fileIsLoaded()) {
             return "";
+        }
+        if (isNetworkSimFileInterface(simulariumFile)) {
+            return `${DATA_BUCKET_URL}/trajectory/${simulariumFile.name}`;
+        } else {
+            const data: ISimulariumFile = simulariumFile.data;
+            // won't work if they loaded a binary file
+            // TODO: need to wait for simulariumFile.data.getAsBlob() to be created on viewer;
+            const dataAsString = JSON.stringify(
+                (data as unknown as { simulariumFile: any }).simulariumFile
+            );
+            const blob = new Blob([dataAsString], {
+                type: "text/plain;charset=utf-8",
+            });
+            return URL.createObjectURL(blob);
         }
     };
 
     const downloadFile = async (fileName: string): Promise<void> => {
-        let blob: Blob = new Blob();
-        let data: BlobPart = "";
-        setIsDownloading(true);
-
-        if (!isLocalSimFile(simulariumFile)) {
-            console.log("downloading networked file");
-            try {
-                data = await fetchFile(simulariumFile.name);
-                blob = new Blob([data], {
-                    type: "text/plain;charset=utf-8",
-                });
-            } catch {
-                console.log("error downloading file");
-                setIsDownloading(false);
-                return;
-            }
-        } else {
-            data = JSON.stringify(simulariumFile.data);
-            blob = new Blob([data.slice(18, -1)], {
-                type: "text/plain;charset=utf-8",
-            });
-        }
         const downloadLink = document.createElement("a");
-        downloadLink.href = URL.createObjectURL(blob);
+        setIsDownloading(true);
         downloadLink.download = fileName;
         downloadLink.style.display = "none";
-
+        downloadLink.href = getHref();
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);
@@ -73,7 +58,7 @@ const DownloadTrajectoryMenu = ({
     };
 
     const onClick = () => {
-        if (!simulariumFile.name) {
+        if (!fileIsLoaded()) {
             return;
         }
         console.log("sim file name", simulariumFile.name);
@@ -97,9 +82,7 @@ const DownloadTrajectoryMenu = ({
                     className={styles.downloadButton}
                     onClick={onClick}
                     type="primary"
-                    disabled={
-                        !simulariumFile.name || isBuffering || isDownloading
-                    }
+                    disabled={!fileIsLoaded() || isBuffering || isDownloading}
                 >
                     Download {Download}
                 </Button>
