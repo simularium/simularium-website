@@ -1,0 +1,106 @@
+.upload-modal :global(.ant-modal-footer) {
+    padding: 12px 16px 20px;
+    background-color: var(--modal-content-bg);
+    max-height: 56px;
+}
+
+.upload-modal :global(.ant-modal-body) {
+    padding: 24px 24px 0px 24px;
+    font-size: 16px;
+    color: var(--dark);
+}
+
+.upload-modal :global(.ant-modal-header) {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-modal :global(.ant-modal-title) {
+    font-size: 14px;
+}
+
+.upload-modal :global(.ant-modal-close-x) {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-modal :global(.ant-checkbox-inner) {
+    background-color: transparent;
+    border: 1px solid var(--dark-three) !important;
+}
+
+input {
+    border-radius: 10px;
+}
+
+.blue-text {
+    color: var(--blue);
+    display: inline;
+}
+
+.body-text {
+    font-size: 14px;
+    color: var(--charcoal-grey);
+}
+
+.heading {
+    font-size: 16px;
+    text-align: left;
+    padding-bottom: 10px;
+    color: var(--black);
+}
+
+.url-input[disabled] {
+    color: var(--black);
+    cursor: auto;
+    width: 395px;
+    margin-right: 14px;
+    text-align: right;
+    direction: rtl;
+    border: 1px solid var(--heather);
+    border-radius: 3px;
+}
+
+.number-input[disabled] {
+    width: 75px;
+    border: 1px solid var(--heather);
+    border-radius: 3px;
+    background: transparent;
+    color: var(--medium-grey);
+    text-align: right;
+}
+
+.number-input {
+    width: 75px;
+    border: 1px solid var(--heather);
+    border-radius: 3px;
+    text-align: right;
+}
+
+.second-line {
+    display: flex;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    gap: 8px;
+    align-items: center;
+}
+
+.second-line p {
+    margin-bottom: 0px;
+}
+
+.divider {
+    margin: 0px;
+    width: 550px;
+    position: absolute;
+    left: 0;
+    background-color: var(--heather);
+}
+
+.ok-button {
+    width: 75px;
+}

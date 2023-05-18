@@ -9,6 +9,9 @@ import {
     PlusOutlined,
     MinusOutlined,
     HomeOutlined,
+    ShareAltOutlined,
+    WarningOutlined,
+    LinkOutlined,
 } from "@ant-design/icons";
 
 import PurpleArrowPointingRight from "../../assets/open-arrow.svg";
@@ -27,6 +30,9 @@ export const GoBack = <ArrowLeftOutlined />;
 export const Reset = <HomeOutlined />;
 export const ZoomIn = <PlusOutlined />;
 export const ZoomOut = <MinusOutlined />;
+export const Share = <ShareAltOutlined />;
+export const Warn = <WarningOutlined />;
+export const Link = <LinkOutlined />;
 
 export const PurpleArrow = <img src={PurpleArrowPointingRight} />;
 export const AicsLogo = <img src={AicsLogoWhite} style={{ width: "140px" }} />;
@@ -50,5 +56,8 @@ export default {
     Reset,
     ZoomIn,
     ZoomOut,
+    Share,
+    Warn,
     BetaTag,
+    Link,
 };

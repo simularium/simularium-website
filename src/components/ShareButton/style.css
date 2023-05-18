@@ -1,0 +1,17 @@
+.container :global(.ant-btn){
+    color: var(--dark-theme-primary-color);
+    background-color: var(--dark-theme-header-bg);
+    border: none;
+}
+
+
+.overlay {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    height: calc(100vh - var(--header-height));
+    background-color: var(--black);
+    opacity: .7;
+}
