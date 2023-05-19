@@ -10,6 +10,10 @@
     justify-content: center;
 }
 
+.container h2,p,h3 {
+  color: var(--dark);
+}
+
 .spin {
   margin: 20px 0;
   padding: 30px 50px 10px;
@@ -23,6 +27,7 @@
 
 .container .center-text {
   text-align: center;
+  margin-bottom: 0px;
 }
 
 .go-back-button {
@@ -56,9 +61,11 @@
 
 .container .tab-button {
   margin-bottom: 20px;
+  border: 1.75px solid var(--dark-four);
 }
 
 .container .cancel-button {
   margin-right: 0px;
   margin-top: 20px;
+  border: 1.75px solid var(--dark-four);
 }
