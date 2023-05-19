@@ -43,7 +43,6 @@ const ConversionProcessingOverlay = ({
             </h3>
             <Button
                 className={styles.tabButton}
-                // type="link"
                 href={`https://simularium.allencell.org/viewer`}
                 target="_blank"
             >
