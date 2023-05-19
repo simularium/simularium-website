@@ -25,7 +25,7 @@ import {
 } from "../../state/viewer/types";
 
 import styles from "./style.css";
-import ShareButton from "../../components/ShareButton";
+import ShareTrajectoryButton from "../../components/ShareTrajectoryButton";
 
 interface AppHeaderProps {
     simulariumFile: LocalSimFile | NetworkedSimFile;
@@ -83,7 +83,7 @@ class AppHeader extends React.Component<AppHeaderProps> {
                         setError={setError}
                     />
                     <HelpMenu key="help" />
-                    <ShareButton
+                    <ShareTrajectoryButton
                         isBuffering={isBuffering}
                         simulariumFile={simulariumFile}
                     />

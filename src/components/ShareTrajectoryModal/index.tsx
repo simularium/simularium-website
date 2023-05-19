@@ -11,7 +11,7 @@ import { Link, Warn } from "../Icons";
 
 import styles from "./style.css";
 
-interface ShareModalProps {
+interface ShareTrajectoryModalProps {
     isLocalFile: boolean;
     closeModal: () => void;
     time: number;
@@ -21,7 +21,7 @@ interface ShareModalProps {
     lastFrameTime: number;
 }
 
-const ShareModal = ({
+const ShareTrajectoryModal = ({
     isLocalFile,
     closeModal,
     time,
@@ -29,60 +29,38 @@ const ShareModal = ({
     timeUnits,
     timeStep,
     lastFrameTime,
-}: ShareModalProps): JSX.Element => {
+}: ShareTrajectoryModalProps): JSX.Element => {
+    const [allowTimeInput, setAllowTimeInput] = React.useState(true);
     const currentTime = parseFloat(time.toFixed(1));
-
     const [url, setUrl] = React.useState(
         window.location.href + `?t=${currentTime}`
     );
-    const [allowTimeInput, setAllowTimeInput] = React.useState(true);
-
     const [lastEnteredNumber, setLastEnteredNumber] =
         React.useState(currentTime);
 
-    // this function is attempting to normalize user input to the nearest valid timestep,
-    // could confuse/frustrate users if that isn't obvious why it's happening
-    // alternately we could deal with that on the backend and just pass in their input as is...
-    const handleNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const userInput = parseFloat(e.target.value);
-        console.log("userInput: ", userInput);
-        let numberValue = 0;
-        if (Number.isNaN(userInput)) {
-            numberValue = currentTime;
-        } else if (userInput + timeStep >= lastFrameTime) {
-            numberValue = lastFrameTime - timeStep;
-        } else {
-            numberValue = Math.round(userInput / timeStep) * timeStep;
-        }
-        setLastEnteredNumber(numberValue);
-        setUrl(window.location.href + `?t=${numberValue}`);
+    const handleAllowUserInput = (): void => {
+        const value = allowTimeInput ? lastEnteredNumber : currentTime;
+        setUrl(window.location.href + `?t=${value}`);
+        setAllowTimeInput((allowTimeInput) => !allowTimeInput);
     };
 
-    const handleAllowUserInput = (): void => {
-        if (allowTimeInput) {
-            setUrl(window.location.href + `?t=${lastEnteredNumber}`);
-            setAllowTimeInput(false);
-        } else {
-            setUrl(window.location.href + `?t=${currentTime}`);
-            setAllowTimeInput(true);
-        }
+    const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const inputAsNumber = parseFloat(e.target.value);
+
+        const timeValue = Number.isNaN(inputAsNumber) // if user has deleted their input use default time
+            ? currentTime
+            : inputAsNumber + timeStep >= lastFrameTime // if user entered time is greater than last frame
+            ? lastFrameTime - timeStep
+            : Math.round(inputAsNumber / timeStep) * timeStep; // normalize to nearest valid timestep
+        setLastEnteredNumber(timeValue);
+        setUrl(window.location.href + `?t=${timeValue}`);
     };
 
     const copyToClipboard = async (): Promise<void> => {
-        const inputElement = document.getElementById(
-            "urlInput"
-        ) as HTMLInputElement | null;
-        if (inputElement) {
-            try {
-                // Copy the text to the clipboard
-                await navigator.clipboard.writeText(inputElement.value);
-
-                console.log("Text copied to clipboard");
-            } catch (err) {
-                console.error("Failed to copy text: ", err);
-            }
-        } else {
-            console.error("Element not found: ");
+        try {
+            await navigator.clipboard.writeText(url);
+        } catch (err) {
+            console.error("Failed to copy text: ", err);
         }
     };
 
@@ -125,7 +103,6 @@ const ShareModal = ({
                       <div>
                           <Input
                               className={styles.urlInput}
-                              id={"urlInput"}
                               value={url}
                               disabled
                           />
@@ -141,7 +118,7 @@ const ShareModal = ({
                               className={styles.numberInput}
                               disabled={allowTimeInput}
                               defaultValue={currentTime}
-                              onChange={handleNumberInput}
+                              onChange={handleUserInput}
                           />
                           <p>
                               {" "}
@@ -192,4 +169,4 @@ function mapStateToProps(state: State) {
     };
 }
 
-export default connect(mapStateToProps)(ShareModal);
+export default connect(mapStateToProps)(ShareTrajectoryModal);
