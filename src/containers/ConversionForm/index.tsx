@@ -22,6 +22,7 @@ import styles from "./style.css";
 import customRequest from "./custom-request";
 import { SetErrorAction } from "../../state/viewer/types";
 import { UploadFile } from "antd/lib/upload";
+import ConversionServerCheckModal from "../../components/ConversionServerCheckModal";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
@@ -45,6 +46,11 @@ const selectOptions = Object.keys(AvailableEngines).map(
     }
 );
 
+// TODO ping the server once I learn how to do that
+const serverCheck = () => {
+    return true;
+};
+
 const ConversionForm = ({
     setConversionEngine,
     conversionProcessingData,
@@ -53,10 +59,13 @@ const ConversionForm = ({
 }: ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile>();
     const [engineSelected, setEngineSelected] = useState<boolean>(false);
+    //TODO use this piece of state by checking if the server is healthy
+    const [serverIsNotHealthy, setServerIsNotHealthy] = useState<boolean>(true);
     // TODO: use conversion template data to render the form
     console.log("conversion form data", conversionProcessingData);
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
+            {serverIsNotHealthy ? <ConversionServerCheckModal /> : null}
             <h3 className={styles.title}>Import a non-native file type</h3>
             <h3>
                 Convert and import a non-simularium file by providing the

@@ -1,0 +1,17 @@
+.server-check-modal :global(.ant-modal-footer) {
+    background-color: var(--modal-content-bg);
+}
+
+.red-text{
+    color: red;
+    padding-bottom: 10px;
+}
+
+.blue-text{
+    color: var(--blue);
+    display: inline-block;
+}
+
+.server-check-modal :global(.ant-modal-body) {
+    padding: 24px 24px 0px 24px;
+}
