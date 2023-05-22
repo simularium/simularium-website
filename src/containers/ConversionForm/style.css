@@ -57,3 +57,8 @@
 .select-title {
     margin-bottom: 0px;
 }
+
+
+.container :global(.ant-upload-span) {
+    background-color: var(--overlay-purple);
+}
