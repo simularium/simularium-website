@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Divider, Spin } from "antd";
 
 import { UpRightArrow, LeftArrow } from "../Icons";
 
 import styles from "./style.css";
+import ConversionCancelModal from "../ConversionCancelModal";
 
 interface ConversionProcessingOverlayProps {
     toggleProcessing: (value: boolean) => void;
@@ -14,13 +15,24 @@ const ConversionProcessingOverlay = ({
     toggleProcessing,
     fileName,
 }: ConversionProcessingOverlayProps): JSX.Element | null => {
+    const [isCancelling, setIsCancelling] = useState(false);
     const cancelImport = () => {
         // this should send necessary information to the backend to cancel the import
         toggleProcessing(false);
     };
 
+    const toggleCancelling = () => {
+        setIsCancelling(false);
+    };
+
     const processingOverlay = (
         <div className={styles.container}>
+            {isCancelling ? (
+                <ConversionCancelModal
+                    toggleCancel={toggleCancelling}
+                    toggleProcessing={toggleProcessing}
+                />
+            ) : null}
             <h2 className={styles.titleText}> File conversion in progress </h2>
             <p className={styles.centerText}>
                 {" "}
@@ -28,7 +40,10 @@ const ConversionProcessingOverlay = ({
                 <br></br>
                 <p>Processing time will vary depending on file size.</p>
             </p>
-            <p className={styles.goBackButton} onClick={cancelImport}>
+            <p
+                className={styles.goBackButton}
+                onClick={() => setIsCancelling(true)}
+            >
                 {" "}
                 {LeftArrow} Stop and go back to form{" "}
             </p>
@@ -51,7 +66,10 @@ const ConversionProcessingOverlay = ({
             <div className={styles.dividerContainer}>
                 <Divider> </Divider>
             </div>
-            <Button className={styles.cancelButton} onClick={cancelImport}>
+            <Button
+                className={styles.cancelButton}
+                onClick={() => setIsCancelling(true)}
+            >
                 Cancel file import
             </Button>
         </div>
