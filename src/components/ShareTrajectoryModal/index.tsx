@@ -31,7 +31,7 @@ const ShareTrajectoryModal = ({
     lastFrameTime,
 }: ShareTrajectoryModalProps): JSX.Element => {
     const [allowTimeInput, setAllowTimeInput] = React.useState(true);
-    const currentTime = parseFloat(time.toFixed(1));
+    const currentTime = parseFloat(time.toFixed(2)); // slider only allows two decimal places
     const [url, setUrl] = React.useState(
         window.location.href + `?t=${currentTime}`
     );
@@ -53,7 +53,7 @@ const ShareTrajectoryModal = ({
             ? lastFrameTime - timeStep
             : Math.round(inputAsNumber / timeStep) * timeStep; // normalize to nearest valid timestep
         setLastEnteredNumber(timeValue);
-        setUrl(window.location.href + `?t=${timeValue}`);
+        setUrl(window.location.href + `?t=${timeValue.toFixed(4)}`); // currently truncating to four digits, this is arbitrary
     };
 
     const copyToClipboard = async (): Promise<void> => {
