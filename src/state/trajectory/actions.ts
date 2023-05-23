@@ -10,7 +10,10 @@ import {
     CLEAR_SIMULARIUM_FILE,
     LOAD_FILE_VIA_URL,
     CONVERT_FILE,
+    SET_CONVERSION_ENGINE,
+    RECEIVE_FILE_TO_CONVERT,
 } from "./constants";
+import { AvailableEngines } from "./conversion-data-types";
 import {
     TrajectoryStateBranch,
     ReceiveAction,
@@ -23,6 +26,8 @@ import {
     ClearSimFileDataAction,
     LoadViaUrlAction,
     ConvertFileAction,
+    SetConversionEngineAction,
+    ReceiveFileToConvertAction,
 } from "./types";
 import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
 
@@ -124,5 +129,21 @@ export function loadViaUrl(
 export function convertFile(): ConvertFileAction {
     return {
         type: CONVERT_FILE,
+    };
+}
+
+export function receiveFileToConvert(payload: string): ReceiveFileToConvertAction {
+    return {
+        type: RECEIVE_FILE_TO_CONVERT,
+        payload: payload
+    }
+}
+
+export function setConversionEngine(
+    payload: AvailableEngines
+): SetConversionEngineAction {
+    return {
+        payload,
+        type: SET_CONVERSION_ENGINE,
     };
 }

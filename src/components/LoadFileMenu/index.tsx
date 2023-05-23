@@ -12,15 +12,17 @@ import {
     RequestNetworkFileAction,
 } from "../../state/trajectory/types";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
-import { VIEWER_PATHNAME } from "../../routes";
+import { IMPORT_PATHNAME, VIEWER_PATHNAME } from "../../routes";
 import FileUploadModal from "../FileUploadModal";
 import { DownArrow } from "../Icons";
 import {
     SetErrorAction,
     SetViewerStatusAction,
+    ViewerStatus,
 } from "../../state/viewer/types";
 
 import styles from "./style.css";
+import { VIEWER_IMPORTING } from "../../state/viewer/constants";
 
 interface LoadFileMenuProps {
     isBuffering: boolean;
@@ -29,17 +31,19 @@ interface LoadFileMenuProps {
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setError: ActionCreator<SetErrorAction>;
-    initializeFileConversion: ActionCreator<ConvertFileAction>;
+    initializeFileConversionUI: ActionCreator<ConvertFileAction>;
+    viewerStatus: ViewerStatus;
 }
 
 const LoadFileMenu = ({
     clearSimulariumFile,
-    initializeFileConversion,
     isBuffering,
     loadLocalFile,
     selectFile,
     setViewerStatus,
     setError,
+    viewerStatus,
+    initializeFileConversionUI: initializeFileConversionUI,
 }: LoadFileMenuProps): JSX.Element => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const location = useLocation();
@@ -89,16 +93,23 @@ const LoadFileMenu = ({
                 <Button type="ghost" onClick={showModal}>
                     Simularium file
                 </Button>
-            )
+            ),
         },
         {
             key: "file-convert",
             label: (
-                <Button type="ghost" onClick={initializeFileConversion}>
+                <Link
+                    to={{
+                        pathname: IMPORT_PATHNAME,
+                    }}
+                    onClick={() => {
+                        initializeFileConversionUI();
+                    }}
+                >
                     Import other file type
-                </Button>
-            )
-        }
+                </Link>
+            ),
+        },
     ];
 
     return (
@@ -106,7 +117,7 @@ const LoadFileMenu = ({
             <Dropdown
                 menu={{ items, theme: "dark", className: styles.menu }}
                 placement="bottomRight"
-                disabled={isBuffering}
+                disabled={isBuffering || viewerStatus === VIEWER_IMPORTING}
             >
                 <Button
                     className="ant-dropdown-link"

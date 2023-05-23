@@ -8,8 +8,13 @@
 }
 
 .menu :global(.ant-dropdown-menu-item) {
-    padding-top: 0;
-    padding-bottom: 0;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.menu :global(.ant-dropdown-menu-submenu-title) {
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 
 .menu :global(.ant-btn-ghost) {
@@ -28,6 +33,9 @@
     box-shadow: 0 1px 3px black;
     padding: 0;
     width: fit-content;
-    right: 300px !important;
-    left: auto !important;
+}
+
+.submenu-button {
+    padding-top: 3px;
+    padding-bottom: 3px;
 }

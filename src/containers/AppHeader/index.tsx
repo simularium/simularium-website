@@ -23,6 +23,7 @@ import viewerStateBranch from "../../state/viewer";
 import {
     SetViewerStatusAction,
     SetErrorAction,
+    ViewerStatus,
 } from "../../state/viewer/types";
 
 import styles from "./style.css";
@@ -36,6 +37,7 @@ interface AppHeaderProps {
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setError: ActionCreator<SetErrorAction>;
     convertFile: ActionCreator<ConvertFileAction>;
+    viewerStatus: ViewerStatus;
 }
 
 class AppHeader extends React.Component<AppHeaderProps> {
@@ -49,6 +51,7 @@ class AppHeader extends React.Component<AppHeaderProps> {
             setViewerStatus,
             clearSimulariumFile,
             setError,
+            viewerStatus,
         } = this.props;
         let lastModified = 0;
         let displayName = "";
@@ -58,7 +61,6 @@ class AppHeader extends React.Component<AppHeaderProps> {
         } else if (isNetworkSimFileInterface(simulariumFile)) {
             displayName = simulariumFile.title;
         }
-
         return (
             <div className={styles.pageHeader}>
                 <div className={styles.leftLinks}>
@@ -83,7 +85,8 @@ class AppHeader extends React.Component<AppHeaderProps> {
                         setViewerStatus={setViewerStatus}
                         isBuffering={isBuffering}
                         setError={setError}
-                        initializeFileConversion={convertFile}
+                        initializeFileConversionUI={convertFile}
+                        viewerStatus={viewerStatus}
                     />
                     <HelpMenu key="help" />
                 </div>
@@ -97,6 +100,7 @@ function mapStateToProps(state: State) {
         simulariumFile:
             trajectoryStateBranch.selectors.getSimulariumFile(state),
         isBuffering: viewerStateBranch.selectors.getIsBuffering(state),
+        viewerStatus: viewerStateBranch.selectors.getStatus(state),
     };
 }
 

@@ -1,0 +1,56 @@
+.container{
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(231, 228, 242, 1);
+    padding-left: 30px;  
+    padding-top: 30px;
+}
+
+.container .loading-icon, .container.loading-text {
+    text-align: center;
+}
+
+.upload {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.upload-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.selector-box {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.container button {
+    margin-right: 20px;
+    min-width: 80px;
+}
+
+.container span svg path {
+    /* this makes the down arrow in the select box visible  */
+    color: var(--light-theme-btn-default-color);
+}
+
+.title {
+    font-size: 30px;
+    padding-bottom: 0px;
+    margin-bottom: 0em;
+    font-weight: 600;
+    letter-spacing: .05rem;
+}
+
+.section-header {
+    padding-top: 30px;
+    padding-bottom: 15px;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.select-title {
+    margin-bottom: 0px;
+}
