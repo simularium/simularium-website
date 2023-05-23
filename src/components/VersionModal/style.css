@@ -1,0 +1,12 @@
+
+.blue-text {
+    color: var(--blue);
+}
+
+.container :global(.ant-modal-footer) {
+    background-color: var(--modal-content-bg);
+}
+
+.container :global(.ant-modal-body) {
+    padding: 12px 12px 0px 12px;
+}
