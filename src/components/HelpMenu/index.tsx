@@ -15,6 +15,8 @@ import styles from "./style.css";
 
 import VersionModal from "../VersionModal";
 
+import VersionModal from "../VersionModal";
+
 const HelpMenu = (): JSX.Element => {
     const [modalVisible, setModalVisible] = React.useState(false);
 
@@ -32,14 +34,16 @@ const HelpMenu = (): JSX.Element => {
             <Link to={TUTORIAL_PATHNAME}>Quick start</Link>
         );
 
-    const items: MenuProps["items"] = [
-        {
-            key: "tutorial",
-            label: tutorialLink,
-        },
-        {
-            key: "forum",
-            label: (
+    const [modalVisible, setModalVisible] = React.useState(false);
+
+    const menu = (
+        <Menu theme="dark" className={styles.menu}>
+            {/* <VersionModal /> */}
+            {modalVisible ? (
+                <VersionModal setModalVisible={setModalVisible} />
+            ) : null}
+            <Menu.Item key="tutorial">{tutorialLink}</Menu.Item>
+            <Menu.Item key="forum">
                 <a href={FORUM_URL} target="_blank" rel="noopener noreferrer">
                     Forum
                 </a>
@@ -51,53 +55,43 @@ const HelpMenu = (): JSX.Element => {
                 <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
                     GitHub
                 </a>
-            ),
-        },
-        {
-            key: "submit-issue",
-            label: "Submit issue",
-            popupClassName: styles.submenu,
-            popupOffset: [-0.45, -4],
-            children: [
-                {
-                    key: "via-github",
-                    label: (
-                        <a
-                            href={ISSUE_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            via GitHub (preferred)
-                        </a>
-                    ),
-                },
-                {
-                    key: "via-forum",
-                    label: (
-                        <a
-                            href={FORUM_BUG_REPORT_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            via Forum (for non-GitHub users)
-                        </a>
-                    ),
-                },
-            ],
-        },
-        {
-            key: "version",
-            label: (
-                <a
-                    onClick={() => {
-                        setModalVisible(!modalVisible);
-                    }}
-                >
-                    Version info
-                </a>
-            ),
-        },
-    ];
+            </Menu.Item>
+            <Menu.SubMenu
+                title="Submit issue"
+                popupClassName={styles.submenu}
+                popupOffset={[-0.45, -4]}
+                key="submit-issue"
+            >
+                <Menu.Item key="submit-issue-github">
+                    <a
+                        href={ISSUE_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        via GitHub (preferred)
+                    </a>
+                </Menu.Item>
+                <Menu.Item key="web-form">
+                    <a
+                        href={FORUM_BUG_REPORT_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        via Forum (for non-GitHub users)
+                    </a>
+                </Menu.Item>
+            </Menu.SubMenu>
+            <Menu.Item
+                key="version"
+                onClick={() => {
+                    console.log("firing");
+                    setModalVisible(!modalVisible);
+                }}
+            >
+                <>Version Info</>
+            </Menu.Item>
+        </Menu>
+    );
 
     return (
         <>

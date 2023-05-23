@@ -15,11 +15,13 @@ const VersionModal: React.FC<VersionModalProps> = ({ setModalVisible }) => {
     };
 
     const footerButton = (
-        <Button type="primary" onClick={closeModal}>
-            Close
-        </Button>
+        <>
+            <Button type="primary" onClick={closeModal}>
+                Close
+            </Button>
+        </>
     );
-
+    console.log("VersionModal");
     return (
         <CustomModal
             className={styles.container}
@@ -27,7 +29,7 @@ const VersionModal: React.FC<VersionModalProps> = ({ setModalVisible }) => {
             open
             footer={footerButton}
             centered
-            title="Version Information"
+            title="Version Info"
             width={425}
         >
             <div>
@@ -43,9 +45,11 @@ const VersionModal: React.FC<VersionModalProps> = ({ setModalVisible }) => {
                 Viewer:{" "}
                 <span className={styles.blueText}>
                     {" "}
-                    simularium-viewer v{SIMULARIUM_VIEWER_VERSION}{" "}
+                    simulairum-viewer v{SIMULARIUM_VIEWER_VERSION}{" "}
                 </span>
             </div>
+            {/* TODO what should this content be */}
+            <span> Engine: not connected to server </span>
         </CustomModal>
     );
 };
