@@ -5,7 +5,8 @@ import { Button, Checkbox, Divider, Input } from "antd";
 import { State } from "../../state/types";
 import { TimeUnits } from "../../state/trajectory/types";
 import trajectoryStateBranch from "../../state/trajectory";
-import selectionStateBranch from "../../state/selection";
+import { getDisplayTimes } from "../../containers/ViewerPanel/selectors";
+import { DisplayTimes } from "../../containers/ViewerPanel/types";
 import CustomModal from "../CustomModal";
 import { Link, Warn } from "../Icons";
 
@@ -14,26 +15,24 @@ import styles from "./style.css";
 interface ShareTrajectoryModalProps {
     isLocalFile: boolean;
     closeModal: () => void;
-    time: number;
-    lastFrame: number;
     timeUnits: TimeUnits;
-    timeStep: number;
-    lastFrameTime: number;
+    displayTimes: DisplayTimes;
 }
 
 const ShareTrajectoryModal = ({
     isLocalFile,
     closeModal,
-    time,
-    lastFrame,
     timeUnits,
-    timeStep,
-    lastFrameTime,
+    displayTimes,
 }: ShareTrajectoryModalProps): JSX.Element => {
+    const currentTime = roundToTimestepPrecision(
+        displayTimes.roundedTime,
+        displayTimes.roundedTimeStep
+    );
+
     const [allowTimeInput, setAllowTimeInput] = React.useState(true);
-    const currentTime = parseFloat(time.toFixed(2)); // slider only allows two decimal places
     const [url, setUrl] = React.useState(
-        window.location.href + `?t=${currentTime}`
+        `${window.location.href}?t=${currentTime}`
     );
     const [lastEnteredNumber, setLastEnteredNumber] =
         React.useState(currentTime);
@@ -44,16 +43,26 @@ const ShareTrajectoryModal = ({
         setAllowTimeInput((allowTimeInput) => !allowTimeInput);
     };
 
+    function roundToTimestepPrecision(input: number, timestep: number): number {
+        const precision = (timestep.toString().split(".")[1] || "").length;
+        const multiplier = Math.pow(10, precision);
+        return Math.round(input * multiplier) / multiplier;
+    }
+
     const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputAsNumber = parseFloat(e.target.value);
 
         const timeValue = Number.isNaN(inputAsNumber) // if user has deleted their input use default time
             ? currentTime
-            : inputAsNumber + timeStep >= lastFrameTime // if user entered time is greater than last frame
-            ? lastFrameTime - timeStep
-            : Math.round(inputAsNumber / timeStep) * timeStep; // normalize to nearest valid timestep
+            : inputAsNumber + displayTimes.roundedTimeStep >=
+              displayTimes.roundedLastFrameTime // if user entered time is greater than last frame
+            ? displayTimes.roundedLastFrameTime - displayTimes.roundedTimeStep
+            : roundToTimestepPrecision(
+                  inputAsNumber,
+                  displayTimes.roundedTimeStep
+              );
         setLastEnteredNumber(timeValue);
-        setUrl(window.location.href + `?t=${timeValue.toFixed(4)}`); // currently truncating to four digits, this is arbitrary
+        setUrl(window.location.href + `?t=${timeValue}`);
     };
 
     const copyToClipboard = async (): Promise<void> => {
@@ -122,7 +131,8 @@ const ShareTrajectoryModal = ({
                           />
                           <p>
                               {" "}
-                              /{lastFrame} {timeUnits ? timeUnits.name : null}{" "}
+                              /{displayTimes.roundedLastFrameTime}{" "}
+                              {timeUnits ? timeUnits.name : null}{" "}
                           </p>
                       </div>
                       <Divider className={styles.divider}></Divider>
@@ -155,17 +165,8 @@ const ShareTrajectoryModal = ({
 
 function mapStateToProps(state: State) {
     return {
-        time: selectionStateBranch.selectors.getCurrentTime(state),
-        lastFrame:
-            trajectoryStateBranch.selectors.getLastFrameTimeOfCachedSimulation(
-                state
-            ),
         timeUnits: trajectoryStateBranch.selectors.getTimeUnits(state),
-        timeStep: trajectoryStateBranch.selectors.getTimeStep(state),
-        lastFrameTime:
-            trajectoryStateBranch.selectors.getLastFrameTimeOfCachedSimulation(
-                state
-            ),
+        displayTimes: getDisplayTimes(state),
     };
 }
 
