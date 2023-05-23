@@ -13,6 +13,8 @@ import {
 
 import styles from "./style.css";
 
+import VersionModal from "../VersionModal";
+
 const HelpMenu = (): JSX.Element => {
     const location = useLocation();
     const tutorialLink =
@@ -27,8 +29,15 @@ const HelpMenu = (): JSX.Element => {
         ) : (
             <Link to={TUTORIAL_PATHNAME}>Quick start</Link>
         );
+
+    const [modalVisible, setModalVisible] = React.useState(false);
+
     const menu = (
         <Menu theme="dark" className={styles.menu}>
+            {/* <VersionModal /> */}
+            {modalVisible ? (
+                <VersionModal setModalVisible={setModalVisible} />
+            ) : null}
             <Menu.Item key="tutorial">{tutorialLink}</Menu.Item>
             <Menu.Item key="forum">
                 <a href={FORUM_URL} target="_blank" rel="noopener noreferrer">
@@ -65,6 +74,15 @@ const HelpMenu = (): JSX.Element => {
                     </a>
                 </Menu.Item>
             </Menu.SubMenu>
+            <Menu.Item
+                key="version"
+                onClick={() => {
+                    console.log("firing");
+                    setModalVisible(!modalVisible);
+                }}
+            >
+                <>Version Info</>
+            </Menu.Item>
         </Menu>
     );
 
