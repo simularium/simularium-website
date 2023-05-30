@@ -96,6 +96,7 @@ const ConversionForm = ({
                         className={styles.upload}
                         listType="text"
                         multiple={false}
+                        fileList={fileToConvert ? [fileToConvert] : []}
                         showUploadList={{
                             showPreviewIcon: false,
                             showDownloadIcon: false,
