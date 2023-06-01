@@ -25,7 +25,7 @@ const DownloadTrajectoryMenu = ({
     const fileIsLoaded = () => !!simulariumFile.name;
 
     const getHref = () => {
-        if (fileIsLoaded()) {
+        if (!fileIsLoaded()) {
             return "";
         }
         if (isNetworkSimFileInterface(simulariumFile)) {
@@ -34,12 +34,7 @@ const DownloadTrajectoryMenu = ({
             const data: ISimulariumFile = simulariumFile.data;
             // won't work if they loaded a binary file
             // TODO: need to wait for simulariumFile.data.getAsBlob() to be created on viewer;
-            const dataAsString = JSON.stringify(
-                (data as unknown as { simulariumFile: any }).simulariumFile
-            );
-            const blob = new Blob([dataAsString], {
-                type: "text/plain;charset=utf-8",
-            });
+            const blob = data.getAsBlob();
             return URL.createObjectURL(blob);
         }
     };
@@ -61,7 +56,6 @@ const DownloadTrajectoryMenu = ({
         if (!fileIsLoaded()) {
             return;
         }
-        console.log("sim file name", simulariumFile.name);
         downloadFile(simulariumFile.name);
     };
 
