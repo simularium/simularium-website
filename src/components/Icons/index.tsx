@@ -23,7 +23,7 @@ export const Loading = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 export const Play = <CaretRightOutlined />;
 export const Pause = <PauseOutlined />;
 export const UploadFile = <ImportOutlined />;
-export const DownArrow = <DownOutlined size={32} />;
+export const DownArrow = <DownOutlined />;
 export const CaretRight = <CaretRightOutlined />;
 export const LeftArrow = <ArrowLeftOutlined />;
 export const Reset = <HomeOutlined />;
