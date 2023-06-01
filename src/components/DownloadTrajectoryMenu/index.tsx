@@ -21,7 +21,6 @@ const DownloadTrajectoryMenu = ({
     isBuffering,
     simulariumFile,
 }: DownloadTrajectoryMenuProps): JSX.Element => {
-    const [isDownloading, setIsDownloading] = React.useState(false);
     const fileIsLoaded = () => !!simulariumFile.name;
 
     const getHref = () => {
@@ -40,7 +39,6 @@ const DownloadTrajectoryMenu = ({
 
     const downloadFile = async (fileName: string): Promise<void> => {
         const downloadLink = document.createElement("a");
-        setIsDownloading(true);
         downloadLink.download = fileName;
         downloadLink.style.display = "none";
         downloadLink.href = getHref();
@@ -48,7 +46,6 @@ const DownloadTrajectoryMenu = ({
         downloadLink.click();
         document.body.removeChild(downloadLink);
         URL.revokeObjectURL(downloadLink.href);
-        setIsDownloading(false);
     };
 
     const onClick = () => {
@@ -63,9 +60,7 @@ const DownloadTrajectoryMenu = ({
             <Tooltip
                 placement="left"
                 title={
-                    isDownloading
-                        ? "Downloading..."
-                        : simulariumFile.name
+                    simulariumFile.name
                         ? "Download trajectory"
                         : "Load a trajectory to perform this action"
                 }
@@ -75,7 +70,7 @@ const DownloadTrajectoryMenu = ({
                     className={styles.downloadButton}
                     onClick={onClick}
                     type="primary"
-                    disabled={!fileIsLoaded() || isBuffering || isDownloading}
+                    disabled={!fileIsLoaded() || isBuffering}
                 >
                     Download {Download}
                 </Button>
