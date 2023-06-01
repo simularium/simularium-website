@@ -21,7 +21,6 @@ const VersionModal: React.FC<VersionModalProps> = ({ setModalVisible }) => {
             </Button>
         </>
     );
-    console.log("VersionModal");
     return (
         <CustomModal
             className={styles.container}
@@ -48,8 +47,8 @@ const VersionModal: React.FC<VersionModalProps> = ({ setModalVisible }) => {
                     simulairum-viewer v{SIMULARIUM_VIEWER_VERSION}{" "}
                 </span>
             </div>
-            {/* TODO what should this content be */}
-            <span> Engine: not connected to server </span>
+            {/* TODO add enginge when we switch to Octopus?/}
+            {/* <span> Engine: not connected to server </span> */}
         </CustomModal>
     );
 };
