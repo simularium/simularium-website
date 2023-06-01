@@ -33,7 +33,6 @@ const DownloadTrajectoryMenu = ({
         } else {
             const data: ISimulariumFile = simulariumFile.data;
             // won't work if they loaded a binary file
-            // TODO: need to wait for simulariumFile.data.getAsBlob() to be created on viewer;
             const blob = data.getAsBlob();
             return URL.createObjectURL(blob);
         }
