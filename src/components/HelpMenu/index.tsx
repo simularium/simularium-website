@@ -77,7 +77,6 @@ const HelpMenu = (): JSX.Element => {
             <Menu.Item
                 key="version"
                 onClick={() => {
-                    console.log("firing");
                     setModalVisible(!modalVisible);
                 }}
             >
