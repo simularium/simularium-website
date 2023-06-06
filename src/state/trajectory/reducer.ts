@@ -9,11 +9,13 @@ import {
     RECEIVE_AGENT_NAMES,
     RECEIVE_SIMULARIUM_FILE,
     CLEAR_SIMULARIUM_FILE,
+    SET_URL_PARAMS,
 } from "./constants";
 import {
     TrajectoryStateBranch,
     ReceiveAction,
     ClearSimFileDataAction,
+    SetUrlParamsAction,
 } from "./types";
 
 export const initialState = {
@@ -71,6 +73,16 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: TrajectoryStateBranch) => ({
             ...state,
             simulariumFile: initialState.simulariumFile,
+        }),
+    },
+    [SET_URL_PARAMS]: {
+        accepts: (action: AnyAction): action is SetUrlParamsAction =>
+            action.type === SET_URL_PARAMS,
+        perform: (
+            state: TrajectoryStateBranch,
+            action: SetUrlParamsAction
+        ) => ({
+            ...state,
         }),
     },
 };

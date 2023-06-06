@@ -26,6 +26,7 @@ import {
     LocalSimFile,
     RequestLocalFileAction,
     RequestNetworkFileAction,
+    SetUrlParamsAction,
 } from "../../state/trajectory/types";
 import {
     SetErrorAction,
@@ -65,6 +66,7 @@ interface AppProps {
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
     setError: ActionCreator<SetErrorAction>;
+    setUrlParams: ActionCreator<SetUrlParamsAction>;
 }
 
 interface AppState {
@@ -202,6 +204,7 @@ class App extends React.Component<AppProps, AppState> {
             setViewerStatus,
             clearSimulariumFile,
             setError,
+            setUrlParams,
         } = this.props;
         return (
             <Layout className={styles.container}>
@@ -217,24 +220,19 @@ class App extends React.Component<AppProps, AppState> {
                             setViewerStatus={setViewerStatus}
                             setError={setError}
                         />
-                        <SideBar
-                            onCollapse={this.onPanelCollapse}
-                            type="left"
-                        >
+                        <SideBar onCollapse={this.onPanelCollapse} type="left">
                             <ModelPanel />
                         </SideBar>
                         <Content>
                             {simulariumController && (
                                 <ViewerPanel
+                                    setUrlParams={setUrlParams}
                                     loadLocalFile={changeToLocalSimulariumFile}
                                     simulariumController={simulariumController}
                                 />
                             )}
                         </Content>
-                        <SideBar
-                            onCollapse={this.onPanelCollapse}
-                            type="right"
-                        >
+                        <SideBar onCollapse={this.onPanelCollapse} type="right">
                             <ResultsPanel />
                         </SideBar>
                     </Layout>

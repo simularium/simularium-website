@@ -9,7 +9,7 @@ import {
     loadSimulariumFile,
 } from "@aics/simularium-viewer";
 
-import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
+import { URL_PARAM_KEY_FILE_NAME, URL_PARAM_KEY_TIME } from "../../constants";
 import { clearUrlParams } from "../../util";
 import { getUserTrajectoryUrl } from "../../util/userUrlHandling";
 import {
@@ -42,6 +42,7 @@ import {
     REQUEST_PLOT_DATA,
     CLEAR_SIMULARIUM_FILE,
     LOAD_FILE_VIA_URL,
+    SET_URL_PARAMS,
 } from "./constants";
 import { ReceiveAction, LocalSimFile } from "./types";
 import { initialState } from "./reducer";
@@ -209,9 +210,8 @@ const loadLocalFile = createLogic({
         const currentState = getState();
         const simulariumController =
             getSimulariumController(currentState) || action.controller;
-        const lastSimulariumFile: LocalSimFile = getSimulariumFile(
-            currentState
-        );
+        const lastSimulariumFile: LocalSimFile =
+            getSimulariumFile(currentState);
         const simulariumFile = action.payload;
 
         if (lastSimulariumFile) {
@@ -332,10 +332,35 @@ const loadFileViaUrl = createLogic({
     type: LOAD_FILE_VIA_URL,
 });
 
+const setTrajectoryStateFromUrlParams = createLogic({
+    process(deps: ReduxLogicDeps) {
+        const { getState } = deps;
+        const currentState = getState();
+
+        const simulariumController = getSimulariumController(currentState);
+
+        const parsed = queryString.parse(location.search);
+        const DEFAULT_TIME = 0;
+
+        if (parsed[URL_PARAM_KEY_TIME]) {
+            const time = Number(parsed[URL_PARAM_KEY_TIME]);
+            simulariumController.gotoTime(time);
+        } else {
+            // currently this won't be called because URL_PARAM_KEY_TIME
+            // is the only param that can get you into this logic
+            // but if we are setting camera position, we will want to
+            // make sure the time also gets set.
+            simulariumController.gotoTime(DEFAULT_TIME);
+        }
+    },
+    type: SET_URL_PARAMS,
+});
+
 export default [
     requestPlotDataLogic,
     loadLocalFile,
     loadNetworkedFile,
     resetSimulariumFileState,
     loadFileViaUrl,
+    setTrajectoryStateFromUrlParams,
 ];

@@ -32,7 +32,7 @@ const ShareTrajectoryModal = ({
 
     const [allowTimeInput, setAllowTimeInput] = React.useState(true);
     const [url, setUrl] = React.useState(
-        `${window.location.href}?t=${currentTime}`
+        `${window.location.href}&t=${currentTime}`
     );
     const [lastEnteredNumber, setLastEnteredNumber] =
         React.useState(currentTime);

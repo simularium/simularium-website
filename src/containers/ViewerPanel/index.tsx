@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ActionCreator, AnyAction } from "redux";
+import queryString from "query-string";
 import SimulariumViewer, {
     SimulariumController,
     UIDisplayData,
@@ -39,6 +40,7 @@ import {
     ReceiveAction,
     LocalSimFile,
     TimeUnits,
+    SetUrlParamsAction,
 } from "../../state/trajectory/types";
 import { batchActions } from "../../state/util";
 import PlaybackControls from "../../components/PlaybackControls";
@@ -57,6 +59,7 @@ import { DisplayTimes } from "./types";
 
 import styles from "./style.css";
 import { MOBILE_CUTOFF } from "../../constants";
+import { hasUrlParamsSettings } from "../../util";
 
 interface ViewerPanelProps {
     time: number;
@@ -72,6 +75,7 @@ interface ViewerPanelProps {
     numFrames: number;
     isBuffering: boolean;
     scaleBarLabel: string;
+    setUrlParams: ActionCreator<SetUrlParamsAction>;
     simulariumController: SimulariumController;
     changeTime: ActionCreator<ChangeTimeAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
@@ -260,7 +264,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         });
     }
 
-    public receiveTimeChange(timeData: TimeData) {
+    public receiveTimeChange(timeData: TimeData): any {
         const {
             changeTime,
             setStatus,
@@ -270,16 +274,22 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             timeStep,
             receiveTrajectory,
             setBuffering,
+            setUrlParams,
         } = this.props;
-
         if (this.state.isInitialPlay) {
             receiveTrajectory({
                 firstFrameTime: timeData.time,
                 lastFrameTime: (numFrames - 1) * timeStep + timeData.time,
             });
+            if (hasUrlParamsSettings()) {
+                // these are settings that need to be applied after the trajectory
+                // is loaded but before the user can interact with the trajectory
+                setUrlParams();
+                return this.setState({ isInitialPlay: false });
+            }
+
             this.setState({ isInitialPlay: false });
         }
-
         const actions: AnyAction[] = [
             changeTime(timeData.time),
             setBuffering(false),
