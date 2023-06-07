@@ -8,9 +8,9 @@ import {
     isLocalFileInterface,
 } from "../../state/trajectory/types";
 import { Share } from "../Icons";
+import ShareTrajectoryModal from "../ShareTrajectoryModal";
 
 import styles from "./style.css";
-import ShareTrajectoryModal from "../ShareTrajectoryModal";
 
 interface ShareTrajectoryButtonProps {
     isBuffering: boolean;
@@ -33,21 +33,19 @@ const ShareTrajectoryButton = ({
         setIsSharing(false);
     };
 
+    const handleTooltipOpen = () => {
+        if (isSharing || !simulariumFile.name) {
+            return false;
+        } else return;
+    };
+
     return (
         <div className={styles.container}>
             <Tooltip
-                title={
-                    isSharing
-                        ? null
-                        : !simulariumFile.name
-                        ? null
-                        : "Share this trajectory"
-                }
+                title={"Share this trajectory"}
                 placement="left"
                 color={TOOLTIP_COLOR}
-                open={
-                    isSharing ? false : !simulariumFile.name ? false : undefined
-                }
+                open={handleTooltipOpen()}
             >
                 {isSharing ? (
                     <div className={styles.overlay}>
