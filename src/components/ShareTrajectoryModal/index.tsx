@@ -51,16 +51,24 @@ const ShareTrajectoryModal = ({
 
     const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputAsNumber = parseFloat(e.target.value);
-
-        const timeValue = Number.isNaN(inputAsNumber) // if user has deleted their input use default time
-            ? currentTime
-            : inputAsNumber + displayTimes.roundedTimeStep >=
-              displayTimes.roundedLastFrameTime // if user entered time is greater than last frame
-            ? displayTimes.roundedLastFrameTime - displayTimes.roundedTimeStep
-            : roundToTimestepPrecision(
-                  inputAsNumber,
-                  displayTimes.roundedTimeStep
-              );
+        let timeValue = null;
+        if (Number.isNaN(inputAsNumber)) {
+            // if user has deleted their input use default time
+            timeValue = currentTime;
+        } else if (
+            inputAsNumber + displayTimes.roundedTimeStep >=
+            displayTimes.roundedLastFrameTime
+        ) {
+            // if user entered time is greater than last frame time
+            timeValue =
+                displayTimes.roundedLastFrameTime -
+                displayTimes.roundedTimeStep;
+        } else {
+            timeValue = roundToTimestepPrecision(
+                inputAsNumber,
+                displayTimes.roundedTimeStep
+            );
+        }
         setLastEnteredNumber(timeValue);
         setUrl(window.location.href + `?t=${timeValue}`);
     };
