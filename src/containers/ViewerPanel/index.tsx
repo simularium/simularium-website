@@ -279,6 +279,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             timeStep,
             receiveTrajectory,
             setBuffering,
+            isLooping,
         } = this.props;
 
         if (this.state.isInitialPlay) {
