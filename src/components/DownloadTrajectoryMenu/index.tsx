@@ -31,7 +31,6 @@ const DownloadTrajectoryMenu = ({
             return `${DATA_BUCKET_URL}/trajectory/${simulariumFile.name}`;
         } else {
             const data: ISimulariumFile = simulariumFile.data;
-            // won't work if they loaded a binary file
             const blob = data.getAsBlob();
             return URL.createObjectURL(blob);
         }
