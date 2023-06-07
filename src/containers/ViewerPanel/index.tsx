@@ -278,7 +278,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             timeStep,
             receiveTrajectory,
             setBuffering,
-            setIsPlaying,
             isLooping,
         } = this.props;
 
