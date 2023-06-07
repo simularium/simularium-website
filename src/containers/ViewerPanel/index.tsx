@@ -248,11 +248,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public toggleLooping() {
         const { isLooping, setIsLooping } = this.props;
-        if (isLooping) {
-            setIsLooping(false);
-        } else {
-            setIsLooping(true);
-        }
+        setIsLooping(!isLooping);
     }
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
@@ -286,7 +282,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             timeStep,
             receiveTrajectory,
             setBuffering,
-            setIsPlaying,
             isLooping,
             setUrlParams,
         } = this.props;
