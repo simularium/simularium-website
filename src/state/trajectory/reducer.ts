@@ -78,10 +78,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
     [SET_URL_PARAMS]: {
         accepts: (action: AnyAction): action is SetUrlParamsAction =>
             action.type === SET_URL_PARAMS,
-        perform: (
-            state: TrajectoryStateBranch,
-            action: SetUrlParamsAction
-        ) => ({
+        perform: (state: TrajectoryStateBranch) => ({
             ...state,
         }),
     },

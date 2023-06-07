@@ -1,6 +1,5 @@
 import * as React from "react";
 import { ActionCreator, AnyAction } from "redux";
-import queryString from "query-string";
 import SimulariumViewer, {
     SimulariumController,
     UIDisplayData,
