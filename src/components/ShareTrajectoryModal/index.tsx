@@ -56,10 +56,10 @@ const ShareTrajectoryModal = ({
             // if user has deleted their input use default time
             timeValue = currentTime;
         } else if (
+            // if user entered time is greater than last frame time
             inputAsNumber + displayTimes.roundedTimeStep >=
             displayTimes.roundedLastFrameTime
         ) {
-            // if user entered time is greater than last frame time
             timeValue =
                 displayTimes.roundedLastFrameTime -
                 displayTimes.roundedTimeStep;
