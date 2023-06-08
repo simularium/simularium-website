@@ -70,7 +70,7 @@ const ShareTrajectoryModal = ({
             );
         }
         setLastEnteredNumber(timeValue);
-        setUrl(window.location.href + `?t=${timeValue}`);
+        setUrl(window.location.href + `&t=${timeValue}`);
     };
 
     const copyToClipboard = async (): Promise<void> => {

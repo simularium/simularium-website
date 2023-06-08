@@ -59,6 +59,7 @@ import { DisplayTimes } from "./types";
 import styles from "./style.css";
 import { MOBILE_CUTOFF } from "../../constants";
 import { hasUrlParamsSettings } from "../../util";
+import { setUrlParams } from "../../state/trajectory/actions";
 
 interface ViewerPanelProps {
     time: number;
@@ -114,6 +115,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             this.onTrajectoryFileInfoChanged.bind(this);
         this.skipToTime = this.skipToTime.bind(this);
         this.resize = this.resize.bind(this);
+
         this.state = {
             isInitialPlay: true,
             particleTypeIds: [],
@@ -473,6 +475,7 @@ const dispatchToPropsMap = {
     setBuffering: viewerStateBranch.actions.setBuffering,
     setIsPlaying: viewerStateBranch.actions.setIsPlaying,
     setError: viewerStateBranch.actions.setError,
+    setUrlParams: trajectoryStateBranch.actions.setUrlParams,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);

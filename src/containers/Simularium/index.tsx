@@ -204,7 +204,6 @@ class App extends React.Component<AppProps, AppState> {
             setViewerStatus,
             clearSimulariumFile,
             setError,
-            setUrlParams,
         } = this.props;
         return (
             <Layout className={styles.container}>
@@ -226,7 +225,6 @@ class App extends React.Component<AppProps, AppState> {
                         <Content>
                             {simulariumController && (
                                 <ViewerPanel
-                                    setUrlParams={setUrlParams}
                                     loadLocalFile={changeToLocalSimulariumFile}
                                     simulariumController={simulariumController}
                                 />
