@@ -26,11 +26,7 @@ const ShareTrajectoryButton = ({
     const isLocalFile = isLocalFileInterface(simulariumFile);
 
     const handleShare = () => {
-        setIsSharing(true);
-    };
-
-    const closeModal = () => {
-        setIsSharing(false);
+        setIsSharing(!isSharing);
     };
 
     const handleTooltipOpen = () => {
@@ -51,7 +47,7 @@ const ShareTrajectoryButton = ({
                     <div className={styles.overlay}>
                         <ShareTrajectoryModal
                             isLocalFile={isLocalFile}
-                            closeModal={closeModal}
+                            closeModal={handleShare}
                         />
                     </div>
                 ) : null}
