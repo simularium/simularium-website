@@ -11,6 +11,7 @@ import CustomModal from "../CustomModal";
 import { Link, Warn } from "../Icons";
 
 import styles from "./style.css";
+import { URL_PARAM_KEY_TIME } from "../../constants";
 
 interface ShareTrajectoryModalProps {
     isLocalFile: boolean;
@@ -29,17 +30,27 @@ const ShareTrajectoryModal = ({
         displayTimes.roundedTime,
         displayTimes.roundedTimeStep
     );
+    const clearPriorAndSetNewParams = (timeValue: number): string => {
+        const currentUrl = new URL(window.location.href);
+        const params = new URLSearchParams(window.location.search);
+        if (params.has(URL_PARAM_KEY_TIME)) {
+            params.delete(URL_PARAM_KEY_TIME);
+        }
+        params.set(URL_PARAM_KEY_TIME, timeValue.toString());
+        currentUrl.search = params.toString();
+        return currentUrl.toString();
+    };
 
     const [allowTimeInput, setAllowTimeInput] = React.useState(true);
     const [url, setUrl] = React.useState(
-        `${window.location.href}&t=${currentTime}`
+        clearPriorAndSetNewParams(currentTime)
     );
     const [lastEnteredNumber, setLastEnteredNumber] =
         React.useState(currentTime);
 
     const handleAllowUserInput = (): void => {
-        const value = allowTimeInput ? lastEnteredNumber : currentTime;
-        setUrl(window.location.href + `?t=${value}`);
+        const timeValue = allowTimeInput ? lastEnteredNumber : currentTime;
+        setUrl(clearPriorAndSetNewParams(timeValue));
         setAllowTimeInput((allowTimeInput) => !allowTimeInput);
     };
 
@@ -70,7 +81,7 @@ const ShareTrajectoryModal = ({
             );
         }
         setLastEnteredNumber(timeValue);
-        setUrl(window.location.href + `&t=${timeValue}`);
+        setUrl(clearPriorAndSetNewParams(timeValue));
     };
 
     const copyToClipboard = async (): Promise<void> => {

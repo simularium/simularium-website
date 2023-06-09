@@ -59,7 +59,6 @@ import { DisplayTimes } from "./types";
 import styles from "./style.css";
 import { MOBILE_CUTOFF } from "../../constants";
 import { hasUrlParamsSettings } from "../../util";
-import { setUrlParams } from "../../state/trajectory/actions";
 
 interface ViewerPanelProps {
     time: number;
@@ -286,9 +285,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 // these are settings that need to be applied after the trajectory
                 // is loaded but before the user can interact with the trajectory
                 setUrlParams();
-                return this.setState({ isInitialPlay: false });
+                this.setState({ isInitialPlay: false });
             }
-
             this.setState({ isInitialPlay: false });
         }
         const actions: AnyAction[] = [
