@@ -87,6 +87,20 @@ export const hasUrlParamsSettings = () => {
     return false;
 };
 
+export const clearPriorAndSetNewParams = (
+    value: string,
+    paramKey: string
+): string => {
+    const currentUrl = new URL(window.location.href);
+    const params = new URLSearchParams(window.location.search);
+    if (params.has(paramKey)) {
+        params.delete(paramKey);
+    }
+    params.set(paramKey, value);
+    currentUrl.search = params.toString();
+    return currentUrl.toString();
+};
+
 export const clearUrlParams = () => {
     // Removes the query string from the current URL shown in the browser
     // ex) https://mysite.com/path?city=seattle -> https://mysite.com/path
