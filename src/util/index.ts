@@ -87,10 +87,11 @@ export const hasUrlParamsSettings = () => {
     return false;
 };
 
-export const clearPriorAndSetNewParams = (
+export const clearAndResetUrlParam = (
     value: string,
     paramKey: string
 ): string => {
+    // this returns a new url as a string, does not change current url shown in browser
     const currentUrl = new URL(window.location.href);
     const params = new URLSearchParams(window.location.search);
     if (params.has(paramKey)) {
