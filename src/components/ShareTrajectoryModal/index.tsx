@@ -96,7 +96,7 @@ const ShareTrajectoryModal = ({
                               in the public cloud using Dropbox, Google Drive,
                               or Amazon S3 and load the model into Simularium
                               via URL.
-                              <span className={"blue-text"}> Learn more </span>
+                              <a> Learn more </a>
                           </h5>
                       </div>
                   </>

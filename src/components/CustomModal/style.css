@@ -46,10 +46,6 @@
     text-align: right;
 }
 
-.modal :global(.blue-text) {
-    color: var(--blue);
-}
-
 .modal :global(.ant-divider) {
     margin: 0px;
     position: absolute;
