@@ -83,10 +83,7 @@ class AppHeader extends React.Component<AppHeaderProps> {
                         setError={setError}
                     />
                     <HelpMenu key="help" />
-                    <ShareTrajectoryButton
-                        isBuffering={isBuffering}
-                        simulariumFile={simulariumFile}
-                    />
+                    <ShareTrajectoryButton simulariumFile={simulariumFile} />
                 </div>
             </div>
         );

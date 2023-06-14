@@ -13,12 +13,10 @@ import ShareTrajectoryModal from "../ShareTrajectoryModal";
 import styles from "./style.css";
 
 interface ShareTrajectoryButtonProps {
-    isBuffering: boolean;
     simulariumFile: LocalSimFile | NetworkedSimFile;
 }
 
 const ShareTrajectoryButton = ({
-    isBuffering,
     simulariumFile,
 }: ShareTrajectoryButtonProps): JSX.Element => {
     const [isSharing, setIsSharing] = React.useState(false);
@@ -55,7 +53,7 @@ const ShareTrajectoryButton = ({
                     className={styles.shareButton}
                     onClick={handleShare}
                     type="primary"
-                    disabled={!simulariumFile.name || isBuffering || isSharing}
+                    disabled={!simulariumFile.name || isSharing}
                 >
                     Share {Share}
                 </Button>

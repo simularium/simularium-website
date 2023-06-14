@@ -1,0 +1,25 @@
+/* Default and primary button colors differ within modals */
+.light-theme :global(.ant-btn-default) {
+    background-color: var(--light-button-default-background);
+    border-color: var(--light-theme-modal-btn-default-color);
+    color: var(--light-button-default-color);
+}
+
+.light-theme :global(.ant-btn-primary) {
+    background-color: var(--light-theme-btn-primary-bg);
+    border: var(--light-button-primary-border);
+    color: var(--light-theme-btn-primary-color);
+}
+
+.light-theme :global(.ant-btn-primary[disabled]) {
+    background: var(--light-button-disabled-background);
+    border: var(--light-button-disabled-border);
+    color: var(--light-theme-btn-primary-color);
+}
+
+.light-theme :global(.ant-btn-text) {
+    background-color: var(--dark-four);
+    border-color: var(--dark-four);
+    color: var(--white-three);
+}
+

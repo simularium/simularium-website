@@ -11,8 +11,10 @@ import CustomModal from "../CustomModal";
 import { Link, Warn } from "../Icons";
 import { URL_PARAM_KEY_TIME } from "../../constants";
 import { clearAndResetUrlParam } from "../../util";
+import classNames from "classnames";
 
 import styles from "./style.css";
+import theme from "../theme/light-theme.css";
 
 interface ShareTrajectoryModalProps {
     isLocalFile: boolean;
@@ -86,24 +88,18 @@ const ShareTrajectoryModal = ({
     const modalOptions = isLocalFile
         ? {
               content: (
-                  <div className={styles.content}>
-                      <h2 className={styles.heading}>
-                          {Warn} The current file is stored on your device.
-                      </h2>
+                  <>
+                      <h4>{Warn} The current file is stored on your device.</h4>
                       <div className={styles.bodyText}>
-                          <p>
+                          <h5>
                               To generate a shareable link, please save the file
                               in the public cloud using Dropbox, Google Drive,
                               or Amazon S3 and load the model into Simularium
                               via URL.
-                              <span className={styles.blueText}>
-                                  {" "}
-                                  Learn more{" "}
-                              </span>
-                          </p>
+                              <span className={"blue-text"}> Learn more </span>
+                          </h5>
                       </div>
-                      <Divider className={styles.divider}></Divider>
-                  </div>
+                  </>
               ),
               footer: (
                   <Button
@@ -118,14 +114,14 @@ const ShareTrajectoryModal = ({
         : // if the trajectory is a networked file
           {
               content: (
-                  <div className={styles.content}>
+                  <>
                       <div>
                           <Input
                               className={styles.urlInput}
                               value={url}
                               disabled
                           />
-                          <Button type="primary" onClick={copyToClipboard}>
+                          <Button type="text" onClick={copyToClipboard}>
                               Copy {Link}
                           </Button>
                       </div>
@@ -134,7 +130,7 @@ const ShareTrajectoryModal = ({
                           <Checkbox onChange={handleAllowUserInput}></Checkbox>
                           <p>Start at</p>
                           <Input
-                              className={styles.numberInput}
+                              className={styles.timeInput}
                               disabled={allowTimeInput}
                               defaultValue={currentTime}
                               onChange={handleUserInput}
@@ -145,8 +141,7 @@ const ShareTrajectoryModal = ({
                               {timeUnits ? timeUnits.name : null}{" "}
                           </p>
                       </div>
-                      <Divider className={styles.divider}></Divider>
-                  </div>
+                  </>
               ),
               footer: (
                   <Button type="default" onClick={closeModal}>
@@ -156,20 +151,19 @@ const ShareTrajectoryModal = ({
           };
 
     return (
-        <div className={styles.container}>
-            <CustomModal
-                className={styles.uploadModal}
-                title="Share Trajectory"
-                width={isLocalFile ? 611 : 550}
-                onCancel={closeModal}
-                mask={false}
-                centered
-                open
-                footer={modalOptions.footer}
-            >
-                {modalOptions.content}
-            </CustomModal>
-        </div>
+        <CustomModal
+            className={classNames(styles.uploadModal, theme.lightTheme)}
+            title="Share Trajectory"
+            width={isLocalFile ? 611 : 550}
+            onCancel={closeModal}
+            mask={false}
+            centered
+            open
+            footer={modalOptions.footer}
+        >
+            {modalOptions.content}
+            <Divider />
+        </CustomModal>
     );
 };
 
