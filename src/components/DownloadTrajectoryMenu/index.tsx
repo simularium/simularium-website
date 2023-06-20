@@ -36,7 +36,7 @@ const DownloadTrajectoryMenu = ({
         }
     };
 
-    const downloadFile = async (fileName: string): Promise<void> => {
+    const downloadFile = (fileName: string): void => {
         const downloadLink = document.createElement("a");
         downloadLink.download = fileName;
         downloadLink.style.display = "none";
@@ -57,7 +57,7 @@ const DownloadTrajectoryMenu = ({
     return (
         <div className={styles.container}>
             <Tooltip
-                placement="left"
+                placement="bottomLeft"
                 title={
                     simulariumFile.name
                         ? "Download trajectory"
