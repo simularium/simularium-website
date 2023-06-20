@@ -8,6 +8,15 @@ import { RoundWarning } from "../Icons";
 
 interface ConversionServerCheckModalProps {}
 
+/////PSEUDOCODE OF APPROACH/////
+// call a function that sends a websocket request with server health check id
+// receive message from websocket with server health check id
+// 1) do this with an event listener
+
+//when sim controller gets instatiated it will call configure network which will call create simulator connection
+// i should add to create simulator connection a health check call
+// simulariumController.sendServerHealthCheck()
+
 const ConversionServerCheckModal: React.FC<
     ConversionServerCheckModalProps
 > = ({}) => {
