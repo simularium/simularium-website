@@ -56,8 +56,8 @@ const ConversionForm = ({
     const [engineSelected, setEngineSelected] = useState<boolean>(false);
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
-    const toggleProcessing = (value: boolean) => {
-        setIsProcessing(value);
+    const toggleProcessing = () => {
+        setIsProcessing(!isProcessing);
     };
 
     // TODO: use conversion template data to render the form
@@ -124,7 +124,7 @@ const ConversionForm = ({
                 <Button
                     type="primary"
                     disabled={!fileToConvert || !engineSelected}
-                    onClick={() => setIsProcessing(true)}
+                    onClick={() => setIsProcessing(!isProcessing)}
                 >
                     Next
                 </Button>

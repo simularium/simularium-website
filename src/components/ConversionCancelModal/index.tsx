@@ -6,18 +6,18 @@ import CustomModal from "../CustomModal";
 import styles from "./style.css";
 
 interface ConversionCancelModalProps {
-    toggleCancel: () => void;
-    toggleProcessing: (value: boolean) => void;
+    continueProcessing: () => void;
+    cancelProcessing: () => void;
 }
 
 const ConversionCancelModal: React.FC<ConversionCancelModalProps> = ({
-    toggleCancel,
-    toggleProcessing,
+    continueProcessing: continueProcessing,
+    cancelProcessing: cancelProcessing,
 }) => {
     const footerButtons = (
         <>
-            <Button onClick={toggleCancel}>No</Button>
-            <Button type="primary" onClick={() => toggleProcessing(false)}>
+            <Button onClick={continueProcessing}>No</Button>
+            <Button type="primary" onClick={cancelProcessing}>
                 Yes, cancel
             </Button>
         </>
@@ -31,6 +31,7 @@ const ConversionCancelModal: React.FC<ConversionCancelModalProps> = ({
             footer={footerButtons}
             width={341}
             centered
+            onCancel={continueProcessing}
         >
             <div>
                 {" "}
