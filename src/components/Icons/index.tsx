@@ -47,7 +47,7 @@ export default {
     DownArrow,
     CaretRight,
     ArrowLeftOutlined,
-    GoBack: LeftArrow,
+    LeftArrow,
     PurpleArrow,
     AicsLogo,
     Reset,

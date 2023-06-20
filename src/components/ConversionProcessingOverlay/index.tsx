@@ -7,7 +7,7 @@ import styles from "./style.css";
 import ConversionCancelModal from "../ConversionCancelModal";
 
 interface ConversionProcessingOverlayProps {
-    toggleProcessing: (value: boolean) => void;
+    toggleProcessing: () => void;
     fileName: string | null;
 }
 
@@ -15,22 +15,18 @@ const ConversionProcessingOverlay = ({
     toggleProcessing,
     fileName,
 }: ConversionProcessingOverlayProps): JSX.Element | null => {
-    const [isCancelling, setIsCancelling] = useState(false);
-    const cancelImport = () => {
-        // this should send necessary information to the backend to cancel the import
-        toggleProcessing(false);
-    };
+    const [cancelModalOpen, setCancelModalOpen] = useState(false);
 
     const toggleCancelling = () => {
-        setIsCancelling(false);
+        setCancelModalOpen(false);
     };
 
     const processingOverlay = (
         <div className={styles.container}>
-            {isCancelling ? (
+            {cancelModalOpen ? (
                 <ConversionCancelModal
-                    toggleCancel={toggleCancelling}
-                    toggleProcessing={toggleProcessing}
+                    continueProcessing={toggleCancelling}
+                    cancelProcessing={toggleProcessing}
                 />
             ) : null}
             <h2 className={styles.titleText}> File conversion in progress </h2>
@@ -38,11 +34,11 @@ const ConversionProcessingOverlay = ({
                 {" "}
                 {fileName} is being converted and will load when complete.{" "}
                 <br></br>
-                <p>Processing time will vary depending on file size.</p>
+                Processing time will vary depending on file size.
             </p>
             <p
                 className={styles.goBackButton}
-                onClick={() => setIsCancelling(true)}
+                onClick={() => setCancelModalOpen(true)}
             >
                 {" "}
                 {LeftArrow} Stop and go back to form{" "}
@@ -68,7 +64,7 @@ const ConversionProcessingOverlay = ({
             </div>
             <Button
                 className={styles.cancelButton}
-                onClick={() => setIsCancelling(true)}
+                onClick={() => setCancelModalOpen(true)}
             >
                 Cancel file import
             </Button>
