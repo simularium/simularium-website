@@ -39,6 +39,7 @@ export const AicsLogo = <img src={AicsLogoWhite} style={{ width: "140px" }} />;
 export const StepForward = <img src={ClockwiseArrow} />;
 export const StepBack = <img src={CounterClockwiseArrow} />;
 export const BetaTag = <img src={Beta} style={{ width: "42px" }} />;
+export const UpRightArrow = <ArrowLeftOutlined rotate={135} />;
 
 export default {
     StepBack,
@@ -60,4 +61,5 @@ export default {
     RoundWarning,
     Download,
     LoopOutlined,
+    UpRightArrow,
 };
