@@ -9,6 +9,7 @@ import {
     PlusOutlined,
     MinusOutlined,
     HomeOutlined,
+    DownloadOutlined,
     RetweetOutlined,
 } from "@ant-design/icons";
 
@@ -28,6 +29,7 @@ export const GoBack = <ArrowLeftOutlined />;
 export const Reset = <HomeOutlined />;
 export const ZoomIn = <PlusOutlined />;
 export const ZoomOut = <MinusOutlined />;
+export const Download = <DownloadOutlined size={32} />;
 export const LoopOutlined = <RetweetOutlined />;
 
 export const PurpleArrow = <img src={PurpleArrowPointingRight} />;
@@ -53,5 +55,6 @@ export default {
     ZoomIn,
     ZoomOut,
     BetaTag,
+    Download,
     LoopOutlined,
 };

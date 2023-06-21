@@ -1,0 +1,5 @@
+.container :global(.ant-btn){
+    color: var(--dark-theme-primary-color);
+    background-color: var(--dark-theme-header-bg);
+    border: none;
+}
