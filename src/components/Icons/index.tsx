@@ -10,7 +10,6 @@ import {
     MinusOutlined,
     HomeOutlined,
     ExclamationCircleOutlined,
-    RetweetOutlined,
     DownloadOutlined,
     RetweetOutlined,
 } from "@ant-design/icons";
@@ -35,7 +34,6 @@ export const RoundWarning = <ExclamationCircleOutlined />;
 export const UpRightArrow = <ArrowLeftOutlined rotate={135} />;
 export const LoopOutlined = <RetweetOutlined />;
 export const Download = <DownloadOutlined size={32} />;
-export const LoopOutlined = <RetweetOutlined />;
 
 export const PurpleArrow = <img src={PurpleArrowPointingRight} />;
 export const AicsLogo = <img src={AicsLogoWhite} style={{ width: "140px" }} />;
@@ -64,5 +62,4 @@ export default {
     UpRightArrow,
     LoopOutlined,
     Download,
-    LoopOutlined,
 };
