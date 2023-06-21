@@ -37,7 +37,7 @@ const ShareTrajectoryButton = ({
         <div className={styles.container}>
             <Tooltip
                 title={"Share this trajectory"}
-                placement="left"
+                placement="bottomLeft"
                 color={TOOLTIP_COLOR}
                 open={handleTooltipOpen()}
             >
