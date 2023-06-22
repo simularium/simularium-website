@@ -11,8 +11,8 @@ interface ConversionCancelModalProps {
 }
 
 const ConversionCancelModal: React.FC<ConversionCancelModalProps> = ({
-    continueProcessing: continueProcessing,
-    cancelProcessing: cancelProcessing,
+    continueProcessing,
+    cancelProcessing,
 }) => {
     const footerButtons = (
         <>
