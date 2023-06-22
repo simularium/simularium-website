@@ -36,18 +36,17 @@ const ConversionProcessingOverlay = ({
                 <br></br>
                 Processing time will vary depending on file size.
             </p>
-            <p
+            <a
                 className={styles.goBackButton}
                 onClick={() => setCancelModalOpen(true)}
             >
                 {" "}
                 {LeftArrow} Stop and go back to form{" "}
-            </p>
+            </a>
             <div className={styles.spin}>
                 <Spin size={"large"}> </Spin>
             </div>
             <p className={styles.processingMargin}> Processing... </p>
-            <p> </p>
             <h3 className={styles.mediumText}>
                 {" "}
                 Open another instance of Simularium{" "}

@@ -30,15 +30,6 @@
   margin-bottom: 0px;
 }
 
-.go-back-button {
-  color: var(--blue);
-  font-size: 12px;
-}
-
-.go-back-button:hover {
-  cursor: pointer;
-}
-
 .go-back-button svg {
   fill: var(--blue);
 }
