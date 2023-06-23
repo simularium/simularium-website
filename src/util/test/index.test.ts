@@ -7,6 +7,7 @@ import {
     roundTimeForDisplay,
     clearUrlParams,
     wrapText,
+    hasUrlParamsSettings,
 } from "../";
 import {
     getFileIdFromUrl,
@@ -120,6 +121,28 @@ describe("General utilities", () => {
                 formattedText: "123 567<br>890<br>abcdefg<br>wxyz",
                 numLines: 4,
             });
+        });
+    });
+
+    describe("hasUrlParamsSettings", () => {
+        it("returns false if no url params or trajectory", () => {
+            const url = `${location.origin}${location.pathname}`;
+            history.replaceState({}, "", url);
+            expect(hasUrlParamsSettings()).toBe(false);
+        });
+        it("returns false if no url params", () => {
+            const url = `${location.origin}${location.pathname}`;
+            history.replaceState({}, "", url + "?trajFileName=traj.simularium");
+            expect(hasUrlParamsSettings()).toBe(false);
+        });
+        it("returns true if url time param", () => {
+            const url = `${location.origin}${location.pathname}`;
+            history.replaceState(
+                {},
+                "",
+                url + "?trajFileName=traj.simularium&t=0"
+            );
+            expect(hasUrlParamsSettings()).toBe(true);
         });
     });
 
