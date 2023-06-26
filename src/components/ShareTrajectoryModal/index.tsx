@@ -85,70 +85,77 @@ const ShareTrajectoryModal = ({
         }
     };
 
-    const modalOptions = isLocalFile
-        ? {
-              content: (
-                  <>
-                      <h4>{Warn} The current file is stored on your device.</h4>
-                      <div className={styles.bodyText}>
-                          <h5>
-                              To generate a shareable link, please save the file
-                              in the public cloud using Dropbox, Google Drive,
-                              or Amazon S3 and load the model into Simularium
-                              via URL.
-                              <a> Learn more </a>
-                          </h5>
-                      </div>
-                  </>
-              ),
-              footer: (
-                  <Button
-                      className={styles.okButton}
-                      type="default"
-                      onClick={closeModal}
-                  >
-                      Ok
-                  </Button>
-              ),
-          }
-        : // if the trajectory is a networked file
-          {
-              content: (
-                  <>
-                      <div>
-                          <Input
-                              className={styles.urlInput}
-                              value={url}
-                              disabled
-                          />
-                          <Button type="text" onClick={copyToClipboard}>
-                              Copy {Link}
-                          </Button>
-                      </div>
-                      <div className={styles.secondLine}>
-                          {" "}
-                          <Checkbox onChange={handleAllowUserInput}></Checkbox>
-                          <p>Start at</p>
-                          <Input
-                              className={styles.timeInput}
-                              disabled={allowTimeInput}
-                              defaultValue={currentTime}
-                              onChange={handleUserInput}
-                          />
-                          <p>
-                              {" "}
-                              /{displayTimes.roundedLastFrameTime}{" "}
-                              {timeUnits ? timeUnits.name : null}{" "}
-                          </p>
-                      </div>
-                  </>
-              ),
-              footer: (
-                  <Button type="default" onClick={closeModal}>
-                      Close
-                  </Button>
-              ),
-          };
+    const modalOptions = {
+        localFile: {
+            content: (
+                <>
+                    <h4>{Warn} The current file is stored on your device.</h4>
+                    <div className={styles.bodyText}>
+                        <h5>
+                            To generate a shareable link, please save the file
+                            in the public cloud using Dropbox, Google Drive, or
+                            Amazon S3 and load the model into Simularium via
+                            URL.
+                            <a
+                                href="https://simularium.allencell.org/tutorial#share-a-link"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                {" "}
+                                Learn more{" "}
+                            </a>
+                        </h5>
+                    </div>
+                </>
+            ),
+            footer: (
+                <Button
+                    className={styles.okButton}
+                    type="default"
+                    onClick={closeModal}
+                >
+                    Ok
+                </Button>
+            ),
+        },
+        networkedFile: {
+            content: (
+                <>
+                    <div>
+                        <Input
+                            className={styles.urlInput}
+                            value={url}
+                            disabled
+                        />
+                        <Button type="text" onClick={copyToClipboard}>
+                            Copy {Link}
+                        </Button>
+                    </div>
+                    <div className={styles.timeInputContainer}>
+                        {" "}
+                        <Checkbox onChange={handleAllowUserInput}></Checkbox>
+                        <p>Start at</p>
+                        <Input
+                            className={styles.timeInput}
+                            disabled={allowTimeInput}
+                            defaultValue={currentTime}
+                            onChange={handleUserInput}
+                        />
+                        <div>
+                            {" "}
+                            /{displayTimes.roundedLastFrameTime}{" "}
+                            {timeUnits ? timeUnits.name : null}{" "}
+                        </div>
+                    </div>
+                </>
+            ),
+            footer: (
+                <Button type="default" onClick={closeModal}>
+                    Close
+                </Button>
+            ),
+        },
+    };
 
     return (
         <CustomModal
@@ -159,9 +166,15 @@ const ShareTrajectoryModal = ({
             mask={false}
             centered
             open
-            footer={modalOptions.footer}
+            footer={
+                isLocalFile
+                    ? modalOptions.localFile.footer
+                    : modalOptions.networkedFile.footer
+            }
         >
-            {modalOptions.content}
+            {isLocalFile
+                ? modalOptions.localFile.content
+                : modalOptions.networkedFile.content}
             <Divider />
         </CustomModal>
     );

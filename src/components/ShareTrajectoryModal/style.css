@@ -24,7 +24,7 @@
     color: var(--medium-grey);
 }
 
-.second-line {
+.time-input-container {
     display: flex;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -32,6 +32,6 @@
     align-items: center;
 }
 
-.second-line p {
+.time-input-container div {
     margin-bottom: 0px;
 }
