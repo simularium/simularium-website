@@ -272,7 +272,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         });
     }
 
-    public receiveTimeChange(timeData: TimeData): any {
+    public receiveTimeChange(timeData: TimeData): void {
         const {
             changeTime,
             setStatus,
@@ -284,7 +284,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setBuffering,
             isLooping,
             setUrlParams,
-            setIsPlaying,
         } = this.props;
         if (this.state.isInitialPlay) {
             receiveTrajectory({
