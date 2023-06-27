@@ -164,10 +164,13 @@ describe("General utilities", () => {
             expect(editUrlParams(url, value, paramKey)).toBe(url + "&t=0");
         });
         it("updates an existing param", () => {
-            const url = `${location.origin}${location.pathname}?trajFileName=traj.simularium&t=0`;
+            const url = `${location.origin}${location.pathname}?trajFileName=traj.simularium`;
+            const param = "&t=0";
             const value = "1";
             const paramKey = "t";
-            expect(editUrlParams(url, value, paramKey)).toBe(url + "&t=1");
+            expect(editUrlParams(url + param, value, paramKey)).toBe(
+                url + "&t=1"
+            );
         });
     });
 
