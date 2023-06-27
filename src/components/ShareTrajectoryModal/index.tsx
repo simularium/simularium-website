@@ -36,14 +36,24 @@ const ShareTrajectoryModal = ({
 
     const [allowTimeInput, setAllowTimeInput] = React.useState(true);
     const [url, setUrl] = React.useState(
-        editUrlParams(currentTime.toString(), URL_PARAM_KEY_TIME)
+        editUrlParams(
+            window.location.href,
+            currentTime.toString(),
+            URL_PARAM_KEY_TIME
+        )
     );
     const [lastEnteredNumber, setLastEnteredNumber] =
         React.useState(currentTime);
 
     const handleAllowUserInput = (): void => {
         const timeValue = allowTimeInput ? lastEnteredNumber : currentTime;
-        setUrl(editUrlParams(timeValue.toString(), URL_PARAM_KEY_TIME));
+        setUrl(
+            editUrlParams(
+                window.location.href,
+                timeValue.toString(),
+                URL_PARAM_KEY_TIME
+            )
+        );
         setAllowTimeInput((allowTimeInput) => !allowTimeInput);
     };
 
@@ -74,7 +84,13 @@ const ShareTrajectoryModal = ({
             );
         }
         setLastEnteredNumber(timeValue);
-        setUrl(editUrlParams(timeValue.toString(), URL_PARAM_KEY_TIME));
+        setUrl(
+            editUrlParams(
+                window.location.href,
+                timeValue.toString(),
+                URL_PARAM_KEY_TIME
+            )
+        );
     };
 
     const copyToClipboard = async (): Promise<void> => {

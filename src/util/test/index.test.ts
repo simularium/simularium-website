@@ -8,6 +8,7 @@ import {
     clearBrowserUrlParams,
     wrapText,
     hasUrlParamsSettings,
+    editUrlParams,
 } from "../";
 import {
     getFileIdFromUrl,
@@ -152,6 +153,21 @@ describe("General utilities", () => {
                 url + "?trajFileName=traj.simularium&notparam=foo"
             );
             expect(hasUrlParamsSettings()).toBe(false);
+        });
+    });
+
+    describe("editUrlParams", () => {
+        it("adds a url param when that param was not present before", () => {
+            const url = `${location.origin}${location.pathname}?trajFileName=traj.simularium`;
+            const value = "0";
+            const paramKey = "t";
+            expect(editUrlParams(url, value, paramKey)).toBe(url + "&t=0");
+        });
+        it("updates an existing param", () => {
+            const url = `${location.origin}${location.pathname}?trajFileName=traj.simularium&t=0`;
+            const value = "1";
+            const paramKey = "t";
+            expect(editUrlParams(url, value, paramKey)).toBe(url + "&t=1");
         });
     });
 

@@ -87,13 +87,14 @@ export const hasUrlParamsSettings = () => {
     return false;
 };
 
-export const editUrlParams = (value: string, paramKey: string): string => {
+export const editUrlParams = (
+    url: string,
+    value: string,
+    paramKey: string
+): string => {
     // this returns a new url as a string, does not change current url shown in browser
-    const currentUrl = new URL(window.location.href);
-    const params = new URLSearchParams(window.location.search);
-    if (params.has(paramKey)) {
-        params.delete(paramKey);
-    }
+    const currentUrl = new URL(url);
+    const params = new URLSearchParams(currentUrl.search);
     params.set(paramKey, value);
     currentUrl.search = params.toString();
     return currentUrl.toString();
