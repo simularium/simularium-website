@@ -5,7 +5,7 @@ import {
     bindAll,
     convertToSentenceCase,
     roundTimeForDisplay,
-    clearUrlParams,
+    clearBrowserUrlParams,
     wrapText,
     hasUrlParamsSettings,
 } from "../";
@@ -144,18 +144,25 @@ describe("General utilities", () => {
             );
             expect(hasUrlParamsSettings()).toBe(true);
         });
+        it("returns false if url params are not in urlSetttings", () => {
+            const url = `${location.origin}${location.pathname}`;
+            history.replaceState(
+                {},
+                "",
+                url + "?trajFileName=traj.simularium&notparam=foo"
+            );
+            expect(hasUrlParamsSettings()).toBe(false);
+        });
     });
 
-    describe("clearUrlParams", () => {
+    describe("clearBrowserUrlParams", () => {
         it("clears one URL param", () => {
             const baseUrl = `${location.origin}${location.pathname}`;
             history.replaceState({}, "", "?trajFileName=traj.simularium");
             expect(location.href).toBe(
                 baseUrl + "?trajFileName=traj.simularium"
             );
-
-            clearUrlParams();
-
+            clearBrowserUrlParams();
             expect(location.href).toBe(baseUrl);
         });
         it("clears multiple URL params", () => {
@@ -169,7 +176,7 @@ describe("General utilities", () => {
                 baseUrl + "?trajFileName=traj.simularium&month=jan"
             );
 
-            clearUrlParams();
+            clearBrowserUrlParams();
 
             expect(location.href).toBe(baseUrl);
         });

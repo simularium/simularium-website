@@ -41,7 +41,7 @@ import {
 import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/viewer/constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
-import { clearUrlParams } from "../../util";
+import { clearBrowserUrlParams } from "../../util";
 import {
     getFileIdFromUrl,
     urlCheck,
@@ -115,7 +115,7 @@ class App extends React.Component<AppProps, AppState> {
             } else {
                 // if the name is not in our list of networked files, just quietly clear out the url
                 // and save the controller
-                clearUrlParams();
+                clearBrowserUrlParams();
                 setSimulariumController(controller);
             }
         };
@@ -141,7 +141,7 @@ class App extends React.Component<AppProps, AppState> {
                     message: `${userTrajectoryUrl} does not seem like a url`,
                     htmlData:
                         "make sure to include 'http/https' at the beginning of the url, and check for typos",
-                    onClose: clearUrlParams,
+                    onClose: clearBrowserUrlParams,
                 });
                 setViewerStatus({ status: VIEWER_ERROR });
                 setSimulariumController(controller);

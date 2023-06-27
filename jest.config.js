@@ -12,7 +12,6 @@ module.exports = {
             "<rootDir>/scripts/jestAssetTransformer.js",
         "\\.(css|less)$": "identity-obj-proxy",
     },
-    coverageReporters: [ "text-summary", "lcov" ],
     coverageThreshold: {
         global: {
             lines: 50,

@@ -10,7 +10,7 @@ import {
 } from "@aics/simularium-viewer";
 
 import { URL_PARAM_KEY_FILE_NAME, URL_PARAM_KEY_TIME } from "../../constants";
-import { clearUrlParams } from "../../util";
+import { clearBrowserUrlParams } from "../../util";
 import { getUserTrajectoryUrl } from "../../util/userUrlHandling";
 import {
     VIEWER_LOADING,
@@ -133,7 +133,7 @@ const handleFileLoadError = (
     });
 
     if (error.level === ErrorLevel.ERROR) {
-        clearUrlParams();
+        clearBrowserUrlParams();
     }
 };
 
@@ -325,7 +325,7 @@ const loadFileViaUrl = createLogic({
                     );
                     dispatch(clearSimulariumFile({ newFile: false }));
                 });
-                clearUrlParams();
+                clearBrowserUrlParams();
                 done();
             });
     },

@@ -87,10 +87,7 @@ export const hasUrlParamsSettings = () => {
     return false;
 };
 
-export const clearAndResetUrlParam = (
-    value: string,
-    paramKey: string
-): string => {
+export const editUrlParams = (value: string, paramKey: string): string => {
     // this returns a new url as a string, does not change current url shown in browser
     const currentUrl = new URL(window.location.href);
     const params = new URLSearchParams(window.location.search);
@@ -102,7 +99,7 @@ export const clearAndResetUrlParam = (
     return currentUrl.toString();
 };
 
-export const clearUrlParams = () => {
+export const clearBrowserUrlParams = () => {
     // Removes the query string from the current URL shown in the browser
     // ex) https://mysite.com/path?city=seattle -> https://mysite.com/path
     history.replaceState({}, "", `${location.origin}${location.pathname}`);

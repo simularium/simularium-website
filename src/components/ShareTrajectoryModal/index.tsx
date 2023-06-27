@@ -10,7 +10,7 @@ import { DisplayTimes } from "../../containers/ViewerPanel/types";
 import CustomModal from "../CustomModal";
 import { Link, Warn } from "../Icons";
 import { URL_PARAM_KEY_TIME } from "../../constants";
-import { clearAndResetUrlParam } from "../../util";
+import { editUrlParams } from "../../util";
 import classNames from "classnames";
 
 import styles from "./style.css";
@@ -36,14 +36,14 @@ const ShareTrajectoryModal = ({
 
     const [allowTimeInput, setAllowTimeInput] = React.useState(true);
     const [url, setUrl] = React.useState(
-        clearAndResetUrlParam(currentTime.toString(), URL_PARAM_KEY_TIME)
+        editUrlParams(currentTime.toString(), URL_PARAM_KEY_TIME)
     );
     const [lastEnteredNumber, setLastEnteredNumber] =
         React.useState(currentTime);
 
     const handleAllowUserInput = (): void => {
         const timeValue = allowTimeInput ? lastEnteredNumber : currentTime;
-        setUrl(clearAndResetUrlParam(timeValue.toString(), URL_PARAM_KEY_TIME));
+        setUrl(editUrlParams(timeValue.toString(), URL_PARAM_KEY_TIME));
         setAllowTimeInput((allowTimeInput) => !allowTimeInput);
     };
 
@@ -74,7 +74,7 @@ const ShareTrajectoryModal = ({
             );
         }
         setLastEnteredNumber(timeValue);
-        setUrl(clearAndResetUrlParam(timeValue.toString(), URL_PARAM_KEY_TIME));
+        setUrl(editUrlParams(timeValue.toString(), URL_PARAM_KEY_TIME));
     };
 
     const copyToClipboard = async (): Promise<void> => {
