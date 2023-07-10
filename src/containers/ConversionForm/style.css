@@ -5,7 +5,7 @@
 }
 
 .form-content {
-    padding-left: 30px;  
+    padding-left: 30px;
     padding-top: 30px;
 }
 
@@ -14,7 +14,7 @@
     padding-bottom: 0px;
     margin-bottom: 0em;
     font-weight: 600;
-    letter-spacing: .05rem;
+    letter-spacing: 0.05rem;
 }
 
 .section-header {
@@ -58,6 +58,7 @@
     color: var(--light-theme-btn-default-color);
 }
 
-.container .loading-icon, .container.loading-text {
+.container .loading-icon,
+.container.loading-text {
     text-align: center;
 }
