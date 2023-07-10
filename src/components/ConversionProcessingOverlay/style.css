@@ -10,53 +10,45 @@
     justify-content: center;
 }
 
-.container h2,p,h3 {
-  color: var(--dark);
+.container h2, .container h3{
+    color: var(--dark);
 }
 
-.spin {
-  margin: 20px 0;
-  padding: 30px 50px 10px;
-  text-align: center;
-  border-radius: 4px;
+.title {
+    font-weight: 700;
 }
 
-.container .title-text {
-  font-weight: 700;
+.content {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 10px 0 26px 0;
 }
 
-.container .center-text {
-  text-align: center;
-  margin-bottom: 0px;
+.go-back-button {
+  margin-top: 10px;
 }
 
-.go-back-button svg {
-  fill: var(--blue);
+.processing-indicator {
+  margin-bottom: 40px;
 }
 
-.container .processing-margin {
-  margin-bottom: 20px;
+.spin-container {
+    margin: 20px 0;
+    padding: 30px 50px 10px;
 }
 
 .divider-container {
-  width: 496px;
+    width: 496px;
+    margin-bottom: 26px;
 }
 
 .divider-container :global(.ant-divider) {
-  background-color: var(--heather);
+    background-color: var(--heather);
 }
 
-.container .medium-text {
-  font-weight: 500;
-}
-
-.container .tab-button {
-  margin-bottom: 20px;
-  border: 1.75px solid var(--dark-four);
-}
-
-.container .cancel-button {
-  margin-right: 0px;
-  margin-top: 20px;
-  border: 1.75px solid var(--dark-four);
+.button {
+    border: 1.75px solid var(--dark-four);
 }
