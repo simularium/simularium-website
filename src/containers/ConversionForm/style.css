@@ -4,39 +4,9 @@
     background-color: rgba(231, 228, 242, 1);
 }
 
-.container .form-content {
-    padding-left: 30px;  
+.form-content {
+    padding-left: 30px;
     padding-top: 30px;
-}
-
-.container .loading-icon, .container.loading-text {
-    text-align: center;
-}
-
-.upload {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.upload-container {
-    display: flex;
-    flex-direction: row;
-}
-
-.selector-box {
-    width: 200px;
-    margin-right: 20px;
-}
-
-.container button {
-    margin-right: 20px;
-    min-width: 80px;
-}
-
-.container span svg path {
-    /* this makes the down arrow in the select box visible  */
-    color: var(--light-theme-btn-default-color);
 }
 
 .title {
@@ -44,7 +14,7 @@
     padding-bottom: 0px;
     margin-bottom: 0em;
     font-weight: 600;
-    letter-spacing: .05rem;
+    letter-spacing: 0.05rem;
 }
 
 .section-header {
@@ -58,7 +28,37 @@
     margin-bottom: 0px;
 }
 
+.upload-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.selector-box {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.upload {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 
 .container :global(.ant-upload-span) {
     background-color: var(--overlay-purple);
+}
+
+.form-content button {
+    margin-right: 20px;
+    min-width: 80px;
+}
+
+.form-content span svg path {
+    /* this makes the down arrow in the select box visible  */
+    color: var(--light-theme-btn-default-color);
+}
+
+.container .loading-icon,
+.container.loading-text {
+    text-align: center;
 }
