@@ -11,7 +11,8 @@
     "license": "ISC",
     "scripts": {
         "start": "webpack serve --config ./webpack/webpack.config.js --env env=dev",
-        "gh-deploy": "gh-pages -d gh-pages",
+        "pregh-deploy": "npm run build",
+        "gh-deploy": "gh-pages -d dist",
         "build:staging": "cross-env NODE_ENV=staging webpack --config ./webpack/webpack.config.js  --env env=staging",
         "build": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.js  --env env=production",
         "lint": "eslint src --ext .ts,.tsx",
