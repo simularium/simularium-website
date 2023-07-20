@@ -3,6 +3,7 @@ export const API_VERSION = "v1";
 export const HEADER_HEIGHT = 113;
 export const URL_PARAM_KEY_FILE_NAME = "trajFileName";
 export const URL_PARAM_KEY_USER_URL = "trajUrl";
+export const URL_PARAM_KEY_TIME = "t";
 export const CHECKBOX_TYPE_STAR = "star";
 export type CHECKBOX_TYPE_STAR = typeof CHECKBOX_TYPE_STAR;
 export const TOOLTIP_COLOR = "#3B3649";

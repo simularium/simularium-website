@@ -1,22 +1,4 @@
 /* Default and primary button colors differ within modals */
-.modal :global(.ant-btn-default) {
-    background-color: transparent;
-    border-color: var(--light-theme-modal-btn-default-color);
-    color: var(--light-theme-modal-btn-default-color);
-}
-
-.modal :global(.ant-btn-primary) {
-    background-color: var(--light-theme-modal-btn-default-color);
-    border: none;
-    color: #d8d8d8;
-}
-
-.modal :global(.ant-btn-primary[disabled]) {
-    background: var(--light-theme-btn-default-disabled-bg);
-    border: none;
-    color: #d8d8d8;
-}
-
 .modal :global(.ant-modal-content) {
     /* prevents modal body color rendering under header/footer at corners */
     border-radius: 3px;
@@ -25,4 +7,48 @@
 .modal :global(.ant-modal-title) {
     text-align: center;
     font-weight: bold;
+    font-size: 14px;
+}
+
+.modal :global(.ant-modal-footer) {
+    padding: 12px 16px 20px;
+    background-color: var(--modal-content-bg);
+    max-height: 56px;
+}
+
+.modal :global(.ant-modal-body) {
+    padding: 24px 24px 0px 24px;
+    font-size: 16px;
+    color: var(--dark);
+}
+
+.modal :global(.ant-modal-header) {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal :global(.ant-modal-close-x) {
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.modal :global(.ant-checkbox-inner) {
+    background-color: transparent;
+    border: 1px solid var(--dark-three) !important;
+}
+
+.modal :global(.ant-input) {
+    border: 1px solid var(--heather);
+    border-radius: 3px;
+    text-align: right;
+}
+
+.modal :global(.ant-divider) {
+    margin: 0px;
+    position: absolute;
+    left: 0;
+    background-color: var(--heather);
 }

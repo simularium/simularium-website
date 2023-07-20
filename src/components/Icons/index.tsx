@@ -9,6 +9,9 @@ import {
     PlusOutlined,
     MinusOutlined,
     HomeOutlined,
+    ShareAltOutlined,
+    WarningOutlined,
+    LinkOutlined,
     DownloadOutlined,
     RetweetOutlined,
 } from "@ant-design/icons";
@@ -29,6 +32,9 @@ export const GoBack = <ArrowLeftOutlined />;
 export const Reset = <HomeOutlined />;
 export const ZoomIn = <PlusOutlined />;
 export const ZoomOut = <MinusOutlined />;
+export const Share = <ShareAltOutlined />;
+export const Warn = <WarningOutlined />;
+export const Link = <LinkOutlined />;
 export const Download = <DownloadOutlined size={32} />;
 export const LoopOutlined = <RetweetOutlined />;
 
@@ -54,7 +60,10 @@ export default {
     Reset,
     ZoomIn,
     ZoomOut,
+    Share,
+    Warn,
     BetaTag,
+    Link,
     Download,
     LoopOutlined,
 };
