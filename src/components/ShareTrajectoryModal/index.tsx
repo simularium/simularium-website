@@ -150,7 +150,7 @@ const ShareTrajectoryModal = ({
                     <div className={styles.timeInputContainer}>
                         {" "}
                         <Checkbox onChange={handleAllowUserInput}></Checkbox>
-                        <p>Start at</p>
+                        <p className={styles.timeInputText}>Start at</p>
                         <Input
                             className={styles.timeInput}
                             disabled={allowTimeInput}

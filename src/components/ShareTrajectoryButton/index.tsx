@@ -28,9 +28,7 @@ const ShareTrajectoryButton = ({
     };
 
     const handleTooltipOpen = () => {
-        if (isSharing || !simulariumFile.name) {
-            return false;
-        } else return;
+        if (isSharing || !simulariumFile.name) return false;
     };
 
     return (

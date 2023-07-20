@@ -24,6 +24,10 @@
     color: var(--medium-grey);
 }
 
+.time-input-text {
+    padding-top: 8px;
+}
+
 .time-input-container {
     display: flex;
     padding-top: 20px;
