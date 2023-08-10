@@ -13,10 +13,12 @@
     --white-six: #e7e7e7;
     --transparent-white: rgba(255, 255, 255, 0.65);
     --dim-gray: #383838;
+    --dim-gray-two: #6E6E6E;
+    --purplish-gray: #4A4658;
     --pale-grey: #ddd9ec;
     --heather: #bab5c9;
     --text-gray: #a0a0a0;
-    --greyish-brown: #4a4a4a;
+    --grayish-brown: #4a4a4a;
     --warm-gray: #979797;
     --charcoal-grey: #3b3649;
     --dark-blue-grey: #2d224d;
@@ -70,5 +72,12 @@
     --light-theme-modal-supplemental-text: var(--charcoal-grey);
     --light-theme-modal-btn-default-color: var(--dark-four);
     --light-theme-btn-default-disabled-bg: var(--heather);
+    --viewer-btn-bg-default: var(--dark-three);
+    --viewer-btn-bg-hover: var(--purplish-gray);
+    --viewer-btn-bg-disabled: var(--dark-three);
+    --viewer-btn-border-active: var( --white-three);
+    --viewer-btn-border-on: var(--dim-gray-two);
+    --viewer-btn-color-default: var(--white-three);
+    --viewer-btn-color-disabled: var(--grayish-brown);
 }
 
