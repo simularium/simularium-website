@@ -6,6 +6,7 @@
     right: 20px;
     justify-content: space-evenly;
     gap: 12px;
+    gap: 12px;
     margin-bottom: 20px;
 }
 
@@ -68,7 +69,6 @@
 .radio-group .radio-btn:last-child {
     border-radius: 0px 0px 3px 3px;
 }
-
 .btn:hover {
     color: var(--viewer-btn-color-default);
     background-color: var(--viewer-btn-bg-hover);
