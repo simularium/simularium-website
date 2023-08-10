@@ -12,6 +12,8 @@ const PAN = "pan";
 const ROTATE = "rotate";
 const ORTHOGRAPHIC = "o";
 const PERSPECTIVE = "p";
+const ORTHOGRAPHIC = "o";
+const PERSPECTIVE = "p";
 const CAMERA_MODE_MODIFIER_KEYS = ["Meta", "Shift"];
 const ZOOM_IN_HK = "ArrowUp";
 const ZOOM_OUT_HK = "ArrowDown";
@@ -45,8 +47,7 @@ const CameraControls = ({
 }: CameraControlsProps): JSX.Element => {
     const [isFocused, saveFocusMode] = useState(true);
     const [mode, setMode] = useState(ROTATE);
-    const [cameraProjectionType, setCameraProjectionType] =
-        useState(PERSPECTIVE);
+    const [camera, setCamera] = useState(PERSPECTIVE);
     const [keyPressed, setKeyPressed] = useState("");
     const lastKeyPressed = useRef("");
 
@@ -105,8 +106,8 @@ const CameraControls = ({
     }, [mode]);
 
     useEffect(() => {
-        setCameraType(cameraProjectionType === ORTHOGRAPHIC);
-    }, [cameraProjectionType]);
+        setCameraType(camera === ORTHOGRAPHIC);
+    }, [camera]);
 
     useEffect(() => {
         if (
@@ -131,10 +132,10 @@ const CameraControls = ({
                 saveFocusMode(!isFocused);
                 break;
             case ORTHOGRAPHIC:
-                setCameraProjectionType(ORTHOGRAPHIC);
+                setCamera(ORTHOGRAPHIC);
                 break;
             case PERSPECTIVE:
-                setCameraProjectionType(PERSPECTIVE);
+                setCamera(PERSPECTIVE);
                 break;
             default:
                 break;
@@ -221,21 +222,22 @@ const CameraControls = ({
                 <div className={styles.radioGroup}>
                     <Tooltip
                         placement="left"
-                        title={"Orthographic Camera"}
+                        title={
+                            mode === ROTATE
+                                ? "Orthographic Camera"
+                                : "Orthographic Camera"
+                        }
                         color={TOOLTIP_COLOR}
                     >
                         {/* Should be radio buttons, but using radio buttons 
                         detaches keypressed listener after the button is pressed */}
                         <Button
                             className={classNames([
-                                {
-                                    [styles.active]:
-                                        cameraProjectionType === ORTHOGRAPHIC,
-                                },
+                                { [styles.active]: camera === ORTHOGRAPHIC },
                                 styles.radioBtn,
                             ])}
                             onClick={() => {
-                                setCameraProjectionType(ORTHOGRAPHIC);
+                                setCamera(ORTHOGRAPHIC);
                             }}
                             icon={Icons.OrthographicCamera}
                         ></Button>
@@ -247,20 +249,18 @@ const CameraControls = ({
                     >
                         <Button
                             className={classNames([
-                                {
-                                    [styles.active]:
-                                        cameraProjectionType === PERSPECTIVE,
-                                },
+                                { [styles.active]: camera === PERSPECTIVE },
                                 styles.radioBtn,
                             ])}
                             onClick={() => {
-                                setCameraProjectionType(PERSPECTIVE);
+                                setCamera(PERSPECTIVE);
                             }}
                             icon={Icons.PerspectiveCamera}
                         ></Button>
                     </Tooltip>
                 </div>
             </div>
+            {/* focus */}
             <Tooltip placement="left" title="Focus (F)" color={TOOLTIP_COLOR}>
                 <Button
                     className={classNames([
@@ -268,7 +268,9 @@ const CameraControls = ({
                         styles.radioBtn,
                     ])}
                     onClick={() => {
+                        console.log(isFocused);
                         saveFocusMode(!isFocused);
+                        console.log(isFocused);
                     }}
                 >
                     <span
@@ -280,6 +282,8 @@ const CameraControls = ({
                     />
                 </Button>
             </Tooltip>
+
+            {/* home */}
             <Tooltip
                 placement="left"
                 title="Home view (H)"
