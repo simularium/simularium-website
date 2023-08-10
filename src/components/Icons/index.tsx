@@ -21,6 +21,8 @@ import AicsLogoWhite from "../../assets/AICS-logo-full.png";
 import ClockwiseArrow from "../../assets/step-forward.svg";
 import CounterClockwiseArrow from "../../assets/step-back.svg";
 import Beta from "../../assets/beta.svg";
+import Orthographic from "../../assets/orthographic.svg";
+import Perspective from "../../assets/perspective.svg";
 
 export const Loading = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 export const Play = <CaretRightOutlined />;
@@ -43,6 +45,8 @@ export const AicsLogo = <img src={AicsLogoWhite} style={{ width: "140px" }} />;
 export const StepForward = <img src={ClockwiseArrow} />;
 export const StepBack = <img src={CounterClockwiseArrow} />;
 export const BetaTag = <img src={Beta} style={{ width: "42px" }} />;
+export const OrthographicCamera = <img src={Orthographic} />;
+export const PerspectiveCamera = <img src={Perspective} />;
 
 export default {
     StepBack,
@@ -66,4 +70,6 @@ export default {
     Link,
     Download,
     LoopOutlined,
+    OrthographicCamera,
+    PerspectiveCamera,
 };
