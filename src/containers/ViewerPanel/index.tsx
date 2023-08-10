@@ -432,6 +432,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     zoomOut={simulariumController.zoomOut}
                     setPanningMode={simulariumController.setPanningMode}
                     setFocusMode={simulariumController.setFocusMode}
+                    setCameraType={simulariumController.setCameraType}
                 />
             </div>
         );
