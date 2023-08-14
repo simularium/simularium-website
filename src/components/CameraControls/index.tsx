@@ -258,7 +258,6 @@ const CameraControls = ({
                     </Tooltip>
                 </div>
             </div>
-            {/* focus */}
             <Tooltip placement="left" title="Focus (F)" color={TOOLTIP_COLOR}>
                 <Button
                     className={classNames([
@@ -266,9 +265,7 @@ const CameraControls = ({
                         styles.radioBtn,
                     ])}
                     onClick={() => {
-                        console.log(isFocused);
                         saveFocusMode(!isFocused);
-                        console.log(isFocused);
                     }}
                 >
                     <span
@@ -280,8 +277,6 @@ const CameraControls = ({
                     />
                 </Button>
             </Tooltip>
-
-            {/* home */}
             <Tooltip
                 placement="left"
                 title="Home view (H)"
