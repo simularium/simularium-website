@@ -129,7 +129,6 @@ const PlayBackControls = ({
                         btnClassNames,
                         { [styles.customStepButton]: !loading },
                     ])}
-                    size="small"
                     onClick={prevHandler}
                     disabled={isStepBackDisabled || loading || isEmpty}
                     loading={loading}
@@ -152,8 +151,10 @@ const PlayBackControls = ({
                 color={TOOLTIP_COLOR}
             >
                 <Button
-                    className={btnClassNames}
-                    size="small"
+                    className={classNames([
+                        btnClassNames,
+                        styles.buttonSpacing,
+                    ])}
                     icon={isPlaying ? Icons.Pause : Icons.Play}
                     onClick={isPlaying ? pauseHandler : () => playHandler()}
                     loading={loading}
@@ -170,7 +171,6 @@ const PlayBackControls = ({
                         btnClassNames,
                         { [styles.customStepButton]: !loading },
                     ])}
-                    size="small"
                     onClick={nextHandler}
                     disabled={isStepForwardDisabled || loading || isEmpty}
                     loading={loading}
@@ -221,16 +221,10 @@ const PlayBackControls = ({
                 arrowPointAtCenter
             >
                 <Button
-                    className={
-                        isLooping
-                            ? btnClassNames
-                            : classNames([
-                                  styles.item,
-                                  styles.btn,
-                                  styles.removeBorder,
-                              ])
-                    }
-                    size="small"
+                    className={classNames([
+                        btnClassNames,
+                        { [styles.active]: isLooping },
+                    ])}
                     icon={Icons.LoopOutlined}
                     onClick={loopHandler}
                     loading={loading}
