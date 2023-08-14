@@ -68,6 +68,7 @@
 .radio-group .radio-btn:last-child {
     border-radius: 0px 0px 3px 3px;
 }
+
 .btn:hover {
     color: var(--viewer-btn-color-default);
     background-color: var(--viewer-btn-bg-hover);
@@ -77,6 +78,11 @@
 .btn:focus {
     background-color: var(--dark-theme-btn-bg);
     color: var(--dark-theme-btn-color);
+}
+
+.btn:hover:focus {
+    color: var(--viewer-btn-color-default);
+    background-color: var(--viewer-btn-bg-hover);
 }
 
 .btn[disabled] {
