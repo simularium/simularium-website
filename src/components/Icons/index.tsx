@@ -9,6 +9,8 @@ import {
     PlusOutlined,
     MinusOutlined,
     HomeOutlined,
+    DownloadOutlined,
+    RetweetOutlined,
 } from "@ant-design/icons";
 
 import PurpleArrowPointingRight from "../../assets/open-arrow.svg";
@@ -23,16 +25,19 @@ export const Pause = <PauseOutlined />;
 export const UploadFile = <ImportOutlined />;
 export const DownArrow = <DownOutlined />;
 export const CaretRight = <CaretRightOutlined />;
-export const GoBack = <ArrowLeftOutlined />;
+export const LeftArrow = <ArrowLeftOutlined />;
 export const Reset = <HomeOutlined />;
 export const ZoomIn = <PlusOutlined />;
 export const ZoomOut = <MinusOutlined />;
+export const Download = <DownloadOutlined size={32} />;
+export const LoopOutlined = <RetweetOutlined />;
 
 export const PurpleArrow = <img src={PurpleArrowPointingRight} />;
 export const AicsLogo = <img src={AicsLogoWhite} style={{ width: "140px" }} />;
 export const StepForward = <img src={ClockwiseArrow} />;
 export const StepBack = <img src={CounterClockwiseArrow} />;
 export const BetaTag = <img src={Beta} style={{ width: "42px" }} />;
+export const UpRightArrow = <ArrowLeftOutlined rotate={135} />;
 
 export default {
     StepBack,
@@ -44,11 +49,14 @@ export default {
     DownArrow,
     CaretRight,
     ArrowLeftOutlined,
-    GoBack,
+    LeftArrow,
     PurpleArrow,
     AicsLogo,
     Reset,
     ZoomIn,
     ZoomOut,
     BetaTag,
+    Download,
+    LoopOutlined,
+    UpRightArrow,
 };

@@ -1,19 +1,31 @@
-.container{
-    height: 100vh;
+.container {
+    height: calc(100vh - var(--header-height));
     width: 100%;
     background-color: rgba(231, 228, 242, 1);
-    padding-left: 30px;  
+}
+
+.form-content {
+    padding-left: 30px;
     padding-top: 30px;
 }
 
-.container .loading-icon, .container.loading-text {
-    text-align: center;
+.title {
+    font-size: 30px;
+    padding-bottom: 0px;
+    margin-bottom: 0em;
+    font-weight: 600;
+    letter-spacing: 0.05rem;
 }
 
-.upload {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+.section-header {
+    padding-top: 30px;
+    padding-bottom: 15px;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.select-title {
+    margin-bottom: 0px;
 }
 
 .upload-container {
@@ -26,31 +38,27 @@
     margin-right: 20px;
 }
 
-.container button {
+.upload {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.container :global(.ant-upload-span) {
+    background-color: var(--overlay-purple);
+}
+
+.form-content button {
     margin-right: 20px;
     min-width: 80px;
 }
 
-.container span svg path {
+.form-content span svg path {
     /* this makes the down arrow in the select box visible  */
     color: var(--light-theme-btn-default-color);
 }
 
-.title {
-    font-size: 30px;
-    padding-bottom: 0px;
-    margin-bottom: 0em;
-    font-weight: 600;
-    letter-spacing: .05rem;
-}
-
-.section-header {
-    padding-top: 30px;
-    padding-bottom: 15px;
-    font-weight: 600;
-    font-size: 20px;
-}
-
-.select-title {
-    margin-bottom: 0px;
+.container .loading-icon,
+.container.loading-text {
+    text-align: center;
 }
