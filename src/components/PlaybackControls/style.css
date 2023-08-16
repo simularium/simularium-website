@@ -106,6 +106,7 @@
 .custom-step-button :global(.ant-btn) {
     padding: 0;
     width: 24px;
+    height: 24px;
 }
 
 .container .anticon svg {
