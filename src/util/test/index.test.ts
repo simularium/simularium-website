@@ -5,8 +5,10 @@ import {
     bindAll,
     convertToSentenceCase,
     roundTimeForDisplay,
-    clearUrlParams,
+    clearBrowserUrlParams,
     wrapText,
+    hasUrlParamsSettings,
+    editUrlParams,
 } from "../";
 import {
     getFileIdFromUrl,
@@ -123,16 +125,63 @@ describe("General utilities", () => {
         });
     });
 
-    describe("clearUrlParams", () => {
+    describe("hasUrlParamsSettings", () => {
+        it("returns false if no url params or trajectory", () => {
+            const url = `${location.origin}${location.pathname}`;
+            history.replaceState({}, "", url);
+            expect(hasUrlParamsSettings()).toBe(false);
+        });
+        it("returns false if no url params", () => {
+            const url = `${location.origin}${location.pathname}`;
+            history.replaceState({}, "", url + "?trajFileName=traj.simularium");
+            expect(hasUrlParamsSettings()).toBe(false);
+        });
+        it("returns true if url time param", () => {
+            const url = `${location.origin}${location.pathname}`;
+            history.replaceState(
+                {},
+                "",
+                url + "?trajFileName=traj.simularium&t=0"
+            );
+            expect(hasUrlParamsSettings()).toBe(true);
+        });
+        it("returns false if url params are not in urlSetttings", () => {
+            const url = `${location.origin}${location.pathname}`;
+            history.replaceState(
+                {},
+                "",
+                url + "?trajFileName=traj.simularium&notparam=foo"
+            );
+            expect(hasUrlParamsSettings()).toBe(false);
+        });
+    });
+
+    describe("editUrlParams", () => {
+        it("adds a url param when that param was not present before", () => {
+            const url = `${location.origin}${location.pathname}?trajFileName=traj.simularium`;
+            const value = "0";
+            const paramKey = "t";
+            expect(editUrlParams(url, value, paramKey)).toBe(url + "&t=0");
+        });
+        it("updates an existing param", () => {
+            const url = `${location.origin}${location.pathname}?trajFileName=traj.simularium`;
+            const param = "&t=0";
+            const value = "1";
+            const paramKey = "t";
+            expect(editUrlParams(url + param, value, paramKey)).toBe(
+                url + "&t=1"
+            );
+        });
+    });
+
+    describe("clearBrowserUrlParams", () => {
         it("clears one URL param", () => {
             const baseUrl = `${location.origin}${location.pathname}`;
             history.replaceState({}, "", "?trajFileName=traj.simularium");
             expect(location.href).toBe(
                 baseUrl + "?trajFileName=traj.simularium"
             );
-
-            clearUrlParams();
-
+            clearBrowserUrlParams();
             expect(location.href).toBe(baseUrl);
         });
         it("clears multiple URL params", () => {
@@ -146,7 +195,7 @@ describe("General utilities", () => {
                 baseUrl + "?trajFileName=traj.simularium&month=jan"
             );
 
-            clearUrlParams();
+            clearBrowserUrlParams();
 
             expect(location.href).toBe(baseUrl);
         });

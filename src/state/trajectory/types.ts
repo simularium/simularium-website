@@ -68,3 +68,7 @@ export interface TimeUnits {
     magnitude: number;
     name: string;
 }
+
+export interface SetUrlParamsAction {
+    type: string;
+}

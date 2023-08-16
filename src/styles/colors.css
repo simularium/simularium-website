@@ -26,6 +26,8 @@
     --baby-purple: #b59ff6;
     --allen-purple: #8d87aa;
     --blue: #0094FF;
+    --modal-content-bg: #e7e4f2;
+    --medium-grey: #AEAEAE;
     --background-dim-gray: var(--dim-gray);
     --border-gray: var(--white-six);
     --footer-bg: var(--dark-three);
@@ -80,4 +82,3 @@
     --viewer-btn-color-default: var(--white-three);
     --viewer-btn-color-disabled: var(--grayish-brown);
 }
-

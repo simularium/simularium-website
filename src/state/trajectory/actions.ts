@@ -9,6 +9,7 @@ import {
     REQUEST_PLOT_DATA,
     CLEAR_SIMULARIUM_FILE,
     LOAD_FILE_VIA_URL,
+    SET_URL_PARAMS,
 } from "./constants";
 import {
     TrajectoryStateBranch,
@@ -21,6 +22,7 @@ import {
     RequestLocalFileAction,
     ClearSimFileDataAction,
     LoadViaUrlAction,
+    SetUrlParamsAction,
 } from "./types";
 import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
 
@@ -116,5 +118,11 @@ export function loadViaUrl(
         controller,
         type: LOAD_FILE_VIA_URL,
         fileId,
+    };
+}
+
+export function setUrlParams(): SetUrlParamsAction {
+    return {
+        type: SET_URL_PARAMS,
     };
 }

@@ -25,6 +25,7 @@ import {
 } from "../../state/viewer/types";
 
 import styles from "./style.css";
+import ShareTrajectoryButton from "../../components/ShareTrajectoryButton";
 import DownloadTrajectoryMenu from "../../components/DownloadTrajectoryMenu";
 
 interface AppHeaderProps {
@@ -83,6 +84,7 @@ class AppHeader extends React.Component<AppHeaderProps> {
                         setError={setError}
                     />
                     <HelpMenu key="help" />
+                    <ShareTrajectoryButton simulariumFile={simulariumFile} />
                     <div className={styles.pipe}>|</div>
                     <DownloadTrajectoryMenu
                         isBuffering={isBuffering}
