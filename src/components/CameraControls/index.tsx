@@ -222,11 +222,7 @@ const CameraControls = ({
                 <div className={styles.radioGroup}>
                     <Tooltip
                         placement="left"
-                        title={
-                            mode === ROTATE
-                                ? "Orthographic Camera"
-                                : "Orthographic Camera"
-                        }
+                        title={"Orthographic Camera"}
                         color={TOOLTIP_COLOR}
                     >
                         {/* Should be radio buttons, but using radio buttons 
