@@ -1,0 +1,17 @@
+.error-modal :global(.ant-modal-title) {
+    font-size: 14px;;
+}
+
+.error-modal :global(.ant-modal-body) {
+   padding: 20px 15px 0px 15px;
+}
+
+.error-modal .red-text {
+    color: var(--brick-red);
+    padding-bottom: 8px;
+}
+
+.error-modal :global(.ant-modal-footer) {
+    background-color: var(--modal-content-bg);
+
+}

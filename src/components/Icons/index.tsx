@@ -11,6 +11,7 @@ import {
     HomeOutlined,
     DownloadOutlined,
     RetweetOutlined,
+    ExclamationCircleFilled,
 } from "@ant-design/icons";
 
 import PurpleArrowPointingRight from "../../assets/open-arrow.svg";
@@ -31,6 +32,7 @@ export const ZoomIn = <PlusOutlined />;
 export const ZoomOut = <MinusOutlined />;
 export const Download = <DownloadOutlined size={32} />;
 export const LoopOutlined = <RetweetOutlined />;
+export const Exclamation = <ExclamationCircleFilled />;
 
 export const PurpleArrow = <img src={PurpleArrowPointingRight} />;
 export const AicsLogo = <img src={AicsLogoWhite} style={{ width: "140px" }} />;
@@ -59,4 +61,5 @@ export default {
     Download,
     LoopOutlined,
     UpRightArrow,
+    Exclamation,
 };

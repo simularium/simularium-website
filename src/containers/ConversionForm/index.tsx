@@ -23,6 +23,7 @@ import customRequest from "./custom-request";
 import { SetErrorAction } from "../../state/viewer/types";
 import { UploadFile } from "antd/lib/upload";
 import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
+import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
@@ -55,15 +56,33 @@ const ConversionForm = ({
     const [fileToConvert, setFileToConvert] = useState<UploadFile>();
     const [engineSelected, setEngineSelected] = useState<boolean>(false);
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
+    const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(true);
 
+    const toggleModal = () => {
+        setFileTypeErrorModalOpen(!fileTypeErrorModalOpen);
+    };
     const toggleProcessing = () => {
         setIsProcessing(!isProcessing);
+    };
+
+    const validateFileType = (file: UploadFile) => {
+        // if file is valid
+        if ("validFile") {
+            setIsProcessing(!isProcessing);
+        }
+        // if file is invalid
+        else {
+            setFileTypeErrorModalOpen(true);
+        }
     };
 
     // TODO: use conversion template data to render the form
     console.log("conversion form data", conversionProcessingData);
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
+            {fileTypeErrorModalOpen ? (
+                <ConversionFileErrorModal closeModal={toggleModal} />
+            ) : null}
             {isProcessing ? (
                 <ConversionProcessingOverlay
                     toggleProcessing={toggleProcessing}
@@ -124,6 +143,10 @@ const ConversionForm = ({
                 <Button
                     type="primary"
                     disabled={!fileToConvert || !engineSelected}
+                    //TODO only set is processing if file is valid
+                    // 1 check if file is valid
+                    // if valid set is processing
+                    // if not toggle modal on
                     onClick={() => setIsProcessing(!isProcessing)}
                 >
                     Next
