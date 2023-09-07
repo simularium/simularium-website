@@ -1,12 +1,19 @@
 import { createSelector } from "reselect";
 import { reduce } from "lodash";
 import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
-import { SelectionEntry } from "@aics/simularium-viewer/type-declarations/simularium/SelectionInterface";
+import {
+    ColorChanges,
+    SelectionEntry,
+} from "@aics/simularium-viewer/type-declarations/simularium/SelectionInterface";
 
 import { getAgentDisplayNamesAndStates } from "../../trajectory/selectors";
-import { VisibilitySelectionMap } from "../types";
+import { ColorChangesMap, VisibilitySelectionMap } from "../types";
 
-import { getAgentHighlightMap, getAgentVisibilityMap } from "./basic";
+import {
+    getAgentHighlightMap,
+    getAgentVisibilityMap,
+    getColorChangesMap,
+} from "./basic";
 
 export const getHighlightedAgents = createSelector(
     [getAgentHighlightMap, getAgentDisplayNamesAndStates],
@@ -96,11 +103,55 @@ export const getAgentsToHide = createSelector(
                         });
                     }
                 }
-
                 return acc;
             },
             init
         );
+    }
+);
+
+export const getColorChanges = createSelector(
+    [getColorChangesMap, getAgentDisplayNamesAndStates],
+    (
+        colorChangesMap: ColorChangesMap,
+        agentDisplayData: UIDisplayData
+    ): ColorChanges[] => {
+        const colorArray: ColorChanges[] = [];
+
+        const agentColorChanges: SelectionEntry[] = reduce(
+            agentDisplayData,
+            (acc: SelectionEntry[], agent) => {
+                if (!colorChangesMap.agents[agent.name]) {
+                    return acc;
+                }
+
+                const agentTags = colorChangesMap.agents[agent.name];
+
+                // If specific tags have color changes, or if the agent itself is present in the colorChangesMap
+                if (agentTags && agentTags.length) {
+                    acc.push({
+                        name: agent.name,
+                        tags: agentTags,
+                    });
+                } else {
+                    acc.push({
+                        name: agent.name,
+                        tags: [],
+                    });
+                }
+                return acc;
+            },
+            []
+        );
+
+        if (agentColorChanges.length) {
+            colorArray.push({
+                agents: agentColorChanges,
+                color: colorChangesMap.color,
+            });
+        }
+
+        return colorArray;
     }
 );
 

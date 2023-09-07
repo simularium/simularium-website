@@ -6,6 +6,7 @@ import {
     HIGHLIGHT_AGENTS_BY_KEY,
     SET_AGENTS_VISIBLE,
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
+    SET_COLOR_CHANGES,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -14,6 +15,8 @@ import {
     SetVisibleAction,
     VisibilitySelectionMap,
     ResetAction,
+    SetColorChangesAction,
+    ColorChangesMap,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -54,6 +57,15 @@ export function highlightAgentsByDisplayKey(
     return {
         payload: agentNames,
         type: HIGHLIGHT_AGENTS_BY_KEY,
+    };
+}
+
+export function setColorChanges(
+    colorChanges: ColorChangesMap
+): SetColorChangesAction {
+    return {
+        payload: colorChanges,
+        type: SET_COLOR_CHANGES,
     };
 }
 

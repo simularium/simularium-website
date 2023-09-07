@@ -47,3 +47,12 @@ export interface ToggleAllVisibleAction {
 export interface ResetAction {
     type: string;
 }
+
+export interface SetColorChangesAction {
+    payload: ColorChangesMap;
+    type: string;
+}
+export interface ColorChangesMap {
+    agents: VisibilitySelectionMap;
+    color: string;
+}

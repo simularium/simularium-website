@@ -11,6 +11,7 @@ import {
     HIGHLIGHT_AGENTS_BY_KEY,
     SET_AGENTS_VISIBLE,
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
+    SET_COLOR_CHANGES,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -20,6 +21,7 @@ import {
     ChangeNumberCollapsedPanelsAction,
     SetVisibleAction,
     ResetAction,
+    SetColorChangesAction,
 } from "./types";
 
 export const initialState = {
@@ -27,6 +29,7 @@ export const initialState = {
     numberPanelsCollapsed: 0,
     agentVisibilityMap: {},
     agentHighlightMap: {},
+    colorChangesMap: { agents: {}, color: "" },
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -38,6 +41,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
                 ...state,
                 agentVisibilityMap: initialState.agentVisibilityMap,
                 agentHighlightMap: initialState.agentHighlightMap,
+                colorChanges: initialState.colorChangesMap,
             };
         },
     },
@@ -119,6 +123,19 @@ const actionToConfigMap: TypeToDescriptionMap = {
                 ...action.payload,
             },
         }),
+    },
+    [SET_COLOR_CHANGES]: {
+        accepts: (action: AnyAction): action is SetColorChangesAction =>
+            action.type === SET_COLOR_CHANGES,
+        perform: (
+            state: SelectionStateBranch,
+            action: SetColorChangesAction
+        ) => {
+            return {
+                ...state,
+                colorChangesMap: action.payload,
+            };
+        },
     },
 };
 

@@ -18,3 +18,4 @@ export const SET_AGENTS_VISIBLE = makeSelectConstant("set-agents-visible");
 export const RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS = makeSelectConstant(
     "reset-selections-and-highlighted-agents"
 );
+export const SET_COLOR_CHANGES = makeSelectConstant("set-color-changes");
