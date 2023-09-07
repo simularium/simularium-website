@@ -99,6 +99,18 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
         }
     };
 
+    getAgentTags = (agentName: string): string[] => {
+        const { treeData } = this.props;
+        const tags: string[] = [""];
+        const agent = treeData.find((agent) => agent.title === agentName);
+        if (agent) {
+            agent?.children.forEach((child) => {
+                tags.push(child.value as string);
+            });
+        }
+        return tags;
+    };
+
     renderCheckAllButton = () => {
         const { agentsChecked, treeData, isSharedCheckboxIndeterminate } =
             this.props;
@@ -229,7 +241,11 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                         : this.renderRowWithNoChildren(
                                               nodeData
                                           )}{" "}
-                                    <ColorSwatch color={nodeData.color} />
+                                    <ColorSwatch
+                                        color={nodeData.color}
+                                        agentName={nodeData.title}
+                                        tags={this.getAgentTags(nodeData.title)}
+                                    />
                                     <Text
                                         style={{ maxWidth: 143 }}
                                         ellipsis={{
@@ -296,6 +312,12 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                                             value.color ||
                                                             nodeData.color
                                                         }
+                                                        agentName={
+                                                            nodeData.title
+                                                        }
+                                                        tags={[
+                                                            value.value as string,
+                                                        ]}
                                                     />
                                                     <label
                                                         className={
