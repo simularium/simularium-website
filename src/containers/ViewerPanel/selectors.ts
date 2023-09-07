@@ -8,6 +8,7 @@ import {
 } from "../../state/trajectory/selectors";
 import {
     getAgentsToHide,
+    getColorChanges,
     getCurrentTime,
     getHighlightedAgents,
 } from "../../state/selection/selectors";
@@ -16,10 +17,11 @@ import { roundTimeForDisplay } from "../../util";
 import { DisplayTimes } from "./types";
 
 export const getSelectionStateInfoForViewer = createSelector(
-    [getHighlightedAgents, getAgentsToHide],
-    (highlightedAgents, hiddenAgents) => ({
+    [getHighlightedAgents, getAgentsToHide, getColorChanges],
+    (highlightedAgents, hiddenAgents, colorChanges) => ({
         highlightedAgents,
         hiddenAgents,
+        colorChanges,
     })
 );
 
