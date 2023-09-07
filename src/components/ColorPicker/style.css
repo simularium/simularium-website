@@ -33,7 +33,6 @@
     border-radius: 0px !important;
     width: 196px;
     height: 12px;
-    transform: matrix(-1, 0, 0, -1, 0, 0);
 }
 
 .container .selection-display {
@@ -65,7 +64,7 @@
 .container .new-color {
     height: 30px;
     width: 60px;
-    background-color: blue;
+    /* background-color: blue; */
 }
 
 .container .old-color-container {
