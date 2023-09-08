@@ -5,44 +5,60 @@
     bottom: 0;
     right: 20px;
     justify-content: space-evenly;
+    gap: 12px;
     margin-bottom: 20px;
+}
+
+.container :global(.ant-btn) {
+    height: 26px;
+    width: 26px;
+    background-color: var(--viewer-btn-bg-default);
 }
 
 .radio-group {
     display: flex;
     flex-flow: column;
+    justify-content: space-evenly;
 }
+
 .zoom-buttons {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     height: 60px;
-    margin-bottom: 4px;
-
-}
-
-.move-buttons {
-    display: flex;
-    height: 84px;
-    flex-flow: column;
-    justify-content: space-evenly;
 }
 
 .btn {
-    background-color: var(--dark-theme-btn-bg);
-    color: var(--dark-theme-btn-color);
+    background-color: var(--viewer-btn-bg-default);
+    color: var(--viewer-btn-color-default);
     border-radius: 3px!important;
+    height: 26px !important;
+    width: 26px !important;
 }
 
 .radio-btn {
-    border-color: var(--dark-theme-btn-bg)!important;
-    background-color: black!important;
     padding: 0 2px!important;
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     font-size: 18px;
     line-height: 18px;
     border-left-width: 1px;
+    border: none;
+}
+
+.radio-btn.active {
+    color: var(--viewer-btn-color-default) !important;
+    background-color: var(--viewer-btn-bg-default) !important;
+    border: 1px solid var(--viewer-btn-border-active) !important;
+}
+
+.radio-btn:hover {
+    color: var(--viewer-btn-color-default);
+    background-color: var(--viewer-btn-bg-hover)!important;
+}
+
+.radio-group .radio-btn:not(:first-child) {
+    border-top: 0px;
 }
 
 .radio-group .radio-btn:first-child {
@@ -52,25 +68,11 @@
 .radio-group .radio-btn:last-child {
     border-radius: 0px 0px 3px 3px;
 }
- 
-.radio-btn.active {
-    color: var(--dark-theme-btn-color) !important;
-    background-color: var(--dark-theme-btn-bg) !important;
-}
 
-.radio-group .radio-btn:not(:first-child) {
-    border-top: 0px;
-}
-
-.radio-btn:hover {
-    color: var(--dark-theme-btn-color);
-    background-color: var(--dark-theme-btn-hover-bg)!important;
-}
-
-.btn:hover,
-.btn:active {
-    color: var(--dark-theme-btn-color);
-    background-color: var(--dark-theme-btn-hover-bg);
+.btn:hover {
+    color: var(--viewer-btn-color-default);
+    background-color: var(--viewer-btn-bg-hover);
+    border: 1px solid var(--viewer-btn-border-active) !important;
 }
 
 .btn:focus {
@@ -78,10 +80,21 @@
     color: var(--dark-theme-btn-color);
 }
 
-.btn[disabled] {
-    background-color: var(--dark-theme-btn-disabled-bg);
-    color: var(--dark-theme-btn-disabled-color);
+.btn:hover:focus {
+    color: var(--viewer-btn-color-default);
+    background-color: var(--viewer-btn-bg-hover);
+}
 
+.btn[disabled] {
+    background-color: var(--viewer-btn-bg-disabled);
+    color: var(--viewer-btn-color-disabled);
+
+}
+
+.container .anticon svg {
+    height: 24px;
+    width: 24px;
+    color: var(--viewer-btn-color-default);
 }
 
 .rotate::after {
