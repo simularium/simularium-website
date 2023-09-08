@@ -47,7 +47,8 @@ const CameraControls = ({
 }: CameraControlsProps): JSX.Element => {
     const [isFocused, saveFocusMode] = useState(true);
     const [mode, setMode] = useState(ROTATE);
-    const [camera, setCamera] = useState(PERSPECTIVE);
+    const [cameraProjectionType, setCameraProjectionType] =
+        useState(PERSPECTIVE);
     const [keyPressed, setKeyPressed] = useState("");
     const lastKeyPressed = useRef("");
 
@@ -106,8 +107,8 @@ const CameraControls = ({
     }, [mode]);
 
     useEffect(() => {
-        setCameraType(camera === ORTHOGRAPHIC);
-    }, [camera]);
+        setCameraType(cameraProjectionType === ORTHOGRAPHIC);
+    }, [cameraProjectionType]);
 
     useEffect(() => {
         if (
@@ -132,10 +133,10 @@ const CameraControls = ({
                 saveFocusMode(!isFocused);
                 break;
             case ORTHOGRAPHIC:
-                setCamera(ORTHOGRAPHIC);
+                setCameraProjectionType(ORTHOGRAPHIC);
                 break;
             case PERSPECTIVE:
-                setCamera(PERSPECTIVE);
+                setCameraProjectionType(PERSPECTIVE);
                 break;
             default:
                 break;
@@ -229,11 +230,14 @@ const CameraControls = ({
                         detaches keypressed listener after the button is pressed */}
                         <Button
                             className={classNames([
-                                { [styles.active]: camera === ORTHOGRAPHIC },
+                                {
+                                    [styles.active]:
+                                        cameraProjectionType === ORTHOGRAPHIC,
+                                },
                                 styles.radioBtn,
                             ])}
                             onClick={() => {
-                                setCamera(ORTHOGRAPHIC);
+                                setCameraProjectionType(ORTHOGRAPHIC);
                             }}
                             icon={Icons.OrthographicCamera}
                         ></Button>
@@ -245,11 +249,14 @@ const CameraControls = ({
                     >
                         <Button
                             className={classNames([
-                                { [styles.active]: camera === PERSPECTIVE },
+                                {
+                                    [styles.active]:
+                                        cameraProjectionType === PERSPECTIVE,
+                                },
                                 styles.radioBtn,
                             ])}
                             onClick={() => {
-                                setCamera(PERSPECTIVE);
+                                setCameraProjectionType(PERSPECTIVE);
                             }}
                             icon={Icons.PerspectiveCamera}
                         ></Button>
