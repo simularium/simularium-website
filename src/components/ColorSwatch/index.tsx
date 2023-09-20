@@ -15,26 +15,31 @@ const ColorSwatch = ({
     tags,
 }: ColorSwatchProps): JSX.Element => {
     const [isColorPickerVisible, setColorPickerVisible] = React.useState(false);
-    const [newColor, setNewColor] = useState(color);
+    const [initialColor, setInitialColor] = React.useState(color); // Initial color state
 
     const closeModal = () => {
         setColorPickerVisible(false);
+    };
+
+    const openModal = () => {
+        setInitialColor(color); // Set the initial color when about to open the modal
+        setColorPickerVisible(true);
     };
 
     return (
         <>
             <div
                 className={styles.container}
-                style={{ backgroundColor: newColor }}
+                style={{ backgroundColor: color }}
                 onClick={() => {
-                    setColorPickerVisible(true);
+                    openModal();
                 }}
             />
             {isColorPickerVisible ? (
                 <OurColorPicker
                     agentName={agentName}
                     tags={tags}
-                    oldColor={color}
+                    oldColor={initialColor}
                     isOpen={isColorPickerVisible}
                     closeModal={closeModal}
                 />
