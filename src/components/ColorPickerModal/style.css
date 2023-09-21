@@ -1,9 +1,0 @@
-.modal-style :global(.ant-modal-content)  {
-    background: #2F2A3C 0% 0% no-repeat padding-box;
-    box-shadow: 0px 3px 6px #000000E2;
-    opacity: 1;
-}
-
-.modal-style :global(.ant-modal-body) {
-    padding: 12px 8px;
-}
