@@ -9,6 +9,7 @@ import { AGENT_COLORS } from "../../containers/ViewerPanel/constants";
 import {
     ColorChangesMap,
     SetColorChangesAction,
+    SetRecentColorsAction,
 } from "../../state/selection/types";
 import { connect } from "react-redux";
 
@@ -17,6 +18,8 @@ interface ColorPickerProps {
     agentName: string;
     tags: string[];
     setColorChanges: ActionCreator<SetColorChangesAction>;
+    setRecentColors: ActionCreator<SetRecentColorsAction>;
+    recentColors: string[];
 }
 
 const ColorPicker = ({
@@ -24,6 +27,8 @@ const ColorPicker = ({
     setColorChanges,
     agentName,
     tags,
+    recentColors,
+    setRecentColors,
 }: ColorPickerProps) => {
     const [color, setColor] = useState(oldColor);
 
@@ -32,31 +37,24 @@ const ColorPicker = ({
             agents: { [agentName]: tags },
             color: color,
         };
-        console.log("colorChanges", colorChanges);
-        console.log("setColorChanges", setColorChanges);
         setColorChanges(colorChanges);
+        updateRecentColors(color);
     };
 
     useEffect(() => {
         handleColorChange(color);
     }, [color]);
 
-    const recentColors = [
-        "#bd7800",
-        "#bbbb99",
-        "#5b79f0",
-        "#89a500",
-        "#da8692",
-        "#418463",
-        "#9f516c",
-        "#00aabf",
-        "#94a7fc",
-        "#ce8ec9",
-        "#58606c",
-        "#0ba345",
-        "#9267cb",
-        "#81dbe6",
-    ];
+    const updateRecentColors = (color: string) => {
+        if (recentColors.includes(color)) {
+            return;
+        }
+        const newRecentColors = [color, ...recentColors];
+        if (newRecentColors.length > 18) {
+            newRecentColors.pop();
+        }
+        setRecentColors(newRecentColors);
+    };
 
     return (
         <div className={styles.container}>
@@ -111,7 +109,6 @@ const ColorPicker = ({
                 ))}
             </div>
             <p className={styles.recentColorText}> Recent </p>
-            {/* TODO: only render if recent colors */}
             <div className={classNames([styles.colors, styles.recentSwatches])}>
                 {recentColors.map((color) => (
                     <button
@@ -129,8 +126,13 @@ const ColorPicker = ({
     );
 };
 
+const mapStateToProps = (state: any) => ({
+    recentColors: selectionStateBranch.selectors.getRecentColors(state),
+});
+
 const dispatchToPropsMap = {
     setColorChanges: selectionStateBranch.actions.setColorChanges,
+    setRecentColors: selectionStateBranch.actions.setRecentColors,
 };
 
-export default connect(null, dispatchToPropsMap)(ColorPicker);
+export default connect(mapStateToProps, dispatchToPropsMap)(ColorPicker);

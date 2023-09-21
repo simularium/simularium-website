@@ -56,3 +56,8 @@ export interface ColorChangesMap {
     agents: VisibilitySelectionMap;
     color: string;
 }
+
+export interface SetRecentColorsAction {
+    payload: string[];
+    type: string;
+}
