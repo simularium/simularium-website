@@ -232,6 +232,10 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                 </Row>
                 <TreeNode headerContent={this.renderCheckAllButton()} />
                 {treeData.map((nodeData) => {
+                    const childrenHaveDifferentColors =
+                        !nodeData.children.every(
+                            (el) => el.color === nodeData.children[0].color
+                        );
                     return (
                         <TreeNode
                             headerContent={
@@ -242,6 +246,9 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                               nodeData
                                           )}{" "}
                                     <ColorSwatch
+                                        childrenHaveDifferentColors={
+                                            childrenHaveDifferentColors
+                                        }
                                         color={nodeData.color}
                                         agentName={nodeData.title}
                                         tags={this.getAgentTags(nodeData.title)}
