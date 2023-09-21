@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import styles from "./styles.css";
-import OurColorPicker from "../ColorPickerModal";
+import ColorPickerPopover from "../ColorPickerPopover";
 import { useState } from "react";
 interface ColorSwatchProps {
     childrenHaveDifferentColors?: boolean;
@@ -45,7 +45,7 @@ const ColorSwatch = ({
                 }}
             />
             {isColorPickerVisible ? (
-                <OurColorPicker
+                <ColorPickerPopover
                     agentName={agentName}
                     tags={tags}
                     oldColor={initialColor}
