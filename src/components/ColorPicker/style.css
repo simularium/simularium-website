@@ -1,44 +1,27 @@
 .container {
-    overflow: hidden;
-    width: 100%;
-    padding-left: 7px;
-    font-family: Overpass;
+    padding-left: 4px;
 }
 
 .container :global(.react-colorful) {
-    position: relative;
-    width: 224px;
-    display: flex;
-    align-items: left;
-    flex-direction: column;
     gap: 7px;
     padding-bottom: 8px;
     height: auto;
 }
 
-.containr :global(.react-colorful__interactive) {
-    background-color: blue;
-}
-
 .container :global(.react-colorful__saturation) {
-    border-radius: 0px !important;
-    height: 115px !important;
-    width: 196px !important;
-    padding-bottom: 7px;
-    flex-shrink: 0;
-    flex-grow: 0;
+    border-radius: 0px;
+    height: 115px;
+    width: 196px;
 }
 
 .container :global(.react-colorful__hue) {
-    border-radius: 0px !important;
+    border-radius: 0px;
     width: 196px;
     height: 12px;
 }
 
 .container .selection-display {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
 }
 
 .container .selection-display-text {
@@ -48,34 +31,23 @@
 .container .hex-input {
     height: 30px;
     width: 68px;
-    border-radius: 0px;
     background-color: transparent;
-    border: 1px solid #d3d3d3;
-    text-align: left;
-    font: normal normal 400 12px/13px Overpass;
-    letter-spacing: 0px;
-    text-transform: uppercase;
+    border: 1px solid var(--white-two);
     font-size: 14px;
-    color: #d3d3d3;
-    opacity: 1;
 }
 
 .container .old-color,
 .container .new-color {
     height: 30px;
     width: 60px;
-    /* background-color: blue; */
 }
 
 .container .old-color-container {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
     text-align: center;
     font-size: 9px;
-    letter-spacing: 0px;
-    color: #d3d3d3;
-    text-transform: uppercase;
+    color: var(--white-two);
     gap: 4px;
 }
 
@@ -92,22 +64,19 @@
     display: flex;
     flex-wrap: wrap;
     gap: 7px;
-    row-gap: 7px;
 }
 
 .container .swatch {
     height: 15.5px;
     width: 15.5px;
     cursor: pointer;
-    /* border: solid 1px #000000; */
     border: none;
 }
 
 .container .recentColorText {
     text-align: left;
     font: normal normal normal 12px/13px Overpass;
-    letter-spacing: 0px;
-    color: #d3d3d3;
+    color: var(--white-two);
     margin-bottom: 2px;
     font-weight: 300;
 }
@@ -118,11 +87,9 @@
     border-radius: 0px;
     border: none;
 }
-.container :global(.react-colorful__hue-pointer),
-.container :global(.react-colorful__alpha-pointer) {
+.container :global(.react-colorful__hue-pointer) {
     width: 5px;
     height: 16px;
-    border-radius: 3px;
     border: 1px solid var(--white-two);
     border-radius: 0px;
 }
