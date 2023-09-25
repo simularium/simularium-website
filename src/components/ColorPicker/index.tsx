@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { HexColorInput, HexColorPicker } from "react-colorful";
 import { ActionCreator } from "redux";
-import styles from "./style.css";
+import { connect } from "react-redux";
+import { Tooltip } from "antd";
+import { HexColorInput, HexColorPicker } from "react-colorful";
 import classNames from "classnames";
 
 import selectionStateBranch from "../../state/selection";
@@ -11,8 +12,8 @@ import {
     SetColorChangesAction,
     SetRecentColorsAction,
 } from "../../state/selection/types";
-import { connect } from "react-redux";
 
+import styles from "./style.css";
 interface ColorPickerProps {
     oldColor: string;
     agentName: string;
@@ -97,15 +98,23 @@ const ColorPicker = ({
                 ])}
             >
                 {AGENT_COLORS.map((color) => (
-                    <button
+                    <Tooltip
                         key={color}
-                        className={classNames([
-                            styles.swatch,
-                            styles.pickerSwatch,
-                        ])}
-                        style={{ background: color }}
-                        onClick={() => setColor(color)}
-                    />
+                        align={{ offset: [2, 5] }}
+                        color="#69738A"
+                        overlayClassName={styles.tooltip}
+                        title={color.slice(1)}
+                    >
+                        <button
+                            key={color}
+                            className={classNames([
+                                styles.swatch,
+                                styles.pickerSwatch,
+                            ])}
+                            style={{ background: color }}
+                            onClick={() => setColor(color)}
+                        />
+                    </Tooltip>
                 ))}
             </div>
             <p className={styles.recentColorText}> Recent </p>
