@@ -56,7 +56,7 @@ const ConversionForm = ({
     const [fileToConvert, setFileToConvert] = useState<UploadFile>();
     const [engineSelected, setEngineSelected] = useState<boolean>(false);
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
-    const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(true);
+    const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(false);
 
     const toggleModal = () => {
         setFileTypeErrorModalOpen(!fileTypeErrorModalOpen);
@@ -65,15 +65,21 @@ const ConversionForm = ({
         setIsProcessing(!isProcessing);
     };
 
-    const validateFileType = (file: UploadFile) => {
-        // if file is valid
-        if ("validFile") {
-            setIsProcessing(!isProcessing);
+    const validateFileType = () => {
+        // currently only checking file extension, and allowing smoldyn
+        // valid files could have txt extention, this isnt a good check
+        // how extensive of a validation do we want to do on the front end?
+        if (fileToConvert) {
+            const fileExtension =
+                fileToConvert.name.split(".").pop()?.toLowerCase() || "";
+            const validExtensions = ["smoldyn"];
+            if (validExtensions.includes(fileExtension)) {
+                console.log("valid file");
+                setIsProcessing(!isProcessing);
+                return;
+            }
         }
-        // if file is invalid
-        else {
-            setFileTypeErrorModalOpen(true);
-        }
+        setFileTypeErrorModalOpen(true);
     };
 
     // TODO: use conversion template data to render the form
@@ -147,7 +153,7 @@ const ConversionForm = ({
                     // 1 check if file is valid
                     // if valid set is processing
                     // if not toggle modal on
-                    onClick={() => setIsProcessing(!isProcessing)}
+                    onClick={() => validateFileType()}
                 >
                     Next
                 </Button>
