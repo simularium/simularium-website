@@ -2,9 +2,9 @@ import { Button } from "antd";
 import React from "react";
 
 import CustomModal from "../CustomModal";
+import { Exclamation } from "../Icons";
 
 import styles from "./style.css";
-import { Exclamation } from "../Icons";
 
 interface ConversionFileErrorModalProps {
     closeModal: () => void;
@@ -13,12 +13,10 @@ interface ConversionFileErrorModalProps {
 const ConversionFileErrorModal: React.FC<ConversionFileErrorModalProps> = ({
     closeModal,
 }) => {
-    const footerButtons = (
-        <>
-            <Button type="primary" onClick={closeModal}>
-                Ok
-            </Button>
-        </>
+    const footerButton = (
+        <Button type="primary" onClick={closeModal}>
+            OK
+        </Button>
     );
 
     return (
@@ -26,8 +24,8 @@ const ConversionFileErrorModal: React.FC<ConversionFileErrorModalProps> = ({
             className={styles.errorModal}
             title="File import cannot be completed"
             open
-            footer={footerButtons}
-            width={425}
+            footer={footerButton}
+            width={426}
             centered
             onCancel={closeModal}
         >
@@ -39,7 +37,11 @@ const ConversionFileErrorModal: React.FC<ConversionFileErrorModalProps> = ({
                 </div>{" "}
                 You may want to double check that the file you selected is a
                 Smoldyn file and try again. For further assistance, please visit
-                <a href="https://forum.allencell.org/">
+                <a
+                    href="https://forum.allencell.org/"
+                    target="_blank"
+                    rel="noreferrer"
+                >
                     {" "}
                     The Allen Cell Discussion Forum.{" "}
                 </a>
