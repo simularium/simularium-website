@@ -74,7 +74,6 @@ const ConversionForm = ({
                 fileToConvert.name.split(".").pop()?.toLowerCase() || "";
             const validExtensions = ["smoldyn"];
             if (validExtensions.includes(fileExtension)) {
-                console.log("valid file");
                 setIsProcessing(!isProcessing);
                 return;
             }
@@ -149,10 +148,6 @@ const ConversionForm = ({
                 <Button
                     type="primary"
                     disabled={!fileToConvert || !engineSelected}
-                    //TODO only set is processing if file is valid
-                    // 1 check if file is valid
-                    // if valid set is processing
-                    // if not toggle modal on
                     onClick={() => validateFileType()}
                 >
                     Next
