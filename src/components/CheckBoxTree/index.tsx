@@ -104,7 +104,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
         const tags: string[] = [""];
         const agent = treeData.find((agent) => agent.title === agentName);
         if (agent) {
-            agent?.children.forEach((child) => {
+            agent.children.forEach((child) => {
                 tags.push(child.value as string);
             });
         }
