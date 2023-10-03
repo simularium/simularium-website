@@ -66,9 +66,6 @@ const ConversionForm = ({
     };
 
     const validateFileType = () => {
-        // currently only checking file extension, and allowing smoldyn
-        // valid files could have txt extention, this isnt a good check
-        // how extensive of a validation do we want to do on the front end?
         if (fileToConvert) {
             const fileExtension =
                 fileToConvert.name.split(".").pop()?.toLowerCase() || "";
