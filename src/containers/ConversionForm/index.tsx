@@ -37,6 +37,12 @@ interface ConversionProps {
     setError: ActionCreator<SetErrorAction>;
 }
 
+interface ExtensionMap {
+    [key: string]: string;
+}
+
+const validFileExtensions: ExtensionMap = { Smoldyn: "txt" };
+
 const selectOptions = Object.keys(AvailableEngines).map(
     (engineName: string, index) => {
         const values = Object.values(AvailableEngines);
@@ -65,12 +71,20 @@ const ConversionForm = ({
         setIsProcessing(!isProcessing);
     };
 
+    const handleEngineChange = (selectedValue: string) => {
+        const selectedEngine = selectedValue as AvailableEngines;
+        setConversionEngine(selectedEngine);
+        setEngineSelected(true);
+    };
+
     const validateFileType = () => {
         if (fileToConvert) {
             const fileExtension =
                 fileToConvert.name.split(".").pop()?.toLowerCase() || "";
-            const validExtensions = ["smoldyn"];
-            if (validExtensions.includes(fileExtension)) {
+            if (
+                validFileExtensions[conversionProcessingData.engineType] ===
+                fileExtension
+            ) {
                 setIsProcessing(!isProcessing);
                 return;
             }
@@ -108,9 +122,8 @@ const ConversionForm = ({
                         bordered={true}
                         defaultValue="Select"
                         options={selectOptions}
-                        onChange={() => {
-                            setConversionEngine();
-                            setEngineSelected(true);
+                        onChange={(selectedValue) => {
+                            handleEngineChange(selectedValue);
                         }}
                     />
                     <Upload
