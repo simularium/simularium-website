@@ -23,7 +23,6 @@ import {
     isOnlineTrajectory,
     urlCheck,
 } from "../userUrlHandling";
-import { FILE } from "dns";
 
 process.env.GOOGLE_API_KEY = "key";
 describe("General utilities", () => {
