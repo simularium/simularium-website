@@ -97,7 +97,10 @@ const ConversionForm = ({
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
             {fileTypeErrorModalOpen ? (
-                <ConversionFileErrorModal closeModal={toggleModal} />
+                <ConversionFileErrorModal
+                    closeModal={toggleModal}
+                    engineType={conversionProcessingData.engineType}
+                />
             ) : null}
             {isProcessing ? (
                 <ConversionProcessingOverlay
