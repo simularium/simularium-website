@@ -7,6 +7,7 @@ import { VIEWER_PATHNAME } from "../../routes";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 
 import styles from "./style.css";
+import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 
 interface ViewerTitleProps {
     simulariumFileName: string;
@@ -27,7 +28,10 @@ const ViewerTitle: React.FunctionComponent<ViewerTitleProps> = (
     // networked-trajectories.ts to get its version info
     // TODO: Eventually we should put all the contents of networked-trajectories.ts in the
     // Simularium files themselves
-    const trajectoryId = location.search.replace("?trajFileName=", "");
+    const trajectoryId = location.search.replace(
+        `?${URL_PARAM_KEY_FILE_NAME}=`,
+        ""
+    );
     const currentTrajectory = TRAJECTORIES.find(
         (trajectory) => trajectory.id === trajectoryId
     );

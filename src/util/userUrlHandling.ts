@@ -74,7 +74,7 @@ export const getFileIdFromUrl = (
 export const getRedirectUrl = (url: string, fileName: string | undefined) => {
     if (url && fileName && USER_TRAJ_REDIRECTS.includes(url)) {
         // ex) simularium.allencell.org/viewer?trajFileName=endocytosis.simularium
-        return `${location.origin}${location.pathname}?trajFileName=${fileName}`;
+        return `${location.origin}${location.pathname}?${URL_PARAM_KEY_FILE_NAME}=${fileName}`;
     } else {
         return "";
     }
