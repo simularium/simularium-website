@@ -1,6 +1,10 @@
 import * as React from "react";
 
-import { USER_TRAJ_REDIRECTS } from "../../constants";
+import {
+    URL_PARAM_KEY_FILE_NAME,
+    URL_PARAM_KEY_USER_URL,
+    USER_TRAJ_REDIRECTS,
+} from "../../constants";
 import {
     bindAll,
     convertToSentenceCase,
@@ -16,8 +20,10 @@ import {
     getRedirectUrl,
     getUserTrajectoryUrl,
     isGoogleDriveUrl,
+    isOnlineTrajectory,
     urlCheck,
 } from "../userUrlHandling";
+import { FILE } from "dns";
 
 process.env.GOOGLE_API_KEY = "key";
 describe("General utilities", () => {
@@ -371,6 +377,23 @@ describe("User Url handling", () => {
             const id = "id";
             const result = getUserTrajectoryUrl("dropbox.com/path", id);
             expect(result).toEqual("dl.dropboxusercontent.com/path");
+        });
+    });
+    describe("isOnlineTrajectory", () => {
+        it("it returns true if the trajectory is hosted online", () => {
+            const cloudTrajectoryUrl = `simularium?${URL_PARAM_KEY_USER_URL}=url`;
+            const result = isOnlineTrajectory(cloudTrajectoryUrl);
+            expect(result).toBeTruthy;
+        });
+        it("true if the trajectory is one of our networked models", () => {
+            const networkedUrl = `simularium?${URL_PARAM_KEY_FILE_NAME}=url`;
+            const result = isOnlineTrajectory(networkedUrl);
+            expect(result).toBeTruthy;
+        });
+        it("it returns false if no relevant url params are present", () => {
+            const url = `simularium?other_url_param=value`;
+            const result = isOnlineTrajectory(url);
+            expect(result).toBeFalsy;
         });
     });
 });
