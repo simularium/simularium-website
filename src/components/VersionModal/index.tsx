@@ -46,8 +46,6 @@ const VersionModal: React.FC<VersionModalProps> = ({ setModalVisible }) => {
                     simulairum-viewer v{SIMULARIUM_VIEWER_VERSION}{" "}
                 </span>
             </div>
-            {/* TODO add enginge when we switch to Octopus?/}
-            {/* <span> Engine: not connected to server </span> */}
         </CustomModal>
     );
 };
