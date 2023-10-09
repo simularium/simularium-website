@@ -79,7 +79,7 @@ const HelpMenu = (): JSX.Element => {
                     setModalVisible(!modalVisible);
                 }}
             >
-                <>Version Info</>
+                <>Version info</>
             </Menu.Item>
         </Menu>
     );

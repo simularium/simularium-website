@@ -27,7 +27,7 @@ const VersionModal: React.FC<VersionModalProps> = ({ setModalVisible }) => {
             open
             footer={footerButton}
             centered
-            title="Version Info"
+            title="Version Information"
             width={425}
         >
             <div>
