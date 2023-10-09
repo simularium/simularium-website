@@ -1,8 +1,13 @@
 import { isString } from "lodash";
 
-import { USER_TRAJ_REDIRECTS } from "../constants";
+import {
+    URL_PARAM_KEY_FILE_NAME,
+    URL_PARAM_KEY_USER_URL,
+    USER_TRAJ_REDIRECTS,
+} from "../constants";
 
-const googleDriveUrlRegEx = /(?:drive.google\.com\/file\/d\/)(.*)(?=\/)|(?:drive.google\.com\/file\/d\/)(.*)/g;
+const googleDriveUrlRegEx =
+    /(?:drive.google\.com\/file\/d\/)(.*)(?=\/)|(?:drive.google\.com\/file\/d\/)(.*)/g;
 const googleDriveUrlExcludingIdRegEx = /(drive.google\.com\/file\/d\/)(?=.*)/g;
 
 export const urlCheck = (urlToCheck: any): string => {
@@ -14,7 +19,8 @@ export const urlCheck = (urlToCheck: any): string => {
      * I had to modify the original to allow s3 buckets which have multiple `.letters-letters.` in them
      * and I made the http(s) required
      */
-    const regEx = /(https?:\/\/)([\w\-]){0,200}(\.[a-zA-Z][^\-])([\/\w]*)*\/?\??([^\n\r]*)?([^\n\r]*)/g;
+    const regEx =
+        /(https?:\/\/)([\w\-]){0,200}(\.[a-zA-Z][^\-])([\/\w]*)*\/?\??([^\n\r]*)?([^\n\r]*)/g;
     if (regEx.test(urlToCheck)) {
         return urlToCheck;
     }
@@ -68,18 +74,14 @@ export const getFileIdFromUrl = (
 export const getRedirectUrl = (url: string, fileName: string | undefined) => {
     if (url && fileName && USER_TRAJ_REDIRECTS.includes(url)) {
         // ex) simularium.allencell.org/viewer?trajFileName=endocytosis.simularium
-        return `${location.origin}${
-            location.pathname
-        }?trajFileName=${fileName}`;
+        return `${location.origin}${location.pathname}?${URL_PARAM_KEY_FILE_NAME}=${fileName}`;
     } else {
         return "";
     }
 };
 
 export const getGoogleApiUrl = (id: string) => {
-    return `https://www.googleapis.com/drive/v2/files/${id}?alt=media&key=${
-        process.env.GOOGLE_API_KEY
-    }`;
+    return `https://www.googleapis.com/drive/v2/files/${id}?alt=media&key=${process.env.GOOGLE_API_KEY}`;
 };
 
 export const getUserTrajectoryUrl = (url: string, fileId?: string) => {
@@ -88,4 +90,11 @@ export const getUserTrajectoryUrl = (url: string, fileId?: string) => {
     } else {
         return url.replace("dropbox.com", "dl.dropboxusercontent.com");
     }
+};
+
+export const isOnlineTrajectory = (url: string) => {
+    return (
+        url.includes(URL_PARAM_KEY_USER_URL) ||
+        url.includes(URL_PARAM_KEY_FILE_NAME)
+    );
 };

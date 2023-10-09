@@ -3,23 +3,21 @@ import { Button, Tooltip } from "antd";
 import { ISimulariumFile } from "@aics/simularium-viewer/type-declarations";
 
 import { DATA_BUCKET_URL, TOOLTIP_COLOR } from "../../constants";
-import {
-    NetworkedSimFile,
-    LocalSimFile,
-    isNetworkSimFileInterface,
-} from "../../state/trajectory/types";
+import { NetworkedSimFile, LocalSimFile } from "../../state/trajectory/types";
 import { Download } from "../Icons";
 
 import styles from "./style.css";
 
 interface DownloadTrajectoryMenuProps {
     isBuffering: boolean;
+    isNetworkedFile: boolean;
     simulariumFile: LocalSimFile | NetworkedSimFile;
 }
 
 const DownloadTrajectoryMenu = ({
     isBuffering,
     simulariumFile,
+    isNetworkedFile,
 }: DownloadTrajectoryMenuProps): JSX.Element => {
     const fileIsLoaded = () => !!simulariumFile.name;
 
@@ -27,10 +25,11 @@ const DownloadTrajectoryMenu = ({
         if (!fileIsLoaded()) {
             return "";
         }
-        if (isNetworkSimFileInterface(simulariumFile)) {
+        if (isNetworkedFile) {
             return `${DATA_BUCKET_URL}/trajectory/${simulariumFile.name}`;
         } else {
-            const data: ISimulariumFile = simulariumFile.data;
+            const localFile = simulariumFile as LocalSimFile; // isNetworkedFile checks for this
+            const data: ISimulariumFile = localFile.data;
             const blob = data.getAsBlob();
             return URL.createObjectURL(blob);
         }

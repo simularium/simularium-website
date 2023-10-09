@@ -2,15 +2,12 @@ import React from "react";
 import { Button, Tooltip } from "antd";
 
 import { TOOLTIP_COLOR } from "../../constants";
-import {
-    NetworkedSimFile,
-    LocalSimFile,
-    isLocalFileInterface,
-} from "../../state/trajectory/types";
+import { NetworkedSimFile, LocalSimFile } from "../../state/trajectory/types";
 import { Share } from "../Icons";
 import ShareTrajectoryModal from "../ShareTrajectoryModal";
 
 import styles from "./style.css";
+import { isOnlineTrajectory } from "../../util/userUrlHandling";
 
 interface ShareTrajectoryButtonProps {
     simulariumFile: LocalSimFile | NetworkedSimFile;
@@ -21,7 +18,7 @@ const ShareTrajectoryButton = ({
 }: ShareTrajectoryButtonProps): JSX.Element => {
     const [isSharing, setIsSharing] = React.useState(false);
 
-    const isLocalFile = isLocalFileInterface(simulariumFile);
+    const trajectoryIsSharable = isOnlineTrajectory(location.href);
 
     const handleShare = () => {
         setIsSharing(!isSharing);
@@ -42,7 +39,7 @@ const ShareTrajectoryButton = ({
                 {isSharing ? (
                     <div className={styles.overlay}>
                         <ShareTrajectoryModal
-                            isLocalFile={isLocalFile}
+                            trajectoryIsSharable={trajectoryIsSharable}
                             closeModal={handleShare}
                         />
                     </div>
