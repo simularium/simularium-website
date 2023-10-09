@@ -43,7 +43,7 @@ const VersionModal: React.FC<VersionModalProps> = ({ setModalVisible }) => {
                 Viewer:{" "}
                 <span className={styles.blueText}>
                     {" "}
-                    simulairum-viewer v{SIMULARIUM_VIEWER_VERSION}{" "}
+                    simularium-viewer v{SIMULARIUM_VIEWER_VERSION}{" "}
                 </span>
             </div>
         </CustomModal>
