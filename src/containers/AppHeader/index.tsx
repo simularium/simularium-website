@@ -31,6 +31,7 @@ import DownloadTrajectoryMenu from "../../components/DownloadTrajectoryMenu";
 interface AppHeaderProps {
     simulariumFile: LocalSimFile | NetworkedSimFile;
     isBuffering: boolean;
+    isNetworkedFile: boolean;
     clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
     changeToLocalSimulariumFile: ActionCreator<RequestLocalFileAction>;
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
@@ -48,6 +49,7 @@ class AppHeader extends React.Component<AppHeaderProps> {
             setViewerStatus,
             clearSimulariumFile,
             setError,
+            isNetworkedFile,
         } = this.props;
         let lastModified = 0;
         let displayName = "";
@@ -89,6 +91,7 @@ class AppHeader extends React.Component<AppHeaderProps> {
                     <DownloadTrajectoryMenu
                         isBuffering={isBuffering}
                         simulariumFile={simulariumFile}
+                        isNetworkedFile={isNetworkedFile}
                     />
                 </div>
             </div>
@@ -101,6 +104,8 @@ function mapStateToProps(state: State) {
         simulariumFile:
             trajectoryStateBranch.selectors.getSimulariumFile(state),
         isBuffering: viewerStateBranch.selectors.getIsBuffering(state),
+        isNetworkedFile:
+            trajectoryStateBranch.selectors.getIsNetworkedFile(state),
     };
 }
 

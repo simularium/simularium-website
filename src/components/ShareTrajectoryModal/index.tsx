@@ -17,14 +17,14 @@ import styles from "./style.css";
 import theme from "../theme/light-theme.css";
 
 interface ShareTrajectoryModalProps {
-    isLocalFile: boolean;
+    trajectoryIsSharable: boolean;
     closeModal: () => void;
     timeUnits: TimeUnits;
     displayTimes: DisplayTimes;
 }
 
 const ShareTrajectoryModal = ({
-    isLocalFile,
+    trajectoryIsSharable,
     closeModal,
     timeUnits,
     displayTimes,
@@ -102,7 +102,7 @@ const ShareTrajectoryModal = ({
     };
 
     const modalOptions = {
-        localFile: {
+        errorMessage: {
             content: (
                 <>
                     <h4>{Warn} The current file is stored on your device.</h4>
@@ -134,7 +134,7 @@ const ShareTrajectoryModal = ({
                 </Button>
             ),
         },
-        networkedFile: {
+        isSharable: {
             content: (
                 <>
                     <div>
@@ -177,20 +177,20 @@ const ShareTrajectoryModal = ({
         <CustomModal
             className={classNames(styles.uploadModal, theme.lightTheme)}
             title="Share Trajectory"
-            width={isLocalFile ? 611 : 550}
+            width={trajectoryIsSharable ? 550 : 611}
             onCancel={closeModal}
             mask={false}
             centered
             open
             footer={
-                isLocalFile
-                    ? modalOptions.localFile.footer
-                    : modalOptions.networkedFile.footer
+                trajectoryIsSharable
+                    ? modalOptions.isSharable.footer
+                    : modalOptions.errorMessage.footer
             }
         >
-            {isLocalFile
-                ? modalOptions.localFile.content
-                : modalOptions.networkedFile.content}
+            {trajectoryIsSharable
+                ? modalOptions.isSharable.content
+                : modalOptions.errorMessage.content}
             <Divider />
         </CustomModal>
     );

@@ -60,6 +60,7 @@ export interface NetworkedSimFile {
 }
 export const isLocalFileInterface = (file: any): file is LocalSimFile =>
     !!file.lastModified;
+
 export const isNetworkSimFileInterface = (
     file: any
 ): file is NetworkedSimFile => !!file.title;
