@@ -14,6 +14,7 @@ import {
 } from "../../state/trajectory/types";
 import {
     AvailableEngines,
+    ExtensionMap,
     Template,
     TemplateMap,
 } from "../../state/trajectory/conversion-data-types";
@@ -35,10 +36,6 @@ interface ConversionProps {
     };
     receiveFileToConvert: ActionCreator<ReceiveFileToConvertAction>;
     setError: ActionCreator<SetErrorAction>;
-}
-
-interface ExtensionMap {
-    [key: string]: string;
 }
 
 const validFileExtensions: ExtensionMap = { Smoldyn: "txt" };
