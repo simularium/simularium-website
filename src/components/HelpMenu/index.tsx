@@ -34,7 +34,6 @@ const HelpMenu = (): JSX.Element => {
 
     const menu = (
         <Menu theme="dark" className={styles.menu}>
-            {/* <VersionModal /> */}
             {modalVisible ? (
                 <VersionModal setModalVisible={setModalVisible} />
             ) : null}
