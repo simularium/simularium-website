@@ -159,11 +159,11 @@ const ConversionForm = ({
                 <Button
                     type="primary"
                     disabled={!readyToConvert}
-                    onClick={() => {
-                        return readyToConvert
+                    onClick={() =>
+                        readyToConvert
                             ? validateFileType(fileToConvert.name)
-                            : null;
-                    }}
+                            : null
+                    } // this will be unclickable anyway, but typescript doesn't' know that
                 >
                     Next
                 </Button>
