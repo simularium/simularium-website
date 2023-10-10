@@ -94,18 +94,18 @@ const ConversionForm = ({
     const readyToConvert = fileToConvert && engineSelected;
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
-            {fileTypeErrorModalOpen ? (
+            {fileTypeErrorModalOpen && (
                 <ConversionFileErrorModal
                     closeModal={toggleModal}
                     engineType={conversionProcessingData.engineType}
                 />
-            ) : null}
-            {isProcessing ? (
+            )}
+            {isProcessing && (
                 <ConversionProcessingOverlay
                     toggleProcessing={toggleProcessing}
                     fileName={fileToConvert ? fileToConvert?.name : null}
                 />
-            ) : null}
+            )}
             <div className={styles.formContent}>
                 <h3 className={styles.title}>Import a non-native file type</h3>
                 <h3>
