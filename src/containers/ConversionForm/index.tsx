@@ -74,25 +74,24 @@ const ConversionForm = ({
         setEngineSelected(true);
     };
 
-    const validateFileType = () => {
-        if (fileToConvert) {
-            const fileExtension = fileToConvert.name
-                .split(".")
-                .pop()
-                ?.toLowerCase();
+    const validateFileType = (fileName: string) => {
+        const fileExtension = fileName.split(".").pop();
+        if (fileExtension) {
             if (
                 validFileExtensions[conversionProcessingData.engineType] ===
-                fileExtension
+                fileExtension.toLowerCase()
             ) {
                 setIsProcessing(!isProcessing);
                 return;
             }
         }
+
         setFileTypeErrorModalOpen(true);
     };
 
     // TODO: use conversion template data to render the form
     console.log("conversion form data", conversionProcessingData);
+    const readyToConvert = fileToConvert && engineSelected;
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
             {fileTypeErrorModalOpen && (
@@ -159,8 +158,12 @@ const ConversionForm = ({
                 <Button ghost>Cancel</Button>
                 <Button
                     type="primary"
-                    disabled={!fileToConvert || !engineSelected}
-                    onClick={() => validateFileType()}
+                    disabled={!readyToConvert}
+                    onClick={() =>
+                        readyToConvert
+                            ? validateFileType(fileToConvert.name)
+                            : null
+                    } // this will be unclickable anyway, but typescript doesn't' know that
                 >
                     Next
                 </Button>
