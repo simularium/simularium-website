@@ -14,3 +14,7 @@
     right: 160px !important;
     left: auto !important;
 }
+
+.menu :global(.ant-dropdown-menu-item-active){
+    background-color: transparent !important;
+}
