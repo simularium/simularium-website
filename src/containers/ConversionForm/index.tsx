@@ -38,7 +38,12 @@ interface ConversionProps {
     setError: ActionCreator<SetErrorAction>;
 }
 
-const validFileExtensions: ExtensionMap = { Smoldyn: "txt" };
+const validFileExtensions: ExtensionMap = {
+    Smoldyn: "txt",
+    cytosim: "txt",
+    cellPACK: "txt",
+    SpringSaLaD: "txt",
+};
 
 const selectOptions = Object.keys(AvailableEngines).map(
     (engineName: string, index) => {
