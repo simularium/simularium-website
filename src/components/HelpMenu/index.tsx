@@ -34,9 +34,9 @@ const HelpMenu = (): JSX.Element => {
 
     const menu = (
         <Menu theme="dark" className={styles.menu}>
-            {modalVisible ? (
+            {modalVisible && (
                 <VersionModal setModalVisible={setModalVisible} />
-            ) : null}
+            )}
             <Menu.Item key="tutorial">{tutorialLink}</Menu.Item>
             <Menu.Item key="forum">
                 <a href={FORUM_URL} target="_blank" rel="noopener noreferrer">
