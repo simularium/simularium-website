@@ -39,6 +39,7 @@ interface ConversionProps {
 }
 
 const validFileExtensions: ExtensionMap = {
+    // TODO: update this with correct extensions
     Smoldyn: "txt",
     cytosim: "txt",
     cellPACK: "txt",
