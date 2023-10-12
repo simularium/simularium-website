@@ -83,19 +83,19 @@ const HelpMenu = (): JSX.Element => {
                         </a>
                     ),
                 },
-                {
-                    key: "version",
-                    label: (
-                        <a
-                            onClick={() => {
-                                setModalVisible(!modalVisible);
-                            }}
-                        >
-                            Version inf
-                        </a>
-                    ),
-                },
             ],
+        },
+        {
+            key: "version",
+            label: (
+                <a
+                    onClick={() => {
+                        setModalVisible(!modalVisible);
+                    }}
+                >
+                    Version info
+                </a>
+            ),
         },
     ];
 
