@@ -13,7 +13,11 @@ import {
 
 import styles from "./style.css";
 
+import VersionModal from "../VersionModal";
+
 const HelpMenu = (): JSX.Element => {
+    const [modalVisible, setModalVisible] = React.useState(false);
+
     const location = useLocation();
     const tutorialLink =
         location.pathname === "/viewer" ? (
@@ -79,16 +83,31 @@ const HelpMenu = (): JSX.Element => {
                         </a>
                     ),
                 },
+                {
+                    key: "version",
+                    label: (
+                        <a
+                            onClick={() => {
+                                setModalVisible(!modalVisible);
+                            }}
+                        >
+                            Version inf
+                        </a>
+                    ),
+                },
             ],
         },
     ];
 
     return (
-        <Dropdown menu={{ items, theme: "dark", className: styles.menu }}>
-            <Button onClick={(e) => e.preventDefault()} type="ghost">
-                Help {DownArrow}
-            </Button>
-        </Dropdown>
+        <>
+            <Dropdown menu={{ items, theme: "dark", className: styles.menu }}>
+                <Button onClick={(e) => e.preventDefault()} type="ghost">
+                    Help {DownArrow}
+                </Button>
+            </Dropdown>
+            {modalVisible && <VersionModal setModalVisible={setModalVisible} />}
+        </>
     );
 };
 

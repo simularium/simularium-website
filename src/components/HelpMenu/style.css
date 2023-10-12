@@ -12,3 +12,7 @@
     padding: 0;
     width: fit-content;
 }
+
+.menu :global(.ant-dropdown-menu-item-active){
+    background-color: transparent !important;
+}
