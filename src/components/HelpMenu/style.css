@@ -11,8 +11,6 @@
     box-shadow: 0 1px 3px black;
     padding: 0;
     width: fit-content;
-    right: 160px !important;
-    left: auto !important;
 }
 
 .menu :global(.ant-dropdown-menu-item-active){

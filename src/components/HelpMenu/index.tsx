@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useLocation, Link } from "react-router-dom";
-import { Menu, Dropdown, Button } from "antd";
+import { Dropdown, Button, MenuProps } from "antd";
 
 import { TUTORIAL_PATHNAME } from "../../routes";
 import { DownArrow } from "../Icons";
@@ -16,6 +16,8 @@ import styles from "./style.css";
 import VersionModal from "../VersionModal";
 
 const HelpMenu = (): JSX.Element => {
+    const [modalVisible, setModalVisible] = React.useState(false);
+
     const location = useLocation();
     const tutorialLink =
         location.pathname === "/viewer" ? (
@@ -30,66 +32,82 @@ const HelpMenu = (): JSX.Element => {
             <Link to={TUTORIAL_PATHNAME}>Quick start</Link>
         );
 
-    const [modalVisible, setModalVisible] = React.useState(false);
-
-    const menu = (
-        <Menu theme="dark" className={styles.menu}>
-            {modalVisible && (
-                <VersionModal setModalVisible={setModalVisible} />
-            )}
-            <Menu.Item key="tutorial">{tutorialLink}</Menu.Item>
-            <Menu.Item key="forum">
+    const items: MenuProps["items"] = [
+        {
+            key: "tutorial",
+            label: tutorialLink,
+        },
+        {
+            key: "forum",
+            label: (
                 <a href={FORUM_URL} target="_blank" rel="noopener noreferrer">
                     Forum
                 </a>
-            </Menu.Item>
-            <Menu.Item key="github">
+            ),
+        },
+        {
+            key: "github",
+            label: (
                 <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
                     GitHub
                 </a>
-            </Menu.Item>
-            <Menu.SubMenu
-                title="Submit issue"
-                popupClassName={styles.submenu}
-                popupOffset={[-0.45, -4]}
-                key="submit-issue"
-            >
-                <Menu.Item key="submit-issue-github">
-                    <a
-                        href={ISSUE_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        via GitHub (preferred)
-                    </a>
-                </Menu.Item>
-                <Menu.Item key="web-form">
-                    <a
-                        href={FORUM_BUG_REPORT_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        via Forum (for non-GitHub users)
-                    </a>
-                </Menu.Item>
-            </Menu.SubMenu>
-            <Menu.Item
-                key="version"
-                onClick={() => {
-                    setModalVisible(!modalVisible);
-                }}
-            >
-                <>Version info</>
-            </Menu.Item>
-        </Menu>
-    );
+            ),
+        },
+        {
+            key: "submit-issue",
+            label: "Submit issue",
+            popupClassName: styles.submenu,
+            popupOffset: [-0.45, -4],
+            children: [
+                {
+                    key: "via-github",
+                    label: (
+                        <a
+                            href={ISSUE_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            via GitHub (preferred)
+                        </a>
+                    ),
+                },
+                {
+                    key: "via-forum",
+                    label: (
+                        <a
+                            href={FORUM_BUG_REPORT_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            via Forum (for non-GitHub users)
+                        </a>
+                    ),
+                },
+            ],
+        },
+        {
+            key: "version",
+            label: (
+                <a
+                    onClick={() => {
+                        setModalVisible(!modalVisible);
+                    }}
+                >
+                    Version info
+                </a>
+            ),
+        },
+    ];
 
     return (
-        <Dropdown overlay={menu} placement="bottomRight">
-            <Button onClick={(e) => e.preventDefault()} type="ghost">
-                Help {DownArrow}
-            </Button>
-        </Dropdown>
+        <>
+            <Dropdown menu={{ items, theme: "dark", className: styles.menu }}>
+                <Button onClick={(e) => e.preventDefault()} type="ghost">
+                    Help {DownArrow}
+                </Button>
+            </Dropdown>
+            {modalVisible && <VersionModal setModalVisible={setModalVisible} />}
+        </>
     );
 };
 
