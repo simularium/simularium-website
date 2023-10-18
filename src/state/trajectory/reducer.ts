@@ -11,6 +11,7 @@ import {
     CLEAR_SIMULARIUM_FILE,
     SET_CONVERSION_TEMPLATE,
     RECEIVE_FILE_TO_CONVERT,
+    SET_CONVERSION_ENGINE,
 } from "./constants";
 import {
     TrajectoryStateBranch,
@@ -18,6 +19,7 @@ import {
     ClearSimFileDataAction,
     SetConversionTemplateData,
     ReceiveFileToConvertAction,
+    SetConversionEngineAction,
 } from "./types";
 
 export const initialState = {
@@ -94,6 +96,20 @@ const actionToConfigMap: TypeToDescriptionMap = {
             processingData: {
                 ...state.processingData,
                 ...action.payload,
+            },
+        }),
+    },
+    [SET_CONVERSION_ENGINE]: {
+        accepts: (action: AnyAction): action is SetConversionEngineAction =>
+            action.type === SET_CONVERSION_ENGINE,
+        perform: (
+            state: TrajectoryStateBranch,
+            action: SetConversionEngineAction
+        ) => ({
+            ...state,
+            processingData: {
+                ...state.processingData,
+                engineType: action.payload,
             },
         }),
     },

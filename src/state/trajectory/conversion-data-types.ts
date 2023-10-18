@@ -36,5 +36,8 @@ export type TemplateMap = {
 };
 
 export interface Template {
-    [key: string]: CustomType
+    [key: string]: CustomType;
 }
+export type ExtensionMap = {
+    [key in AvailableEngines]: string;
+};
