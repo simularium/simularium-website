@@ -14,6 +14,7 @@ import {
 } from "../../state/trajectory/types";
 import {
     AvailableEngines,
+    ExtensionMap,
     Template,
     TemplateMap,
 } from "../../state/trajectory/conversion-data-types";
@@ -23,6 +24,7 @@ import customRequest from "./custom-request";
 import { SetErrorAction } from "../../state/viewer/types";
 import { UploadFile } from "antd/lib/upload";
 import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
+import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
@@ -35,6 +37,14 @@ interface ConversionProps {
     receiveFileToConvert: ActionCreator<ReceiveFileToConvertAction>;
     setError: ActionCreator<SetErrorAction>;
 }
+
+const validFileExtensions: ExtensionMap = {
+    // TODO: update this with correct extensions
+    Smoldyn: "txt",
+    cytosim: "txt",
+    cellPACK: "txt",
+    SpringSaLaD: "txt",
+};
 
 const selectOptions = Object.keys(AvailableEngines).map(
     (engineName: string, index) => {
@@ -55,21 +65,53 @@ const ConversionForm = ({
     const [fileToConvert, setFileToConvert] = useState<UploadFile>();
     const [engineSelected, setEngineSelected] = useState<boolean>(false);
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
+    const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(false);
 
+    const toggleModal = () => {
+        setFileTypeErrorModalOpen(!fileTypeErrorModalOpen);
+    };
     const toggleProcessing = () => {
         setIsProcessing(!isProcessing);
     };
 
+    const handleEngineChange = (selectedValue: string) => {
+        const selectedEngine = selectedValue as AvailableEngines;
+        setConversionEngine(selectedEngine);
+        setEngineSelected(true);
+    };
+
+    const validateFileType = (fileName: string) => {
+        const fileExtension = fileName.split(".").pop();
+        if (fileExtension) {
+            if (
+                validFileExtensions[conversionProcessingData.engineType] ===
+                fileExtension.toLowerCase()
+            ) {
+                setIsProcessing(!isProcessing);
+                return;
+            }
+        }
+
+        setFileTypeErrorModalOpen(true);
+    };
+
     // TODO: use conversion template data to render the form
     console.log("conversion form data", conversionProcessingData);
+    const readyToConvert = fileToConvert && engineSelected;
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
-            {isProcessing ? (
+            {fileTypeErrorModalOpen && (
+                <ConversionFileErrorModal
+                    closeModal={toggleModal}
+                    engineType={conversionProcessingData.engineType}
+                />
+            )}
+            {isProcessing && (
                 <ConversionProcessingOverlay
                     toggleProcessing={toggleProcessing}
                     fileName={fileToConvert ? fileToConvert?.name : null}
                 />
-            ) : null}
+            )}
             <div className={styles.formContent}>
                 <h3 className={styles.title}>Import a non-native file type</h3>
                 <h3>
@@ -87,9 +129,8 @@ const ConversionForm = ({
                         bordered={true}
                         defaultValue="Select"
                         options={selectOptions}
-                        onChange={() => {
-                            setConversionEngine();
-                            setEngineSelected(true);
+                        onChange={(selectedValue) => {
+                            handleEngineChange(selectedValue);
                         }}
                     />
                     <Upload
@@ -123,8 +164,10 @@ const ConversionForm = ({
                 <Button ghost>Cancel</Button>
                 <Button
                     type="primary"
-                    disabled={!fileToConvert || !engineSelected}
-                    onClick={() => setIsProcessing(!isProcessing)}
+                    disabled={!readyToConvert}
+                    onClick={() =>
+                        readyToConvert && validateFileType(fileToConvert.name)
+                    } // this will be unclickable anyway, but typescript doesn't know that
                 >
                     Next
                 </Button>

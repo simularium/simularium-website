@@ -7,5 +7,5 @@
 }
 
 .file-upload :global(.ant-upload-list-item-card-actions-btn) svg {
-    color: #d14040;
+    color: var(--brick-red);
 }
