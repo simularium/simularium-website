@@ -35,8 +35,7 @@ const ConversionFileErrorModal: React.FC<ConversionFileErrorModalProps> = ({
             <div>
                 <div className={styles.redText}>
                     {" "}
-                    {Exclamation}{" "}
-                    {`We're sorry, there was a problem importing your file.`}
+                    {"We're sorry, there was a problem importing your file."}
                 </div>{" "}
                 You may want to double check that the file you selected is a
                 valid {engineType} file and try again. For further assistance,
