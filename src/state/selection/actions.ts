@@ -7,7 +7,6 @@ import {
     SET_AGENTS_VISIBLE,
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
     SET_COLOR_CHANGES,
-    SET_RECENT_COLORS,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
