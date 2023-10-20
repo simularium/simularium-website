@@ -20,6 +20,7 @@ export const getSelectionStateInfoForViewer = createSelector(
     (highlightedAgents, hiddenAgents) => ({
         highlightedAgents,
         hiddenAgents,
+        colorChanges: [],
     })
 );
 
