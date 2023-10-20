@@ -27,6 +27,7 @@ describe("ViewerPanel selectors", () => {
                 colorChanges: [],
                 hiddenAgents: [],
                 highlightedAgents: [],
+                colorChanges: [],
             });
         });
     });
