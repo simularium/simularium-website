@@ -99,18 +99,6 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
         }
     };
 
-    getAgentTags = (agentName: string): string[] => {
-        const { treeData } = this.props;
-        const tags: string[] = [""];
-        const agent = treeData.find((agent) => agent.title === agentName);
-        if (agent) {
-            agent.children.forEach((child) => {
-                tags.push(child.value as string);
-            });
-        }
-        return tags;
-    };
-
     renderCheckAllButton = () => {
         const { agentsChecked, treeData, isSharedCheckboxIndeterminate } =
             this.props;
@@ -232,10 +220,6 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                 </Row>
                 <TreeNode headerContent={this.renderCheckAllButton()} />
                 {treeData.map((nodeData) => {
-                    const childrenHaveDifferentColors =
-                        !nodeData.children.every(
-                            (el) => el.color === nodeData.children[0].color
-                        );
                     return (
                         <TreeNode
                             headerContent={
@@ -245,14 +229,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                         : this.renderRowWithNoChildren(
                                               nodeData
                                           )}{" "}
-                                    <ColorSwatch
-                                        childrenHaveDifferentColors={
-                                            childrenHaveDifferentColors
-                                        }
-                                        color={nodeData.color}
-                                        agentName={nodeData.title}
-                                        tags={this.getAgentTags(nodeData.title)}
-                                    />
+                                    <ColorSwatch color={nodeData.color} />
                                     <Text
                                         style={{ maxWidth: 143 }}
                                         ellipsis={{
@@ -319,12 +296,6 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                                             value.color ||
                                                             nodeData.color
                                                         }
-                                                        agentName={
-                                                            nodeData.title
-                                                        }
-                                                        tags={[
-                                                            value.value as string,
-                                                        ]}
                                                     />
                                                     <label
                                                         className={
