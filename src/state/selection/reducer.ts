@@ -23,7 +23,6 @@ import {
     SetVisibleAction,
     ResetAction,
     SetColorChangesAction,
-    SetRecentColorsAction,
 } from "./types";
 
 export const initialState = {
@@ -32,7 +31,6 @@ export const initialState = {
     agentVisibilityMap: {},
     agentHighlightMap: {},
     colorChangesMap: { agents: {}, color: "" },
-    recentColors: [],
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -137,19 +135,6 @@ const actionToConfigMap: TypeToDescriptionMap = {
             return {
                 ...state,
                 colorChangesMap: action.payload,
-            };
-        },
-    },
-    [SET_RECENT_COLORS]: {
-        accepts: (action: AnyAction): action is SetRecentColorsAction =>
-            action.type === SET_RECENT_COLORS,
-        perform: (
-            state: SelectionStateBranch,
-            action: SetRecentColorsAction
-        ) => {
-            return {
-                ...state,
-                recentColors: action.payload,
             };
         },
     },

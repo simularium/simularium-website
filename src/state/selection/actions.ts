@@ -18,7 +18,6 @@ import {
     ResetAction,
     SetColorChangesAction,
     ColorChangesMap,
-    SetRecentColorsAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -85,12 +84,5 @@ export function selectMetadata(
 export function resetAgentSelectionsAndHighlights(): ResetAction {
     return {
         type: RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
-    };
-}
-
-export function setRecentColors(colors: string[]): SetRecentColorsAction {
-    return {
-        payload: colors,
-        type: SET_RECENT_COLORS,
     };
 }

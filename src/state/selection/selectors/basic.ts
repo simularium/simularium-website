@@ -9,4 +9,3 @@ export const getColorChangesMap = (state: State) =>
     state.selection.colorChangesMap;
 export const getNumberCollapsed = (state: State) =>
     state.selection.numberPanelsCollapsed;
-export const getRecentColors = (state: State) => state.selection.recentColors;
