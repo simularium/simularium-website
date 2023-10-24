@@ -12,6 +12,7 @@ import {
     SET_BUFFERING,
     SET_IS_PLAYING,
     VIEWER_ERROR,
+    SET_SERVER_HEALTH,
 } from "./constants";
 import {
     ViewerStateBranch,
@@ -28,6 +29,7 @@ export const initialState = {
     fileDraggedOver: false,
     isBuffering: false,
     isPlaying: false,
+    serverHealth: true,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -86,6 +88,14 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: ViewerStateBranch, action: ToggleAction) => ({
             ...state,
             isPlaying: action.payload,
+        }),
+    },
+    [SET_SERVER_HEALTH]: {
+        accepts: (action: AnyAction): action is ToggleAction =>
+            action.type === SET_SERVER_HEALTH,
+        perform: (state: ViewerStateBranch, action: ToggleAction) => ({
+            ...state,
+            serverHealth: action.payload,
         }),
     },
 };
