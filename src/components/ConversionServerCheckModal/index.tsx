@@ -6,7 +6,9 @@ import CustomModal from "../CustomModal";
 import styles from "./style.css";
 import { RoundWarning } from "../Icons";
 
-interface ConversionServerCheckModalProps {}
+interface ConversionServerCheckModalProps {
+    closeModal: () => void;
+}
 
 /////PSEUDOCODE OF APPROACH/////
 // call a function that sends a websocket request with server health check id
@@ -17,23 +19,22 @@ interface ConversionServerCheckModalProps {}
 // i should add to create simulator connection a health check call
 // simulariumController.sendServerHealthCheck()
 
-const ConversionServerCheckModal: React.FC<
-    ConversionServerCheckModalProps
-> = ({}) => {
-    const footerButtons = (
-        <>
-            <Button type="primary">Ok</Button>
-        </>
-    );
-
+const ConversionServerCheckModal: React.FC<ConversionServerCheckModalProps> = ({
+    closeModal,
+}) => {
     return (
         <CustomModal
             className={styles.serverCheckModal}
             title="Cancel file import"
             open
-            footer={footerButtons}
+            footer={
+                <Button type="primary" onClick={closeModal}>
+                    Ok
+                </Button>
+            }
             width={425}
             centered
+            onCancel={closeModal}
         >
             <div className={styles.redText}>
                 {" "}
@@ -45,10 +46,14 @@ const ConversionServerCheckModal: React.FC<
                 Please try again at a later time. For further assitance, please
                 visit{" "}
             </span>
-            <div className={styles.blueText}>
+            <a
+                href="https://forum.allencell.org/"
+                target="_blank"
+                rel="noreferrer"
+            >
                 {" "}
-                The Allen Cell Discussion Forum.
-            </div>
+                The Allen Cell Discussion Forum.{" "}
+            </a>
         </CustomModal>
     );
 };

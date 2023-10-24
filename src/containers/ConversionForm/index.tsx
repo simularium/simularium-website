@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Upload, Select, Divider, Button } from "antd";
 import classNames from "classnames";
 import { ActionCreator } from "redux";
@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import theme from "../../components/theme/light-theme.css";
 import { State } from "../../state";
 import trajectoryStateBranch from "../../state/trajectory";
+import simulariumStateBranch from "../../state/simularium";
 import viewerStateBranch from "../../state/viewer";
 import {
     ReceiveFileToConvertAction,
@@ -23,6 +24,7 @@ import customRequest from "./custom-request";
 import { SetErrorAction } from "../../state/viewer/types";
 import { UploadFile } from "antd/lib/upload";
 import ConversionServerCheckModal from "../../components/ConversionServerCheckModal";
+import { SimulariumController } from "@aics/simularium-viewer";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
@@ -34,6 +36,8 @@ interface ConversionProps {
     };
     receiveFileToConvert: ActionCreator<ReceiveFileToConvertAction>;
     setError: ActionCreator<SetErrorAction>;
+    simulariumController: SimulariumController;
+    serverHealthy: boolean;
 }
 
 const selectOptions = Object.keys(AvailableEngines).map(
@@ -46,26 +50,55 @@ const selectOptions = Object.keys(AvailableEngines).map(
     }
 );
 
-// TODO ping the server once I learn how to do that
-const serverCheck = () => {
-    return true;
-};
-
 const ConversionForm = ({
     setConversionEngine,
     conversionProcessingData,
     setError,
     receiveFileToConvert,
+    serverHealthy,
+    simulariumController,
 }: ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile>();
     const [engineSelected, setEngineSelected] = useState<boolean>(false);
-    //TODO use this piece of state by checking if the server is healthy
-    const [serverIsNotHealthy, setServerIsNotHealthy] = useState<boolean>(true);
+    const [serverDown, setServerIsDown] = useState<boolean>(false);
+
+    const handleFileSelection = async (file: UploadFile) => {
+        setFileToConvert(file);
+        // necessarry to check if simController exists?
+        // if server is unhealthy, viewer state will update and throw modal
+        // below method doesn't exist yet:
+        // simulariumController.sendServerCheck();
+
+        //to simulate server being down when we upload:
+        setServerIsDown(true);
+
+        //TODO: once modal is dismissed it wont arise again
+        //unless "serverHealthy" changes in state
+        // should we refire the modal if a user ignores server check
+        // and tried to continue with next button?
+        //
+    };
+
+    useEffect(() => {
+        // the ping from handleFileSelection should set this off
+        if (!serverHealthy) {
+            setServerIsDown(true);
+        }
+    }, [serverHealthy]);
+
+    const closeServerCheckModal = () => {
+        setServerIsDown(false);
+    };
+
     // TODO: use conversion template data to render the form
     console.log("conversion form data", conversionProcessingData);
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
-            {serverIsNotHealthy ? <ConversionServerCheckModal /> : null}
+            {serverDown ? (
+                <ConversionServerCheckModal
+                    closeModal={closeServerCheckModal}
+                />
+            ) : null}
             <h3 className={styles.title}>Import a non-native file type</h3>
             <h3>
                 Convert and import a non-simularium file by providing the
@@ -97,7 +130,7 @@ const ConversionForm = ({
                         showRemoveIcon: true,
                     }}
                     onChange={({ file }) => {
-                        setFileToConvert(file);
+                        handleFileSelection(file);
                     }}
                     customRequest={(options) =>
                         customRequest(
@@ -128,6 +161,9 @@ function mapStateToProps(state: State) {
     return {
         conversionProcessingData:
             trajectoryStateBranch.selectors.getConversionProcessingData(state),
+        simulariumController:
+            simulariumStateBranch.selectors.getSimulariumController(state),
+        serverHealth: viewerStateBranch.selectors.getServerHealth(state),
     };
 }
 
