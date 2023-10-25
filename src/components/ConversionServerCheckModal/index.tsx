@@ -43,7 +43,7 @@ const ConversionServerCheckModal: React.FC<ConversionServerCheckModalProps> = ({
             </div>
             <span>
                 {" "}
-                Please try again at a later time. For further assitance, please
+                Please try again at a later time. For further assistance, please
                 visit{" "}
             </span>
             <a
