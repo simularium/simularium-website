@@ -5,10 +5,6 @@ import {
     SelectionEntry,
     UIDisplayData,
 } from "@aics/simularium-viewer/type-declarations";
-// import {
-//     ColorChanges,
-//     SelectionEntry,
-// } from "@aics/simularium-viewer/type-declarations/simularium/SelectionInterface";
 
 import { getAgentDisplayNamesAndStates } from "../../trajectory/selectors";
 import { ColorChangesMap, VisibilitySelectionMap } from "../types";
