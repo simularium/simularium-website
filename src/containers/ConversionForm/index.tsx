@@ -40,7 +40,7 @@ interface ConversionProps {
     receiveFileToConvert: ActionCreator<ReceiveFileToConvertAction>;
     setError: ActionCreator<SetErrorAction>;
     simulariumController: SimulariumController;
-    serverHealthy: boolean;
+    serverHealth: boolean;
 }
 
 const validFileExtensions: ExtensionMap = {
@@ -66,45 +66,28 @@ const ConversionForm = ({
     conversionProcessingData,
     setError,
     receiveFileToConvert,
-    serverHealthy,
-    simulariumController,
-}: ConversionProps): JSX.Element => {
+    serverHealth,
+}: // simulariumController,
+ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile>();
     const [engineSelected, setEngineSelected] = useState<boolean>(false);
     const [serverDown, setServerIsDown] = useState<boolean>(false);
+    const [isProcessing, setIsProcessing] = useState<boolean>(false);
+    const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(false);
 
-    const handleFileSelection = async (file: UploadFile) => {
-        setFileToConvert(file);
-        // necessarry to check if simController exists?
-        // if server is unhealthy, viewer state will update and throw modal
-        // below method doesn't exist yet:
-        // simulariumController.sendServerCheck();
-
-        //to simulate server being down when we upload:
-        setServerIsDown(true);
-
-        //TODO: once modal is dismissed it wont arise again
-        //unless "serverHealthy" changes in state
-        // should we refire the modal if a user ignores server check
-        // and tried to continue with next button?
-        //
-    };
-
+    console.log("serverHealth", serverHealth);
     useEffect(() => {
         // the ping from handleFileSelection should set this off
-        if (!serverHealthy) {
+        if (!serverHealth) {
             setServerIsDown(true);
         }
-    }, [serverHealthy]);
+    }, [serverHealth]);
 
     const closeServerCheckModal = () => {
         setServerIsDown(false);
     };
 
-    const [isProcessing, setIsProcessing] = useState<boolean>(false);
-    const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(false);
-
-    const toggleModal = () => {
+    const toggleFileTypeModal = () => {
         setFileTypeErrorModalOpen(!fileTypeErrorModalOpen);
     };
     const toggleProcessing = () => {
@@ -115,6 +98,20 @@ const ConversionForm = ({
         const selectedEngine = selectedValue as AvailableEngines;
         setConversionEngine(selectedEngine);
         setEngineSelected(true);
+    };
+
+    const handleFileSelection = async (file: UploadFile) => {
+        setFileToConvert(file);
+        // necessarry to check if simController exists?
+        // if server is down, viewer state will update and trigger modal
+        // below method doesn't exist yet:
+        // simulariumController.sendServerCheck();
+
+        // to simulate server being down when we upload:
+        setServerIsDown(true);
+
+        // toggle serverDown so that modal will close
+        // but unless serverHealth changes, Next button will be disabled
     };
 
     const validateFileType = (fileName: string) => {
@@ -134,17 +131,17 @@ const ConversionForm = ({
 
     // TODO: use conversion template data to render the form
     console.log("conversion form data", conversionProcessingData);
-    const readyToConvert = fileToConvert && engineSelected;
+    const readyToConvert = fileToConvert && engineSelected && serverHealth;
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
-            {serverDown ? (
+            {serverDown && (
                 <ConversionServerCheckModal
                     closeModal={closeServerCheckModal}
                 />
-            ) : null}
+            )}
             {fileTypeErrorModalOpen && (
                 <ConversionFileErrorModal
-                    closeModal={toggleModal}
+                    closeModal={toggleFileTypeModal}
                     engineType={conversionProcessingData.engineType}
                 />
             )}
