@@ -1,10 +1,14 @@
 import { createSelector } from "reselect";
 import { reduce } from "lodash";
-import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
 import {
     ColorChanges,
     SelectionEntry,
-} from "@aics/simularium-viewer/type-declarations/simularium/SelectionInterface";
+    UIDisplayData,
+} from "@aics/simularium-viewer/type-declarations";
+// import {
+//     ColorChanges,
+//     SelectionEntry,
+// } from "@aics/simularium-viewer/type-declarations/simularium/SelectionInterface";
 
 import { getAgentDisplayNamesAndStates } from "../../trajectory/selectors";
 import { ColorChangesMap, VisibilitySelectionMap } from "../types";
