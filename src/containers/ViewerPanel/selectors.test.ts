@@ -24,6 +24,7 @@ describe("ViewerPanel selectors", () => {
              */
             const result = getSelectionStateInfoForViewer({ ...initialState });
             expect(result).toEqual({
+                colorChanges: [],
                 hiddenAgents: [],
                 highlightedAgents: [],
             });
