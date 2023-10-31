@@ -1,6 +1,6 @@
 import { initialState } from "../../index";
 import { State } from "../../types";
-import { getHighlightedAgents, getAgentsToHide } from ".";
+import { getHighlightedAgents, getAgentsToHide, getColorChanges } from ".";
 const mockUIDisplayData = [
     {
         name: "agent1",
@@ -185,6 +185,103 @@ describe("selection composed selectors", () => {
             expect(agentsToHide).toEqual([
                 { name: "agent1", tags: [""] },
                 { name: "agent2", tags: [""] },
+            ]);
+        });
+    });
+
+    describe("getColorChanges", () => {
+        it("returns an array with agents and their tags if there are color changes", () => {
+            const stateWithColorChanges = {
+                ...mockState,
+                selection: {
+                    ...mockState.selection,
+                    colorChangesMap: {
+                        color: "FF0000",
+                        agents: {
+                            agent1: ["state1"],
+                            agent2: ["state2", "state3"],
+                            agent3: [],
+                        },
+                    },
+                },
+            };
+
+            const colorChanges = getColorChanges(stateWithColorChanges);
+            expect(colorChanges).toBeInstanceOf(Array);
+            expect(colorChanges).toEqual([
+                {
+                    color: "FF0000",
+                    agents: [
+                        { name: "agent1", tags: ["state1"] },
+                        { name: "agent2", tags: ["state2", "state3"] },
+                        { name: "agent3", tags: [] },
+                    ],
+                },
+            ]);
+        });
+
+        it("returns an empty array if there are no color changes", () => {
+            const stateWithColorChanges = {
+                ...mockState,
+                selection: {
+                    ...mockState.selection,
+                    colorChangesMap: {
+                        color: "",
+                        agents: {},
+                    },
+                },
+            };
+
+            const colorChanges = getColorChanges(stateWithColorChanges);
+            expect(colorChanges).toBeInstanceOf(Array);
+            expect(colorChanges).toEqual([]);
+        });
+
+        it("does not include agents not present in the colorChangesMap", () => {
+            const stateWithColorChanges = {
+                ...mockState,
+                selection: {
+                    ...mockState.selection,
+                    colorChangesMap: {
+                        color: "FF0000",
+                        agents: {
+                            agent1: ["state1"],
+                        },
+                    },
+                },
+            };
+
+            const colorChanges = getColorChanges(stateWithColorChanges);
+            expect(colorChanges).toBeInstanceOf(Array);
+            expect(colorChanges).toEqual([
+                {
+                    color: "FF0000",
+                    agents: [{ name: "agent1", tags: ["state1"] }],
+                },
+            ]);
+        });
+
+        it("includes agents with no specific tags if they are present in the colorChangesMap", () => {
+            const stateWithColorChanges = {
+                ...mockState,
+                selection: {
+                    ...mockState.selection,
+                    colorChangesMap: {
+                        color: "00FF00",
+                        agents: {
+                            agent1: [],
+                        },
+                    },
+                },
+            };
+
+            const colorChanges = getColorChanges(stateWithColorChanges);
+            expect(colorChanges).toBeInstanceOf(Array);
+            expect(colorChanges).toEqual([
+                {
+                    color: "00FF00",
+                    agents: [{ name: "agent1", tags: [] }],
+                },
             ]);
         });
     });
