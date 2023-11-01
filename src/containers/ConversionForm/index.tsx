@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Upload, Select, Divider, Button } from "antd";
 import classNames from "classnames";
 import { ActionCreator } from "redux";
@@ -66,25 +66,18 @@ const ConversionForm = ({
     conversionProcessingData,
     setError,
     receiveFileToConvert,
+    // simulariumController,
     serverHealth,
-}: // simulariumController,
-ConversionProps): JSX.Element => {
+}: ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile>();
     const [engineSelected, setEngineSelected] = useState<boolean>(false);
-    const [serverDown, setServerIsDown] = useState<boolean>(false);
+    const [serverDownModalOpen, setServerIsDownModalOpen] =
+        useState<boolean>(false);
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
     const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(false);
 
-    console.log("serverHealth", serverHealth);
-    useEffect(() => {
-        // the ping from handleFileSelection should set this off
-        if (!serverHealth) {
-            setServerIsDown(true);
-        }
-    }, [serverHealth]);
-
-    const closeServerCheckModal = () => {
-        setServerIsDown(false);
+    const toggleServerCheckModal = () => {
+        setServerIsDownModalOpen(!serverDownModalOpen);
     };
 
     const toggleFileTypeModal = () => {
@@ -108,7 +101,9 @@ ConversionProps): JSX.Element => {
         // simulariumController.sendServerCheck();
 
         // to simulate server being down when we upload:
-        setServerIsDown(true);
+        if (!serverHealth) {
+            setServerIsDownModalOpen(true);
+        }
 
         // toggle serverDown so that modal will close
         // but unless serverHealth changes, Next button will be disabled
@@ -134,9 +129,9 @@ ConversionProps): JSX.Element => {
     const readyToConvert = fileToConvert && engineSelected && serverHealth;
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
-            {serverDown && (
+            {serverDownModalOpen && (
                 <ConversionServerCheckModal
-                    closeModal={closeServerCheckModal}
+                    closeModal={toggleServerCheckModal}
                 />
             )}
             {fileTypeErrorModalOpen && (
