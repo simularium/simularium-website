@@ -14,28 +14,29 @@ import {
 } from "../../state/selection/types";
 
 import styles from "./style.css";
+
 interface ColorPickerProps {
-    oldColor: string;
+    initialColor: string;
     agentName: string;
     tags: string[];
-    setColorChanges: ActionCreator<SetColorChangesAction>;
-    setRecentColors: ActionCreator<SetRecentColorsAction>;
     recentColors: string[];
     isOpen: boolean;
     closePopover: () => void;
+    setColorChanges: ActionCreator<SetColorChangesAction>;
+    setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 
 const ColorPicker = ({
-    oldColor,
-    setColorChanges,
+    initialColor,
     agentName,
     tags,
     recentColors,
-    setRecentColors,
     isOpen,
     closePopover,
+    setColorChanges,
+    setRecentColors,
 }: ColorPickerProps) => {
-    const [color, setColor] = useState(oldColor);
+    const [color, setColor] = useState(initialColor);
 
     const handleColorChange = (color: string) => {
         const colorChanges: ColorChangesMap = {
@@ -61,16 +62,16 @@ const ColorPicker = ({
         setRecentColors(newRecentColors);
     };
 
-    const renderColorPickerContent = () => (
+    const renderColorPickerComponent = () => (
         <div className={styles.container}>
             <HexColorPicker color={color} onChange={setColor} />
             <div className={styles.selectionDisplay}>
                 <div className={styles.oldColorContainer}>
                     <div
                         className={styles.oldColor}
-                        style={{ backgroundColor: oldColor }}
+                        style={{ backgroundColor: initialColor }}
                         onClick={() => {
-                            setColor(oldColor);
+                            setColor(initialColor);
                         }}
                     >
                         {" "}
@@ -111,10 +112,7 @@ const ColorPicker = ({
                     >
                         <button
                             key={color}
-                            className={classNames([
-                                styles.swatch,
-                                styles.pickerSwatch,
-                            ])}
+                            className={styles.swatch}
                             style={{ background: color }}
                             onClick={() => setColor(color)}
                         />
@@ -122,14 +120,11 @@ const ColorPicker = ({
                 ))}
             </div>
             <p className={styles.recentColorText}> Recent </p>
-            <div className={classNames([styles.colors, styles.recentSwatches])}>
+            <div className={styles.colors}>
                 {recentColors.map((color) => (
                     <button
                         key={color}
-                        className={classNames([
-                            styles.swatch,
-                            styles.recentSwatch,
-                        ])}
+                        className={styles.swatch}
                         style={{ background: color }}
                         onClick={() => setColor(color)}
                     />
@@ -142,7 +137,7 @@ const ColorPicker = ({
         <Popover
             overlayClassName={styles.popover}
             open={isOpen}
-            content={renderColorPickerContent()}
+            content={renderColorPickerComponent()}
             placement="right"
             onOpenChange={closePopover}
             trigger="click"

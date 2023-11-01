@@ -29,7 +29,7 @@ const ColorSwatch = ({
     };
 
     // could move these rules into the css sheet, but to get color from prop
-    // and apply rules conditionlly means there will be soe inline styling
+    // and apply rules conditionlly means there will be some inline styling
     // figured its more clean to have it all visible here rather than some here and some in stylesheet
     const style = childrenHaveDifferentColors
         ? { border: "1px solid #d3d3d3" }
@@ -40,15 +40,13 @@ const ColorSwatch = ({
             <div
                 className={styles.container}
                 style={style}
-                onClick={() => {
-                    openPopover();
-                }}
+                onClick={openPopover}
             />
             {isColorPickerVisible ? (
                 <ColorPicker
                     agentName={agentName}
                     tags={tags}
-                    oldColor={initialColor}
+                    initialColor={initialColor}
                     isOpen={isColorPickerVisible}
                     closePopover={closePopover}
                 />
