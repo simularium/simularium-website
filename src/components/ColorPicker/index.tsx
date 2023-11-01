@@ -73,18 +73,14 @@ const ColorPicker = ({
                         onClick={() => {
                             setColor(initialColor);
                         }}
-                    >
-                        {" "}
-                    </div>
+                    ></div>
                     <p> CURRENT </p>
                 </div>
                 <div className={styles.oldColorContainer}>
                     <div
                         className={styles.newColor}
                         style={{ backgroundColor: color }}
-                    >
-                        {" "}
-                    </div>
+                    ></div>
                     <p> NEW </p>
                 </div>
                 <div className={styles.oldColorContainer}>
