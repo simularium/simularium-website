@@ -103,7 +103,7 @@ const ColorPicker = ({
                         key={color}
                         align={{ offset: [2, 5] }}
                         overlayClassName={styles.tooltip}
-                        title={color.slice(1)}
+                        title={color.replace("#", "")}
                     >
                         <button
                             key={color}
