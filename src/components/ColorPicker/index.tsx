@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
-import { Tooltip } from "antd";
+import { Popover, Tooltip } from "antd";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import classNames from "classnames";
 
@@ -21,6 +21,8 @@ interface ColorPickerProps {
     setColorChanges: ActionCreator<SetColorChangesAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
     recentColors: string[];
+    isOpen: boolean;
+    closePopover: () => void;
 }
 
 const ColorPicker = ({
@@ -30,6 +32,8 @@ const ColorPicker = ({
     tags,
     recentColors,
     setRecentColors,
+    isOpen,
+    closePopover,
 }: ColorPickerProps) => {
     const [color, setColor] = useState(oldColor);
 
@@ -57,7 +61,7 @@ const ColorPicker = ({
         setRecentColors(newRecentColors);
     };
 
-    return (
+    const renderColorPickerContent = () => (
         <div className={styles.container}>
             <HexColorPicker color={color} onChange={setColor} />
             <div className={styles.selectionDisplay}>
@@ -132,6 +136,17 @@ const ColorPicker = ({
                 ))}
             </div>
         </div>
+    );
+
+    return (
+        <Popover
+            overlayClassName={styles.popover}
+            open={isOpen}
+            content={renderColorPickerContent()}
+            placement="right"
+            onOpenChange={closePopover}
+            trigger="click"
+        />
     );
 };
 

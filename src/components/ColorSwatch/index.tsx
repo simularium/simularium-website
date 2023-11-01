@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import styles from "./styles.css";
-import ColorPickerPopover from "../ColorPickerPopover";
 import { useState } from "react";
+import ColorPicker from "../ColorPicker";
 interface ColorSwatchProps {
     childrenHaveDifferentColors?: boolean;
     color: string;
@@ -19,11 +19,11 @@ const ColorSwatch = ({
     const [isColorPickerVisible, setColorPickerVisible] = useState(false);
     const [initialColor, setInitialColor] = useState(color);
 
-    const closeModal = () => {
+    const closePopover = () => {
         setColorPickerVisible(false);
     };
 
-    const openModal = () => {
+    const openPopover = () => {
         setInitialColor(color);
         setColorPickerVisible(true);
     };
@@ -41,16 +41,16 @@ const ColorSwatch = ({
                 className={styles.container}
                 style={style}
                 onClick={() => {
-                    openModal();
+                    openPopover();
                 }}
             />
             {isColorPickerVisible ? (
-                <ColorPickerPopover
+                <ColorPicker
                     agentName={agentName}
                     tags={tags}
                     oldColor={initialColor}
                     isOpen={isColorPickerVisible}
-                    closeModal={closeModal}
+                    closePopover={closePopover}
                 />
             ) : null}
         </>
