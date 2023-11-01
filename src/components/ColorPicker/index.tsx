@@ -102,7 +102,6 @@ const ColorPicker = ({
                     <Tooltip
                         key={color}
                         align={{ offset: [2, 5] }}
-                        color="#69738A"
                         overlayClassName={styles.tooltip}
                         title={color.slice(1)}
                     >
