@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Popover, Tooltip } from "antd";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import classNames from "classnames";
+import { useDebounce } from "use-debounce";
 
 import selectionStateBranch from "../../state/selection";
 import { AGENT_COLORS } from "../../containers/ViewerPanel/constants";
@@ -37,19 +38,20 @@ const ColorPicker = ({
     setRecentColors,
 }: ColorPickerProps) => {
     const [color, setColor] = useState(initialColor);
+    const [debouncedColor] = useDebounce(color, 250);
 
     const handleColorChange = (color: string) => {
         const colorChanges: ColorChangesMap = {
             agents: { [agentName]: tags },
-            color: color,
+            color: debouncedColor,
         };
         setColorChanges(colorChanges);
-        updateRecentColors(color);
+        updateRecentColors(debouncedColor);
     };
 
     useEffect(() => {
-        handleColorChange(color);
-    }, [color]);
+        handleColorChange(debouncedColor);
+    }, [debouncedColor]);
 
     const updateRecentColors = (color: string) => {
         if (recentColors.includes(color)) {
