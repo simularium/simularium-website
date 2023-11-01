@@ -352,6 +352,7 @@ const fileConversionLogic = createLogic({
                 status: VIEWER_IMPORTING,
             })
         );
+        // TODO server ping here, set state
         done();
     },
     type: CONVERT_FILE,
