@@ -3,11 +3,19 @@ import * as React from "react";
 import styles from "./styles.css";
 import { useState } from "react";
 import ColorPicker from "../ColorPicker";
+import { ActionCreator } from "redux";
+import {
+    SetColorChangesAction,
+    SetRecentColorsAction,
+} from "../../state/selection/types";
 interface ColorSwatchProps {
     childrenHaveDifferentColors?: boolean;
     color: string;
     agentName: string;
     tags: string[];
+    recentColors: string[];
+    setColorChanges: ActionCreator<SetColorChangesAction>;
+    setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 
 const ColorSwatch = ({
@@ -15,6 +23,9 @@ const ColorSwatch = ({
     color,
     agentName,
     tags,
+    recentColors,
+    setColorChanges,
+    setRecentColors,
 }: ColorSwatchProps): JSX.Element => {
     const [isColorPickerVisible, setColorPickerVisible] = useState(false);
     const [initialColor, setInitialColor] = useState(color);
@@ -49,6 +60,9 @@ const ColorSwatch = ({
                     initialColor={initialColor}
                     isOpen={isColorPickerVisible}
                     closePopover={closePopover}
+                    recentColors={recentColors}
+                    setColorChanges={setColorChanges}
+                    setRecentColors={setRecentColors}
                 />
             ) : null}
         </>
