@@ -120,17 +120,6 @@
     margin: auto 2px;
 }
 
-.container .anticon svg {
-    height: 24px;
-    width: 24px;
-    color: var(--viewer-btn-color-default);
-}
-
-.container :global(.ant-btn-loading-icon) {
-    color: var(--viewer-btn-color-default);
-    margin: auto 2px;
-}
-
 .step-back::after {
     content: "\e906";
 }

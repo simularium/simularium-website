@@ -15,8 +15,6 @@ import styles from "./style.css";
 
 import VersionModal from "../VersionModal";
 
-import VersionModal from "../VersionModal";
-
 const HelpMenu = (): JSX.Element => {
     const [modalVisible, setModalVisible] = React.useState(false);
 
