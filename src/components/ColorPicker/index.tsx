@@ -41,14 +41,14 @@ const ColorPicker = ({
     const handleColorChange = (color: string) => {
         const colorChanges: ColorChangesMap = {
             agents: { [agentName]: tags },
-            color: debouncedColor,
+            color: color,
         };
         setColorChanges(colorChanges);
-        updateRecentColors(debouncedColor);
     };
 
     useEffect(() => {
         handleColorChange(debouncedColor);
+        updateRecentColors(debouncedColor);
     }, [debouncedColor]);
 
     const updateRecentColors = (color: string) => {
