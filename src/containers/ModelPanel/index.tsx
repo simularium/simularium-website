@@ -16,16 +16,21 @@ import { State } from "../../state/types";
 import {
     getAgentVisibilityMap,
     getAgentHighlightMap,
+    getRecentColors,
 } from "../../state/selection/selectors";
 import {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
     setAgentsVisible,
+    setColorChanges,
+    setRecentColors,
 } from "../../state/selection/actions";
 import {
     ChangeAgentsRenderingStateAction,
+    SetColorChangesAction,
     SetVisibleAction,
     VisibilitySelectionMap,
+    SetRecentColorsAction,
 } from "../../state/selection/types";
 import CheckBoxTree, { AgentDisplayNode } from "../../components/CheckBoxTree";
 import {
@@ -60,6 +65,9 @@ interface ModelPanelProps {
     viewerStatus: ViewerStatus;
     isNetworkedFile: boolean;
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
+    recentColors: string[];
+    setColorChanges: ActionCreator<SetColorChangesAction>;
+    setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 
 class ModelPanel extends React.Component<ModelPanelProps> {
@@ -77,6 +85,9 @@ class ModelPanel extends React.Component<ModelPanelProps> {
             viewerStatus,
             isNetworkedFile,
             changeToNetworkedFile: loadNetworkFile,
+            recentColors,
+            setColorChanges,
+            setRecentColors,
         } = this.props;
         const checkboxTree = (
             <CheckBoxTree
@@ -89,6 +100,9 @@ class ModelPanel extends React.Component<ModelPanelProps> {
                 payloadForSelectAll={payloadForSelectAll}
                 payloadForSelectNone={payloadForSelectNone}
                 isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
+                recentColors={recentColors}
+                setColorChanges={setColorChanges}
+                setRecentColors={setRecentColors}
             />
         );
         const contentMap = {
@@ -128,6 +142,7 @@ function mapStateToProps(state: State) {
         isSharedCheckboxIndeterminate: getIsSharedCheckboxIndeterminate(state),
         viewerStatus: getStatus(state),
         isNetworkedFile: getIsNetworkedFile(state),
+        recentColors: getRecentColors(state),
     };
 }
 
@@ -137,6 +152,8 @@ const dispatchToPropsMap = {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
     setAgentsVisible,
+    setColorChanges,
+    setRecentColors,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ModelPanel);

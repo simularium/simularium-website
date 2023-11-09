@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { ActionCreator } from "redux";
-import { connect } from "react-redux";
 import { Popover, Tooltip } from "antd";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import classNames from "classnames";
 import { useDebounce } from "use-debounce";
 
-import selectionStateBranch from "../../state/selection";
 import { AGENT_COLORS } from "../../containers/ViewerPanel/constants";
 import {
     ColorChangesMap,
@@ -43,14 +41,14 @@ const ColorPicker = ({
     const handleColorChange = (color: string) => {
         const colorChanges: ColorChangesMap = {
             agents: { [agentName]: tags },
-            color: debouncedColor,
+            color: color,
         };
         setColorChanges(colorChanges);
-        updateRecentColors(debouncedColor);
     };
 
     useEffect(() => {
         handleColorChange(debouncedColor);
+        updateRecentColors(debouncedColor);
     }, [debouncedColor]);
 
     const updateRecentColors = (color: string) => {
@@ -142,13 +140,4 @@ const ColorPicker = ({
     );
 };
 
-const mapStateToProps = (state: any) => ({
-    recentColors: selectionStateBranch.selectors.getRecentColors(state),
-});
-
-const dispatchToPropsMap = {
-    setColorChanges: selectionStateBranch.actions.setColorChanges,
-    setRecentColors: selectionStateBranch.actions.setRecentColors,
-};
-
-export default connect(mapStateToProps, dispatchToPropsMap)(ColorPicker);
+export default ColorPicker;

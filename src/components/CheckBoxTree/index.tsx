@@ -7,6 +7,8 @@ import classNames from "classnames";
 
 import {
     ChangeAgentsRenderingStateAction,
+    SetColorChangesAction,
+    SetRecentColorsAction,
     SetVisibleAction,
     VisibilitySelectionMap,
 } from "../../state/selection/types";
@@ -41,6 +43,9 @@ interface CheckBoxTreeProps {
     payloadForSelectAll: VisibilitySelectionMap;
     payloadForSelectNone: VisibilitySelectionMap;
     isSharedCheckboxIndeterminate: boolean;
+    recentColors: string[];
+    setColorChanges: ActionCreator<SetColorChangesAction>;
+    setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 const CHECKBOX_SPAN_NO = 2;
 const LABEL_SPAN_NO = 6;
@@ -211,7 +216,14 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
         </Row>
     );
     render() {
-        const { agentsHighlighted, treeData, agentsChecked } = this.props;
+        const {
+            agentsHighlighted,
+            treeData,
+            agentsChecked,
+            recentColors,
+            setColorChanges,
+            setRecentColors,
+        } = this.props;
         return treeData.length > 0 ? (
             <div className={styles.container}>
                 <Row className={styles.colLabels}>
@@ -252,6 +264,9 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                         color={nodeData.color}
                                         agentName={nodeData.title}
                                         tags={this.getAgentTags(nodeData.title)}
+                                        recentColors={recentColors}
+                                        setColorChanges={setColorChanges}
+                                        setRecentColors={setRecentColors}
                                     />
                                     <Text
                                         style={{ maxWidth: 143 }}
@@ -325,6 +340,15 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                                         tags={[
                                                             value.value as string,
                                                         ]}
+                                                        recentColors={
+                                                            recentColors
+                                                        }
+                                                        setColorChanges={
+                                                            setColorChanges
+                                                        }
+                                                        setRecentColors={
+                                                            setRecentColors
+                                                        }
                                                     />
                                                     <label
                                                         className={
