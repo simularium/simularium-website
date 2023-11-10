@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ActionCreator } from "redux";
 import { Popover, Tooltip } from "antd";
 import { HexColorInput, HexColorPicker } from "react-colorful";
@@ -37,6 +37,7 @@ const ColorPicker = ({
 }: ColorPickerProps) => {
     const [color, setColor] = useState(initialColor);
     const [debouncedColor] = useDebounce(color, 250);
+    const isInitialRender = useRef(true);
 
     const handleColorChange = (color: string) => {
         const colorChanges: ColorChanges[] = [
@@ -49,8 +50,12 @@ const ColorPicker = ({
     };
 
     useEffect(() => {
-        handleColorChange(debouncedColor);
-        updateRecentColors(debouncedColor);
+        if (isInitialRender.current) {
+            isInitialRender.current = false;
+        } else {
+            handleColorChange(debouncedColor);
+            updateRecentColors(debouncedColor);
+        }
     }, [debouncedColor]);
 
     const updateRecentColors = (color: string) => {
