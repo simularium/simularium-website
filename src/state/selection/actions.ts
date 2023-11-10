@@ -1,3 +1,4 @@
+import { ColorChanges } from "../../../../simularium-viewer/type-declarations";
 import {
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
@@ -17,7 +18,6 @@ import {
     VisibilitySelectionMap,
     ResetAction,
     SetColorChangesAction,
-    ColorChangesMap,
     SetRecentColorsAction,
 } from "./types";
 
@@ -63,7 +63,7 @@ export function highlightAgentsByDisplayKey(
 }
 
 export function setColorChanges(
-    colorChanges: ColorChangesMap
+    colorChanges: ColorChanges
 ): SetColorChangesAction {
     return {
         payload: colorChanges,

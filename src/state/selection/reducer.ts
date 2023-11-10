@@ -31,7 +31,7 @@ export const initialState = {
     numberPanelsCollapsed: 0,
     agentVisibilityMap: {},
     agentHighlightMap: {},
-    colorChangesMap: { agents: {}, color: "" },
+    colorChanges: [],
     recentColors: [],
 };
 
@@ -44,7 +44,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
                 ...state,
                 agentVisibilityMap: initialState.agentVisibilityMap,
                 agentHighlightMap: initialState.agentHighlightMap,
-                colorChanges: initialState.colorChangesMap,
+                colorChanges: initialState.colorChanges,
             };
         },
     },
@@ -136,7 +136,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
         ) => {
             return {
                 ...state,
-                colorChangesMap: action.payload,
+                colorChanges: action.payload,
             };
         },
     },

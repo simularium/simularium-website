@@ -5,9 +5,9 @@ import { HexColorInput, HexColorPicker } from "react-colorful";
 import classNames from "classnames";
 import { useDebounce } from "use-debounce";
 
+import { ColorChanges } from "../../../../simularium-viewer/type-declarations";
 import { AGENT_COLORS } from "../../containers/ViewerPanel/constants";
 import {
-    ColorChangesMap,
     SetColorChangesAction,
     SetRecentColorsAction,
 } from "../../state/selection/types";
@@ -39,10 +39,12 @@ const ColorPicker = ({
     const [debouncedColor] = useDebounce(color, 250);
 
     const handleColorChange = (color: string) => {
-        const colorChanges: ColorChangesMap = {
-            agents: { [agentName]: tags },
-            color: color,
-        };
+        const colorChanges: ColorChanges[] = [
+            {
+                agents: [{ name: agentName, tags: tags }],
+                color: color,
+            },
+        ];
         setColorChanges(colorChanges);
     };
 
