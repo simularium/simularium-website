@@ -2,4 +2,18 @@
     color: var(--dark-theme-primary-color);
     background-color: var(--dark-theme-header-bg);
     border: none;
+    padding-right: 8px;
+    padding-left: 22px;
+}
+
+.container .disabled :global(.ant-btn){
+    color: var(--dim-gray-two);
+}
+
+.container :global(.ant-btn:hover){
+    color: var(--baby-purple-two);
+}
+
+.container :global(.anticon) {
+    font-size: 16px;
 }

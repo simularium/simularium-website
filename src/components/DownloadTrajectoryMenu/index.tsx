@@ -53,22 +53,33 @@ const DownloadTrajectoryMenu = ({
         downloadFile(simulariumFile.name);
     };
 
+    const isDisabled = () => {
+        return !fileIsLoaded() || isBuffering;
+    };
+
+    const getTooltipOffset = () => {
+        if (isDisabled()) {
+            return [25, -30];
+        } else return [40, -18];
+    };
+
     return (
         <div className={styles.container}>
             <Tooltip
                 placement="bottomLeft"
                 title={
-                    simulariumFile.name
-                        ? "Download trajectory"
-                        : "Load a trajectory to perform this action"
+                    isDisabled()
+                        ? "Load a model to perform this action"
+                        : "Download trajectory"
                 }
                 color={TOOLTIP_COLOR}
+                align={{ offset: getTooltipOffset() }}
             >
                 <Button
-                    className={styles.downloadButton}
+                    className={isDisabled() ? styles.disabled : undefined}
                     onClick={onClick}
                     type="primary"
-                    disabled={!fileIsLoaded() || isBuffering}
+                    disabled={isDisabled()}
                 >
                     Download {Download}
                 </Button>
