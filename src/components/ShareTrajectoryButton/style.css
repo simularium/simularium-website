@@ -8,7 +8,6 @@
 
 .container :global(.ant-btn:hover){
     color: var(--baby-purple-two);
-
 }
 
 .container .disabled :global(.ant-btn){
