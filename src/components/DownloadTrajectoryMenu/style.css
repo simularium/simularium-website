@@ -10,7 +10,7 @@
     color: var(--dim-gray-two);
 }
 
-.container :global(.ant-btn:hover){
+.container :global(.ant-tooltip-open.ant-btn) {
     color: var(--baby-purple-two);
 }
 
