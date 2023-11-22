@@ -95,3 +95,28 @@
         display: none;
     }
 }
+
+/* Styling rules for Share and Download buttons */
+.page-header .buttons .action-buttons :global(.ant-btn) {
+    color: var(--dark-theme-primary-color);
+    background-color: var(--dark-theme-header-bg);
+    border: none;
+    padding-right: 8px;
+    padding-left: 22px;
+}
+
+.page-header .buttons .action-buttons .disabled :global(.ant-btn) {
+    color: var(--dim-gray-two);
+}
+
+.page-header .buttons .action-buttons :global(.ant-tooltip-open.ant-btn) {
+    color: var(--baby-purple-two);
+}
+
+.page-header .buttons .action-buttons :global(.anticon) {
+    font-size: 16px;
+}
+
+.page-header .buttons .action-buttons {
+    display: flex;
+}
