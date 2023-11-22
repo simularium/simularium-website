@@ -26,15 +26,8 @@ const ShareTrajectoryButton = ({
         setIsSharing(!isSharing);
     };
 
-    const isDisabled = () => {
-        return !simulariumFile.name || isSharing || isBuffering;
-    };
-
-    const getTooltipOffset = () => {
-        if (isDisabled()) {
-            return [0, -30];
-        } else return [0, -18];
-    };
+    const isDisabled = !simulariumFile.name || isSharing || isBuffering;
+    const tooltipOffset = isDisabled ? [0, -30] : [0, -18];
 
     return (
         <div className={styles.container}>
@@ -48,19 +41,19 @@ const ShareTrajectoryButton = ({
             ) : null}
             <Tooltip
                 title={
-                    isDisabled()
+                    isDisabled
                         ? "Load a model to perform this action"
                         : "Share trajectory"
                 }
                 placement="bottomLeft"
                 color={TOOLTIP_COLOR}
-                align={{ offset: getTooltipOffset() }}
+                align={{ offset: tooltipOffset }}
             >
                 <Button
-                    className={isDisabled() ? styles.disabled : undefined}
+                    className={isDisabled ? styles.disabled : undefined}
                     onClick={handleShare}
                     type="primary"
-                    disabled={isDisabled()}
+                    disabled={isDisabled}
                 >
                     Share {Share}
                 </Button>
