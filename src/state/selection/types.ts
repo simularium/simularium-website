@@ -1,3 +1,4 @@
+import { ColorChanges } from "../../../../simularium-viewer/type-declarations";
 import { TrajectoryStateBranch } from "../trajectory/types";
 
 export interface SelectionStateBranch {
@@ -49,12 +50,8 @@ export interface ResetAction {
 }
 
 export interface SetColorChangesAction {
-    payload: ColorChangesMap;
+    payload: ColorChanges;
     type: string;
-}
-export interface ColorChangesMap {
-    agents: VisibilitySelectionMap;
-    color: string;
 }
 
 export interface SetRecentColorsAction {

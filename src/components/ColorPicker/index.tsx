@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ActionCreator } from "redux";
 import { Popover, Tooltip } from "antd";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import classNames from "classnames";
 import { useDebounce } from "use-debounce";
 
+import { ColorChanges } from "../../../../simularium-viewer/type-declarations";
 import { AGENT_COLORS } from "../../containers/ViewerPanel/constants";
 import {
-    ColorChangesMap,
     SetColorChangesAction,
     SetRecentColorsAction,
 } from "../../state/selection/types";
@@ -37,18 +37,25 @@ const ColorPicker = ({
 }: ColorPickerProps) => {
     const [color, setColor] = useState(initialColor);
     const [debouncedColor] = useDebounce(color, 250);
+    const isInitialRender = useRef(true);
 
     const handleColorChange = (color: string) => {
-        const colorChanges: ColorChangesMap = {
-            agents: { [agentName]: tags },
-            color: color,
-        };
+        const colorChanges: ColorChanges[] = [
+            {
+                agents: [{ name: agentName, tags: tags }],
+                color: color,
+            },
+        ];
         setColorChanges(colorChanges);
     };
 
     useEffect(() => {
-        handleColorChange(debouncedColor);
-        updateRecentColors(debouncedColor);
+        if (isInitialRender.current) {
+            isInitialRender.current = false;
+        } else {
+            handleColorChange(debouncedColor);
+            updateRecentColors(debouncedColor);
+        }
     }, [debouncedColor]);
 
     const updateRecentColors = (color: string) => {
