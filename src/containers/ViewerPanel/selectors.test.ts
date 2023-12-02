@@ -26,7 +26,7 @@ describe("ViewerPanel selectors", () => {
             expect(result).toEqual({
                 hiddenAgents: [],
                 highlightedAgents: [],
-                colorChange: [],
+                colorChange: null,
             });
         });
     });
