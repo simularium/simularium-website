@@ -7,7 +7,7 @@ import { getAgentDisplayNamesAndStates } from "../trajectory/selectors";
 import { receiveAgentNamesAndStates } from "../trajectory/actions";
 
 const storeColorsLogic = createLogic({
-    process(deps: ReduxLogicDeps, dispatch) {
+    process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
         const uiData: UIDisplayData = getAgentDisplayNamesAndStates(getState());
         const colorChange = action.payload;
@@ -34,6 +34,7 @@ const storeColorsLogic = createLogic({
             return newAgent;
         });
         dispatch(receiveAgentNamesAndStates(newUiData));
+        done();
     },
     type: SET_COLOR_CHANGES,
 });
