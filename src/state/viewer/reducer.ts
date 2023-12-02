@@ -30,7 +30,6 @@ export const initialState = {
     fileDraggedOver: false,
     isBuffering: false,
     isPlaying: false,
-    serverHealth: true,
     isLooping: false,
 };
 
@@ -90,14 +89,6 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: ViewerStateBranch, action: ToggleAction) => ({
             ...state,
             isPlaying: action.payload,
-        }),
-    },
-    [SET_SERVER_HEALTH]: {
-        accepts: (action: AnyAction): action is ToggleAction =>
-            action.type === SET_SERVER_HEALTH,
-        perform: (state: ViewerStateBranch, action: ToggleAction) => ({
-            ...state,
-            serverHealth: action.payload,
         }),
     },
     [SET_IS_LOOPING]: {
