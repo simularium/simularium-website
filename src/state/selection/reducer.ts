@@ -136,7 +136,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
         ) => {
             return {
                 ...state,
-                colorChanges: action.payload,
+                colorChanges: [...state.colorChanges, ...action.payload],
             };
         },
     },

@@ -5,7 +5,7 @@ import { HexColorInput, HexColorPicker } from "react-colorful";
 import classNames from "classnames";
 import { useDebounce } from "use-debounce";
 
-import { ColorChanges } from "../../../../simularium-viewer/type-declarations";
+import { ColorChanges } from "../../../../simularium-viewer/";
 import { AGENT_COLORS } from "../../containers/ViewerPanel/constants";
 import {
     SetColorChangesAction,
