@@ -1,15 +1,16 @@
 import { createSelector } from "reselect";
 import { find } from "lodash";
+import { ColorChange, UIDisplayData } from "@aics/simularium-viewer";
 
 import {
     isNetworkSimFileInterface,
     LocalSimFile,
     NetworkedSimFile,
 } from "../types";
-import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
-import TRAJECTORIES from "../../../constants/networked-trajectories";
 
+import TRAJECTORIES from "../../../constants/networked-trajectories";
 import { getSimulariumFile, getAgentDisplayNamesAndStates } from "./basic";
+import { getColorChange } from "../../selection/selectors";
 
 export const getIsNetworkedFile = createSelector(
     [getSimulariumFile],
@@ -25,11 +26,12 @@ export const getIsNetworkedFile = createSelector(
 );
 
 export const getUiDisplayDataTree = createSelector(
-    [getAgentDisplayNamesAndStates],
-    (uiDisplayData: UIDisplayData) => {
+    [getAgentDisplayNamesAndStates, getColorChange],
+    (uiDisplayData: UIDisplayData, colorChange: ColorChange[]) => {
         if (!uiDisplayData.length) {
             return [];
         }
+        console.log(colorChange);
         return uiDisplayData.map((agent) => ({
             title: agent.name,
             key: agent.name,

@@ -4,11 +4,11 @@ import { Popover, Tooltip } from "antd";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import classNames from "classnames";
 import { useDebounce } from "use-debounce";
+import { ColorChange } from "@aics/simularium-viewer";
 
-import { ColorChanges } from "../../../../simularium-viewer/";
 import { AGENT_COLORS } from "../../containers/ViewerPanel/constants";
 import {
-    SetColorChangesAction,
+    SetColorChangeAction,
     SetRecentColorsAction,
 } from "../../state/selection/types";
 
@@ -21,7 +21,7 @@ interface ColorPickerProps {
     recentColors: string[];
     isOpen: boolean;
     closePopover: () => void;
-    setColorChanges: ActionCreator<SetColorChangesAction>;
+    setColorChange: ActionCreator<SetColorChangeAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 
@@ -32,7 +32,7 @@ const ColorPicker = ({
     recentColors,
     isOpen,
     closePopover,
-    setColorChanges,
+    setColorChange,
     setRecentColors,
 }: ColorPickerProps) => {
     const [color, setColor] = useState(initialColor);
@@ -40,13 +40,12 @@ const ColorPicker = ({
     const isInitialRender = useRef(true);
 
     const handleColorChange = (color: string) => {
-        const colorChanges: ColorChanges[] = [
-            {
-                agents: [{ name: agentName, tags: tags }],
-                color: color,
-            },
-        ];
-        setColorChanges(colorChanges);
+        const colorChange: ColorChange = {
+            agent: { name: agentName, tags: tags },
+            color: color,
+        };
+
+        setColorChange(colorChange);
     };
 
     useEffect(() => {

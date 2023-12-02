@@ -348,6 +348,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const { receiveAgentNamesAndStates, setAgentsVisible } = this.props;
 
         const selectedAgents = convertUIDataToSelectionData(uiData);
+        console.log("uiData", uiData);
         const actions = [
             receiveAgentNamesAndStates(uiData),
             setAgentsVisible(selectedAgents),
@@ -382,6 +383,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setError,
             scaleBarLabel,
         } = this.props;
+        console.log("INFO", selectionStateInfoForViewer);
         return (
             <div
                 ref={this.centerContent}

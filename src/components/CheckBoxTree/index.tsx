@@ -7,7 +7,7 @@ import classNames from "classnames";
 
 import {
     ChangeAgentsRenderingStateAction,
-    SetColorChangesAction,
+    SetColorChangeAction,
     SetRecentColorsAction,
     SetVisibleAction,
     VisibilitySelectionMap,
@@ -44,7 +44,7 @@ interface CheckBoxTreeProps {
     payloadForSelectNone: VisibilitySelectionMap;
     isSharedCheckboxIndeterminate: boolean;
     recentColors: string[];
-    setColorChanges: ActionCreator<SetColorChangesAction>;
+    setColorChange: ActionCreator<SetColorChangeAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 const CHECKBOX_SPAN_NO = 2;
@@ -221,7 +221,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
             treeData,
             agentsChecked,
             recentColors,
-            setColorChanges,
+            setColorChange,
             setRecentColors,
         } = this.props;
         return treeData.length > 0 ? (
@@ -265,7 +265,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                         agentName={nodeData.title}
                                         tags={this.getAgentTags(nodeData.title)}
                                         recentColors={recentColors}
-                                        setColorChanges={setColorChanges}
+                                        setColorChange={setColorChange}
                                         setRecentColors={setRecentColors}
                                     />
                                     <Text
@@ -343,8 +343,8 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                                         recentColors={
                                                             recentColors
                                                         }
-                                                        setColorChanges={
-                                                            setColorChanges
+                                                        setColorChange={
+                                                            setColorChange
                                                         }
                                                         setRecentColors={
                                                             setRecentColors

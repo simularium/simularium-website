@@ -1,4 +1,4 @@
-import { ColorChanges } from "../../../../simularium-viewer";
+import { ColorChange } from "@aics/simularium-viewer";
 import { TrajectoryStateBranch } from "../trajectory/types";
 
 export interface SelectionStateBranch {
@@ -49,8 +49,8 @@ export interface ResetAction {
     type: string;
 }
 
-export interface SetColorChangesAction {
-    payload: ColorChanges[];
+export interface SetColorChangeAction {
+    payload: ColorChange;
     type: string;
 }
 

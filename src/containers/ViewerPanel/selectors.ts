@@ -1,4 +1,8 @@
-import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
+import {
+    ColorChange,
+    SelectionStateInfo,
+    UIDisplayData,
+} from "@aics/simularium-viewer";
 import { createSelector } from "reselect";
 import {
     getLastFrameTimeOfCachedSimulation,
@@ -8,7 +12,7 @@ import {
 } from "../../state/trajectory/selectors";
 import {
     getAgentsToHide,
-    getColorChanges,
+    getColorChange,
     getCurrentTime,
     getHighlightedAgents,
 } from "../../state/selection/selectors";
@@ -17,11 +21,15 @@ import { roundTimeForDisplay } from "../../util";
 import { DisplayTimes } from "./types";
 
 export const getSelectionStateInfoForViewer = createSelector(
-    [getHighlightedAgents, getAgentsToHide, getColorChanges],
-    (highlightedAgents, hiddenAgents, colorChanges) => ({
+    [getHighlightedAgents, getAgentsToHide, getColorChange],
+    (
         highlightedAgents,
         hiddenAgents,
-        colorChanges,
+        colorChange: ColorChange
+    ): SelectionStateInfo => ({
+        highlightedAgents,
+        hiddenAgents,
+        colorChange,
     })
 );
 

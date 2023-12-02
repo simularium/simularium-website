@@ -1,6 +1,6 @@
 import { initialState } from "../../index";
 import { State } from "../../types";
-import { getHighlightedAgents, getAgentsToHide, getColorChanges } from ".";
+import { getHighlightedAgents, getAgentsToHide } from ".";
 const mockUIDisplayData = [
     {
         name: "agent1",

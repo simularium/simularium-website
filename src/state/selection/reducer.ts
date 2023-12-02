@@ -22,7 +22,7 @@ import {
     ChangeNumberCollapsedPanelsAction,
     SetVisibleAction,
     ResetAction,
-    SetColorChangesAction,
+    SetColorChangeAction,
     SetRecentColorsAction,
 } from "./types";
 
@@ -31,7 +31,7 @@ export const initialState = {
     numberPanelsCollapsed: 0,
     agentVisibilityMap: {},
     agentHighlightMap: {},
-    colorChanges: [],
+    colorChange: null,
     recentColors: [],
 };
 
@@ -44,7 +44,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
                 ...state,
                 agentVisibilityMap: initialState.agentVisibilityMap,
                 agentHighlightMap: initialState.agentHighlightMap,
-                colorChanges: initialState.colorChanges,
+                colorChange: initialState.colorChange,
             };
         },
     },
@@ -128,15 +128,15 @@ const actionToConfigMap: TypeToDescriptionMap = {
         }),
     },
     [SET_COLOR_CHANGES]: {
-        accepts: (action: AnyAction): action is SetColorChangesAction =>
+        accepts: (action: AnyAction): action is SetColorChangeAction =>
             action.type === SET_COLOR_CHANGES,
         perform: (
             state: SelectionStateBranch,
-            action: SetColorChangesAction
+            action: SetColorChangeAction
         ) => {
             return {
                 ...state,
-                colorChanges: [...state.colorChanges, ...action.payload],
+                colorChange: action.payload,
             };
         },
     },
