@@ -12,7 +12,6 @@ import {
     SET_BUFFERING,
     SET_IS_PLAYING,
     VIEWER_ERROR,
-    SET_SERVER_HEALTH,
     SET_IS_LOOPING,
 } from "./constants";
 import {
