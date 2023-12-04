@@ -39,6 +39,7 @@
         "@types/react-plotly.js": "^2.2.4",
         "@types/react-router-dom": "^5.1.5",
         "@types/sinon": "7.0.6",
+        "@types/uuid": "^9.0.7",
         "@typescript-eslint/eslint-plugin": "^5.42.1",
         "@typescript-eslint/parser": "^5.42.1",
         "@webpack-cli/serve": "^1.7.0",
@@ -114,7 +115,8 @@
         "react-waypoint": "^9.0.3",
         "redux": "4.2.0",
         "redux-logic": "^3.0.3",
-        "reselect": "4.0.0"
+        "reselect": "4.0.0",
+        "uuid": "^9.0.1"
     },
     "resolutions": {
         "react": "^16",

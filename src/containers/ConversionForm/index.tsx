@@ -3,6 +3,7 @@ import { Upload, Select, Divider, Button } from "antd";
 import classNames from "classnames";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 
 import theme from "../../components/theme/light-theme.css";
 import { State } from "../../state";
@@ -31,8 +32,10 @@ import ConversionFileErrorModal from "../../components/ConversionFileErrorModal"
 import { NetConnectionParams } from "@aics/simularium-viewer/type-declarations/simularium";
 
 // TODO QUESTIONS
+// This is handling asynchronous logic with workarounds releveant to websockets
+// that said, the state "serverHealth" is not used anywhere in the application
+// so I decided to handle it all here in the component for now.
 // Currently sending one request on page load and another request on file upload... sufficient?
-// I'm using Date.now() to generate a request ID, there are libraries like nanoid or uuid but i dont want to add unneeded dependencies
 // 15 second time out for health check responses, is that too long?
 
 interface ConversionProps {
@@ -49,7 +52,7 @@ interface ConversionProps {
 }
 
 interface HealthCheckTimeouts {
-    [requestId: number]: NodeJS.Timeout;
+    [requestId: string]: NodeJS.Timeout;
 }
 
 const validFileExtensions: ExtensionMap = {
@@ -106,21 +109,9 @@ const ConversionForm = ({
     const healthCheckTimeouts: HealthCheckTimeouts = {};
     let healthCheckInterval: NodeJS.Timeout | null = null;
 
-    // will use this interval to send health checks every 15 seconds if one fails
-    const setHealthCheckInterval = () => {
-        if (healthCheckInterval) {
-            clearInterval(healthCheckInterval);
-        }
-        healthCheckInterval = setInterval(sendHealthCheck, 15000);
-    };
-
-    const generateRequestId = () => {
-        return Date.now();
-    };
-
     // sends a health check and sets initial 15 second timeout
     const sendHealthCheck = () => {
-        const requestId = generateRequestId();
+        const requestId = uuidv4();
         controller.checkServerHealth(
             () => onHealthCheckResponse(requestId),
             netConnectionConfig
@@ -133,7 +124,7 @@ const ConversionForm = ({
                 delete healthCheckTimeouts[requestId];
                 // Start interval checks only if not already started
                 if (!healthCheckInterval) {
-                    setHealthCheckInterval();
+                    healthCheckInterval = setInterval(sendHealthCheck, 15000);
                 }
             }
         }, 15000);
@@ -141,7 +132,7 @@ const ConversionForm = ({
 
     // callback for viewer
     // sets server health state, clears timeouts and intervals
-    const onHealthCheckResponse = (requestId: number): void => {
+    const onHealthCheckResponse = (requestId: string): void => {
         setServerHealth(true);
 
         if (healthCheckTimeouts[requestId]) {
@@ -171,7 +162,7 @@ const ConversionForm = ({
         );
     }, [serverHealth]);
 
-    // callback for modal to use
+    // callback for modal component to use
     const toggleServerCheckModal = () => {
         setServerIsDownModalOpen(!serverDownModalOpen);
     };
@@ -179,6 +170,7 @@ const ConversionForm = ({
     const toggleFileTypeModal = () => {
         setFileTypeErrorModalOpen(!fileTypeErrorModalOpen);
     };
+
     const toggleProcessing = () => {
         setIsProcessing(!isProcessing);
     };
