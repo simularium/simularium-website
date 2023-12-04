@@ -1,9 +1,6 @@
 import { createSelector } from "reselect";
 import { reduce } from "lodash";
-import {
-    SelectionEntry,
-    UIDisplayData,
-} from "@aics/simularium-viewer/type-declarations";
+import { SelectionEntry, UIDisplayData } from "@aics/simularium-viewer";
 
 import { getAgentDisplayNamesAndStates } from "../../trajectory/selectors";
 import { VisibilitySelectionMap } from "../types";

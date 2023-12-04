@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Tooltip } from "antd";
-import { ISimulariumFile } from "@aics/simularium-viewer/type-declarations";
+import { ISimulariumFile } from "@aics/simularium-viewer";
 
 import { DATA_BUCKET_URL, TOOLTIP_COLOR } from "../../constants";
 import { NetworkedSimFile, LocalSimFile } from "../../state/trajectory/types";
