@@ -9,8 +9,6 @@ import {
     TOOLTIP_COLOR,
 } from "../../constants";
 
-import styles from "./style.css";
-
 interface CheckboxTypeProps extends CheckboxProps {
     checkboxType?: CHECKBOX_TYPE_STAR;
     checkboxLevel?: keyof TooltipOffsets;
