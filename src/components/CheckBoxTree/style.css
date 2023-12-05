@@ -13,6 +13,7 @@
 .header-label {
     margin-left: 8px;
     max-width: 120px;
+    font-weight: 200;
 }
 
 .checkbox-set {
@@ -54,7 +55,7 @@
 
 .check-all-checkbox {
     width: 100%;
-    margin-left: 67px;
+    margin-left: 82px; /* to line up with the checkboxes below */
     padding: 10px 0;
 }
 
