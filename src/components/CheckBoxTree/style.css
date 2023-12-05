@@ -80,11 +80,10 @@
     color: var(--dark-theme-sidebar-text)
 }
 
-.container :global(.header-checkbox) {
-    margin-left: 8px;
-    top: 3px;
+.container :global(.header-checkbox .ant-checkbox) {
+    top: 3.5px;
 }
 
-.container :global(.header-checkbox .ant-checkbox) {
-    top: 3px;
+.container .checkbox-column, .container .color-swatch-column  {
+    width: 35px;
 }

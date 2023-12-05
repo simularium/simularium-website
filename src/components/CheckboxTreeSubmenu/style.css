@@ -10,3 +10,7 @@
 .container span {
     top: 0;
 }
+
+.container :global(.ant-checkbox) {
+    top: 2px;
+}

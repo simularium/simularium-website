@@ -293,8 +293,11 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                             }
                                         />
                                     </Col>
-                                    <Row className={styles.subMenu}>
-                                        <Col span={CHECKBOX_SPAN_NO} offset={3}>
+                                    <Row>
+                                        <Col
+                                            offset={1}
+                                            className={styles.colorSwatchColumn}
+                                        >
                                             {nodeData.children.map((value) => {
                                                 return (
                                                     <div
@@ -329,7 +332,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                             })}
                                         </Col>
                                     </Row>
-                                    <Col span={CHECKBOX_SPAN_NO}>
+                                    <Col className={styles.checkboxColumn}>
                                         <CheckboxTreeSubmenu
                                             options={nodeData.children}
                                             checkedAgents={
@@ -344,10 +347,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                             }
                                         />
                                     </Col>
-                                    <Col
-                                        offset={4}
-                                        className={styles.checkboxLabels}
-                                    >
+                                    <Col className={styles.checkboxLabels}>
                                         {nodeData.children.map((value) => {
                                             return (
                                                 <div
