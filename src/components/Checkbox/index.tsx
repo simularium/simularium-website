@@ -6,7 +6,7 @@ import StarCheckbox from "../StarCheckbox";
 import {
     CHECKBOX_TYPE_STAR,
     LEFT_PANEL_TOOLTIP_DELAY,
-    LEFT_PANEL_TOOLTIP_COLOR,
+    TOOLTIP_COLOR,
 } from "../../constants";
 
 import styles from "./style.css";
@@ -45,18 +45,16 @@ const Checkbox = (props: CheckboxTypeProps): JSX.Element => {
         return <StarCheckbox {...childProps} />;
     }
     return (
-        <div className={styles.container}>
-            <Tooltip
-                title={props.checked ? "Hide" : "Show"}
-                placement="top"
-                mouseEnterDelay={LEFT_PANEL_TOOLTIP_DELAY}
-                // Position tooltip with alignConfig object: https://github.com/yiminghe/dom-align#usage
-                align={{ offset: tooltipOffsets[checkboxLevel] }}
-                color={LEFT_PANEL_TOOLTIP_COLOR}
-            >
-                <AntdCheckbox {...childProps} />
-            </Tooltip>
-        </div>
+        <Tooltip
+            title={props.checked ? "Hide" : "Show"}
+            placement="top"
+            mouseEnterDelay={LEFT_PANEL_TOOLTIP_DELAY}
+            // Position tooltip with alignConfig object: https://github.com/yiminghe/dom-align#usage
+            align={{ offset: tooltipOffsets[checkboxLevel] }}
+            color={TOOLTIP_COLOR}
+        >
+            <AntdCheckbox {...childProps} />
+        </Tooltip>
     );
 };
 
