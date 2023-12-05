@@ -108,6 +108,8 @@ const ConversionForm = ({
 
     const healthCheckTimeouts: HealthCheckTimeouts = {};
     let healthCheckInterval: NodeJS.Timeout | null = null;
+    let healthCheckCount = 0;
+    const MAX_HEALTH_CHECKS = 4;
 
     // sends a health check and sets initial 15 second timeout
     const sendHealthCheck = () => {
@@ -122,12 +124,24 @@ const ConversionForm = ({
             if (healthCheckTimeouts[requestId]) {
                 setServerHealth(false);
                 delete healthCheckTimeouts[requestId];
+                healthCheckCount++;
+
                 // Start interval checks only if not already started
-                if (!healthCheckInterval) {
+                if (
+                    !healthCheckInterval &&
+                    healthCheckCount < MAX_HEALTH_CHECKS
+                ) {
                     healthCheckInterval = setInterval(sendHealthCheck, 15000);
+                } else if (
+                    healthCheckCount >= MAX_HEALTH_CHECKS &&
+                    healthCheckInterval !== null
+                ) {
+                    clearInterval(healthCheckInterval);
+                    healthCheckInterval = null;
+                    healthCheckCount = 0;
                 }
             }
-        }, 15000);
+        }, 3000);
     };
 
     // callback for viewer
