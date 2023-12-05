@@ -9,68 +9,72 @@
     justify-content: center;
 }
 
-.container {
+.color-picker {
     padding-left: 4px;
 }
 
-.container .selection-display {
+.color-picker .selection-display, 
+.color-picker .color-selections {
     display: flex;
 }
 
-.container .old-color,
-.container .new-color {
+.color-picker .selection-display {
+    gap: 8px
+}
+
+.selection-display .large-swatch {
     height: 30px;
     width: 60px;
 }
 
-.container .old-color-container {
+.selection {
     display: flex;
     flex-direction: column;
-    text-align: center;
-    font-size: 9px;
-    color: var(--white-two);
     gap: 4px;
 }
 
-.container .hex-input {
+.selection label,
+.selection .hex-input{
+    text-transform: uppercase;    
+    color: var(--dark-theme-popover-text);
+    font-size: 9px;
+    text-align: center;
+}
+
+.selection .hex-input {
     height: 30px;
     width: 68px;
     background-color: transparent;
-    border: 1px solid var(--white-two);
+    border: 1px solid var(--dark-theme-input-border);
     font-size: 14px;
-    text-transform: uppercase;
     padding-left: 6px;
     padding-top: 4px;
 }
 
-.container .new-color {
-    margin-right: 8px;
-}
-
-.container .agent-colors-swatches {
+.color-picker .agent-colors-swatches {
     padding-top: 6px;
     padding-bottom: 12px;
 }
 
-.container .colors {
+.color-picker .colors {
     display: flex;
     flex-wrap: wrap;
     gap: 7px;
 }
 
-.container .swatch {
+.color-picker .swatch {
     height: 15.5px;
     width: 15.5px;
     cursor: pointer;
     border: none;
 }
 
-.container .swatch:hover {
+.color-picker .swatch:hover {
     transform: scale(1.29);
     box-shadow: 0px 0px 10px #000000;
 }
 
-.container .tooltip {
+.color-picker .tooltip {
     box-shadow: 0px 3px 4px #000000;
     height: 20px !important;
 }
@@ -89,44 +93,45 @@
     --antd-arrow-background-color: var(--color-picker-tooltip);
 }
 
-.container .recent-color-text {
+.color-picker .recent-color-text {
     text-align: left;
     font-size: 12px;
-    color: var(--white-two);
     margin-bottom: 2px;
     font-weight: 300;
+    color: var(--dark-theme-popover-text)
 }
 
-.container :global(.react-colorful__saturation-pointer) {
+.color-picker :global(.react-colorful__saturation-pointer) {
     width: 0px;
     height: 0px;
     border-radius: 0px;
     border: none;
 }
-.container :global(.react-colorful__hue-pointer) {
+
+.color-picker :global(.react-colorful__hue-pointer) {
     width: 5px;
     height: 16px;
     border: 1px solid var(--white-two);
     border-radius: 0px;
 }
 
-.container :global(.react-colorful__pointer-fill) {
+.color-picker :global(.react-colorful__pointer-fill) {
     background-color: black !important;
 }
 
-.container :global(.react-colorful) {
+.color-picker :global(.react-colorful) {
     gap: 7px;
     padding-bottom: 8px;
     height: auto;
 }
 
-.container :global(.react-colorful__saturation) {
+.color-picker :global(.react-colorful__saturation) {
     border-radius: 0px;
     height: 115px;
     width: 196px;
 }
 
-.container :global(.react-colorful__hue) {
+.color-picker :global(.react-colorful__hue) {
     border-radius: 0px;
     width: 196px;
     height: 12px;

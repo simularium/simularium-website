@@ -46,6 +46,7 @@ export default class SharedCheckbox extends React.Component<SharedCheckboxProps>
             : !!checkedList.length && checkedList.length < options.length;
         const checkboxClassNames = classNames([
             styles.container,
+            { [styles.checkbox]: checkboxType !== CHECKBOX_TYPE_STAR },
             { [styles.header]: isHeader, ["header-checkbox"]: isHeader },
         ]);
 
@@ -61,7 +62,7 @@ export default class SharedCheckbox extends React.Component<SharedCheckboxProps>
                 checkboxType={checkboxType}
                 checkboxLevel={title === "All" ? "top" : "shared"}
             >
-                {showLabel ? title : ""}
+                {showLabel ? title : null}
             </Checkbox>
         );
     }

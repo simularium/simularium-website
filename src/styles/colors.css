@@ -42,7 +42,9 @@
     --dark-theme-header-bg: var(--dark-three);
     --dark-theme-header-text: var(--text-gray);
     --dark-theme-component-bg: var(--dark-four);
+    --dark-theme-input-border: var(--white-two);
     --dark-theme-text-color: var(--off-white);
+    --dark-theme-popover-text: var(--white-two);
     --dark-theme-menu-text-color: var(--transparent-white);
     --dark-theme-menu-text-hover: var(--pure-white);
     --dark-theme-agent-dropdown-toggle: var(--warm-gray);

@@ -6,3 +6,7 @@
     width: 37px;
     height: 40px;
 }
+
+.container span {
+    top: 0;
+}

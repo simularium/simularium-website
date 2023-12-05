@@ -33,11 +33,7 @@
     vertical-align: middle;
     outline: none;
     cursor: pointer;
-}
-
-:global(.header-checkbox) .container,
-:global(.header-checkbox) :global(.ant-checkbox) {
-    top: 9px;
+    top: 10px;
 }
 
 .container input {

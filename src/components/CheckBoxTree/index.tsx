@@ -48,7 +48,6 @@ interface CheckBoxTreeProps {
     setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 const CHECKBOX_SPAN_NO = 2;
-const LABEL_SPAN_NO = 6;
 import styles from "./style.css";
 
 class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
@@ -124,11 +123,10 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                 value.length ? key : ""
             )
         );
-
         return (
             <div className={styles.checkAllCheckbox}>
                 <SharedCheckbox
-                    title="All"
+                    title="All Agent Types"
                     showLabel={true}
                     options={map(treeData, "key" as string)}
                     onTopLevelCheck={this.toggleAllOnOff}
@@ -140,57 +138,54 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
         );
     };
 
-    renderRowWithNoChildren = (nodeData: AgentDisplayNode) => {
-        const { agentsChecked, agentsHighlighted } = this.props;
+    renderHighlightNoChildren = (nodeData: AgentDisplayNode) => {
+        const { agentsHighlighted } = this.props;
         const isHighlighted =
             isEmpty(agentsHighlighted) || !agentsHighlighted[nodeData.title]
                 ? false
                 : agentsHighlighted[nodeData.title].includes(nodeData.title);
+
+        return (
+            <Checkbox
+                className={[styles.noChildrenRow].join(" ")}
+                key={`${nodeData.title}-highlight`}
+                checkboxType={CHECKBOX_TYPE_STAR}
+                value={nodeData.title}
+                checked={isHighlighted}
+                onChange={(event) =>
+                    this.onAgentWithNoTagsChangeHighlight(event, nodeData.title)
+                }
+            />
+        );
+    };
+
+    renderCheckBoxNoChildren = (nodeData: AgentDisplayNode) => {
+        const { agentsChecked } = this.props;
+
         const isVisible =
             isEmpty(agentsChecked) || !agentsChecked[nodeData.title]
                 ? false
                 : agentsChecked[nodeData.title].includes(nodeData.title);
 
         return (
-            <Row
-                className={[styles.noChildrenRow, styles.checkboxSet].join(" ")}
-            >
-                <Col span={12}>
-                    <Checkbox
-                        className={"header-checkbox"}
-                        key={`${nodeData.title}-highlight`}
-                        checkboxType={CHECKBOX_TYPE_STAR}
-                        value={nodeData.title}
-                        checked={isHighlighted}
-                        onChange={(event) =>
-                            this.onAgentWithNoTagsChangeHighlight(
-                                event,
-                                nodeData.title
-                            )
-                        }
-                    />
-                </Col>
-                <Col span={12}>
-                    <Checkbox
-                        className={"header-checkbox"}
-                        key={`${nodeData.title}-onoff`}
-                        checked={isVisible}
-                        value={nodeData.title}
-                        onChange={(event) =>
-                            this.onAgentWithNoTagsChangeVisible(
-                                event,
-                                nodeData.title
-                            )
-                        }
-                    />
-                </Col>
-            </Row>
+            <Checkbox
+                className={"header-checkbox"}
+                key={`${nodeData.title}-onoff`}
+                checked={isVisible}
+                value={nodeData.title}
+                onChange={(event) =>
+                    this.onAgentWithNoTagsChangeVisible(event, nodeData.title)
+                }
+            />
         );
     };
 
-    renderSharedCheckboxes = (nodeData: AgentDisplayNode) => (
-        <Row key="actions" className={styles.checkboxSet}>
-            <Col span={12}>
+    renderSharedCheckboxes = (
+        nodeData: AgentDisplayNode,
+        type: CHECKBOX_TYPE_STAR | undefined
+    ) => {
+        if (type === CHECKBOX_TYPE_STAR) {
+            return (
                 <SharedCheckbox
                     title={nodeData.title}
                     showLabel={false}
@@ -202,8 +197,9 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                     }
                     isHeader={true}
                 />
-            </Col>
-            <Col span={12}>
+            );
+        } else {
+            return (
                 <SharedCheckbox
                     title={nodeData.title}
                     showLabel={false}
@@ -212,9 +208,9 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                     checkedList={this.props.agentsChecked[nodeData.title] || []}
                     isHeader={true}
                 />
-            </Col>
-        </Row>
-    );
+            );
+        }
+    };
     render() {
         const {
             agentsHighlighted,
@@ -226,22 +222,6 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
         } = this.props;
         return treeData.length > 0 ? (
             <div className={styles.container}>
-                <Row className={styles.colLabels}>
-                    <Col span={CHECKBOX_SPAN_NO} offset={4}>
-                        <label
-                            className={classNames([
-                                "icon-moon",
-                                styles.starIcon,
-                            ])}
-                        />
-                    </Col>
-                    <Col span={CHECKBOX_SPAN_NO}>
-                        <label>show</label>
-                    </Col>
-                    <Col flex={LABEL_SPAN_NO} offset={1}>
-                        <label>type</label>
-                    </Col>
-                </Row>
                 <TreeNode headerContent={this.renderCheckAllButton()} />
                 {treeData.map((nodeData) => {
                     const childrenHaveDifferentColors =
@@ -253,8 +233,11 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                             headerContent={
                                 <>
                                     {nodeData.children.length
-                                        ? this.renderSharedCheckboxes(nodeData)
-                                        : this.renderRowWithNoChildren(
+                                        ? this.renderSharedCheckboxes(
+                                              nodeData,
+                                              CHECKBOX_TYPE_STAR
+                                          )
+                                        : this.renderHighlightNoChildren(
                                               nodeData
                                           )}{" "}
                                     <ColorSwatch
@@ -268,6 +251,14 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                         setColorChange={setColorChange}
                                         setRecentColors={setRecentColors}
                                     />
+                                    {nodeData.children.length
+                                        ? this.renderSharedCheckboxes(
+                                              nodeData,
+                                              undefined
+                                          )
+                                        : this.renderCheckBoxNoChildren(
+                                              nodeData
+                                          )}{" "}
                                     <Text
                                         style={{ maxWidth: 143 }}
                                         ellipsis={{
@@ -302,6 +293,42 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                             }
                                         />
                                     </Col>
+                                    <Row className={styles.subMenu}>
+                                        <Col span={CHECKBOX_SPAN_NO} offset={3}>
+                                            {nodeData.children.map((value) => {
+                                                return (
+                                                    <div
+                                                        key={`label-${nodeData.title}-${value.value}-color`}
+                                                        className={
+                                                            styles.rowLabelContainer
+                                                        }
+                                                    >
+                                                        <ColorSwatch
+                                                            color={
+                                                                value.color ||
+                                                                nodeData.color
+                                                            }
+                                                            agentName={
+                                                                nodeData.title
+                                                            }
+                                                            tags={[
+                                                                value.value as string,
+                                                            ]}
+                                                            recentColors={
+                                                                recentColors
+                                                            }
+                                                            setColorChange={
+                                                                setColorChange
+                                                            }
+                                                            setRecentColors={
+                                                                setRecentColors
+                                                            }
+                                                        />
+                                                    </div>
+                                                );
+                                            })}
+                                        </Col>
+                                    </Row>
                                     <Col span={CHECKBOX_SPAN_NO}>
                                         <CheckboxTreeSubmenu
                                             options={nodeData.children}
@@ -329,27 +356,6 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                                         styles.rowLabelContainer
                                                     }
                                                 >
-                                                    <ColorSwatch
-                                                        color={
-                                                            value.color ||
-                                                            nodeData.color
-                                                        }
-                                                        agentName={
-                                                            nodeData.title
-                                                        }
-                                                        tags={[
-                                                            value.value as string,
-                                                        ]}
-                                                        recentColors={
-                                                            recentColors
-                                                        }
-                                                        setColorChange={
-                                                            setColorChange
-                                                        }
-                                                        setRecentColors={
-                                                            setRecentColors
-                                                        }
-                                                    />
                                                     <label
                                                         className={
                                                             styles.rowLabel

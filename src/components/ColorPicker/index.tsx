@@ -35,7 +35,7 @@ const ColorPicker = ({
     setColorChange,
     setRecentColors,
 }: ColorPickerProps) => {
-    const [color, setColor] = useState(initialColor);
+    const [color, setColor] = useState("#000000");
     const [debouncedColor] = useDebounce(color, 250);
     const isInitialRender = useRef(true);
 
@@ -69,33 +69,35 @@ const ColorPicker = ({
     };
 
     const renderColorPickerComponent = () => (
-        <div className={styles.container}>
+        <div className={styles.colorPicker}>
             <HexColorPicker color={color} onChange={setColor} />
             <div className={styles.selectionDisplay}>
-                <div className={styles.oldColorContainer}>
-                    <div
-                        className={styles.oldColor}
-                        style={{ backgroundColor: initialColor }}
-                        onClick={() => {
-                            setColor(initialColor);
-                        }}
-                    ></div>
-                    <p> CURRENT </p>
+                <div className={styles.colorSelections}>
+                    <div className={styles.selection}>
+                        <div
+                            className={styles.largeSwatch}
+                            style={{ backgroundColor: initialColor }}
+                            onClick={() => {
+                                setColor(initialColor);
+                            }}
+                        ></div>
+                        <label>Current</label>
+                    </div>
+                    <div className={styles.selection}>
+                        <div
+                            className={styles.largeSwatch}
+                            style={{ backgroundColor: color }}
+                        ></div>
+                        <label>New</label>
+                    </div>
                 </div>
-                <div className={styles.oldColorContainer}>
-                    <div
-                        className={styles.newColor}
-                        style={{ backgroundColor: color }}
-                    ></div>
-                    <p> NEW </p>
-                </div>
-                <div className={styles.oldColorContainer}>
+                <div className={styles.selection}>
                     <HexColorInput
                         className={styles.hexInput}
                         color={color}
                         onChange={setColor}
                     />
-                    <p> HEX </p>
+                    <label>Hex</label>
                 </div>
             </div>
             <div
@@ -120,7 +122,7 @@ const ColorPicker = ({
                     </Tooltip>
                 ))}
             </div>
-            <p className={styles.recentColorText}> Recent </p>
+            <h4 className={styles.recentColorText}> Recent </h4>
             <div className={styles.colors}>
                 {recentColors.map((color) => (
                     <button
