@@ -341,7 +341,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                             }
                                         />
                                     </Col>
-                                    <Col className={styles.checkboxLabels}>
+                                    <Col className={styles.agentNamesColumn}>
                                         {nodeData.children.map((value) => {
                                             return (
                                                 <div
@@ -352,7 +352,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                                 >
                                                     <label
                                                         className={
-                                                            styles.rowLabel
+                                                            styles.agentNameLabel
                                                         }
                                                         key={
                                                             value.value as string

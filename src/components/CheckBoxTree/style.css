@@ -1,47 +1,19 @@
+:root {
+    --text-label-margin: 8px;
+}
+
 .container {
     background-color: var(--dark);
 }
 
-.sub-menu {
-    flex-flow: row;
-}
-
-.sub-menu :global(.ant-col-offset-3) {
-    margin-left: 13.4%;
-}
-
 .header-label {
-    margin-left: 8px;
+    margin-left: var(--text-label-margin);
     max-width: 120px;
     font-weight: 200;
 }
 
-.checkbox-set {
-    width: 53px;
-}
-
-.checkbox-set :global(.ant-checkbox) {
-    top: 12px;
-}
-
-.container .checkbox-labels {
-    display: flex;
-    flex-direction: column;
-}
-
-.row-label-container {
-    display: inline-block;
-    height: 40px;
-    padding: 2px 0;
-}
-
-.row-label {
-    margin-left: 8px;
-    font-weight: 200;
-    vertical-align: text-top;
-    display: inline-block;
-    height: 16px;
-    line-height: 1;
+.container :global(.ant-typography-ellipsis) {
+    color: var(--dark-theme-sidebar-text)
 }
 
 .container :global(.ant-checkbox-inner) {
@@ -59,8 +31,12 @@
     padding: 10px 0;
 }
 
+.check-all-checkbox :global(.ant-checkbox) {
+    margin-right: var(--text-label-margin);
+}
+
 .no-children-row {
-    margin-left: 32px;
+    margin-left: 32px; /* keeps it in the same position as rows with dropdowns */
 }
 
 .no-children-row :global(.ant-checkbox-wrapper) {
@@ -68,25 +44,25 @@
     height: 40px;
 }
 
-.check-all-checkbox :global(.ant-checkbox) {
-    margin-right: 12px;
-}
-
 .star-icon::after {
     content: "\e902";
-    color: var(--white-two);
-}
-
-.container :global(.ant-typography-ellipsis) {
-    color: var(--dark-theme-sidebar-text)
+    color: var(--dark-theme-sidebar-text);
 }
 
 .container :global(.header-checkbox .ant-checkbox) {
     top: 3.5px;
 }
 
+.sub-menu {
+    flex-flow: row;
+}
+
+.sub-menu :global(.ant-col-offset-3) {
+    margin-left: 13.4%;
+}
+
 .container .checkbox-column, .container .color-swatch-column  {
-    width: 16px;
+    max-width: 20px;
 }
 
 .color-swatch-column {
@@ -95,5 +71,24 @@
 
 .checkbox-column {
     margin-left: 18px;
-    margin-right: 6px;
+}
+
+.container .agent-names-column {
+    display: flex;
+    flex-direction: column;
+    margin-left: var(--text-label-margin);
+}
+
+.row-label-container {
+    display: inline-block;
+    height: 40px;
+    padding: 2px 0;
+}
+
+.agent-name-label {
+    font-weight: 200;
+    vertical-align: text-top;
+    display: inline-block;
+    height: 16px;
+    line-height: 1;
 }
