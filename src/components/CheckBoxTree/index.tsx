@@ -225,7 +225,9 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                 {treeData.map((nodeData) => {
                     const childrenHaveDifferentColors =
                         !nodeData.children.every(
-                            (el) => el.color === nodeData.children[0].color
+                            (el) =>
+                                el.color.toLowerCase() ===
+                                nodeData.children[0].color.toLowerCase()
                         );
                     return (
                         <TreeNode

@@ -42,9 +42,8 @@ const ColorPicker = ({
     const handleColorChange = (color: string) => {
         const colorChange: ColorChange = {
             agent: { name: agentName, tags: tags },
-            color: color,
+            color: color.toLowerCase(),
         };
-
         setColorChange(colorChange);
     };
 
@@ -95,7 +94,7 @@ const ColorPicker = ({
                     <HexColorInput
                         className={styles.hexInput}
                         color={color}
-                        onChange={setColor}
+                        onChange={(color) => setColor(color.toLowerCase)}
                     />
                     <label>Hex</label>
                 </div>
