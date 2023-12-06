@@ -3,7 +3,6 @@ import { Col, Row, Typography } from "antd";
 import { ActionCreator } from "redux";
 import { CheckboxChangeEvent, CheckboxOptionType } from "antd/lib/checkbox";
 import { map, filter, isEmpty } from "lodash";
-import classNames from "classnames";
 
 import {
     ChangeAgentsRenderingStateAction,
@@ -293,45 +292,40 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                             }
                                         />
                                     </Col>
-                                    <Row>
-                                        <Col
-                                            offset={1}
-                                            className={styles.colorSwatchColumn}
-                                        >
-                                            {nodeData.children.map((value) => {
-                                                return (
-                                                    <div
-                                                        key={`label-${nodeData.title}-${value.value}-color`}
-                                                        className={
-                                                            styles.rowLabelContainer
+                                    <Col className={styles.colorSwatchColumn}>
+                                        {nodeData.children.map((value) => {
+                                            return (
+                                                <div
+                                                    key={`label-${nodeData.title}-${value.value}-color`}
+                                                    className={
+                                                        styles.rowLabelContainer
+                                                    }
+                                                >
+                                                    <ColorSwatch
+                                                        color={
+                                                            value.color ||
+                                                            nodeData.color
                                                         }
-                                                    >
-                                                        <ColorSwatch
-                                                            color={
-                                                                value.color ||
-                                                                nodeData.color
-                                                            }
-                                                            agentName={
-                                                                nodeData.title
-                                                            }
-                                                            tags={[
-                                                                value.value as string,
-                                                            ]}
-                                                            recentColors={
-                                                                recentColors
-                                                            }
-                                                            setColorChange={
-                                                                setColorChange
-                                                            }
-                                                            setRecentColors={
-                                                                setRecentColors
-                                                            }
-                                                        />
-                                                    </div>
-                                                );
-                                            })}
-                                        </Col>
-                                    </Row>
+                                                        agentName={
+                                                            nodeData.title
+                                                        }
+                                                        tags={[
+                                                            value.value as string,
+                                                        ]}
+                                                        recentColors={
+                                                            recentColors
+                                                        }
+                                                        setColorChange={
+                                                            setColorChange
+                                                        }
+                                                        setRecentColors={
+                                                            setRecentColors
+                                                        }
+                                                    />
+                                                </div>
+                                            );
+                                        })}
+                                    </Col>
                                     <Col className={styles.checkboxColumn}>
                                         <CheckboxTreeSubmenu
                                             options={nodeData.children}

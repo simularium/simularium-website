@@ -86,5 +86,14 @@
 }
 
 .container .checkbox-column, .container .color-swatch-column  {
-    width: 35px;
+    width: 16px;
+}
+
+.color-swatch-column {
+    margin-left: 3px;
+}
+
+.checkbox-column {
+    margin-left: 18px;
+    margin-right: 6px;
 }
