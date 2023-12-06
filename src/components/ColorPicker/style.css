@@ -69,6 +69,10 @@
     border: none;
 }
 
+.color-picker .recent-colors.hidden{
+    height: 37px;
+}
+
 .color-picker .swatch:hover {
     transform: scale(1.29);
     box-shadow: 0px 0px 10px #000000;

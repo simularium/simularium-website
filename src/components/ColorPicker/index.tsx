@@ -132,6 +132,11 @@ const ColorPicker = ({
                     />
                 ))}
             </div>
+            <div
+                className={classNames(styles.recentColors, {
+                    [styles.hidden]: recentColors.length == 0,
+                })}
+            />
         </div>
     );
 
