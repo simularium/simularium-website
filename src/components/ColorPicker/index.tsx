@@ -35,7 +35,7 @@ const ColorPicker = ({
     setColorChange,
     setRecentColors,
 }: ColorPickerProps) => {
-    const [color, setColor] = useState("#000000");
+    const [color, setColor] = useState(initialColor);
     const [debouncedColor] = useDebounce(color, 250);
     const isInitialRender = useRef(true);
 
