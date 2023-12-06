@@ -1,13 +1,12 @@
-import * as React from "react";
-
-import styles from "./styles.css";
-import { useState } from "react";
-import ColorPicker from "../ColorPicker";
+import React, { useState } from "react";
 import { ActionCreator } from "redux";
+
+import ColorPicker from "../ColorPicker";
 import {
     SetColorChangeAction,
     SetRecentColorsAction,
 } from "../../state/selection/types";
+import styles from "./styles.css";
 interface ColorSwatchProps {
     childrenHaveDifferentColors?: boolean;
     color: string;
