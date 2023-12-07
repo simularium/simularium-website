@@ -89,7 +89,7 @@ const ConversionForm = ({
 
     // TODO delete after development, useEffect to log a change in server health
     useEffect(() => {
-        console.log("localServerHealth", conversionStatus);
+        console.log(conversionStatus);
     }, [conversionStatus]);
 
     // callback for modal component to use
