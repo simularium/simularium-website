@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Upload, Select, Divider, Button } from "antd";
-import classNames from "classnames";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
+import { Upload, Select, Divider, Button } from "antd";
+import { UploadFile } from "antd/lib/upload";
+import classNames from "classnames";
 
-import theme from "../../components/theme/light-theme.css";
 import { State } from "../../state";
 import trajectoryStateBranch from "../../state/trajectory";
-import simulariumStateBranch from "../../state/simularium";
 import viewerStateBranch from "../../state/viewer";
 import {
     ConfigureFileConversionAction,
@@ -15,23 +14,21 @@ import {
     ReceiveFileToConvertAction,
     SetConversionEngineAction,
 } from "../../state/trajectory/types";
+import { SetErrorAction } from "../../state/viewer/types";
 import {
     AvailableEngines,
     ExtensionMap,
     Template,
     TemplateMap,
 } from "../../state/trajectory/conversion-data-types";
-
-import styles from "./style.css";
-import customRequest from "./custom-request";
-import { SetErrorAction } from "../../state/viewer/types";
-import { UploadFile } from "antd/lib/upload";
 import ConversionServerErrorModal from "../../components/ConversionServerErrorModal";
-import { SimulariumController } from "@aics/simularium-viewer";
 import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
 import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
 import { CONVERSION_NO_SERVER } from "../../state/trajectory/constants";
+import customRequest from "./custom-request";
 
+import theme from "../../components/theme/light-theme.css";
+import styles from "./style.css";
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
     conversionProcessingData: {
@@ -42,7 +39,6 @@ interface ConversionProps {
     };
     receiveFileToConvert: ActionCreator<ReceiveFileToConvertAction>;
     setError: ActionCreator<SetErrorAction>;
-    simulariumController: SimulariumController;
     configureControllerAndCheckServer: ActionCreator<ConfigureFileConversionAction>;
     conversionStatus: ConversionStatus;
 }
@@ -232,8 +228,6 @@ function mapStateToProps(state: State) {
     return {
         conversionProcessingData:
             trajectoryStateBranch.selectors.getConversionProcessingData(state),
-        simulariumController:
-            simulariumStateBranch.selectors.getSimulariumController(state),
         conversionStatus:
             trajectoryStateBranch.selectors.getConversionStatus(state),
     };
@@ -243,8 +237,6 @@ const dispatchToPropsMap = {
     receiveFileToConvert: trajectoryStateBranch.actions.receiveFileToConvert,
     setError: viewerStateBranch.actions.setError,
     setConversionEngine: trajectoryStateBranch.actions.setConversionEngine,
-    setSimulariumController:
-        simulariumStateBranch.actions.setSimulariumController,
     configureControllerAndCheckServer:
         trajectoryStateBranch.actions.configureControllerAndCheckServer,
 };

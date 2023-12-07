@@ -2,9 +2,9 @@ import { Button } from "antd";
 import React from "react";
 
 import CustomModal from "../CustomModal";
+import { AvailableEngines } from "../../state/trajectory/conversion-data-types";
 
 import styles from "./style.css";
-import { AvailableEngines } from "../../state/trajectory/conversion-data-types";
 
 interface ConversionFileErrorModalProps {
     closeModal: () => void;

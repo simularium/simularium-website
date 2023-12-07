@@ -4,6 +4,8 @@ import { AnyAction } from "redux";
 import { createLogic } from "redux-logic";
 import { ArgumentAction } from "redux-logic/definitions/action";
 import queryString from "query-string";
+import { map, reduce } from "lodash";
+import { v4 as uuidv4 } from "uuid";
 import {
     ErrorLevel,
     FrontEndError,
@@ -11,8 +13,6 @@ import {
     SimulariumController,
     loadSimulariumFile,
 } from "@aics/simularium-viewer";
-import { map, reduce } from "lodash";
-import { v4 as uuidv4 } from "uuid";
 
 import {
     ENGINE_TO_TEMPLATE_MAP,
@@ -362,8 +362,8 @@ const configureFileConversionLogic = createLogic({
         const { getState } = deps;
 
         // I imagine this will eventually replace the config up top
-        // for for development purposes I'm leaving it here
-        // until we switch to Octopus
+        // but for development purposes I'm leaving it here
+        // until we switch to Octopus, make sure it matches your local instance.
         const netConnectionConfig: NetConnectionParams = {
             serverIp: "0.0.0.0",
             serverPort: 8765,
@@ -388,10 +388,11 @@ const configureFileConversionLogic = createLogic({
         // now that we have a controller, check the server health
         // originally thought to do this every 15 seconds
         // now thinking we do 5 checks, 3 seconds apart
-        // if any come back true we assume we're good for now... not sure, this is arbitrary
+        // if any come back true we assume we're good for now... this is arbitrary
         // i'd rather a flurry of requests that can be started on page load,
-        // that have enough delay to allow controller to get configured
-        // and re-run when relevant, rather than long 15s-1minute periods of sending checks
+        // that have enough delay to allow controller to get configured in the meanwhile
+        // and then we run another check when relevant
+        // rather than long 15s-1minute periods of sending checks
         let healthCheckSuccessful = false;
         const healthCheckTimeouts: HealthCheckTimeout = {};
         const attempts = 0;
