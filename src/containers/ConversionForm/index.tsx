@@ -3,7 +3,6 @@ import { Upload, Select, Divider, Button } from "antd";
 import classNames from "classnames";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
 
 import theme from "../../components/theme/light-theme.css";
 import { State } from "../../state";
@@ -11,6 +10,8 @@ import trajectoryStateBranch from "../../state/trajectory";
 import simulariumStateBranch from "../../state/simularium";
 import viewerStateBranch from "../../state/viewer";
 import {
+    ConfigureFileConversionAction,
+    ConversionStatus,
     ReceiveFileToConvertAction,
     SetConversionEngineAction,
 } from "../../state/trajectory/types";
@@ -29,14 +30,7 @@ import ConversionServerCheckModal from "../../components/ConversionServerCheckMo
 import { SimulariumController } from "@aics/simularium-viewer";
 import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
 import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
-import { NetConnectionParams } from "@aics/simularium-viewer/type-declarations/simularium";
-
-// TODO QUESTIONS
-// This is handling asynchronous logic with workarounds releveant to websockets
-// that said, the state "serverHealth" is not used anywhere in the application
-// so I decided to handle it all here in the component for now.
-// Currently sending one request on page load and another request on file upload... sufficient?
-// 15 second time out for health check responses, is that too long?
+import { CONVERSION_NO_SERVER } from "../../state/trajectory/constants";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
@@ -49,10 +43,8 @@ interface ConversionProps {
     receiveFileToConvert: ActionCreator<ReceiveFileToConvertAction>;
     setError: ActionCreator<SetErrorAction>;
     simulariumController: SimulariumController;
-}
-
-interface HealthCheckTimeouts {
-    [requestId: string]: NodeJS.Timeout;
+    configureControllerAndCheckServer: ActionCreator<ConfigureFileConversionAction>;
+    conversionStatus: ConversionStatus;
 }
 
 const validFileExtensions: ExtensionMap = {
@@ -73,23 +65,14 @@ const selectOptions = Object.keys(AvailableEngines).map(
     }
 );
 
-// possible to arrive here without configuring a controller
-// so we need this config to send a health check
-const netConnectionConfig: NetConnectionParams = {
-    serverIp: "0.0.0.0",
-    serverPort: 8765,
-    useOctopus: true,
-    secureConnection: false,
-};
-
 const ConversionForm = ({
     setConversionEngine,
     conversionProcessingData,
     setError,
     receiveFileToConvert,
-    simulariumController,
+    configureControllerAndCheckServer,
+    conversionStatus,
 }: ConversionProps): JSX.Element => {
-    const [serverHealth, setServerHealth] = useState<boolean>(false);
     const [engineSelected, setEngineSelected] = useState<boolean>(false);
     const [fileToConvert, setFileToConvert] = useState<UploadFile>();
     const [serverDownModalOpen, setServerIsDownModalOpen] =
@@ -99,82 +82,15 @@ const ConversionForm = ({
 
     const readyToConvert = fileToConvert && engineSelected;
 
-    // TODO is it necessary to check if existing controller is not RemoteSimulator?
-    const controller =
-        simulariumController ||
-        new SimulariumController({
-            netConnectionSettings: netConnectionConfig,
-        });
-
-    const healthCheckTimeouts: HealthCheckTimeouts = {};
-    let healthCheckInterval: NodeJS.Timeout | null = null;
-    let healthCheckCount = 0;
-    const MAX_HEALTH_CHECKS = 4;
-
-    // sends a health check and sets initial 15 second timeout
-    const sendHealthCheck = () => {
-        const requestId = uuidv4();
-        controller.checkServerHealth(
-            () => onHealthCheckResponse(requestId),
-            netConnectionConfig
-        );
-
-        healthCheckTimeouts[requestId] = setTimeout(() => {
-            // no response received in time
-            if (healthCheckTimeouts[requestId]) {
-                setServerHealth(false);
-                delete healthCheckTimeouts[requestId];
-                healthCheckCount++;
-
-                // Start interval checks only if not already started
-                if (
-                    !healthCheckInterval &&
-                    healthCheckCount < MAX_HEALTH_CHECKS
-                ) {
-                    healthCheckInterval = setInterval(sendHealthCheck, 15000);
-                } else if (
-                    healthCheckCount >= MAX_HEALTH_CHECKS &&
-                    healthCheckInterval !== null
-                ) {
-                    clearInterval(healthCheckInterval);
-                    healthCheckInterval = null;
-                    healthCheckCount = 0;
-                }
-            }
-        }, 3000);
-    };
-
-    // callback for viewer
-    // sets server health state, clears timeouts and intervals
-    const onHealthCheckResponse = (requestId: string): void => {
-        setServerHealth(true);
-
-        if (healthCheckTimeouts[requestId]) {
-            clearTimeout(healthCheckTimeouts[requestId]);
-            delete healthCheckTimeouts[requestId];
-        }
-
-        // Stop the interval checks as server is healthy
-        if (healthCheckInterval) {
-            clearInterval(healthCheckInterval);
-            healthCheckInterval = null;
-        }
-    };
-
-    // On load, configure controller and send request
+    // On load, configure controller and check if server is healthy
     useEffect(() => {
-        sendHealthCheck();
+        configureControllerAndCheckServer();
     }, []);
 
-    // useEffect to log a change in server health
+    // TODO delete after development, useEffect to log a change in server health
     useEffect(() => {
-        console.log(
-            "localServerHealth",
-            serverHealth,
-            "netConnectionConfig",
-            netConnectionConfig
-        );
-    }, [serverHealth]);
+        console.log("localServerHealth", conversionStatus);
+    }, [conversionStatus]);
 
     // callback for modal component to use
     const toggleServerCheckModal = () => {
@@ -198,7 +114,7 @@ const ConversionForm = ({
     // we sent one health check on page load
     // that might have been a while ago, lets send another
     const handleFileSelection = async (file: UploadFile) => {
-        sendHealthCheck();
+        configureControllerAndCheckServer();
         setFileToConvert(file);
     };
 
@@ -218,7 +134,7 @@ const ConversionForm = ({
 
     const advanceIfServerIsHealthy = () => {
         if (readyToConvert && validateFileType(fileToConvert.name)) {
-            if (!serverHealth) {
+            if (conversionStatus === CONVERSION_NO_SERVER) {
                 setServerIsDownModalOpen(true);
             } else {
                 // at this point: engine selected, file uploaded, file type valid, server health received
@@ -319,6 +235,8 @@ function mapStateToProps(state: State) {
             trajectoryStateBranch.selectors.getConversionProcessingData(state),
         simulariumController:
             simulariumStateBranch.selectors.getSimulariumController(state),
+        conversionStatus:
+            trajectoryStateBranch.selectors.getConversionStatus(state),
     };
 }
 
@@ -328,6 +246,8 @@ const dispatchToPropsMap = {
     setConversionEngine: trajectoryStateBranch.actions.setConversionEngine,
     setSimulariumController:
         simulariumStateBranch.actions.setSimulariumController,
+    configureControllerAndCheckServer:
+        trajectoryStateBranch.actions.configureControllerAndCheckServer,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ConversionForm);

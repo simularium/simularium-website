@@ -6,9 +6,12 @@ import queryString from "query-string";
 import {
     ErrorLevel,
     FrontEndError,
+    NetConnectionParams,
+    SimulariumController,
     loadSimulariumFile,
 } from "@aics/simularium-viewer";
 import { map, reduce } from "lodash";
+import { v4 as uuidv4 } from "uuid";
 
 import {
     ENGINE_TO_TEMPLATE_MAP,
@@ -40,6 +43,7 @@ import {
     receiveSimulariumFile,
     requestCachedPlotData,
     clearSimulariumFile,
+    setConversionStatus,
 } from "./actions";
 import {
     LOAD_LOCAL_FILE_IN_VIEWER,
@@ -50,8 +54,11 @@ import {
     CONVERT_FILE,
     SET_CONVERSION_ENGINE,
     SET_CONVERSION_TEMPLATE,
+    CONFIGURE_FILE_CONVERSION,
+    CONVERSION_NO_SERVER,
+    CONVERSION_SERVER_LIVE,
 } from "./constants";
-import { ReceiveAction, LocalSimFile } from "./types";
+import { ReceiveAction, LocalSimFile, HealthCheckTimeout } from "./types";
 import { initialState } from "./reducer";
 import {
     TemplateMap,
@@ -60,6 +67,7 @@ import {
     AvailableEngines,
     Template,
 } from "./conversion-data-types";
+import { AnyAction } from "redux";
 
 const netConnectionSettings = {
     serverIp: process.env.BACKEND_SERVER_IP,
@@ -345,6 +353,98 @@ const loadFileViaUrl = createLogic({
     type: LOAD_FILE_VIA_URL,
 });
 
+const configureFileConversionLogic = createLogic({
+    process(
+        deps: ReduxLogicDeps,
+        dispatch: <T extends AnyAction>(action: T) => T,
+        done
+    ) {
+        const { getState } = deps;
+
+        // I imagine this will eventually replace the config up top
+        // for for development purposes I'm leaving it here
+        // until we switch to Octopus
+        const netConnectionConfig: NetConnectionParams = {
+            serverIp: "0.0.0.0",
+            serverPort: 8765,
+            useOctopus: true,
+            secureConnection: false,
+        };
+        // check if a controller exists and has the right configuration
+        let controller = getSimulariumController(getState());
+        if (!controller || !controller.remoteWebsocketClient) {
+            dispatch(
+                setConversionStatus({
+                    status: CONVERSION_NO_SERVER,
+                })
+            );
+            // configure the controller
+            controller = new SimulariumController({
+                netConnectionSettings: netConnectionConfig,
+            });
+            // set it in state
+            dispatch(setSimulariumController(controller));
+        }
+        // now that we have a controller, check the server health
+        // originally thought to do this every 15 seconds
+        // now thinking we do 5 checks, 3 seconds apart
+        // if any come back true we assume we're good for now... not sure, this is arbitrary
+        // i'd rather a flurry of requests that can be started on page load,
+        // that have enough delay to allow controller to get configured
+        // and re-run when relevant, rather than long 15s-1minute periods of sending checks
+        let healthCheckSuccessful = false;
+        const healthCheckTimeouts: HealthCheckTimeout = {};
+        const attempts = 0;
+
+        const performHealthCheck = (attempts: number) => {
+            if (healthCheckSuccessful) {
+                return; // Stop if a successful response was already received
+            }
+            const MAX_ATTEMPTS = 5;
+            const requestId: string = uuidv4();
+
+            controller.checkServerHealth(() => {
+                // callback/handler for viewer function
+                healthCheckSuccessful = true;
+                clearTimeout(healthCheckTimeouts[requestId]);
+                dispatch(
+                    setConversionStatus({
+                        status: CONVERSION_SERVER_LIVE,
+                    })
+                );
+                done();
+            }, netConnectionConfig);
+
+            const timeoutId = setTimeout(() => {
+                if (!healthCheckSuccessful) {
+                    // just in case another check just resolved
+                    clearTimeout(healthCheckTimeouts[requestId]);
+                    if (attempts < MAX_ATTEMPTS) {
+                        // Retry the health check with incremented count
+                        attempts++;
+                        performHealthCheck(attempts);
+                    } else {
+                        // if we've done the max # of attempts, set conversionStatus
+                        dispatch(
+                            setConversionStatus({
+                                status: CONVERSION_NO_SERVER,
+                            })
+                        );
+                        done();
+                    }
+                }
+            }, 3000);
+
+            // store the time out id
+            healthCheckTimeouts[requestId] = timeoutId;
+        };
+
+        // Start the first health check
+        performHealthCheck(attempts);
+    },
+    type: CONFIGURE_FILE_CONVERSION,
+});
+
 const fileConversionLogic = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         dispatch(
@@ -435,4 +535,5 @@ export default [
     loadFileViaUrl,
     fileConversionLogic,
     setConversionEngineLogic,
+    configureFileConversionLogic,
 ];

@@ -2,7 +2,17 @@ import {
     ISimulariumFile,
     SimulariumController,
 } from "@aics/simularium-viewer/type-declarations";
-import { AvailableEngines, Template, TemplateMap } from "./conversion-data-types";
+import {
+    AvailableEngines,
+    Template,
+    TemplateMap,
+} from "./conversion-data-types";
+import {
+    CONVERSION_NO_SERVER,
+    CONVERSION_SERVER_LIVE,
+    CONVERSION_ACTIVE,
+    CONVERSION_COMPLETE,
+} from "./constants";
 
 export interface TrajectoryStateBranch {
     [key: string]: any;
@@ -48,6 +58,10 @@ export interface LoadViaUrlAction {
     fileId?: string;
 }
 
+export interface ConfigureFileConversionAction {
+    type: string;
+}
+
 export interface ConvertFileAction {
     type: string;
 }
@@ -68,6 +82,11 @@ export interface SetConversionTemplateData {
         template: Template;
         templateMap: TemplateMap;
     };
+    type: string;
+}
+
+export interface SetConversionStatusAction {
+    payload: { status: ConversionStatus };
     type: string;
 }
 
@@ -92,3 +111,18 @@ export interface TimeUnits {
     magnitude: number;
     name: string;
 }
+
+export interface HealthCheckTimeout {
+    [requestId: string]: NodeJS.Timeout;
+}
+
+type CONVERSION_NO_SERVER = typeof CONVERSION_NO_SERVER;
+type CONVERSION_SERVER_LIVE = typeof CONVERSION_SERVER_LIVE;
+type CONVERSION_ACTIVE = typeof CONVERSION_ACTIVE;
+type CONVERSION_COMPLETE = typeof CONVERSION_COMPLETE;
+
+export type ConversionStatus =
+    | CONVERSION_NO_SERVER
+    | CONVERSION_SERVER_LIVE
+    | CONVERSION_ACTIVE
+    | CONVERSION_COMPLETE;
