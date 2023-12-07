@@ -3,11 +3,11 @@
 }
 
 .server-error-modal :global(.ant-modal-close-x) {
+    /* specifying here prevents hover behavior */
+    color: var(--light-theme-modal-close-x);
     font-size: 12px;
     position: relative;
     top: -3px;
-    /* specifying here prevents hover behavior */
-    color: var(--light-theme-modal-close-x);
 }
 
 .server-error-modal  :global(.ant-modal-header) {
