@@ -2,9 +2,9 @@ import { Button } from "antd";
 import React from "react";
 
 import CustomModal from "../CustomModal";
+import { Exclamation } from "../Icons";
 
 import styles from "./style.css";
-import { RoundWarning } from "../Icons";
 
 interface ConversionServerCheckModalProps {
     closeModal: () => void;
@@ -16,22 +16,21 @@ const ConversionServerCheckModal: React.FC<ConversionServerCheckModalProps> = ({
     return (
         <CustomModal
             className={styles.serverCheckModal}
-            title="Cancel file import"
+            title="File import cannot be completed"
             open
             footer={
                 <Button type="primary" onClick={closeModal}>
-                    Ok
+                    OK
                 </Button>
             }
-            width={425}
             centered
             onCancel={closeModal}
         >
-            <div className={styles.redText}>
+            <p className={styles.redText}>
                 {" "}
-                {RoundWarning} We`&apos;`re sorry, the server is currently
+                {Exclamation} We&apos;re sorry, the server is currently
                 experiencing an issue.
-            </div>
+            </p>
             <span>
                 {" "}
                 Please try again at a later time. For further assistance, please
