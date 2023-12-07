@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Upload, Select, Divider, Button } from "antd";
 import classNames from "classnames";
 import { ActionCreator } from "redux";
@@ -7,8 +7,11 @@ import { connect } from "react-redux";
 import theme from "../../components/theme/light-theme.css";
 import { State } from "../../state";
 import trajectoryStateBranch from "../../state/trajectory";
+import simulariumStateBranch from "../../state/simularium";
 import viewerStateBranch from "../../state/viewer";
 import {
+    ConfigureFileConversionAction,
+    ConversionStatus,
     ReceiveFileToConvertAction,
     SetConversionEngineAction,
 } from "../../state/trajectory/types";
@@ -23,8 +26,11 @@ import styles from "./style.css";
 import customRequest from "./custom-request";
 import { SetErrorAction } from "../../state/viewer/types";
 import { UploadFile } from "antd/lib/upload";
+import ConversionServerErrorModal from "../../components/ConversionServerErrorModal";
+import { SimulariumController } from "@aics/simularium-viewer";
 import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
 import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
+import { CONVERSION_NO_SERVER } from "../../state/trajectory/constants";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
@@ -36,6 +42,9 @@ interface ConversionProps {
     };
     receiveFileToConvert: ActionCreator<ReceiveFileToConvertAction>;
     setError: ActionCreator<SetErrorAction>;
+    simulariumController: SimulariumController;
+    configureControllerAndCheckServer: ActionCreator<ConfigureFileConversionAction>;
+    conversionStatus: ConversionStatus;
 }
 
 const validFileExtensions: ExtensionMap = {
@@ -61,13 +70,34 @@ const ConversionForm = ({
     conversionProcessingData,
     setError,
     receiveFileToConvert,
+    configureControllerAndCheckServer,
+    conversionStatus,
 }: ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile>();
     const [engineSelected, setEngineSelected] = useState<boolean>(false);
+    const [serverDownModalOpen, setServerIsDownModalOpen] =
+        useState<boolean>(false);
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
     const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(false);
 
-    const toggleModal = () => {
+    const readyToConvert = fileToConvert && engineSelected;
+
+    // On load, configure controller and check if server is healthy
+    useEffect(() => {
+        configureControllerAndCheckServer();
+    }, []);
+
+    // TODO delete after development, useEffect to log a change in server health
+    useEffect(() => {
+        console.log(conversionStatus);
+    }, [conversionStatus]);
+
+    // callback for modal component to use
+    const toggleServerCheckModal = () => {
+        setServerIsDownModalOpen(!serverDownModalOpen);
+    };
+
+    const toggleFileTypeModal = () => {
         setFileTypeErrorModalOpen(!fileTypeErrorModalOpen);
     };
     const toggleProcessing = () => {
@@ -80,6 +110,13 @@ const ConversionForm = ({
         setEngineSelected(true);
     };
 
+    // we sent one health check on page load
+    // that might have been a while ago, lets send another
+    const handleFileSelection = async (file: UploadFile) => {
+        configureControllerAndCheckServer();
+        setFileToConvert(file);
+    };
+
     const validateFileType = (fileName: string) => {
         const fileExtension = fileName.split(".").pop();
         if (fileExtension) {
@@ -87,22 +124,37 @@ const ConversionForm = ({
                 validFileExtensions[conversionProcessingData.engineType] ===
                 fileExtension.toLowerCase()
             ) {
-                setIsProcessing(!isProcessing);
-                return;
+                return true;
             }
         }
 
         setFileTypeErrorModalOpen(true);
+        return false;
+    };
+
+    const advanceIfServerIsHealthy = () => {
+        if (readyToConvert && validateFileType(fileToConvert.name)) {
+            if (conversionStatus === CONVERSION_NO_SERVER) {
+                setServerIsDownModalOpen(true);
+            } else {
+                // at this point: engine selected, file uploaded, file type valid, server health received
+                setIsProcessing(true);
+            }
+        }
     };
 
     // TODO: use conversion template data to render the form
     console.log("conversion form data", conversionProcessingData);
-    const readyToConvert = fileToConvert && engineSelected;
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
+            {serverDownModalOpen && (
+                <ConversionServerErrorModal
+                    closeModal={toggleServerCheckModal}
+                />
+            )}
             {fileTypeErrorModalOpen && (
                 <ConversionFileErrorModal
-                    closeModal={toggleModal}
+                    closeModal={toggleFileTypeModal}
                     engineType={conversionProcessingData.engineType}
                 />
             )}
@@ -144,7 +196,7 @@ const ConversionForm = ({
                             showRemoveIcon: true,
                         }}
                         onChange={({ file }) => {
-                            setFileToConvert(file);
+                            handleFileSelection(file);
                         }}
                         customRequest={(options) =>
                             customRequest(
@@ -165,9 +217,7 @@ const ConversionForm = ({
                 <Button
                     type="primary"
                     disabled={!readyToConvert}
-                    onClick={() =>
-                        readyToConvert && validateFileType(fileToConvert.name)
-                    } // this will be unclickable anyway, but typescript doesn't know that
+                    onClick={advanceIfServerIsHealthy}
                 >
                     Next
                 </Button>
@@ -182,6 +232,10 @@ function mapStateToProps(state: State) {
     return {
         conversionProcessingData:
             trajectoryStateBranch.selectors.getConversionProcessingData(state),
+        simulariumController:
+            simulariumStateBranch.selectors.getSimulariumController(state),
+        conversionStatus:
+            trajectoryStateBranch.selectors.getConversionStatus(state),
     };
 }
 
@@ -189,6 +243,10 @@ const dispatchToPropsMap = {
     receiveFileToConvert: trajectoryStateBranch.actions.receiveFileToConvert,
     setError: viewerStateBranch.actions.setError,
     setConversionEngine: trajectoryStateBranch.actions.setConversionEngine,
+    setSimulariumController:
+        simulariumStateBranch.actions.setSimulariumController,
+    configureControllerAndCheckServer:
+        trajectoryStateBranch.actions.configureControllerAndCheckServer,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ConversionForm);
