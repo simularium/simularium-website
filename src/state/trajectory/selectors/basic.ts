@@ -14,4 +14,7 @@ export const getSimulariumFile = (state: State) =>
     state.trajectory.simulariumFile;
 export const getAgentDisplayNamesAndStates = (state: State) =>
     state.trajectory.agentUiNames;
-export const getConversionProcessingData = (state: State) => state.trajectory.processingData;
+export const getConversionProcessingData = (state: State) =>
+    state.trajectory.processingData;
+export const getConversionStatus = (state: State) =>
+    state.trajectory.conversionStatus;

@@ -1,4 +1,5 @@
 import { makeConstant } from "../util";
+
 const BRANCH_NAME = "trajectory";
 const makeTrajectoryConstant = (constant: string) =>
     makeConstant(BRANCH_NAME, constant);
@@ -24,7 +25,18 @@ export const CONVERT_FILE = makeTrajectoryConstant("convert-file");
 export const SET_CONVERSION_ENGINE = makeTrajectoryConstant(
     "set-conversion-engine"
 );
-export const SET_CONVERSION_TEMPLATE = makeTrajectoryConstant("set-conversion-template");
+export const SET_CONVERSION_TEMPLATE = makeTrajectoryConstant(
+    "set-conversion-template"
+);
 export const RECEIVE_FILE_TO_CONVERT = makeTrajectoryConstant(
     "receive-file-to-convert"
 );
+export const SET_CONVERSION_STATUS = makeTrajectoryConstant("set-status");
+export const CONFIGURE_FILE_CONVERSION = makeTrajectoryConstant(
+    "configure-file-conversion"
+);
+
+export const CONVERSION_NO_SERVER = "conversion-no-server";
+export const CONVERSION_SERVER_LIVE = "conversion-server-live";
+export const CONVERSION_ACTIVE = "conversion-active";
+export const CONVERSION_COMPLETE = "conversion-complete";

@@ -12,6 +12,8 @@ import {
     CONVERT_FILE,
     SET_CONVERSION_ENGINE,
     RECEIVE_FILE_TO_CONVERT,
+    SET_CONVERSION_STATUS,
+    CONFIGURE_FILE_CONVERSION,
 } from "./constants";
 import { AvailableEngines } from "./conversion-data-types";
 import {
@@ -28,6 +30,9 @@ import {
     ConvertFileAction,
     SetConversionEngineAction,
     ReceiveFileToConvertAction,
+    ConversionStatus,
+    SetConversionStatusAction,
+    ConfigureFileConversionAction,
 } from "./types";
 import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
 
@@ -126,17 +131,34 @@ export function loadViaUrl(
     };
 }
 
+export function setConversionStatus(payload: {
+    status: ConversionStatus;
+}): SetConversionStatusAction {
+    return {
+        payload,
+        type: SET_CONVERSION_STATUS,
+    };
+}
+
+export function configureControllerAndCheckServer(): ConfigureFileConversionAction {
+    return {
+        type: CONFIGURE_FILE_CONVERSION,
+    };
+}
+
 export function convertFile(): ConvertFileAction {
     return {
         type: CONVERT_FILE,
     };
 }
 
-export function receiveFileToConvert(payload: string): ReceiveFileToConvertAction {
+export function receiveFileToConvert(
+    payload: string
+): ReceiveFileToConvertAction {
     return {
         type: RECEIVE_FILE_TO_CONVERT,
-        payload: payload
-    }
+        payload: payload,
+    };
 }
 
 export function setConversionEngine(
