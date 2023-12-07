@@ -75,6 +75,7 @@
     --light-theme-btn-default-color: var(--dark-four);
     --light-theme-btn-default-disabled-bg: var(--heather);
     --light-theme-btn-primary-color: var(--white-three);
+    --light-theme-btn-primary-hover-color: var(--baby-purple);
     --light-theme-btn-primary-disabled-color: var(--true-gray);
     --light-theme-btn-primary-bg: var(--dark-four);
     --light-theme-btn-primary-disabled-bg: var(--heather);
