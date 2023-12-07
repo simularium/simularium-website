@@ -2,7 +2,6 @@ import { Button } from "antd";
 import React from "react";
 
 import CustomModal from "../CustomModal";
-import { Exclamation } from "../Icons";
 
 import styles from "./style.css";
 import { AvailableEngines } from "../../state/trajectory/conversion-data-types";
