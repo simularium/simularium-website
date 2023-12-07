@@ -2,19 +2,6 @@
     width: 425px;
 }
 
-.server-error-modal :global(.ant-modal-body) {
-    padding: 20px 20px 0px;
-}
-
-.server-error-modal  :global(.ant-modal-header) {
-    padding: 12px 24px;
-}
-
-.server-error-modal :global(.ant-modal-close) {
-    font-size: 12px;
-    position: absolute;
-}
-
 .server-error-modal :global(.ant-modal-close-x) {
     font-size: 12px;
     position: relative;
@@ -23,26 +10,25 @@
     color: var(--light-theme-modal-close-x);
 }
 
+.server-error-modal  :global(.ant-modal-header) {
+    padding: 12px 24px;
+}
+
 .server-error-modal :global(.ant-modal-title) {
     font-size: 14px;
     font-weight: 400;
 }
 
-.red-text{
-    color: var(--warning-text-color);
-    padding-bottom: 10px;
+.server-error-modal :global(.ant-modal-body) {
+    padding: 20px 20px 0px;
 }
 
-.blue-text{
-    color: var(--modal-link);
-    display: inline-block;
+.server-error-modal .red-text {
+    color: var(--warning-text-color);
+    padding-bottom: 1px;
 }
 
 .server-error-modal :global(.ant-modal-footer) {
     background-color: var(--modal-content-bg);
-    padding: 16px 12px 12px;
-}
-
-.server-error-modal :global(.ant-button-primary) {
-    width: 51px;
+    padding: 6px 16px 12px;
 }

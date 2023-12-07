@@ -31,19 +31,19 @@ const ConversionServerErrorModal: React.FC<ConversionServerErrorModalProps> = ({
                 {Exclamation} We&apos;re sorry, the server is currently
                 experiencing an issue.
             </p>
-            <span>
+            <p>
                 {" "}
                 Please try again at a later time. For further assistance, please
                 visit{" "}
-            </span>
-            <a
-                href="https://forum.allencell.org/"
-                target="_blank"
-                rel="noreferrer"
-            >
-                {" "}
-                The Allen Cell Discussion Forum.{" "}
-            </a>
+                <a
+                    href="https://forum.allencell.org/"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    {" "}
+                    The Allen Cell Discussion Forum.{" "}
+                </a>
+            </p>
         </CustomModal>
     );
 };
