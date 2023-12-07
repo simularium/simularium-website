@@ -33,6 +33,7 @@
     --footer-text: var(--warm-gray);
     --footer-text-border-bottom: var(--greyish-brown);
     --footer-link: var(--blue);
+    --modal-link: var(--blue);
     --side-panel-tooltip: var(--charcoal-grey);
     --input-border-highlight: var(--baby-purple);
     --dark-theme-primary-color: var(--baby-purple);
@@ -73,11 +74,14 @@
     --light-theme-modal-supplemental-text: var(--charcoal-grey);
     --light-theme-btn-default-color: var(--dark-four);
     --light-theme-btn-default-disabled-bg: var(--heather);
-
     --light-theme-btn-primary-color: var(--white-three);
+    --light-theme-btn-primary-hover-color: var(--baby-purple);
+    --light-theme-btn-primary-hover-bg: var(--dark);
     --light-theme-btn-primary-disabled-color: var(--true-gray);
     --light-theme-btn-primary-bg: var(--dark-four);
     --light-theme-btn-primary-disabled-bg: var(--heather);
+    --light-theme-modal-close-x: var(--warm-gray);
+    --warning-text-color: var(--brick-red);
     
     
 }

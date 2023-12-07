@@ -11,6 +11,11 @@
     color: var(--light-theme-btn-primary-color);
 }
 
+.light-theme :global(.ant-btn-primary):hover {
+    background-color: var(--light-theme-btn-primary-hover-bg);
+    color: var(--light-theme-btn-primary-hover-color);
+}
+
 .light-theme :global(.ant-btn-primary[disabled]) {
     background: var(--light-button-disabled-background);
     border: var(--light-button-disabled-border);
