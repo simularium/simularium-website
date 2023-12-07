@@ -76,8 +76,6 @@ const ConversionForm = ({
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
     const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(false);
 
-    const readyToConvert = fileToConvert && engineSelected;
-
     // On load, configure controller and check if server is healthy
     useEffect(() => {
         configureControllerAndCheckServer();
@@ -88,7 +86,7 @@ const ConversionForm = ({
         console.log(conversionStatus);
     }, [conversionStatus]);
 
-    // callback for modal component to use
+    // callbacks for state variables
     const toggleServerCheckModal = () => {
         setServerIsDownModalOpen(!serverDownModalOpen);
     };
@@ -96,6 +94,7 @@ const ConversionForm = ({
     const toggleFileTypeModal = () => {
         setFileTypeErrorModalOpen(!fileTypeErrorModalOpen);
     };
+
     const toggleProcessing = () => {
         setIsProcessing(!isProcessing);
     };
@@ -129,7 +128,11 @@ const ConversionForm = ({
     };
 
     const advanceIfServerIsHealthy = () => {
-        if (readyToConvert && validateFileType(fileToConvert.name)) {
+        if (
+            engineSelected &&
+            fileToConvert &&
+            validateFileType(fileToConvert.name)
+        ) {
             if (conversionStatus === CONVERSION_NO_SERVER) {
                 setServerIsDownModalOpen(true);
             } else {
@@ -212,7 +215,7 @@ const ConversionForm = ({
                 <Button ghost>Cancel</Button>
                 <Button
                     type="primary"
-                    disabled={!readyToConvert}
+                    disabled={!fileToConvert || !engineSelected}
                     onClick={advanceIfServerIsHealthy}
                 >
                     Next
