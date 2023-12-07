@@ -13,6 +13,7 @@ import {
     RECEIVE_FILE_TO_CONVERT,
     SET_CONVERSION_ENGINE,
     SET_CONVERSION_STATUS,
+    CONVERSION_NO_SERVER,
 } from "./constants";
 import {
     TrajectoryStateBranch,
@@ -38,7 +39,7 @@ export const initialState = {
         data: null,
         lastModified: null,
     },
-    conversionStatus: "",
+    conversionStatus: CONVERSION_NO_SERVER,
     processingData: {
         engineType: "",
         template: null,
@@ -107,10 +108,10 @@ const actionToConfigMap: TypeToDescriptionMap = {
             action.type === SET_CONVERSION_STATUS,
         perform: (
             state: TrajectoryStateBranch,
-            action: SetConversionTemplateData
+            action: SetConversionStatusAction
         ) => ({
             ...state,
-            conversionStatus: action.payload,
+            conversionStatus: action.payload.status,
         }),
     },
     [SET_CONVERSION_ENGINE]: {
