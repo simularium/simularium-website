@@ -32,7 +32,7 @@ const ConversionFileErrorModal: React.FC<ConversionFileErrorModalProps> = ({
             onCancel={closeModal}
         >
             <div>
-                <div className={styles.redText}>
+                <div className={styles.redWarningText}>
                     {" "}
                     {"We're sorry, there was a problem importing your file."}
                 </div>{" "}
