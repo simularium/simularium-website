@@ -353,6 +353,7 @@ const loadFileViaUrl = createLogic({
     type: LOAD_FILE_VIA_URL,
 });
 
+// configures the controller for file conversion and sends server health checks
 const configureFileConversionLogic = createLogic({
     process(
         deps: ReduxLogicDeps,
@@ -361,8 +362,8 @@ const configureFileConversionLogic = createLogic({
     ) {
         const { getState } = deps;
 
-        // I imagine this will eventually replace the config up top
-        // but for development purposes I'm leaving it here
+        // TODO: Most likely this will eventually replace the config up top
+        // but for development purposes it's here
         // until we switch to Octopus, make sure it matches your local instance.
         const netConnectionConfig: NetConnectionParams = {
             serverIp: "0.0.0.0",
@@ -378,25 +379,26 @@ const configureFileConversionLogic = createLogic({
                     status: CONVERSION_NO_SERVER,
                 })
             );
-            // configure the controller
+            // configure a new controller and put in state
             controller = new SimulariumController({
                 netConnectionSettings: netConnectionConfig,
             });
-            // set it in state
             dispatch(setSimulariumController(controller));
         }
-        // now that we have a controller, check the server health
-        // originally thought to do this every 15 seconds
-        // now thinking we do 5 checks, 3 seconds apart
-        // if any come back true we assume we're good for now... this is arbitrary
-        // i'd rather a flurry of requests that can be started on page load,
-        // that have enough delay to allow controller to get configured in the meanwhile
-        // and then we run another check when relevant
-        // rather than long 15s-1minute periods of sending checks
+        // check the server health
+        // Originally thought to send checks every 15 seconds,
+        // currently sending a flurry of checks, 3 seconds apart, 15 seconds total.
+        // Ff any come back true we assume we're good for now... this timing is arbitrary
+        // I reasoned a quick set of requests that can be started on page load,
+        // that cumulatively have enough delay to let a connection be configured
+        // is a better idea than a minute long period of sending checks,
+        // during which things could change.
+        // We can retrigger this as often as necessary.
         let healthCheckSuccessful = false;
         const healthCheckTimeouts: HealthCheckTimeout = {};
         const attempts = 0;
 
+        // recursive function that sends response handlers to viewer with request and timeout ids
         const performHealthCheck = (attempts: number) => {
             if (healthCheckSuccessful) {
                 return; // Stop if a successful response was already received
@@ -416,12 +418,13 @@ const configureFileConversionLogic = createLogic({
                 done();
             }, netConnectionConfig);
 
+            // timeouts that resolve send new checks until the max # of attempts is reached
             const timeoutId = setTimeout(() => {
                 if (!healthCheckSuccessful) {
-                    // just in case another check just resolved
+                    // in case another check just resolved
                     clearTimeout(healthCheckTimeouts[requestId]);
                     if (attempts < MAX_ATTEMPTS) {
-                        // Retry the health check with incremented count
+                        // retry the health check with incremented count
                         attempts++;
                         performHealthCheck(attempts);
                     } else {
