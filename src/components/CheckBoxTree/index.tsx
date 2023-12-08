@@ -16,7 +16,7 @@ import CheckboxTreeSubmenu from "../CheckboxTreeSubmenu";
 import TreeNode from "../TreeNode";
 import Checkbox from "../Checkbox";
 import { CHECKBOX_TYPE_STAR } from "../../constants";
-import ColorSwatch from "../ColorSwatch";
+import ColorPicker from "../ColorPicker";
 import NoTypeMappingText from "../NoTrajectoriesText/NoTypeMappingText";
 
 const { Text } = Typography;
@@ -241,11 +241,11 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                         : this.renderHighlightNoChildren(
                                               nodeData
                                           )}{" "}
-                                    <ColorSwatch
+                                    <ColorPicker
                                         childrenHaveDifferentColors={
                                             childrenHaveDifferentColors
                                         }
-                                        color={nodeData.color}
+                                        selectedColor={nodeData.color}
                                         agentName={nodeData.title}
                                         tags={this.getAgentTags(nodeData.title)}
                                         recentColors={recentColors}
@@ -303,8 +303,8 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                                         styles.rowLabelContainer
                                                     }
                                                 >
-                                                    <ColorSwatch
-                                                        color={
+                                                    <ColorPicker
+                                                        selectedColor={
                                                             value.color ||
                                                             nodeData.color
                                                         }

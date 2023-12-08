@@ -15,29 +15,38 @@ import {
 import styles from "./style.css";
 
 interface ColorPickerProps {
-    initialColor: string;
+    childrenHaveDifferentColors?: boolean;
+    selectedColor: string;
     agentName: string;
     tags: string[];
     recentColors: string[];
-    isOpen: boolean;
-    closePopover: () => void;
     setColorChange: ActionCreator<SetColorChangeAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 
 const ColorPicker = ({
-    initialColor,
     agentName,
     tags,
     recentColors,
-    isOpen,
-    closePopover,
     setColorChange,
     setRecentColors,
+    selectedColor,
+    childrenHaveDifferentColors,
 }: ColorPickerProps) => {
-    const [color, setColor] = useState(initialColor);
+    const [color, setColor] = useState(selectedColor);
     const [debouncedColor] = useDebounce(color, 250);
     const isInitialRender = useRef(true);
+    const [isColorPickerVisible, setColorPickerVisible] = useState(false);
+    const [lastSelectedColor, setLastSelectedColor] = useState(selectedColor);
+
+    const togglePopover = () => {
+        if (isColorPickerVisible) {
+            setColorPickerVisible(false);
+        } else {
+            setLastSelectedColor(color);
+            setColorPickerVisible(true);
+        }
+    };
 
     const handleColorChange = (color: string) => {
         const colorChange: ColorChange = {
@@ -75,9 +84,9 @@ const ColorPicker = ({
                     <div className={styles.selection}>
                         <div
                             className={styles.largeSwatch}
-                            style={{ backgroundColor: initialColor }}
+                            style={{ backgroundColor: lastSelectedColor }}
                             onClick={() => {
-                                setColor(initialColor);
+                                setColor(lastSelectedColor);
                             }}
                         ></div>
                         <label>Current</label>
@@ -101,8 +110,8 @@ const ColorPicker = ({
             </div>
             <div
                 className={classNames([
-                    styles.colors,
-                    styles.agentColorsSwatches,
+                    styles.colorsContainer,
+                    styles.availableColors,
                 ])}
             >
                 {AGENT_COLORS.map((color) => (
@@ -121,8 +130,8 @@ const ColorPicker = ({
                     </Tooltip>
                 ))}
             </div>
-            <h4 className={styles.recentColorText}> Recent </h4>
-            <div className={styles.colors}>
+            <h4 className={styles.subTitle}>Recent</h4>
+            <div className={styles.colorsContainer}>
                 {recentColors.map((color) => (
                     <button
                         key={color}
@@ -132,23 +141,34 @@ const ColorPicker = ({
                     />
                 ))}
             </div>
-            <div
-                className={classNames(styles.recentColors, {
-                    [styles.hidden]: recentColors.length == 0,
-                })}
-            />
         </div>
     );
+    const style = childrenHaveDifferentColors
+        ? { border: "1px solid #d3d3d3" }
+        : { backgroundColor: color };
 
     return (
         <Popover
             overlayClassName={styles.popover}
-            open={isOpen}
+            open={isColorPickerVisible}
             content={renderColorPickerComponent()}
-            placement="right"
-            onOpenChange={closePopover}
+            placement="bottomLeft"
+            onOpenChange={togglePopover}
             trigger="click"
-        />
+        >
+            <label
+                className={classNames(
+                    styles.agentSwatchContainer,
+                    "agent-swatch-container"
+                )}
+            >
+                <div
+                    className={classNames(styles.agentSwatch, "agent-swatch")}
+                    style={style}
+                    onClick={togglePopover}
+                ></div>
+            </label>
+        </Popover>
     );
 };
 

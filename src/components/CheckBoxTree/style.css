@@ -85,6 +85,14 @@
     padding: 2px 0;
 }
 
+/* Need to style these swatches differently that the ones that 
+are laid out in a row. These are the children swatches in the 
+dropdown laid out in a column. */
+.row-label-container :global(.agent-swatch-container) {
+    margin: 4px;
+    padding: 0px;
+}
+
 .agent-name-label {
     font-weight: 200;
     vertical-align: text-top;
