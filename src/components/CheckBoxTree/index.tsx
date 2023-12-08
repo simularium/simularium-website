@@ -212,25 +212,50 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
             );
         }
     };
+
+    renderParentColorPicker = (nodeData: AgentDisplayNode) => {
+        const { recentColors, setColorChange, setRecentColors } = this.props;
+        const childrenHaveDifferentColors = !nodeData.children.every(
+            (el) =>
+                el.color.toLowerCase() ===
+                nodeData.children[0].color.toLowerCase()
+        );
+        return (
+            <ColorPicker
+                childrenHaveDifferentColors={childrenHaveDifferentColors}
+                selectedColor={nodeData.color}
+                agentName={nodeData.title}
+                tags={this.getAgentTags(nodeData.title)}
+                recentColors={recentColors}
+                setColorChange={setColorChange}
+                setRecentColors={setRecentColors}
+            />
+        );
+    };
+
+    renderChildColorPicker = (
+        nodeData: AgentDisplayNode,
+        value: CheckBoxWithColor
+    ) => {
+        const { recentColors, setColorChange, setRecentColors } = this.props;
+        return (
+            <ColorPicker
+                selectedColor={value.color || nodeData.color}
+                agentName={nodeData.title}
+                tags={[value.value as string]}
+                recentColors={recentColors}
+                setColorChange={setColorChange}
+                setRecentColors={setRecentColors}
+            />
+        );
+    };
+
     render() {
-        const {
-            agentsHighlighted,
-            treeData,
-            agentsChecked,
-            recentColors,
-            setColorChange,
-            setRecentColors,
-        } = this.props;
+        const { agentsHighlighted, treeData, agentsChecked } = this.props;
         return treeData.length > 0 ? (
             <div className={styles.container}>
                 <TreeNode headerContent={this.renderCheckAllButton()} />
                 {treeData.map((nodeData) => {
-                    const childrenHaveDifferentColors =
-                        !nodeData.children.every(
-                            (el) =>
-                                el.color.toLowerCase() ===
-                                nodeData.children[0].color.toLowerCase()
-                        );
                     return (
                         <TreeNode
                             headerContent={
@@ -243,17 +268,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                         : this.renderHighlightNoChildren(
                                               nodeData
                                           )}{" "}
-                                    <ColorPicker
-                                        childrenHaveDifferentColors={
-                                            childrenHaveDifferentColors
-                                        }
-                                        selectedColor={nodeData.color}
-                                        agentName={nodeData.title}
-                                        tags={this.getAgentTags(nodeData.title)}
-                                        recentColors={recentColors}
-                                        setColorChange={setColorChange}
-                                        setRecentColors={setRecentColors}
-                                    />
+                                    {this.renderParentColorPicker(nodeData)}
                                     {nodeData.children.length
                                         ? this.renderSharedCheckboxes(
                                               nodeData,
@@ -305,27 +320,10 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                                         styles.rowLabelContainer
                                                     }
                                                 >
-                                                    <ColorPicker
-                                                        selectedColor={
-                                                            value.color ||
-                                                            nodeData.color
-                                                        }
-                                                        agentName={
-                                                            nodeData.title
-                                                        }
-                                                        tags={[
-                                                            value.value as string,
-                                                        ]}
-                                                        recentColors={
-                                                            recentColors
-                                                        }
-                                                        setColorChange={
-                                                            setColorChange
-                                                        }
-                                                        setRecentColors={
-                                                            setRecentColors
-                                                        }
-                                                    />
+                                                    {this.renderChildColorPicker(
+                                                        nodeData,
+                                                        value
+                                                    )}
                                                 </div>
                                             );
                                         })}
