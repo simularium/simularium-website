@@ -388,7 +388,7 @@ const configureFileConversionLogic = createLogic({
         // check the server health
         // Originally thought to send checks every 15 seconds,
         // currently sending a flurry of checks, 3 seconds apart, 15 seconds total.
-        // Ff any come back true we assume we're good for now... this timing is arbitrary
+        // If any come back true we assume we're good for now... this timing is arbitrary
         // I reasoned a quick set of requests that can be started on page load,
         // that cumulatively have enough delay to let a connection be configured
         // is a better idea than a minute long period of sending checks,
@@ -418,7 +418,7 @@ const configureFileConversionLogic = createLogic({
                 done();
             }, netConnectionConfig);
 
-            // timeouts that resolve send new checks until the max # of attempts is reached
+            // timeouts that, if they resolve, send new checks until the max # of attempts is reached
             const timeoutId = setTimeout(() => {
                 if (!healthCheckSuccessful) {
                     // in case another check just resolved
