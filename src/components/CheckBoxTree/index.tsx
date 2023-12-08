@@ -148,7 +148,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
 
         return (
             <Checkbox
-                className={[styles.noChildrenRow].join(" ")}
+                className={styles.noChildrenRow}
                 key={`${nodeData.title}-highlight`}
                 checkboxType={CHECKBOX_TYPE_STAR}
                 value={nodeData.title}
