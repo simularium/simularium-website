@@ -103,7 +103,7 @@ const ColorPicker = ({
                     <HexColorInput
                         className={styles.hexInput}
                         color={color}
-                        onChange={(color) => setColor(color.toLowerCase)}
+                        onChange={(color) => setColor(color.toLowerCase())}
                     />
                     <label>Hex</label>
                 </div>
