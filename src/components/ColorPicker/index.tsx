@@ -30,28 +30,39 @@ const ColorPicker = ({
     recentColors,
     setColorChange,
     setRecentColors,
-    selectedColor,
+    selectedColor: initialColor,
     childrenHaveDifferentColors,
 }: ColorPickerProps) => {
-    const [color, setColor] = useState(selectedColor);
-    const [debouncedColor] = useDebounce(color, 250);
+    const [currentColor, setCurrentColor] = useState(initialColor);
+    const [debouncedColor] = useDebounce(currentColor, 250);
     const isInitialRender = useRef(true);
     const [isColorPickerVisible, setColorPickerVisible] = useState(false);
-    const [lastSelectedColor, setLastSelectedColor] = useState(selectedColor);
+    const [lastSelectedColor, setLastSelectedColor] = useState(initialColor);
 
+    console.log(
+        "ColorPicker",
+        agentName,
+        "initialColor",
+        initialColor,
+        "currentColor",
+        currentColor,
+        "lastSelectedColor",
+        lastSelectedColor
+    );
     const togglePopover = () => {
-        setLastSelectedColor(color);
         if (isColorPickerVisible) {
             setColorPickerVisible(false);
         } else {
+            setLastSelectedColor(currentColor);
             setColorPickerVisible(true);
         }
     };
 
-    const handleColorChange = (color: string) => {
+    const handleColorChange = (newColor: string) => {
+        console.log("handleColorChange", newColor, tags);
         const colorChange: ColorChange = {
             agent: { name: agentName, tags: tags },
-            color: color.toLowerCase(),
+            color: newColor.toLowerCase(),
         };
         setColorChange(colorChange);
     };
@@ -78,7 +89,7 @@ const ColorPicker = ({
 
     const renderColorPickerComponent = () => (
         <div className={styles.colorPicker}>
-            <HexColorPicker color={color} onChange={setColor} />
+            <HexColorPicker color={currentColor} onChange={setCurrentColor} />
             <div className={styles.selectionDisplay}>
                 <div className={styles.colorSelections}>
                     <div className={styles.selection}>
@@ -86,28 +97,30 @@ const ColorPicker = ({
                             className={styles.largeSwatch}
                             style={{ backgroundColor: lastSelectedColor }}
                             onClick={() => {
-                                setColor(lastSelectedColor);
+                                setCurrentColor(lastSelectedColor);
                             }}
                         ></div>
                         <label>
-                            {lastSelectedColor == color
-                                ? "Current"
+                            {lastSelectedColor == currentColor
+                                ? ""
                                 : "Previous"}
                         </label>
                     </div>
                     <div className={styles.selection}>
                         <div
                             className={styles.largeSwatch}
-                            style={{ backgroundColor: color }}
+                            style={{ backgroundColor: currentColor }}
                         ></div>
-                        <label>{lastSelectedColor == color ? "" : "New"}</label>
+                        <label>New</label>
                     </div>
                 </div>
                 <div className={styles.selection}>
                     <HexColorInput
                         className={styles.hexInput}
-                        color={color}
-                        onChange={(color) => setColor(color.toLowerCase())}
+                        color={currentColor}
+                        onChange={(color) =>
+                            setCurrentColor(color.toLowerCase())
+                        }
                     />
                     <label>Hex</label>
                 </div>
@@ -129,7 +142,7 @@ const ColorPicker = ({
                             key={color}
                             className={styles.swatch}
                             style={{ background: color }}
-                            onClick={() => setColor(color)}
+                            onClick={() => setCurrentColor(color)}
                         />
                     </Tooltip>
                 ))}
@@ -141,7 +154,7 @@ const ColorPicker = ({
                         key={color}
                         className={styles.swatch}
                         style={{ background: color }}
-                        onClick={() => setColor(color)}
+                        onClick={() => setCurrentColor(color)}
                     />
                 ))}
             </div>
@@ -149,7 +162,7 @@ const ColorPicker = ({
     );
     const style = childrenHaveDifferentColors
         ? { border: "1px solid #d3d3d3" }
-        : { backgroundColor: lastSelectedColor };
+        : { backgroundColor: currentColor };
 
     return (
         <Popover
