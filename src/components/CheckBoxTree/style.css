@@ -27,7 +27,7 @@
 
 .check-all-checkbox {
     width: 100%;
-    margin-left: 82px; /* to line up with the checkboxes below */
+    margin-left: 88px; /* to line up with the checkboxes below */
     padding: 10px 0;
 }
 
@@ -70,7 +70,7 @@
 }
 
 .checkbox-column {
-    margin-left: 18px;
+    margin-left: 30px;
 }
 
 .container .agent-names-column {
