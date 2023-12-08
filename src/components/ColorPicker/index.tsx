@@ -39,16 +39,6 @@ const ColorPicker = ({
     const [isColorPickerVisible, setColorPickerVisible] = useState(false);
     const [lastSelectedColor, setLastSelectedColor] = useState(initialColor);
 
-    console.log(
-        "ColorPicker",
-        agentName,
-        "initialColor",
-        initialColor,
-        "currentColor",
-        currentColor,
-        "lastSelectedColor",
-        lastSelectedColor
-    );
     const togglePopover = () => {
         if (isColorPickerVisible) {
             setColorPickerVisible(false);
@@ -59,7 +49,6 @@ const ColorPicker = ({
     };
 
     const handleColorChange = (newColor: string) => {
-        console.log("handleColorChange", newColor, tags);
         const colorChange: ColorChange = {
             agent: { name: agentName, tags: tags },
             color: newColor.toLowerCase(),
@@ -75,6 +64,10 @@ const ColorPicker = ({
             updateRecentColors(debouncedColor);
         }
     }, [debouncedColor]);
+
+    useEffect(() => {
+        setCurrentColor(initialColor);
+    }, [initialColor]);
 
     const updateRecentColors = (color: string) => {
         if (recentColors.includes(color)) {
