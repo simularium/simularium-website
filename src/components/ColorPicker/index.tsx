@@ -40,10 +40,10 @@ const ColorPicker = ({
     const [lastSelectedColor, setLastSelectedColor] = useState(selectedColor);
 
     const togglePopover = () => {
+        setLastSelectedColor(color);
         if (isColorPickerVisible) {
             setColorPickerVisible(false);
         } else {
-            setLastSelectedColor(color);
             setColorPickerVisible(true);
         }
     };
@@ -89,7 +89,7 @@ const ColorPicker = ({
                                 setColor(lastSelectedColor);
                             }}
                         ></div>
-                        <label>Current</label>
+                        <label>Previous</label>
                     </div>
                     <div className={styles.selection}>
                         <div
@@ -145,7 +145,7 @@ const ColorPicker = ({
     );
     const style = childrenHaveDifferentColors
         ? { border: "1px solid #d3d3d3" }
-        : { backgroundColor: color };
+        : { backgroundColor: lastSelectedColor };
 
     return (
         <Popover
