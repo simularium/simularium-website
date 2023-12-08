@@ -85,7 +85,7 @@
     padding: 2px 0;
 }
 
-/* Need to style these swatches differently that the ones that 
+/* Need to style these swatches differently than the ones that 
 are laid out in a row. These are the children swatches in the 
 dropdown laid out in a column. */
 .row-label-container :global(.agent-swatch-container) {
