@@ -7,6 +7,7 @@ import { CHECKBOX_TYPE_STAR } from "../../constants";
 import { isUndefined } from "lodash";
 
 import styles from "./style.css";
+import { CHECK_ALL_BUTTON_TITLE } from "../CheckBoxTree";
 
 interface SharedCheckboxProps {
     options: string[];
@@ -63,7 +64,9 @@ export default class SharedCheckbox extends React.Component<SharedCheckboxProps>
                 }}
                 className={checkboxClassNames}
                 checkboxType={checkboxType}
-                checkboxLevel={title === "All" ? "top" : "shared"}
+                checkboxLevel={
+                    title === CHECK_ALL_BUTTON_TITLE ? "top" : "shared"
+                }
             >
                 {showLabel ? title : null}
             </Checkbox>

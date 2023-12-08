@@ -25,6 +25,8 @@ interface CheckBoxWithColor extends CheckboxOptionType {
     color: string;
 }
 
+export const CHECK_ALL_BUTTON_TITLE = "All Agent Types";
+
 export interface AgentDisplayNode {
     title: string;
     key: string;
@@ -68,7 +70,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
     toggleAllOnOff = (checkedKeys: { [key: string]: string[] }) => {
         const { setAgentsVisible, payloadForSelectNone, payloadForSelectAll } =
             this.props;
-        if (!checkedKeys.All.length) {
+        if (!checkedKeys[CHECK_ALL_BUTTON_TITLE].length) {
             setAgentsVisible(payloadForSelectNone);
         } else {
             setAgentsVisible(payloadForSelectAll);
@@ -125,7 +127,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
         return (
             <div className={styles.checkAllCheckbox}>
                 <SharedCheckbox
-                    title="All Agent Types"
+                    title={CHECK_ALL_BUTTON_TITLE}
                     showLabel={true}
                     options={map(treeData, "key" as string)}
                     onTopLevelCheck={this.toggleAllOnOff}
