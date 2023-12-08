@@ -10,10 +10,12 @@ import styles from "./style.css";
 import { isOnlineTrajectory } from "../../util/userUrlHandling";
 
 interface ShareTrajectoryButtonProps {
+    isBuffering: boolean;
     simulariumFile: LocalSimFile | NetworkedSimFile;
 }
 
 const ShareTrajectoryButton = ({
+    isBuffering,
     simulariumFile,
 }: ShareTrajectoryButtonProps): JSX.Element => {
     const [isSharing, setIsSharing] = React.useState(false);
@@ -24,31 +26,34 @@ const ShareTrajectoryButton = ({
         setIsSharing(!isSharing);
     };
 
-    const handleTooltipOpen = () => {
-        if (isSharing || !simulariumFile.name) return false;
-    };
+    const isDisabled = !simulariumFile.name || isSharing || isBuffering;
+    const tooltipOffset = isDisabled ? [0, -30] : [0, -18];
 
     return (
         <div className={styles.container}>
+            {isSharing ? (
+                <div className={styles.overlay}>
+                    <ShareTrajectoryModal
+                        trajectoryIsSharable={trajectoryIsSharable}
+                        closeModal={handleShare}
+                    />
+                </div>
+            ) : null}
             <Tooltip
-                title={"Share this trajectory"}
+                title={
+                    isDisabled
+                        ? "Load a model to perform this action"
+                        : "Share trajectory"
+                }
                 placement="bottomLeft"
                 color={TOOLTIP_COLOR}
-                open={handleTooltipOpen()}
+                align={{ offset: tooltipOffset }}
             >
-                {isSharing ? (
-                    <div className={styles.overlay}>
-                        <ShareTrajectoryModal
-                            trajectoryIsSharable={trajectoryIsSharable}
-                            closeModal={handleShare}
-                        />
-                    </div>
-                ) : null}
                 <Button
-                    className={styles.shareButton}
+                    className={isDisabled ? styles.disabled : undefined}
                     onClick={handleShare}
                     type="primary"
-                    disabled={!simulariumFile.name || isSharing}
+                    disabled={isDisabled}
                 >
                     Share {Share}
                 </Button>

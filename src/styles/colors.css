@@ -27,6 +27,7 @@
     --allen-purple: #8d87aa;
     --blue: #0094FF;
     --modal-content-bg: #e7e4f2;
+    --baby-purple-two: #DCCFFF;
     --medium-grey: #AEAEAE;
     --background-dim-gray: var(--dim-gray);
     --border-gray: var(--white-six);
@@ -34,7 +35,6 @@
     --footer-text: var(--warm-gray);
     --footer-text-border-bottom: var(--greyish-brown);
     --footer-link: var(--blue);
-    --side-panel-tooltip: var(--charcoal-grey);
     --input-border-highlight: var(--baby-purple);
     --dark-theme-primary-color: var(--baby-purple);
     --dark-theme-body-bg: var(--black);
@@ -59,7 +59,7 @@
     --dark-theme-btn-primary: var(--baby-purple);
     --dark-theme-btn-primary-text: var(--dark-two);
     --dark-theme-slider-color: var(--white-three);    
-    --dark-theme-tooltip-bg: var(--dark);
+    --dark-theme-tooltip-bg: var(--charcoal-grey);
     --dark-theme-version-badge-purple: var(--dark-five);
     --light-theme-background-purple: var(--pale-grey);
     --light-theme-button-purple: var(--dark-blue-grey);
