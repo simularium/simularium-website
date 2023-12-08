@@ -89,14 +89,18 @@ const ColorPicker = ({
                                 setColor(lastSelectedColor);
                             }}
                         ></div>
-                        <label>Previous</label>
+                        <label>
+                            {lastSelectedColor == color
+                                ? "Current"
+                                : "Previous"}
+                        </label>
                     </div>
                     <div className={styles.selection}>
                         <div
                             className={styles.largeSwatch}
                             style={{ backgroundColor: color }}
                         ></div>
-                        <label>New</label>
+                        <label>{lastSelectedColor == color ? "" : "New"}</label>
                     </div>
                 </div>
                 <div className={styles.selection}>
