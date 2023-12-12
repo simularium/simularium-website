@@ -55,9 +55,9 @@ import {
     CONVERT_FILE,
     SET_CONVERSION_ENGINE,
     SET_CONVERSION_TEMPLATE,
-    CONFIGURE_FILE_CONVERSION,
     CONVERSION_NO_SERVER,
     CONVERSION_SERVER_LIVE,
+    RECEIVE_FILE_TO_CONVERT,
 } from "./constants";
 import { ReceiveAction, LocalSimFile, HealthCheckTimeout } from "./types";
 import { initialState } from "./reducer";
@@ -446,7 +446,7 @@ const configureFileConversionLogic = createLogic({
         // Start the first health check
         performHealthCheck(attempts);
     },
-    type: CONFIGURE_FILE_CONVERSION,
+    type: RECEIVE_FILE_TO_CONVERT,
 });
 
 const fileConversionLogic = createLogic({

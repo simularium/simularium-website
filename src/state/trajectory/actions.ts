@@ -13,7 +13,6 @@ import {
     SET_CONVERSION_ENGINE,
     RECEIVE_FILE_TO_CONVERT,
     SET_CONVERSION_STATUS,
-    CONFIGURE_FILE_CONVERSION,
 } from "./constants";
 import { AvailableEngines } from "./conversion-data-types";
 import {
@@ -32,7 +31,6 @@ import {
     ReceiveFileToConvertAction,
     ConversionStatus,
     SetConversionStatusAction,
-    ConfigureFileConversionAction,
 } from "./types";
 import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
 
@@ -137,12 +135,6 @@ export function setConversionStatus(payload: {
     return {
         payload,
         type: SET_CONVERSION_STATUS,
-    };
-}
-
-export function configureControllerAndCheckServer(): ConfigureFileConversionAction {
-    return {
-        type: CONFIGURE_FILE_CONVERSION,
     };
 }
 

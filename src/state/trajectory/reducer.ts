@@ -134,13 +134,22 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (
             state: TrajectoryStateBranch,
             action: ReceiveFileToConvertAction
-        ) => ({
-            ...state,
-            processingData: {
-                ...state.processingData,
-                fileToConvert: action.payload,
-            },
-        }),
+        ) => {
+            // prevent side effects if called with no payload
+            // (e.g. when configuring server)
+            if (action.payload === null || action.payload === undefined) {
+                return {
+                    ...state,
+                };
+            }
+            return {
+                ...state,
+                processingData: {
+                    ...state.processingData,
+                    fileToConvert: action.payload,
+                },
+            };
+        },
     },
 };
 

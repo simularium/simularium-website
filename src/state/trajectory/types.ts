@@ -57,10 +57,6 @@ export interface LoadViaUrlAction {
     fileId?: string;
 }
 
-export interface ConfigureFileConversionAction {
-    type: string;
-}
-
 export interface ConvertFileAction {
     type: string;
 }

@@ -9,7 +9,6 @@ import { State } from "../../state";
 import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
 import {
-    ConfigureFileConversionAction,
     ConversionStatus,
     ReceiveFileToConvertAction,
     SetConversionEngineAction,
@@ -39,7 +38,6 @@ interface ConversionProps {
     };
     receiveFileToConvert: ActionCreator<ReceiveFileToConvertAction>;
     setError: ActionCreator<SetErrorAction>;
-    configureControllerAndCheckServer: ActionCreator<ConfigureFileConversionAction>;
     conversionStatus: ConversionStatus;
 }
 
@@ -66,7 +64,6 @@ const ConversionForm = ({
     conversionProcessingData,
     setError,
     receiveFileToConvert,
-    configureControllerAndCheckServer,
     conversionStatus,
 }: ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile>();
@@ -78,7 +75,8 @@ const ConversionForm = ({
 
     // On load, configure controller and check if server is healthy
     useEffect(() => {
-        configureControllerAndCheckServer();
+        // calling this with null payload configures the controller and checks server health
+        receiveFileToConvert(null);
     }, []);
 
     // TODO delete after development, useEffect to log a change in server health
@@ -108,7 +106,6 @@ const ConversionForm = ({
     // we sent one health check on page load
     // that might have been a while ago, lets send another
     const handleFileSelection = async (file: UploadFile) => {
-        configureControllerAndCheckServer();
         setFileToConvert(file);
     };
 
@@ -240,8 +237,6 @@ const dispatchToPropsMap = {
     receiveFileToConvert: trajectoryStateBranch.actions.receiveFileToConvert,
     setError: viewerStateBranch.actions.setError,
     setConversionEngine: trajectoryStateBranch.actions.setConversionEngine,
-    configureControllerAndCheckServer:
-        trajectoryStateBranch.actions.configureControllerAndCheckServer,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ConversionForm);
