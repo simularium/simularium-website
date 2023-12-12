@@ -103,8 +103,6 @@ const ConversionForm = ({
         setEngineSelected(true);
     };
 
-    // we sent one health check on page load
-    // that might have been a while ago, lets send another
     const handleFileSelection = async (file: UploadFile) => {
         setFileToConvert(file);
     };
