@@ -10,6 +10,7 @@ import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
 import {
     ConversionStatus,
+    InitializeConversionAction,
     ReceiveFileToConvertAction,
     SetConversionEngineAction,
 } from "../../state/trajectory/types";
@@ -39,6 +40,7 @@ interface ConversionProps {
     };
     receiveFileToConvert: ActionCreator<ReceiveFileToConvertAction>;
     setError: ActionCreator<SetErrorAction>;
+    initializeConversion: ActionCreator<InitializeConversionAction>;
     conversionStatus: ConversionStatus;
 }
 
@@ -65,6 +67,7 @@ const ConversionForm = ({
     conversionProcessingData,
     setError,
     receiveFileToConvert,
+    initializeConversion,
     conversionStatus,
 }: ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile>();
@@ -74,10 +77,8 @@ const ConversionForm = ({
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
     const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(false);
 
-    // On load, configure controller and check if server is healthy
     useEffect(() => {
-        // calling this with null payload configures the controller and checks server health
-        receiveFileToConvert(null);
+        initializeConversion();
     }, []);
 
     // TODO delete after development, useEffect to log a change in server health
@@ -236,6 +237,7 @@ const dispatchToPropsMap = {
     receiveFileToConvert: trajectoryStateBranch.actions.receiveFileToConvert,
     setError: viewerStateBranch.actions.setError,
     setConversionEngine: trajectoryStateBranch.actions.setConversionEngine,
+    initializeConversion: trajectoryStateBranch.actions.initializeConversion,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ConversionForm);

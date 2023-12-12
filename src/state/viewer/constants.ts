@@ -15,4 +15,3 @@ export const VIEWER_EMPTY = "empty";
 export const VIEWER_LOADING = "loading";
 export const VIEWER_ERROR = "error";
 export const VIEWER_SUCCESS = "success";
-export const VIEWER_IMPORTING = "importing";

@@ -36,7 +36,6 @@ import {
 import {
     VIEWER_EMPTY,
     VIEWER_ERROR,
-    VIEWER_IMPORTING,
     VIEWER_LOADING,
     VIEWER_SUCCESS,
 } from "../../state/viewer/constants";
@@ -96,7 +95,6 @@ class ModelPanel extends React.Component<ModelPanelProps> {
             [VIEWER_SUCCESS]: checkboxTree,
             [VIEWER_EMPTY]: <NoTrajectoriesText selectFile={loadNetworkFile} />,
             [VIEWER_LOADING]: <div />,
-            [VIEWER_IMPORTING]: <div />,
             [VIEWER_ERROR]: isNetworkedFile ? (
                 <NetworkFileFailedText />
             ) : (

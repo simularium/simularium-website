@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import {
     ClearSimFileDataAction,
-    ConvertFileAction,
+    ConversionStatus,
     isLocalFileInterface,
     isNetworkSimFileInterface,
     LocalSimFile,
@@ -23,7 +23,6 @@ import viewerStateBranch from "../../state/viewer";
 import {
     SetViewerStatusAction,
     SetErrorAction,
-    ViewerStatus,
 } from "../../state/viewer/types";
 
 import styles from "./style.css";
@@ -37,8 +36,7 @@ interface AppHeaderProps {
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setError: ActionCreator<SetErrorAction>;
-    convertFile: ActionCreator<ConvertFileAction>;
-    viewerStatus: ViewerStatus;
+    conversionStatus: ConversionStatus;
 }
 
 class AppHeader extends React.Component<AppHeaderProps> {
@@ -48,11 +46,10 @@ class AppHeader extends React.Component<AppHeaderProps> {
             isBuffering,
             changeToLocalSimulariumFile: loadLocalFile,
             changeToNetworkedFile: loadNetworkFile,
-            convertFile,
             setViewerStatus,
             clearSimulariumFile,
             setError,
-            viewerStatus,
+            conversionStatus,
         } = this.props;
         let lastModified = 0;
         let displayName = "";
@@ -86,8 +83,7 @@ class AppHeader extends React.Component<AppHeaderProps> {
                         setViewerStatus={setViewerStatus}
                         isBuffering={isBuffering}
                         setError={setError}
-                        initializeFileConversionUI={convertFile}
-                        viewerStatus={viewerStatus}
+                        conversionStatus={conversionStatus}
                     />
                     <HelpMenu key="help" />
                     <div className={styles.pipe}>|</div>
@@ -106,7 +102,8 @@ function mapStateToProps(state: State) {
         simulariumFile:
             trajectoryStateBranch.selectors.getSimulariumFile(state),
         isBuffering: viewerStateBranch.selectors.getIsBuffering(state),
-        viewerStatus: viewerStateBranch.selectors.getStatus(state),
+        conversionStatus:
+            trajectoryStateBranch.selectors.getConversionStatus(state),
     };
 }
 
@@ -117,7 +114,6 @@ const dispatchToPropsMap = {
     clearSimulariumFile: trajectoryStateBranch.actions.clearSimulariumFile,
     setViewerStatus: viewerStateBranch.actions.setStatus,
     setError: viewerStateBranch.actions.setError,
-    convertFile: trajectoryStateBranch.actions.convertFile,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(AppHeader);
