@@ -372,18 +372,20 @@ const configureFileConversionLogic = createLogic({
             secureConnection: false,
         };
         // check if a controller exists and has the right configuration
+        // create/configure as needed and put in state
         let controller = getSimulariumController(getState());
-        if (!controller || !controller.remoteWebsocketClient) {
+        if (!controller) {
             dispatch(
                 setConversionStatus({
                     status: CONVERSION_NO_SERVER,
                 })
             );
-            // configure a new controller and put in state
             controller = new SimulariumController({
                 netConnectionSettings: netConnectionConfig,
             });
             dispatch(setSimulariumController(controller));
+        } else if (!controller.remoteWebsocketClient) {
+            controller.configureNetwork(netConnectionConfig);
         }
         // check the server health
         // Originally thought to send checks every 15 seconds,
