@@ -8,7 +8,7 @@
 }
 
 .error-modal .red-warning-text {
-    color: var(--brick-red);
+    color: var(--warning-text-color);
     padding: 10px 0px;
 }
 
