@@ -12,6 +12,7 @@ import {
     CONVERSION_SERVER_LIVE,
     CONVERSION_ACTIVE,
     CONVERSION_COMPLETE,
+    CONVERSION_INACTIVE,
 } from "./constants";
 export interface TrajectoryStateBranch {
     [key: string]: any;
@@ -57,7 +58,7 @@ export interface LoadViaUrlAction {
     fileId?: string;
 }
 
-export interface ConvertFileAction {
+export interface InitializeConversionAction {
     type: string;
 }
 
@@ -115,8 +116,10 @@ type CONVERSION_NO_SERVER = typeof CONVERSION_NO_SERVER;
 type CONVERSION_SERVER_LIVE = typeof CONVERSION_SERVER_LIVE;
 type CONVERSION_ACTIVE = typeof CONVERSION_ACTIVE;
 type CONVERSION_COMPLETE = typeof CONVERSION_COMPLETE;
+type CONVERSION_INACTIVE = typeof CONVERSION_INACTIVE;
 
 export type ConversionStatus =
+    | CONVERSION_INACTIVE
     | CONVERSION_NO_SERVER
     | CONVERSION_SERVER_LIVE
     | CONVERSION_ACTIVE

@@ -24,7 +24,6 @@ import {
     VIEWER_LOADING,
     VIEWER_EMPTY,
     VIEWER_ERROR,
-    VIEWER_IMPORTING,
 } from "../viewer/constants";
 import {
     changeTime,
@@ -52,12 +51,11 @@ import {
     REQUEST_PLOT_DATA,
     CLEAR_SIMULARIUM_FILE,
     LOAD_FILE_VIA_URL,
-    CONVERT_FILE,
+    INITIALIZE_CONVERSION,
     SET_CONVERSION_ENGINE,
     SET_CONVERSION_TEMPLATE,
     CONVERSION_NO_SERVER,
     CONVERSION_SERVER_LIVE,
-    RECEIVE_FILE_TO_CONVERT,
 } from "./constants";
 import { ReceiveAction, LocalSimFile, HealthCheckTimeout } from "./types";
 import { initialState } from "./reducer";
@@ -354,7 +352,7 @@ const loadFileViaUrl = createLogic({
 });
 
 // configures the controller for file conversion and sends server health checks
-const configureFileConversionLogic = createLogic({
+const initializeFileConversionLogic = createLogic({
     process(
         deps: ReduxLogicDeps,
         dispatch: <T extends AnyAction>(action: T) => T,
@@ -375,11 +373,6 @@ const configureFileConversionLogic = createLogic({
         // create/configure as needed and put in state
         let controller = getSimulariumController(getState());
         if (!controller) {
-            dispatch(
-                setConversionStatus({
-                    status: CONVERSION_NO_SERVER,
-                })
-            );
             controller = new SimulariumController({
                 netConnectionSettings: netConnectionConfig,
             });
@@ -448,19 +441,7 @@ const configureFileConversionLogic = createLogic({
         // Start the first health check
         performHealthCheck(attempts);
     },
-    type: RECEIVE_FILE_TO_CONVERT,
-});
-
-const fileConversionLogic = createLogic({
-    process(deps: ReduxLogicDeps, dispatch, done) {
-        dispatch(
-            setStatus({
-                status: VIEWER_IMPORTING,
-            })
-        );
-        done();
-    },
-    type: CONVERT_FILE,
+    type: INITIALIZE_CONVERSION,
 });
 
 const setConversionEngineLogic = createLogic({
@@ -539,7 +520,6 @@ export default [
     loadNetworkedFile,
     resetSimulariumFileState,
     loadFileViaUrl,
-    fileConversionLogic,
     setConversionEngineLogic,
-    configureFileConversionLogic,
+    initializeFileConversionLogic,
 ];

@@ -9,7 +9,7 @@ import {
     REQUEST_PLOT_DATA,
     CLEAR_SIMULARIUM_FILE,
     LOAD_FILE_VIA_URL,
-    CONVERT_FILE,
+    INITIALIZE_CONVERSION,
     SET_CONVERSION_ENGINE,
     RECEIVE_FILE_TO_CONVERT,
     SET_CONVERSION_STATUS,
@@ -26,7 +26,7 @@ import {
     RequestLocalFileAction,
     ClearSimFileDataAction,
     LoadViaUrlAction,
-    ConvertFileAction,
+    InitializeConversionAction,
     SetConversionEngineAction,
     ReceiveFileToConvertAction,
     ConversionStatus,
@@ -138,9 +138,9 @@ export function setConversionStatus(payload: {
     };
 }
 
-export function convertFile(): ConvertFileAction {
+export function initializeConversion(): InitializeConversionAction {
     return {
-        type: CONVERT_FILE,
+        type: INITIALIZE_CONVERSION,
     };
 }
 
