@@ -441,6 +441,10 @@ const initializeFileConversionLogic = createLogic({
 
         // Start the first health check
         performHealthCheck(attempts);
+        // restore network settings to default so that things work
+        // when we navigate away from conversion page
+        // TODO: this will not be relevant once we switch to Octopus
+        controller.configureNetwork(netConnectionSettings);
     },
     type: INITIALIZE_CONVERSION,
 });
