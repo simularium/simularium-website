@@ -381,6 +381,7 @@ const initializeFileConversionLogic = createLogic({
             controller.configureNetwork(netConnectionConfig);
         }
         // check the server health
+        // TODO cut this comment down to size before merging
         // Originally thought to send checks every 15 seconds,
         // currently sending a flurry of checks, 3 seconds apart, 15 seconds total.
         // If any come back true we assume we're good for now... this timing is arbitrary

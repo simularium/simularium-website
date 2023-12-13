@@ -32,16 +32,14 @@ const ConversionServerErrorModal: React.FC<ConversionServerErrorModalProps> = ({
                 experiencing an issue.
             </p>
             <p>
-                {" "}
                 Please try again at a later time. For further assistance, please
-                visit{" "}
+                visit
                 <a
                     href="https://forum.allencell.org/"
                     target="_blank"
                     rel="noreferrer"
                 >
-                    {" "}
-                    The Allen Cell Discussion Forum.{" "}
+                    The Allen Cell Discussion Forum.
                 </a>
             </p>
         </CustomModal>
