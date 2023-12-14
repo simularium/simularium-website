@@ -1,7 +1,7 @@
 .container {
+    background-color: var(--overlay-purple);
     height: calc(100vh - var(--header-height));
     width: 100%;
-    background-color: var(--overlay-purple);
 }
 
 .form-content {
@@ -11,17 +11,17 @@
 
 .title {
     font-size: 30px;
-    padding-bottom: 0px;
-    margin-bottom: 0em;
     font-weight: 600;
     letter-spacing: 0.05rem;
+    margin-bottom: 0em;
+    padding-bottom: 0px;
 }
 
 .section-header {
+    font-size: 20px;
+    font-weight: 600;
     padding-top: 30px;
     padding-bottom: 15px;
-    font-weight: 600;
-    font-size: 20px;
 }
 
 .select-title {
@@ -29,8 +29,8 @@
 }
 
 .selector-box {
-    width: 200px;
     margin-right: 20px;
+    width: 200px;
 }
 
 .upload-container {
@@ -42,7 +42,7 @@
     display: flex;
 }
 
-.container :global(.ant-upload-span) {
+.upload :global(.ant-upload-span) {
     background-color: var(--overlay-purple);
 }
 
