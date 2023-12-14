@@ -25,7 +25,7 @@ import { SetErrorAction } from "../../state/viewer/types";
 import { UploadFile } from "antd/lib/upload";
 import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
 import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
-import { ZoomIn } from "../../components/Icons";
+import { ZoomIn as CancelIcon } from "../../components/Icons";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
@@ -131,6 +131,7 @@ const ConversionForm = ({
                 <div className={styles.uploadContainer}>
                     <Select
                         className={styles.selectorBox}
+                        id="select"
                         bordered={true}
                         defaultValue="Select"
                         options={selectOptions}
@@ -146,7 +147,7 @@ const ConversionForm = ({
                         showUploadList={{
                             showPreviewIcon: false,
                             showDownloadIcon: false,
-                            showRemoveIcon: true,
+                            showRemoveIcon: false,
                         }}
                         onChange={({ file }) => {
                             setFileToConvert(file);
@@ -167,7 +168,7 @@ const ConversionForm = ({
                             className={styles.removeFileIcon}
                             onClick={handleRemoveFile}
                         >
-                            {ZoomIn}
+                            {CancelIcon}
                         </div>
                     )}
                 </div>
