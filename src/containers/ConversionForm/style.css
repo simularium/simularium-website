@@ -42,6 +42,10 @@
     display: flex;
 }
 
+.container :global(.ant-upload-span) {
+    background-color: var(--overlay-purple);
+}
+
 .upload :global(.ant-upload-list) {
     padding-bottom: 7px;
 }
