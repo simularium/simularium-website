@@ -1,7 +1,7 @@
 .container {
     height: calc(100vh - var(--header-height));
     width: 100%;
-    background-color: rgba(231, 228, 242, 1);
+    background-color: var(--overlay-purple);
 }
 
 .form-content {
@@ -28,24 +28,36 @@
     margin-bottom: 0px;
 }
 
-.upload-container {
-    display: flex;
-    flex-direction: row;
-}
-
 .selector-box {
     width: 200px;
     margin-right: 20px;
 }
 
-.upload {
+.upload-container {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    max-height: 32px;
 }
 
-.container :global(.ant-upload-span) {
-    background-color: var(--overlay-purple);
+.upload {
+    display: flex;
+}
+
+.upload :global(.ant-upload-list) {
+    padding-bottom: 7px;
+}
+.upload :global(.ant-upload-list-item-card-actions-btn) {
+    display: none;
+}
+
+.remove-file-icon {
+    cursor: pointer;
+    font-size: 18px;
+    padding-top: 6px;
+}
+
+.remove-file-icon svg {
+    fill: var(--delete-file-icon-color);
+    transform: rotate(45deg);
 }
 
 .form-content button {
