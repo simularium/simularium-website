@@ -25,6 +25,7 @@ import { SetErrorAction } from "../../state/viewer/types";
 import { UploadFile } from "antd/lib/upload";
 import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
 import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
+import { ZoomIn } from "../../components/Icons";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
@@ -62,7 +63,7 @@ const ConversionForm = ({
     setError,
     receiveFileToConvert,
 }: ConversionProps): JSX.Element => {
-    const [fileToConvert, setFileToConvert] = useState<UploadFile>();
+    const [fileToConvert, setFileToConvert] = useState<UploadFile | null>();
     const [engineSelected, setEngineSelected] = useState<boolean>(false);
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
     const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(false);
@@ -78,6 +79,10 @@ const ConversionForm = ({
         const selectedEngine = selectedValue as AvailableEngines;
         setConversionEngine(selectedEngine);
         setEngineSelected(true);
+    };
+
+    const handleRemoveFile = () => {
+        setFileToConvert(null);
     };
 
     const validateFileType = (fileName: string) => {
@@ -157,6 +162,14 @@ const ConversionForm = ({
                     >
                         <Button type="default">Select file</Button>
                     </Upload>
+                    {fileToConvert && (
+                        <div
+                            className={styles.removeFileIcon}
+                            onClick={handleRemoveFile}
+                        >
+                            {ZoomIn}
+                        </div>
+                    )}
                 </div>
                 <Divider orientation="right" orientationMargin={400}>
                     {" "}
