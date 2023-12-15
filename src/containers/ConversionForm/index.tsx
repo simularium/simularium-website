@@ -25,7 +25,7 @@ import { SetErrorAction } from "../../state/viewer/types";
 import { UploadFile } from "antd/lib/upload";
 import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
 import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
-import { ZoomIn as CancelIcon } from "../../components/Icons";
+import { ZoomIn as CancelIcon, DownCaret } from "../../components/Icons";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
@@ -127,11 +127,12 @@ const ConversionForm = ({
                     {" "}
                     Provide file information (required){" "}
                 </h3>
-                <h3 className={styles.selectTitle}>Simulation Engine</h3>
+                <h3 className={styles.selectTitle}>Simulation engine</h3>
                 <div className={styles.uploadContainer}>
                     <Select
                         className={styles.selectorBox}
                         id="select"
+                        suffixIcon={DownCaret}
                         bordered={true}
                         defaultValue="Select"
                         options={selectOptions}
