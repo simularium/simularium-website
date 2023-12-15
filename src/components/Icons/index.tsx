@@ -19,6 +19,7 @@ import AicsLogoWhite from "../../assets/AICS-logo-full.png";
 import ClockwiseArrow from "../../assets/step-forward.svg";
 import CounterClockwiseArrow from "../../assets/step-back.svg";
 import Beta from "../../assets/beta.svg";
+import CaretAICS from "../../assets/icon-caret.svg";
 
 export const Loading = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 export const Play = <CaretRightOutlined />;
@@ -40,6 +41,12 @@ export const StepForward = <img src={ClockwiseArrow} />;
 export const StepBack = <img src={CounterClockwiseArrow} />;
 export const BetaTag = <img src={Beta} style={{ width: "42px" }} />;
 export const UpRightArrow = <ArrowLeftOutlined rotate={135} />;
+export const DownCaret = (
+    <img
+        src={CaretAICS}
+        style={{ width: "16px", transform: "rotate(180deg)" }}
+    />
+);
 
 export default {
     StepBack,
