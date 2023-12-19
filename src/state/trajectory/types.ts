@@ -1,7 +1,4 @@
-import {
-    ISimulariumFile,
-    SimulariumController,
-} from "@aics/simularium-viewer/type-declarations";
+import { ISimulariumFile, SimulariumController } from "@aics/simularium-viewer";
 
 export interface TrajectoryStateBranch {
     [key: string]: any;

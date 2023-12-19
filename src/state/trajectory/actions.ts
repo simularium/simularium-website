@@ -1,3 +1,5 @@
+import { SimulariumController } from "@aics/simularium-viewer";
+
 import {
     RECEIVE_TRAJECTORY,
     REQUEST_TRAJECTORY,
@@ -24,7 +26,6 @@ import {
     LoadViaUrlAction,
     SetUrlParamsAction,
 } from "./types";
-import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
 
 export function receiveTrajectory(
     payload: TrajectoryStateBranch
