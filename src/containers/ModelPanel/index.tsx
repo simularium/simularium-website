@@ -32,7 +32,7 @@ import {
     VisibilitySelectionMap,
     SetRecentColorsAction,
 } from "../../state/selection/types";
-import CheckBoxTree, { AgentDisplayNode } from "../../components/CheckBoxTree";
+import CheckBoxTree, { AgentDisplayNode } from "../../components/AgentTree";
 import {
     getSelectAllVisibilityMap,
     getSelectNoneVisibilityMap,

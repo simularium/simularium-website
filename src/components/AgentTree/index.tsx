@@ -12,7 +12,7 @@ import {
     VisibilitySelectionMap,
 } from "../../state/selection/types";
 import SharedCheckbox from "../SharedCheckbox";
-import CheckboxTreeSubmenu from "../CheckboxTreeSubmenu";
+import AgentTreeSubmenu from "../AgentTreeSubmenu";
 import TreeNode from "../TreeNode";
 import Checkbox from "../Checkbox";
 import { CHECKBOX_TYPE_STAR } from "../../constants";
@@ -34,7 +34,7 @@ export interface AgentDisplayNode {
     color: string;
 }
 
-interface CheckBoxTreeProps {
+interface AgentTreeProps {
     treeData: AgentDisplayNode[];
     agentsChecked: VisibilitySelectionMap;
     agentsHighlighted: VisibilitySelectionMap;
@@ -51,7 +51,7 @@ interface CheckBoxTreeProps {
 const CHECKBOX_SPAN_NO = 2;
 import styles from "./style.css";
 
-class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
+class AgentTree extends React.Component<AgentTreeProps> {
     onSubCheckboxChange = (key: string, values: string[]) => {
         const { handleAgentCheck } = this.props;
         handleAgentCheck({ [key]: values });
@@ -295,7 +295,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                             {nodeData.children.length > 0 && (
                                 <Row className={styles.subMenu}>
                                     <Col span={CHECKBOX_SPAN_NO} offset={3}>
-                                        <CheckboxTreeSubmenu
+                                        <AgentTreeSubmenu
                                             options={nodeData.children}
                                             checkedAgents={
                                                 agentsHighlighted[
@@ -329,7 +329,7 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
                                         })}
                                     </Col>
                                     <Col className={styles.checkboxColumn}>
-                                        <CheckboxTreeSubmenu
+                                        <AgentTreeSubmenu
                                             options={nodeData.children}
                                             checkedAgents={
                                                 agentsChecked[nodeData.title] ||
@@ -378,4 +378,4 @@ class CheckBoxTree extends React.Component<CheckBoxTreeProps> {
     }
 }
 
-export default CheckBoxTree;
+export default AgentTree;
