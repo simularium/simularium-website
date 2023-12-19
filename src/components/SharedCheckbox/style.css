@@ -7,6 +7,6 @@
     top: 3px;
 }
 
-.checkbox :global(.ant-checkbox + span) {
+.checkbox :global(.ant-checkbox) + span {
     padding: 0px;
 }
