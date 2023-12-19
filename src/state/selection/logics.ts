@@ -29,7 +29,6 @@ const storeColorsLogic = createLogic({
                     }
                 );
                 newAgent.displayStates = newDisplayStates;
-                return newAgent;
             }
             return newAgent;
         });
