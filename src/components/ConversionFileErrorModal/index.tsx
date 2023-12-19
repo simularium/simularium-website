@@ -33,9 +33,8 @@ const ConversionFileErrorModal: React.FC<ConversionFileErrorModalProps> = ({
         >
             <div>
                 <div className={styles.warningText}>
-                    {" "}
                     {"We're sorry, there was a problem importing your file."}
-                </div>{" "}
+                </div>
                 You may want to double check that the file you selected is a
                 valid {engineType} file and try again. For further assistance,
                 please visit
@@ -44,8 +43,7 @@ const ConversionFileErrorModal: React.FC<ConversionFileErrorModalProps> = ({
                     target="_blank"
                     rel="noreferrer"
                 >
-                    {" "}
-                    The Allen Cell Discussion Forum.{" "}
+                    The Allen Cell Discussion Forum.
                 </a>
             </div>
         </CustomModal>
