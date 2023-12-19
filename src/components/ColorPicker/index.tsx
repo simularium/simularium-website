@@ -32,7 +32,7 @@ const ColorPicker = ({
     setRecentColors,
     selectedColor: initialColor,
     childrenHaveDifferentColors,
-}: ColorPickerProps) => {
+}: ColorPickerProps): JSX.Element => {
     const [currentColor, setCurrentColor] = useState(initialColor);
     const [debouncedColor] = useDebounce(currentColor, 250);
     const isInitialRender = useRef(true);
