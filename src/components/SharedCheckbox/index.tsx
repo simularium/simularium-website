@@ -7,6 +7,7 @@ import { CHECKBOX_TYPE_STAR } from "../../constants";
 import { isUndefined } from "lodash";
 
 import styles from "./style.css";
+import { CHECK_ALL_BUTTON_TITLE } from "../AgentTree";
 
 interface SharedCheckboxProps {
     options: string[];
@@ -46,7 +47,10 @@ export default class SharedCheckbox extends React.Component<SharedCheckboxProps>
             : !!checkedList.length && checkedList.length < options.length;
         const checkboxClassNames = classNames([
             styles.container,
-            { [styles.header]: isHeader, ["header-checkbox"]: isHeader },
+            {
+                [styles.checkbox]: checkboxType !== CHECKBOX_TYPE_STAR,
+                ["header-checkbox"]: isHeader,
+            },
         ]);
 
         return (
@@ -54,14 +58,13 @@ export default class SharedCheckbox extends React.Component<SharedCheckboxProps>
                 indeterminate={isIndeterminate}
                 onChange={this.onCheckAllChange}
                 checked={checkedList.length === options.length}
-                style={{
-                    margin: "auto",
-                }}
                 className={checkboxClassNames}
                 checkboxType={checkboxType}
-                checkboxLevel={title === "All" ? "top" : "shared"}
+                checkboxLevel={
+                    title === CHECK_ALL_BUTTON_TITLE ? "top" : "shared"
+                }
             >
-                {showLabel ? title : ""}
+                {showLabel ? title : null}
             </Checkbox>
         );
     }

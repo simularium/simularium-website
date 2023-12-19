@@ -1,3 +1,4 @@
+import { ColorChange } from "@aics/simularium-viewer";
 import { TrajectoryStateBranch } from "../trajectory/types";
 
 export interface SelectionStateBranch {
@@ -45,5 +46,15 @@ export interface ToggleAllVisibleAction {
 }
 
 export interface ResetAction {
+    type: string;
+}
+
+export interface SetColorChangeAction {
+    payload: ColorChange;
+    type: string;
+}
+
+export interface SetRecentColorsAction {
+    payload: string[];
     type: string;
 }

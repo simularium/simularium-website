@@ -1,4 +1,4 @@
-import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
+import { SimulariumController } from "@aics/simularium-viewer";
 import { createLogic } from "redux-logic";
 
 import { getSimulariumController } from "../simularium/selectors";

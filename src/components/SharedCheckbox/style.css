@@ -1,3 +1,7 @@
-.header :global(.ant-checkbox) {
-    top: 8px;
+.checkbox :global(.ant-checkbox) {
+    top: 3px;
+}
+
+.checkbox :global(.ant-checkbox) + span {
+    padding: 0px;
 }

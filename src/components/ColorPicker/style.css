@@ -1,0 +1,150 @@
+.agent-swatch-container {
+    margin-left: 11px;
+    margin-right: 16px;
+    height: 30px;
+    padding-top: 7px;
+}
+
+.agent-swatch {
+    width: 12px;
+    height: 16px;
+    display: inline-block;
+}
+
+.agent-swatch:hover {
+    cursor: pointer;
+}
+
+.popover :global(.ant-popover-content) {
+    width: 215px;
+    box-shadow: 0px 3px 6px #000000;
+    left: -15px;
+}
+
+.popover :global(.ant-popover-inner-content) {
+    padding: 10px 8px;
+    display: flex;
+    justify-content: center;
+}
+
+.color-picker {
+    padding-left: 4px;
+}
+
+.color-picker .selection-display, 
+.color-picker .color-selections {
+    display: flex;
+}
+
+.color-picker .selection-display {
+    gap: 8px
+}
+
+.selection-display .large-swatch {
+    height: 30px;
+    width: 60px;
+}
+
+.selection {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.selection label,
+.selection .hex-input{
+    text-transform: uppercase;    
+    color: var(--dark-theme-popover-text);
+    font-size: 9px;
+    text-align: center;
+}
+
+.selection .hex-input {
+    height: 30px;
+    width: 68px;
+    background-color: transparent;
+    border: 1px solid var(--dark-theme-input-border);
+    font-size: 14px;
+    padding-left: 6px;
+    padding-top: 4px;
+}
+
+.available-colors {
+    padding: 12px 0px 12px 0px;
+}
+
+.colors-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.swatch {
+    height: 15.5px;
+    width: 15.5px;
+    cursor: pointer;
+    border: none;
+}
+
+.swatch:hover {
+    transform: scale(1.29);
+    box-shadow: 0px 0px 10px #000000;
+}
+
+.color-picker .sub-title {
+    text-align: left;
+    font-size: 12px;
+    margin-bottom: 2px;
+    font-weight: 300;
+    color: var(--dark-theme-popover-text)
+}
+
+.tooltip :global(.ant-tooltip-inner) {
+    font-size: 9px;
+    letter-spacing: 0px;
+    min-height: 0px;
+    padding: 8px 10px 4.5px 10px;
+    text-transform: uppercase;
+    background-color: var(--color-picker-tooltip);
+}
+
+.tooltip :global(.ant-tooltip-arrow-content) {
+    --antd-arrow-background-color: var(--color-picker-tooltip);
+}
+
+/* Styles that override react-colorful */
+.color-picker :global(.react-colorful__saturation-pointer) {
+    width: 0px;
+    height: 0px;
+    border-radius: 0px;
+    border: none;
+}
+
+.color-picker :global(.react-colorful__hue-pointer) {
+    width: 5px;
+    height: 16px;
+    border: 1px solid var(--white-two);
+    border-radius: 0px;
+}
+
+.color-picker :global(.react-colorful__pointer-fill) {
+    background-color: black !important;
+}
+
+.color-picker :global(.react-colorful) {
+    gap: 7px;
+    padding-bottom: 8px;
+    height: auto;
+}
+
+.color-picker :global(.react-colorful__saturation) {
+    border-radius: 0px;
+    height: 115px;
+    width: 196px;
+}
+
+.color-picker :global(.react-colorful__hue) {
+    border-radius: 0px;
+    height: 12px;
+    width: 196px;
+}

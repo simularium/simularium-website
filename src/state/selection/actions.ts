@@ -1,3 +1,4 @@
+import { ColorChange } from "@aics/simularium-viewer";
 import {
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
@@ -6,6 +7,8 @@ import {
     HIGHLIGHT_AGENTS_BY_KEY,
     SET_AGENTS_VISIBLE,
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
+    SET_COLOR_CHANGES,
+    SET_RECENT_COLORS,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -14,6 +17,8 @@ import {
     SetVisibleAction,
     VisibilitySelectionMap,
     ResetAction,
+    SetColorChangeAction,
+    SetRecentColorsAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -57,6 +62,13 @@ export function highlightAgentsByDisplayKey(
     };
 }
 
+export function setColorChange(colorChange: ColorChange): SetColorChangeAction {
+    return {
+        payload: colorChange,
+        type: SET_COLOR_CHANGES,
+    };
+}
+
 export function selectMetadata(
     key: string,
     payload: string | number
@@ -71,5 +83,12 @@ export function selectMetadata(
 export function resetAgentSelectionsAndHighlights(): ResetAction {
     return {
         type: RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
+    };
+}
+
+export function setRecentColors(colors: string[]): SetRecentColorsAction {
+    return {
+        payload: colors,
+        type: SET_RECENT_COLORS,
     };
 }

@@ -29,6 +29,7 @@
     --modal-content-bg: #e7e4f2;
     --baby-purple-two: #DCCFFF;
     --medium-grey: #AEAEAE;
+    --dark-blue-gray: #69738A;
     --background-dim-gray: var(--dim-gray);
     --border-gray: var(--white-six);
     --footer-bg: var(--dark-three);
@@ -41,7 +42,9 @@
     --dark-theme-header-bg: var(--dark-three);
     --dark-theme-header-text: var(--text-gray);
     --dark-theme-component-bg: var(--dark-four);
+    --dark-theme-input-border: var(--white-two);
     --dark-theme-text-color: var(--off-white);
+    --dark-theme-popover-text: var(--white-two);
     --dark-theme-menu-text-color: var(--transparent-white);
     --dark-theme-menu-text-hover: var(--pure-white);
     --dark-theme-agent-dropdown-toggle: var(--warm-gray);
@@ -74,6 +77,7 @@
     --light-theme-modal-supplemental-text: var(--charcoal-grey);
     --light-theme-modal-btn-default-color: var(--dark-four);
     --light-theme-btn-default-disabled-bg: var(--heather);
+    --color-picker-tooltip: var(--dark-blue-gray);
     --viewer-btn-bg-default: var(--dark-three);
     --viewer-btn-bg-hover: var(--purplish-gray);
     --viewer-btn-bg-disabled: var(--dark-three);
