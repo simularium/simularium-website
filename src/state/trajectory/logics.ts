@@ -381,15 +381,8 @@ const initializeFileConversionLogic = createLogic({
             controller.configureNetwork(netConnectionConfig);
         }
         // check the server health
-        // TODO cut this comment down to size before merging
-        // Originally thought to send checks every 15 seconds,
-        // currently sending a flurry of checks, 3 seconds apart, 15 seconds total.
-        // If any come back true we assume we're good for now... this timing is arbitrary
-        // I reasoned a quick set of requests that can be started on page load,
-        // that cumulatively have enough delay to let a connection be configured
-        // is a better idea than a minute long period of sending checks,
-        // during which things could change.
-        // We can retrigger this as often as necessary.
+        // Currently sending 5 checks, 3 seconds apart, can be adjusted/triggered as needed
+        // If any come back true we assume we're good for now, this timing is arbitrary
         let healthCheckSuccessful = false;
         const healthCheckTimeouts: HealthCheckTimeout = {};
         const attempts = 0;
