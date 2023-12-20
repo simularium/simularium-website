@@ -36,7 +36,7 @@ import { setStatus, setIsPlaying, setError } from "../viewer/actions";
 import { ReduxLogicDeps } from "../types";
 import { batchActions } from "../util";
 
-import { getSimulariumFile } from "./selectors";
+import { getConversionStatus, getSimulariumFile } from "./selectors";
 import {
     changeToLocalSimulariumFile,
     receiveTrajectory,
@@ -56,6 +56,7 @@ import {
     SET_CONVERSION_TEMPLATE,
     CONVERSION_NO_SERVER,
     CONVERSION_SERVER_LIVE,
+    CONVERSION_INACTIVE,
 } from "./constants";
 import { ReceiveAction, LocalSimFile, HealthCheckTimeout } from "./types";
 import { initialState } from "./reducer";
@@ -397,14 +398,17 @@ const initializeFileConversionLogic = createLogic({
 
             controller.checkServerHealth(() => {
                 // callback/handler for viewer function
-                healthCheckSuccessful = true;
-                clearTimeout(healthCheckTimeouts[requestId]);
-                dispatch(
-                    setConversionStatus({
-                        status: CONVERSION_SERVER_LIVE,
-                    })
-                );
-                done();
+                // only handle if we're still on the conversion page
+                if (getConversionStatus(getState()) !== CONVERSION_INACTIVE) {
+                    healthCheckSuccessful = true;
+                    clearTimeout(healthCheckTimeouts[requestId]);
+                    dispatch(
+                        setConversionStatus({
+                            status: CONVERSION_SERVER_LIVE,
+                        })
+                    );
+                    done();
+                }
             }, netConnectionConfig);
 
             // timeouts that, if they resolve, send new checks until the max # of attempts is reached
@@ -412,18 +416,23 @@ const initializeFileConversionLogic = createLogic({
                 if (!healthCheckSuccessful) {
                     // in case another check just resolved
                     clearTimeout(healthCheckTimeouts[requestId]);
-                    if (attempts < MAX_ATTEMPTS) {
-                        // retry the health check with incremented count
-                        attempts++;
-                        performHealthCheck(attempts);
-                    } else {
-                        // if we've done the max # of attempts, set conversionStatus
-                        dispatch(
-                            setConversionStatus({
-                                status: CONVERSION_NO_SERVER,
-                            })
-                        );
-                        done();
+                    // stop process if user has navigated away from conversion page
+                    if (
+                        getConversionStatus(getState()) !== CONVERSION_INACTIVE
+                    ) {
+                        if (attempts < MAX_ATTEMPTS) {
+                            // retry the health check with incremented count
+                            attempts++;
+                            performHealthCheck(attempts);
+                        } else {
+                            // if we've done the max # of attempts, set conversionStatus
+                            dispatch(
+                                setConversionStatus({
+                                    status: CONVERSION_NO_SERVER,
+                                })
+                            );
+                            done();
+                        }
                     }
                 }
             }, 3000);
