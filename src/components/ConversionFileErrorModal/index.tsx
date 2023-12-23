@@ -2,10 +2,9 @@ import { Button } from "antd";
 import React from "react";
 
 import CustomModal from "../CustomModal";
-import { Exclamation } from "../Icons";
+import { AvailableEngines } from "../../state/trajectory/conversion-data-types";
 
 import styles from "./style.css";
-import { AvailableEngines } from "../../state/trajectory/conversion-data-types";
 
 interface ConversionFileErrorModalProps {
     closeModal: () => void;
@@ -33,10 +32,9 @@ const ConversionFileErrorModal: React.FC<ConversionFileErrorModalProps> = ({
             onCancel={closeModal}
         >
             <div>
-                <div className={styles.redText}>
-                    {" "}
+                <div className={styles.warningText}>
                     {"We're sorry, there was a problem importing your file."}
-                </div>{" "}
+                </div>
                 You may want to double check that the file you selected is a
                 valid {engineType} file and try again. For further assistance,
                 please visit
@@ -45,8 +43,7 @@ const ConversionFileErrorModal: React.FC<ConversionFileErrorModalProps> = ({
                     target="_blank"
                     rel="noreferrer"
                 >
-                    {" "}
-                    The Allen Cell Discussion Forum.{" "}
+                    The Allen Cell Discussion Forum.
                 </a>
             </div>
         </CustomModal>

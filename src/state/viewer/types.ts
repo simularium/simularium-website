@@ -5,7 +5,6 @@ import {
     VIEWER_ERROR,
     VIEWER_EMPTY,
     VIEWER_SUCCESS,
-    VIEWER_IMPORTING,
 } from "./constants";
 
 export interface ViewerStateBranch {
@@ -42,14 +41,8 @@ export interface ViewerError {
     onClose?: () => void;
 }
 
-type VIEWER_LOADING = typeof VIEWER_LOADING;
-type VIEWER_ERROR = typeof VIEWER_ERROR;
-type VIEWER_EMPTY = typeof VIEWER_EMPTY;
-type VIEWER_SUCCESS = typeof VIEWER_SUCCESS;
-type VIEWER_IMPORTING = typeof VIEWER_IMPORTING;
 export type ViewerStatus =
-    | VIEWER_LOADING
-    | VIEWER_ERROR
-    | VIEWER_EMPTY
-    | VIEWER_SUCCESS
-    | VIEWER_IMPORTING;
+    | typeof VIEWER_LOADING
+    | typeof VIEWER_ERROR
+    | typeof VIEWER_EMPTY
+    | typeof VIEWER_SUCCESS;
