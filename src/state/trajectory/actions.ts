@@ -13,6 +13,7 @@ import {
     SET_CONVERSION_ENGINE,
     RECEIVE_FILE_TO_CONVERT,
     SET_CONVERSION_STATUS,
+    CONVERT_FILE,
 } from "./constants";
 import { AvailableEngines } from "./conversion-data-types";
 import {
@@ -31,6 +32,7 @@ import {
     ReceiveFileToConvertAction,
     ConversionStatus,
     SetConversionStatusAction,
+    ConvertFileAction,
 } from "./types";
 import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
 
@@ -145,11 +147,12 @@ export function initializeConversion(): InitializeConversionAction {
 }
 
 export function receiveFileToConvert(
-    payload: string
+    fileContents: string,
+    fileName: string
 ): ReceiveFileToConvertAction {
     return {
         type: RECEIVE_FILE_TO_CONVERT,
-        payload: payload,
+        payload: { fileContents, fileName },
     };
 }
 
@@ -159,5 +162,11 @@ export function setConversionEngine(
     return {
         payload,
         type: SET_CONVERSION_ENGINE,
+    };
+}
+
+export function convertFile(): ConvertFileAction {
+    return {
+        type: CONVERT_FILE,
     };
 }
