@@ -36,7 +36,11 @@ import { setStatus, setIsPlaying, setError } from "../viewer/actions";
 import { ReduxLogicDeps } from "../types";
 import { batchActions } from "../util";
 
-import { getConversionStatus, getSimulariumFile } from "./selectors";
+import {
+    getConversionProcessingData,
+    getConversionStatus,
+    getSimulariumFile,
+} from "./selectors";
 import {
     changeToLocalSimulariumFile,
     receiveTrajectory,
@@ -57,8 +61,15 @@ import {
     CONVERSION_NO_SERVER,
     CONVERSION_SERVER_LIVE,
     CONVERSION_INACTIVE,
+    CONVERT_FILE,
+    CONVERSION_ACTIVE,
 } from "./constants";
-import { ReceiveAction, LocalSimFile, HealthCheckTimeout } from "./types";
+import {
+    ReceiveAction,
+    LocalSimFile,
+    HealthCheckTimeout,
+    SetConversionStatusAction,
+} from "./types";
 import { initialState } from "./reducer";
 import {
     TemplateMap,
@@ -446,7 +457,8 @@ const initializeFileConversionLogic = createLogic({
         // restore network settings to default so that things work
         // when we navigate away from conversion page
         // TODO: this will not be relevant once we switch to Octopus
-        controller.configureNetwork(netConnectionSettings);
+        // TODO: we can't reset this here because it breaks conversion
+        // controller.configureNetwork(netConnectionSettings);
     },
     type: INITIALIZE_CONVERSION,
 });
@@ -521,6 +533,50 @@ const setConversionEngineLogic = createLogic({
     type: SET_CONVERSION_ENGINE,
 });
 
+const convertFileLogic = createLogic({
+    process(
+        deps: ReduxLogicDeps,
+        dispatch: (action: SetConversionStatusAction) => void,
+        done
+    ) {
+        const { getState } = deps;
+
+        const { engineType, fileToConvert, fileName } =
+            getConversionProcessingData(getState());
+        const fileContents: Record<string, any> = {
+            fileContents: { fileContents: fileToConvert },
+            metaData: { trajectoryTitle: fileName },
+        };
+        // TODO: Most likely this will eventually replace the config up top
+        // but for development purposes it's here
+        // until we switch to Octopus, make sure it matches your local instance.
+        const netConnectionConfig: NetConnectionParams = {
+            serverIp: "0.0.0.0",
+            serverPort: 8765,
+            useOctopus: true,
+            secureConnection: false,
+        };
+        const controller = getSimulariumController(getState());
+        // convert the file
+        dispatch(
+            setConversionStatus({
+                status: CONVERSION_ACTIVE,
+            })
+        );
+        controller
+            .convertAndLoadTrajectory(
+                netConnectionConfig,
+                fileContents,
+                engineType
+            )
+            .catch((err: Error) => {
+                console.error(err);
+            });
+        done();
+    },
+    type: CONVERT_FILE,
+});
+
 export default [
     requestPlotDataLogic,
     loadLocalFile,
@@ -529,4 +585,5 @@ export default [
     loadFileViaUrl,
     setConversionEngineLogic,
     initializeFileConversionLogic,
+    convertFileLogic,
 ];
