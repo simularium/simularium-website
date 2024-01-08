@@ -10,6 +10,7 @@ import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
 import {
     ConversionStatus,
+    ConvertFileAction,
     InitializeConversionAction,
     ReceiveFileToConvertAction,
     SetConversionEngineAction,
@@ -17,30 +18,26 @@ import {
 import { SetErrorAction } from "../../state/viewer/types";
 import {
     AvailableEngines,
+    ConversionProcessingData,
     ExtensionMap,
-    Template,
-    TemplateMap,
 } from "../../state/trajectory/conversion-data-types";
 import ConversionServerErrorModal from "../../components/ConversionServerErrorModal";
-import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
 import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
 import { CONVERSION_NO_SERVER } from "../../state/trajectory/constants";
 import customRequest from "./custom-request";
 
 import theme from "../../components/theme/light-theme.css";
 import styles from "./style.css";
+import { useHistory } from "react-router-dom";
+import { VIEWER_PATHNAME } from "../../routes";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
-    conversionProcessingData: {
-        template: Template;
-        templateMap: TemplateMap;
-        fileToConvert: string;
-        engineType: AvailableEngines;
-    };
+    conversionProcessingData: ConversionProcessingData;
     receiveFileToConvert: ActionCreator<ReceiveFileToConvertAction>;
     setError: ActionCreator<SetErrorAction>;
     initializeConversion: ActionCreator<InitializeConversionAction>;
+    convertFile: ActionCreator<ConvertFileAction>;
     conversionStatus: ConversionStatus;
 }
 
@@ -69,13 +66,15 @@ const ConversionForm = ({
     receiveFileToConvert,
     initializeConversion,
     conversionStatus,
+    convertFile,
 }: ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile>();
     const [engineSelected, setEngineSelected] = useState<boolean>(false);
     const [serverDownModalOpen, setServerIsDownModalOpen] =
         useState<boolean>(false);
-    const [isProcessing, setIsProcessing] = useState<boolean>(false);
     const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(false);
+
+    const history = useHistory();
 
     useEffect(() => {
         initializeConversion();
@@ -93,10 +92,6 @@ const ConversionForm = ({
 
     const toggleFileTypeModal = () => {
         setFileTypeErrorModalOpen(!fileTypeErrorModalOpen);
-    };
-
-    const toggleProcessing = () => {
-        setIsProcessing(!isProcessing);
     };
 
     const handleEngineChange = (selectedValue: string) => {
@@ -124,7 +119,7 @@ const ConversionForm = ({
         return false;
     };
 
-    const advanceIfServerIsHealthy = () => {
+    const sendFileToConvert = () => {
         if (
             engineSelected &&
             fileToConvert &&
@@ -133,8 +128,8 @@ const ConversionForm = ({
             if (conversionStatus === CONVERSION_NO_SERVER) {
                 setServerIsDownModalOpen(true);
             } else {
-                // at this point: engine selected, file uploaded, file type valid, server health received
-                setIsProcessing(true);
+                convertFile();
+                history.push(VIEWER_PATHNAME);
             }
         }
     };
@@ -152,12 +147,6 @@ const ConversionForm = ({
                 <ConversionFileErrorModal
                     closeModal={toggleFileTypeModal}
                     engineType={conversionProcessingData.engineType}
-                />
-            )}
-            {isProcessing && (
-                <ConversionProcessingOverlay
-                    toggleProcessing={toggleProcessing}
-                    fileName={fileToConvert ? fileToConvert?.name : null}
                 />
             )}
             <div className={styles.formContent}>
@@ -213,7 +202,7 @@ const ConversionForm = ({
                 <Button
                     type="primary"
                     disabled={!fileToConvert || !engineSelected}
-                    onClick={advanceIfServerIsHealthy}
+                    onClick={sendFileToConvert}
                 >
                     Next
                 </Button>
@@ -238,6 +227,7 @@ const dispatchToPropsMap = {
     setError: viewerStateBranch.actions.setError,
     setConversionEngine: trajectoryStateBranch.actions.setConversionEngine,
     initializeConversion: trajectoryStateBranch.actions.initializeConversion,
+    convertFile: trajectoryStateBranch.actions.convertFile,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ConversionForm);
