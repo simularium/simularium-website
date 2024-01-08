@@ -6,38 +6,42 @@ import queryString from "query-string";
 import { SimulariumController, ErrorLevel } from "@aics/simularium-viewer";
 import { find } from "lodash";
 
+import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
+import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
 import SideBar from "../../components/SideBar";
 import ResultsPanel from "../ResultsPanel";
 import ModelPanel from "../ModelPanel";
 import ViewerPanel from "../ViewerPanel";
-import { State } from "../../state/types";
 
+import { State } from "../../state/types";
 import trajectoryStateBranch from "../../state/trajectory";
 import selectionStateBranch from "../../state/selection";
 import viewerStateBranch from "../../state/viewer";
 import simulariumStateBranch from "../../state/simularium";
 import {
-    URL_PARAM_KEY_FILE_NAME,
-    URL_PARAM_KEY_USER_URL,
-} from "../../constants";
-import {
     ClearSimFileDataAction,
+    ConversionStatus,
     LoadViaUrlAction,
     LocalSimFile,
     RequestLocalFileAction,
     RequestNetworkFileAction,
 } from "../../state/trajectory/types";
+import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
+import { CONVERSION_ACTIVE } from "../../state/trajectory/constants";
 import {
     SetErrorAction,
     SetViewerStatusAction,
 } from "../../state/viewer/types";
-import { SetSimulariumControllerAction } from "../../state/simularium/types";
-import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
+import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/viewer/constants";
 import {
     DragOverViewerAction,
     ResetDragOverViewerAction,
 } from "../../state/viewer/types";
-import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/viewer/constants";
+import { SetSimulariumControllerAction } from "../../state/simularium/types";
+import {
+    URL_PARAM_KEY_FILE_NAME,
+    URL_PARAM_KEY_USER_URL,
+} from "../../constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { clearUrlParams } from "../../util";
@@ -65,6 +69,8 @@ interface AppProps {
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
     setError: ActionCreator<SetErrorAction>;
+    conversionProcessingData: ConversionProcessingData;
+    conversionStatus: ConversionStatus;
 }
 
 interface AppState {
@@ -202,11 +208,18 @@ class App extends React.Component<AppProps, AppState> {
             setViewerStatus,
             clearSimulariumFile,
             setError,
+            conversionProcessingData,
+            conversionStatus,
         } = this.props;
         return (
             <Layout className={styles.container}>
                 <div ref={this.interactiveContent}>
                     <Layout className={styles.content}>
+                        {conversionStatus === CONVERSION_ACTIVE && (
+                            <ConversionProcessingOverlay
+                                fileName={conversionProcessingData.fileName}
+                            />
+                        )}
                         <ViewerOverlayTarget
                             key="drop"
                             clearSimulariumFile={clearSimulariumFile}
@@ -247,6 +260,10 @@ function mapStateToProps(state: State) {
         fileIsDraggedOverViewer:
             viewerStateBranch.selectors.getFileDraggedOver(state),
         viewerStatus: viewerStateBranch.selectors.getStatus(state),
+        conversionStatus:
+            trajectoryStateBranch.selectors.getConversionStatus(state),
+        conversionProcessingData:
+            trajectoryStateBranch.selectors.getConversionProcessingData(state),
     };
 }
 
