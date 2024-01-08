@@ -20,6 +20,7 @@
 }
 
 .content {
+    color: var(--dark);
     display: flex;
     flex-flow: column;
     align-items: center;

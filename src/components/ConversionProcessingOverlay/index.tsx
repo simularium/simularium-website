@@ -1,32 +1,36 @@
 import React, { useState } from "react";
 import { Button, Divider, Spin } from "antd";
+import classNames from "classnames";
+import { useHistory } from "react-router";
 
+import { IMPORT_PATHNAME } from "../../routes";
+import ConversionCancelModal from "../ConversionCancelModal";
 import { UpRightArrow, LeftArrow } from "../Icons";
+import theme from "../../components/theme/light-theme.css";
 
 import styles from "./style.css";
-import ConversionCancelModal from "../ConversionCancelModal";
 
 interface ConversionProcessingOverlayProps {
-    toggleProcessing: () => void;
     fileName: string | null;
 }
 
 const ConversionProcessingOverlay = ({
-    toggleProcessing,
     fileName,
 }: ConversionProcessingOverlayProps): JSX.Element | null => {
     const [cancelModalOpen, setCancelModalOpen] = useState(false);
+
+    const history = useHistory();
 
     const toggleCancelling = () => {
         setCancelModalOpen(false);
     };
 
     const processingOverlay = (
-        <div className={styles.container}>
+        <div className={classNames(styles.container, theme.lightTheme)}>
             {cancelModalOpen ? (
                 <ConversionCancelModal
                     continueProcessing={toggleCancelling}
-                    cancelProcessing={toggleProcessing}
+                    cancelProcessing={() => history.push(IMPORT_PATHNAME)}
                 />
             ) : null}
             <h2 className={styles.title}> File conversion in progress </h2>
