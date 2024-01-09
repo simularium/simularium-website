@@ -432,16 +432,15 @@ const initializeFileConversionLogic = createLogic({
                         getConversionStatus(getState()) !== CONVERSION_INACTIVE
                     ) {
                         if (attempts < MAX_ATTEMPTS) {
-                            // retry the health check with incremented count
-                            attempts++;
-                            performHealthCheck(attempts);
-                        } else {
-                            // if we've done the max # of attempts, set conversionStatus
                             dispatch(
                                 setConversionStatus({
                                     status: CONVERSION_NO_SERVER,
                                 })
                             );
+                            // retry the health check with incremented count
+                            attempts++;
+                            performHealthCheck(attempts);
+                        } else {
                             done();
                         }
                     }
@@ -454,10 +453,10 @@ const initializeFileConversionLogic = createLogic({
 
         // Start the first health check
         performHealthCheck(attempts);
-        // restore network settings to default so that things work
-        // when we navigate away from conversion page
-        // TODO: this will not be relevant once we switch to Octopus
-        // TODO: we can't reset this here because it breaks conversion
+        // TODO: we can't reset this here because it breaks conversion,
+        // we need to maintain a connection to the local server
+        // to run the conversion.
+        // this will not be relevant once we switch to Octopus
         // controller.configureNetwork(netConnectionSettings);
     },
     type: INITIALIZE_CONVERSION,
