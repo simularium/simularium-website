@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Button, Divider, Spin } from "antd";
-import classNames from "classnames";
 
 import ConversionCancelModal from "../ConversionCancelModal";
 import { UpRightArrow, LeftArrow } from "../Icons";
-import theme from "../../components/theme/light-theme.css";
 
 import styles from "./style.css";
 
@@ -24,7 +22,7 @@ const ConversionProcessingOverlay = ({
     };
 
     const processingOverlay = (
-        <div className={classNames(styles.container, theme.lightTheme)}>
+        <div className={styles.container}>
             {cancelModalOpen ? (
                 <ConversionCancelModal
                     continueProcessing={toggleCancelling}
