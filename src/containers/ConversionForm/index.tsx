@@ -23,13 +23,17 @@ import {
 } from "../../state/trajectory/conversion-data-types";
 import ConversionServerErrorModal from "../../components/ConversionServerErrorModal";
 import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
-import { CONVERSION_NO_SERVER } from "../../state/trajectory/constants";
+import {
+    CONVERSION_ACTIVE,
+    CONVERSION_NO_SERVER,
+} from "../../state/trajectory/constants";
 import customRequest from "./custom-request";
 
 import theme from "../../components/theme/light-theme.css";
 import styles from "./style.css";
 import { useHistory } from "react-router-dom";
 import { VIEWER_PATHNAME } from "../../routes";
+import { setConversionStatus } from "../../state/trajectory/actions";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
@@ -101,6 +105,7 @@ const ConversionForm = ({
     };
 
     const handleFileSelection = async (file: UploadFile) => {
+        initializeConversion();
         setFileToConvert(file);
     };
 
@@ -125,9 +130,13 @@ const ConversionForm = ({
             fileToConvert &&
             validateFileType(fileToConvert.name)
         ) {
+            //TODO we want this line, but its commented out to allow breakibng the process
+            // intentionally so we can test what happens if the server goes down mid conversion
+            // initializeConversion();
             if (conversionStatus === CONVERSION_NO_SERVER) {
                 setServerIsDownModalOpen(true);
             } else {
+                setConversionStatus({ status: CONVERSION_ACTIVE });
                 convertFile();
                 history.push(VIEWER_PATHNAME);
             }
