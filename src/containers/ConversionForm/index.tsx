@@ -14,8 +14,8 @@ import {
     InitializeConversionAction,
     ReceiveFileToConvertAction,
     SetConversionEngineAction,
+    SetConversionStatusAction,
 } from "../../state/trajectory/types";
-import { setConversionStatus } from "../../state/trajectory/actions";
 import { SetErrorAction } from "../../state/viewer/types";
 import {
     AvailableEngines,
@@ -27,6 +27,7 @@ import ConversionServerErrorModal from "../../components/ConversionServerErrorMo
 import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
 import {
     CONVERSION_ACTIVE,
+    CONVERSION_INACTIVE,
     CONVERSION_NO_SERVER,
 } from "../../state/trajectory/constants";
 import customRequest from "./custom-request";
@@ -42,6 +43,7 @@ interface ConversionProps {
     initializeConversion: ActionCreator<InitializeConversionAction>;
     convertFile: ActionCreator<ConvertFileAction>;
     conversionStatus: ConversionStatus;
+    setConversionStatus: ActionCreator<SetConversionStatusAction>;
 }
 
 const validFileExtensions: ExtensionMap = {
@@ -70,6 +72,7 @@ const ConversionForm = ({
     initializeConversion,
     conversionStatus,
     convertFile,
+    setConversionStatus,
 }: ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile>();
     const [engineSelected, setEngineSelected] = useState<boolean>(false);
@@ -103,6 +106,10 @@ const ConversionForm = ({
 
     const cancelProcessing = () => {
         setIsProcessing(false);
+    };
+
+    const cancelConversion = () => {
+        setConversionStatus({ status: CONVERSION_INACTIVE });
     };
 
     const handleEngineChange = (selectedValue: string) => {
@@ -218,7 +225,9 @@ const ConversionForm = ({
                 <Divider orientation="right" orientationMargin={400}>
                     {" "}
                 </Divider>
-                <Button ghost>Cancel</Button>
+                <Button ghost onClick={cancelConversion}>
+                    Cancel
+                </Button>
                 <Button
                     type="primary"
                     disabled={!fileToConvert || !engineSelected}
@@ -248,6 +257,7 @@ const dispatchToPropsMap = {
     setConversionEngine: trajectoryStateBranch.actions.setConversionEngine,
     initializeConversion: trajectoryStateBranch.actions.initializeConversion,
     convertFile: trajectoryStateBranch.actions.convertFile,
+    setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ConversionForm);
