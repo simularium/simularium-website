@@ -7,7 +7,6 @@ import queryString from "query-string";
 import { SimulariumController, ErrorLevel } from "@aics/simularium-viewer";
 import { find } from "lodash";
 
-import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
 import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
 import SideBar from "../../components/SideBar";
 import ResultsPanel from "../ResultsPanel";
@@ -31,7 +30,7 @@ import {
 import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
 import {
     CONVERSION_ACTIVE,
-    CONVERSION_NO_SERVER,
+    CONVERSION_INACTIVE,
     CONVERSION_SERVER_LIVE,
 } from "../../state/trajectory/constants";
 import {
@@ -59,6 +58,7 @@ import {
 const { Content } = Layout;
 
 import styles from "./style.css";
+import ConversionForm from "../ConversionForm";
 
 interface AppProps extends RouteComponentProps {
     onSidePanelCollapse: (number: number) => void;
@@ -179,24 +179,8 @@ class App extends React.Component<AppProps, AppState> {
             current.addEventListener("dragleave", this.handleEndDrag, false);
         }
 
-        // if (this.props.conversionStatus === CONVERSION_ACTIVE) {
-        this.setupConversionCheckInterval();
-        // }
-    }
-
-    public componentDidUpdate(prevProps: AppProps) {
-        const { conversionStatus } = this.props;
-
-        // if the server goes down while waiting for a conversion to finish
-        // we will only know this if we fire intializeConversion
-        // possibly we should update octopus to handle some cases of conversion error
-        // and fire periodic initializeConversion calls during conversion to confirm serer is healthy?
-        if (
-            prevProps.conversionStatus === CONVERSION_ACTIVE &&
-            conversionStatus === CONVERSION_NO_SERVER
-        ) {
-            // Use React Router to navigate to /import
-            this.props.history.push("/import");
+        if (this.props.conversionStatus === CONVERSION_ACTIVE) {
+            this.setupConversionCheckInterval();
         }
     }
 
@@ -228,17 +212,13 @@ class App extends React.Component<AppProps, AppState> {
 
     private setupConversionCheckInterval = () => {
         const { initializeConversion } = this.props;
-        console.log("firing setupConversionCheckInterval");
         if (this.conversionCheckInterval) {
-            console.log("clearing interval");
             clearInterval(this.conversionCheckInterval);
         }
-        console.log("conversionStatus", this.props.conversionStatus);
         if (
             this.props.conversionStatus === CONVERSION_ACTIVE ||
             this.props.conversionStatus === CONVERSION_SERVER_LIVE
         ) {
-            console.log("conversion is live setting interval");
             this.conversionCheckInterval = setInterval(() => {
                 initializeConversion();
             }, 15000); // 15 seconds
@@ -255,17 +235,14 @@ class App extends React.Component<AppProps, AppState> {
             setViewerStatus,
             clearSimulariumFile,
             setError,
-            conversionProcessingData,
             conversionStatus,
         } = this.props;
         return (
             <Layout className={styles.container}>
                 <div ref={this.interactiveContent}>
                     <Layout className={styles.content}>
-                        {conversionStatus === CONVERSION_ACTIVE && (
-                            <ConversionProcessingOverlay
-                                fileName={conversionProcessingData.fileName}
-                            />
+                        {conversionStatus !== CONVERSION_INACTIVE && (
+                            <ConversionForm />
                         )}
                         <ViewerOverlayTarget
                             key="drop"
