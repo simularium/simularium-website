@@ -31,9 +31,8 @@ import customRequest from "./custom-request";
 
 import theme from "../../components/theme/light-theme.css";
 import styles from "./style.css";
-import { useHistory } from "react-router-dom";
-import { VIEWER_PATHNAME } from "../../routes";
 import { setConversionStatus } from "../../state/trajectory/actions";
+import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
@@ -77,16 +76,20 @@ const ConversionForm = ({
     const [serverDownModalOpen, setServerIsDownModalOpen] =
         useState<boolean>(false);
     const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(false);
-
-    const history = useHistory();
+    const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
     useEffect(() => {
+        setConversionStatus({ status: CONVERSION_NO_SERVER });
         initializeConversion();
     }, []);
 
-    // TODO delete after development, useEffect to log a change in server health
     useEffect(() => {
         console.log(conversionStatus);
+        // this should account for the server going down while a conversion is in process
+        if (isProcessing && conversionStatus === CONVERSION_NO_SERVER) {
+            setIsProcessing(false);
+            setServerIsDownModalOpen(true);
+        }
     }, [conversionStatus]);
 
     // callbacks for state variables
@@ -96,6 +99,10 @@ const ConversionForm = ({
 
     const toggleFileTypeModal = () => {
         setFileTypeErrorModalOpen(!fileTypeErrorModalOpen);
+    };
+
+    const toggleIsProcessing = () => {
+        setIsProcessing(!isProcessing);
     };
 
     const handleEngineChange = (selectedValue: string) => {
@@ -130,15 +137,13 @@ const ConversionForm = ({
             fileToConvert &&
             validateFileType(fileToConvert.name)
         ) {
-            //TODO we want this line, but its commented out to allow breakibng the process
-            // intentionally so we can test what happens if the server goes down mid conversion
-            // initializeConversion();
+            initializeConversion();
             if (conversionStatus === CONVERSION_NO_SERVER) {
                 setServerIsDownModalOpen(true);
             } else {
+                setIsProcessing(true);
                 setConversionStatus({ status: CONVERSION_ACTIVE });
                 convertFile();
-                history.push(VIEWER_PATHNAME);
             }
         }
     };
@@ -156,6 +161,12 @@ const ConversionForm = ({
                 <ConversionFileErrorModal
                     closeModal={toggleFileTypeModal}
                     engineType={conversionProcessingData.engineType}
+                />
+            )}
+            {conversionStatus === CONVERSION_ACTIVE && (
+                <ConversionProcessingOverlay
+                    fileName={conversionProcessingData.fileName}
+                    cancelProcessing={toggleIsProcessing}
                 />
             )}
             <div className={styles.formContent}>
