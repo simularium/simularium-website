@@ -1,4 +1,5 @@
 import * as React from "react";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 import { Layout } from "antd";
@@ -21,13 +22,18 @@ import simulariumStateBranch from "../../state/simularium";
 import {
     ClearSimFileDataAction,
     ConversionStatus,
+    InitializeConversionAction,
     LoadViaUrlAction,
     LocalSimFile,
     RequestLocalFileAction,
     RequestNetworkFileAction,
 } from "../../state/trajectory/types";
 import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
-import { CONVERSION_ACTIVE } from "../../state/trajectory/constants";
+import {
+    CONVERSION_ACTIVE,
+    CONVERSION_NO_SERVER,
+    CONVERSION_SERVER_LIVE,
+} from "../../state/trajectory/constants";
 import {
     SetErrorAction,
     SetViewerStatusAction,
@@ -54,7 +60,7 @@ const { Content } = Layout;
 
 import styles from "./style.css";
 
-interface AppProps {
+interface AppProps extends RouteComponentProps {
     onSidePanelCollapse: (number: number) => void;
     simulariumFile: LocalSimFile;
     setSimulariumController: ActionCreator<SetSimulariumControllerAction>;
@@ -71,6 +77,7 @@ interface AppProps {
     setError: ActionCreator<SetErrorAction>;
     conversionProcessingData: ConversionProcessingData;
     conversionStatus: ConversionStatus;
+    initializeConversion: ActionCreator<InitializeConversionAction>;
 }
 
 interface AppState {
@@ -81,6 +88,7 @@ class App extends React.Component<AppProps, AppState> {
     public simulariumController: SimulariumController | undefined;
     private interactiveContent = React.createRef<HTMLDivElement>();
     private endDragover = 0;
+    private conversionCheckInterval: NodeJS.Timeout | null = null;
     constructor(props: AppProps) {
         super(props);
         this.onPanelCollapse = this.onPanelCollapse.bind(this);
@@ -170,6 +178,26 @@ class App extends React.Component<AppProps, AppState> {
             );
             current.addEventListener("dragleave", this.handleEndDrag, false);
         }
+
+        // if (this.props.conversionStatus === CONVERSION_ACTIVE) {
+        this.setupConversionCheckInterval();
+        // }
+    }
+
+    public componentDidUpdate(prevProps: AppProps) {
+        const { conversionStatus } = this.props;
+
+        // if the server goes down while waiting for a conversion to finish
+        // we will only know this if we fire intializeConversion
+        // possibly we should update octopus to handle some cases of conversion error
+        // and fire periodic initializeConversion calls during conversion to confirm serer is healthy?
+        if (
+            prevProps.conversionStatus === CONVERSION_ACTIVE &&
+            conversionStatus === CONVERSION_NO_SERVER
+        ) {
+            // Use React Router to navigate to /import
+            this.props.history.push("/import");
+        }
     }
 
     public onPanelCollapse(open: boolean) {
@@ -197,6 +225,25 @@ class App extends React.Component<AppProps, AppState> {
             }, 300);
         }
     }
+
+    private setupConversionCheckInterval = () => {
+        const { initializeConversion } = this.props;
+        console.log("firing setupConversionCheckInterval");
+        if (this.conversionCheckInterval) {
+            console.log("clearing interval");
+            clearInterval(this.conversionCheckInterval);
+        }
+        console.log("conversionStatus", this.props.conversionStatus);
+        if (
+            this.props.conversionStatus === CONVERSION_ACTIVE ||
+            this.props.conversionStatus === CONVERSION_SERVER_LIVE
+        ) {
+            console.log("conversion is live setting interval");
+            this.conversionCheckInterval = setInterval(() => {
+                initializeConversion();
+            }, 15000); // 15 seconds
+        }
+    };
 
     public render(): JSX.Element {
         const {
@@ -280,6 +327,7 @@ const dispatchToPropsMap = {
     dragOverViewer: viewerStateBranch.actions.dragOverViewer,
     setViewerStatus: viewerStateBranch.actions.setStatus,
     setError: viewerStateBranch.actions.setError,
+    initializeConversion: trajectoryStateBranch.actions.initializeConversion,
 };
 
-export default connect(mapStateToProps, dispatchToPropsMap)(App);
+export default connect(mapStateToProps, dispatchToPropsMap)(withRouter(App));
