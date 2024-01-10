@@ -371,7 +371,7 @@ const initializeFileConversionLogic = createLogic({
         done
     ) {
         const { getState } = deps;
-
+        console.log("initializing conversion");
         // TODO: Most likely this will eventually replace the config up top
         // but for development purposes it's here
         // until we switch to Octopus, make sure it matches your local instance.
@@ -401,6 +401,7 @@ const initializeFileConversionLogic = createLogic({
 
         // recursive function that sends response handlers to viewer with request and timeout ids
         const performHealthCheck = (attempts: number) => {
+            console.log("sending health check");
             if (healthCheckSuccessful) {
                 return; // Stop if a successful response was already received
             }
