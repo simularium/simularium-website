@@ -42,10 +42,7 @@ import {
     ConversionStatus,
     SetConversionStatusAction,
 } from "../../state/trajectory/types";
-import {
-    CONVERSION_ACTIVE,
-    CONVERSION_INACTIVE,
-} from "../../state/trajectory/constants";
+import { CONVERSION_INACTIVE } from "../../state/trajectory/constants";
 import { batchActions } from "../../state/util";
 import PlaybackControls from "../../components/PlaybackControls";
 import CameraControls from "../../components/CameraControls";
@@ -257,7 +254,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
         const { conversionStatus, setConversionStatus } = this.props;
-        if (conversionStatus === CONVERSION_ACTIVE) {
+        if (conversionStatus !== CONVERSION_INACTIVE) {
             setConversionStatus({ status: CONVERSION_INACTIVE });
         }
 
