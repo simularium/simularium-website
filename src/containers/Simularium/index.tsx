@@ -240,10 +240,10 @@ class App extends React.Component<AppProps, AppState> {
         return (
             <Layout className={styles.container}>
                 <div ref={this.interactiveContent}>
+                    {conversionStatus !== CONVERSION_INACTIVE && (
+                        <ConversionForm />
+                    )}
                     <Layout className={styles.content}>
-                        {conversionStatus !== CONVERSION_INACTIVE && (
-                            <ConversionForm />
-                        )}
                         <ViewerOverlayTarget
                             key="drop"
                             clearSimulariumFile={clearSimulariumFile}

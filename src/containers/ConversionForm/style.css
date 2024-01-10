@@ -1,7 +1,8 @@
 .container {
     height: calc(100vh - var(--header-height));
     width: 100%;
-    background-color: rgba(231, 228, 242, 1);
+    background-color: var(--overlay-purple);
+    z-index: 1000;
 }
 
 .form-content {
