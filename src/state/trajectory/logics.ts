@@ -84,6 +84,14 @@ const netConnectionSettings = {
     serverPort: 9002,
 };
 
+// TODO this will be removed/integrated when we switch to Octopus
+const octopusConnectionConfig: NetConnectionParams = {
+    serverIp: "0.0.0.0",
+    serverPort: 8765,
+    useOctopus: true,
+    secureConnection: false,
+};
+
 const resetSimulariumFileState = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         const { getState, action } = deps;
@@ -371,26 +379,16 @@ const initializeFileConversionLogic = createLogic({
         done
     ) {
         const { getState } = deps;
-        console.log("initializing conversion");
-        // TODO: Most likely this will eventually replace the config up top
-        // but for development purposes it's here
-        // until we switch to Octopus, make sure it matches your local instance.
-        const netConnectionConfig: NetConnectionParams = {
-            serverIp: "0.0.0.0",
-            serverPort: 8765,
-            useOctopus: true,
-            secureConnection: false,
-        };
         // check if a controller exists and has the right configuration
         // create/configure as needed and put in state
         let controller = getSimulariumController(getState());
         if (!controller) {
             controller = new SimulariumController({
-                netConnectionSettings: netConnectionConfig,
+                netConnectionSettings: octopusConnectionConfig,
             });
             dispatch(setSimulariumController(controller));
         } else if (!controller.remoteWebsocketClient) {
-            controller.configureNetwork(netConnectionConfig);
+            controller.configureNetwork(octopusConnectionConfig);
         }
         // check the server health
         // Currently sending 5 checks, 3 seconds apart, can be adjusted/triggered as needed
@@ -401,7 +399,6 @@ const initializeFileConversionLogic = createLogic({
 
         // recursive function that sends response handlers to viewer with request and timeout ids
         const performHealthCheck = (attempts: number) => {
-            console.log("sending health check");
             if (healthCheckSuccessful) {
                 return; // Stop if a successful response was already received
             }
@@ -421,7 +418,7 @@ const initializeFileConversionLogic = createLogic({
                     );
                     done();
                 }
-            }, netConnectionConfig);
+            }, octopusConnectionConfig);
 
             // timeouts that, if they resolve, send new checks until the max # of attempts is reached
             const timeoutId = setTimeout(() => {
@@ -454,11 +451,6 @@ const initializeFileConversionLogic = createLogic({
 
         // Start the first health check
         performHealthCheck(attempts);
-        // TODO: we can't reset this here because it breaks conversion,
-        // we need to maintain a connection to the local server
-        // to run the conversion.
-        // this will not be relevant once we switch to Octopus
-        // controller.configureNetwork(netConnectionSettings);
     },
     type: INITIALIZE_CONVERSION,
 });
@@ -547,15 +539,6 @@ const convertFileLogic = createLogic({
             fileContents: { fileContents: fileToConvert },
             metaData: { trajectoryTitle: fileName },
         };
-        // TODO: Most likely this will eventually replace the config up top
-        // but for development purposes it's here
-        // until we switch to Octopus, make sure it matches your local instance.
-        const netConnectionConfig: NetConnectionParams = {
-            serverIp: "0.0.0.0",
-            serverPort: 8765,
-            useOctopus: true,
-            secureConnection: false,
-        };
         const controller = getSimulariumController(getState());
         // convert the file
         dispatch(
@@ -565,7 +548,7 @@ const convertFileLogic = createLogic({
         );
         controller
             .convertAndLoadTrajectory(
-                netConnectionConfig,
+                octopusConnectionConfig,
                 fileContents,
                 engineType
             )
