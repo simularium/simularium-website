@@ -12,6 +12,7 @@ import {
     NetworkedSimFile,
     RequestLocalFileAction,
     RequestNetworkFileAction,
+    SetConversionStatusAction,
 } from "../../state/trajectory/types";
 import LoadFileMenu from "../../components/LoadFileMenu";
 import ViewerTitle from "../../components/ViewerTitle";
@@ -37,6 +38,7 @@ interface AppHeaderProps {
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setError: ActionCreator<SetErrorAction>;
     conversionStatus: ConversionStatus;
+    setConversionStatus: ActionCreator<SetConversionStatusAction>;
 }
 
 class AppHeader extends React.Component<AppHeaderProps> {
@@ -50,6 +52,7 @@ class AppHeader extends React.Component<AppHeaderProps> {
             clearSimulariumFile,
             setError,
             conversionStatus,
+            setConversionStatus,
         } = this.props;
         let lastModified = 0;
         let displayName = "";
@@ -84,6 +87,7 @@ class AppHeader extends React.Component<AppHeaderProps> {
                         isBuffering={isBuffering}
                         setError={setError}
                         conversionStatus={conversionStatus}
+                        setConversionStatus={setConversionStatus}
                     />
                     <HelpMenu key="help" />
                     <div className={styles.pipe}>|</div>
@@ -114,6 +118,7 @@ const dispatchToPropsMap = {
     clearSimulariumFile: trajectoryStateBranch.actions.clearSimulariumFile,
     setViewerStatus: viewerStateBranch.actions.setStatus,
     setError: viewerStateBranch.actions.setError,
+    setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(AppHeader);

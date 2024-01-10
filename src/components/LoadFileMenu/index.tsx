@@ -10,9 +10,10 @@ import {
     ConversionStatus,
     RequestLocalFileAction,
     RequestNetworkFileAction,
+    SetConversionStatusAction,
 } from "../../state/trajectory/types";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
-import { IMPORT_PATHNAME, VIEWER_PATHNAME } from "../../routes";
+import { VIEWER_PATHNAME } from "../../routes";
 import FileUploadModal from "../FileUploadModal";
 import { DownArrow } from "../Icons";
 import {
@@ -21,7 +22,10 @@ import {
 } from "../../state/viewer/types";
 
 import styles from "./style.css";
-import { CONVERSION_INACTIVE } from "../../state/trajectory/constants";
+import {
+    CONVERSION_INACTIVE,
+    CONVERSION_NO_SERVER,
+} from "../../state/trajectory/constants";
 
 interface LoadFileMenuProps {
     isBuffering: boolean;
@@ -31,6 +35,7 @@ interface LoadFileMenuProps {
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setError: ActionCreator<SetErrorAction>;
     conversionStatus: ConversionStatus;
+    setConversionStatus: ActionCreator<SetConversionStatusAction>;
 }
 
 const LoadFileMenu = ({
@@ -41,6 +46,7 @@ const LoadFileMenu = ({
     setViewerStatus,
     setError,
     conversionStatus,
+    setConversionStatus,
 }: LoadFileMenuProps): JSX.Element => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const location = useLocation();
@@ -51,6 +57,10 @@ const LoadFileMenu = ({
             history.push(VIEWER_PATHNAME);
         }
         setIsModalVisible(true);
+    };
+
+    const openConversionForm = () => {
+        setConversionStatus({ status: CONVERSION_NO_SERVER });
     };
 
     const onClick = (trajectoryData: TrajectoryDisplayData) => {
@@ -96,12 +106,14 @@ const LoadFileMenu = ({
             key: "file-convert",
             label: (
                 <Link
-                    to={{
-                        pathname: IMPORT_PATHNAME,
-                    }}
+                    onClick={openConversionForm}
+                    to={{ pathname: VIEWER_PATHNAME }}
                 >
                     Import other file type
                 </Link>
+                // <Button type="ghost" onClick={openConversionForm}>
+
+                // </Button>
             ),
         },
     ];
