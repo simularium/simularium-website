@@ -1,17 +1,10 @@
 import * as React from "react";
-import { withRouter, RouteComponentProps } from "react-router-dom";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 import { Layout } from "antd";
 import queryString from "query-string";
 import { SimulariumController, ErrorLevel } from "@aics/simularium-viewer";
 import { find } from "lodash";
-
-import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
-import SideBar from "../../components/SideBar";
-import ResultsPanel from "../ResultsPanel";
-import ModelPanel from "../ModelPanel";
-import ViewerPanel from "../ViewerPanel";
 
 import { State } from "../../state/types";
 import trajectoryStateBranch from "../../state/trajectory";
@@ -55,12 +48,18 @@ import {
     urlCheck,
     getRedirectUrl,
 } from "../../util/userUrlHandling";
+
+import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
+import SideBar from "../../components/SideBar";
+import ResultsPanel from "../ResultsPanel";
+import ModelPanel from "../ModelPanel";
+import ViewerPanel from "../ViewerPanel";
+import ConversionForm from "../ConversionForm";
+
 const { Content } = Layout;
 
 import styles from "./style.css";
-import ConversionForm from "../ConversionForm";
-
-interface AppProps extends RouteComponentProps {
+interface AppProps {
     onSidePanelCollapse: (number: number) => void;
     simulariumFile: LocalSimFile;
     setSimulariumController: ActionCreator<SetSimulariumControllerAction>;
@@ -221,7 +220,7 @@ class App extends React.Component<AppProps, AppState> {
         ) {
             this.conversionCheckInterval = setInterval(() => {
                 initializeConversion();
-            }, 15000); // 15 seconds
+            }, 15000);
         }
     };
 
@@ -307,4 +306,4 @@ const dispatchToPropsMap = {
     initializeConversion: trajectoryStateBranch.actions.initializeConversion,
 };
 
-export default connect(mapStateToProps, dispatchToPropsMap)(withRouter(App));
+export default connect(mapStateToProps, dispatchToPropsMap)(App);

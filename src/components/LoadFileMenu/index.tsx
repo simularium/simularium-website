@@ -111,9 +111,6 @@ const LoadFileMenu = ({
                 >
                     Import other file type
                 </Link>
-                // <Button type="ghost" onClick={openConversionForm}>
-
-                // </Button>
             ),
         },
     ];

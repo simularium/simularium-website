@@ -15,12 +15,14 @@ import {
     ReceiveFileToConvertAction,
     SetConversionEngineAction,
 } from "../../state/trajectory/types";
+import { setConversionStatus } from "../../state/trajectory/actions";
 import { SetErrorAction } from "../../state/viewer/types";
 import {
     AvailableEngines,
     ConversionProcessingData,
     ExtensionMap,
 } from "../../state/trajectory/conversion-data-types";
+import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
 import ConversionServerErrorModal from "../../components/ConversionServerErrorModal";
 import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
 import {
@@ -31,8 +33,6 @@ import customRequest from "./custom-request";
 
 import theme from "../../components/theme/light-theme.css";
 import styles from "./style.css";
-import { setConversionStatus } from "../../state/trajectory/actions";
-import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
@@ -73,19 +73,19 @@ const ConversionForm = ({
 }: ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile>();
     const [engineSelected, setEngineSelected] = useState<boolean>(false);
+    const [isProcessing, setIsProcessing] = useState<boolean>(false);
     const [serverDownModalOpen, setServerIsDownModalOpen] =
         useState<boolean>(false);
     const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(false);
-    const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
     useEffect(() => {
+        // on page load assume server is down until we hear back from it
         setConversionStatus({ status: CONVERSION_NO_SERVER });
         initializeConversion();
     }, []);
 
     useEffect(() => {
-        console.log(conversionStatus);
-        // this should account for the server going down while a conversion is in process
+        // this it to account for the server going down while a conversion is in process
         if (isProcessing && conversionStatus === CONVERSION_NO_SERVER) {
             setIsProcessing(false);
             setServerIsDownModalOpen(true);
@@ -101,8 +101,8 @@ const ConversionForm = ({
         setFileTypeErrorModalOpen(!fileTypeErrorModalOpen);
     };
 
-    const toggleIsProcessing = () => {
-        setIsProcessing(!isProcessing);
+    const cancelProcessing = () => {
+        setIsProcessing(false);
     };
 
     const handleEngineChange = (selectedValue: string) => {
@@ -112,7 +112,6 @@ const ConversionForm = ({
     };
 
     const handleFileSelection = async (file: UploadFile) => {
-        initializeConversion();
         setFileToConvert(file);
     };
 
@@ -137,10 +136,11 @@ const ConversionForm = ({
             fileToConvert &&
             validateFileType(fileToConvert.name)
         ) {
-            initializeConversion();
             if (conversionStatus === CONVERSION_NO_SERVER) {
                 setServerIsDownModalOpen(true);
             } else {
+                // we now use this local state lets us distinguish between arriving on this page normally
+                // and arriving here because the server went down while a conversion was in process
                 setIsProcessing(true);
                 setConversionStatus({ status: CONVERSION_ACTIVE });
                 convertFile();
@@ -166,7 +166,7 @@ const ConversionForm = ({
             {conversionStatus === CONVERSION_ACTIVE && (
                 <ConversionProcessingOverlay
                     fileName={conversionProcessingData.fileName}
-                    cancelProcessing={toggleIsProcessing}
+                    cancelProcessing={cancelProcessing}
                 />
             )}
             <div className={styles.formContent}>
