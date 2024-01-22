@@ -26,11 +26,13 @@ import {
 } from "../../state/viewer/types";
 
 import styles from "./style.css";
+import ShareTrajectoryButton from "../../components/ShareTrajectoryButton";
 import DownloadTrajectoryMenu from "../../components/DownloadTrajectoryMenu";
 
 interface AppHeaderProps {
     simulariumFile: LocalSimFile | NetworkedSimFile;
     isBuffering: boolean;
+    isNetworkedFile: boolean;
     clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
     changeToLocalSimulariumFile: ActionCreator<RequestLocalFileAction>;
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
@@ -49,6 +51,7 @@ class AppHeader extends React.Component<AppHeaderProps> {
             setViewerStatus,
             clearSimulariumFile,
             setError,
+            isNetworkedFile,
             conversionStatus,
         } = this.props;
         let lastModified = 0;
@@ -62,7 +65,12 @@ class AppHeader extends React.Component<AppHeaderProps> {
         return (
             <div className={styles.pageHeader}>
                 <div className={styles.leftLinks}>
-                    <a href="https://allencell.org" title="Allen Cell Explorer">
+                    <a
+                        href="https://allencell.org"
+                        title="Allen Cell Explorer"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         {AicsLogo}
                     </a>
                     <span className={styles.verticalBar}>|</span>
@@ -86,11 +94,17 @@ class AppHeader extends React.Component<AppHeaderProps> {
                         conversionStatus={conversionStatus}
                     />
                     <HelpMenu key="help" />
-                    <div className={styles.pipe}>|</div>
-                    <DownloadTrajectoryMenu
-                        isBuffering={isBuffering}
-                        simulariumFile={simulariumFile}
-                    />
+                    <div className={styles.actionButtons}>
+                        <DownloadTrajectoryMenu
+                            isBuffering={isBuffering}
+                            simulariumFile={simulariumFile}
+                            isNetworkedFile={isNetworkedFile}
+                        />
+                        <ShareTrajectoryButton
+                            simulariumFile={simulariumFile}
+                            isBuffering={isBuffering}
+                        />
+                    </div>
                 </div>
             </div>
         );
@@ -102,6 +116,8 @@ function mapStateToProps(state: State) {
         simulariumFile:
             trajectoryStateBranch.selectors.getSimulariumFile(state),
         isBuffering: viewerStateBranch.selectors.getIsBuffering(state),
+        isNetworkedFile:
+            trajectoryStateBranch.selectors.getIsNetworkedFile(state),
         conversionStatus:
             trajectoryStateBranch.selectors.getConversionStatus(state),
     };

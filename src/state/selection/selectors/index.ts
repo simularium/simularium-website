@@ -1,7 +1,6 @@
 import { createSelector } from "reselect";
 import { reduce } from "lodash";
-import { UIDisplayData } from "@aics/simularium-viewer/type-declarations";
-import { SelectionEntry } from "@aics/simularium-viewer/type-declarations/simularium/SelectionInterface";
+import { SelectionEntry, UIDisplayData } from "@aics/simularium-viewer";
 
 import { getAgentDisplayNamesAndStates } from "../../trajectory/selectors";
 import { VisibilitySelectionMap } from "../types";
@@ -96,7 +95,6 @@ export const getAgentsToHide = createSelector(
                         });
                     }
                 }
-
                 return acc;
             },
             init

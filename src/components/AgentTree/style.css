@@ -1,0 +1,102 @@
+:root {
+    --text-label-margin: 8px;
+}
+
+.container {
+    background-color: var(--dark);
+}
+
+.header-label {
+    margin-left: var(--text-label-margin);
+    max-width: 120px;
+    font-weight: 200;
+}
+
+.container :global(.ant-typography-ellipsis) {
+    color: var(--dark-theme-sidebar-text)
+}
+
+.container :global(.ant-checkbox-inner) {
+    border-color: var(--warm-gray);
+}
+
+.container :global(.ant-checkbox-indeterminate .ant-checkbox-inner::after) {
+    background-color: var(--dark-theme-header-bg);
+    height: 2px;
+}
+
+.check-all-checkbox {
+    width: 100%;
+    margin-left: 88px; /* to line up with the checkboxes below */
+    padding: 10px 0;
+}
+
+.check-all-checkbox :global(.ant-checkbox) {
+    margin-right: var(--text-label-margin);
+}
+
+.no-children-row {
+    margin-left: 32px; /* keeps it in the same position as rows with dropdowns */
+}
+
+.no-children-row :global(.ant-checkbox-wrapper) {
+    width: 30px;
+    height: 40px;
+}
+
+.star-icon::after {
+    content: "\e902";
+    color: var(--dark-theme-sidebar-text);
+}
+
+.container :global(.header-checkbox .ant-checkbox) {
+    top: 3.5px;
+}
+
+.sub-menu {
+    flex-flow: row;
+}
+
+.sub-menu :global(.ant-col-offset-3) {
+    margin-left: 13.4%;
+}
+
+.container .checkbox-column, .container .color-swatch-column  {
+    max-width: 20px;
+}
+
+.color-swatch-column {
+    margin-left: 3px;
+}
+
+.checkbox-column {
+    margin-left: 30px;
+}
+
+.container .agent-names-column {
+    display: flex;
+    flex-direction: column;
+    margin-left: var(--text-label-margin);
+}
+
+.row-label-container {
+    display: inline-block;
+    height: 40px;
+    padding: 2px 0;
+}
+
+/* Need to style these swatches differently than the ones that 
+are laid out in a row. These are the children swatches in the 
+dropdown laid out in a column. */
+.row-label-container :global(.agent-swatch-container) {
+    margin: 4px;
+    padding: 0px;
+}
+
+.agent-name-label {
+    font-weight: 200;
+    vertical-align: text-top;
+    display: inline-block;
+    height: 16px;
+    line-height: 1;
+}

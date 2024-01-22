@@ -6,7 +6,7 @@ import StarCheckbox from "../StarCheckbox";
 import {
     CHECKBOX_TYPE_STAR,
     LEFT_PANEL_TOOLTIP_DELAY,
-    LEFT_PANEL_TOOLTIP_COLOR,
+    TOOLTIP_COLOR,
 } from "../../constants";
 
 interface CheckboxTypeProps extends CheckboxProps {
@@ -49,7 +49,7 @@ const Checkbox = (props: CheckboxTypeProps): JSX.Element => {
             mouseEnterDelay={LEFT_PANEL_TOOLTIP_DELAY}
             // Position tooltip with alignConfig object: https://github.com/yiminghe/dom-align#usage
             align={{ offset: tooltipOffsets[checkboxLevel] }}
-            color={LEFT_PANEL_TOOLTIP_COLOR}
+            color={TOOLTIP_COLOR}
         >
             <AntdCheckbox {...childProps} />
         </Tooltip>

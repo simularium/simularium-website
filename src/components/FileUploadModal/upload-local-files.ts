@@ -13,7 +13,7 @@ import {
 import { LocalSimFile } from "../../state/trajectory/types";
 import { VIEWER_ERROR } from "../../state/viewer/constants";
 import { ViewerError, ViewerStatus } from "../../state/viewer/types";
-import { clearUrlParams } from "../../util";
+import { clearBrowserUrlParams } from "../../util";
 
 let numRequests = 0;
 
@@ -126,7 +126,7 @@ export default async (
         setError({ level, message, htmlData: "" });
         setViewerStatus({ status: VIEWER_ERROR });
         clearSimulariumFile({ newFile: false });
-        clearUrlParams();
+        clearBrowserUrlParams();
         if (rcRequest?.onError) {
             rcRequest.onError(error as UploadRequestError);
         }
