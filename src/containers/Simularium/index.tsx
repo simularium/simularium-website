@@ -221,9 +221,7 @@ class App extends React.Component<AppProps, AppState> {
             <Layout className={styles.container}>
                 <div ref={this.interactiveContent}>
                     {conversionStatus !== CONVERSION_INACTIVE && (
-                        <ConversionForm
-                            simulariumController={simulariumController}
-                        />
+                        <ConversionForm />
                     )}
                     <Layout className={styles.content}>
                         <ViewerOverlayTarget
