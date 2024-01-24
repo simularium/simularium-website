@@ -177,10 +177,6 @@ class App extends React.Component<AppProps, AppState> {
             );
             current.addEventListener("dragleave", this.handleEndDrag, false);
         }
-
-        if (this.props.conversionStatus === CONVERSION_ACTIVE) {
-            this.setupConversionCheckInterval();
-        }
     }
 
     public onPanelCollapse(open: boolean) {
@@ -209,21 +205,6 @@ class App extends React.Component<AppProps, AppState> {
         }
     }
 
-    private setupConversionCheckInterval = () => {
-        const { initializeConversion } = this.props;
-        if (this.conversionCheckInterval) {
-            clearInterval(this.conversionCheckInterval);
-        }
-        if (
-            this.props.conversionStatus === CONVERSION_ACTIVE ||
-            this.props.conversionStatus === CONVERSION_SERVER_LIVE
-        ) {
-            this.conversionCheckInterval = setInterval(() => {
-                initializeConversion();
-            }, 15000);
-        }
-    };
-
     public render(): JSX.Element {
         const {
             simulariumController,
@@ -240,7 +221,9 @@ class App extends React.Component<AppProps, AppState> {
             <Layout className={styles.container}>
                 <div ref={this.interactiveContent}>
                     {conversionStatus !== CONVERSION_INACTIVE && (
-                        <ConversionForm />
+                        <ConversionForm
+                            simulariumController={simulariumController}
+                        />
                     )}
                     <Layout className={styles.content}>
                         <ViewerOverlayTarget
