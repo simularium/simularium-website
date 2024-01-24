@@ -10,17 +10,12 @@
     justify-content: center;
 }
 
-.container h2,
-.container h3 {
-    color: var(--dark);
-}
-
 .title {
     font-weight: 700;
 }
 
 .content {
-    color: var(--dark);
+    color: var(--light-theme-text-primary-color);
     display: flex;
     flex-flow: column;
     align-items: center;
