@@ -3,7 +3,7 @@ import "core-js/es6/promise";
 import "core-js/es6/set";
 
 import React from "react";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Provider, useDispatch, batch } from "react-redux";
 import { Layout } from "antd";
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
@@ -91,6 +91,13 @@ console.log("Welcome to Simularium " + SIMULARIUM_BUILD_ENVIRONMENT + " build");
 console.log("Simularium Website Version " + SIMULARIUM_WEBSITE_VERSION);
 console.log("Simularium Viewer Version " + SIMULARIUM_VIEWER_VERSION);
 
-const renderApp = () => render(<App />, document.getElementById(APP_ID));
+const renderApp = (container: HTMLElement) => {
+    const root = createRoot(container);
+    root.render(<App />);
+};
 
-renderApp();
+const container: HTMLElement | null = document.getElementById(APP_ID);
+
+container !== null
+    ? renderApp(container)
+    : console.log("Could not find container element with id " + APP_ID);
