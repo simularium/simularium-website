@@ -12,6 +12,7 @@ import styles from "./style.css";
 interface SiderProps {
     type: string;
     onCollapse: (open: boolean) => void;
+    children?: React.ReactNode;
 }
 
 interface SiderState {
