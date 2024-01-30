@@ -1,0 +1,34 @@
+.server-error-modal :global(.ant-modal-content) {
+    width: 425px;
+}
+
+.server-error-modal :global(.ant-modal-close-x) {
+    /* specifying here prevents hover behavior */
+    color: var(--light-theme-modal-close-x);
+    font-size: 12px;
+    position: relative;
+    top: -3px;
+}
+
+.server-error-modal  :global(.ant-modal-header) {
+    padding: 12px 24px;
+}
+
+.server-error-modal :global(.ant-modal-title) {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.server-error-modal :global(.ant-modal-body) {
+    padding: 20px 20px 0px;
+}
+
+.server-error-modal .warning-text {
+    color: var(--warning-text-color);
+    padding-bottom: 1px;
+}
+
+.server-error-modal :global(.ant-modal-footer) {
+    background-color: var(--modal-content-bg);
+    padding: 6px 16px 12px;
+}

@@ -1,9 +1,16 @@
+import { ISimulariumFile, SimulariumController } from "@aics/simularium-viewer";
 import {
-    ISimulariumFile,
-    SimulariumController,
-} from "@aics/simularium-viewer/type-declarations";
-import { AvailableEngines, Template, TemplateMap } from "./conversion-data-types";
-
+    AvailableEngines,
+    Template,
+    TemplateMap,
+} from "./conversion-data-types";
+import {
+    CONVERSION_NO_SERVER,
+    CONVERSION_SERVER_LIVE,
+    CONVERSION_ACTIVE,
+    CONVERSION_COMPLETE,
+    CONVERSION_INACTIVE,
+} from "./constants";
 export interface TrajectoryStateBranch {
     [key: string]: any;
 }
@@ -48,7 +55,7 @@ export interface LoadViaUrlAction {
     fileId?: string;
 }
 
-export interface ConvertFileAction {
+export interface InitializeConversionAction {
     type: string;
 }
 
@@ -71,6 +78,11 @@ export interface SetConversionTemplateData {
     type: string;
 }
 
+export interface SetConversionStatusAction {
+    payload: { status: ConversionStatus };
+    type: string;
+}
+
 export interface LocalSimFile {
     name: string;
     data: ISimulariumFile;
@@ -84,6 +96,7 @@ export interface NetworkedSimFile {
 }
 export const isLocalFileInterface = (file: any): file is LocalSimFile =>
     !!file.lastModified;
+
 export const isNetworkSimFileInterface = (
     file: any
 ): file is NetworkedSimFile => !!file.title;
@@ -92,3 +105,18 @@ export interface TimeUnits {
     magnitude: number;
     name: string;
 }
+
+export interface SetUrlParamsAction {
+    type: string;
+}
+
+export interface HealthCheckTimeout {
+    [requestId: string]: NodeJS.Timeout;
+}
+
+export type ConversionStatus =
+    | typeof CONVERSION_INACTIVE
+    | typeof CONVERSION_NO_SERVER
+    | typeof CONVERSION_SERVER_LIVE
+    | typeof CONVERSION_ACTIVE
+    | typeof CONVERSION_COMPLETE;

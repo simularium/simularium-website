@@ -1,26 +1,30 @@
 import { AxiosResponse } from "axios";
 import { batch } from "react-redux";
+import { AnyAction } from "redux";
 import { createLogic } from "redux-logic";
 import { ArgumentAction } from "redux-logic/definitions/action";
 import queryString from "query-string";
+import { map, reduce } from "lodash";
+import { v4 as uuidv4 } from "uuid";
 import {
     ErrorLevel,
     FrontEndError,
+    NetConnectionParams,
+    SimulariumController,
     loadSimulariumFile,
 } from "@aics/simularium-viewer";
-import { map, reduce } from "lodash";
 
 import {
     ENGINE_TO_TEMPLATE_MAP,
     URL_PARAM_KEY_FILE_NAME,
+    URL_PARAM_KEY_TIME,
 } from "../../constants";
-import { clearUrlParams } from "../../util";
+import { clearBrowserUrlParams } from "../../util";
 import { getUserTrajectoryUrl } from "../../util/userUrlHandling";
 import {
     VIEWER_LOADING,
     VIEWER_EMPTY,
     VIEWER_ERROR,
-    VIEWER_IMPORTING,
 } from "../viewer/constants";
 import {
     changeTime,
@@ -33,13 +37,14 @@ import { setStatus, setIsPlaying, setError } from "../viewer/actions";
 import { ReduxLogicDeps } from "../types";
 import { batchActions } from "../util";
 
-import { getSimulariumFile } from "./selectors";
+import { getConversionStatus, getSimulariumFile } from "./selectors";
 import {
     changeToLocalSimulariumFile,
     receiveTrajectory,
     receiveSimulariumFile,
     requestCachedPlotData,
     clearSimulariumFile,
+    setConversionStatus,
 } from "./actions";
 import {
     LOAD_LOCAL_FILE_IN_VIEWER,
@@ -47,11 +52,15 @@ import {
     REQUEST_PLOT_DATA,
     CLEAR_SIMULARIUM_FILE,
     LOAD_FILE_VIA_URL,
-    CONVERT_FILE,
+    SET_URL_PARAMS,
+    INITIALIZE_CONVERSION,
     SET_CONVERSION_ENGINE,
     SET_CONVERSION_TEMPLATE,
+    CONVERSION_NO_SERVER,
+    CONVERSION_SERVER_LIVE,
+    CONVERSION_INACTIVE,
 } from "./constants";
-import { ReceiveAction, LocalSimFile } from "./types";
+import { ReceiveAction, LocalSimFile, HealthCheckTimeout } from "./types";
 import { initialState } from "./reducer";
 import {
     TemplateMap,
@@ -146,7 +155,7 @@ const handleFileLoadError = (
     });
 
     if (error.level === ErrorLevel.ERROR) {
-        clearUrlParams();
+        clearBrowserUrlParams();
     }
 };
 
@@ -338,23 +347,134 @@ const loadFileViaUrl = createLogic({
                     );
                     dispatch(clearSimulariumFile({ newFile: false }));
                 });
-                clearUrlParams();
+                clearBrowserUrlParams();
                 done();
             });
     },
     type: LOAD_FILE_VIA_URL,
 });
 
-const fileConversionLogic = createLogic({
-    process(deps: ReduxLogicDeps, dispatch, done) {
-        dispatch(
-            setStatus({
-                status: VIEWER_IMPORTING,
-            })
-        );
-        done();
+const setTrajectoryStateFromUrlParams = createLogic({
+    process(deps: ReduxLogicDeps) {
+        const { getState } = deps;
+        const currentState = getState();
+
+        const simulariumController = getSimulariumController(currentState);
+
+        const parsed = queryString.parse(location.search);
+        const DEFAULT_TIME = 0;
+
+        if (parsed[URL_PARAM_KEY_TIME]) {
+            const time = Number(parsed[URL_PARAM_KEY_TIME]);
+            simulariumController.gotoTime(time);
+        } else {
+            // currently this won't be called because URL_PARAM_KEY_TIME
+            // is the only param that can get you into this logic
+            // but if we are setting camera position, we will want to
+            // make sure the time also gets set.
+            simulariumController.gotoTime(DEFAULT_TIME);
+        }
     },
-    type: CONVERT_FILE,
+    type: SET_URL_PARAMS,
+});
+
+// configures the controller for file conversion and sends server health checks
+const initializeFileConversionLogic = createLogic({
+    process(
+        deps: ReduxLogicDeps,
+        dispatch: <T extends AnyAction>(action: T) => T,
+        done
+    ) {
+        const { getState } = deps;
+
+        // TODO: Most likely this will eventually replace the config up top
+        // but for development purposes it's here
+        // until we switch to Octopus, make sure it matches your local instance.
+        const netConnectionConfig: NetConnectionParams = {
+            serverIp: "0.0.0.0",
+            serverPort: 8765,
+            useOctopus: true,
+            secureConnection: false,
+        };
+        // check if a controller exists and has the right configuration
+        // create/configure as needed and put in state
+        let controller = getSimulariumController(getState());
+        if (!controller) {
+            controller = new SimulariumController({
+                netConnectionSettings: netConnectionConfig,
+            });
+            dispatch(setSimulariumController(controller));
+        } else if (!controller.remoteWebsocketClient) {
+            controller.configureNetwork(netConnectionConfig);
+        }
+        // check the server health
+        // Currently sending 5 checks, 3 seconds apart, can be adjusted/triggered as needed
+        // If any come back true we assume we're good for now, this timing is arbitrary
+        let healthCheckSuccessful = false;
+        const healthCheckTimeouts: HealthCheckTimeout = {};
+        const attempts = 0;
+
+        // recursive function that sends response handlers to viewer with request and timeout ids
+        const performHealthCheck = (attempts: number) => {
+            if (healthCheckSuccessful) {
+                return; // Stop if a successful response was already received
+            }
+            const MAX_ATTEMPTS = 5;
+            const requestId: string = uuidv4();
+
+            controller.checkServerHealth(() => {
+                // callback/handler for viewer function
+                // only handle if we're still on the conversion page
+                if (getConversionStatus(getState()) !== CONVERSION_INACTIVE) {
+                    healthCheckSuccessful = true;
+                    clearTimeout(healthCheckTimeouts[requestId]);
+                    dispatch(
+                        setConversionStatus({
+                            status: CONVERSION_SERVER_LIVE,
+                        })
+                    );
+                    done();
+                }
+            }, netConnectionConfig);
+
+            // timeouts that, if they resolve, send new checks until the max # of attempts is reached
+            const timeoutId = setTimeout(() => {
+                if (!healthCheckSuccessful) {
+                    // in case another check just resolved
+                    clearTimeout(healthCheckTimeouts[requestId]);
+                    // stop process if user has navigated away from conversion page
+                    if (
+                        getConversionStatus(getState()) !== CONVERSION_INACTIVE
+                    ) {
+                        if (attempts < MAX_ATTEMPTS) {
+                            // retry the health check with incremented count
+                            attempts++;
+                            performHealthCheck(attempts);
+                        } else {
+                            // if we've done the max # of attempts, set conversionStatus
+                            dispatch(
+                                setConversionStatus({
+                                    status: CONVERSION_NO_SERVER,
+                                })
+                            );
+                            done();
+                        }
+                    }
+                }
+            }, 3000);
+
+            // store the time out id
+            healthCheckTimeouts[requestId] = timeoutId;
+        };
+
+        // Start the first health check
+        performHealthCheck(attempts);
+        // restore network settings to default so that things work
+        // when we navigate away from conversion page
+        // TODO: this will not be relevant once we switch to Octopus
+        controller.configureNetwork(netConnectionSettings);
+    },
+    type: INITIALIZE_CONVERSION,
 });
 
 const setConversionEngineLogic = createLogic({
@@ -433,6 +553,7 @@ export default [
     loadNetworkedFile,
     resetSimulariumFileState,
     loadFileViaUrl,
-    fileConversionLogic,
+    setTrajectoryStateFromUrlParams,
     setConversionEngineLogic,
+    initializeFileConversionLogic,
 ];

@@ -1,3 +1,5 @@
+import { SimulariumController } from "@aics/simularium-viewer";
+
 import {
     RECEIVE_TRAJECTORY,
     REQUEST_TRAJECTORY,
@@ -9,9 +11,11 @@ import {
     REQUEST_PLOT_DATA,
     CLEAR_SIMULARIUM_FILE,
     LOAD_FILE_VIA_URL,
-    CONVERT_FILE,
+    SET_URL_PARAMS,
+    INITIALIZE_CONVERSION,
     SET_CONVERSION_ENGINE,
     RECEIVE_FILE_TO_CONVERT,
+    SET_CONVERSION_STATUS,
 } from "./constants";
 import { AvailableEngines } from "./conversion-data-types";
 import {
@@ -25,11 +29,13 @@ import {
     RequestLocalFileAction,
     ClearSimFileDataAction,
     LoadViaUrlAction,
-    ConvertFileAction,
+    SetUrlParamsAction,
+    InitializeConversionAction,
     SetConversionEngineAction,
     ReceiveFileToConvertAction,
+    ConversionStatus,
+    SetConversionStatusAction,
 } from "./types";
-import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
 
 export function receiveTrajectory(
     payload: TrajectoryStateBranch
@@ -126,17 +132,34 @@ export function loadViaUrl(
     };
 }
 
-export function convertFile(): ConvertFileAction {
+export function setUrlParams(): SetUrlParamsAction {
     return {
-        type: CONVERT_FILE,
+        type: SET_URL_PARAMS,
     };
 }
 
-export function receiveFileToConvert(payload: string): ReceiveFileToConvertAction {
+export function setConversionStatus(payload: {
+    status: ConversionStatus;
+}): SetConversionStatusAction {
+    return {
+        payload,
+        type: SET_CONVERSION_STATUS,
+    };
+}
+
+export function initializeConversion(): InitializeConversionAction {
+    return {
+        type: INITIALIZE_CONVERSION,
+    };
+}
+
+export function receiveFileToConvert(
+    payload: string
+): ReceiveFileToConvertAction {
     return {
         type: RECEIVE_FILE_TO_CONVERT,
-        payload: payload
-    }
+        payload: payload,
+    };
 }
 
 export function setConversionEngine(

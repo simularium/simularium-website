@@ -12,6 +12,8 @@ import {
     SET_CONVERSION_TEMPLATE,
     RECEIVE_FILE_TO_CONVERT,
     SET_CONVERSION_ENGINE,
+    SET_CONVERSION_STATUS,
+    CONVERSION_INACTIVE,
 } from "./constants";
 import {
     TrajectoryStateBranch,
@@ -20,6 +22,7 @@ import {
     SetConversionTemplateData,
     ReceiveFileToConvertAction,
     SetConversionEngineAction,
+    SetConversionStatusAction,
 } from "./types";
 
 export const initialState = {
@@ -36,6 +39,7 @@ export const initialState = {
         data: null,
         lastModified: null,
     },
+    conversionStatus: CONVERSION_INACTIVE,
     processingData: {
         engineType: "",
         template: null,
@@ -99,6 +103,17 @@ const actionToConfigMap: TypeToDescriptionMap = {
             },
         }),
     },
+    [SET_CONVERSION_STATUS]: {
+        accepts: (action: AnyAction): action is SetConversionStatusAction =>
+            action.type === SET_CONVERSION_STATUS,
+        perform: (
+            state: TrajectoryStateBranch,
+            action: SetConversionStatusAction
+        ) => ({
+            ...state,
+            conversionStatus: action.payload.status,
+        }),
+    },
     [SET_CONVERSION_ENGINE]: {
         accepts: (action: AnyAction): action is SetConversionEngineAction =>
             action.type === SET_CONVERSION_ENGINE,
@@ -119,13 +134,15 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (
             state: TrajectoryStateBranch,
             action: ReceiveFileToConvertAction
-        ) => ({
-            ...state,
-            processingData: {
-                ...state.processingData,
-                fileToConvert: action.payload,
-            },
-        }),
+        ) => {
+            return {
+                ...state,
+                processingData: {
+                    ...state.processingData,
+                    fileToConvert: action.payload,
+                },
+            };
+        },
     },
 };
 

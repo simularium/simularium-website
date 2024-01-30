@@ -1,25 +1,23 @@
 import React from "react";
 import { Button, Tooltip } from "antd";
-import { ISimulariumFile } from "@aics/simularium-viewer/type-declarations";
+import { ISimulariumFile } from "@aics/simularium-viewer";
 
 import { DATA_BUCKET_URL, TOOLTIP_COLOR } from "../../constants";
-import {
-    NetworkedSimFile,
-    LocalSimFile,
-    isNetworkSimFileInterface,
-} from "../../state/trajectory/types";
+import { NetworkedSimFile, LocalSimFile } from "../../state/trajectory/types";
 import { Download } from "../Icons";
 
 import styles from "./style.css";
 
 interface DownloadTrajectoryMenuProps {
     isBuffering: boolean;
+    isNetworkedFile: boolean;
     simulariumFile: LocalSimFile | NetworkedSimFile;
 }
 
 const DownloadTrajectoryMenu = ({
     isBuffering,
     simulariumFile,
+    isNetworkedFile,
 }: DownloadTrajectoryMenuProps): JSX.Element => {
     const fileIsLoaded = () => !!simulariumFile.name;
 
@@ -27,10 +25,11 @@ const DownloadTrajectoryMenu = ({
         if (!fileIsLoaded()) {
             return "";
         }
-        if (isNetworkSimFileInterface(simulariumFile)) {
+        if (isNetworkedFile) {
             return `${DATA_BUCKET_URL}/trajectory/${simulariumFile.name}`;
         } else {
-            const data: ISimulariumFile = simulariumFile.data;
+            const localFile = simulariumFile as LocalSimFile; // isNetworkedFile checks for this
+            const data: ISimulariumFile = localFile.data;
             const blob = data.getAsBlob();
             return URL.createObjectURL(blob);
         }
@@ -54,22 +53,26 @@ const DownloadTrajectoryMenu = ({
         downloadFile(simulariumFile.name);
     };
 
+    const isDisabled = !fileIsLoaded() || isBuffering;
+    const tooltipOffset = isDisabled ? [25, -30] : [40, -18];
+
     return (
         <div className={styles.container}>
             <Tooltip
                 placement="bottomLeft"
                 title={
-                    simulariumFile.name
-                        ? "Download trajectory"
-                        : "Load a trajectory to perform this action"
+                    isDisabled
+                        ? "Load a model to perform this action"
+                        : "Download trajectory"
                 }
                 color={TOOLTIP_COLOR}
+                align={{ offset: tooltipOffset }}
             >
                 <Button
-                    className={styles.downloadButton}
+                    className={isDisabled ? styles.disabled : undefined}
                     onClick={onClick}
                     type="primary"
-                    disabled={!fileIsLoaded() || isBuffering}
+                    disabled={isDisabled}
                 >
                     Download {Download}
                 </Button>

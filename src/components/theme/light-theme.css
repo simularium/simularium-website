@@ -17,3 +17,14 @@
     color: var(--light-theme-btn-primary-color);
 }
 
+.light-theme :global(.ant-btn-text) {
+    background-color: var(--dark-four);
+    border-color: var(--dark-four);
+    color: var(--white-three);
+}
+
+
+.light-theme :global(.ant-btn-primary):hover {
+    background-color: var(--light-theme-btn-primary-hover-bg);
+    color: var(--light-theme-btn-primary-hover-color);
+}

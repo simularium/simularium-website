@@ -8,7 +8,7 @@ const CheckboxGroup = AntdCheckbox.Group;
 import Checkbox from "../Checkbox";
 import { CHECKBOX_TYPE_STAR } from "../../constants";
 
-interface CheckboxTreeSubmenuProps {
+interface AgentTreeSubmenuProps {
     checkedAgents: string[];
     options: CheckboxOptionType[];
     onChange: (values: CheckboxValueType[]) => void;
@@ -16,12 +16,12 @@ interface CheckboxTreeSubmenuProps {
 }
 import styles from "./style.css";
 
-const CheckboxTreeSubmenu = ({
+const AgentTreeSubmenu = ({
     checkedAgents,
     options,
     onChange,
     checkboxType,
-}: CheckboxTreeSubmenuProps): JSX.Element => {
+}: AgentTreeSubmenuProps): JSX.Element => {
     const onCheckboxChange = ({ target }: CheckboxChangeEvent) => {
         const allowedValues = map(options, "value");
         const optionIndex = checkedAgents.indexOf(target.value);
@@ -60,4 +60,4 @@ const CheckboxTreeSubmenu = ({
     );
 };
 
-export default CheckboxTreeSubmenu;
+export default AgentTreeSubmenu;

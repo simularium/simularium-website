@@ -7,7 +7,7 @@ import TRAJECTORIES from "../../constants/networked-trajectories";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import {
     ClearSimFileDataAction,
-    ConvertFileAction,
+    ConversionStatus,
     RequestLocalFileAction,
     RequestNetworkFileAction,
 } from "../../state/trajectory/types";
@@ -18,11 +18,10 @@ import { DownArrow } from "../Icons";
 import {
     SetErrorAction,
     SetViewerStatusAction,
-    ViewerStatus,
 } from "../../state/viewer/types";
 
 import styles from "./style.css";
-import { VIEWER_IMPORTING } from "../../state/viewer/constants";
+import { CONVERSION_INACTIVE } from "../../state/trajectory/constants";
 
 interface LoadFileMenuProps {
     isBuffering: boolean;
@@ -31,8 +30,7 @@ interface LoadFileMenuProps {
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setError: ActionCreator<SetErrorAction>;
-    initializeFileConversionUI: ActionCreator<ConvertFileAction>;
-    viewerStatus: ViewerStatus;
+    conversionStatus: ConversionStatus;
 }
 
 const LoadFileMenu = ({
@@ -42,8 +40,7 @@ const LoadFileMenu = ({
     selectFile,
     setViewerStatus,
     setError,
-    viewerStatus,
-    initializeFileConversionUI: initializeFileConversionUI,
+    conversionStatus,
 }: LoadFileMenuProps): JSX.Element => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const location = useLocation();
@@ -102,9 +99,6 @@ const LoadFileMenu = ({
                     to={{
                         pathname: IMPORT_PATHNAME,
                     }}
-                    onClick={() => {
-                        initializeFileConversionUI();
-                    }}
                 >
                     Import other file type
                 </Link>
@@ -117,7 +111,9 @@ const LoadFileMenu = ({
             <Dropdown
                 menu={{ items, theme: "dark", className: styles.menu }}
                 placement="bottomRight"
-                disabled={isBuffering || viewerStatus === VIEWER_IMPORTING}
+                disabled={
+                    isBuffering || conversionStatus !== CONVERSION_INACTIVE
+                }
             >
                 <Button
                     className="ant-dropdown-link"

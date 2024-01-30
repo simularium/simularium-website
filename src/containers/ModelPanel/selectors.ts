@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 import { isEmpty } from "lodash";
 
-import { AgentDisplayNode } from "../../components/CheckBoxTree";
+import { AgentDisplayNode } from "../../components/AgentTree";
 import { getUiDisplayDataTree } from "../../state/trajectory/selectors";
 import { getAgentVisibilityMap } from "../../state/selection/selectors";
 import { VisibilitySelectionMap } from "../../state/selection/types";
@@ -56,9 +56,7 @@ export const getIsSharedCheckboxIndeterminate = createSelector(
             if (visibleStates === undefined) {
                 // This should theoretically never happen
                 console.warn(
-                    `Skipping agent ${
-                        agent.key
-                    } in getIsSharedCheckboxIndeterminate because it doesn't exist in agentVisibilityMap`
+                    `Skipping agent ${agent.key} in getIsSharedCheckboxIndeterminate because it doesn't exist in agentVisibilityMap`
                 );
                 continue;
             }

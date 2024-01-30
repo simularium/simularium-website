@@ -16,18 +16,23 @@ import { State } from "../../state/types";
 import {
     getAgentVisibilityMap,
     getAgentHighlightMap,
+    getRecentColors,
 } from "../../state/selection/selectors";
 import {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
     setAgentsVisible,
+    setColorChange,
+    setRecentColors,
 } from "../../state/selection/actions";
 import {
     ChangeAgentsRenderingStateAction,
+    SetColorChangeAction,
     SetVisibleAction,
     VisibilitySelectionMap,
+    SetRecentColorsAction,
 } from "../../state/selection/types";
-import CheckBoxTree, { AgentDisplayNode } from "../../components/CheckBoxTree";
+import CheckBoxTree, { AgentDisplayNode } from "../../components/AgentTree";
 import {
     getSelectAllVisibilityMap,
     getSelectNoneVisibilityMap,
@@ -36,7 +41,6 @@ import {
 import {
     VIEWER_EMPTY,
     VIEWER_ERROR,
-    VIEWER_IMPORTING,
     VIEWER_LOADING,
     VIEWER_SUCCESS,
 } from "../../state/viewer/constants";
@@ -61,6 +65,9 @@ interface ModelPanelProps {
     viewerStatus: ViewerStatus;
     isNetworkedFile: boolean;
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
+    recentColors: string[];
+    setColorChange: ActionCreator<SetColorChangeAction>;
+    setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 
 class ModelPanel extends React.Component<ModelPanelProps> {
@@ -78,6 +85,9 @@ class ModelPanel extends React.Component<ModelPanelProps> {
             viewerStatus,
             isNetworkedFile,
             changeToNetworkedFile: loadNetworkFile,
+            recentColors,
+            setColorChange,
+            setRecentColors,
         } = this.props;
         const checkboxTree = (
             <CheckBoxTree
@@ -90,13 +100,15 @@ class ModelPanel extends React.Component<ModelPanelProps> {
                 payloadForSelectAll={payloadForSelectAll}
                 payloadForSelectNone={payloadForSelectNone}
                 isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
+                recentColors={recentColors}
+                setColorChange={setColorChange}
+                setRecentColors={setRecentColors}
             />
         );
         const contentMap = {
             [VIEWER_SUCCESS]: checkboxTree,
             [VIEWER_EMPTY]: <NoTrajectoriesText selectFile={loadNetworkFile} />,
             [VIEWER_LOADING]: <div />,
-            [VIEWER_IMPORTING]: <div />,
             [VIEWER_ERROR]: isNetworkedFile ? (
                 <NetworkFileFailedText />
             ) : (
@@ -130,6 +142,7 @@ function mapStateToProps(state: State) {
         isSharedCheckboxIndeterminate: getIsSharedCheckboxIndeterminate(state),
         viewerStatus: getStatus(state),
         isNetworkedFile: getIsNetworkedFile(state),
+        recentColors: getRecentColors(state),
     };
 }
 
@@ -139,6 +152,8 @@ const dispatchToPropsMap = {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
     setAgentsVisible,
+    setColorChange,
+    setRecentColors,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ModelPanel);

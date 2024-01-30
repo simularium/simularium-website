@@ -1,4 +1,4 @@
-import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
+import { SimulariumController } from "@aics/simularium-viewer";
 
 export interface SimulariumStateBranch {
     [key: string]: any;

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import {
     ClearSimFileDataAction,
-    ConvertFileAction,
+    ConversionStatus,
     isLocalFileInterface,
     isNetworkSimFileInterface,
     LocalSimFile,
@@ -23,22 +23,22 @@ import viewerStateBranch from "../../state/viewer";
 import {
     SetViewerStatusAction,
     SetErrorAction,
-    ViewerStatus,
 } from "../../state/viewer/types";
 
 import styles from "./style.css";
+import ShareTrajectoryButton from "../../components/ShareTrajectoryButton";
 import DownloadTrajectoryMenu from "../../components/DownloadTrajectoryMenu";
 
 interface AppHeaderProps {
     simulariumFile: LocalSimFile | NetworkedSimFile;
     isBuffering: boolean;
+    isNetworkedFile: boolean;
     clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
     changeToLocalSimulariumFile: ActionCreator<RequestLocalFileAction>;
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setError: ActionCreator<SetErrorAction>;
-    convertFile: ActionCreator<ConvertFileAction>;
-    viewerStatus: ViewerStatus;
+    conversionStatus: ConversionStatus;
 }
 
 class AppHeader extends React.Component<AppHeaderProps> {
@@ -48,11 +48,11 @@ class AppHeader extends React.Component<AppHeaderProps> {
             isBuffering,
             changeToLocalSimulariumFile: loadLocalFile,
             changeToNetworkedFile: loadNetworkFile,
-            convertFile,
             setViewerStatus,
             clearSimulariumFile,
             setError,
-            viewerStatus,
+            isNetworkedFile,
+            conversionStatus,
         } = this.props;
         let lastModified = 0;
         let displayName = "";
@@ -65,7 +65,12 @@ class AppHeader extends React.Component<AppHeaderProps> {
         return (
             <div className={styles.pageHeader}>
                 <div className={styles.leftLinks}>
-                    <a href="https://allencell.org" title="Allen Cell Explorer">
+                    <a
+                        href="https://allencell.org"
+                        title="Allen Cell Explorer"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         {AicsLogo}
                     </a>
                     <span className={styles.verticalBar}>|</span>
@@ -86,15 +91,20 @@ class AppHeader extends React.Component<AppHeaderProps> {
                         setViewerStatus={setViewerStatus}
                         isBuffering={isBuffering}
                         setError={setError}
-                        initializeFileConversionUI={convertFile}
-                        viewerStatus={viewerStatus}
+                        conversionStatus={conversionStatus}
                     />
                     <HelpMenu key="help" />
-                    <div className={styles.pipe}>|</div>
-                    <DownloadTrajectoryMenu
-                        isBuffering={isBuffering}
-                        simulariumFile={simulariumFile}
-                    />
+                    <div className={styles.actionButtons}>
+                        <DownloadTrajectoryMenu
+                            isBuffering={isBuffering}
+                            simulariumFile={simulariumFile}
+                            isNetworkedFile={isNetworkedFile}
+                        />
+                        <ShareTrajectoryButton
+                            simulariumFile={simulariumFile}
+                            isBuffering={isBuffering}
+                        />
+                    </div>
                 </div>
             </div>
         );
@@ -106,7 +116,10 @@ function mapStateToProps(state: State) {
         simulariumFile:
             trajectoryStateBranch.selectors.getSimulariumFile(state),
         isBuffering: viewerStateBranch.selectors.getIsBuffering(state),
-        viewerStatus: viewerStateBranch.selectors.getStatus(state),
+        isNetworkedFile:
+            trajectoryStateBranch.selectors.getIsNetworkedFile(state),
+        conversionStatus:
+            trajectoryStateBranch.selectors.getConversionStatus(state),
     };
 }
 
@@ -117,7 +130,6 @@ const dispatchToPropsMap = {
     clearSimulariumFile: trajectoryStateBranch.actions.clearSimulariumFile,
     setViewerStatus: viewerStateBranch.actions.setStatus,
     setError: viewerStateBranch.actions.setError,
-    convertFile: trajectoryStateBranch.actions.convertFile,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(AppHeader);

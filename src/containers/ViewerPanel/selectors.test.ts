@@ -17,7 +17,7 @@ const mockDisplayData = [
 
 describe("ViewerPanel selectors", () => {
     describe("getSelectionStateInfoForViewer", () => {
-        it("gathers the highlighted agents and hidden agents", () => {
+        it("gathers the highlighted agents, hidden agents, and color changes", () => {
             /**
              * Only need to test the shape of the data, the selectors that
              * generate the contents of the two lists are tested in state
@@ -26,6 +26,7 @@ describe("ViewerPanel selectors", () => {
             expect(result).toEqual({
                 hiddenAgents: [],
                 highlightedAgents: [],
+                colorChange: null,
             });
         });
     });
