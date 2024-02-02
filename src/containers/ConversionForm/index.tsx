@@ -109,7 +109,7 @@ const ConversionForm = ({
     const handleRemoveFile = () => {
         setFileToConvert(null);
     };
-    
+
     const handleFileSelection = async (file: UploadFile) => {
         setFileToConvert(file);
     };
@@ -213,12 +213,12 @@ const ConversionForm = ({
                         <Button type="default">Select file</Button>
                     </Upload>
                     {fileToConvert && (
-                        <div
+                        <button
                             className={styles.removeFileIcon}
                             onClick={handleRemoveFile}
                         >
                             {CancelIcon}
-                        </div>
+                        </button>
                     )}
                 </div>
                 <Divider orientation="right" orientationMargin={400}>

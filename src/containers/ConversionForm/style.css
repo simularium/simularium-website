@@ -65,10 +65,14 @@
     display: none;
 }
 
-.remove-file-icon {
+.upload-container .remove-file-icon {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
     cursor: pointer;
-    font-size: 18px;
-    padding-top: 4px;
+    min-width: 16px;
+    padding: 1px 0px 0px;
 }
 
 .remove-file-icon svg {
