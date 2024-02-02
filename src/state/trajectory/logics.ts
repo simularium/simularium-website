@@ -79,13 +79,7 @@ import {
     Template,
 } from "./conversion-data-types";
 
-const netConnectionSettings = {
-    serverIp: process.env.BACKEND_SERVER_IP,
-    serverPort: 9002,
-};
-
-// TODO this will be removed/integrated when we switch to Octopus
-const octopusConnectionConfig: NetConnectionParams = {
+const netConnectionSettings: NetConnectionParams = {
     serverIp: "0.0.0.0",
     serverPort: 8765,
     useOctopus: true,
@@ -201,7 +195,7 @@ const loadNetworkedFile = createLogic({
                 dispatch(setSimulariumController(simulariumController));
             }
         }
-        if (!simulariumController.netConnection) {
+        if (!simulariumController.remoteWebsocketClient) {
             simulariumController.configureNetwork(netConnectionSettings);
         }
 
@@ -384,11 +378,11 @@ const initializeFileConversionLogic = createLogic({
         let controller = getSimulariumController(getState());
         if (!controller) {
             controller = new SimulariumController({
-                netConnectionSettings: octopusConnectionConfig,
+                netConnectionSettings: netConnectionSettings,
             });
             dispatch(setSimulariumController(controller));
         } else if (!controller.remoteWebsocketClient) {
-            controller.configureNetwork(octopusConnectionConfig);
+            controller.configureNetwork(netConnectionSettings);
         }
         // check the server health
         // Currently sending 5 checks, 3 seconds apart, can be adjusted/triggered as needed
@@ -418,7 +412,7 @@ const initializeFileConversionLogic = createLogic({
                     );
                     done();
                 }
-            }, octopusConnectionConfig);
+            }, netConnectionSettings);
 
             // timeouts that, if they resolve, send new checks until the max # of attempts is reached
             const timeoutId = setTimeout(() => {
@@ -528,7 +522,7 @@ const setConversionEngineLogic = createLogic({
 const convertFileLogic = createLogic({
     process(
         deps: ReduxLogicDeps,
-        dispatch: (action: SetConversionStatusAction) => void,
+        dispatch: <T extends AnyAction>(action: T) => T,
         done
     ) {
         const { getState } = deps;
@@ -539,6 +533,11 @@ const convertFileLogic = createLogic({
             fileContents: { fileContents: fileToConvert },
             metaData: { trajectoryTitle: fileName },
         };
+        dispatch(
+            clearSimulariumFile({
+                newFile: true,
+            })
+        );
         const controller = getSimulariumController(getState());
         // convert the file
         dispatch(
@@ -548,7 +547,7 @@ const convertFileLogic = createLogic({
         );
         controller
             .convertAndLoadTrajectory(
-                octopusConnectionConfig,
+                netConnectionSettings,
                 fileContents,
                 engineType
             )
