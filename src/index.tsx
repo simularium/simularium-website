@@ -35,7 +35,6 @@ function useLocationChange() {
     React.useEffect(() => {
         if (location.pathname === VIEWER_PATHNAME) {
             batch(() => {
-                dispatch(setIsPlaying(false));
                 dispatch(setStatus({ status: VIEWER_EMPTY }));
             });
         } else {
