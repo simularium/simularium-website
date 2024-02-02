@@ -24,7 +24,7 @@ import {
 import ConversionServerErrorModal from "../../components/ConversionServerErrorModal";
 import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
 import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
-import { ZoomIn as CancelIcon, DownCaret } from "../../components/Icons";
+import { Cancel, DownCaret } from "../../components/Icons";
 import { CONVERSION_NO_SERVER } from "../../state/trajectory/constants";
 import customRequest from "./custom-request";
 
@@ -217,7 +217,7 @@ const ConversionForm = ({
                             className={styles.removeFileIcon}
                             onClick={handleRemoveFile}
                         >
-                            {CancelIcon}
+                            {Cancel}
                         </button>
                     )}
                 </div>

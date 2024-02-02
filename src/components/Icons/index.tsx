@@ -35,6 +35,7 @@ export const CaretRight = <CaretRightOutlined />;
 export const LeftArrow = <ArrowLeftOutlined />;
 export const Reset = <HomeOutlined />;
 export const ZoomIn = <PlusOutlined />;
+export const Cancel = <PlusOutlined />;
 export const ZoomOut = <MinusOutlined />;
 export const Share = <ShareAltOutlined />;
 export const Warn = <WarningOutlined />;
@@ -84,4 +85,5 @@ export default {
     PerspectiveCamera,
     UpRightArrow,
     Exclamation,
+    Cancel,
 };
