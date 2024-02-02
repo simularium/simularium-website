@@ -48,6 +48,8 @@ export const StepForward = <img src={ClockwiseArrow} />;
 export const StepBack = <img src={CounterClockwiseArrow} />;
 export const BetaTag = <img src={Beta} style={{ width: "42px" }} />;
 export const UpRightArrow = <ArrowLeftOutlined rotate={135} />;
+export const OrthographicCamera = <img src={Orthographic} />;
+export const PerspectiveCamera = <img src={Perspective} />;
 
 export default {
     StepBack,
