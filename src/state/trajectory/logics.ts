@@ -76,11 +76,13 @@ import {
     Template,
 } from "./conversion-data-types";
 
+// TODO: this will need to be configured to point to the ECS instance once this is updated,
+// currently this requires running Octopus locally.
 const netConnectionSettings: NetConnectionParams = {
     serverIp: "0.0.0.0",
     serverPort: 8765,
     useOctopus: true,
-    secureConnection: false,
+    secureConnection: true,
 };
 
 const resetSimulariumFileState = createLogic({
