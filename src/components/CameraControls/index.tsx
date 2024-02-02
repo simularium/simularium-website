@@ -10,12 +10,21 @@ import styles from "./style.css";
 
 const PAN = "pan";
 const ROTATE = "rotate";
+const ORTHOGRAPHIC = "o";
+const PERSPECTIVE = "p";
 const CAMERA_MODE_MODIFIER_KEYS = ["Meta", "Shift"];
 const ZOOM_IN_HK = "ArrowUp";
 const ZOOM_OUT_HK = "ArrowDown";
 const RESET_HK = "h";
 const FOCUS_HK = "f";
-const HOT_KEYS = [ZOOM_IN_HK, ZOOM_OUT_HK, RESET_HK, FOCUS_HK];
+const HOT_KEYS = [
+    ZOOM_IN_HK,
+    ZOOM_OUT_HK,
+    RESET_HK,
+    FOCUS_HK,
+    ORTHOGRAPHIC,
+    PERSPECTIVE,
+];
 
 interface CameraControlsProps {
     resetCamera: () => void;
@@ -23,6 +32,7 @@ interface CameraControlsProps {
     zoomOut: () => void;
     setPanningMode: (value: boolean) => void;
     setFocusMode: (value: boolean) => void;
+    setCameraType: (value: boolean) => void;
 }
 
 const CameraControls = ({
@@ -31,9 +41,12 @@ const CameraControls = ({
     zoomOut,
     setPanningMode,
     setFocusMode,
+    setCameraType,
 }: CameraControlsProps): JSX.Element => {
     const [isFocused, saveFocusMode] = useState(true);
     const [mode, setMode] = useState(ROTATE);
+    const [cameraProjectionType, setCameraProjectionType] =
+        useState(PERSPECTIVE);
     const [keyPressed, setKeyPressed] = useState("");
     const lastKeyPressed = useRef("");
 
@@ -92,6 +105,10 @@ const CameraControls = ({
     }, [mode]);
 
     useEffect(() => {
+        setCameraType(cameraProjectionType === ORTHOGRAPHIC);
+    }, [cameraProjectionType]);
+
+    useEffect(() => {
         if (
             (isModifierKey(keyPressed) && !lastKeyPressed.current) ||
             (isModifierKey(lastKeyPressed.current) && !keyPressed)
@@ -113,6 +130,12 @@ const CameraControls = ({
             case FOCUS_HK:
                 saveFocusMode(!isFocused);
                 break;
+            case ORTHOGRAPHIC:
+                setCameraProjectionType(ORTHOGRAPHIC);
+                break;
+            case PERSPECTIVE:
+                setCameraProjectionType(PERSPECTIVE);
+                break;
             default:
                 break;
         }
@@ -120,6 +143,30 @@ const CameraControls = ({
     }, [keyPressed]);
     return (
         <div className={styles.container}>
+            <div className={styles.zoomButtons}>
+                <Tooltip
+                    placement="left"
+                    title="Zoom in ( &uarr; )"
+                    color={TOOLTIP_COLOR}
+                >
+                    <Button
+                        className={styles.btn}
+                        icon={Icons.ZoomIn}
+                        onClick={zoomIn}
+                    />
+                </Tooltip>
+                <Tooltip
+                    placement="left"
+                    title="Zoom out ( &darr; )"
+                    color={TOOLTIP_COLOR}
+                >
+                    <Button
+                        className={styles.btn}
+                        icon={Icons.ZoomOut}
+                        onClick={zoomOut}
+                    />
+                </Tooltip>
+            </div>
             <div className={styles.moveButtons}>
                 <div className={styles.radioGroup}>
                     <Tooltip
@@ -169,56 +216,70 @@ const CameraControls = ({
                         </Button>
                     </Tooltip>
                 </div>
-                <Tooltip
-                    placement="left"
-                    title="Focus (F)"
-                    color={TOOLTIP_COLOR}
-                >
-                    <Button
-                        size="small"
-                        className={classNames([
-                            { [styles.active]: isFocused },
-                            styles.radioBtn,
-                        ])}
-                        onClick={() => saveFocusMode(!isFocused)}
+            </div>
+            <div className={styles.moveButtons}>
+                <div className={styles.radioGroup}>
+                    <Tooltip
+                        placement="left"
+                        title={"Orthographic Camera"}
+                        color={TOOLTIP_COLOR}
                     >
-                        <span
+                        {/* Should be radio buttons, but using radio buttons 
+                        detaches keypressed listener after the button is pressed */}
+                        <Button
                             className={classNames([
-                                "icon-moon",
-                                "anticon",
-                                styles.focus,
+                                {
+                                    [styles.active]:
+                                        cameraProjectionType === ORTHOGRAPHIC,
+                                },
+                                styles.radioBtn,
                             ])}
-                        />
-                    </Button>
-                </Tooltip>
+                            onClick={() => {
+                                setCameraProjectionType(ORTHOGRAPHIC);
+                            }}
+                            icon={Icons.OrthographicCamera}
+                        ></Button>
+                    </Tooltip>
+                    <Tooltip
+                        placement="left"
+                        title={"Perspective Camera"}
+                        color={TOOLTIP_COLOR}
+                    >
+                        <Button
+                            className={classNames([
+                                {
+                                    [styles.active]:
+                                        cameraProjectionType === PERSPECTIVE,
+                                },
+                                styles.radioBtn,
+                            ])}
+                            onClick={() => {
+                                setCameraProjectionType(PERSPECTIVE);
+                            }}
+                            icon={Icons.PerspectiveCamera}
+                        ></Button>
+                    </Tooltip>
+                </div>
             </div>
-
-            <div className={styles.zoomButtons}>
-                <Tooltip
-                    placement="left"
-                    title="Zoom in ( &uarr; )"
-                    color={TOOLTIP_COLOR}
+            <Tooltip placement="left" title="Focus (F)" color={TOOLTIP_COLOR}>
+                <Button
+                    className={classNames([
+                        { [styles.active]: isFocused },
+                        styles.radioBtn,
+                    ])}
+                    onClick={() => {
+                        saveFocusMode(!isFocused);
+                    }}
                 >
-                    <Button
-                        className={styles.btn}
-                        size="small"
-                        icon={Icons.ZoomIn}
-                        onClick={zoomIn}
+                    <span
+                        className={classNames([
+                            "icon-moon",
+                            "anticon",
+                            styles.focus,
+                        ])}
                     />
-                </Tooltip>
-                <Tooltip
-                    placement="left"
-                    title="Zoom out ( &darr; )"
-                    color={TOOLTIP_COLOR}
-                >
-                    <Button
-                        className={styles.btn}
-                        size="small"
-                        icon={Icons.ZoomOut}
-                        onClick={zoomOut}
-                    />
-                </Tooltip>
-            </div>
+                </Button>
+            </Tooltip>
             <Tooltip
                 placement="left"
                 title="Home view (H)"
@@ -226,7 +287,6 @@ const CameraControls = ({
             >
                 <Button
                     className={styles.btn}
-                    size="small"
                     icon={Icons.Reset}
                     onClick={resetCamera}
                 />

@@ -1,0 +1,41 @@
+.ok-button {
+    width: 75px;
+}
+
+.body-text {
+    padding-bottom: 10px;
+}
+
+.url-input[disabled] {
+    color: var(--black);
+    cursor: auto;
+    width: 395px;
+    margin-right: 14px;
+    direction: rtl;
+}
+
+.time-input,
+.time-input[disabled] {
+    width: 75px;
+}
+
+.time-input[disabled] {
+    background: transparent;
+    color: var(--medium-grey);
+}
+
+.time-input-text {
+    padding-top: 8px;
+}
+
+.time-input-container {
+    display: flex;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    gap: 8px;
+    align-items: center;
+}
+
+.time-input-container div {
+    margin-bottom: 0px;
+}

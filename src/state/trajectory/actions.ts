@@ -1,3 +1,5 @@
+import { SimulariumController } from "@aics/simularium-viewer";
+
 import {
     RECEIVE_TRAJECTORY,
     REQUEST_TRAJECTORY,
@@ -9,6 +11,7 @@ import {
     REQUEST_PLOT_DATA,
     CLEAR_SIMULARIUM_FILE,
     LOAD_FILE_VIA_URL,
+    SET_URL_PARAMS,
     INITIALIZE_CONVERSION,
     SET_CONVERSION_ENGINE,
     RECEIVE_FILE_TO_CONVERT,
@@ -27,6 +30,7 @@ import {
     RequestLocalFileAction,
     ClearSimFileDataAction,
     LoadViaUrlAction,
+    SetUrlParamsAction,
     InitializeConversionAction,
     SetConversionEngineAction,
     ReceiveFileToConvertAction,
@@ -34,7 +38,6 @@ import {
     SetConversionStatusAction,
     ConvertFileAction,
 } from "./types";
-import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
 
 export function receiveTrajectory(
     payload: TrajectoryStateBranch
@@ -128,6 +131,12 @@ export function loadViaUrl(
         controller,
         type: LOAD_FILE_VIA_URL,
         fileId,
+    };
+}
+
+export function setUrlParams(): SetUrlParamsAction {
+    return {
+        type: SET_URL_PARAMS,
     };
 }
 

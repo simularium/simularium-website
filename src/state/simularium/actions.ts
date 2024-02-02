@@ -1,4 +1,4 @@
-import { SimulariumController } from "@aics/simularium-viewer/type-declarations";
+import { SimulariumController } from "@aics/simularium-viewer";
 
 import { SET_SIMULARIUM_CONTROLLER } from "./constants";
 import { SetSimulariumControllerAction } from "./types";

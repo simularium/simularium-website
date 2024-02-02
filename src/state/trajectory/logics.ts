@@ -17,8 +17,9 @@ import {
 import {
     ENGINE_TO_TEMPLATE_MAP,
     URL_PARAM_KEY_FILE_NAME,
+    URL_PARAM_KEY_TIME,
 } from "../../constants";
-import { clearUrlParams } from "../../util";
+import { clearBrowserUrlParams } from "../../util";
 import { getUserTrajectoryUrl } from "../../util/userUrlHandling";
 import {
     VIEWER_LOADING,
@@ -55,6 +56,7 @@ import {
     REQUEST_PLOT_DATA,
     CLEAR_SIMULARIUM_FILE,
     LOAD_FILE_VIA_URL,
+    SET_URL_PARAMS,
     INITIALIZE_CONVERSION,
     SET_CONVERSION_ENGINE,
     SET_CONVERSION_TEMPLATE,
@@ -161,7 +163,7 @@ const handleFileLoadError = (
     });
 
     if (error.level === ErrorLevel.ERROR) {
-        clearUrlParams();
+        clearBrowserUrlParams();
     }
 };
 
@@ -353,11 +355,35 @@ const loadFileViaUrl = createLogic({
                     );
                     dispatch(clearSimulariumFile({ newFile: false }));
                 });
-                clearUrlParams();
+                clearBrowserUrlParams();
                 done();
             });
     },
     type: LOAD_FILE_VIA_URL,
+});
+
+const setTrajectoryStateFromUrlParams = createLogic({
+    process(deps: ReduxLogicDeps) {
+        const { getState } = deps;
+        const currentState = getState();
+
+        const simulariumController = getSimulariumController(currentState);
+
+        const parsed = queryString.parse(location.search);
+        const DEFAULT_TIME = 0;
+
+        if (parsed[URL_PARAM_KEY_TIME]) {
+            const time = Number(parsed[URL_PARAM_KEY_TIME]);
+            simulariumController.gotoTime(time);
+        } else {
+            // currently this won't be called because URL_PARAM_KEY_TIME
+            // is the only param that can get you into this logic
+            // but if we are setting camera position, we will want to
+            // make sure the time also gets set.
+            simulariumController.gotoTime(DEFAULT_TIME);
+        }
+    },
+    type: SET_URL_PARAMS,
 });
 
 // configures the controller for file conversion and sends server health checks
@@ -560,6 +586,7 @@ export default [
     loadNetworkedFile,
     resetSimulariumFileState,
     loadFileViaUrl,
+    setTrajectoryStateFromUrlParams,
     setConversionEngineLogic,
     initializeFileConversionLogic,
     convertFileLogic,

@@ -1,5 +1,7 @@
 import { forOwn, isFunction } from "lodash";
 import React from "react";
+import queryString from "query-string";
+import { URL_PARAM_KEY_TIME } from "../constants";
 
 type AnyFunction = () => any;
 
@@ -21,10 +23,10 @@ export function convertToSentenceCase(string: string): string {
         return "";
     }
     return string
-        .replace(/\s\w/g, function(c) {
+        .replace(/\s\w/g, function (c) {
             return c.toLowerCase();
         })
-        .replace(/(^\s*\w|[\.\!\?]\s+\w)/g, function(c) {
+        .replace(/(^\s*\w|[\.\!\?]\s+\w)/g, function (c) {
             return c.toUpperCase();
         });
 }
@@ -73,7 +75,32 @@ export const wrapText = (
     };
 };
 
-export const clearUrlParams = () => {
+export const hasUrlParamsSettings = () => {
+    const urlSettings = [URL_PARAM_KEY_TIME];
+    const parsed = queryString.parse(location.search);
+    for (let index = 0; index < urlSettings.length; index++) {
+        const paramName = urlSettings[index];
+        if (parsed[paramName] !== undefined) {
+            return true;
+        }
+    }
+    return false;
+};
+
+export const editUrlParams = (
+    url: string,
+    value: string,
+    paramKey: string
+): string => {
+    // this returns a new url as a string, does not change current url shown in browser
+    const currentUrl = new URL(url);
+    const params = new URLSearchParams(currentUrl.search);
+    params.set(paramKey, value);
+    currentUrl.search = params.toString();
+    return currentUrl.toString();
+};
+
+export const clearBrowserUrlParams = () => {
     // Removes the query string from the current URL shown in the browser
     // ex) https://mysite.com/path?city=seattle -> https://mysite.com/path
     history.replaceState({}, "", `${location.origin}${location.pathname}`);

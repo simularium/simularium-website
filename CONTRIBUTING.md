@@ -63,11 +63,12 @@ ___
 Run `npm update` to update dependencies, including simularium-viewer
 
 ### Daily builds
-[Viewer at development head](https://simularium.github.io/simularium-website/dev)
-[Latest released stable viewer](https://simularium.github.io/simularium-website/stable)
+- [Site with viewer at development head](https://simularium.github.io/simularium-website/dev)
+- [Site with latest released stable viewer](https://simularium.github.io/simularium-website/stable)
 
 #### Staging deployment
 Automatically builds from `main`
+- [Staging site](https://staging.simularium.allencell.org/)
 
 #### Production deployment
 1. Make a new version: `npm version [patch/minor/major]`

@@ -6,10 +6,10 @@ import SimulariumViewer, {
     SelectionStateInfo,
     compareTimes,
     ErrorLevel,
+    TrajectoryFileInfo,
+    TimeData,
 } from "@aics/simularium-viewer";
 import "@aics/simularium-viewer/style/style.css";
-import { TrajectoryFileInfo } from "@aics/simularium-viewer/type-declarations/simularium";
-import { TimeData } from "@aics/simularium-viewer/type-declarations/viewport";
 import { connect } from "react-redux";
 import { Modal } from "antd";
 import Bowser from "bowser";
@@ -41,6 +41,7 @@ import {
     TimeUnits,
     ConversionStatus,
     SetConversionStatusAction,
+    SetUrlParamsAction,
 } from "../../state/trajectory/types";
 import { CONVERSION_INACTIVE } from "../../state/trajectory/constants";
 import { batchActions } from "../../state/util";
@@ -50,6 +51,7 @@ import ScaleBar from "../../components/ScaleBar";
 import { TUTORIAL_PATHNAME } from "../../routes";
 import ErrorNotification from "../../components/ErrorNotification";
 import { MOBILE_CUTOFF } from "../../constants";
+import { hasUrlParamsSettings } from "../../util";
 
 import {
     convertUIDataToSelectionData,
@@ -76,6 +78,7 @@ interface ViewerPanelProps {
     numFrames: number;
     isBuffering: boolean;
     scaleBarLabel: string;
+    setUrlParams: ActionCreator<SetUrlParamsAction>;
     simulariumController: SimulariumController;
     changeTime: ActionCreator<ChangeTimeAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
@@ -119,6 +122,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             this.onTrajectoryFileInfoChanged.bind(this);
         this.skipToTime = this.skipToTime.bind(this);
         this.resize = this.resize.bind(this);
+
         this.state = {
             isInitialPlay: true,
             particleTypeIds: [],
@@ -278,7 +282,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         });
     }
 
-    public receiveTimeChange(timeData: TimeData) {
+    public receiveTimeChange(timeData: TimeData): void {
         const {
             changeTime,
             setStatus,
@@ -289,16 +293,21 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             receiveTrajectory,
             setBuffering,
             isLooping,
+            setUrlParams,
         } = this.props;
-
         if (this.state.isInitialPlay) {
             receiveTrajectory({
                 firstFrameTime: timeData.time,
                 lastFrameTime: (numFrames - 1) * timeStep + timeData.time,
             });
+            if (hasUrlParamsSettings()) {
+                // these are settings that need to be applied after the trajectory
+                // is loaded but before the user can interact with the trajectory
+                setUrlParams();
+                this.setState({ isInitialPlay: false });
+            }
             this.setState({ isInitialPlay: false });
         }
-
         const actions: AnyAction[] = [
             changeTime(timeData.time),
             setBuffering(false),
@@ -442,6 +451,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     zoomOut={simulariumController.zoomOut}
                     setPanningMode={simulariumController.setPanningMode}
                     setFocusMode={simulariumController.setFocusMode}
+                    setCameraType={simulariumController.setCameraType}
                 />
             </div>
         );
@@ -494,6 +504,7 @@ const dispatchToPropsMap = {
     setIsLooping: viewerStateBranch.actions.setIsLooping,
     setError: viewerStateBranch.actions.setError,
     setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
+    setUrlParams: trajectoryStateBranch.actions.setUrlParams,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);

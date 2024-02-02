@@ -1,7 +1,4 @@
-import {
-    ISimulariumFile,
-    SimulariumController,
-} from "@aics/simularium-viewer/type-declarations";
+import { ISimulariumFile, SimulariumController } from "@aics/simularium-viewer";
 import {
     AvailableEngines,
     Template,
@@ -102,6 +99,7 @@ export interface NetworkedSimFile {
 }
 export const isLocalFileInterface = (file: any): file is LocalSimFile =>
     !!file.lastModified;
+
 export const isNetworkSimFileInterface = (
     file: any
 ): file is NetworkedSimFile => !!file.title;
@@ -109,6 +107,10 @@ export const isNetworkSimFileInterface = (
 export interface TimeUnits {
     magnitude: number;
     name: string;
+}
+
+export interface SetUrlParamsAction {
+    type: string;
 }
 
 export interface HealthCheckTimeout {
