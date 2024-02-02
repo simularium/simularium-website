@@ -64,12 +64,7 @@ import {
     CONVERT_FILE,
     CONVERSION_ACTIVE,
 } from "./constants";
-import {
-    ReceiveAction,
-    LocalSimFile,
-    HealthCheckTimeout,
-    SetConversionStatusAction,
-} from "./types";
+import { ReceiveAction, LocalSimFile, HealthCheckTimeout } from "./types";
 import { initialState } from "./reducer";
 import {
     TemplateMap,

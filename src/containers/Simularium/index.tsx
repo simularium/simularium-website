@@ -21,11 +21,7 @@ import {
     RequestNetworkFileAction,
 } from "../../state/trajectory/types";
 import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
-import {
-    CONVERSION_ACTIVE,
-    CONVERSION_INACTIVE,
-    CONVERSION_SERVER_LIVE,
-} from "../../state/trajectory/constants";
+import { CONVERSION_INACTIVE } from "../../state/trajectory/constants";
 import {
     SetErrorAction,
     SetViewerStatusAction,
