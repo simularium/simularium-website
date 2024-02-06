@@ -77,7 +77,6 @@
 
 .remove-file-icon svg {
     fill: var(--delete-file-icon-color);
-    transform: rotate(45deg);
 }
 
 .form-content button {

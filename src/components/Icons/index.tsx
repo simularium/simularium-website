@@ -35,7 +35,7 @@ export const CaretRight = <CaretRightOutlined />;
 export const LeftArrow = <ArrowLeftOutlined />;
 export const Reset = <HomeOutlined />;
 export const ZoomIn = <PlusOutlined />;
-export const Cancel = <PlusOutlined />;
+export const Cancel = <PlusOutlined style={{ transform: "rotate(45deg)" }} />;
 export const ZoomOut = <MinusOutlined />;
 export const Share = <ShareAltOutlined />;
 export const Warn = <WarningOutlined />;
