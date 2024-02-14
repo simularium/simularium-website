@@ -91,13 +91,7 @@ console.log("Welcome to Simularium " + SIMULARIUM_BUILD_ENVIRONMENT + " build");
 console.log("Simularium Website Version " + SIMULARIUM_WEBSITE_VERSION);
 console.log("Simularium Viewer Version " + SIMULARIUM_VIEWER_VERSION);
 
-const renderApp = (container: HTMLElement) => {
-    const root = createRoot(container);
-    root.render(<App />);
-};
-
 const container: HTMLElement | null = document.getElementById(APP_ID);
-
-container !== null
-    ? renderApp(container)
-    : console.log("Could not find container element with id " + APP_ID);
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const root = createRoot(container!);
+root.render(<App />);
