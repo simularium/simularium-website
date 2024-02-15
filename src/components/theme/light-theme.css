@@ -1,40 +1,42 @@
 /* Default and primary button colors differ within modals */
 
 /* primary button */
-.light-theme :global(.primary-button), modal :global(.primary-button):focus {
-    border: 1px solid var(--dark-four);
+.light-theme :global(.primary-button),
+modal :global(.primary-button):focus {
+    border: 1px solid var(--light-theme-button-primary-bg);
     border-radius: 3px;
-    background-color: var(--dark-four);
-    color: var(--white-three)
+    background-color: var(--light-theme-button-primary-bg);
+    color: var(--light-theme-button-primary-text);
 }
 
-.light-theme :global(.primary-button):hover{
-    color:var(--baby-purple);
-    border: 1px solid var(--dark-four);
+.light-theme :global(.primary-button):hover {
+    color: var(--light-theme-button-primary-text-hove);
+    border: 1px solid var(--light-theme-button-primary-border-hover);
 }
 
-.light-theme :global(.primary-button):disabled{
+.light-theme :global(.primary-button):disabled {
     border: 1px solid var(--heather);
-    color:var(--white-three);
-    background-color: var(--heather);
+    color: var(--light-theme-button-primary-text-disabled);
+    background-color: var(--light-theme-button-primary-bg-disabled);
 }
 
 /* secondary button */
-.light-theme :global(.secondary-button), modal :global(.secondary-button):focus{
-    border: 1px solid var(--dark-four);
+.light-theme :global(.secondary-button),
+modal :global(.secondary-button):focus {
+    border: 1px solid var(--light-theme-button-secondary-border);
     border-radius: 3px;
     background-color: transparent;
-    color: var(--dark-four)
+    color: var(--light-theme-button-secondary-text);
 }
 
-.light-theme :global(.secondary-button):hover{
-    background-color: var(--charcoal-grey);
-    color:var(--baby-purple);
-    border: 1px solid var(--dark-four);
+.light-theme :global(.secondary-button):hover {
+    background-color: var(--light-theme-button-secondary-bg-hover);
+    color: var(--light-theme-button-secondary-text-hover);
+    border: 1px solid var(--light-theme-button-secondary-border);
 }
 
-.light-theme :global(.secondary-button):disabled{
-    border: 1px solid var(--heather);
-    color:var(--heather);
+.light-theme :global(.secondary-button):disabled {
+    border: 1px solid var(--light-theme-button-primary-border-disabled);
+    color: var(--light-theme-button-secondary-text-disabled);
     background-color: transparent;
 }
