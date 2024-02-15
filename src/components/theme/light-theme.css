@@ -10,12 +10,12 @@ modal :global(.primary-button):focus {
 }
 
 .light-theme :global(.primary-button):hover {
-    color: var(--light-theme-button-primary-text-hove);
+    color: var(--light-theme-button-primary-text-hover);
     border: 1px solid var(--light-theme-button-primary-border-hover);
 }
 
 .light-theme :global(.primary-button):disabled {
-    border: 1px solid var(--heather);
+    border: 1px solid var(--light-theme-button-primary-text-disabled);
     color: var(--light-theme-button-primary-text-disabled);
     background-color: var(--light-theme-button-primary-bg-disabled);
 }
