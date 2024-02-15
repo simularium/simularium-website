@@ -1,25 +1,40 @@
 /* Default and primary button colors differ within modals */
-.light-theme :global(.ant-btn-default) {
-    background-color: var(--light-button-default-background);
-    border-color: var(--light-theme-modal-btn-default-color);
-    color: var(--light-button-default-color);
-}
 
-.light-theme :global(.ant-btn-primary) {
-    background-color: var(--light-theme-btn-primary-bg);
-    border: var(--light-button-primary-border);
-    color: var(--light-theme-btn-primary-color);
-}
-
-.light-theme :global(.ant-btn-primary[disabled]) {
-    background: var(--light-button-disabled-background);
-    border: var(--light-button-disabled-border);
-    color: var(--light-theme-btn-primary-color);
-}
-
-.light-theme :global(.ant-btn-text) {
+/* primary button */
+.light-theme :global(.primary-button), modal :global(.primary-button):focus {
+    border: 1px solid var(--dark-four);
+    border-radius: 3px;
     background-color: var(--dark-four);
-    border-color: var(--dark-four);
-    color: var(--white-three);
+    color: var(--white-three)
 }
 
+.light-theme :global(.primary-button):hover{
+    color:var(--baby-purple);
+    border: 1px solid var(--dark-four);
+}
+
+.light-theme :global(.primary-button):disabled{
+    border: 1px solid var(--heather);
+    color:var(--white-three);
+    background-color: var(--heather);
+}
+
+/* secondary button */
+.light-theme :global(.secondary-button), modal :global(.secondary-button):focus{
+    border: 1px solid var(--dark-four);
+    border-radius: 3px;
+    background-color: transparent;
+    color: var(--dark-four)
+}
+
+.light-theme :global(.secondary-button):hover{
+    background-color: var(--charcoal-grey);
+    color:var(--baby-purple);
+    border: 1px solid var(--dark-four);
+}
+
+.light-theme :global(.secondary-button):disabled{
+    border: 1px solid var(--heather);
+    color:var(--heather);
+    background-color: transparent;
+}

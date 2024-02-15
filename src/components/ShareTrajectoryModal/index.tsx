@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import { connect } from "react-redux";
 import { Button, Checkbox, Divider, Input } from "antd";
 
@@ -11,7 +12,6 @@ import CustomModal from "../CustomModal";
 import { Link, Warn } from "../Icons";
 import { URL_PARAM_KEY_TIME } from "../../constants";
 import { editUrlParams } from "../../util";
-import classNames from "classnames";
 
 import styles from "./style.css";
 import theme from "../theme/light-theme.css";
@@ -166,7 +166,7 @@ const ShareTrajectoryModal = ({
                 </>
             ),
             footer: (
-                <Button type="default" onClick={closeModal}>
+                <Button className="secondary-button" onClick={closeModal}>
                     Close
                 </Button>
             ),

@@ -12,11 +12,6 @@
     margin-bottom: 0;
 }
 
-.upload-modal :global(.ant-input-affix-wrapper) {
-    border-radius: 3px;
-    border-color: var(--input-border-highlight);
-}
-
 .upload-modal :global(.ant-input-suffix svg) {
     color: var(--light-theme-modal-supplemental-text);
 }
