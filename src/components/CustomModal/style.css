@@ -40,10 +40,9 @@
     border: 1px solid var(--dark-three) !important;
 }
 
-.modal :global(.ant-input) {
-    border: 1px solid var(--heather);
+.modal :global(.ant-input-affix-wrapper) {
+    border: 1px solid var(--input-border-highlight);
     border-radius: 3px;
-    text-align: right;
 }
 
 .modal :global(.ant-divider) {
