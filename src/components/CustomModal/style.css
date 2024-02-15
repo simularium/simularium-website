@@ -51,3 +51,7 @@
     left: 0;
     background-color: var(--heather);
 }
+
+.modal :global(.ant-modal-close):hover{
+    color: var(--white-three);
+}
