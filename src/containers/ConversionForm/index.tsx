@@ -124,7 +124,7 @@ const ConversionForm = ({
         setFileToConvert(null);
     };
 
-    const handleFileSelection = (file: UploadFile): void => {
+    const handleFileSelection = async (file: UploadFile) => {
         setFileToConvert(file);
         customRequest(file, receiveFileToConvert, setError);
     };
