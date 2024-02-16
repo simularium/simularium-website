@@ -54,12 +54,10 @@
     background-color: var(--overlay-purple);
 }
 
-.upload :global(.ant-upload-list) {
-    padding-bottom: 7px;
-}
-
-.upload :global(.ant-upload-list-item) {
+.upload .rendered-file-name {
+    height: 100%;
     margin-top: 6px;
+    display: block;
 }
 
 .upload :global(.ant-upload-text-icon) {
@@ -73,7 +71,6 @@
     border: none;
     cursor: pointer;
     min-width: 16px;
-    padding: 1px 0px 0px;
 }
 
 .remove-file-icon svg {

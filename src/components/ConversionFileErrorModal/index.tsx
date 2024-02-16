@@ -31,7 +31,7 @@ const ConversionFileErrorModal: React.FC<ConversionFileErrorModalProps> = ({
             centered
             onCancel={closeModal}
         >
-            <div>
+            <p>
                 <div className={styles.warningText}>
                     {"We're sorry, there was a problem importing your file."}
                 </div>
@@ -45,7 +45,7 @@ const ConversionFileErrorModal: React.FC<ConversionFileErrorModalProps> = ({
                 >
                     The Allen Cell Discussion Forum.
                 </a>
-            </div>
+            </p>
         </CustomModal>
     );
 };

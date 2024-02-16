@@ -25,7 +25,7 @@ const ConversionCancelModal: React.FC<ConversionCancelModalProps> = ({
 
     return (
         <CustomModal
-            className={styles.uploadModal}
+            className={styles.cancelModal}
             title="Cancel file import"
             open
             footer={footerButtons}
@@ -33,11 +33,10 @@ const ConversionCancelModal: React.FC<ConversionCancelModalProps> = ({
             centered
             onCancel={continueProcessing}
         >
-            <div>
-                {" "}
+            <p>
                 Information provided will not be saved. Are you sure you want to
                 cancel the process?
-            </div>
+            </p>
         </CustomModal>
     );
 };

@@ -11,6 +11,7 @@
 }
 
 .title {
+    color: var(--light-theme-text-primary-color);
     font-weight: 700;
 }
 

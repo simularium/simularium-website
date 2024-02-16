@@ -107,6 +107,7 @@ const ConversionForm = ({
 
     const cancelProcessing = () => {
         setIsProcessing(false);
+        setConversionStatus({ status: CONVERSION_NO_SERVER });
     };
 
     const cancelConversion = () => {
@@ -161,6 +162,17 @@ const ConversionForm = ({
         }
     };
 
+    const customItemRender = () => {
+        if (fileToConvert) {
+            return (
+                <span className={styles.renderedFileName}>
+                    {" "}
+                    {fileToConvert.name}
+                </span>
+            );
+        }
+    };
+
     // TODO: use conversion template data to render the form
     console.log("conversion form data", conversionProcessingData);
     const conversionForm = (
@@ -210,6 +222,7 @@ const ConversionForm = ({
                         listType="text"
                         multiple={false}
                         fileList={fileToConvert ? [fileToConvert] : []}
+                        itemRender={customItemRender}
                         showUploadList={{
                             showPreviewIcon: false,
                             showDownloadIcon: false,
