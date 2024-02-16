@@ -40,6 +40,8 @@
     --footer-text-border-bottom: var(--greyish-brown);
     --footer-link: var(--blue);
     --input-border-highlight: var(--baby-purple);
+    --delete-file-icon-color: var(--brick-red);
+
     --dark-theme-primary-color: var(--baby-purple);
     --dark-theme-body-bg: var(--black);
     --dark-theme-header-bg: var(--dark-three);
@@ -95,6 +97,7 @@
     --light-theme-btn-primary-disabled-color: var(--true-gray);
     --light-theme-btn-primary-bg: var(--dark-four);
     --light-theme-btn-primary-disabled-bg: var(--heather);
+    --light-theme-select-border-color: var(--heather);
     --light-theme-modal-close-x: var(--warm-gray);
     --warning-text-color: var(--brick-red); 
 }

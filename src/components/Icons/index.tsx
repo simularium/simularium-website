@@ -22,6 +22,7 @@ import AicsLogoWhite from "../../assets/AICS-logo-full.png";
 import ClockwiseArrow from "../../assets/step-forward.svg";
 import CounterClockwiseArrow from "../../assets/step-back.svg";
 import Beta from "../../assets/beta.svg";
+import CaretAICS from "../../assets/icon-caret.svg";
 import Orthographic from "../../assets/orthographic.svg";
 import Perspective from "../../assets/perspective.svg";
 
@@ -34,6 +35,7 @@ export const CaretRight = <CaretRightOutlined />;
 export const LeftArrow = <ArrowLeftOutlined />;
 export const Reset = <HomeOutlined />;
 export const ZoomIn = <PlusOutlined />;
+export const Cancel = <PlusOutlined style={{ transform: "rotate(45deg)" }} />;
 export const ZoomOut = <MinusOutlined />;
 export const Share = <ShareAltOutlined />;
 export const Warn = <WarningOutlined />;
@@ -50,6 +52,12 @@ export const BetaTag = <img src={Beta} style={{ width: "42px" }} />;
 export const OrthographicCamera = <img src={Orthographic} />;
 export const PerspectiveCamera = <img src={Perspective} />;
 export const UpRightArrow = <ArrowLeftOutlined rotate={135} />;
+export const DownCaret = (
+    <img
+        src={CaretAICS}
+        style={{ width: "16px", transform: "rotate(180deg)" }}
+    />
+);
 
 export default {
     StepBack,
@@ -77,4 +85,5 @@ export default {
     PerspectiveCamera,
     UpRightArrow,
     Exclamation,
+    Cancel,
 };
