@@ -112,6 +112,7 @@ const ConversionForm = ({
 
     const handleFileSelection = async (file: UploadFile) => {
         setFileToConvert(file);
+        customRequest(file, receiveFileToConvert, setError);
     };
 
     const validateFileType = (fileName: string) => {
@@ -141,6 +142,17 @@ const ConversionForm = ({
                 // at this point: engine selected, file uploaded, file type valid, server health received
                 setIsProcessing(true);
             }
+        }
+    };
+
+    const customItemRender = () => {
+        if (fileToConvert) {
+            return (
+                <span className={styles.renderedFileName}>
+                    {" "}
+                    {fileToConvert.name}
+                </span>
+            );
         }
     };
 
@@ -193,6 +205,7 @@ const ConversionForm = ({
                         listType="text"
                         multiple={false}
                         fileList={fileToConvert ? [fileToConvert] : []}
+                        itemRender={customItemRender}
                         showUploadList={{
                             showPreviewIcon: false,
                             showDownloadIcon: false,
@@ -201,14 +214,6 @@ const ConversionForm = ({
                         onChange={({ file }) => {
                             handleFileSelection(file);
                         }}
-                        customRequest={(options) =>
-                            customRequest(
-                                fileToConvert,
-                                receiveFileToConvert,
-                                setError,
-                                options
-                            )
-                        }
                     >
                         <Button type="default">Select file</Button>
                     </Upload>
