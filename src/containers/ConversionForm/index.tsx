@@ -118,8 +118,9 @@ const ConversionForm = ({
         setEngineSelected(true);
     };
 
-    const handleFileSelection = async (file: UploadFile) => {
+    const handleFileSelection = (file: UploadFile): void => {
         setFileToConvert(file);
+        customRequest(file, receiveFileToConvert, setError);
     };
 
     const validateFileType = (fileName: string) => {
@@ -210,14 +211,6 @@ const ConversionForm = ({
                         onChange={({ file }) => {
                             handleFileSelection(file);
                         }}
-                        customRequest={(options) =>
-                            customRequest(
-                                fileToConvert,
-                                receiveFileToConvert,
-                                setError,
-                                options
-                            )
-                        }
                     >
                         <Button type="default">Select file</Button>
                     </Upload>
