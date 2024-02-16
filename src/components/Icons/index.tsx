@@ -50,8 +50,6 @@ export const BetaTag = <img src={Beta} style={{ width: "42px" }} />;
 export const OrthographicCamera = <img src={Orthographic} />;
 export const PerspectiveCamera = <img src={Perspective} />;
 export const UpRightArrow = <ArrowLeftOutlined rotate={135} />;
-export const OrthographicCamera = <img src={Orthographic} />;
-export const PerspectiveCamera = <img src={Perspective} />;
 
 export default {
     StepBack,
