@@ -24,6 +24,7 @@ import {
 import ConversionServerErrorModal from "../../components/ConversionServerErrorModal";
 import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
 import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
+import { Cancel, DownCaret } from "../../components/Icons";
 import { CONVERSION_NO_SERVER } from "../../state/trajectory/constants";
 import customRequest from "./custom-request";
 
@@ -70,7 +71,7 @@ const ConversionForm = ({
     initializeConversion,
     conversionStatus,
 }: ConversionProps): JSX.Element => {
-    const [fileToConvert, setFileToConvert] = useState<UploadFile>();
+    const [fileToConvert, setFileToConvert] = useState<UploadFile | null>();
     const [engineSelected, setEngineSelected] = useState<boolean>(false);
     const [serverDownModalOpen, setServerIsDownModalOpen] =
         useState<boolean>(false);
@@ -103,6 +104,10 @@ const ConversionForm = ({
         const selectedEngine = selectedValue as AvailableEngines;
         setConversionEngine(selectedEngine);
         setEngineSelected(true);
+    };
+
+    const handleRemoveFile = () => {
+        setFileToConvert(null);
     };
 
     const handleFileSelection = async (file: UploadFile) => {
@@ -170,10 +175,12 @@ const ConversionForm = ({
                     {" "}
                     Provide file information (required){" "}
                 </h3>
-                <h3 className={styles.selectTitle}>Simulation Engine</h3>
+                <h3 className={styles.selectTitle}>Simulation engine</h3>
                 <div className={styles.uploadContainer}>
                     <Select
                         className={styles.selectorBox}
+                        id="select"
+                        suffixIcon={DownCaret}
                         bordered={true}
                         defaultValue="Select"
                         options={selectOptions}
@@ -189,7 +196,7 @@ const ConversionForm = ({
                         showUploadList={{
                             showPreviewIcon: false,
                             showDownloadIcon: false,
-                            showRemoveIcon: true,
+                            showRemoveIcon: false,
                         }}
                         onChange={({ file }) => {
                             handleFileSelection(file);
@@ -205,6 +212,14 @@ const ConversionForm = ({
                     >
                         <Button type="default">Select file</Button>
                     </Upload>
+                    {fileToConvert && (
+                        <button
+                            className={styles.removeFileIcon}
+                            onClick={handleRemoveFile}
+                        >
+                            {Cancel}
+                        </button>
+                    )}
                 </div>
                 <Divider orientation="right" orientationMargin={400}>
                     {" "}
