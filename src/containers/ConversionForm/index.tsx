@@ -149,7 +149,6 @@ const ConversionForm = ({
         if (fileToConvert) {
             return (
                 <span className={styles.renderedFileName}>
-                    {" "}
                     {fileToConvert.name}
                 </span>
             );
@@ -184,8 +183,7 @@ const ConversionForm = ({
                     following information
                 </h3>
                 <h3 className={styles.sectionHeader}>
-                    {" "}
-                    Provide file information (required){" "}
+                    Provide file information (required)
                 </h3>
                 <h3 className={styles.selectTitle}>Simulation engine</h3>
                 <div className={styles.uploadContainer}>
@@ -226,9 +224,7 @@ const ConversionForm = ({
                         </button>
                     )}
                 </div>
-                <Divider orientation="right" orientationMargin={400}>
-                    {" "}
-                </Divider>
+                <Divider orientation="right" orientationMargin={400}> </Divider>
                 <Button ghost>Cancel</Button>
                 <Button
                     type="primary"
