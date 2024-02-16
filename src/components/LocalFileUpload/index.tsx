@@ -18,6 +18,7 @@ interface FileUploadProps {
     maxCount?: number;
     multiple?: boolean;
     name?: string;
+    children?: React.ReactNode;
 }
 
 /**
