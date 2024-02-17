@@ -145,7 +145,7 @@ const ConversionForm = ({
         }
     };
 
-    const customItemRender = () => {
+    const renderUploadFile = () => {
         if (fileToConvert) {
             return (
                 <span className={styles.renderedFileName}>
@@ -203,7 +203,7 @@ const ConversionForm = ({
                         listType="text"
                         multiple={false}
                         fileList={fileToConvert ? [fileToConvert] : []}
-                        itemRender={customItemRender}
+                        itemRender={renderUploadFile}
                         showUploadList={{
                             showPreviewIcon: false,
                             showDownloadIcon: false,
