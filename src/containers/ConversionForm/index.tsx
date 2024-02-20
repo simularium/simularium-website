@@ -145,14 +145,9 @@ const ConversionForm = ({
         }
     };
 
-    const renderUploadFile = () => {
-        if (fileToConvert) {
-            return (
-                <span className={styles.renderedFileName}>
-                    {fileToConvert.name}
-                </span>
-            );
-        }
+    const renderUploadFile = (): JSX.Element => {
+        const fileName = fileToConvert ? fileToConvert.name : "";
+        return <span className={styles.renderedFileName}>{fileName}</span>;
     };
 
     // TODO: use conversion template data to render the form
@@ -224,7 +219,9 @@ const ConversionForm = ({
                         </button>
                     )}
                 </div>
-                <Divider orientation="right" orientationMargin={400}> </Divider>
+                <Divider orientation="right" orientationMargin={400}>
+                    {" "}
+                </Divider>
                 <Button ghost>Cancel</Button>
                 <Button
                     type="primary"
