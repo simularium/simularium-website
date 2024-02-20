@@ -162,11 +162,10 @@ const ConversionForm = ({
         }
     };
 
-    const customItemRender = () => {
+    const renderUploadFile = () => {
         if (fileToConvert) {
             return (
                 <span className={styles.renderedFileName}>
-                    {" "}
                     {fileToConvert.name}
                 </span>
             );
@@ -201,8 +200,7 @@ const ConversionForm = ({
                     following information
                 </h3>
                 <h3 className={styles.sectionHeader}>
-                    {" "}
-                    Provide file information (required){" "}
+                    Provide file information (required)
                 </h3>
                 <h3 className={styles.selectTitle}>Simulation engine</h3>
                 <div className={styles.uploadContainer}>
@@ -222,7 +220,7 @@ const ConversionForm = ({
                         listType="text"
                         multiple={false}
                         fileList={fileToConvert ? [fileToConvert] : []}
-                        itemRender={customItemRender}
+                        itemRender={renderUploadFile}
                         showUploadList={{
                             showPreviewIcon: false,
                             showDownloadIcon: false,
@@ -243,12 +241,8 @@ const ConversionForm = ({
                         </button>
                     )}
                 </div>
-                <Divider orientation="right" orientationMargin={400}>
-                    {" "}
-                </Divider>
-                <Button ghost onClick={cancelConversion}>
-                    Cancel
-                </Button>
+                <Divider orientation="right" orientationMargin={400}> </Divider>
+                <Button ghost>Cancel</Button>
                 <Button
                     type="primary"
                     disabled={!fileToConvert || !engineSelected}
