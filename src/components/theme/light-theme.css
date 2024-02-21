@@ -2,7 +2,7 @@
 
 /* primary button */
 .light-theme :global(.primary-button),
-modal :global(.primary-button):focus {
+.light-theme :global(.primary-button):focus {
     border: 1px solid var(--light-theme-button-primary-bg);
     border-radius: 3px;
     background-color: var(--light-theme-button-primary-bg);
@@ -22,7 +22,7 @@ modal :global(.primary-button):focus {
 
 /* secondary button */
 .light-theme :global(.secondary-button),
-modal :global(.secondary-button):focus {
+.light-theme :global(.secondary-button):focus {
     border: 1px solid var(--light-theme-button-secondary-border);
     border-radius: 3px;
     background-color: transparent;
