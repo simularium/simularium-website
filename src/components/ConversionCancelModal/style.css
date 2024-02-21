@@ -1,3 +1,7 @@
-.upload-modal :global(.ant-modal-footer) {
+.cancel-modal p {
+    font-size: 14px;
+}
+
+.cancel-modal :global(.ant-modal-footer) {
     background-color: var(--modal-content-bg);
 }

@@ -69,6 +69,7 @@
     --dark-theme-slider-color: var(--white-three);    
     --dark-theme-tooltip-bg: var(--charcoal-grey);
     --dark-theme-version-badge-purple: var(--dark-five);
+    --light-theme-text-primary-color: var(--dark);
     --light-theme-background-purple: var(--pale-grey);
     --light-theme-button-purple: var(--dark-blue-grey);
     --light-theme-heading1-gray: var(--dark-three);

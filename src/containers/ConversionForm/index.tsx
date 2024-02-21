@@ -112,6 +112,7 @@ const ConversionForm = ({
 
     const handleFileSelection = async (file: UploadFile) => {
         setFileToConvert(file);
+        customRequest(file, receiveFileToConvert, setError);
     };
 
     const validateFileType = (fileName: string) => {
@@ -144,6 +145,11 @@ const ConversionForm = ({
         }
     };
 
+    const renderUploadFile = (): JSX.Element => {
+        const fileName = fileToConvert ? fileToConvert.name : "";
+        return <span className={styles.renderedFileName}>{fileName}</span>;
+    };
+
     // TODO: use conversion template data to render the form
     console.log("conversion form data", conversionProcessingData);
     const conversionForm = (
@@ -172,8 +178,7 @@ const ConversionForm = ({
                     following information
                 </h3>
                 <h3 className={styles.sectionHeader}>
-                    {" "}
-                    Provide file information (required){" "}
+                    Provide file information (required)
                 </h3>
                 <h3 className={styles.selectTitle}>Simulation engine</h3>
                 <div className={styles.uploadContainer}>
@@ -193,6 +198,7 @@ const ConversionForm = ({
                         listType="text"
                         multiple={false}
                         fileList={fileToConvert ? [fileToConvert] : []}
+                        itemRender={renderUploadFile}
                         showUploadList={{
                             showPreviewIcon: false,
                             showDownloadIcon: false,
@@ -201,14 +207,6 @@ const ConversionForm = ({
                         onChange={({ file }) => {
                             handleFileSelection(file);
                         }}
-                        customRequest={(options) =>
-                            customRequest(
-                                fileToConvert,
-                                receiveFileToConvert,
-                                setError,
-                                options
-                            )
-                        }
                     >
                         <Button type="default">Select file</Button>
                     </Upload>
@@ -221,9 +219,7 @@ const ConversionForm = ({
                         </button>
                     )}
                 </div>
-                <Divider orientation="right" orientationMargin={400}>
-                    {" "}
-                </Divider>
+                <Divider orientation="right" orientationMargin={400}/>
                 <Button ghost>Cancel</Button>
                 <Button
                     type="primary"

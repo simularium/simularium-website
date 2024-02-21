@@ -32,12 +32,14 @@ const ConversionFileErrorModal: React.FC<ConversionFileErrorModalProps> = ({
             onCancel={closeModal}
         >
             <div>
-                <div className={styles.warningText}>
+                <p className={styles.warningText}>
                     {"We're sorry, there was a problem importing your file."}
-                </div>
-                You may want to double check that the file you selected is a
-                valid {engineType} file and try again. For further assistance,
-                please visit
+                </p>
+                <p>
+                    You may want to double check that the file you selected is a
+                    valid {engineType} file and try again. For further
+                    assistance, please visit
+                </p>
                 <a
                     href="https://forum.allencell.org/"
                     target="_blank"
