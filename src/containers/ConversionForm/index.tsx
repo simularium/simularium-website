@@ -110,10 +110,6 @@ const ConversionForm = ({
         setConversionStatus({ status: CONVERSION_NO_SERVER });
     };
 
-    const cancelConversion = () => {
-        setConversionStatus({ status: CONVERSION_INACTIVE });
-    };
-
     const handleEngineChange = (selectedValue: string) => {
         const selectedEngine = selectedValue as AvailableEngines;
         setConversionEngine(selectedEngine);
