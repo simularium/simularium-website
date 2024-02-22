@@ -34,7 +34,7 @@ const ShareTrajectoryButton = ({
     const tooltipOffset = isDisabled ? [0, -20] : [0, -8];
 
     return (
-        <>
+        <div className={styles.container}>
             {isSharing ? (
                 <div className={styles.overlay}>
                     <ShareTrajectoryModal
@@ -43,34 +43,32 @@ const ShareTrajectoryButton = ({
                     />
                 </div>
             ) : null}
-            <div className={styles.container}>
-                <Tooltip
-                    title={
-                        !simulariumFile.name
-                            ? "Load a model to perform this action"
-                            : "Share trajectory"
-                    }
-                    placement="bottomLeft"
-                    color={TOOLTIP_COLOR}
-                    align={{ offset: tooltipOffset }}
-                    mouseEnterDelay={0.5}
-                    trigger={isSharing ? [] : ["hover"]}
-                    onOpenChange={(visible) => {
-                        setTooltipVisible(visible);
-                    }}
-                    open={tooltipVisible}
+            <Tooltip
+                title={
+                    !simulariumFile.name
+                        ? "Load a model to perform this action"
+                        : "Share trajectory"
+                }
+                placement="bottomLeft"
+                color={TOOLTIP_COLOR}
+                align={{ offset: tooltipOffset }}
+                mouseEnterDelay={0.5}
+                trigger={isSharing ? [] : ["hover"]}
+                onOpenChange={(visible) => {
+                    setTooltipVisible(visible);
+                }}
+                open={tooltipVisible}
+            >
+                <Button
+                    className={isDisabled ? styles.disabled : undefined}
+                    type="primary"
+                    disabled={isDisabled}
+                    onClick={handleShare}
                 >
-                    <Button
-                        className={isDisabled ? styles.disabled : undefined}
-                        type="primary"
-                        disabled={isDisabled}
-                        onClick={handleShare}
-                    >
-                        Share {Share}
-                    </Button>
-                </Tooltip>
-            </div>
-        </>
+                    Share {Share}
+                </Button>
+            </Tooltip>
+        </div>
     );
 };
 
