@@ -8,3 +8,7 @@
     background-color: var(--black);
     opacity: .7;
 }
+
+.container {
+    cursor: pointer;
+}

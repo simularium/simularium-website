@@ -36,7 +36,7 @@
     --footer-text: var(--warm-gray);
     --footer-text-border-bottom: var(--greyish-brown);
     --footer-link: var(--blue);
-    --input-border-highlight: var(--baby-purple);
+    --input-border-highlight: var(--heather);
     --dark-theme-primary-color: var(--baby-purple);
     --dark-theme-body-bg: var(--black);
     --dark-theme-header-bg: var(--dark-three);
@@ -66,6 +66,23 @@
     --dark-theme-version-badge-purple: var(--dark-five);
     --light-theme-background-purple: var(--pale-grey);
     --light-theme-button-purple: var(--dark-blue-grey);
+
+    --light-theme-button-primary-text: var(--white-three);
+    --light-theme-button-primary-bg: var(--dark-blue-grey);
+    --light-theme-button-primary-text-hover: var(--baby-purple);
+    --light-theme-button-primary-border-hover: var(--dark-four);
+    --light-theme-button-primary-text-disabled: var(--white-three);
+    --light-theme-button-primary-bg-disabled: var(--heather);
+
+
+    --light-theme-button-secondary-text: var(--dark-four);
+    --light-theme-button-secondary-border: var(--dark-four);
+    --light-theme-button-secondary-text-hover: var(--baby-purple);
+    --light-theme-button-secondary-bg-hover: var(--charcoal-grey);
+    --light-theme-button-secondary-text-disabled: var(--heather);
+    --light-theme-button-primary-border-disabled: var(--heather);
+
+
     --light-theme-heading1-gray: var(--dark-three);
     --light-theme-heading2-gray: var(--greyish-brown);
     --light-theme-panel-light-gray: var(--white-four);
