@@ -28,7 +28,6 @@ import ConversionFileErrorModal from "../../components/ConversionFileErrorModal"
 import { Cancel, DownCaret } from "../../components/Icons";
 import {
     CONVERSION_ACTIVE,
-    CONVERSION_INACTIVE,
     CONVERSION_NO_SERVER,
 } from "../../state/trajectory/constants";
 import customRequest from "./custom-request";
