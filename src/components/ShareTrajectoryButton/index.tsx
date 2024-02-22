@@ -30,7 +30,7 @@ const ShareTrajectoryButton = ({
     const tooltipOffset = isDisabled ? [0, -30] : [0, -18];
 
     return (
-        <div className={styles.container} onClick={handleShare}>
+        <div className={styles.container}>
             {isSharing ? (
                 <div className={styles.overlay}>
                     <ShareTrajectoryModal
@@ -51,6 +51,7 @@ const ShareTrajectoryButton = ({
             >
                 <Button
                     className={isDisabled ? styles.disabled : undefined}
+                    onClick={handleShare}
                     type="primary"
                     disabled={isDisabled}
                 >
