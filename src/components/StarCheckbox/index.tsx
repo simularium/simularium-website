@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { Tooltip } from "antd";
 import { CheckboxChangeEvent, CheckboxProps } from "antd/lib/checkbox";
 
-import { LEFT_PANEL_TOOLTIP_DELAY, TOOLTIP_COLOR } from "../../constants";
+import { TOOLTIP_DELAY, TOOLTIP_COLOR } from "../../constants";
 
 import styles from "./style.css";
 
@@ -27,7 +27,7 @@ const StarCheckbox = ({
                 <Tooltip
                     title={checked ? "Remove highlight" : "Highlight"}
                     placement="top"
-                    mouseEnterDelay={LEFT_PANEL_TOOLTIP_DELAY}
+                    mouseEnterDelay={TOOLTIP_DELAY}
                     color={TOOLTIP_COLOR}
                 >
                     <input
