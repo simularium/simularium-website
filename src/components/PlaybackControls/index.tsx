@@ -54,19 +54,17 @@ const PlayBackControls = ({
     // - Gets called once when the user clicks on the slider to skip to a specific time
     // - Gets called multiple times when user is scrubbing (every time the play head
     //     passes through a time value associated with a frame)
-    const handleTimeChange = (sliderValue: number | [number, number]): void => {
-        // sliderValue can be an array of numbers (representing a selected range),
-        // but we're just using a single value
-        onTimeChange(sliderValue as number);
+    const handleTimeChange = (sliderValue: number): void => {
+        onTimeChange(sliderValue);
         if (isPlaying) {
             // Need to save the sliderValue as timeToResumeAfterScrubbing to use in handleSliderMouseUp,
             // because the sliderValue argument available in handleSliderMouseUp is not accurate
             // when the time between mouse down and mouse up is short.
-            setTimeToResumeAfterScrubbing(sliderValue as number);
+            setTimeToResumeAfterScrubbing(sliderValue);
             pauseHandler();
         } else if (timeToResumeAfterScrubbing >= 0) {
             // Update value if user is still dragging
-            setTimeToResumeAfterScrubbing(sliderValue as number);
+            setTimeToResumeAfterScrubbing(sliderValue);
         }
     };
 
@@ -197,6 +195,7 @@ const PlayBackControls = ({
                 min={firstFrameTime}
                 max={lastFrameTime}
                 disabled={loading || isEmpty}
+                range={false}
             />
             <div className={styles.time}>
                 <InputNumber
