@@ -34,6 +34,7 @@ const getBasePlugins = (dist, env) => {
                 ["og:description"]:
                     "The Simularium Viewer makes it easy to share and interrogate interactive 3D visualizations of biological simulation trajectories and related plots directly in a web browser.",
                 ["og:url"]: "https://simularium.allencell.org",
+                ["og:type"]: "website",
                 ["og:image:type"]: "image/png",
                 ["og:image:width"]: "2048",
                 ["og:image:height"]: "1115",
