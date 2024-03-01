@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Tooltip } from "antd";
 
-import { TOOLTIP_COLOR } from "../../constants";
+import { NAV_BAR_TOOLTIP_OFFSET, TOOLTIP_COLOR } from "../../constants";
 import { NetworkedSimFile, LocalSimFile } from "../../state/trajectory/types";
 import { Share } from "../Icons";
 import ShareTrajectoryModal from "../ShareTrajectoryModal";
@@ -31,7 +31,7 @@ const ShareTrajectoryButton = ({
 
     const isDisabled = !simulariumFile.name || isSharing || isBuffering;
     // disabled buttons are wrapped in a span which changes the tooltip offset
-    const tooltipOffset = isDisabled ? [0, -20] : [0, -8];
+    const tooltipOffset = isDisabled ? [0, -20] : NAV_BAR_TOOLTIP_OFFSET;
 
     return (
         <div className={styles.container}>
@@ -53,8 +53,11 @@ const ShareTrajectoryButton = ({
                 color={TOOLTIP_COLOR}
                 align={{ offset: tooltipOffset }}
                 mouseEnterDelay={0.5}
-                trigger={isSharing ? [] : ["hover"]}
+                trigger={isSharing ? [] : ["hover", "focus"]}
                 onOpenChange={(visible) => {
+                    if (isSharing) {
+                        setTooltipVisible(false);
+                    }
                     setTooltipVisible(visible);
                 }}
                 open={tooltipVisible}
