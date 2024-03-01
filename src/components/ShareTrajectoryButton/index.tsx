@@ -55,8 +55,8 @@ const ShareTrajectoryButton = ({
                 mouseEnterDelay={0.5}
                 trigger={isSharing ? [] : ["hover", "focus"]}
                 onOpenChange={(visible) => {
-                    if (isSharing) {
-                        setTooltipVisible(false);
+                    if (isSharing && visible) {
+                        return setTooltipVisible(false);
                     }
                     setTooltipVisible(visible);
                 }}
