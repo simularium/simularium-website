@@ -8,7 +8,7 @@ export const CHECKBOX_TYPE_STAR = "star";
 export type CHECKBOX_TYPE_STAR = typeof CHECKBOX_TYPE_STAR;
 export const TOOLTIP_COLOR = "#3B3649";
 export const TOOLTIP_DELAY = 1; // in seconds
-
+export const NAV_BAR_TOOLTIP_OFFSET = [0, -8];
 // URLs
 export const BASE_API_URL = `/api/${API_VERSION}`;
 export const DATA_BUCKET_URL =
