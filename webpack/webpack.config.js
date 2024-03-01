@@ -132,6 +132,10 @@ module.exports = ({ analyze, env, dest = "dist" } = {}) => ({
                 use: ["file-loader"],
             },
             {
+                test: /\.html$/i,
+                loader: "html-loader",
+            },
+            {
                 test: /\.md$/,
                 use: ["raw-loader"],
             },
