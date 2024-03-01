@@ -2,7 +2,12 @@ import React from "react";
 import { Button, Tooltip } from "antd";
 import { ISimulariumFile } from "@aics/simularium-viewer";
 
-import { DATA_BUCKET_URL, TOOLTIP_COLOR } from "../../constants";
+import {
+    DATA_BUCKET_URL,
+    NAV_BAR_TOOLTIP_OFFSET,
+    TOOLTIP_COLOR,
+    TOOLTIP_DELAY,
+} from "../../constants";
 import { NetworkedSimFile, LocalSimFile } from "../../state/trajectory/types";
 import { Download } from "../Icons";
 
@@ -54,7 +59,8 @@ const DownloadTrajectoryMenu = ({
     };
 
     const isDisabled = !fileIsLoaded() || isBuffering;
-    const tooltipOffset = isDisabled ? [25, -30] : [40, -18];
+    // disabled buttons are wrapped in a span which changes the tooltip offset
+    const tooltipOffset = isDisabled ? [-30, -20] : NAV_BAR_TOOLTIP_OFFSET;
 
     return (
         <div className={styles.container}>
@@ -66,6 +72,8 @@ const DownloadTrajectoryMenu = ({
                         : "Download trajectory"
                 }
                 color={TOOLTIP_COLOR}
+                arrowPointAtCenter={true}
+                mouseEnterDelay={TOOLTIP_DELAY}
                 align={{ offset: tooltipOffset }}
             >
                 <Button

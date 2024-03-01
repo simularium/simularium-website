@@ -5,7 +5,7 @@ import { CheckboxProps } from "antd/lib/checkbox";
 import StarCheckbox from "../StarCheckbox";
 import {
     CHECKBOX_TYPE_STAR,
-    LEFT_PANEL_TOOLTIP_DELAY,
+    TOOLTIP_DELAY,
     TOOLTIP_COLOR,
 } from "../../constants";
 
@@ -46,7 +46,7 @@ const Checkbox = (props: CheckboxTypeProps): JSX.Element => {
         <Tooltip
             title={props.checked ? "Hide" : "Show"}
             placement="top"
-            mouseEnterDelay={LEFT_PANEL_TOOLTIP_DELAY}
+            mouseEnterDelay={TOOLTIP_DELAY}
             // Position tooltip with alignConfig object: https://github.com/yiminghe/dom-align#usage
             align={{ offset: tooltipOffsets[checkboxLevel] }}
             color={TOOLTIP_COLOR}

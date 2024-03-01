@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Tooltip } from "antd";
 
-import { TOOLTIP_COLOR } from "../../constants";
+import { NAV_BAR_TOOLTIP_OFFSET, TOOLTIP_COLOR } from "../../constants";
 import { NetworkedSimFile, LocalSimFile } from "../../state/trajectory/types";
 import { Share } from "../Icons";
 import ShareTrajectoryModal from "../ShareTrajectoryModal";
@@ -19,15 +19,19 @@ const ShareTrajectoryButton = ({
     simulariumFile,
 }: ShareTrajectoryButtonProps): JSX.Element => {
     const [isSharing, setIsSharing] = React.useState(false);
+    const [tooltipVisible, setTooltipVisible] = React.useState(false);
 
     const trajectoryIsSharable = isOnlineTrajectory(location.href);
 
     const handleShare = () => {
         setIsSharing(!isSharing);
+        // this is to ensure the tooltip closes when the button is clicked
+        setTooltipVisible(false);
     };
 
     const isDisabled = !simulariumFile.name || isSharing || isBuffering;
-    const tooltipOffset = isDisabled ? [0, -30] : [0, -18];
+    // disabled buttons are wrapped in a span which changes the tooltip offset
+    const tooltipOffset = isDisabled ? [0, -20] : NAV_BAR_TOOLTIP_OFFSET;
 
     return (
         <div className={styles.container}>
@@ -41,19 +45,28 @@ const ShareTrajectoryButton = ({
             ) : null}
             <Tooltip
                 title={
-                    isDisabled
+                    !simulariumFile.name
                         ? "Load a model to perform this action"
                         : "Share trajectory"
                 }
                 placement="bottomLeft"
                 color={TOOLTIP_COLOR}
                 align={{ offset: tooltipOffset }}
+                mouseEnterDelay={0.5}
+                trigger={isSharing ? [] : ["hover", "focus"]}
+                onOpenChange={(visible) => {
+                    if (isSharing && visible) {
+                        return setTooltipVisible(false);
+                    }
+                    setTooltipVisible(visible);
+                }}
+                open={tooltipVisible}
             >
                 <Button
                     className={isDisabled ? styles.disabled : undefined}
-                    onClick={handleShare}
                     type="primary"
                     disabled={isDisabled}
+                    onClick={handleShare}
                 >
                     Share {Share}
                 </Button>
