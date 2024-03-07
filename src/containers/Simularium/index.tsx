@@ -52,6 +52,7 @@ const { Content } = Layout;
 import styles from "./style.css";
 import classNames from "classnames";
 import { EMBED_PATHNAME } from "../../routes";
+import EmbedOverlay from "../../components/EmbedOverlay";
 
 interface AppProps {
     onSidePanelCollapse: (number: number) => void;
@@ -197,17 +198,38 @@ class App extends React.Component<AppProps, AppState> {
         }
     }
 
-    public render(): JSX.Element {
+    public renderOverlay(isEmbedded: boolean) {
         const {
-            simulariumController,
-            changeToLocalSimulariumFile,
+            simulariumFile,
             resetDragOverViewer,
+            changeToLocalSimulariumFile,
             viewerStatus,
             fileIsDraggedOverViewer,
             setViewerStatus,
             clearSimulariumFile,
             setError,
         } = this.props;
+        if (isEmbedded) {
+            return <EmbedOverlay title={simulariumFile.name} />;
+        } else {
+            return (
+                <ViewerOverlayTarget
+                    key="drop"
+                    clearSimulariumFile={clearSimulariumFile}
+                    loadLocalFile={changeToLocalSimulariumFile}
+                    isLoading={viewerStatus === VIEWER_LOADING}
+                    resetDragOverViewer={resetDragOverViewer}
+                    fileIsDraggedOver={fileIsDraggedOverViewer}
+                    setViewerStatus={setViewerStatus}
+                    setError={setError}
+                />
+            );
+        }
+    }
+
+    public render(): JSX.Element {
+        const { simulariumController, changeToLocalSimulariumFile } =
+            this.props;
         const isEmbedded = location.pathname === EMBED_PATHNAME;
         return (
             <Layout
@@ -218,16 +240,7 @@ class App extends React.Component<AppProps, AppState> {
             >
                 <div ref={this.interactiveContent}>
                     <Layout className={styles.content}>
-                        <ViewerOverlayTarget
-                            key="drop"
-                            clearSimulariumFile={clearSimulariumFile}
-                            loadLocalFile={changeToLocalSimulariumFile}
-                            isLoading={viewerStatus === VIEWER_LOADING}
-                            resetDragOverViewer={resetDragOverViewer}
-                            fileIsDraggedOver={fileIsDraggedOverViewer}
-                            setViewerStatus={setViewerStatus}
-                            setError={setError}
-                        />
+                        {this.renderOverlay(isEmbedded)}
                         <SideBar
                             onCollapse={this.onPanelCollapse}
                             isEmbedded={isEmbedded}

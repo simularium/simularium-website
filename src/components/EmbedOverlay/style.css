@@ -1,0 +1,14 @@
+.container{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 300;
+    display: flex;
+    color: white;
+    pointer-events: none;
+}
+
+.container h4 {
+    color: var(--dark-theme-text-color);
+    margin: 0 auto;
+}
