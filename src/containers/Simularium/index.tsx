@@ -96,7 +96,6 @@ class App extends React.Component<AppProps, AppState> {
             setViewerStatus,
             setError,
         } = this.props;
-        console.log(location.pathname);
         const current = this.interactiveContent.current;
         const controller = simulariumController || new SimulariumController({});
 
