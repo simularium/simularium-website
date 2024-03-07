@@ -18,7 +18,6 @@ import LocalFileUpload from "../LocalFileUpload";
 import uploadFiles from "./upload-local-files";
 
 import styles from "./style.css";
-import theme from "../theme/light-theme.css";
 
 const enum UploadTab {
     // this version of antd requires tab keys to be strings
