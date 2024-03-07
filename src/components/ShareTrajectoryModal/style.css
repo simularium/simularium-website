@@ -17,7 +17,7 @@
 
 .time-input[disabled] {
     background: transparent;
-    color: var(--light-theme-input-disabled-colo);
+    color: var(--light-theme-input-disabled-color);
 }
 
 .time-input-text {

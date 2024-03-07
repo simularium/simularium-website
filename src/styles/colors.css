@@ -78,6 +78,7 @@
     --light-theme-version-badge-purple: var(--allen-purple);
     --light-theme-background-off-white: var(--off-white);
     --light-theme-faint-text: var(--white-two);
+    --light-theme-input-disabled-color: var(--medium-gray);
     --light-theme-modal-content-bg: var(--light-purple);
     --light-theme-modal-supplemental-text: var(--charcoal-gray);
     --light-theme-modal-supplemental-text: var(--charcoal-gray);
