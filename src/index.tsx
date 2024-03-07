@@ -32,7 +32,10 @@ function useLocationChange() {
     const dispatch = useDispatch();
 
     React.useEffect(() => {
-        if (location.pathname !== VIEWER_PATHNAME) {
+        if (
+            location.pathname !== VIEWER_PATHNAME &&
+            location.pathname !== EMBED_PATHNAME
+        ) {
             batch(() => {
                 // if we're navigating away from the viewer, stop playing and reset state
                 dispatch(setIsPlaying(false));
