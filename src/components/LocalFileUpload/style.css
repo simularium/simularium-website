@@ -16,7 +16,7 @@
 }
 
 .file-upload :global(.ant-upload-list-item-card-actions-btn) svg {
-    color: #d14040;
+    color: var(--cancel-icon-color);
 }
 
 .file-upload :global(.ant-upload-list-text .ant-upload-list-item-name) {

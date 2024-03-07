@@ -140,29 +140,3 @@
 .markdown p {
     margin-bottom: 2em;
 }
-
-/* These will be useful if we ever bring a call-to-action button back */
-/* .call-to-action-panel :global(.ant-btn) {
-    display: block;
-    width: 130px;
-    height: 30px;
-    font-size: 14px;
-    margin-top: 3em;
-    margin-bottom: 0.5em;
-    margin-left: auto;
-    margin-right: auto;
-    transition: 0.3s;
-    border-radius: 3px;
-}
-
-.call-to-action-panel :global(.ant-btn-primary),
-.call-to-action-panel :global(.ant-btn-ghost:hover) {
-    background-color: var(--light-theme-button-purple);
-    color: var(--light-theme-background-purple);
-}
-
-.call-to-action-panel :global(.ant-btn-ghost),
-:global(.ant-btn-primary:hover) {
-    background-color: transparent;
-    color: var(--light-theme-button-purple);
-} */

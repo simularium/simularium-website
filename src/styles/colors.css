@@ -13,30 +13,39 @@
     --white-six: #e7e7e7;
     --transparent-white: rgba(255, 255, 255, 0.65);
     --dim-gray: #383838;
-    --dim-gray-two: #6E6E6E;
-    --purplish-gray: #4A4658;
-    --pale-grey: #ddd9ec;
+    --dim-gray-two: #6e6e6e;
+    --purplish-gray: #4a4658;
+    --pale-gray: #ddd9ec;
     --heather: #bab5c9;
     --text-gray: #a0a0a0;
     --grayish-brown: #4a4a4a;
     --warm-gray: #979797;
-    --charcoal-grey: #3b3649;
-    --dark-blue-grey: #2d224d;
-    --background-dark-gray: #131313;
+    --charcoal-gray: #3b3649;
+    --light-purple: #e7e4f2;
     --baby-purple: #b59ff6;
     --allen-purple: #8d87aa;
-    --blue: #0094FF;
-    --modal-content-bg: #e7e4f2;
-    --baby-purple-two: #DCCFFF;
-    --medium-grey: #AEAEAE;
-    --dark-blue-gray: #69738A;
-    --background-dim-gray: var(--dim-gray);
-    --border-gray: var(--white-six);
+    --blue: #0094ff;
+    --baby-purple-two: #dccfff;
+    --medium-gray: #aeaeae;
+    --dark-blue-gray: #69738a;
+    --brick-red: #d14040;
+    /* Non-theme variables */
+    --icon-moon-color: var(--white-three);
+    --star-checkbox-bg: var(--grayish-brown);
     --footer-bg: var(--dark-three);
     --footer-text: var(--warm-gray);
-    --footer-text-border-bottom: var(--greyish-brown);
+    --footer-text-border-bottom: var(--grayish-brown);
     --footer-link: var(--blue);
     --input-border-highlight: var(--heather);
+    --color-picker-tooltip: var(--dark-blue-gray);
+    --viewer-btn-bg-default: var(--dark-three);
+    --viewer-btn-bg-hover: var(--purplish-gray);
+    --viewer-btn-bg-disabled: var(--dark-three);
+    --viewer-btn-border-active: var(--white-three);
+    --viewer-btn-color-default: var(--white-three);
+    --viewer-btn-color-disabled: var(--grayish-brown);
+    --cancel-icon-color: var(--brick-red);
+    /* Dark theme */
     --dark-theme-primary-color: var(--baby-purple);
     --dark-theme-body-bg: var(--black);
     --dark-theme-header-bg: var(--dark-three);
@@ -56,50 +65,40 @@
     --dark-theme-btn-bg: var(--dark-three);
     --dark-theme-btn-color: var(--white-three);
     --dark-theme-btn-color-dim: var(--text-gray);
-    --dark-theme-btn-hover-bg: var(--greyish-brown);
-    --dark-theme-btn-disabled-bg: var(--dark-two);
-    --dark-theme-btn-disabled-color: rgb(231 231 231 / 32%);
+    --dark-theme-btn-hover-bg: var(--grayish-brown);
     --dark-theme-btn-primary: var(--baby-purple);
-    --dark-theme-btn-primary-text: var(--dark-two);
-    --dark-theme-slider-color: var(--white-three);    
-    --dark-theme-tooltip-bg: var(--charcoal-grey);
+    --dark-theme-tooltip-bg: var(--charcoal-gray);
     --dark-theme-version-badge-purple: var(--dark-five);
-    --light-theme-background-purple: var(--pale-grey);
-    --light-theme-button-purple: var(--dark-blue-grey);
-
-    --light-theme-button-primary-text: var(--white-three);
-    --light-theme-button-primary-bg: var(--dark-blue-grey);
-    --light-theme-button-primary-text-hover: var(--baby-purple);
-    --light-theme-button-primary-border-hover: var(--dark-four);
-    --light-theme-button-primary-text-disabled: var(--white-three);
-    --light-theme-button-primary-bg-disabled: var(--heather);
-
-
-    --light-theme-button-secondary-text: var(--dark-four);
-    --light-theme-button-secondary-border: var(--dark-four);
-    --light-theme-button-secondary-text-hover: var(--baby-purple);
-    --light-theme-button-secondary-bg-hover: var(--charcoal-grey);
-    --light-theme-button-secondary-text-disabled: var(--heather);
-    --light-theme-button-primary-border-disabled: var(--heather);
-
-
+    /* Light theme */
+    --light-theme-background-purple: var(--pale-gray);
     --light-theme-heading1-gray: var(--dark-three);
-    --light-theme-heading2-gray: var(--greyish-brown);
+    --light-theme-heading2-gray: var(--grayish-brown);
     --light-theme-panel-light-gray: var(--white-four);
-    --light-theme-button-light-gray: var(--white-four);
     --light-theme-card-bg-white: var(--pure-white);
     --light-theme-version-badge-purple: var(--allen-purple);
     --light-theme-background-off-white: var(--off-white);
     --light-theme-faint-text: var(--white-two);
-    --light-theme-modal-supplemental-text: var(--charcoal-grey);
-    --light-theme-modal-btn-default-color: var(--dark-four);
-    --light-theme-btn-default-disabled-bg: var(--heather);
-    --color-picker-tooltip: var(--dark-blue-gray);
-    --viewer-btn-bg-default: var(--dark-three);
-    --viewer-btn-bg-hover: var(--purplish-gray);
-    --viewer-btn-bg-disabled: var(--dark-three);
-    --viewer-btn-border-active: var( --white-three);
-    --viewer-btn-border-on: var(--dim-gray-two);
-    --viewer-btn-color-default: var(--white-three);
-    --viewer-btn-color-disabled: var(--grayish-brown);
+    --light-theme-modal-content-bg: var(--light-purple);
+    --light-theme-modal-supplemental-text: var(--charcoal-gray);
+    --light-theme-modal-supplemental-text: var(--charcoal-gray);
+    /* primary modal buttons */
+    --light-theme-btn-primary-bg: var(--dark-four);
+    --light-theme-btn-primary-border: var(--dark-four);
+    --light-theme-btn-primary-color: var(--white-three);
+    --light-theme-btn-primary-hover-bg: var(--dark);
+    --light-theme-btn-primary-hover-border: var(--dark);
+    --light-theme-btn-primary-hover-color: var(--baby-purple);
+    --light-theme-btn-primary-disabled-bg: var(--heather);
+    --light-theme-btn-primary-disabled-border: var(--heather);
+    --light-theme-btn-primary-disabled-color: var(--white-three);
+    /* secondary modal buttons */
+    --light-theme-btn-secondary-bg: transparent;
+    --light-theme-btn-secondary-border: var(--dark-four);
+    --light-theme-btn-secondary-color: var(--dark-four);
+    --light-theme-btn-secondary-hover-bg: var(--dark);
+    --light-theme-btn-secondary-hover-border: var(--dark);
+    --light-theme-btn-secondary-hover-color: var(--baby-purple);
+    --light-theme-btn-secondary-disabled-bg: transparent;
+    --light-theme-btn-secondary-disabled-border: var(--heather);
+    --light-theme-btn-secondary-disabled-color: var(--heather);
 }
