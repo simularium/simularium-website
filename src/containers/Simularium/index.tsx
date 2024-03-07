@@ -50,6 +50,8 @@ import {
 const { Content } = Layout;
 
 import styles from "./style.css";
+import classNames from "classnames";
+import { EMBED_PATHNAME } from "../../routes";
 
 interface AppProps {
     onSidePanelCollapse: (number: number) => void;
@@ -93,6 +95,7 @@ class App extends React.Component<AppProps, AppState> {
             setViewerStatus,
             setError,
         } = this.props;
+        console.log(location.pathname);
         const current = this.interactiveContent.current;
         const controller = simulariumController || new SimulariumController({});
 
@@ -205,8 +208,14 @@ class App extends React.Component<AppProps, AppState> {
             clearSimulariumFile,
             setError,
         } = this.props;
+        const isEmbedded = location.pathname === EMBED_PATHNAME;
         return (
-            <Layout className={styles.container}>
+            <Layout
+                className={classNames([
+                    styles.container,
+                    { [styles.embed]: isEmbedded },
+                ])}
+            >
                 <div ref={this.interactiveContent}>
                     <Layout className={styles.content}>
                         <ViewerOverlayTarget
@@ -219,7 +228,11 @@ class App extends React.Component<AppProps, AppState> {
                             setViewerStatus={setViewerStatus}
                             setError={setError}
                         />
-                        <SideBar onCollapse={this.onPanelCollapse} type="left">
+                        <SideBar
+                            onCollapse={this.onPanelCollapse}
+                            isEmbedded={isEmbedded}
+                            type="left"
+                        >
                             <ModelPanel />
                         </SideBar>
                         <Content>
@@ -230,7 +243,11 @@ class App extends React.Component<AppProps, AppState> {
                                 />
                             )}
                         </Content>
-                        <SideBar onCollapse={this.onPanelCollapse} type="right">
+                        <SideBar
+                            onCollapse={this.onPanelCollapse}
+                            isEmbedded={isEmbedded}
+                            type="right"
+                        >
                             <ResultsPanel />
                         </SideBar>
                     </Layout>
