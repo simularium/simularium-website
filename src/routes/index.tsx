@@ -1,7 +1,6 @@
 import TutorialPage from "../components/TutorialPage";
 import LandingPage from "../components/LandingPage";
 import Simularium from "../containers/Simularium";
-// import Embed from "../containers/Embed";
 
 export const VIEWER_PATHNAME = "/viewer";
 export const TUTORIAL_PATHNAME = "/tutorial";
