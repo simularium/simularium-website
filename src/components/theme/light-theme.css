@@ -2,7 +2,7 @@
 
 /* primary buttons */
 .light-theme :global(.primary-button),
-.light-theme :global(.secondary-button):focus {
+.light-theme :global(.primary-button):focus {
     background-color: var(--light-theme-btn-primary-bg);
     border: var(--light-theme-btn-primary-border);
     color: var(--light-theme-btn-primary-color);
