@@ -103,17 +103,17 @@ with "icon-moon" class name.
  /* Current in-use icons */
 .star-empty-icon::after {
     content: var(--star-empty);
-    color: var(--warm-gray)
+    color: var(--dark-theme-star-icon-color)
 }
 
 .star-dashed-icon::after {
     content: var(--star-dashed);
-    color: var(--white-two);
+    color: var(--dark-theme-star-icon-active-color);
 }
 
 .star-full-icon::after {
     content: var(--star-full);
-    color: var(--white-two);
+    color: var(--dark-theme-star-icon-active-color);
 }
 
 .step-back-icon::after {
