@@ -31,13 +31,13 @@ const VersionModal: React.FC<VersionModalProps> = ({ setModalVisible }) => {
             width={425}
         >
             <div>
-                Application:
+                Application:{" "}
                 <span className={styles.blueText}>
                     simularium-website v{SIMULARIUM_WEBSITE_VERSION}
                 </span>
             </div>
             <div>
-                Viewer:
+                Viewer:{" "}
                 <span className={styles.blueText}>
                     simularium-viewer v{SIMULARIUM_VIEWER_VERSION}
                 </span>
