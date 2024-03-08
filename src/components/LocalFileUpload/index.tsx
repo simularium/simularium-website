@@ -70,12 +70,7 @@ const LocalFileUpload: React.FC<FileUploadProps> = ({
                 }}
             >
                 {children || (
-                    <Button
-                        className="secondary-button"
-                        ant-click-animating-without-extra-node={false}
-                    >
-                        Select file
-                    </Button>
+                    <Button className="secondary-button">Select file</Button>
                 )}
             </Link>
         </Upload>
