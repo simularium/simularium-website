@@ -26,6 +26,26 @@ const getBasePlugins = (dist, env) => {
         new HtmlWebpackPlugin({
             favicon: "./src/assets/AICS-logo.svg",
             template: path.resolve(__dirname, "index.template.html"),
+            meta: {
+                viewport: "width=device-width, initial-scale=1",
+                description:
+                    "The Simularium Viewer makes it easy to share and interrogate interactive 3D visualizations of biological simulation trajectories and related plots directly in a web browser.",
+                ["og:title"]: "Simularium",
+                ["og:description"]:
+                    "The Simularium Viewer makes it easy to share and interrogate interactive 3D visualizations of biological simulation trajectories and related plots directly in a web browser.",
+                ["og:url"]: "https://simularium.allencell.org",
+                ["og:type"]: "website",
+                ["og:image:type"]: "image/png",
+                ["og:image:width"]: "2048",
+                ["og:image:height"]: "1115",
+                ["og:image:alt"]:
+                    "A view of the Simularium viewer showing a 3D scene of molecular interactions, with data plots on the right side of the screen, and a menu of the visible agents on the left side.",
+                ["twitter:card"]: "summary_large_image",
+                ["twitter:title"]: "Simularium",
+                ["twitter:description"]:
+                    "The Simularium Viewer makes it easy to share and interrogate interactive 3D visualizations of biological simulation trajectories and related plots directly in a web browser.",
+                ["twitter:url"]: "https://simularium.allencell.org/",
+            },
         }),
         new webpack.EnvironmentPlugin({
             GH_BUILD: !!process.env.GH_BUILD,
