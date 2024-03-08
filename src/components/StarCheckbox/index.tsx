@@ -16,10 +16,13 @@ const StarCheckbox = ({
 }: CheckboxProps): JSX.Element => {
     const parentClassnames = className ? className.split(" ") : [];
     const wrapperClassnames = classNames([...parentClassnames, styles.wrapper]);
-    const checkboxClassNames = classNames(["icon-moon", styles.checkbox], {
-        [styles.checked]: checked,
-        [styles.indeterminate]: indeterminate,
-    });
+    const checkboxClassNames = classNames(
+        ["icon-moon", "star-empty-icon", styles.checkbox],
+        {
+            ["star-full-icon"]: checked,
+            ["star-dashed-icon"]: indeterminate,
+        }
+    );
 
     return (
         <label className={wrapperClassnames}>

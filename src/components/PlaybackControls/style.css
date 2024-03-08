@@ -119,11 +119,3 @@
     color: var(--viewer-btn-color-default);
     margin: auto 2px;
 }
-
-.step-back::after {
-    content: "\e906";
-}
-
-.step-forward::after {
-    content: "\e907";
-}

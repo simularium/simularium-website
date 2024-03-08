@@ -1,0 +1,21 @@
+:root {
+/* these variables associate a semantic name with
+icomoon glyphs defined in icomoon.svg so that 
+style sheets that implement these glyphs are readable.
+
+the css are applied to content properties in global style 
+rules in src/style.css, those class names serve as constants
+and can be applied to elements to render the glyphs. */
+    --step-back: "\e908";
+    --step-forward: "\e909";
+    --looping: "\e900";
+    --pan: "\e904";
+    --orthographic: "\e901";
+    --perspective: "\e902";
+    --reset: "\e903";
+    --focus: "\e90a";
+    --star-empty: "\e90b";
+    --star-dashed: "\e907";
+    --star-full: "\e9d9";
+    --rotate: "\e999";
+}

@@ -137,7 +137,7 @@ const PlayBackControls = ({
                             className={classNames([
                                 "icon-moon",
                                 "anticon",
-                                styles.stepBack,
+                                "step-back-icon",
                             ])}
                         />
                     )}
@@ -179,7 +179,7 @@ const PlayBackControls = ({
                             className={classNames([
                                 "icon-moon",
                                 "anticon",
-                                styles.stepForward,
+                                "step-forward-icon",
                             ])}
                         />
                     )}
