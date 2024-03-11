@@ -35,247 +35,27 @@ const thirdPartyLicensing = (licenseUrl: string) => {
 
 const TRAJECTORIES: TrajectoryDisplayData[] = [
     {
-        modelName: "Actin in Clathrin-mediated Endocytosis",
-        id: "endocytosis.simularium",
-        title: "Actin in Clathrin-mediated Endocytosis",
-        totalSimulatedTime: "15s",
-        authors: "Matthew Akamatsu et al.",
+        modelName: "Blood Plasma",
+        id: "blood-plasma-1.0.simularium",
+        title: "Blood Plasma",
+        totalSimulatedTime: "0s",
+        version: "1.0",
+        authors:
+            "Graham T Johnson, Ludovic Autin, Mostafa Al-Alusi, David S Goodsell, Michel F Sanner & Arthur J Olson",
         publication: {
-            title:
-                "Principles of self-organization and load adaptation by the actin cytoskeleton during clathrin-mediated endocytosis",
-            journal: "eLife",
-            year: 2020,
-            url: "https://elifesciences.org/articles/49840",
+            title: "cellPACK: a virtual mesoscope to model and visualize structural systems biology",
+            journal: "Nature Methods",
+            year: 2015,
+            url: "https://www.nature.com/articles/nmeth.3204",
         },
         description:
-            "A CytoSim model of a branched actin network internalizing an endocytic pit against membrane tension.",
-        code:
-            "Software used to generate this data is available <a href='https://github.com/DrubinBarnes/Akamatsu_CME_manuscript'>here</a>.",
+            "A cellPACK model of a 100 nm × 100 nm × 15 nm volume of human blood plasma based on a mesoscale recipe containing information for the most abundant macromolecules.",
+        code: "Software used to generate this data is available <a href='https://github.com/mesoscope/cellpack'>here</a>.",
         legalese: thirdPartyLicensing(
-            "https://github.com/DrubinBarnes/Akamatsu_CME_manuscript/blob/master/LICENSE"
+            "https://github.com/mesoscope/cellpack/blob/main/LICENSE"
         ),
-        imageFile: endocytosisImage,
-        gifFile: endocytosisGif,
-    },
-    {
-        modelName: "SARS-CoV-2 Dynamics in Human Lung Epithelium",
-        id: "pc4covid19.simularium",
-        title: "SARS-CoV-2 Dynamics in Human Lung Epithelium",
-        version: "4.1",
-        totalSimulatedTime: "24h",
-        authors: "Michael Getz et al.",
-        publication: {
-            title:
-                "Rapid community-driven development of a SARS-CoV-2 tissue simulator",
-            journal: "bioRxiv",
-            year: 2020,
-            url: "https://www.biorxiv.org/content/10.1101/2020.04.02.019075v3",
-        },
-        description:
-            "A PhysiCell model of SARS-CoV-2 dynamics in human lung epithelium.",
-        code:
-            "Software used to generate this data is available <a href='https://github.com/pc4covid19/pc4covid19'>here</a>.",
-        legalese: thirdPartyLicensing(
-            "https://github.com/pc4covid19/pc4covid19/blob/master/LICENSE"
-        ),
-        imageFile: covidImage,
-        gifFile: covidGif,
-    },
-    {
-        modelName: "Membrane Wrapping a Nanoparticle",
-        id: "nanoparticle_wrapping.simularium",
-        title: "Membrane Wrapping a Nanoparticle",
-        totalSimulatedTime: "5.48ms",
-        authors: "Mohsen Sadeghi et al.",
-        publication: {
-            title:
-                "Particle-based membrane model for mesoscopic simulation of cellular dynamics",
-            journal: "J Chem Phys",
-            year: 2018,
-            url: "https://aip.scitation.org/doi/10.1063/1.5009107",
-        },
-        description:
-            "A model of a coarse-grained particle-based membrane wrapping a nanoparticle.",
-        imageFile: nanoparticleImage,
-        gifFile: nanoparticleGif,
-    },
-    {
-        modelName: "Spatiotemporal oscillations in the E. coli Min system",
-        id: "smoldyn_min1.simularium",
-        title: "Spatiotemporal oscillations in the E. coli Min system",
-        totalSimulatedTime: "100s",
-        authors: "Steve Andrews et al.",
-        publication: {
-            title: "Detailed Simulations of Cell Biology with Smoldyn 2.1",
-            journal: "PLoS Computational Biology",
-            year: 2010,
-            url:
-                "https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000705",
-        },
-        description:
-            "A Smoldyn example model of the E. coli Min system, which is used to find the cell center during cell division.",
-        code:
-            "Software used to generate this data is available <a href='https://github.com/ssandrews/Smoldyn'>here</a>. The input data file is <a href='https://github.com/ssandrews/Smoldyn/blob/master/examples/S99_more/Min/Min1.txt'>here</a>.",
-        legalese: thirdPartyLicensing(
-            "https://github.com/ssandrews/Smoldyn/blob/master/LICENSE"
-        ),
-        imageFile: smoldynMin1Image,
-        gifFile: smoldynMin1Gif,
-    },
-    {
-        modelName: "Sequestration of CaMKII in dendritic spines",
-        id: "smoldyn_spine.simularium",
-        title: "Sequestration of CaMKII in dendritic spines",
-        totalSimulatedTime: "1.5s",
-        authors: "Shahid Khan et al.",
-        publication: {
-            title: "Sequestration of CaMKII in dendritic spines in silico",
-            journal: "J Comp Neuro",
-            year: 2011,
-            url:
-                "https://link.springer.com/article/10.1007%2Fs10827-011-0323-2",
-        },
-        description:
-            "A Smoldyn model of a dendritic spine with CaMKII and molecules of the postsynaptic density at the spine tip.",
-        code:
-            "Software used to generate this data is available <a href='https://github.com/ssandrews/Smoldyn'>here</a>. The input data file is <a href='http://www.smoldyn.org/archive/Andrews_Arkin_2010/spine.txt'>here</a>.",
-        legalese: thirdPartyLicensing(
-            "https://github.com/ssandrews/Smoldyn/blob/master/LICENSE"
-        ),
-        imageFile: smoldynSpineImage,
-        gifFile: smoldynSpineGif,
-    },
-    {
-        modelName: "Actin Bundle Dynamics with α–Actinin and Myosin",
-        id: "medyan_Chandrasekaran_2019_UNI_alphaA_0.1_MA_0.0225.simularium",
-        title: "Actin Bundle Dynamics with α–Actinin and Myosin",
-        subtitle: "Low Myosin Activity",
-        totalSimulatedTime: "33min",
-        authors: "Chandrasekaran et al.",
-        publication: {
-            title:
-                "Remarkable structural transformations of actin bundles are driven by their initial polarity, motor activity, crosslinking, and filament treadmilling",
-            journal: "PLoS Computational Biology",
-            year: 2019,
-            url:
-                "https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1007156",
-        },
-        description:
-            "A MEDYAN model of interacting actin filaments, α–actinin crosslinkers, and myosin motors. Low myosin activity maintains the bundle structure.",
-        code:
-            "Software used to generate this data is available <a href='https://bitbucket.org/jkomianos/medyan/src/master/'>here</a>. The outputs that were visualized can be downloaded <a href='https://drum.lib.umd.edu/handle/1903/21856'>here</a>.",
-        legalese: thirdPartyLicensing(
-            "https://bitbucket.org/jkomianos/medyan/src/master/license.txt"
-        ),
-        imageFile: medyan1Image,
-        gifFile: medyan1Gif,
-    },
-    {
-        modelName: "Actin Bundle Dynamics with α–Actinin and Myosin",
-        id: "medyan_Chandrasekaran_2019_UNI_alphaA_0.1_MA_0.675.simularium",
-        title: "Actin Bundle Dynamics with α–Actinin and Myosin",
-        subtitle: "High Myosin Activity",
-        totalSimulatedTime: "33min",
-        authors: "Chandrasekaran et al.",
-        publication: {
-            title:
-                "Remarkable structural transformations of actin bundles are driven by their initial polarity, motor activity, crosslinking, and filament treadmilling",
-            journal: "PLoS Computational Biology",
-            year: 2019,
-            url:
-                "https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1007156",
-        },
-        description:
-            "A MEDYAN model of interacting actin filaments, α–actinin crosslinkers, and myosin motors. High myosin activity causes formation of an aster-like structure.",
-        code:
-            "Software used to generate this data is available <a href='https://bitbucket.org/jkomianos/medyan/src/master/'>here</a>. The outputs that were visualized can be downloaded <a href='https://drum.lib.umd.edu/handle/1903/21856'>here</a>.",
-        legalese: thirdPartyLicensing(
-            "https://bitbucket.org/jkomianos/medyan/src/master/license.txt"
-        ),
-        imageFile: medyan2Image,
-        gifFile: medyan2Gif,
-    },
-    /*
-    {
-        modelName: "Vivarium E coli",
-        id: "vivarium_ecoli.simularium",
-        title: "Vivarium E coli",
-        totalSimulatedTime: "10h",
-        authors: "Agmon and Spangler",
-        publication: {
-            title: "A Multi-Scale Approach to Modeling E. coli Chemotaxis",
-            journal: "Entropy",
-            year: 2020,
-            url: "https://www.mdpi.com/1099-4300/22/10/1101",
-        },
-        description: "Model of chemotactic E. coli using Vivarium.",
-        code:
-            "Software used to generate this data is available <a href='https://github.com/vivarium-collective/vivarium-chemotaxis'>here</a>.",
-        legalese:
-            thirdPartyLicensing("https://github.com/vivarium-collective/vivarium-chemotaxis/blob/master/LICENSE"),
-        imageFile: vivariumImage,
-        gifFile: vivariumGif,
-    },
-    */
-    {
-        modelName: "Condensate Formation",
-        id: "springsalad_condensate_formation_Below_Ksp.simularium",
-        title: "Condensate Formation: Below Ksp",
-        totalSimulatedTime: "1s",
-        authors: "Aniruddha Chattaraj et al.",
-        publication: {
-            title:
-                "The solubility product extends the buffering concept to heterotypic biomolecular condensates",
-            journal: "eLife",
-            year: 2021,
-            url: "https://elifesciences.org/articles/67176",
-        },
-        description:
-            "A SpringSaLaD model of liquid-liquid phase separation below Ksp where no condensate forms.",
-        code:
-            "Software used to generate this data is available <a href='https://github.com/achattaraj/Ksp_phase_separation'>here</a>.",
-        imageFile: springSalad1Image,
-        gifFile: springSalad1Gif,
-    },
-    {
-        modelName: "Condensate Formation",
-        id: "springsalad_condensate_formation_At_Ksp.simularium",
-        title: "Condensate Formation: At Ksp",
-        totalSimulatedTime: "0.4s",
-        authors: "Aniruddha Chattaraj et al.",
-        publication: {
-            title:
-                "The solubility product extends the buffering concept to heterotypic biomolecular condensates",
-            journal: "eLife",
-            year: 2021,
-            url: "https://elifesciences.org/articles/67176",
-        },
-        description:
-            "A SpringSaLaD model of liquid-liquid phase separation at Ksp where condensate forms.",
-        code:
-            "Software used to generate this data is available <a href='https://github.com/achattaraj/Ksp_phase_separation'>here</a>.",
-        imageFile: springSalad2Image,
-        gifFile: springSalad2Gif,
-    },
-    {
-        modelName: "Condensate Formation",
-        id: "springsalad_condensate_formation_Above_Ksp.simularium",
-        title: "Condensate Formation: Above Ksp",
-        totalSimulatedTime: "0.4s",
-        authors: "Aniruddha Chattaraj et al.",
-        publication: {
-            title:
-                "The solubility product extends the buffering concept to heterotypic biomolecular condensates",
-            journal: "eLife",
-            year: 2021,
-            url: "https://elifesciences.org/articles/67176",
-        },
-        description:
-            "A SpringSaLaD model of liquid-liquid phase separation above Ksp where condensate forms.",
-        code:
-            "Software used to generate this data is available <a href='https://github.com/achattaraj/Ksp_phase_separation'>here</a>.",
-        imageFile: springSalad3Image,
-        gifFile: springSalad3Gif,
+        imageFile: bloodPlasmaImage,
+        gifFile: bloodPlasmaGif,
     },
     /* Not ready yet
     {
@@ -338,29 +118,226 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
     },
     */
     {
-        modelName: "Blood Plasma",
-        id: "blood-plasma-1.0.simularium",
-        title: "Blood Plasma",
-        totalSimulatedTime: "0s",
-        version: "1.0",
-        authors:
-            "Graham T Johnson, Ludovic Autin, Mostafa Al-Alusi, David S Goodsell, Michel F Sanner & Arthur J Olson",
+        modelName: "Condensate Formation",
+        id: "springsalad_condensate_formation_Above_Ksp.simularium",
+        title: "Condensate Formation: Above Ksp",
+        totalSimulatedTime: "0.4s",
+        authors: "Aniruddha Chattaraj et al.",
         publication: {
-            title:
-                "cellPACK: a virtual mesoscope to model and visualize structural systems biology",
-            journal: "Nature Methods",
-            year: 2015,
-            url: "https://www.nature.com/articles/nmeth.3204",
+            title: "The solubility product extends the buffering concept to heterotypic biomolecular condensates",
+            journal: "eLife",
+            year: 2021,
+            url: "https://elifesciences.org/articles/67176",
         },
         description:
-            "A cellPACK model of a 100 nm × 100 nm × 15 nm volume of human blood plasma based on a mesoscale recipe containing information for the most abundant macromolecules.",
+            "A SpringSaLaD model of liquid-liquid phase separation above Ksp where condensate forms.",
+        code: "Software used to generate this data is available <a href='https://github.com/achattaraj/Ksp_phase_separation'>here</a>.",
+        imageFile: springSalad3Image,
+        gifFile: springSalad3Gif,
+    },
+    {
+        modelName: "Condensate Formation",
+        id: "springsalad_condensate_formation_At_Ksp.simularium",
+        title: "Condensate Formation: At Ksp",
+        totalSimulatedTime: "0.4s",
+        authors: "Aniruddha Chattaraj et al.",
+        publication: {
+            title: "The solubility product extends the buffering concept to heterotypic biomolecular condensates",
+            journal: "eLife",
+            year: 2021,
+            url: "https://elifesciences.org/articles/67176",
+        },
+        description:
+            "A SpringSaLaD model of liquid-liquid phase separation at Ksp where condensate forms.",
+        code: "Software used to generate this data is available <a href='https://github.com/achattaraj/Ksp_phase_separation'>here</a>.",
+        imageFile: springSalad2Image,
+        gifFile: springSalad2Gif,
+    },
+    {
+        modelName: "Condensate Formation",
+        id: "springsalad_condensate_formation_Below_Ksp.simularium",
+        title: "Condensate Formation: Below Ksp",
+        totalSimulatedTime: "1s",
+        authors: "Aniruddha Chattaraj et al.",
+        publication: {
+            title: "The solubility product extends the buffering concept to heterotypic biomolecular condensates",
+            journal: "eLife",
+            year: 2021,
+            url: "https://elifesciences.org/articles/67176",
+        },
+        description:
+            "A SpringSaLaD model of liquid-liquid phase separation below Ksp where no condensate forms.",
+        code: "Software used to generate this data is available <a href='https://github.com/achattaraj/Ksp_phase_separation'>here</a>.",
+        imageFile: springSalad1Image,
+        gifFile: springSalad1Gif,
+    },
+    /*
+    {
+        modelName: "Vivarium E coli",
+        id: "vivarium_ecoli.simularium",
+        title: "Vivarium E coli",
+        totalSimulatedTime: "10h",
+        authors: "Agmon and Spangler",
+        publication: {
+            title: "A Multi-Scale Approach to Modeling E. coli Chemotaxis",
+            journal: "Entropy",
+            year: 2020,
+            url: "https://www.mdpi.com/1099-4300/22/10/1101",
+        },
+        description: "Model of chemotactic E. coli using Vivarium.",
         code:
-            "Software used to generate this data is available <a href='https://github.com/mesoscope/cellpack'>here</a>.",
+            "Software used to generate this data is available <a href='https://github.com/vivarium-collective/vivarium-chemotaxis'>here</a>.",
+        legalese:
+            thirdPartyLicensing("https://github.com/vivarium-collective/vivarium-chemotaxis/blob/master/LICENSE"),
+        imageFile: vivariumImage,
+        gifFile: vivariumGif,
+    },
+    */
+    {
+        modelName: "Actin Bundle Dynamics with α–Actinin and Myosin",
+        id: "medyan_Chandrasekaran_2019_UNI_alphaA_0.1_MA_0.675.simularium",
+        title: "Actin Bundle Dynamics with α–Actinin and Myosin",
+        subtitle: "High Myosin Activity",
+        totalSimulatedTime: "33min",
+        authors: "Chandrasekaran et al.",
+        publication: {
+            title: "Remarkable structural transformations of actin bundles are driven by their initial polarity, motor activity, crosslinking, and filament treadmilling",
+            journal: "PLoS Computational Biology",
+            year: 2019,
+            url: "https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1007156",
+        },
+        description:
+            "A MEDYAN model of interacting actin filaments, α–actinin crosslinkers, and myosin motors. High myosin activity causes formation of an aster-like structure.",
+        code: "Software used to generate this data is available <a href='https://bitbucket.org/jkomianos/medyan/src/master/'>here</a>. The outputs that were visualized can be downloaded <a href='https://drum.lib.umd.edu/handle/1903/21856'>here</a>.",
         legalese: thirdPartyLicensing(
-            "https://github.com/mesoscope/cellpack/blob/main/LICENSE"
+            "https://bitbucket.org/jkomianos/medyan/src/master/license.txt"
         ),
-        imageFile: bloodPlasmaImage,
-        gifFile: bloodPlasmaGif,
+        imageFile: medyan2Image,
+        gifFile: medyan2Gif,
+    },
+    {
+        modelName: "Actin Bundle Dynamics with α–Actinin and Myosin",
+        id: "medyan_Chandrasekaran_2019_UNI_alphaA_0.1_MA_0.0225.simularium",
+        title: "Actin Bundle Dynamics with α–Actinin and Myosin",
+        subtitle: "Low Myosin Activity",
+        totalSimulatedTime: "33min",
+        authors: "Chandrasekaran et al.",
+        publication: {
+            title: "Remarkable structural transformations of actin bundles are driven by their initial polarity, motor activity, crosslinking, and filament treadmilling",
+            journal: "PLoS Computational Biology",
+            year: 2019,
+            url: "https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1007156",
+        },
+        description:
+            "A MEDYAN model of interacting actin filaments, α–actinin crosslinkers, and myosin motors. Low myosin activity maintains the bundle structure.",
+        code: "Software used to generate this data is available <a href='https://bitbucket.org/jkomianos/medyan/src/master/'>here</a>. The outputs that were visualized can be downloaded <a href='https://drum.lib.umd.edu/handle/1903/21856'>here</a>.",
+        legalese: thirdPartyLicensing(
+            "https://bitbucket.org/jkomianos/medyan/src/master/license.txt"
+        ),
+        imageFile: medyan1Image,
+        gifFile: medyan1Gif,
+    },
+    {
+        modelName: "Sequestration of CaMKII in dendritic spines",
+        id: "smoldyn_spine.simularium",
+        title: "Sequestration of CaMKII in dendritic spines",
+        totalSimulatedTime: "1.5s",
+        authors: "Shahid Khan et al.",
+        publication: {
+            title: "Sequestration of CaMKII in dendritic spines in silico",
+            journal: "J Comp Neuro",
+            year: 2011,
+            url: "https://link.springer.com/article/10.1007%2Fs10827-011-0323-2",
+        },
+        description:
+            "A Smoldyn model of a dendritic spine with CaMKII and molecules of the postsynaptic density at the spine tip.",
+        code: "Software used to generate this data is available <a href='https://github.com/ssandrews/Smoldyn'>here</a>. The input data file is <a href='http://www.smoldyn.org/archive/Andrews_Arkin_2010/spine.txt'>here</a>.",
+        legalese: thirdPartyLicensing(
+            "https://github.com/ssandrews/Smoldyn/blob/master/LICENSE"
+        ),
+        imageFile: smoldynSpineImage,
+        gifFile: smoldynSpineGif,
+    },
+    {
+        modelName: "Spatiotemporal oscillations in the E. coli Min system",
+        id: "smoldyn_min1.simularium",
+        title: "Spatiotemporal oscillations in the E. coli Min system",
+        totalSimulatedTime: "100s",
+        authors: "Steve Andrews et al.",
+        publication: {
+            title: "Detailed Simulations of Cell Biology with Smoldyn 2.1",
+            journal: "PLoS Computational Biology",
+            year: 2010,
+            url: "https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000705",
+        },
+        description:
+            "A Smoldyn example model of the E. coli Min system, which is used to find the cell center during cell division.",
+        code: "Software used to generate this data is available <a href='https://github.com/ssandrews/Smoldyn'>here</a>. The input data file is <a href='https://github.com/ssandrews/Smoldyn/blob/master/examples/S99_more/Min/Min1.txt'>here</a>.",
+        legalese: thirdPartyLicensing(
+            "https://github.com/ssandrews/Smoldyn/blob/master/LICENSE"
+        ),
+        imageFile: smoldynMin1Image,
+        gifFile: smoldynMin1Gif,
+    },
+    {
+        modelName: "Membrane Wrapping a Nanoparticle",
+        id: "nanoparticle_wrapping.simularium",
+        title: "Membrane Wrapping a Nanoparticle",
+        totalSimulatedTime: "5.48ms",
+        authors: "Mohsen Sadeghi et al.",
+        publication: {
+            title: "Particle-based membrane model for mesoscopic simulation of cellular dynamics",
+            journal: "J Chem Phys",
+            year: 2018,
+            url: "https://aip.scitation.org/doi/10.1063/1.5009107",
+        },
+        description:
+            "A model of a coarse-grained particle-based membrane wrapping a nanoparticle.",
+        imageFile: nanoparticleImage,
+        gifFile: nanoparticleGif,
+    },
+    {
+        modelName: "SARS-CoV-2 Dynamics in Human Lung Epithelium",
+        id: "pc4covid19.simularium",
+        title: "SARS-CoV-2 Dynamics in Human Lung Epithelium",
+        version: "4.1",
+        totalSimulatedTime: "24h",
+        authors: "Michael Getz et al.",
+        publication: {
+            title: "Rapid community-driven development of a SARS-CoV-2 tissue simulator",
+            journal: "bioRxiv",
+            year: 2020,
+            url: "https://www.biorxiv.org/content/10.1101/2020.04.02.019075v3",
+        },
+        description:
+            "A PhysiCell model of SARS-CoV-2 dynamics in human lung epithelium.",
+        code: "Software used to generate this data is available <a href='https://github.com/pc4covid19/pc4covid19'>here</a>.",
+        legalese: thirdPartyLicensing(
+            "https://github.com/pc4covid19/pc4covid19/blob/master/LICENSE"
+        ),
+        imageFile: covidImage,
+        gifFile: covidGif,
+    },
+    {
+        modelName: "Actin in Clathrin-mediated Endocytosis",
+        id: "endocytosis.simularium",
+        title: "Actin in Clathrin-mediated Endocytosis",
+        totalSimulatedTime: "15s",
+        authors: "Matthew Akamatsu et al.",
+        publication: {
+            title: "Principles of self-organization and load adaptation by the actin cytoskeleton during clathrin-mediated endocytosis",
+            journal: "eLife",
+            year: 2020,
+            url: "https://elifesciences.org/articles/49840",
+        },
+        description:
+            "A CytoSim model of a branched actin network internalizing an endocytic pit against membrane tension.",
+        code: "Software used to generate this data is available <a href='https://github.com/DrubinBarnes/Akamatsu_CME_manuscript'>here</a>.",
+        legalese: thirdPartyLicensing(
+            "https://github.com/DrubinBarnes/Akamatsu_CME_manuscript/blob/master/LICENSE"
+        ),
+        imageFile: endocytosisImage,
+        gifFile: endocytosisGif,
     },
 ];
 
