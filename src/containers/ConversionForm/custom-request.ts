@@ -14,7 +14,8 @@ export default async (
 ) => {
     try {
         const unpackedFileText = await fileToConvert.originFileObj.text();
-        const fileName = fileToConvert.name.replace(/\.[^/.]+$/, "");
+        const fileExtensionRegex = /\.[^/.]+$/;
+        const fileName = fileToConvert.name.replace(fileExtensionRegex, "");
         receiveFileToConvert(unpackedFileText, fileName);
         if (rcRequest?.onSuccess) {
             rcRequest.onSuccess(
