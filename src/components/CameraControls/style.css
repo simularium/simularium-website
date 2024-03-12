@@ -40,8 +40,6 @@
     padding: 0 2px!important;
     width: 26px;
     height: 26px;
-    font-size: 18px;
-    line-height: 18px;
     border-left-width: 1px;
     border: none;
 }
@@ -95,16 +93,4 @@
     height: 24px;
     width: 24px;
     color: var(--viewer-btn-color-default);
-}
-
-.rotate::after {
-    content: "\e909";
-}
-
-.pan::after {
-    content: "\e908";
-}
-
-.focus::after {
-    content: "\e90a";
 }

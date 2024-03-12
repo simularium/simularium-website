@@ -1,3 +1,8 @@
+
+@import "./styles/colors.css";
+@import "./styles/constants.css";
+@import "./styles/icons.css";
+
 /* global styles
 css modules not applied */
 
@@ -59,6 +64,13 @@ canvas:focus {
     border-color: var(--dark-theme-btn-hover-bg);
 }
 
+.ant-tooltip-inner,
+.ant-popover-inner {
+    background: var(--dark-theme-tooltip-bg) 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 4px var(--black);
+    opacity: 1;
+}
+
 .icon-moon {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: "icomoon" !important;
@@ -73,59 +85,74 @@ canvas:focus {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* these class names are not being used, are but included here to 
-keep track of what font glyphs are available.
-To use one, the span must have the "icon-moon" class name, and then 
-use the :after pseduo selector to input the content.
-*/
-.icon-focus:before {
-    content: "\e90a";
-    color: var(--icon-moon-color);
+
+/* 
+Icomoon font glyphs are used for our custom icons, 
+they can be styled like text: font-size, color, etc.
+
+Most icons are used only once, or styled the same way in each use,
+so it is safe to apply style rules here, and then override in the
+rare case they need to be different.
+
+If new glyphs are added/glyphs are changed: update the css vars 
+in /styles/icons.css, and define the appropriate::after selector 
+here, apply icon using "name-icon" class name in conjunction 
+with "icon-moon" class name.
+ */
+
+ /* Current in-use icons */
+.star-empty-icon::after {
+    content: var(--star-empty);
+    color: var(--dark-theme-star-icon-color)
 }
 
-.icon-rotate:before {
-    content: "\e909";
+.star-dashed-icon::after {
+    content: var(--star-dashed);
+    color: var(--dark-theme-star-icon-active-color);
 }
 
-.icon-pan:before {
-    content: "\e908";
+.star-full-icon::after {
+    content: var(--star-full);
+    color: var(--dark-theme-star-icon-active-color);
 }
 
-.icon-star-empty1:before {
-    content: "\e901";
+.step-back-icon::after {
+    content: var(--step-back);
 }
 
-.icon-star-part-filled:before {
-    content: "\e900";
+.step-forward-icon::after {
+    content: var(--step-forward);
 }
 
-.icon-star-filled:before {
-    content: "\e902";
+.looping-icon::after {
+    font-size: 13px;
+    content: var(--looping);
 }
 
-.icon-enlarge:before {
-    content: "\e989";
+.rotate-icon::after {
+    font-size: 10px;
+    content: var(--rotate);
 }
 
-.icon-star-empty:before {
-    content: "\e9d7";
+.pan-icon::after {
+    font-size: 6px;
+    content: var(--pan);
 }
 
-.icon-star-full:before {
-    content: "\e9d9";
+.focus-icon::after {
+    content: var(--focus);
 }
 
-.icon-step-back:before {
-    content: "\e906";
+.orthographic-icon::after {
+    font-size: 14px;
+    content: var(--orthographic);
 }
 
-.icon-step-forward:before {
-    content: "\e907";
+.perspective-icon::after {
+    font-size: 14px;
+    content: var(--perspective);
 }
 
-.ant-tooltip-inner,
-.ant-popover-inner {
-    background: var(--dark-theme-tooltip-bg) 0% 0% no-repeat padding-box;
-    box-shadow: 0px 3px 4px var(--black);
-    opacity: 1;
+.reset-icon::after {
+    content: var(--reset);
 }

@@ -69,6 +69,8 @@
     --dark-theme-btn-primary: var(--baby-purple);
     --dark-theme-tooltip-bg: var(--charcoal-gray);
     --dark-theme-version-badge-purple: var(--dark-five);
+    --dark-theme-star-icon-color: var(--warm-gray);
+    --dark-theme-star-icon-active-color: var(--white-two);
     /* Light theme */
     --light-theme-background-purple: var(--pale-gray);
     --light-theme-heading1-gray: var(--dark-three);

@@ -44,11 +44,6 @@
     height: 40px;
 }
 
-.star-icon::after {
-    content: "\e902";
-    color: var(--dark-theme-sidebar-text);
-}
-
 .container :global(.header-checkbox .ant-checkbox) {
     top: 3.5px;
 }

@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { useHotkeys, useIsHotkeyPressed } from "react-hotkeys-hook";
 
 import { TOOLTIP_COLOR } from "../../constants/index";
-import Icons from "../Icons";
+import { ZoomIn, ZoomOut } from "../Icons";
 
 import styles from "./style.css";
 
@@ -151,7 +151,7 @@ const CameraControls = ({
                 >
                     <Button
                         className={styles.btn}
-                        icon={Icons.ZoomIn}
+                        icon={ZoomIn}
                         onClick={zoomIn}
                     />
                 </Tooltip>
@@ -162,7 +162,7 @@ const CameraControls = ({
                 >
                     <Button
                         className={styles.btn}
-                        icon={Icons.ZoomOut}
+                        icon={ZoomOut}
                         onClick={zoomOut}
                     />
                 </Tooltip>
@@ -189,7 +189,7 @@ const CameraControls = ({
                                 className={classNames([
                                     "icon-moon",
                                     "anticon",
-                                    styles.rotate,
+                                    "rotate-icon",
                                 ])}
                             />
                         </Button>
@@ -210,7 +210,7 @@ const CameraControls = ({
                                 className={classNames([
                                     "icon-moon",
                                     "anticon",
-                                    styles.pan,
+                                    "pan-icon",
                                 ])}
                             />
                         </Button>
@@ -237,7 +237,15 @@ const CameraControls = ({
                             onClick={() => {
                                 setCameraProjectionType(ORTHOGRAPHIC);
                             }}
-                            icon={Icons.OrthographicCamera}
+                            icon={
+                                <span
+                                    className={classNames([
+                                        "icon-moon",
+                                        "anticon",
+                                        "orthographic-icon",
+                                    ])}
+                                />
+                            }
                         ></Button>
                     </Tooltip>
                     <Tooltip
@@ -256,7 +264,15 @@ const CameraControls = ({
                             onClick={() => {
                                 setCameraProjectionType(PERSPECTIVE);
                             }}
-                            icon={Icons.PerspectiveCamera}
+                            icon={
+                                <span
+                                    className={classNames([
+                                        "icon-moon",
+                                        "anticon",
+                                        "perspective-icon",
+                                    ])}
+                                />
+                            }
                         ></Button>
                     </Tooltip>
                 </div>
@@ -275,7 +291,7 @@ const CameraControls = ({
                         className={classNames([
                             "icon-moon",
                             "anticon",
-                            styles.focus,
+                            "focus-icon",
                         ])}
                     />
                 </Button>
@@ -287,7 +303,15 @@ const CameraControls = ({
             >
                 <Button
                     className={styles.btn}
-                    icon={Icons.Reset}
+                    icon={
+                        <span
+                            className={classNames([
+                                "icon-moon",
+                                "anticon",
+                                "reset-icon",
+                            ])}
+                        />
+                    }
                     onClick={resetCamera}
                 />
             </Tooltip>
