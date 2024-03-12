@@ -134,6 +134,9 @@ module.exports = ({ analyze, env, dest = "dist" } = {}) => ({
             {
                 test: /\.html$/i,
                 loader: "html-loader",
+                options: {
+                        esModule: false,
+                },
             },
             {
                 test: /\.md$/,

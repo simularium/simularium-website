@@ -12,7 +12,7 @@
 
 .modal :global(.ant-modal-footer) {
     padding: 12px 16px 20px;
-    background-color: var(--modal-content-bg);
+    background-color: var(--light-theme-modal-content-bg);
     max-height: 56px;
 }
 
@@ -33,6 +33,7 @@
     height: 40px;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .modal :global(.ant-checkbox-inner) {
@@ -54,4 +55,8 @@
 
 .modal :global(.ant-modal-close):hover{
     color: var(--white-three);
+}
+
+.modal :global(.ant-modal-footer) button {
+    width: 82px;
 }

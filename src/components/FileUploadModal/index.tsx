@@ -18,7 +18,6 @@ import LocalFileUpload from "../LocalFileUpload";
 import uploadFiles from "./upload-local-files";
 
 import styles from "./style.css";
-import theme from "../theme/light-theme.css";
 
 const enum UploadTab {
     // this version of antd requires tab keys to be strings
@@ -102,7 +101,6 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
                 Cancel
             </Button>
             <Button
-                type="primary"
                 className="primary-button"
                 disabled={disableLoad}
                 onClick={onLoadClick}
@@ -114,7 +112,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 
     return (
         <CustomModal
-            className={[styles.uploadModal, theme.lightTheme].join(" ")}
+            className={styles.uploadModal}
             title="Choose a Simularium file to load"
             open
             footer={footerButtons}

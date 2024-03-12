@@ -64,6 +64,13 @@ canvas:focus {
     border-color: var(--dark-theme-btn-hover-bg);
 }
 
+.ant-tooltip-inner,
+.ant-popover-inner {
+    background: var(--dark-theme-tooltip-bg) 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 4px var(--black);
+    opacity: 1;
+}
+
 .icon-moon {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: "icomoon" !important;
@@ -76,13 +83,6 @@ canvas:focus {
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-
-.ant-tooltip-inner,
-.ant-popover-inner {
-    background: var(--dark-theme-tooltip-bg) 0% 0% no-repeat padding-box;
-    box-shadow: 0px 3px 4px var(--black);
-    opacity: 1;
 }
 
 

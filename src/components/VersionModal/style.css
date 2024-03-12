@@ -14,5 +14,5 @@
 }
 
 .container :global(.ant-modal-footer) {
-    background-color: var(--modal-content-bg);
+    background-color: var(--light-theme-modal-content-bg);
 }

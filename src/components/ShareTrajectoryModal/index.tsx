@@ -1,5 +1,4 @@
 import React from "react";
-import classNames from "classnames";
 import { connect } from "react-redux";
 import { Button, Checkbox, Divider, Input } from "antd";
 
@@ -14,7 +13,6 @@ import { URL_PARAM_KEY_TIME } from "../../constants";
 import { editUrlParams } from "../../util";
 
 import styles from "./style.css";
-import theme from "../theme/light-theme.css";
 
 interface ShareTrajectoryModalProps {
     trajectoryIsSharable: boolean;
@@ -125,11 +123,7 @@ const ShareTrajectoryModal = ({
                 </>
             ),
             footer: (
-                <Button
-                    className={styles.okButton}
-                    type="default"
-                    onClick={closeModal}
-                >
+                <Button className={"secondary-button"} onClick={closeModal}>
                     Ok
                 </Button>
             ),
@@ -143,12 +137,14 @@ const ShareTrajectoryModal = ({
                             value={url}
                             disabled
                         />
-                        <Button type="text" onClick={copyToClipboard}>
+                        <Button
+                            className={"primary-button"}
+                            onClick={copyToClipboard}
+                        >
                             Copy {Link}
                         </Button>
                     </div>
                     <div className={styles.timeInputContainer}>
-                        {" "}
                         <Checkbox onChange={handleAllowUserInput}></Checkbox>
                         <p className={styles.timeInputText}>Start at</p>
                         <Input
@@ -158,9 +154,8 @@ const ShareTrajectoryModal = ({
                             onChange={handleUserInput}
                         />
                         <div>
-                            {" "}
-                            /{displayTimes.roundedLastFrameTime}{" "}
-                            {timeUnits ? timeUnits.name : null}{" "}
+                            /{displayTimes.roundedLastFrameTime}
+                            {timeUnits ? timeUnits.name : null}
                         </div>
                     </div>
                 </>
@@ -175,7 +170,7 @@ const ShareTrajectoryModal = ({
 
     return (
         <CustomModal
-            className={classNames(styles.uploadModal, theme.lightTheme)}
+            className={styles.uploadModal}
             title="Share Trajectory"
             width={trajectoryIsSharable ? 550 : 611}
             onCancel={closeModal}
