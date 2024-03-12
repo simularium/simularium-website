@@ -4,6 +4,7 @@ import Simularium from "../containers/Simularium";
 
 export const VIEWER_PATHNAME = "/viewer";
 export const TUTORIAL_PATHNAME = "/tutorial";
+export const EMBED_PATHNAME = "/embed";
 
 export default [
     {
@@ -20,5 +21,10 @@ export default [
         name: "Run Simulations",
         component: Simularium,
         path: VIEWER_PATHNAME,
+    },
+    {
+        name: "Embed",
+        component: Simularium,
+        path: EMBED_PATHNAME,
     },
 ];

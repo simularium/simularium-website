@@ -11,7 +11,7 @@ import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 import { APP_ID } from "./constants";
 
 import { createReduxStore } from "./state";
-import routes, { VIEWER_PATHNAME } from "./routes";
+import routes, { EMBED_PATHNAME, VIEWER_PATHNAME } from "./routes";
 import ScrollToTop from "./components/ScrollToTop";
 import AppHeader from "./containers/AppHeader";
 
@@ -32,7 +32,10 @@ function useLocationChange() {
     const dispatch = useDispatch();
 
     React.useEffect(() => {
-        if (location.pathname !== VIEWER_PATHNAME) {
+        if (
+            location.pathname !== VIEWER_PATHNAME &&
+            location.pathname !== EMBED_PATHNAME
+        ) {
             batch(() => {
                 // if we're navigating away from the viewer, stop playing and reset state
                 dispatch(setIsPlaying(false));
@@ -76,9 +79,11 @@ const App = () => {
                     }
                 >
                     <ScrollToTop />
-                    <Header>
-                        <AppHeader />
-                    </Header>
+                    {location.pathname !== EMBED_PATHNAME && (
+                        <Header>
+                            <AppHeader />
+                        </Header>
+                    )}
                     <RouterSwitch />
                 </BrowserRouter>
             </Layout>

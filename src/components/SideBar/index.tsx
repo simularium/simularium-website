@@ -13,6 +13,7 @@ interface SiderProps {
     type: string;
     onCollapse: (open: boolean) => void;
     children?: React.ReactNode;
+    isEmbedded?: boolean;
 }
 
 interface SiderState {
@@ -36,12 +37,12 @@ export default class SideBar extends React.Component<SiderProps, SiderState> {
     };
 
     public render(): JSX.Element {
-        const { type, children } = this.props;
-
+        const { type, children, isEmbedded } = this.props;
         // Ex) class="style__sider--30dA5 style__left--1KLfS"
         const siderClass: string = classNames({
             [styles.sider]: true,
             [styles[type]]: true,
+            [styles.embed]: isEmbedded,
         });
 
         // Ex) class="style__trigger--30dA5 style__left--1KLfS style__collapsed--ncLRy"
