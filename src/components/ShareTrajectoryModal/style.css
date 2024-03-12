@@ -1,7 +1,3 @@
-.ok-button {
-    width: 75px;
-}
-
 .body-text {
     padding-bottom: 10px;
 }
@@ -21,7 +17,7 @@
 
 .time-input[disabled] {
     background: transparent;
-    color: var(--medium-grey);
+    color: var(--light-theme-input-disabled-color);
 }
 
 .time-input-text {
