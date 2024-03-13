@@ -1,14 +1,15 @@
 import React, { KeyboardEvent, useState } from "react";
-import { Button, Slider, Tooltip, InputNumber } from "antd";
+import { Slider, InputNumber } from "antd";
 import classNames from "classnames";
 import { compareTimes } from "@aics/simularium-viewer";
 
-import { TOOLTIP_COLOR } from "../../constants/index";
-import Icons from "../Icons";
 import { DisplayTimes } from "../../containers/ViewerPanel/types";
 import { TimeUnits } from "../../state/trajectory/types";
+import { Pause, Play } from "../Icons";
+import ViewportButton from "../ViewportButton";
 
 import styles from "./style.css";
+
 interface PlayBackProps {
     playHandler: (timeOverride?: number) => void;
     time: number;
@@ -106,8 +107,6 @@ const PlayBackControls = ({
         return `${displayTimes.maxNumChars + 1}ch`;
     };
 
-    const btnClassNames = classNames([styles.item, styles.btn]);
-
     // Disable step back button if time - timeStep < firstFrameTime
     const isStepBackDisabled =
         compareTimes(time - timeStep, firstFrameTime, timeStep) === -1;
@@ -117,80 +116,40 @@ const PlayBackControls = ({
 
     return (
         <div className={styles.container}>
-            <Tooltip
-                placement="top"
-                title="Skip 1 frame back"
-                color={TOOLTIP_COLOR}
-            >
-                <Button
-                    className={classNames([
-                        btnClassNames,
-                        { [styles.customStepButton]: !loading },
-                    ])}
-                    onClick={prevHandler}
+            <div className={styles.buttonContainer}>
+                <ViewportButton
+                    tooltipText="Skip 1 frame back"
+                    tooltipPlacement="top"
+                    icon={"step-back-icon"}
+                    clickHandler={prevHandler}
                     disabled={isStepBackDisabled || loading || isEmpty}
                     loading={loading}
-                >
-                    {/* if loading, antd will show loading icon, otherwise, show our custom svg */}
-                    {!loading && (
-                        <span
-                            className={classNames([
-                                "icon-moon",
-                                "anticon",
-                                "step-back-icon",
-                            ])}
-                        />
-                    )}
-                </Button>
-            </Tooltip>
-            <Tooltip
-                placement="top"
-                title={isPlaying ? "Pause" : "Play"}
-                color={TOOLTIP_COLOR}
-            >
-                <Button
-                    className={classNames([
-                        btnClassNames,
-                        styles.buttonSpacing,
-                    ])}
-                    icon={isPlaying ? Icons.Pause : Icons.Play}
-                    onClick={isPlaying ? pauseHandler : () => playHandler()}
-                    loading={loading}
-                    disabled={isEmpty}
                 />
-            </Tooltip>
-            <Tooltip
-                placement="top"
-                title="Skip 1 frame ahead"
-                color={TOOLTIP_COLOR}
-            >
-                <Button
-                    className={classNames([
-                        btnClassNames,
-                        { [styles.customStepButton]: !loading },
-                    ])}
-                    onClick={nextHandler}
+                <ViewportButton
+                    tooltipText={isPlaying ? "Pause" : "Play"}
+                    tooltipPlacement="top"
+                    icon={isPlaying ? Pause : Play}
+                    clickHandler={
+                        isPlaying ? pauseHandler : () => playHandler()
+                    }
                     disabled={isStepForwardDisabled || loading || isEmpty}
                     loading={loading}
-                >
-                    {/* if loading, antd will show loading icon, otherwise, show our custom svg */}
-                    {!loading && (
-                        <span
-                            className={classNames([
-                                "icon-moon",
-                                "anticon",
-                                "step-forward-icon",
-                            ])}
-                        />
-                    )}
-                </Button>
-            </Tooltip>
+                />
+                <ViewportButton
+                    tooltipText={"Skip 1 frame ahead"}
+                    tooltipPlacement="top"
+                    icon={"step-forward-icon"}
+                    clickHandler={nextHandler}
+                    disabled={isStepForwardDisabled || loading || isEmpty}
+                    loading={loading}
+                />
+            </div>
             <Slider
                 value={time}
                 onChange={handleTimeChange}
                 onAfterChange={handleSliderMouseUp}
                 tooltip={{ open: false }}
-                className={[styles.slider, styles.item].join(" ")}
+                className={classNames(styles.slider, styles.item)}
                 step={timeStep}
                 min={firstFrameTime}
                 max={lastFrameTime}
@@ -213,23 +172,15 @@ const PlayBackControls = ({
                     {timeUnits ? timeUnits.name : "s"}
                 </span>
             </div>
-            <Tooltip
-                placement="top"
-                title={isLooping ? "Turn off looping" : "Turn on looping"}
-                color={TOOLTIP_COLOR}
-                arrowPointAtCenter
-            >
-                <Button
-                    className={classNames([
-                        btnClassNames,
-                        { [styles.active]: isLooping },
-                    ])}
-                    icon={Icons.LoopOutlined}
-                    onClick={loopHandler}
-                    loading={loading}
-                    disabled={isEmpty}
-                />
-            </Tooltip>
+            <ViewportButton
+                tooltipText={isLooping ? "Turn off looping" : "Turn on looping"}
+                tooltipPlacement="top"
+                icon={"looping-icon"}
+                clickHandler={loopHandler}
+                disabled={isEmpty}
+                active={isLooping}
+                loading={loading}
+            />
         </div>
     );
 };

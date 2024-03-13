@@ -1,0 +1,38 @@
+.viewport-button:global(.ant-btn),
+.viewport-button:global(.ant-btn:focus) {
+    background-color: var(--dark-theme-viewport-button-bg);
+    border-color: var(--dark-theme-viewport-button-border);
+    border-radius: 3px;
+    color: var(--dark-theme-viewport-button-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 26px;
+    width: 26px;
+    min-width: 26px;
+}
+
+.viewport-button:global(.ant-btn).disabled {
+    color: var(--dark-theme-viewport-button-disabled-color);
+    cursor: not-allowed;
+}
+
+.viewport-button:global(.ant-btn).active {
+    border-color: var(--dark-theme-viewport-button-toggle-border);
+}
+
+.viewport-button:global(.ant-btn:hover):not(.disabled) {
+    background-color: var(--dark-theme-viewport-button-hover-bg);
+}
+
+.viewport-button:global(.ant-btn:hover):not(.disabled).active {
+    border-color: var(--dark-theme-viewport-button-toggle-border);
+}
+
+.viewport-button:global(.ant-btn).radio-group-top {
+    border-radius: 3px 3px 0px 0px;
+}
+
+.viewport-button:global(.ant-btn).radio-group-bottom {
+    border-radius: 0px 0px 3px 3px;
+}
