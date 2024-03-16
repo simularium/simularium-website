@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Button, ButtonProps, Tooltip } from "antd";
+import { Button, ButtonProps, Tooltip, TooltipProps } from "antd";
 import classNames from "classnames";
 
 import { TOOLTIP_COLOR } from "../../constants";
@@ -7,7 +7,7 @@ import styles from "./style.css";
 
 interface ViewportButtonProps extends ButtonProps {
     tooltipText?: string;
-    tooltipPlacement?: "top" | "bottom" | "left" | "right";
+    tooltipPlacement?: TooltipProps["placement"];
     icon?: ReactNode | string; // When using an icomoon icon, pass the icon name as defined in selectors in src/styles.css
     radioGroupPosition?: "top" | "bottom";
     clickHandler?: () => void;
