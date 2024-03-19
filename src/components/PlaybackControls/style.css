@@ -1,6 +1,7 @@
 .container {
     position: absolute;
     display: flex;
+    gap: 8px;
     bottom: 0;
     right: 25%;
     width: 50%;
@@ -8,12 +9,17 @@
     margin-bottom: 20px;
 }
 
+.button-container {
+    display: flex;
+    gap: 4px;
+}
+
 .container :global(.ant-input-number) {
     background-color: transparent;
 }
 
 .container :global(.ant-input-number input) {
-    color: var(--viewer-btn-color-default);
+    color: var(--dark-theme-viewport-button-color);
     padding: 0 3px;
 }
 
@@ -22,51 +28,13 @@
     display: none;
 }
 
-.container .btn, .container :global(.ant-btn) {
-    /* this works to set height and other qualties  */
-    height: 26px;
-    width: 26px;
-    border-radius: 3px;
-    background-color: var(--viewer-btn-bg-default);
-    color: var(--viewer-btn-color-default);
-    border: none;
-}
-
-.container .btn:hover {
-    color: var(--viewer-btn-color-default);
-    background-color: var(--viewer-btn-bg-hover);
-    border: 1px solid var(--viewer-btn-border-active);
-}
-
-.container .btn.active {
-    color: var(--viewer-btn-color-default);
-    background-color: var(--viewer-btn-bg-default);
-    border: 1px solid var(--viewer-btn-border-active);
-}
-
-.container .btn.active:hover {
-    color: var(--viewer-btn-color-default);
-    background-color: var(--viewer-btn-bg-hover);
-    border: 1px solid var(--viewer-btn-border-active);
-}
-
-.container .btn button[disabled] {
-    background-color: var(--viewer-btn-bg-disabled);
-    color: var(--viewer-btn-color-disabled);
-}
-
-.container .button-spacing {
-    margin-left: 4px;
-    margin-right: 4px;
-}
-
 .container .slider {
     flex: 3;
     margin: auto 10px;
 }
 
 .container .slider :global(.ant-slider-track) {
-    background-color: var(--viewer-btn-color-default);
+    background-color: var(--dark-theme-slider-handle-color);
 }
 
 .container .slider :global(.ant-slider-track),
@@ -75,7 +43,7 @@
 }
 
 .container .slider :global(.ant-slider-handle) {
-    background-color: var(--viewer-btn-color-default);
+    background-color: var(--dark-theme-slider-handle-color);
     border: none;
     height: 10px;
     width: 10px;
@@ -88,8 +56,8 @@
 
 .time {
     font-weight: 300;
-    background-color: var(--viewer-btn-bg-default);
-    color: var(--viewer-btn-color-default);
+    background-color: var(--dark-theme-viewport-button-bg);
+    color: var(--dark-theme-viewport-button-color);
     height: 26px;
     min-width: 100px;
     padding: 1px 7px 4px 7px;
@@ -99,23 +67,5 @@
 }
 
 .lastFrameTime {
-    color: var(--dark-theme-btn-color-dim);
-}
-
-.custom-step-button,
-.custom-step-button :global(.ant-btn) {
-    padding: 0;
-    width: 24px;
-    height: 24px;
-}
-
-.container .anticon svg {
-    height: 24px;
-    width: 24px;
-    color: var(--viewer-btn-color-default);
-}
-
-.container :global(.ant-btn-loading-icon) {
-    color: var(--viewer-btn-color-default);
-    margin: auto 2px;
+    color: var(--dark-theme-dim-color);
 }

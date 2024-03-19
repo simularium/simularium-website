@@ -1,10 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Button, Tooltip } from "antd";
-import classNames from "classnames";
 import { useHotkeys, useIsHotkeyPressed } from "react-hotkeys-hook";
 
-import { TOOLTIP_COLOR } from "../../constants/index";
 import { ZoomIn, ZoomOut } from "../Icons";
+import ViewportButton from "../ViewportButton";
 
 import styles from "./style.css";
 
@@ -143,178 +141,77 @@ const CameraControls = ({
     }, [keyPressed]);
     return (
         <div className={styles.container}>
-            <div className={styles.zoomButtons}>
-                <Tooltip
-                    placement="left"
-                    title="Zoom in ( &uarr; )"
-                    color={TOOLTIP_COLOR}
-                >
-                    <Button
-                        className={styles.btn}
-                        icon={ZoomIn}
-                        onClick={zoomIn}
-                    />
-                </Tooltip>
-                <Tooltip
-                    placement="left"
-                    title="Zoom out ( &darr; )"
-                    color={TOOLTIP_COLOR}
-                >
-                    <Button
-                        className={styles.btn}
-                        icon={ZoomOut}
-                        onClick={zoomOut}
-                    />
-                </Tooltip>
-            </div>
-            <div className={styles.moveButtons}>
-                <div className={styles.radioGroup}>
-                    <Tooltip
-                        placement="left"
-                        title={
-                            mode === ROTATE ? "Rotate" : "Rotate (hold SHIFT)"
-                        }
-                        color={TOOLTIP_COLOR}
-                    >
-                        {/* Should be radio buttons, but using radio buttons 
-                        detaches keypressed listener after the button is pressed */}
-                        <Button
-                            className={classNames([
-                                { [styles.active]: mode === ROTATE },
-                                styles.radioBtn,
-                            ])}
-                            onClick={() => setMode(ROTATE)}
-                        >
-                            <span
-                                className={classNames([
-                                    "icon-moon",
-                                    "anticon",
-                                    "rotate-icon",
-                                ])}
-                            />
-                        </Button>
-                    </Tooltip>
-                    <Tooltip
-                        placement="left"
-                        title={mode === PAN ? "Pan" : "Pan (hold SHIFT)"}
-                        color={TOOLTIP_COLOR}
-                    >
-                        <Button
-                            className={classNames([
-                                { [styles.active]: mode === PAN },
-                                styles.radioBtn,
-                            ])}
-                            onClick={() => setMode(PAN)}
-                        >
-                            <span
-                                className={classNames([
-                                    "icon-moon",
-                                    "anticon",
-                                    "pan-icon",
-                                ])}
-                            />
-                        </Button>
-                    </Tooltip>
-                </div>
-            </div>
-            <div className={styles.moveButtons}>
-                <div className={styles.radioGroup}>
-                    <Tooltip
-                        placement="left"
-                        title={"Orthographic Camera"}
-                        color={TOOLTIP_COLOR}
-                    >
-                        {/* Should be radio buttons, but using radio buttons 
-                        detaches keypressed listener after the button is pressed */}
-                        <Button
-                            className={classNames([
-                                {
-                                    [styles.active]:
-                                        cameraProjectionType === ORTHOGRAPHIC,
-                                },
-                                styles.radioBtn,
-                            ])}
-                            onClick={() => {
-                                setCameraProjectionType(ORTHOGRAPHIC);
-                            }}
-                            icon={
-                                <span
-                                    className={classNames([
-                                        "icon-moon",
-                                        "anticon",
-                                        "orthographic-icon",
-                                    ])}
-                                />
-                            }
-                        ></Button>
-                    </Tooltip>
-                    <Tooltip
-                        placement="left"
-                        title={"Perspective Camera"}
-                        color={TOOLTIP_COLOR}
-                    >
-                        <Button
-                            className={classNames([
-                                {
-                                    [styles.active]:
-                                        cameraProjectionType === PERSPECTIVE,
-                                },
-                                styles.radioBtn,
-                            ])}
-                            onClick={() => {
-                                setCameraProjectionType(PERSPECTIVE);
-                            }}
-                            icon={
-                                <span
-                                    className={classNames([
-                                        "icon-moon",
-                                        "anticon",
-                                        "perspective-icon",
-                                    ])}
-                                />
-                            }
-                        ></Button>
-                    </Tooltip>
-                </div>
-            </div>
-            <Tooltip placement="left" title="Focus (F)" color={TOOLTIP_COLOR}>
-                <Button
-                    className={classNames([
-                        { [styles.active]: isFocused },
-                        styles.radioBtn,
-                    ])}
-                    onClick={() => {
-                        saveFocusMode(!isFocused);
-                    }}
-                >
-                    <span
-                        className={classNames([
-                            "icon-moon",
-                            "anticon",
-                            "focus-icon",
-                        ])}
-                    />
-                </Button>
-            </Tooltip>
-            <Tooltip
-                placement="left"
-                title="Home view (H)"
-                color={TOOLTIP_COLOR}
-            >
-                <Button
-                    className={styles.btn}
-                    icon={
-                        <span
-                            className={classNames([
-                                "icon-moon",
-                                "anticon",
-                                "reset-icon",
-                            ])}
-                        />
-                    }
-                    onClick={resetCamera}
+            <div className={styles.zoomGroup}>
+                <ViewportButton
+                    tooltipText="Zoom in ( &uarr; )"
+                    tooltipPlacement="left"
+                    icon={ZoomIn}
+                    clickHandler={zoomIn}
                 />
-            </Tooltip>
+                <ViewportButton
+                    tooltipText="Zoom out ( &darr; )"
+                    tooltipPlacement="left"
+                    icon={ZoomOut}
+                    clickHandler={zoomOut}
+                />
+            </div>
+            <div className={styles.radioGroup}>
+                <ViewportButton
+                    tooltipText={
+                        mode === ROTATE ? "Rotate" : "Rotate (hold SHIFT)"
+                    }
+                    tooltipPlacement="left"
+                    icon={"rotate-icon"}
+                    radioGroupPosition={"top"}
+                    clickHandler={() => setMode(ROTATE)}
+                    active={mode === ROTATE}
+                />
+                <ViewportButton
+                    tooltipText={mode === PAN ? "Pan" : "Pan (hold SHIFT)"}
+                    tooltipPlacement="left"
+                    icon={"pan-icon"}
+                    radioGroupPosition={"bottom"}
+                    clickHandler={() => setMode(PAN)}
+                    active={mode === PAN}
+                />
+            </div>
+            <ViewportButton
+                tooltipText={"Focus (F)"}
+                tooltipPlacement="left"
+                icon={"focus-icon"}
+                clickHandler={() => {
+                    saveFocusMode(!isFocused);
+                }}
+                active={isFocused}
+            />
+            <div className={styles.radioGroup}>
+                <ViewportButton
+                    tooltipText={"Orthographic Camera"}
+                    tooltipPlacement="left"
+                    icon={"orthographic-icon"}
+                    radioGroupPosition={"top"}
+                    clickHandler={() => {
+                        setCameraProjectionType(ORTHOGRAPHIC);
+                    }}
+                    active={cameraProjectionType === ORTHOGRAPHIC}
+                />
+                <ViewportButton
+                    tooltipText={"Perspective Camera"}
+                    tooltipPlacement="left"
+                    icon={"perspective-icon"}
+                    radioGroupPosition={"bottom"}
+                    clickHandler={() => {
+                        setCameraProjectionType(PERSPECTIVE);
+                    }}
+                    active={cameraProjectionType === PERSPECTIVE}
+                />
+            </div>
+            <ViewportButton
+                tooltipText={"Home view (H)"}
+                tooltipPlacement="left"
+                icon={"reset-icon"}
+                clickHandler={resetCamera}
+            />
         </div>
     );
 };

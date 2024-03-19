@@ -10,7 +10,6 @@
     --white-two: #d3d3d3;
     --white-three: #d8d8d8;
     --white-four: #f2f2f2;
-    --white-six: #e7e7e7;
     --transparent-white: rgba(255, 255, 255, 0.65);
     --dim-gray: #383838;
     --dim-gray-two: #6e6e6e;
@@ -29,8 +28,7 @@
     --medium-gray: #aeaeae;
     --dark-blue-gray: #69738a;
     --brick-red: #d14040;
-    /* Non-theme variables */
-    --icon-moon-color: var(--white-three);
+    /* non-theme variables */
     --star-checkbox-bg: var(--grayish-brown);
     --footer-bg: var(--dark-three);
     --footer-text: var(--warm-gray);
@@ -38,21 +36,25 @@
     --footer-link: var(--blue);
     --input-border-highlight: var(--heather);
     --color-picker-tooltip: var(--dark-blue-gray);
-    --viewer-btn-bg-default: var(--dark-three);
-    --viewer-btn-bg-hover: var(--purplish-gray);
-    --viewer-btn-bg-disabled: var(--dark-three);
-    --viewer-btn-border-active: var(--white-three);
-    --viewer-btn-color-default: var(--white-three);
-    --viewer-btn-color-disabled: var(--grayish-brown);
     --cancel-icon-color: var(--brick-red);
     /* Dark theme */
-    --dark-theme-primary-color: var(--baby-purple);
+    /* viewport-buttons */
+    --dark-theme-viewport-button-bg: var(--dark-three);
+    --dark-theme-viewport-button-border: var(--dark-three);
+    --dark-theme-viewport-button-color: var(--white-three);
+    --dark-theme-viewport-button-toggle-border: var(--dim-gray-two);
+    --dark-theme-viewport-button-hover-bg: var(--purplish-gray);
+    --dark-theme-viewport-button-disabled-color: var(--dim-gray-two);
+    /* dark theme general/uncategorized */
     --dark-theme-body-bg: var(--black);
     --dark-theme-header-bg: var(--dark-three);
+    --dark-theme-text-color: var(--off-white);
+    --dark-theme-dim-color: var(--text-gray);
+    --dark-theme-slider-handle-color: var(--white-three);
+    --dark-theme-primary-color: var(--baby-purple);
     --dark-theme-header-text: var(--text-gray);
     --dark-theme-component-bg: var(--dark-four);
     --dark-theme-input-border: var(--white-two);
-    --dark-theme-text-color: var(--off-white);
     --dark-theme-popover-text: var(--white-two);
     --dark-theme-menu-text-color: var(--transparent-white);
     --dark-theme-menu-text-hover: var(--pure-white);
@@ -62,11 +64,7 @@
     --dark-theme-sidebar-header-bg: var(--dark-three);
     --dark-theme-sidebar-item-bg: var(--dark-two);
     --dark-theme-sidebar-text: var(--white-two);
-    --dark-theme-btn-bg: var(--dark-three);
-    --dark-theme-btn-color: var(--white-three);
-    --dark-theme-btn-color-dim: var(--text-gray);
     --dark-theme-btn-hover-bg: var(--grayish-brown);
-    --dark-theme-btn-primary: var(--baby-purple);
     --dark-theme-tooltip-bg: var(--charcoal-gray);
     --dark-theme-version-badge-purple: var(--dark-five);
     --dark-theme-star-icon-color: var(--warm-gray);
