@@ -76,11 +76,12 @@ const ConversionForm = ({
     setConversionStatus,
 }: ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile | null>();
-    const [engineSelected, setEngineSelected] = useState<boolean>(false);
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
     const [serverErrorModalOpen, setServerErrorModalOpen] =
         useState<boolean>(false);
     const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(false);
+
+    const engineSelected = !!conversionProcessingData.engineType;
 
     useEffect(() => {
         // on page load assume server is down until we hear back from it
@@ -117,7 +118,6 @@ const ConversionForm = ({
     const handleEngineChange = (selectedValue: string) => {
         const selectedEngine = selectedValue as AvailableEngines;
         setConversionEngine(selectedEngine);
-        setEngineSelected(true);
     };
 
     const handleRemoveFile = () => {
