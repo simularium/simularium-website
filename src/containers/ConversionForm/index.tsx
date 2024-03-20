@@ -78,7 +78,7 @@ const ConversionForm = ({
     const [fileToConvert, setFileToConvert] = useState<UploadFile | null>();
     const [engineSelected, setEngineSelected] = useState<boolean>(false);
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
-    const [serverDownModalOpen, setServerIsDownModalOpen] =
+    const [serverErrorModalOpen, setServerErrorModalOpen] =
         useState<boolean>(false);
     const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(false);
 
@@ -92,13 +92,13 @@ const ConversionForm = ({
         // this is to account for the server going down while a conversion is in process
         if (isProcessing && conversionStatus === CONVERSION_NO_SERVER) {
             setIsProcessing(false);
-            setServerIsDownModalOpen(true);
+            setServerErrorModalOpen(true);
         }
     }, [conversionStatus]);
 
     // callbacks for state variables
     const toggleServerCheckModal = () => {
-        setServerIsDownModalOpen(!serverDownModalOpen);
+        setServerErrorModalOpen(!serverErrorModalOpen);
     };
 
     const toggleFileTypeModal = () => {
@@ -151,7 +151,7 @@ const ConversionForm = ({
             validateFileType(fileToConvert.name)
         ) {
             if (conversionStatus === CONVERSION_NO_SERVER) {
-                setServerIsDownModalOpen(true);
+                setServerErrorModalOpen(true);
             } else {
                 // we now use this local state lets us distinguish between arriving on this page normally
                 // and arriving here because the server went down while a conversion was in process
@@ -171,7 +171,7 @@ const ConversionForm = ({
     console.log("conversion form data", conversionProcessingData);
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
-            {serverDownModalOpen && (
+            {serverErrorModalOpen && (
                 <ConversionServerErrorModal
                     closeModal={toggleServerCheckModal}
                 />
