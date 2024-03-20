@@ -88,7 +88,7 @@ const ConversionForm = ({
     }, []);
 
     useEffect(() => {
-        // this it to account for the server going down while a conversion is in process
+        // this is to account for the server going down while a conversion is in process
         if (isProcessing && conversionStatus === CONVERSION_NO_SERVER) {
             setIsProcessing(false);
             setServerIsDownModalOpen(true);
