@@ -219,7 +219,7 @@ const ConversionForm = ({
                         </button>
                     )}
                 </div>
-                <Divider orientation="right" orientationMargin={400}/>
+                <Divider className={styles.divider} orientation="right" />
                 <Button ghost>Cancel</Button>
                 <Button
                     type="primary"

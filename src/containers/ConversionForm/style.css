@@ -6,6 +6,7 @@
 }
 
 .form-content {
+    width: 900px;
     padding-left: 30px;
     padding-top: 30px;
 }
@@ -75,6 +76,10 @@
 
 .remove-file-icon svg {
     fill: var(--delete-file-icon-color);
+}
+
+.divider {
+    background-color: var(--light-theme-divider-bg);
 }
 
 .form-content button {
