@@ -28,6 +28,7 @@ import ConversionFileErrorModal from "../../components/ConversionFileErrorModal"
 import { Cancel, DownCaret } from "../../components/Icons";
 import {
     CONVERSION_ACTIVE,
+    CONVERSION_INACTIVE,
     CONVERSION_NO_SERVER,
 } from "../../state/trajectory/constants";
 import customRequest from "./custom-request";
@@ -107,6 +108,10 @@ const ConversionForm = ({
     const cancelProcessing = () => {
         setIsProcessing(false);
         setConversionStatus({ status: CONVERSION_NO_SERVER });
+    };
+
+    const cancelConversion = () => {
+        setConversionStatus({ status: CONVERSION_INACTIVE });
     };
 
     const handleEngineChange = (selectedValue: string) => {
@@ -232,7 +237,9 @@ const ConversionForm = ({
                     )}
                 </div>
                 <Divider orientation="right" orientationMargin={400} />
-                <Button ghost>Cancel</Button>
+                <Button ghost onClick={cancelConversion}>
+                    Cancel
+                </Button>
                 <Button
                     type="primary"
                     disabled={!fileToConvert || !engineSelected}

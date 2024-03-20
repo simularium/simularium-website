@@ -556,11 +556,6 @@ const convertFileLogic = createLogic({
             fileContents: { fileContents: fileToConvert },
             metaData: { trajectoryTitle: fileName },
         };
-        dispatch(
-            clearSimulariumFile({
-                newFile: true,
-            })
-        );
         const controller = getSimulariumController(getState());
         // convert the file
         dispatch(
