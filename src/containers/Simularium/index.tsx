@@ -85,7 +85,6 @@ class App extends React.Component<AppProps, AppState> {
     public simulariumController: SimulariumController | undefined;
     private interactiveContent = React.createRef<HTMLDivElement>();
     private endDragover = 0;
-    private conversionCheckInterval: NodeJS.Timeout | null = null;
     constructor(props: AppProps) {
         super(props);
         this.onPanelCollapse = this.onPanelCollapse.bind(this);
