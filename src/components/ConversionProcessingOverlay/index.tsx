@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { Button, Divider, Spin } from "antd";
 
+import ConversionCancelModal from "../ConversionCancelModal";
 import { UpRightArrow, LeftArrow } from "../Icons";
 
 import styles from "./style.css";
-import ConversionCancelModal from "../ConversionCancelModal";
 
 interface ConversionProcessingOverlayProps {
-    toggleProcessing: () => void;
     fileName: string | null;
+    cancelProcessing: () => void;
 }
 
 const ConversionProcessingOverlay = ({
-    toggleProcessing,
     fileName,
+    cancelProcessing,
 }: ConversionProcessingOverlayProps): JSX.Element | null => {
     const [cancelModalOpen, setCancelModalOpen] = useState(false);
 
@@ -26,7 +26,7 @@ const ConversionProcessingOverlay = ({
             {cancelModalOpen ? (
                 <ConversionCancelModal
                     continueProcessing={toggleCancelling}
-                    cancelProcessing={toggleProcessing}
+                    cancelProcessing={cancelProcessing}
                 />
             ) : null}
             <h2 className={styles.title}> File conversion in progress </h2>

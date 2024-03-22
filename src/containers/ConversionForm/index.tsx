@@ -10,22 +10,27 @@ import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
 import {
     ConversionStatus,
+    ConvertFileAction,
     InitializeConversionAction,
     ReceiveFileToConvertAction,
     SetConversionEngineAction,
+    SetConversionStatusAction,
 } from "../../state/trajectory/types";
 import { SetErrorAction } from "../../state/viewer/types";
 import {
     AvailableEngines,
+    ConversionProcessingData,
     ExtensionMap,
-    Template,
-    TemplateMap,
 } from "../../state/trajectory/conversion-data-types";
-import ConversionServerErrorModal from "../../components/ConversionServerErrorModal";
 import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
+import ConversionServerErrorModal from "../../components/ConversionServerErrorModal";
 import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
 import { Cancel, DownCaret } from "../../components/Icons";
-import { CONVERSION_NO_SERVER } from "../../state/trajectory/constants";
+import {
+    CONVERSION_ACTIVE,
+    CONVERSION_INACTIVE,
+    CONVERSION_NO_SERVER,
+} from "../../state/trajectory/constants";
 import customRequest from "./custom-request";
 
 import theme from "../../components/theme/light-theme.css";
@@ -33,16 +38,13 @@ import styles from "./style.css";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
-    conversionProcessingData: {
-        template: Template;
-        templateMap: TemplateMap;
-        fileToConvert: string;
-        engineType: AvailableEngines;
-    };
+    conversionProcessingData: ConversionProcessingData;
     receiveFileToConvert: ActionCreator<ReceiveFileToConvertAction>;
     setError: ActionCreator<SetErrorAction>;
     initializeConversion: ActionCreator<InitializeConversionAction>;
+    convertFile: ActionCreator<ConvertFileAction>;
     conversionStatus: ConversionStatus;
+    setConversionStatus: ActionCreator<SetConversionStatusAction>;
 }
 
 const validFileExtensions: ExtensionMap = {
@@ -70,40 +72,52 @@ const ConversionForm = ({
     receiveFileToConvert,
     initializeConversion,
     conversionStatus,
+    convertFile,
+    setConversionStatus,
 }: ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile | null>();
-    const [engineSelected, setEngineSelected] = useState<boolean>(false);
-    const [serverDownModalOpen, setServerIsDownModalOpen] =
-        useState<boolean>(false);
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
+    const [serverErrorModalOpen, setServerErrorModalOpen] =
+        useState<boolean>(false);
     const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(false);
 
+    const engineSelected = !!conversionProcessingData.engineType;
+
     useEffect(() => {
+        // on page load assume server is down until we hear back from it
+        setConversionStatus({ status: CONVERSION_NO_SERVER });
         initializeConversion();
     }, []);
 
-    // TODO delete after development, useEffect to log a change in server health
     useEffect(() => {
-        console.log(conversionStatus);
+        // this is to account for the server going down while a conversion is in process
+        if (isProcessing && conversionStatus === CONVERSION_NO_SERVER) {
+            setIsProcessing(false);
+            setServerErrorModalOpen(true);
+        }
     }, [conversionStatus]);
 
     // callbacks for state variables
     const toggleServerCheckModal = () => {
-        setServerIsDownModalOpen(!serverDownModalOpen);
+        setServerErrorModalOpen(!serverErrorModalOpen);
     };
 
     const toggleFileTypeModal = () => {
         setFileTypeErrorModalOpen(!fileTypeErrorModalOpen);
     };
 
-    const toggleProcessing = () => {
-        setIsProcessing(!isProcessing);
+    const cancelProcessing = () => {
+        setIsProcessing(false);
+        setConversionStatus({ status: CONVERSION_NO_SERVER });
+    };
+
+    const cancelConversion = () => {
+        setConversionStatus({ status: CONVERSION_INACTIVE });
     };
 
     const handleEngineChange = (selectedValue: string) => {
         const selectedEngine = selectedValue as AvailableEngines;
         setConversionEngine(selectedEngine);
-        setEngineSelected(true);
     };
 
     const handleRemoveFile = () => {
@@ -130,17 +144,20 @@ const ConversionForm = ({
         return false;
     };
 
-    const advanceIfServerIsHealthy = () => {
+    const sendFileToConvert = () => {
         if (
             engineSelected &&
             fileToConvert &&
             validateFileType(fileToConvert.name)
         ) {
             if (conversionStatus === CONVERSION_NO_SERVER) {
-                setServerIsDownModalOpen(true);
+                setServerErrorModalOpen(true);
             } else {
-                // at this point: engine selected, file uploaded, file type valid, server health received
+                // we now use this local state lets us distinguish between arriving on this page normally
+                // and arriving here because the server went down while a conversion was in process
                 setIsProcessing(true);
+                setConversionStatus({ status: CONVERSION_ACTIVE });
+                convertFile();
             }
         }
     };
@@ -154,7 +171,7 @@ const ConversionForm = ({
     console.log("conversion form data", conversionProcessingData);
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
-            {serverDownModalOpen && (
+            {serverErrorModalOpen && (
                 <ConversionServerErrorModal
                     closeModal={toggleServerCheckModal}
                 />
@@ -165,10 +182,10 @@ const ConversionForm = ({
                     engineType={conversionProcessingData.engineType}
                 />
             )}
-            {isProcessing && (
+            {conversionStatus === CONVERSION_ACTIVE && (
                 <ConversionProcessingOverlay
-                    toggleProcessing={toggleProcessing}
-                    fileName={fileToConvert ? fileToConvert?.name : null}
+                    fileName={conversionProcessingData.fileName}
+                    cancelProcessing={cancelProcessing}
                 />
             )}
             <div className={styles.formContent}>
@@ -219,12 +236,14 @@ const ConversionForm = ({
                         </button>
                     )}
                 </div>
-                <Divider orientation="right" orientationMargin={400}/>
-                <Button ghost>Cancel</Button>
+                <Divider orientation="right" orientationMargin={400} />
+                <Button ghost onClick={cancelConversion}>
+                    Cancel
+                </Button>
                 <Button
                     type="primary"
                     disabled={!fileToConvert || !engineSelected}
-                    onClick={advanceIfServerIsHealthy}
+                    onClick={sendFileToConvert}
                 >
                     Next
                 </Button>
@@ -249,6 +268,8 @@ const dispatchToPropsMap = {
     setError: viewerStateBranch.actions.setError,
     setConversionEngine: trajectoryStateBranch.actions.setConversionEngine,
     initializeConversion: trajectoryStateBranch.actions.initializeConversion,
+    convertFile: trajectoryStateBranch.actions.convertFile,
+    setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ConversionForm);

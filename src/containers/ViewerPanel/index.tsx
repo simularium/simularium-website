@@ -39,14 +39,19 @@ import {
     ReceiveAction,
     LocalSimFile,
     TimeUnits,
+    ConversionStatus,
+    SetConversionStatusAction,
     SetUrlParamsAction,
 } from "../../state/trajectory/types";
+import { CONVERSION_INACTIVE } from "../../state/trajectory/constants";
 import { batchActions } from "../../state/util";
 import PlaybackControls from "../../components/PlaybackControls";
 import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
 import { TUTORIAL_PATHNAME } from "../../routes";
 import ErrorNotification from "../../components/ErrorNotification";
+import { MOBILE_CUTOFF } from "../../constants";
+import { hasUrlParamsSettings } from "../../util";
 
 import {
     convertUIDataToSelectionData,
@@ -57,8 +62,6 @@ import { AGENT_COLORS } from "./constants";
 import { DisplayTimes } from "./types";
 
 import styles from "./style.css";
-import { MOBILE_CUTOFF } from "../../constants";
-import { hasUrlParamsSettings } from "../../util";
 
 interface ViewerPanelProps {
     time: number;
@@ -92,6 +95,8 @@ interface ViewerPanelProps {
     error: ViewerError;
     setBuffering: ActionCreator<ToggleAction>;
     setError: ActionCreator<SetErrorAction>;
+    conversionStatus: ConversionStatus;
+    setConversionStatus: ActionCreator<SetConversionStatusAction>;
 }
 
 interface ViewerPanelState {
@@ -252,6 +257,11 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
+        const { conversionStatus, setConversionStatus } = this.props;
+        if (conversionStatus !== CONVERSION_INACTIVE) {
+            setConversionStatus({ status: CONVERSION_INACTIVE });
+        }
+
         const { receiveTrajectory, simulariumController } = this.props;
         const tickIntervalLength = simulariumController.tickIntervalLength;
 
@@ -474,6 +484,8 @@ function mapStateToProps(state: State) {
         isBuffering: viewerStateBranch.selectors.getIsBuffering(state),
         isPlaying: viewerStateBranch.selectors.getIsPlaying(state),
         isLooping: viewerStateBranch.selectors.getIsLooping(state),
+        conversionStatus:
+            trajectoryStateBranch.selectors.getConversionStatus(state),
     };
 }
 
@@ -491,6 +503,7 @@ const dispatchToPropsMap = {
     setIsPlaying: viewerStateBranch.actions.setIsPlaying,
     setIsLooping: viewerStateBranch.actions.setIsLooping,
     setError: viewerStateBranch.actions.setError,
+    setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
 };
 

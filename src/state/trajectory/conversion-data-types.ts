@@ -41,3 +41,11 @@ export interface Template {
 export type ExtensionMap = {
     [key in AvailableEngines]: string;
 };
+
+export type ConversionProcessingData = {
+    template: Template;
+    templateMap: TemplateMap;
+    fileToConvert: string;
+    fileName: string;
+    engineType: AvailableEngines;
+};
