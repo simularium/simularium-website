@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { Checkbox as AntdCheckbox, Tooltip } from "antd";
 import { CheckboxProps } from "antd/lib/checkbox";
 
@@ -31,6 +31,23 @@ const Checkbox = (props: CheckboxTypeProps): JSX.Element => {
     const childProps = { ...props, checkboxType: null, checkboxLevel: null };
     const checkboxLevel = props.checkboxLevel ? props.checkboxLevel : "default";
 
+    const [showTooltip, setShowTooltip] = useState(false);
+    const [tooltipTitle, setTooltipTitle] = useState("Hide");
+
+    const updateTooltipTitle = () => {
+        const text = !props.checked ? "Show" : "Hide";
+        setTooltipTitle(text);
+    };
+
+    const handleMouseEnter = () => {
+        setShowTooltip(true);
+    };
+
+    const handleMouseLeave = () => {
+        setShowTooltip(false);
+        updateTooltipTitle();
+    };
+
     if (props.checkboxType === CHECKBOX_TYPE_STAR) {
         /* 
         Wrapping the StarCheckbox in a Tooltip component as done below for AntdCheckbox
@@ -44,14 +61,24 @@ const Checkbox = (props: CheckboxTypeProps): JSX.Element => {
     }
     return (
         <Tooltip
-            title={props.checked ? "Hide" : "Show"}
+            title={tooltipTitle}
             placement="top"
             mouseEnterDelay={TOOLTIP_DELAY}
             // Position tooltip with alignConfig object: https://github.com/yiminghe/dom-align#usage
             align={{ offset: tooltipOffsets[checkboxLevel] }}
             color={TOOLTIP_COLOR}
+            open={showTooltip}
+            onOpenChange={updateTooltipTitle}
         >
-            <AntdCheckbox {...childProps} />
+            <AntdCheckbox
+                {...childProps}
+                onChange={(e) => {
+                    setShowTooltip(false);
+                    childProps.onChange?.(e);
+                }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+            />
         </Tooltip>
     );
 };
