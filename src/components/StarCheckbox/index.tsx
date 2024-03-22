@@ -54,9 +54,7 @@ const StarCheckbox = ({
                         type="checkbox"
                         onChange={(e: any) => {
                             setShowTooltip(false);
-                            onChange
-                                ? onChange(e as CheckboxChangeEvent)
-                                : null;
+                            onChange?.(e);
                         }}
                         value={value}
                         onMouseEnter={handleMouseEnter}

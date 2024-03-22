@@ -74,7 +74,7 @@ const Checkbox = (props: CheckboxTypeProps): JSX.Element => {
                 {...childProps}
                 onChange={(e) => {
                     setShowTooltip(false);
-                    childProps.onChange ? childProps.onChange(e) : null;
+                    childProps.onChange?.(e);
                 }}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
