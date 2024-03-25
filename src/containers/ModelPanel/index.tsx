@@ -116,6 +116,8 @@ class ModelPanel extends React.Component<ModelPanelProps> {
             ),
         };
 
+        const infoPanel = <div>INFO PANEL</div>;
+
         return (
             <div className={styles.container}>
                 <SideBarContents
@@ -123,6 +125,7 @@ class ModelPanel extends React.Component<ModelPanelProps> {
                     content={[
                         <div className={styles.container} key="molecules">
                             {contentMap[viewerStatus]}
+                            {infoPanel}
                         </div>,
                         null,
                     ]}
