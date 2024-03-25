@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import classNames from "classnames";
 import { Tooltip } from "antd";
-import { CheckboxChangeEvent, CheckboxProps } from "antd/lib/checkbox";
+import { CheckboxProps } from "antd/lib/checkbox";
 
 import { TOOLTIP_DELAY, TOOLTIP_COLOR } from "../../constants";
 
