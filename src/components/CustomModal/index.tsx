@@ -24,10 +24,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
     divider,
     ...props
 }) => {
-    /**
-     *  custom close icon, positioned inside title: has correct icon
-     *  and ensures proper placement if header height changes
-     */
     const title = (
         <>
             <span>{titleText}</span>
@@ -38,9 +34,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
         </>
     );
 
-    /**
-     *  spacing styles differ slightly between divider and non-divider modals
-     */
     const footer = (
         <>
             {divider ? <Divider /> : null}
