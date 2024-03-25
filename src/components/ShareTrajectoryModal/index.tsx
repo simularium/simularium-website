@@ -110,7 +110,7 @@ const ShareTrajectoryModal = ({
                             To generate a shareable link, please save the file
                             in the public cloud using Dropbox, Google Drive, or
                             Amazon S3 and load the model into Simularium via
-                            URL.{"  "}
+                            URL.
                             <a
                                 href="https://simularium.allencell.org/tutorial#share-a-link"
                                 target="_blank"
