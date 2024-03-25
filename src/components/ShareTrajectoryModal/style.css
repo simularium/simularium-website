@@ -41,8 +41,7 @@
     gap: 7px;
 }
 
-.time-input,
-.time-input[disabled] {
+.time-input {
     text-align: right;
     width: 64px;
 }
