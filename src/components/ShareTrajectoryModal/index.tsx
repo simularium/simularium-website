@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Checkbox, Divider, Input } from "antd";
+import { Button, Checkbox, Input } from "antd";
+import classNames from "classnames";
 
 import { State } from "../../state/types";
 import { TimeUnits } from "../../state/trajectory/types";
@@ -102,25 +103,24 @@ const ShareTrajectoryModal = ({
     const modalOptions = {
         errorMessage: {
             content: (
-                <>
+                <div className={styles.errorContainer}>
                     <h4>{Warn} The current file is stored on your device.</h4>
-                    <div className={styles.bodyText}>
+                    <div>
                         <h5>
                             To generate a shareable link, please save the file
                             in the public cloud using Dropbox, Google Drive, or
                             Amazon S3 and load the model into Simularium via
-                            URL.
+                            URL.{"  "}
                             <a
                                 href="https://simularium.allencell.org/tutorial#share-a-link"
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                {" "}
-                                Learn more{" "}
+                                Learn more
                             </a>
                         </h5>
                     </div>
-                </>
+                </div>
             ),
             footer: (
                 <Button className={"secondary-button"} onClick={closeModal}>
@@ -130,15 +130,18 @@ const ShareTrajectoryModal = ({
         },
         isSharable: {
             content: (
-                <>
-                    <div>
+                <div className={styles.shareContainer}>
+                    <div className={styles.urlInputContainer}>
                         <Input
                             className={styles.urlInput}
                             value={url}
                             disabled
                         />
                         <Button
-                            className={"primary-button"}
+                            className={classNames(
+                                "primary-button",
+                                styles.copyButton
+                            )}
                             onClick={copyToClipboard}
                         >
                             Copy {Link}
@@ -158,7 +161,7 @@ const ShareTrajectoryModal = ({
                             {timeUnits ? timeUnits.name : null}
                         </div>
                     </div>
-                </>
+                </div>
             ),
             footer: (
                 <Button className="secondary-button" onClick={closeModal}>
@@ -170,14 +173,12 @@ const ShareTrajectoryModal = ({
 
     return (
         <CustomModal
+            closeHandler={closeModal}
             className={styles.uploadModal}
-            title="Share Trajectory"
+            titleText="Share trajectory"
+            divider={true}
             width={trajectoryIsSharable ? 550 : 611}
-            onCancel={closeModal}
-            mask={false}
-            centered
-            open
-            footer={
+            footerButtons={
                 trajectoryIsSharable
                     ? modalOptions.isSharable.footer
                     : modalOptions.errorMessage.footer
@@ -186,7 +187,6 @@ const ShareTrajectoryModal = ({
             {trajectoryIsSharable
                 ? modalOptions.isSharable.content
                 : modalOptions.errorMessage.content}
-            <Divider />
         </CustomModal>
     );
 };

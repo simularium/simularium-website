@@ -1,37 +1,52 @@
-.body-text {
-    padding-bottom: 10px;
+.error-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.url-input[disabled] {
-    color: var(--black);
+.share-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.url-input-container {
+    display: flex;
+    gap: 6px;
+}
+
+.url-input[disabled]:global(.ant-input) {
+    flex-grow: 1;
+    color: var(--light-theme-modal-input-color);
+    background-color: var(--light-theme-modal-input-bg);
     cursor: auto;
-    width: 395px;
-    margin-right: 14px;
     direction: rtl;
+    width: 395px;
+}
+
+.copy-button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.copy-button span:global(.anticon) {
+    margin: 0px;
+    padding-top: 2px;
+}
+
+.time-input-container {
+    align-items: center;
+    display: flex;
+    gap: 7px;
 }
 
 .time-input,
 .time-input[disabled] {
-    width: 75px;
-}
-
-.time-input[disabled] {
-    background: transparent;
-    color: var(--light-theme-input-disabled-color);
+    text-align: right;
+    width: 64px;
 }
 
 .time-input-text {
-    padding-top: 8px;
-}
-
-.time-input-container {
-    display: flex;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    gap: 8px;
-    align-items: center;
-}
-
-.time-input-container div {
-    margin-bottom: 0px;
+    margin: 0px;
 }
