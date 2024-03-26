@@ -6,8 +6,6 @@ import { Share } from "../Icons";
 import ShareTrajectoryModal from "../ShareTrajectoryModal";
 import NavButtonWithTooltip from "../NavButtonWithTooltip";
 
-import styles from "./style.css";
-
 interface ShareTrajectoryButtonProps {
     isBuffering: boolean;
     simulariumFile: LocalSimFile | NetworkedSimFile;
@@ -25,15 +23,13 @@ const ShareTrajectoryButton = ({
 
     const isDisabled = !simulariumFile.name || isSharing || isBuffering;
     return (
-        <div className={styles.container}>
-            {isSharing ? (
-                <div className={styles.overlay}>
-                    <ShareTrajectoryModal
-                        trajectoryIsSharable={trajectoryIsSharable}
-                        closeModal={handleShare}
-                    />
-                </div>
-            ) : null}
+        <>
+            {isSharing && (
+                <ShareTrajectoryModal
+                    trajectoryIsSharable={trajectoryIsSharable}
+                    closeModal={handleShare}
+                />
+            )}
             <NavButtonWithTooltip
                 tooltipPlacement="bottomLeft"
                 titleText="Share"
@@ -46,7 +42,7 @@ const ShareTrajectoryButton = ({
                     disabled: "Load a model to perform this action",
                 }}
             />
-        </div>
+        </>
     );
 };
 

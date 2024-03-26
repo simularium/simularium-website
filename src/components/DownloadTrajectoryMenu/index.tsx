@@ -6,8 +6,6 @@ import { NetworkedSimFile, LocalSimFile } from "../../state/trajectory/types";
 import { Download } from "../Icons";
 import NavButtonWithTooltip from "../NavButtonWithTooltip";
 
-import styles from "./style.css";
-
 interface DownloadTrajectoryMenuProps {
     isBuffering: boolean;
     isNetworkedFile: boolean;
@@ -45,20 +43,18 @@ const DownloadTrajectoryMenu = ({
     };
 
     return (
-        <div className={styles.container}>
-            <NavButtonWithTooltip
-                titleText="Download"
-                buttonType="action"
-                icon={Download}
-                clickHandler={downloadFile}
-                isDisabled={isDisabled}
-                tooltipText={{
-                    default: "Download trajectory",
-                    disabled: "Load a model to perform this action",
-                }}
-                tooltipPlacement="bottomLeft"
-            />
-        </div>
+        <NavButtonWithTooltip
+            titleText="Download"
+            buttonType="action"
+            icon={Download}
+            clickHandler={downloadFile}
+            isDisabled={isDisabled}
+            tooltipText={{
+                default: "Download trajectory",
+                disabled: "Load a model to perform this action",
+            }}
+            tooltipPlacement="bottomLeft"
+        />
     );
 };
 
