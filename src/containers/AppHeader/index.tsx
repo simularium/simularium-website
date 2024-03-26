@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 
@@ -27,6 +27,7 @@ import {
 import styles from "./style.css";
 import ShareTrajectoryButton from "../../components/ShareTrajectoryButton";
 import DownloadTrajectoryMenu from "../../components/DownloadTrajectoryMenu";
+import NavButton from "../../components/NavButton";
 
 interface AppHeaderProps {
     simulariumFile: LocalSimFile | NetworkedSimFile;
@@ -39,74 +40,76 @@ interface AppHeaderProps {
     setError: ActionCreator<SetErrorAction>;
 }
 
-class AppHeader extends React.Component<AppHeaderProps> {
-    public render(): JSX.Element {
-        const {
-            simulariumFile,
-            isBuffering,
-            changeToLocalSimulariumFile: loadLocalFile,
-            changeToNetworkedFile: loadNetworkFile,
-            setViewerStatus,
-            clearSimulariumFile,
-            setError,
-            isNetworkedFile,
-        } = this.props;
-        let lastModified = 0;
-        let displayName = "";
-        if (isLocalFileInterface(simulariumFile)) {
-            displayName = simulariumFile.name;
-            lastModified = simulariumFile.lastModified;
-        } else if (isNetworkSimFileInterface(simulariumFile)) {
-            displayName = simulariumFile.title;
-        }
+const AppHeader: React.FC<AppHeaderProps> = ({
+    simulariumFile,
+    isBuffering,
+    changeToLocalSimulariumFile: loadLocalFile,
+    changeToNetworkedFile: loadNetworkFile,
+    setViewerStatus,
+    clearSimulariumFile,
+    setError,
+    isNetworkedFile,
+}) => {
+    const history = useHistory();
 
-        return (
-            <div className={styles.pageHeader}>
-                <div className={styles.leftLinks}>
-                    <a
-                        href="https://allencell.org"
-                        title="Allen Cell Explorer"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {AicsLogo}
-                    </a>
-                    <span className={styles.verticalBar}>|</span>
-                    <Link to="/" className={styles.simulariumHome}>
-                        SIMULARIUM HOME
-                    </Link>
-                </div>
-                <ViewerTitle
-                    simulariumFileName={displayName}
-                    lastModified={lastModified}
-                />
-                <div className={styles.buttons}>
-                    <LoadFileMenu
-                        key="select"
-                        selectFile={loadNetworkFile}
-                        clearSimulariumFile={clearSimulariumFile}
-                        loadLocalFile={loadLocalFile}
-                        setViewerStatus={setViewerStatus}
-                        isBuffering={isBuffering}
-                        setError={setError}
-                    />
-                    <HelpMenu key="help" />
-                    <div className={styles.actionButtons}>
-                        <DownloadTrajectoryMenu
-                            isBuffering={isBuffering}
-                            simulariumFile={simulariumFile}
-                            isNetworkedFile={isNetworkedFile}
-                        />
-                        <ShareTrajectoryButton
-                            simulariumFile={simulariumFile}
-                            isBuffering={isBuffering}
-                        />
-                    </div>
-                </div>
-            </div>
-        );
+    let lastModified = 0;
+    let displayName = "";
+    if (isLocalFileInterface(simulariumFile)) {
+        displayName = simulariumFile.name;
+        lastModified = simulariumFile.lastModified;
+    } else if (isNetworkSimFileInterface(simulariumFile)) {
+        displayName = simulariumFile.title;
     }
-}
+
+    return (
+        <div className={styles.pageHeader}>
+            <div className={styles.leftLinks}>
+                <a
+                    href="https://allencell.org"
+                    title="Allen Cell Explorer"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    {AicsLogo}
+                </a>
+                <span className={styles.verticalBar}>|</span>
+                <NavButton
+                    className={styles.simulariumHome}
+                    titleText="SIMULARIUM HOME"
+                    buttonType="action"
+                    clickHandler={() => {
+                        history.push("/");
+                    }}
+                />
+            </div>
+            <ViewerTitle
+                simulariumFileName={displayName}
+                lastModified={lastModified}
+            />
+            <div className={styles.buttonContainer}>
+                <LoadFileMenu
+                    key="select"
+                    selectFile={loadNetworkFile}
+                    clearSimulariumFile={clearSimulariumFile}
+                    loadLocalFile={loadLocalFile}
+                    setViewerStatus={setViewerStatus}
+                    isBuffering={isBuffering}
+                    setError={setError}
+                />
+                <HelpMenu key="help" />
+                <DownloadTrajectoryMenu
+                    isBuffering={isBuffering}
+                    simulariumFile={simulariumFile}
+                    isNetworkedFile={isNetworkedFile}
+                />
+                <ShareTrajectoryButton
+                    simulariumFile={simulariumFile}
+                    isBuffering={isBuffering}
+                />
+            </div>
+        </div>
+    );
+};
 
 function mapStateToProps(state: State) {
     return {
