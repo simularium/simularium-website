@@ -1,0 +1,22 @@
+.nav-button.action:global(.ant-btn),
+.nav-button.action:global(.ant-btn:focus) {
+    background-color: var(--dark-theme-action-button-bg);
+    border-color: var(--dark-theme-action-button-bg);
+    border-radius: 3px;
+    color: var(--dark-theme-action-button-color);
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+    /* height: 26px;
+    width: 26px;
+    min-width: 26px; */
+}
+
+.nav-button.action:global(.ant-btn).disabled {
+    color: var(--dark-theme-action-button-disabled-color);
+    cursor: not-allowed;
+}
+
+.nav-button.action:global(.ant-btn:hover):not(.disabled) {
+    color: var(--dark-theme-action-button-hover-color);
+}
