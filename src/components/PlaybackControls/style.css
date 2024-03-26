@@ -1,12 +1,7 @@
 .container {
-    position: absolute;
     display: flex;
-    gap: 8px;
-    bottom: 0;
-    right: 25%;
-    width: 50%;
+    flex-grow: 1;
     justify-content: space-evenly;
-    margin-bottom: 20px;
 }
 
 .button-container {

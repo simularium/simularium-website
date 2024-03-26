@@ -40,12 +40,16 @@ import {
     LocalSimFile,
     TimeUnits,
     SetUrlParamsAction,
+    NetworkedSimFile,
+    isLocalFileInterface,
+    isNetworkSimFileInterface,
 } from "../../state/trajectory/types";
 import { batchActions } from "../../state/util";
 import PlaybackControls from "../../components/PlaybackControls";
+import RecordMoviesComponent from "../../components/RecordMoviesComponent";
 import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
-import { TUTORIAL_PATHNAME } from "../../routes";
+import { TUTORIAL_PATHNAME, VIEWER_PATHNAME } from "../../routes";
 import ErrorNotification from "../../components/ErrorNotification";
 
 import {
@@ -75,6 +79,7 @@ interface ViewerPanelProps {
     numFrames: number;
     isBuffering: boolean;
     scaleBarLabel: string;
+    simulariumFile: LocalSimFile | NetworkedSimFile;
     setUrlParams: ActionCreator<SetUrlParamsAction>;
     simulariumController: SimulariumController;
     changeTime: ActionCreator<ChangeTimeAction>;
@@ -99,6 +104,9 @@ interface ViewerPanelState {
     particleTypeIds: string[];
     height: number;
     width: number;
+    recordedMovie: Blob | null;
+    movieTitle: string;
+    movieDuration: number;
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -123,6 +131,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             particleTypeIds: [],
             height: 0,
             width: 0,
+            recordedMovie: null,
+            movieTitle: "",
+            movieDuration: 0,
         };
     }
 
@@ -364,6 +375,48 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
     };
 
+    public downloadMovie = () => {
+        if (!this.state.recordedMovie) {
+            console.error("No recorded movie to download");
+            return;
+        }
+        const url = URL.createObjectURL(this.state.recordedMovie);
+        const filename = this.state.movieTitle
+            ? this.state.movieTitle + ".mp4"
+            : "simularium.mp4";
+        const anchor = document.createElement("a");
+        anchor.href = url;
+        anchor.download = filename;
+        document.body.appendChild(anchor);
+        anchor.click();
+        document.body.removeChild(anchor);
+        URL.revokeObjectURL(url);
+    };
+
+    public onRecordedMovie = (videoBlob: Blob) => {
+        const { simulariumFile } = this.props;
+        let simulariumFileName = "";
+        if (isLocalFileInterface(simulariumFile)) {
+            simulariumFileName = simulariumFile.name;
+        } else if (isNetworkSimFileInterface(simulariumFile)) {
+            simulariumFileName = simulariumFile.title;
+        }
+        const title =
+            location.pathname.startsWith(VIEWER_PATHNAME) && simulariumFileName
+                ? simulariumFileName
+                : "";
+        const url = URL.createObjectURL(videoBlob);
+        const video = document.createElement("video");
+        video.src = url;
+        video.onloadedmetadata = () => {
+            this.setState({
+                recordedMovie: videoBlob,
+                movieTitle: title,
+                movieDuration: video.duration,
+            });
+        };
+    };
+
     public render(): JSX.Element {
         const {
             time,
@@ -413,27 +466,38 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     onTrajectoryFileInfoChanged={
                         this.onTrajectoryFileInfoChanged
                     }
+                    onRecordedMovie={this.onRecordedMovie}
                 />
                 {firstFrameTime !== lastFrameTime && (
-                    <PlaybackControls
-                        playHandler={this.startPlay}
-                        time={time}
-                        timeStep={timeStep}
-                        displayTimes={displayTimes}
-                        timeUnits={timeUnits}
-                        onTimeChange={this.skipToTime}
-                        pauseHandler={this.pause}
-                        prevHandler={this.playBackOne}
-                        nextHandler={this.playForwardOne}
-                        isPlaying={isPlaying}
-                        isLooping={isLooping}
-                        loopHandler={this.toggleLooping}
-                        firstFrameTime={firstFrameTime}
-                        lastFrameTime={lastFrameTime}
-                        loading={isBuffering}
-                        isEmpty={status === VIEWER_EMPTY}
-                    />
+                    <div className={styles.bottomControlsContainer}>
+                        <PlaybackControls
+                            playHandler={this.startPlay}
+                            time={time}
+                            timeStep={timeStep}
+                            displayTimes={displayTimes}
+                            timeUnits={timeUnits}
+                            onTimeChange={this.skipToTime}
+                            pauseHandler={this.pause}
+                            prevHandler={this.playBackOne}
+                            nextHandler={this.playForwardOne}
+                            isPlaying={isPlaying}
+                            isLooping={isLooping}
+                            loopHandler={this.toggleLooping}
+                            firstFrameTime={firstFrameTime}
+                            lastFrameTime={lastFrameTime}
+                            loading={isBuffering}
+                            isEmpty={status === VIEWER_EMPTY}
+                        />
+                        <RecordMoviesComponent
+                            trajectoryTitle={this.state.movieTitle}
+                            movieDuration={this.state.movieDuration}
+                            downloadMovie={this.downloadMovie}
+                            startRecording={simulariumController.startRecording}
+                            stopRecording={simulariumController.stopRecording}
+                        />
+                    </div>
                 )}
+
                 <ScaleBar label={scaleBarLabel} />
                 <CameraControls
                     resetCamera={simulariumController.resetCamera}
@@ -474,6 +538,8 @@ function mapStateToProps(state: State) {
         isBuffering: viewerStateBranch.selectors.getIsBuffering(state),
         isPlaying: viewerStateBranch.selectors.getIsPlaying(state),
         isLooping: viewerStateBranch.selectors.getIsLooping(state),
+        simulariumFile:
+            trajectoryStateBranch.selectors.getSimulariumFile(state),
     };
 }
 
