@@ -8,7 +8,7 @@ import styles from "./style.css";
 
 interface RecordMovieComponentProps {
     movieUrl: string;
-    downloadMovie: () => void;
+    movieTitle: string;
     cleanupMovieState: () => void;
     startRecording: () => void;
     stopRecording: () => void;
@@ -17,7 +17,7 @@ interface RecordMovieComponentProps {
 const RecordMovieComponent = (props: RecordMovieComponentProps) => {
     const {
         movieUrl,
-        downloadMovie,
+        movieTitle,
         cleanupMovieState,
         startRecording,
         stopRecording,
@@ -42,6 +42,20 @@ const RecordMovieComponent = (props: RecordMovieComponentProps) => {
         setIsRecording(false);
         stopRecording();
         setModalVisible(true);
+    };
+
+    const downloadMovie = () => {
+        if (!movieUrl) {
+            console.error("No recorded movie to download");
+            return;
+        }
+        const anchor = document.createElement("a");
+        anchor.href = movieUrl;
+        anchor.download = movieTitle;
+        document.body.appendChild(anchor);
+        anchor.click();
+        document.body.removeChild(anchor);
+        cleanupMovieState();
     };
 
     const startRecordIcon = (

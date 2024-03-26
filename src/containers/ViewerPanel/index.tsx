@@ -387,12 +387,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         });
     };
 
-    public downloadMovie = () => {
-        const { movieURL } = this.state;
-        if (!movieURL) {
-            console.error("No recorded movie to download");
-            return;
-        }
+    public getMovieTitle = () => {
         const { simulariumFile } = this.props;
         const fileExtensionRegex = /\.simularium$/;
         const movieTitle =
@@ -400,13 +395,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 ? simulariumFile.title
                 : simulariumFile.name.replace(fileExtensionRegex, "") ||
                   "simularium";
-        const anchor = document.createElement("a");
-        anchor.href = movieURL;
-        anchor.download = movieTitle;
-        document.body.appendChild(anchor);
-        anchor.click();
-        document.body.removeChild(anchor);
-        this.cleanupMovieState();
+        return movieTitle;
     };
 
     public render(): JSX.Element {
@@ -482,7 +471,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                         />
                         <RecordMoviesComponent
                             movieUrl={this.state.movieURL}
-                            downloadMovie={this.downloadMovie}
+                            movieTitle={this.getMovieTitle()}
                             cleanupMovieState={this.cleanupMovieState}
                             startRecording={simulariumController.startRecording}
                             stopRecording={simulariumController.stopRecording}
