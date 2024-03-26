@@ -4,20 +4,16 @@ import React from "react";
 import CustomModal from "../CustomModal";
 
 interface RecordMoviesModalProps {
-    setModalVisible: (isModalVisible: boolean) => void;
     downloadMovie: () => void;
-    duration: number;
+    closeModal: () => void;
+    duration: string;
 }
 
 const RecordMoviesModal: React.FC<RecordMoviesModalProps> = ({
-    setModalVisible,
     downloadMovie,
+    closeModal,
     duration,
 }) => {
-    const closeModal = () => {
-        setModalVisible(false);
-    };
-
     const completeDownload = () => {
         downloadMovie();
         closeModal();
@@ -34,16 +30,6 @@ const RecordMoviesModal: React.FC<RecordMoviesModalProps> = ({
         </>
     );
 
-    const getFormattedDuration = (durationInSeconds: number): string => {
-        const minutes = Math.floor((durationInSeconds % 3600) / 60);
-        const secs = Math.ceil(durationInSeconds) % 60;
-
-        const minutesStr = minutes.toString().padStart(2, "0");
-        const secondsStr = secs.toString().padStart(2, "0");
-
-        return `${minutesStr}:${secondsStr}`;
-    };
-
     return (
         <CustomModal
             closeHandler={closeModal}
@@ -51,7 +37,7 @@ const RecordMoviesModal: React.FC<RecordMoviesModalProps> = ({
             titleText="Save movie"
             width={311}
         >
-            <div>Movie duration: {getFormattedDuration(duration)} s</div>
+            <div>Movie duration: {duration} s</div>
         </CustomModal>
     );
 };

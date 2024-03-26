@@ -104,9 +104,7 @@ interface ViewerPanelState {
     particleTypeIds: string[];
     height: number;
     width: number;
-    recordedMovie: Blob | null;
-    movieTitle: string;
-    movieDuration: number;
+    movieURL: string;
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -131,9 +129,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             particleTypeIds: [],
             height: 0,
             width: 0,
-            recordedMovie: null,
-            movieTitle: "",
-            movieDuration: 0,
+            movieURL: "",
         };
     }
 
@@ -375,46 +371,42 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
     };
 
-    public downloadMovie = () => {
-        if (!this.state.recordedMovie) {
-            console.error("No recorded movie to download");
-            return;
+    public cleanupMovieState = () => {
+        if (this.state.movieURL) {
+            URL.revokeObjectURL(this.state.movieURL);
         }
-        const url = URL.createObjectURL(this.state.recordedMovie);
-        const filename = this.state.movieTitle
-            ? this.state.movieTitle + ".mp4"
-            : "simularium.mp4";
-        const anchor = document.createElement("a");
-        anchor.href = url;
-        anchor.download = filename;
-        document.body.appendChild(anchor);
-        anchor.click();
-        document.body.removeChild(anchor);
-        URL.revokeObjectURL(url);
+        this.setState({
+            movieURL: "",
+        });
     };
 
     public onRecordedMovie = (videoBlob: Blob) => {
-        const { simulariumFile } = this.props;
-        let simulariumFileName = "";
-        if (isLocalFileInterface(simulariumFile)) {
-            simulariumFileName = simulariumFile.name;
-        } else if (isNetworkSimFileInterface(simulariumFile)) {
-            simulariumFileName = simulariumFile.title;
-        }
-        const title =
-            location.pathname.startsWith(VIEWER_PATHNAME) && simulariumFileName
-                ? simulariumFileName
-                : "";
         const url = URL.createObjectURL(videoBlob);
-        const video = document.createElement("video");
-        video.src = url;
-        video.onloadedmetadata = () => {
-            this.setState({
-                recordedMovie: videoBlob,
-                movieTitle: title,
-                movieDuration: video.duration,
-            });
-        };
+        this.setState({
+            movieURL: url,
+        });
+    };
+
+    public downloadMovie = () => {
+        const { movieURL } = this.state;
+        if (!movieURL) {
+            console.error("No recorded movie to download");
+            return;
+        }
+        const { simulariumFile } = this.props;
+        const fileExtensionRegex = /\.simularium$/;
+        const movieTitle =
+            isNetworkSimFileInterface(simulariumFile) && simulariumFile.title
+                ? simulariumFile.title
+                : simulariumFile.name.replace(fileExtensionRegex, "") ||
+                  "simularium";
+        const anchor = document.createElement("a");
+        anchor.href = movieURL;
+        anchor.download = movieTitle;
+        document.body.appendChild(anchor);
+        anchor.click();
+        document.body.removeChild(anchor);
+        this.cleanupMovieState();
     };
 
     public render(): JSX.Element {
@@ -489,9 +481,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                             isEmpty={status === VIEWER_EMPTY}
                         />
                         <RecordMoviesComponent
-                            trajectoryTitle={this.state.movieTitle}
-                            movieDuration={this.state.movieDuration}
+                            movieUrl={this.state.movieURL}
                             downloadMovie={this.downloadMovie}
+                            cleanupMovieState={this.cleanupMovieState}
                             startRecording={simulariumController.startRecording}
                             stopRecording={simulariumController.stopRecording}
                         />

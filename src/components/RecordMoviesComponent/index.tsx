@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 
 import RecordMoviesModal from "../RecordMoviesModal";
@@ -7,21 +7,31 @@ import ViewportButton from "../ViewportButton";
 import styles from "./style.css";
 
 interface RecordMovieComponentProps {
-    trajectoryTitle: string;
-    movieDuration: number;
+    movieUrl: string;
     downloadMovie: () => void;
+    cleanupMovieState: () => void;
     startRecording: () => void;
     stopRecording: () => void;
 }
 
 const RecordMovieComponent = (props: RecordMovieComponentProps) => {
-    const { movieDuration, downloadMovie, startRecording, stopRecording } =
-        props;
+    const {
+        movieUrl,
+        downloadMovie,
+        cleanupMovieState,
+        startRecording,
+        stopRecording,
+    } = props;
     const [isRecording, setIsRecording] = useState<boolean>(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [isHovering, setIsHovering] = useState(false);
 
     const supportedBrowser = "VideoEncoder" in window;
+
+    const closeModal = () => {
+        cleanupMovieState();
+        setModalVisible(false);
+    };
 
     const start = () => {
         setIsRecording(true);
@@ -66,13 +76,38 @@ const RecordMovieComponent = (props: RecordMovieComponentProps) => {
         return isRecording ? stopIcon : startRecordIcon;
     };
 
+    const useFormattedDuration = () => {
+        const [formattedDuration, setFormattedDuration] = useState("");
+
+        useEffect(() => {
+            const video = document.createElement("video");
+            video.src = movieUrl;
+            video.onloadedmetadata = () => {
+                const durationInSeconds = video.duration;
+                const minutes = Math.floor((durationInSeconds % 3600) / 60);
+                const secs = Math.ceil(durationInSeconds) % 60;
+
+                const minutesStr = minutes.toString().padStart(2, "0");
+                const secondsStr = secs.toString().padStart(2, "0");
+
+                setFormattedDuration(`${minutesStr}:${secondsStr}`);
+                video.src = "";
+                video.load();
+            };
+        }, [movieUrl]);
+
+        return formattedDuration;
+    };
+
+    const duration = useFormattedDuration();
+
     return (
         <div className={styles.record}>
             {modalVisible && (
                 <RecordMoviesModal
-                    setModalVisible={setModalVisible}
+                    closeModal={closeModal}
                     downloadMovie={downloadMovie}
-                    duration={movieDuration}
+                    duration={duration}
                 />
             )}
             <ViewportButton
