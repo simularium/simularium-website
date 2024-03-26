@@ -1,3 +1,6 @@
+.nav-button::after {
+  animation: none;
+}
 
 .nav-button.action:global(.ant-btn) {
     background-color: var(--dark-theme-action-button-bg);
