@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Tooltip, TooltipProps } from "antd";
 
 import {
@@ -8,14 +8,13 @@ import {
 } from "../../constants";
 import NavButton, { NavButtonProps } from "../NavButton";
 
+interface TooltipText {
+    default: string;
+    disabled?: string;
+}
 interface NavButtonWithTooltipProps extends NavButtonProps {
-    tooltipText?: { default: string; disabled?: string };
-    titleText?: string;
-    buttonType?: string;
+    tooltipText?: TooltipText;
     tooltipPlacement?: TooltipProps["placement"];
-    icon?: ReactNode;
-    clickHandler: () => void;
-    isDisabled?: boolean;
 }
 
 const NavButtonWithTooltip: React.FC<NavButtonWithTooltipProps> = ({
@@ -36,6 +35,7 @@ const NavButtonWithTooltip: React.FC<NavButtonWithTooltipProps> = ({
 
     const [tooltipRenderText, setTooltipRenderText] =
         useState(getTooltipRenderText);
+    const [tooltipVisible, setTooltipVisible] = useState(false);
 
     // The conditional below prevents a flicker when tooltip text changes faster than tooltip can hide
     useEffect(() => {
@@ -44,10 +44,8 @@ const NavButtonWithTooltip: React.FC<NavButtonWithTooltipProps> = ({
         }
     }, [isDisabled]);
 
-    const [tooltipVisible, setTooltipVisible] = React.useState(false);
-
-    const handleMouseEnter = () => setTooltipVisible(true);
-    const handleMouseLeave = () => setTooltipVisible(false);
+    const onMouseEnter = () => setTooltipVisible(true);
+    const onMouseLeave = () => setTooltipVisible(false);
 
     const navButtonProps = {
         ...props,
@@ -56,8 +54,8 @@ const NavButtonWithTooltip: React.FC<NavButtonWithTooltipProps> = ({
         buttonType,
         isDisabled,
         clickHandler,
-        onMouseEnter: handleMouseEnter,
-        onMouseLeave: handleMouseLeave,
+        onMouseEnter,
+        onMouseLeave,
     };
 
     return (
