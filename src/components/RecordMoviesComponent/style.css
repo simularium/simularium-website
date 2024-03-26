@@ -1,0 +1,46 @@
+.record {
+    display: flex;
+    gap: 4px;
+    justify-content: space-evenly;
+}
+
+.icon-container {
+    height: 100%;
+    width: 100%;
+}
+
+.red-circle {
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    background: var(--dark-theme-record-button-red);
+    box-shadow: 0 0 0 0 var(--dark-theme-record-button-red);
+}
+
+.animate {
+    animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 #FF5252B3;
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px #FF525200;
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 #FF525200;
+  }
+}
+
+.status-container {
+    position: relative;
+}
+
+.recording-status {
+    margin-top: 5px;
+    position: absolute;
+}

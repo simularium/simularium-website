@@ -162,3 +162,26 @@ with "icon-moon" class name.
     color: var(--light-theme-modal-close-icon);
     content: var(--close);
 }
+
+.stop-record-icon::after {
+    font-size: 9px;
+    content: var(--stop-record);
+}
+
+/* the following rules stack two glyphs that
+need different colors at different times */
+.record-icon-circle,
+.record-icon-ring {
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+.record-icon-ring::after {
+    font-size: 12px;
+    content: var(--start-record-ring);
+}
+
+.record-icon-circle::after {
+    font-size: 12px;
+    content: var(--start-record-circle);
+}

@@ -3,3 +3,13 @@
     position: relative;
     overflow: hidden;
 }
+
+.bottom-controls-container {
+    position: absolute;
+    display: flex;
+    gap: 4px;
+    bottom: 0;
+    right: 25%;
+    width: 50%;
+    margin-bottom: 20px;
+}

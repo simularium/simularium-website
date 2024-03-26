@@ -14,6 +14,7 @@
 
 .viewport-button:global(.ant-btn).disabled {
     color: var(--dark-theme-viewport-button-disabled-color);
+    border-color: var(--dark-theme-viewport-button-bg);
     cursor: not-allowed;
 }
 
@@ -36,3 +37,14 @@
 .viewport-button:global(.ant-btn).radio-group-bottom {
     border-radius: 0px 0px 3px 3px;
 }
+
+.viewport-button:global(.ant-btn) :global(.record-icon-circle),
+.viewport-button:global(.ant-btn) :global(.stop-record-icon) {
+    color: var(--dark-theme-record-button-red);
+}
+
+.viewport-button:global(.ant-btn).disabled :global(.record-icon-circle) {
+    color: var(--dark-theme-viewport-button-disabled-color);
+}
+
+

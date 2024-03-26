@@ -28,6 +28,7 @@
     --medium-gray: #aeaeae;
     --dark-blue-gray: #69738a;
     --brick-red: #d14040;
+    --bright-red: #c23030;
     /* non-theme variables */
     --star-checkbox-bg: var(--grayish-brown);
     --footer-bg: var(--dark-three);
@@ -43,6 +44,7 @@
     --dark-theme-viewport-button-toggle-border: var(--dim-gray-two);
     --dark-theme-viewport-button-hover-bg: var(--purplish-gray);
     --dark-theme-viewport-button-disabled-color: var(--dim-gray-two);
+    --dark-theme-record-button-red: var(--bright-red);
     /* dark theme general/uncategorized */
     --dark-theme-body-bg: var(--black);
     --dark-theme-header-bg: var(--dark-three);
