@@ -387,7 +387,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         });
     };
 
-    public getMovieTitle = () => {
+    private getMovieTitle = () => {
         const { simulariumFile } = this.props;
         const fileExtensionRegex = /\.simularium$/;
         const movieTitle =
