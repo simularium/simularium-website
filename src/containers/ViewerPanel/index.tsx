@@ -42,8 +42,12 @@ import {
     ConversionStatus,
     SetConversionStatusAction,
     SetUrlParamsAction,
+    RequestNetworkFileAction,
 } from "../../state/trajectory/types";
-import { CONVERSION_INACTIVE } from "../../state/trajectory/constants";
+import {
+    CONVERSION_ACTIVE,
+    CONVERSION_INACTIVE,
+} from "../../state/trajectory/constants";
 import { batchActions } from "../../state/util";
 import PlaybackControls from "../../components/PlaybackControls";
 import CameraControls from "../../components/CameraControls";
@@ -97,6 +101,7 @@ interface ViewerPanelProps {
     setError: ActionCreator<SetErrorAction>;
     conversionStatus: ConversionStatus;
     setConversionStatus: ActionCreator<SetConversionStatusAction>;
+    changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
 }
 
 interface ViewerPanelState {
@@ -220,6 +225,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleJsonMeshData(jsonData: any) {
+        console.log("handleJsonMeshData");
         const { receiveAgentTypeIds } = this.props;
         const particleTypeIds = Object.keys(jsonData);
         receiveAgentTypeIds(particleTypeIds);
@@ -257,7 +263,24 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
+        console.log(
+            "onTrajectoryFileInfoChanged, trajectorydata.trajectoryTitle: ",
+            data
+        );
+        console.log("conversionStatus: ", this.props.conversionStatus);
         const { conversionStatus, setConversionStatus } = this.props;
+        //TODO all is making a small PR to add this field to trajectory file ino and we will probably need to add it to the type
+        // if (conversionStatus === CONVERSION_ACTIVE) {
+        //     const { changeToNetworkedFile } = this.props;
+        //     // TODO: we need to get the fileName from the server
+        //     // when other networked trajectories are loaded data.fileName can be logged
+        //     // out of the argument to this function, even though it does not appear
+        //     // in TrajectoryFileInfo type (anymore?)
+        //     changeToNetworkedFile({
+        //         name: `616c3c8b-c554-419a-a2a8-ee3b49584274.simularium`,
+        //         title: data.trajectoryTitle,
+        //     });
+        // }
         if (conversionStatus !== CONVERSION_INACTIVE) {
             setConversionStatus({ status: CONVERSION_INACTIVE });
         }
@@ -355,6 +378,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
+        console.log("handleUiDisplayDataChanged");
         const { receiveAgentNamesAndStates, setAgentsVisible } = this.props;
 
         const selectedAgents = convertUIDataToSelectionData(uiData);
@@ -505,6 +529,7 @@ const dispatchToPropsMap = {
     setError: viewerStateBranch.actions.setError,
     setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
+    changeToNetworkedFile: trajectoryStateBranch.actions.changeToNetworkedFile,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);
