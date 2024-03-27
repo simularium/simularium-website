@@ -83,6 +83,7 @@
     --light-theme-modal-supplemental-text: var(--charcoal-grey);
     --light-theme-btn-default-color: var(--dark-four);
     --light-theme-btn-default-disabled-bg: var(--heather);
+    --light-theme-divider-bg: var(--heather);
     --color-picker-tooltip: var(--dark-blue-gray);
     --viewer-btn-bg-default: var(--dark-three);
     --viewer-btn-bg-hover: var(--purplish-gray);

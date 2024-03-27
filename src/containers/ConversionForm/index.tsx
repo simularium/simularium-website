@@ -236,10 +236,8 @@ const ConversionForm = ({
                         </button>
                     )}
                 </div>
-                <Divider orientation="right" orientationMargin={400} />
-                <Button ghost onClick={cancelConversion}>
-                    Cancel
-                </Button>
+                <Divider className={styles.divider} orientation="right" />
+                <Button ghost onClick={cancelConversion}>Cancel</Button>
                 <Button
                     type="primary"
                     disabled={!fileToConvert || !engineSelected}
