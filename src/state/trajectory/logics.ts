@@ -37,7 +37,11 @@ import { setStatus, setIsPlaying, setError } from "../viewer/actions";
 import { ReduxLogicDeps } from "../types";
 import { batchActions } from "../util";
 
-import { getConversionStatus, getSimulariumFile } from "./selectors";
+import {
+    getConversionProcessingData,
+    getConversionStatus,
+    getSimulariumFile,
+} from "./selectors";
 import {
     changeToLocalSimulariumFile,
     receiveTrajectory,
@@ -59,6 +63,8 @@ import {
     CONVERSION_NO_SERVER,
     CONVERSION_SERVER_LIVE,
     CONVERSION_INACTIVE,
+    CONVERT_FILE,
+    CONVERSION_ACTIVE,
 } from "./constants";
 import { ReceiveAction, LocalSimFile, HealthCheckTimeout } from "./types";
 import { initialState } from "./reducer";
@@ -70,9 +76,13 @@ import {
     Template,
 } from "./conversion-data-types";
 
-const netConnectionSettings = {
-    serverIp: process.env.BACKEND_SERVER_IP,
-    serverPort: 9002,
+// TODO: this will need to be configured to point to the ECS instance once this is updated,
+// currently this requires running Octopus locally.
+const netConnectionSettings: NetConnectionParams = {
+    serverIp: "0.0.0.0",
+    serverPort: 8765,
+    useOctopus: true,
+    secureConnection: true,
 };
 
 const resetSimulariumFileState = createLogic({
@@ -184,7 +194,7 @@ const loadNetworkedFile = createLogic({
                 dispatch(setSimulariumController(simulariumController));
             }
         }
-        if (!simulariumController.netConnection) {
+        if (!simulariumController.remoteWebsocketClient) {
             simulariumController.configureNetwork(netConnectionSettings);
         }
 
@@ -386,26 +396,16 @@ const initializeFileConversionLogic = createLogic({
         done
     ) {
         const { getState } = deps;
-
-        // TODO: Most likely this will eventually replace the config up top
-        // but for development purposes it's here
-        // until we switch to Octopus, make sure it matches your local instance.
-        const netConnectionConfig: NetConnectionParams = {
-            serverIp: "0.0.0.0",
-            serverPort: 8765,
-            useOctopus: true,
-            secureConnection: false,
-        };
         // check if a controller exists and has the right configuration
         // create/configure as needed and put in state
         let controller = getSimulariumController(getState());
         if (!controller) {
             controller = new SimulariumController({
-                netConnectionSettings: netConnectionConfig,
+                netConnectionSettings: netConnectionSettings,
             });
             dispatch(setSimulariumController(controller));
         } else if (!controller.remoteWebsocketClient) {
-            controller.configureNetwork(netConnectionConfig);
+            controller.configureNetwork(netConnectionSettings);
         }
         // check the server health
         // Currently sending 5 checks, 3 seconds apart, can be adjusted/triggered as needed
@@ -435,7 +435,7 @@ const initializeFileConversionLogic = createLogic({
                     );
                     done();
                 }
-            }, netConnectionConfig);
+            }, netConnectionSettings);
 
             // timeouts that, if they resolve, send new checks until the max # of attempts is reached
             const timeoutId = setTimeout(() => {
@@ -447,16 +447,15 @@ const initializeFileConversionLogic = createLogic({
                         getConversionStatus(getState()) !== CONVERSION_INACTIVE
                     ) {
                         if (attempts < MAX_ATTEMPTS) {
-                            // retry the health check with incremented count
-                            attempts++;
-                            performHealthCheck(attempts);
-                        } else {
-                            // if we've done the max # of attempts, set conversionStatus
                             dispatch(
                                 setConversionStatus({
                                     status: CONVERSION_NO_SERVER,
                                 })
                             );
+                            // retry the health check with incremented count
+                            attempts++;
+                            performHealthCheck(attempts);
+                        } else {
                             done();
                         }
                     }
@@ -469,10 +468,6 @@ const initializeFileConversionLogic = createLogic({
 
         // Start the first health check
         performHealthCheck(attempts);
-        // restore network settings to default so that things work
-        // when we navigate away from conversion page
-        // TODO: this will not be relevant once we switch to Octopus
-        controller.configureNetwork(netConnectionSettings);
     },
     type: INITIALIZE_CONVERSION,
 });
@@ -547,6 +542,41 @@ const setConversionEngineLogic = createLogic({
     type: SET_CONVERSION_ENGINE,
 });
 
+const convertFileLogic = createLogic({
+    process(
+        deps: ReduxLogicDeps,
+        dispatch: <T extends AnyAction>(action: T) => T,
+        done
+    ) {
+        const { getState } = deps;
+
+        const { engineType, fileToConvert, fileName } =
+            getConversionProcessingData(getState());
+        const fileContents: Record<string, any> = {
+            fileContents: { fileContents: fileToConvert },
+            metaData: { trajectoryTitle: fileName },
+        };
+        const controller = getSimulariumController(getState());
+        // convert the file
+        dispatch(
+            setConversionStatus({
+                status: CONVERSION_ACTIVE,
+            })
+        );
+        controller
+            .convertAndLoadTrajectory(
+                netConnectionSettings,
+                fileContents,
+                engineType
+            )
+            .catch((err: Error) => {
+                console.error(err);
+            });
+        done();
+    },
+    type: CONVERT_FILE,
+});
+
 export default [
     requestPlotDataLogic,
     loadLocalFile,
@@ -556,4 +586,5 @@ export default [
     setTrajectoryStateFromUrlParams,
     setConversionEngineLogic,
     initializeFileConversionLogic,
+    convertFileLogic,
 ];

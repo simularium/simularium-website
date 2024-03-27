@@ -45,6 +45,7 @@ export const initialState = {
         template: null,
         templateMap: null,
         fileToConvert: null,
+        fileName: "",
     },
 };
 
@@ -139,7 +140,8 @@ const actionToConfigMap: TypeToDescriptionMap = {
                 ...state,
                 processingData: {
                     ...state.processingData,
-                    fileToConvert: action.payload,
+                    fileToConvert: action.payload.fileContents,
+                    fileName: action.payload.fileName,
                 },
             };
         },

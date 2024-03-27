@@ -8,7 +8,6 @@ import {
     CONVERSION_NO_SERVER,
     CONVERSION_SERVER_LIVE,
     CONVERSION_ACTIVE,
-    CONVERSION_COMPLETE,
     CONVERSION_INACTIVE,
 } from "./constants";
 export interface TrajectoryStateBranch {
@@ -61,11 +60,15 @@ export interface InitializeConversionAction {
 
 export interface ReceiveFileToConvertAction {
     type: string;
-    payload: string;
+    payload: { fileContents: string; fileName: string };
 }
 
 export interface SetConversionEngineAction {
     payload: AvailableEngines;
+    type: string;
+}
+
+export interface ConvertFileAction {
     type: string;
 }
 
@@ -118,5 +121,4 @@ export type ConversionStatus =
     | typeof CONVERSION_INACTIVE
     | typeof CONVERSION_NO_SERVER
     | typeof CONVERSION_SERVER_LIVE
-    | typeof CONVERSION_ACTIVE
-    | typeof CONVERSION_COMPLETE;
+    | typeof CONVERSION_ACTIVE;
