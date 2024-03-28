@@ -57,10 +57,7 @@ const NoTrajectoriesText = ({
                             <li>SpringSaLaD</li>
                         </ul>
                     </li> */}
-                    <li>
-                        {" "}
-                        Import a Smoldyn file through the Load Model menu.{" "}
-                    </li>
+                    <li>Import a Smoldyn file through the Load Model menu.</li>
                     <li>
                         Convert other file types using{" "}
                         <a
