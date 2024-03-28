@@ -1,5 +1,6 @@
 .upload-modal .extra-info {
     margin-top: .25rem;
+    margin-bottom: 0rem;
     color: var(--light-theme-modal-supplemental-text);
     font-size: 14px;
 }
@@ -26,5 +27,9 @@
 
 .upload-modal :global(.ant-tabs .ant-tabs-tab) {
     padding: 0;
+    font-size: 16px;
+}
+
+.upload-modal :global(.ant-tabs .ant-tabs-tab-active) {
     font-weight: 600;
 }
