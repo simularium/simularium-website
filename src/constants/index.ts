@@ -15,8 +15,8 @@ export const URL_PARAM_CUSTOM_TYPES = "custom-types";
 
 // URLs
 export const BASE_API_URL = `/api/${API_VERSION}`;
-export const DATA_BUCKET_URL =
-    "https://aics-simularium-data.s3.us-east-2.amazonaws.com";
+// todo octopus launch: this is pointing to the development octopus http endpoint
+export const DATA_BUCKET_URL = "http://0.0.0.0:1337/download?file";
 export const FORUM_URL =
     "https://forum.allencell.org/c/software-code/simularium/";
 // Note that below has "/tags/" unlike FORUM_URL
