@@ -28,7 +28,7 @@ const NoTrajectoriesText = ({
     return (
         <div className={styles.container}>
             <h3>Ways to get started:</h3>
-            <p>
+            <div>
                 <ol>
                     <li>Drag and drop a .simularium file onto this window</li>
                     <li>
@@ -43,7 +43,11 @@ const NoTrajectoriesText = ({
                         now or browse examples from the{" "}
                         <a href="/#try-simularium-now">start page</a>
                     </li>
-                    <li>
+                    {/* 
+                    todo: restore this text as autoconversion handles
+                    more file types
+                    */}
+                    {/* <li>
                         Import common file types through the Load Model menu
                         button, including:
                         <ul>
@@ -52,6 +56,10 @@ const NoTrajectoriesText = ({
                             <li>cellPACK</li>
                             <li>SpringSaLaD</li>
                         </ul>
+                    </li> */}
+                    <li>
+                        {" "}
+                        Import a Smoldyn file through the Load Model menu.{" "}
                     </li>
                     <li>
                         Convert other file types using{" "}
@@ -64,7 +72,7 @@ const NoTrajectoriesText = ({
                         </a>
                     </li>
                 </ol>
-            </p>
+            </div>
         </div>
     );
 };

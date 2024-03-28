@@ -2,20 +2,17 @@
     margin: 1em;
 }
 
-.container p, .container h3 {
+.container div, .container h3 {
     color: var(--dark-theme-sidebar-text);
-    margin-bottom: 1.5em;
     font-size: 16px;
+    margin-bottom: 1.5em;
 }
 
 .container h3 {
     font-weight: 600;
 }
 
-.container p {
-    font-weight: 200;
-}
-
 .container ul, .container ol {
     padding-left: 20px;
+    font-weight: 200;
 }
