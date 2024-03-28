@@ -29,6 +29,7 @@ import {
 import styles from "./style.css";
 import ShareTrajectoryButton from "../../components/ShareTrajectoryButton";
 import DownloadTrajectoryMenu from "../../components/DownloadTrajectoryMenu";
+import { CONVERSION_INACTIVE } from "../../state/trajectory/constants";
 
 interface AppHeaderProps {
     simulariumFile: LocalSimFile | NetworkedSimFile;
@@ -81,10 +82,12 @@ class AppHeader extends React.Component<AppHeaderProps> {
                         SIMULARIUM HOME
                     </Link>
                 </div>
-                <ViewerTitle
-                    simulariumFileName={displayName}
-                    lastModified={lastModified}
-                />
+                {conversionStatus === CONVERSION_INACTIVE && (
+                    <ViewerTitle
+                        simulariumFileName={displayName}
+                        lastModified={lastModified}
+                    />
+                )}
                 <div className={styles.buttons}>
                     <LoadFileMenu
                         key="select"
