@@ -35,6 +35,8 @@ export const RECEIVE_FILE_TO_CONVERT = makeTrajectoryConstant(
     "receive-file-to-convert"
 );
 export const CONVERT_FILE = makeTrajectoryConstant("convert-file");
+export const RECEIVE_CONVERTED_FILE =
+    makeTrajectoryConstant("receive-converted");
 
 export const SET_CONVERSION_STATUS = makeTrajectoryConstant("set-status");
 export const CONVERSION_INACTIVE = "conversion-inactive";

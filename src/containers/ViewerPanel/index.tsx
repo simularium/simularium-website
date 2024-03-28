@@ -42,8 +42,12 @@ import {
     ConversionStatus,
     SetConversionStatusAction,
     SetUrlParamsAction,
+    RequestNetworkFileAction,
 } from "../../state/trajectory/types";
-import { CONVERSION_INACTIVE } from "../../state/trajectory/constants";
+import {
+    CONVERSION_ACTIVE,
+    CONVERSION_INACTIVE,
+} from "../../state/trajectory/constants";
 import { batchActions } from "../../state/util";
 import PlaybackControls from "../../components/PlaybackControls";
 import CameraControls from "../../components/CameraControls";
@@ -96,7 +100,7 @@ interface ViewerPanelProps {
     setBuffering: ActionCreator<ToggleAction>;
     setError: ActionCreator<SetErrorAction>;
     conversionStatus: ConversionStatus;
-    setConversionStatus: ActionCreator<SetConversionStatusAction>;
+    receiveConvertedFile: ActionCreator<ReceiveAction>;
 }
 
 interface ViewerPanelState {
@@ -256,13 +260,32 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         setIsLooping(!isLooping);
     }
 
-    public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
-        const { conversionStatus, setConversionStatus } = this.props;
-        if (conversionStatus !== CONVERSION_INACTIVE) {
-            setConversionStatus({ status: CONVERSION_INACTIVE });
-        }
+    public handleIncomingConvertedFile(data: TrajectoryFileInfo) {
+        const { conversionStatus, receiveConvertedFile } = this.props;
+        if (conversionStatus === CONVERSION_ACTIVE) {
+            // todo:
+            // TFI v4? and/or address the fact that this typing is not actually enforced
+            // on the incoming data... it's misleading to import the type from the viewer
+            // but have the viewer send data that doesn't match the type
+            interface TrajectoryFileInfoWithFileName
+                extends TrajectoryFileInfo {
+                fileName: string;
+            }
+            const dataWithFileName = data as TrajectoryFileInfoWithFileName;
 
-        const { receiveTrajectory, simulariumController } = this.props;
+            receiveConvertedFile({
+                name: dataWithFileName.fileName,
+                title: dataWithFileName.trajectoryTitle,
+            });
+        }
+    }
+
+    public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
+        const { receiveTrajectory, simulariumController, conversionStatus } =
+            this.props;
+        if (conversionStatus === CONVERSION_ACTIVE) {
+            this.handleIncomingConvertedFile(data);
+        }
         const tickIntervalLength = simulariumController.tickIntervalLength;
 
         let scaleBarLabelNumber =
@@ -503,7 +526,7 @@ const dispatchToPropsMap = {
     setIsPlaying: viewerStateBranch.actions.setIsPlaying,
     setIsLooping: viewerStateBranch.actions.setIsLooping,
     setError: viewerStateBranch.actions.setError,
-    setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
+    receiveConvertedFile: trajectoryStateBranch.actions.receiveConvertedFile,
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
 };
 
