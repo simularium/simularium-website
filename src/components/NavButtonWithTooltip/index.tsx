@@ -19,7 +19,7 @@ interface NavButtonWithTooltipProps extends NavButtonProps {
 }
 
 const NavButtonWithTooltip: React.FC<NavButtonWithTooltipProps> = ({
-    tooltipText = { default: "" },
+    tooltipText = { default: "", disabled: "" },
     titleText,
     tooltipPlacement,
     buttonType,
@@ -29,20 +29,19 @@ const NavButtonWithTooltip: React.FC<NavButtonWithTooltipProps> = ({
     ...props
 }) => {
     const getTooltipRenderText = () => {
-        return isDisabled && tooltipText.disabled
-            ? tooltipText.disabled
-            : tooltipText.default;
+        return isDisabled ? tooltipText.disabled : tooltipText.default;
     };
 
     const [tooltipRenderText, setTooltipRenderText] =
         useState(getTooltipRenderText);
     const [tooltipVisible, setTooltipVisible] = useState(false);
 
-    // The conditional below prevents a flicker when tooltip text changes faster than tooltip can hide
     useEffect(() => {
-        if (!isDisabled || (!tooltipVisible && isDisabled)) {
-            setTooltipRenderText(getTooltipRenderText());
+        // changing text while tooltip is visible can cause flickers
+        if (tooltipVisible) {
+            return;
         }
+        setTooltipRenderText(getTooltipRenderText());
     }, [isDisabled]);
 
     const onMouseEnter = () => setTooltipVisible(true);
