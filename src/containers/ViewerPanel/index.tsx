@@ -100,8 +100,7 @@ interface ViewerPanelProps {
     setBuffering: ActionCreator<ToggleAction>;
     setError: ActionCreator<SetErrorAction>;
     conversionStatus: ConversionStatus;
-    setConversionStatus: ActionCreator<SetConversionStatusAction>;
-    changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
+    receiveConvertedFile: ActionCreator<ReceiveAction>;
 }
 
 interface ViewerPanelState {
@@ -262,30 +261,32 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         setIsLooping(!isLooping);
     }
 
-    public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
-        console.log(
-            "onTrajectoryFileInfoChanged, trajectorydata.trajectoryTitle: ",
-            data
-        );
-        console.log("conversionStatus: ", this.props.conversionStatus);
-        const { conversionStatus, setConversionStatus } = this.props;
-        //TODO all is making a small PR to add this field to trajectory file ino and we will probably need to add it to the type
-        // if (conversionStatus === CONVERSION_ACTIVE) {
-        //     const { changeToNetworkedFile } = this.props;
-        //     // TODO: we need to get the fileName from the server
-        //     // when other networked trajectories are loaded data.fileName can be logged
-        //     // out of the argument to this function, even though it does not appear
-        //     // in TrajectoryFileInfo type (anymore?)
-        //     changeToNetworkedFile({
-        //         name: `616c3c8b-c554-419a-a2a8-ee3b49584274.simularium`,
-        //         title: data.trajectoryTitle,
-        //     });
-        // }
-        if (conversionStatus !== CONVERSION_INACTIVE) {
-            setConversionStatus({ status: CONVERSION_INACTIVE });
-        }
+    public handleIncomingConvertedFile(data: TrajectoryFileInfo) {
+        const { conversionStatus, receiveConvertedFile } = this.props;
+        if (conversionStatus === CONVERSION_ACTIVE) {
+            // todo:
+            // TFI v4? and/or address the fact that this typing is not actually enforced
+            // on the incoming data... it's misleading to import the type from the viewer
+            // but have the viewer send data that doesn't match the type
+            interface TrajectoryFileInfoWithFileName
+                extends TrajectoryFileInfo {
+                fileName: string;
+            }
+            const dataWithFileName = data as TrajectoryFileInfoWithFileName;
 
-        const { receiveTrajectory, simulariumController } = this.props;
+            receiveConvertedFile({
+                name: dataWithFileName.fileName,
+                title: dataWithFileName.trajectoryTitle,
+            });
+        }
+    }
+
+    public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
+        const { receiveTrajectory, simulariumController, conversionStatus } =
+            this.props;
+        if (conversionStatus === CONVERSION_ACTIVE) {
+            this.handleIncomingConvertedFile(data);
+        }
         const tickIntervalLength = simulariumController.tickIntervalLength;
 
         let scaleBarLabelNumber =
@@ -527,9 +528,8 @@ const dispatchToPropsMap = {
     setIsPlaying: viewerStateBranch.actions.setIsPlaying,
     setIsLooping: viewerStateBranch.actions.setIsLooping,
     setError: viewerStateBranch.actions.setError,
-    setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
-    changeToNetworkedFile: trajectoryStateBranch.actions.changeToNetworkedFile,
+    receiveConvertedFile: trajectoryStateBranch.actions.receiveConvertedFile,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);
