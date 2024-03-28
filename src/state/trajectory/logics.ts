@@ -65,6 +65,7 @@ import {
     CONVERSION_INACTIVE,
     CONVERT_FILE,
     CONVERSION_ACTIVE,
+    RECEIVE_CONVERTED_FILE,
 } from "./constants";
 import { ReceiveAction, LocalSimFile, HealthCheckTimeout } from "./types";
 import { initialState } from "./reducer";
@@ -171,6 +172,7 @@ const handleFileLoadError = (
 
 const loadNetworkedFile = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
+        console.log("loadNetworkedFile logic");
         const { action, getState } = deps;
         const currentState = getState();
 
@@ -577,6 +579,26 @@ const convertFileLogic = createLogic({
     type: CONVERT_FILE,
 });
 
+const receiveConvertedFileLogic = createLogic({
+    process(deps: ReduxLogicDeps, dispatch) {
+        const { action, getState } = deps;
+        const currentState = getState();
+        const conversionStatus = getConversionStatus(currentState);
+        const simulariumFile = action.payload;
+        dispatch(receiveSimulariumFile(simulariumFile));
+        clearOutFileTrajectoryUrlParam();
+        history.replaceState(
+            {},
+            "",
+            `${location.origin}${location.pathname}?${URL_PARAM_KEY_FILE_NAME}=${simulariumFile.name}`
+        );
+        if (conversionStatus !== CONVERSION_INACTIVE) {
+            dispatch(setConversionStatus({ status: CONVERSION_INACTIVE }));
+        }
+    },
+    type: RECEIVE_CONVERTED_FILE,
+});
+
 export default [
     requestPlotDataLogic,
     loadLocalFile,
@@ -587,4 +609,5 @@ export default [
     setConversionEngineLogic,
     initializeFileConversionLogic,
     convertFileLogic,
+    receiveConvertedFileLogic,
 ];

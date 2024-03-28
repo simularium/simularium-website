@@ -17,6 +17,7 @@ import {
     RECEIVE_FILE_TO_CONVERT,
     SET_CONVERSION_STATUS,
     CONVERT_FILE,
+    RECEIVE_CONVERTED_FILE,
 } from "./constants";
 import { AvailableEngines } from "./conversion-data-types";
 import {
@@ -177,5 +178,12 @@ export function setConversionEngine(
 export function convertFile(): ConvertFileAction {
     return {
         type: CONVERT_FILE,
+    };
+}
+
+export function receiveConvertedFile(payload: NetworkedSimFile): ReceiveAction {
+    return {
+        payload,
+        type: RECEIVE_CONVERTED_FILE,
     };
 }
