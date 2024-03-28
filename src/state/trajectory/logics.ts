@@ -172,7 +172,6 @@ const handleFileLoadError = (
 
 const loadNetworkedFile = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
-        console.log("loadNetworkedFile logic");
         const { action, getState } = deps;
         const currentState = getState();
 

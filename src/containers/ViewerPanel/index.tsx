@@ -224,7 +224,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleJsonMeshData(jsonData: any) {
-        console.log("handleJsonMeshData");
         const { receiveAgentTypeIds } = this.props;
         const particleTypeIds = Object.keys(jsonData);
         receiveAgentTypeIds(particleTypeIds);
@@ -379,7 +378,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
-        console.log("handleUiDisplayDataChanged");
         const { receiveAgentNamesAndStates, setAgentsVisible } = this.props;
 
         const selectedAgents = convertUIDataToSelectionData(uiData);
@@ -528,8 +526,8 @@ const dispatchToPropsMap = {
     setIsPlaying: viewerStateBranch.actions.setIsPlaying,
     setIsLooping: viewerStateBranch.actions.setIsLooping,
     setError: viewerStateBranch.actions.setError,
-    setUrlParams: trajectoryStateBranch.actions.setUrlParams,
     receiveConvertedFile: trajectoryStateBranch.actions.receiveConvertedFile,
+    setUrlParams: trajectoryStateBranch.actions.setUrlParams,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);
