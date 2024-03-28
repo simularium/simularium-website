@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Tooltip, TooltipProps } from "antd";
+import { Tooltip } from "antd";
 
 import {
     NAV_BAR_TOOLTIP_OFFSET,
@@ -7,6 +7,7 @@ import {
     TOOLTIP_DELAY,
 } from "../../constants";
 import NavButton, { NavButtonProps } from "../NavButton";
+import { TooltipPlacement } from "../../constants/interfaces";
 
 interface TooltipText {
     default: string;
@@ -14,7 +15,7 @@ interface TooltipText {
 }
 interface NavButtonWithTooltipProps extends NavButtonProps {
     tooltipText?: TooltipText;
-    tooltipPlacement?: TooltipProps["placement"];
+    tooltipPlacement?: TooltipPlacement;
 }
 
 const NavButtonWithTooltip: React.FC<NavButtonWithTooltipProps> = ({
