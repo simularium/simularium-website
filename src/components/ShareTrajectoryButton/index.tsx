@@ -33,7 +33,6 @@ const ShareTrajectoryButton = ({
             <NavButtonWithTooltip
                 tooltipPlacement="bottomLeft"
                 titleText="Share"
-                buttonType="action"
                 icon={Share}
                 clickHandler={handleShare}
                 isDisabled={isDisabled}

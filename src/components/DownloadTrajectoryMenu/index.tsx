@@ -45,7 +45,6 @@ const DownloadTrajectoryMenu = ({
     return (
         <NavButtonWithTooltip
             titleText="Download"
-            buttonType="action"
             icon={Download}
             clickHandler={downloadFile}
             isDisabled={isDisabled}

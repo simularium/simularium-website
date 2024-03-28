@@ -15,17 +15,18 @@ export interface NavButtonProps extends ButtonProps {
 const NavButton: React.FC<NavButtonProps> = ({
     className,
     titleText,
-    buttonType,
+    buttonType = "action",
     icon,
     clickHandler,
     isDisabled,
     ...props
 }) => {
+    // NavButtons default to action button styling, provide secondary or primary to override
     const buttonClassNames = classNames(
         className,
         styles.navButton,
-        buttonType && styles[buttonType],
-        isDisabled && styles.disabled
+        styles[buttonType],
+        { [styles.disabled]: isDisabled }
     );
 
     return (
