@@ -30,10 +30,10 @@ export const GoBack = <ArrowLeftOutlined />;
 export const Reset = <HomeOutlined />;
 export const ZoomIn = <PlusOutlined />;
 export const ZoomOut = <MinusOutlined />;
-export const Share = <ShareAltOutlined />;
+export const Share = <ShareAltOutlined style={{ fontSize: "15px" }} />;
 export const Warn = <WarningOutlined />;
 export const Link = <LinkOutlined />;
-export const Download = <DownloadOutlined size={32} />;
+export const Download = <DownloadOutlined style={{ fontSize: "15px" }} />;
 export const LoopOutlined = <RetweetOutlined />;
 
 export const PurpleArrow = <img src={PurpleArrowPointingRight} />;

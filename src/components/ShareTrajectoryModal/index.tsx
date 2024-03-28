@@ -174,7 +174,6 @@ const ShareTrajectoryModal = ({
             title="Share Trajectory"
             width={trajectoryIsSharable ? 550 : 611}
             onCancel={closeModal}
-            mask={false}
             centered
             open
             footer={
