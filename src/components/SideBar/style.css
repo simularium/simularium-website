@@ -23,14 +23,17 @@
 }
 
 .sider :global(.ant-layout-sider-children) {
-    overflow: auto;
+    overflow-y: visible;
+    overflow-x: visible;
+
+    /* overflow-x: visible;
+    overflow-y: hidden; */
 }
 
 :global(.ant-collapse),
 :global(.ant-collapse-header),
 :global(.ant-collapse > .ant-collapse-item:last-child),
-:global(.ant-collapse > .ant-collapse-item:last-child > .ant-collapse-header)
-{
+:global(.ant-collapse > .ant-collapse-item:last-child > .ant-collapse-header) {
     border-radius: 0;
 }
 
@@ -43,7 +46,7 @@
     position: absolute;
     top: 50%;
     left: 3.5px;
-} 
+}
 
 .trigger {
     position: absolute;
@@ -73,10 +76,12 @@
     left: -22px;
 }
 
-.left img, .collapsed.right img {
+.left img,
+.collapsed.right img {
     transform: rotate(180deg);
 }
 
-.collapsed.left img, .right img {
+.collapsed.left img,
+.right img {
     transform: rotate(0deg);
 }

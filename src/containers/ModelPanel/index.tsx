@@ -17,6 +17,7 @@ import {
     getAgentVisibilityMap,
     getAgentHighlightMap,
     getRecentColors,
+    getFollowObject,
 } from "../../state/selection/selectors";
 import {
     turnAgentsOnByDisplayKey,
@@ -51,6 +52,10 @@ import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFi
 import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
 
 import styles from "./style.css";
+import MetadataPanel from "../../components/MetadataPanel";
+import { SimulariumController } from "@aics/simularium-viewer";
+import { Divider } from "antd";
+import { AgentData } from "@aics/simularium-viewer/type-declarations/simularium/types";
 
 interface ModelPanelProps {
     uiDisplayDataTree: AgentDisplayNode[];
@@ -68,6 +73,8 @@ interface ModelPanelProps {
     recentColors: string[];
     setColorChange: ActionCreator<SetColorChangeAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
+    simulariumController: SimulariumController;
+    followObject: AgentData;
 }
 
 class ModelPanel extends React.Component<ModelPanelProps> {
@@ -88,7 +95,10 @@ class ModelPanel extends React.Component<ModelPanelProps> {
             recentColors,
             setColorChange,
             setRecentColors,
+            simulariumController,
+            followObject,
         } = this.props;
+        console.log("uidisplaydata in model panel", uiDisplayDataTree);
         const checkboxTree = (
             <CheckBoxTree
                 treeData={uiDisplayDataTree}
@@ -116,16 +126,37 @@ class ModelPanel extends React.Component<ModelPanelProps> {
             ),
         };
 
-        const infoPanel = <div>INFO PANEL</div>;
+        if (followObject !== undefined) {
+            if (uiDisplayDataTree[followObject.type] !== undefined) {
+                console.log("followObject is not undefined");
+                if (uiDisplayDataTree[followObject.type].title !== undefined) {
+                    console.log("title is not undefined");
+                    const followedObjectAgentType =
+                        uiDisplayDataTree[followObject.type].title ||
+                        "default object title";
+
+                    console.log(
+                        "followedObjectAgentType",
+                        followedObjectAgentType
+                    );
+                }
+            }
+        }
 
         return (
             <div className={styles.container}>
                 <SideBarContents
+                    followObject={followObject}
+                    // agentType={followedObjectAgentType}
+                    uidisplayData={uiDisplayDataTree}
+                    hasMetadataPanel={true}
                     mainTitle="Agents"
                     content={[
-                        <div className={styles.container} key="molecules">
+                        <div
+                            className={styles.sidebarContentsContainer}
+                            key="molecules"
+                        >
                             {contentMap[viewerStatus]}
-                            {infoPanel}
                         </div>,
                         null,
                     ]}
@@ -146,6 +177,7 @@ function mapStateToProps(state: State) {
         viewerStatus: getStatus(state),
         isNetworkedFile: getIsNetworkedFile(state),
         recentColors: getRecentColors(state),
+        followObject: getFollowObject(state),
     };
 }
 

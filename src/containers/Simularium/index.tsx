@@ -230,6 +230,7 @@ class App extends React.Component<AppProps, AppState> {
         const { simulariumController, changeToLocalSimulariumFile } =
             this.props;
         const isEmbedded = location.pathname === EMBED_PATHNAME;
+
         return (
             <Layout
                 className={classNames([
@@ -245,7 +246,9 @@ class App extends React.Component<AppProps, AppState> {
                             isEmbedded={isEmbedded}
                             type="left"
                         >
-                            <ModelPanel />
+                            <ModelPanel
+                                simulariumController={simulariumController}
+                            />
                         </SideBar>
                         <Content>
                             {simulariumController && (

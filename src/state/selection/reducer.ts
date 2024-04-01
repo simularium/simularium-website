@@ -13,6 +13,7 @@ import {
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
     SET_COLOR_CHANGES,
     SET_RECENT_COLORS,
+    SET_FOLLOW_OBJECT,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -24,6 +25,7 @@ import {
     ResetAction,
     SetColorChangeAction,
     SetRecentColorsAction,
+    SetFollowAgentDataAction,
 } from "./types";
 
 export const initialState = {
@@ -33,6 +35,7 @@ export const initialState = {
     agentHighlightMap: {},
     colorChange: null,
     recentColors: [],
+    followAgentData: -1,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -150,6 +153,19 @@ const actionToConfigMap: TypeToDescriptionMap = {
             return {
                 ...state,
                 recentColors: action.payload,
+            };
+        },
+    },
+    [SET_FOLLOW_OBJECT]: {
+        accepts: (action: AnyAction): action is SetFollowAgentDataAction =>
+            action.type === SET_FOLLOW_OBJECT,
+        perform: (
+            state: SelectionStateBranch,
+            action: SetFollowAgentDataAction
+        ) => {
+            return {
+                ...state,
+                followAgentData: action.payload,
             };
         },
     },

@@ -25,6 +25,7 @@ import {
 } from "../../state/viewer/constants";
 import {
     ChangeTimeAction,
+    SetFollowAgentDataAction,
     SetVisibleAction,
 } from "../../state/selection/types";
 import {
@@ -59,6 +60,7 @@ import { DisplayTimes } from "./types";
 import styles from "./style.css";
 import { MOBILE_CUTOFF } from "../../constants";
 import { hasUrlParamsSettings } from "../../util";
+import { AgentData } from "@aics/simularium-viewer/type-declarations/simularium/types";
 
 interface ViewerPanelProps {
     time: number;
@@ -92,6 +94,7 @@ interface ViewerPanelProps {
     error: ViewerError;
     setBuffering: ActionCreator<ToggleAction>;
     setError: ActionCreator<SetErrorAction>;
+    setFollowAgentData: ActionCreator<SetFollowAgentDataAction>;
 }
 
 interface ViewerPanelState {
@@ -252,6 +255,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
+        console.log("onTrajectoryFileInfoChanged", data);
         const { receiveTrajectory, simulariumController } = this.props;
         const tickIntervalLength = simulariumController.tickIntervalLength;
 
@@ -364,6 +368,17 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
     };
 
+    public onFollowObjectChange = (
+        newFollowObject: number,
+        oldFollowObject: number,
+        agentData: AgentData
+    ) => {
+        const { setFollowAgentData: setFollowAgentData } = this.props;
+        if (newFollowObject !== oldFollowObject) {
+            setFollowAgentData(agentData);
+        }
+    };
+
     public render(): JSX.Element {
         const {
             time,
@@ -413,6 +428,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     onTrajectoryFileInfoChanged={
                         this.onTrajectoryFileInfoChanged
                     }
+                    followObjectCallback={this.onFollowObjectChange}
                 />
                 {firstFrameTime !== lastFrameTime && (
                     <PlaybackControls
@@ -492,6 +508,7 @@ const dispatchToPropsMap = {
     setIsLooping: viewerStateBranch.actions.setIsLooping,
     setError: viewerStateBranch.actions.setError,
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
+    setFollowAgentData: selectionStateBranch.actions.setFollowAgentData,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);

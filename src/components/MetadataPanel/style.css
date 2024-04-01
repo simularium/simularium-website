@@ -1,0 +1,36 @@
+.container {
+    color: var(--dark-theme-text-color-bright);
+    position: relative;
+    overflow: visible;
+}
+
+/* todo make icon button type a thing? */
+.icon {
+    background-color: transparent;
+    border: none;
+}
+
+.title {
+    display: flex;
+    justify-content: space-between;
+    /* background-color: aqua; */
+}
+
+.divider {
+    background-color: var(--dark-theme-divider);
+    box-sizing: content-box;
+    padding-left: 10px;
+    margin: 0px;
+}
+
+.content {
+    padding: 10px 6px 10px 16px;
+    box-sizing: content-box;
+    /* padding-left: 10px; */
+    /* background-color: violet; */
+    /* margin: 0px; */
+}
+
+.content-expanded {
+    padding: 10px 6px 10px 16px;
+}

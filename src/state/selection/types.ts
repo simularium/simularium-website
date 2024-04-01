@@ -58,3 +58,8 @@ export interface SetRecentColorsAction {
     payload: string[];
     type: string;
 }
+
+export interface SetFollowAgentDataAction {
+    payload: number;
+    type: string;
+}

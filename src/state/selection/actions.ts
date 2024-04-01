@@ -9,6 +9,7 @@ import {
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
     SET_COLOR_CHANGES,
     SET_RECENT_COLORS,
+    SET_FOLLOW_OBJECT,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -19,6 +20,7 @@ import {
     ResetAction,
     SetColorChangeAction,
     SetRecentColorsAction,
+    SetFollowAgentDataAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -90,5 +92,14 @@ export function setRecentColors(colors: string[]): SetRecentColorsAction {
     return {
         payload: colors,
         type: SET_RECENT_COLORS,
+    };
+}
+
+export function setFollowAgentData(
+    agentData: number
+): SetFollowAgentDataAction {
+    return {
+        payload: agentData,
+        type: SET_FOLLOW_OBJECT,
     };
 }
