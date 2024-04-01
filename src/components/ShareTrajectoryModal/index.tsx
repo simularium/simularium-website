@@ -16,14 +16,14 @@ import { editUrlParams } from "../../util";
 import styles from "./style.css";
 
 interface ShareTrajectoryModalProps {
-    trajectoryIsSharable: boolean;
+    trajectoryIsShareable: boolean;
     closeModal: () => void;
     timeUnits: TimeUnits;
     displayTimes: DisplayTimes;
 }
 
 const ShareTrajectoryModal = ({
-    trajectoryIsSharable,
+    trajectoryIsShareable,
     closeModal,
     timeUnits,
     displayTimes,
@@ -128,7 +128,7 @@ const ShareTrajectoryModal = ({
                 </Button>
             ),
         },
-        isSharable: {
+        isShareable: {
             content: (
                 <div className={styles.shareContainer}>
                     <div className={styles.urlInputContainer}>
@@ -177,15 +177,15 @@ const ShareTrajectoryModal = ({
             className={styles.uploadModal}
             titleText="Share trajectory"
             divider={true}
-            width={trajectoryIsSharable ? 550 : 611}
+            width={trajectoryIsShareable ? 550 : 611}
             footerButtons={
-                trajectoryIsSharable
-                    ? modalOptions.isSharable.footer
+                trajectoryIsShareable
+                    ? modalOptions.isShareable.footer
                     : modalOptions.errorMessage.footer
             }
         >
-            {trajectoryIsSharable
-                ? modalOptions.isSharable.content
+            {trajectoryIsShareable
+                ? modalOptions.isShareable.content
                 : modalOptions.errorMessage.content}
         </CustomModal>
     );

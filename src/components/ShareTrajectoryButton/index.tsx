@@ -17,7 +17,7 @@ const ShareTrajectoryButton = ({
 }: ShareTrajectoryButtonProps): JSX.Element => {
     const [isSharing, setIsSharing] = React.useState(false);
 
-    const trajectoryIsSharable = isOnlineTrajectory(location.href);
+    const trajectoryIsShareable = isOnlineTrajectory(location.href);
 
     const handleShare = () => setIsSharing(!isSharing);
 
@@ -26,7 +26,7 @@ const ShareTrajectoryButton = ({
         <>
             {isSharing && (
                 <ShareTrajectoryModal
-                    trajectoryIsSharable={trajectoryIsSharable}
+                    trajectoryIsShareable={trajectoryIsShareable}
                     closeModal={handleShare}
                 />
             )}
