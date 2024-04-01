@@ -27,23 +27,26 @@ const NoTrajectoriesText = ({
 
     return (
         <div className={styles.container}>
-            <h3>Ways to get started:</h3>
-            <p>
-                <ol>
-                    <li>Drag and drop a .simularium file onto this window</li>
-                    <li>
-                        <Link
-                            onClick={() => handleClick(exampleTrajectory)}
-                            to={{
-                                search: `?${URL_PARAM_KEY_FILE_NAME}=${exampleTrajectory.id}`,
-                            }}
-                        >
-                            Load an example
-                        </Link>{" "}
-                        now or browse examples from the{" "}
-                        <a href="/#try-simularium-now">start page</a>
-                    </li>
-                    <li>
+            <h3 className={styles.heading}>Ways to get started:</h3>
+            <ol className={styles.list}>
+                <li>Drag and drop a .simularium file onto this window.</li>
+                <li>
+                    <Link
+                        onClick={() => handleClick(exampleTrajectory)}
+                        to={{
+                            search: `?${URL_PARAM_KEY_FILE_NAME}=${exampleTrajectory.id}`,
+                        }}
+                    >
+                        Load an example
+                    </Link>{" "}
+                    now or browse examples from the{" "}
+                    <a href="/#try-simularium-now">start page.</a>
+                </li>
+                {/* 
+                    todo: restore this text as autoconversion handles
+                    more file types
+                    */}
+                {/* <li>
                         Import common file types through the Load Model menu
                         button, including:
                         <ul>
@@ -52,19 +55,19 @@ const NoTrajectoriesText = ({
                             <li>cellPACK</li>
                             <li>SpringSaLaD</li>
                         </ul>
-                    </li>
-                    <li>
-                        Convert other file types using{" "}
-                        <a
-                            href={`${TUTORIAL_PATHNAME}#convert-your-data`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            this tutorial
-                        </a>
-                    </li>
-                </ol>
-            </p>
+                    </li> */}
+                <li>Import a Smoldyn file through the Load Model menu.</li>
+                <li>
+                    Convert other file types using{" "}
+                    <a
+                        href={`${TUTORIAL_PATHNAME}#convert-your-data`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        this tutorial.
+                    </a>
+                </li>
+            </ol>
         </div>
     );
 };

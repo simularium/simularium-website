@@ -1,21 +1,19 @@
 .container {
-    margin: 1em;
+  margin: 1em;
+  font-size: 16px;
 }
 
-.container p, .container h3 {
-    color: var(--dark-theme-sidebar-text);
-    margin-bottom: 1.5em;
-    font-size: 16px;
+.container,
+.container .heading {
+  color: var(--dark-theme-sidebar-text);
 }
 
-.container h3 {
-    font-weight: 600;
+.heading {
+  font-weight: 600;
+  margin-bottom: 1.5em;
 }
 
-.container p {
-    font-weight: 200;
-}
-
-.container ul, .container ol {
-    padding-left: 20px;
+.list {
+  padding-left: 20px;
+  font-weight: 200;
 }
