@@ -1,13 +1,10 @@
 import React from "react";
-import { Button, Tooltip } from "antd";
 
-import { NAV_BAR_TOOLTIP_OFFSET, TOOLTIP_COLOR } from "../../constants";
 import { NetworkedSimFile, LocalSimFile } from "../../state/trajectory/types";
+import { isOnlineTrajectory } from "../../util/userUrlHandling";
 import { Share } from "../Icons";
 import ShareTrajectoryModal from "../ShareTrajectoryModal";
-
-import styles from "./style.css";
-import { isOnlineTrajectory } from "../../util/userUrlHandling";
+import NavButtonWithTooltip from "../NavButtonWithTooltip";
 
 interface ShareTrajectoryButtonProps {
     isBuffering: boolean;
@@ -19,59 +16,32 @@ const ShareTrajectoryButton = ({
     simulariumFile,
 }: ShareTrajectoryButtonProps): JSX.Element => {
     const [isSharing, setIsSharing] = React.useState(false);
-    const [tooltipVisible, setTooltipVisible] = React.useState(false);
 
     const trajectoryIsSharable = isOnlineTrajectory(location.href);
 
-    const handleShare = () => {
-        setIsSharing(!isSharing);
-        // this is to ensure the tooltip closes when the button is clicked
-        setTooltipVisible(false);
-    };
+    const handleShare = () => setIsSharing(!isSharing);
 
     const isDisabled = !simulariumFile.name || isSharing || isBuffering;
-    // disabled buttons are wrapped in a span which changes the tooltip offset
-    const tooltipOffset = isDisabled ? [0, -20] : NAV_BAR_TOOLTIP_OFFSET;
-
     return (
-        <div className={styles.container}>
-            {isSharing ? (
-                <div className={styles.overlay}>
-                    <ShareTrajectoryModal
-                        trajectoryIsSharable={trajectoryIsSharable}
-                        closeModal={handleShare}
-                    />
-                </div>
-            ) : null}
-            <Tooltip
-                title={
-                    !simulariumFile.name
-                        ? "Load a model to perform this action"
-                        : "Share trajectory"
-                }
-                placement="bottomLeft"
-                color={TOOLTIP_COLOR}
-                align={{ offset: tooltipOffset }}
-                mouseEnterDelay={0.5}
-                trigger={isSharing ? [] : ["hover", "focus"]}
-                onOpenChange={(visible) => {
-                    if (isSharing && visible) {
-                        return setTooltipVisible(false);
-                    }
-                    setTooltipVisible(visible);
+        <>
+            {isSharing && (
+                <ShareTrajectoryModal
+                    trajectoryIsSharable={trajectoryIsSharable}
+                    closeModal={handleShare}
+                />
+            )}
+            <NavButtonWithTooltip
+                tooltipPlacement="bottomLeft"
+                titleText="Share"
+                icon={Share}
+                clickHandler={handleShare}
+                isDisabled={isDisabled}
+                tooltipText={{
+                    default: "Share trajectory",
+                    disabled: "Load a model to perform this action",
                 }}
-                open={tooltipVisible}
-            >
-                <Button
-                    className={isDisabled ? styles.disabled : undefined}
-                    type="primary"
-                    disabled={isDisabled}
-                    onClick={handleShare}
-                >
-                    Share {Share}
-                </Button>
-            </Tooltip>
-        </div>
+            />
+        </>
     );
 };
 
