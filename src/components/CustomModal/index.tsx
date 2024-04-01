@@ -5,7 +5,14 @@ import classNames from "classnames";
 import theme from "../theme/light-theme.css";
 import styles from "./style.css";
 
-interface CustomModalProps extends ModalProps {
+type OmittedProps =
+    | "onCancel"
+    | "closable"
+    | "title"
+    | "footer"
+    | "open"
+    | "centered";
+interface CustomModalProps extends Omit<ModalProps, OmittedProps> {
     closeHandler: () => void;
     titleText?: string;
     footerButtons?: React.ReactNode;
