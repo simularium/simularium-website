@@ -21,6 +21,7 @@
     --warm-gray: #979797;
     --charcoal-gray: #3b3649;
     --light-purple: #e7e4f2;
+    --light-purple-two: #d7c8ff;
     --baby-purple: #b59ff6;
     --allen-purple: #8d87aa;
     --blue: #0094ff;
@@ -43,6 +44,31 @@
     --dark-theme-viewport-button-toggle-border: var(--dim-gray-two);
     --dark-theme-viewport-button-hover-bg: var(--purplish-gray);
     --dark-theme-viewport-button-disabled-color: var(--dim-gray-two);
+    /* dark theme action buttons */
+    --dark-theme-action-button-bg: transparent;
+    --dark-theme-action-button-color: var(--baby-purple);
+    --dark-theme-action-button-hover-color: var(--light-purple-two);
+    --dark-theme-action-button-disabled-color: var(--dim-gray-two);
+    /* dark theme primary buttons */
+    --dark-theme-primary-button-bg: var(--baby-purple);
+    --dark-theme-primary-button-border: var(--baby-purple);
+    --dark-theme-primary-button-color: var(--dark-two);
+    --dark-theme-primary-button-hover-bg: var(--light-purple-two);
+    --dark-theme-primary-button-hover-border: var(--light-purple-two);
+    --dark-theme-primary-button-hover-color: var(--dark-two);
+    --dark-theme-primary-button-disabled-bg: var(--dark-three);
+    --dark-theme-primary-button-disabled-border: var(--dark-three);
+    --dark-theme-primary-button-disabled-color: var(--text-gray);
+    /* dark theme secondary buttons */
+    --dark-theme-secondary-button-bg: transparent;
+    --dark-theme-secondary-button-border: var(--baby-purple);
+    --dark-theme-secondary-button-color: var(--baby-purple);
+    --dark-theme-secondary-button-hover-bg: var(--light-purple-two);
+    --dark-theme-secondary-button-hover-border: var(--light-purple-two);
+    --dark-theme-secondary-button-hover-color: var(--dark-two);
+    --dark-theme-secondary-button-disabled-bg: transparent;
+    --dark-theme-secondary-button-disabled-border: var(--dark-theme-header-bg);
+    --dark-theme-secondary-button-disabled-color: var(--dim-gray-two);
     /* dark theme general/uncategorized */
     --dark-theme-body-bg: var(--black);
     --dark-theme-header-bg: var(--dark-three);
