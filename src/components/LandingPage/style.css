@@ -27,7 +27,7 @@
 }
 
 .panel {
-    background-color: var(--light-theme-panel-light-gray);
+    background-color: var(--light-theme-gray-bg);
     padding-left: 1.5em;
     padding-right: 1.5em;
     padding-top: 3em;
@@ -65,17 +65,17 @@
 
 .try-simularium-panel {
     composes: panel;
-    background-color: var(--light-theme-background-purple);
+    background-color: var(--light-theme-bg);
 }
 
 .future-simularium-panel {
     composes: panel;
-    background-color: white;
+    background-color: var(--light-theme-white-bg);
 }
 
 .citation-panel {
     composes: panel;
-    background-color: white;
+    background-color: var(--light-theme-white-bg);
 }
 
 .citation-content {

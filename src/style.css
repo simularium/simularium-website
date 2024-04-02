@@ -13,12 +13,12 @@ h2 {
 }
 
 h1 {
-    color: var(--light-theme-heading1-gray);
+    color: var(--light-theme-heading1-color);
     font-size: 36px;
 }
 
 h2 {
-    color: var(--light-theme-heading2-gray);
+    color: var(--light-theme-heading2-color);
     font-size: 24px;
 }
 
@@ -155,4 +155,10 @@ with "icon-moon" class name.
 
 .reset-icon::after {
     content: var(--reset);
+}
+
+.close-icon::after {
+    font-size: 12px;
+    color: var(--light-theme-modal-close-icon);
+    content: var(--close);
 }
