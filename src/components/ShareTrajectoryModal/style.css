@@ -15,6 +15,7 @@
     gap: 6px;
 }
 
+/* this input is functionally disabled but styled as though it is not */
 .url-input[disabled]:global(.ant-input) {
     flex-grow: 1;
     color: var(--light-theme-modal-input-color);
