@@ -15,8 +15,6 @@ export const RECEIVE_SIMULARIUM_FILE = makeTrajectoryConstant(
 );
 export const LOAD_LOCAL_FILE_IN_VIEWER =
     makeTrajectoryConstant("load-local-file");
-export const LOAD_LOCAL_FILE_IN_VIEWER =
-    makeTrajectoryConstant("load-local-file");
 export const LOAD_NETWORKED_FILE_IN_VIEWER = makeTrajectoryConstant(
     "load-networked-file"
 );

@@ -18,9 +18,8 @@ import AppHeader from "./containers/AppHeader";
 const { Header } = Layout;
 
 import "./style.css";
-import { setIsPlaying, setStatus } from "./state/viewer/actions";
+import { setIsPlaying } from "./state/viewer/actions";
 import { clearSimulariumFile } from "./state/trajectory/actions";
-import { VIEWER_EMPTY } from "./state/viewer/constants";
 
 export const store = createReduxStore();
 interface LocationWithState extends Location {
