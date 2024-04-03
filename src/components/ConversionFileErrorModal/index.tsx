@@ -30,15 +30,14 @@ const ConversionFileErrorModal: React.FC<ConversionFileErrorModalProps> = ({
             footerButtons={footerButton}
             closeHandler={closeModal}
         >
-            {/* <> */}
             <p className={classNames(styles.warningText)}>
-                {Exclamation}{" "}
+                {Exclamation}
                 {` We're sorry, there was a problem importing your file.`}
             </p>
             <p>
                 {`You may want to double check that the file you selected is a
-                    valid`}{" "}
-                {engineType}{" "}
+                    valid `}
+                {engineType}
                 {` file and try again. For further
                     assistance, please visit `}
                 <a
@@ -49,7 +48,6 @@ const ConversionFileErrorModal: React.FC<ConversionFileErrorModalProps> = ({
                     The Allen Cell Discussion Forum.
                 </a>
             </p>
-            {/* </> */}
         </CustomModal>
     );
 };
