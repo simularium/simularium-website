@@ -41,7 +41,6 @@ import {
     TimeUnits,
     SetUrlParamsAction,
     NetworkedSimFile,
-    isLocalFileInterface,
     isNetworkSimFileInterface,
 } from "../../state/trajectory/types";
 import { batchActions } from "../../state/util";
@@ -49,7 +48,7 @@ import PlaybackControls from "../../components/PlaybackControls";
 import RecordMoviesComponent from "../../components/RecordMoviesComponent";
 import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
-import { TUTORIAL_PATHNAME, VIEWER_PATHNAME } from "../../routes";
+import { TUTORIAL_PATHNAME } from "../../routes";
 import ErrorNotification from "../../components/ErrorNotification";
 
 import {
