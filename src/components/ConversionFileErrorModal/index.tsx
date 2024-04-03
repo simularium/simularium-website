@@ -1,8 +1,10 @@
 import { Button } from "antd";
 import React from "react";
+import classNames from "classnames";
 
-import CustomModal from "../CustomModal";
 import { AvailableEngines } from "../../state/trajectory/conversion-data-types";
+import CustomModal from "../CustomModal";
+import { Exclamation } from "../Icons";
 
 import styles from "./style.css";
 
@@ -16,7 +18,7 @@ const ConversionFileErrorModal: React.FC<ConversionFileErrorModalProps> = ({
     engineType,
 }) => {
     const footerButton = (
-        <Button type="primary" onClick={closeModal}>
+        <Button className="primary-button" onClick={closeModal}>
             OK
         </Button>
     );
@@ -24,22 +26,21 @@ const ConversionFileErrorModal: React.FC<ConversionFileErrorModalProps> = ({
     return (
         <CustomModal
             className={styles.errorModal}
-            title="File import cannot be completed"
-            open
-            footer={footerButton}
-            width={426}
-            centered
-            onCancel={closeModal}
+            titleText="File import cannot be completed"
+            footerButtons={footerButton}
+            closeHandler={closeModal}
         >
-            <div>
-                <p className={styles.warningText}>
-                    {"We're sorry, there was a problem importing your file."}
-                </p>
-                <p>
-                    You may want to double check that the file you selected is a
-                    valid {engineType} file and try again. For further
-                    assistance, please visit
-                </p>
+            {/* <> */}
+            <p className={classNames(styles.warningText)}>
+                {Exclamation}{" "}
+                {` We're sorry, there was a problem importing your file.`}
+            </p>
+            <p>
+                {`You may want to double check that the file you selected is a
+                    valid`}{" "}
+                {engineType}{" "}
+                {` file and try again. For further
+                    assistance, please visit `}
                 <a
                     href="https://forum.allencell.org/"
                     target="_blank"
@@ -47,7 +48,8 @@ const ConversionFileErrorModal: React.FC<ConversionFileErrorModalProps> = ({
                 >
                     The Allen Cell Discussion Forum.
                 </a>
-            </div>
+            </p>
+            {/* </> */}
         </CustomModal>
     );
 };

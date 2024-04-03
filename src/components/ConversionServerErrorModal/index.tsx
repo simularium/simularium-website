@@ -1,5 +1,5 @@
-import { Button } from "antd";
 import React from "react";
+import { Button } from "antd";
 
 import CustomModal from "../CustomModal";
 import { Exclamation } from "../Icons";
@@ -13,26 +13,27 @@ interface ConversionServerErrorModalProps {
 const ConversionServerErrorModal: React.FC<ConversionServerErrorModalProps> = ({
     closeModal,
 }) => {
+    const footerButtons = (
+        <Button className="primary-button" onClick={closeModal}>
+            OK
+        </Button>
+    );
+
     return (
         <CustomModal
             className={styles.serverErrorModal}
-            title="File import cannot be completed"
-            open
-            footer={
-                <Button type="primary" onClick={closeModal}>
-                    OK
-                </Button>
-            }
-            centered
-            onCancel={closeModal}
+            titleText="File import cannot be completed"
+            footerButtons={footerButtons}
+            closeHandler={closeModal}
         >
             <p className={styles.warningText}>
-                {Exclamation} We&apos;re sorry, the server is currently
-                experiencing an issue.
+                {Exclamation}{" "}
+                {` We're sorry, the server is currently
+                experiencing an issue.`}
             </p>
             <p>
-                Please try again at a later time. For further assistance, please
-                visit
+                {`Please try again at a later time. For further assistance, please
+                visit `}
                 <a
                     href="https://forum.allencell.org/"
                     target="_blank"
