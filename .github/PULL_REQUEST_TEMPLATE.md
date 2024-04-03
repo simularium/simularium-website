@@ -1,3 +1,8 @@
+Time estimate or Size
+=======
+How long do you expect it to take a reviewer to review this PR? 
+Alternately, is this PR xsmall, small, medium, large, or xlarge?
+
 Problem
 =======
 What is the problem this work solves, including

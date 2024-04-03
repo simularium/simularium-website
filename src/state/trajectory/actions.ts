@@ -1,5 +1,7 @@
 import { SimulariumController } from "@aics/simularium-viewer";
 
+import { SimulariumController } from "@aics/simularium-viewer";
+
 import {
     RECEIVE_TRAJECTORY,
     REQUEST_TRAJECTORY,

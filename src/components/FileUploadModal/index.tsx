@@ -97,22 +97,26 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 
     const footerButtons = (
         <>
-            <Button onClick={closeModal}>Cancel</Button>
-            <Button type="primary" disabled={disableLoad} onClick={onLoadClick}>
+            <Button
+                className="primary-button"
+                disabled={disableLoad}
+                onClick={onLoadClick}
+            >
                 Load
+            </Button>
+            <Button className="secondary-button" onClick={closeModal}>
+                Cancel
             </Button>
         </>
     );
 
     return (
         <CustomModal
+            closeHandler={closeModal}
             className={styles.uploadModal}
-            title="Choose a Simularium file to load"
-            open
-            footer={footerButtons}
-            onCancel={closeModal}
+            titleText="Choose a Simularium file to load"
+            footerButtons={footerButtons}
             width={525}
-            centered
         >
             <Tabs
                 items={tabItems}

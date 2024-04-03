@@ -1,12 +1,12 @@
-@import "../../styles/colors.css";
-@import "../../styles/constants.css";
-
 .sider {
     height: calc(100vh - var(--header-height));
     left: 0;
     z-index: 100;
     background-color: var(--dark-theme-sidebar-bg);
     padding: 0 10px 0 0;
+}
+.sider.embed {
+    height: 100vh;
 }
 
 .sider.right {

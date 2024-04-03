@@ -15,35 +15,28 @@ const VersionModal: React.FC<VersionModalProps> = ({ setModalVisible }) => {
     };
 
     const footerButton = (
-        <Button type="primary" onClick={closeModal}>
+        <Button className={"secondary-button"} onClick={closeModal}>
             Close
         </Button>
     );
 
     return (
         <CustomModal
-            className={styles.container}
-            onCancel={closeModal}
-            open
-            footer={footerButton}
-            centered
-            title="Version Information"
+            closeHandler={closeModal}
+            titleText="Version information"
+            footerButtons={footerButton}
             width={425}
         >
             <div>
-                {" "}
                 Application:{" "}
                 <span className={styles.blueText}>
-                    {" "}
-                    simularium-website v{SIMULARIUM_WEBSITE_VERSION}{" "}
+                    simularium-website v{SIMULARIUM_WEBSITE_VERSION}
                 </span>
             </div>
             <div>
-                {" "}
                 Viewer:{" "}
                 <span className={styles.blueText}>
-                    {" "}
-                    simularium-viewer v{SIMULARIUM_VIEWER_VERSION}{" "}
+                    simularium-viewer v{SIMULARIUM_VIEWER_VERSION}
                 </span>
             </div>
         </CustomModal>
