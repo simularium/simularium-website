@@ -116,19 +116,20 @@ const LoadFileMenu = ({
         },
     ];
 
+    const isDisabled = isBuffering || conversionStatus !== CONVERSION_INACTIVE;
+
     return (
         <>
             <Dropdown
                 menu={{ items, theme: "dark", className: styles.menu }}
                 placement="bottomRight"
-                disabled={
-                    isBuffering || conversionStatus !== CONVERSION_INACTIVE
-                }
+                disabled={isDisabled}
             >
                 <NavButton
                     titleText={"Load model"}
                     icon={DownArrow}
                     buttonType="primary"
+                    isDisabled={isDisabled}
                 />
             </Dropdown>
             {/* 
