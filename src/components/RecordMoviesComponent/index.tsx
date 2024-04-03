@@ -58,7 +58,10 @@ const RecordMovieComponent = (props: RecordMovieComponentProps) => {
         cleanupMovieState();
     };
 
-    const startRecordIcon = (
+    /**
+     * In this icon we are stacking glyphs to create multicolor icons via icomoon
+     */
+    const startRecordingIcon = (
         <span className={styles.iconContainer}>
             <span
                 className={classNames("icon-moon", "record-icon-circle")}
@@ -69,27 +72,31 @@ const RecordMovieComponent = (props: RecordMovieComponentProps) => {
         </span>
     );
 
+    const activeRecordingIcon = (
+        <div className={classNames([styles.redCircle, styles.animate])}></div>
+    );
+
+    const stopRecordingIcon = isHovering
+        ? "stop-record-icon"
+        : activeRecordingIcon;
+
+    const getIcon = () => {
+        return isRecording ? stopRecordingIcon : startRecordingIcon;
+    };
+
     const getTooltipText = () => {
         if (!supportedBrowser) {
             return "Feature not supported on this browser, please try using Chrome or Edge";
         } else if (isRecording) {
             return "Stop movie recording";
-        } else {
-            return "Start movie recording";
         }
+        return "Start movie recording";
     };
 
-    const getIcon = () => {
-        const stopIcon = isHovering ? (
-            "stop-record-icon"
-        ) : (
-            <div
-                className={classNames([styles.redCircle, styles.animate])}
-            ></div>
-        );
-        return isRecording ? stopIcon : startRecordIcon;
-    };
-
+    /**
+     * onloadedmetadata is async hence the need for this custom hook
+     * to retrieve the duration from the recorded movie.
+     */
     const useFormattedDuration = () => {
         const [formattedDuration, setFormattedDuration] = useState("");
 
