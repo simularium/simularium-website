@@ -225,7 +225,7 @@ const ConversionForm = ({
                             handleFileSelection(file);
                         }}
                     >
-                        <Button type="default">Select file</Button>
+                        <Button className="primary-button">Select file</Button>
                     </Upload>
                     {fileToConvert && (
                         <button
@@ -237,9 +237,11 @@ const ConversionForm = ({
                     )}
                 </div>
                 <Divider className={styles.divider} orientation="right" />
-                <Button ghost onClick={cancelConversion}>Cancel</Button>
+                <Button className="secondary-button" onClick={cancelConversion}>
+                    Cancel
+                </Button>
                 <Button
-                    type="primary"
+                    className="primary-button"
                     disabled={!fileToConvert || !engineSelected}
                     onClick={sendFileToConvert}
                 >

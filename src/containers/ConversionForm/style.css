@@ -1,6 +1,6 @@
 .container {
     position: absolute;
-    background-color: var(--overlay-purple);
+    background-color: var(--light-theme-bg);
     height: calc(100vh - var(--header-height));
     width: 100%;
     z-index: 1000;
@@ -76,11 +76,11 @@
 }
 
 .remove-file-icon svg {
-    fill: var(--delete-file-icon-color);
+    fill: var(--cancel-icon-color);
 }
 
 .divider {
-    background-color: var(--light-theme-divider-bg);
+    background-color: var(--light-theme-divider);
 }
 
 .form-content button {
@@ -91,7 +91,7 @@
 
 .form-content span svg path {
     /* this makes the down arrow in the select box visible  */
-    color: var(--light-theme-btn-default-color);
+    color: var(--light-theme-btn-primary-border);
 }
 
 .container .loading-icon,
