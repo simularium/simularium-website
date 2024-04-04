@@ -9,12 +9,6 @@
     margin-bottom: 20px;
 }
 
-.container :global(.ant-btn) {
-    height: 26px;
-    width: 26px;
-    background-color: var(--viewer-btn-bg-default);
-}
-
 .zoom-group {
     display: flex;
     flex-direction: column;
