@@ -27,7 +27,7 @@ const ConversionServerErrorModal: React.FC<ConversionServerErrorModalProps> = ({
             closeHandler={closeModal}
         >
             <p className={styles.warningText}>
-                {Exclamation}{" "}
+                {Exclamation}
                 {` We're sorry, the server is currently
                 experiencing an issue.`}
             </p>
