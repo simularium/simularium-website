@@ -9,6 +9,7 @@ import { Pause, Play } from "../Icons";
 import ViewportButton from "../ViewportButton";
 
 import styles from "./style.css";
+import { IconGlyphs } from "../../constants/interfaces";
 
 interface PlayBackProps {
     playHandler: (timeOverride?: number) => void;
@@ -120,7 +121,7 @@ const PlayBackControls = ({
                 <ViewportButton
                     tooltipText="Skip 1 frame back"
                     tooltipPlacement="top"
-                    icon={"step-back-icon"}
+                    icon={IconGlyphs.StepBack}
                     clickHandler={prevHandler}
                     disabled={isStepBackDisabled || loading || isEmpty}
                     loading={loading}
@@ -138,7 +139,7 @@ const PlayBackControls = ({
                 <ViewportButton
                     tooltipText={"Skip 1 frame ahead"}
                     tooltipPlacement="top"
-                    icon={"step-forward-icon"}
+                    icon={IconGlyphs.StepForward}
                     clickHandler={nextHandler}
                     disabled={isStepForwardDisabled || loading || isEmpty}
                     loading={loading}
@@ -175,7 +176,7 @@ const PlayBackControls = ({
             <ViewportButton
                 tooltipText={isLooping ? "Turn off looping" : "Turn on looping"}
                 tooltipPlacement="top"
-                icon={"looping-icon"}
+                icon={IconGlyphs.Loop}
                 clickHandler={loopHandler}
                 disabled={isEmpty}
                 active={isLooping}

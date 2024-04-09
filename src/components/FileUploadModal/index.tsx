@@ -11,6 +11,7 @@ import {
     SetErrorAction,
     SetViewerStatusAction,
 } from "../../state/viewer/types";
+import { ButtonType } from "../../constants/interfaces";
 
 import CustomModal from "../CustomModal";
 import UrlUploadForm from "./url-upload-form";
@@ -98,13 +99,13 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     const footerButtons = (
         <>
             <Button
-                className="primary-button"
+                className={ButtonType.Primary}
                 disabled={disableLoad}
                 onClick={onLoadClick}
             >
                 Load
             </Button>
-            <Button className="secondary-button" onClick={closeModal}>
+            <Button className={ButtonType.Secondary} onClick={closeModal}>
                 Cancel
             </Button>
         </>

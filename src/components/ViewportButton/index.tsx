@@ -36,9 +36,7 @@ const ViewportButton: React.FC<ViewportButtonProps> = ({
             return icon;
         }
         if (typeof icon === "string") {
-            return (
-                <span className={classNames(["icon-moon", "anticon", icon])} />
-            );
+            return <span className={icon} />;
         }
     };
 

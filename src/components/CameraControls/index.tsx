@@ -5,6 +5,7 @@ import { ZoomIn, ZoomOut } from "../Icons";
 import ViewportButton from "../ViewportButton";
 
 import styles from "./style.css";
+import { IconGlyphs } from "../../constants/interfaces";
 
 const PAN = "pan";
 const ROTATE = "rotate";
@@ -161,7 +162,7 @@ const CameraControls = ({
                         mode === ROTATE ? "Rotate" : "Rotate (hold SHIFT)"
                     }
                     tooltipPlacement="left"
-                    icon={"rotate-icon"}
+                    icon={IconGlyphs.Rotate}
                     radioGroupPosition={"top"}
                     clickHandler={() => setMode(ROTATE)}
                     active={mode === ROTATE}
@@ -169,7 +170,7 @@ const CameraControls = ({
                 <ViewportButton
                     tooltipText={mode === PAN ? "Pan" : "Pan (hold SHIFT)"}
                     tooltipPlacement="left"
-                    icon={"pan-icon"}
+                    icon={IconGlyphs.Pan}
                     radioGroupPosition={"bottom"}
                     clickHandler={() => setMode(PAN)}
                     active={mode === PAN}
@@ -178,7 +179,7 @@ const CameraControls = ({
             <ViewportButton
                 tooltipText={"Focus (F)"}
                 tooltipPlacement="left"
-                icon={"focus-icon"}
+                icon={IconGlyphs.Focus}
                 clickHandler={() => {
                     saveFocusMode(!isFocused);
                 }}
@@ -188,7 +189,7 @@ const CameraControls = ({
                 <ViewportButton
                     tooltipText={"Orthographic Camera"}
                     tooltipPlacement="left"
-                    icon={"orthographic-icon"}
+                    icon={IconGlyphs.Orthographic}
                     radioGroupPosition={"top"}
                     clickHandler={() => {
                         setCameraProjectionType(ORTHOGRAPHIC);
@@ -198,7 +199,7 @@ const CameraControls = ({
                 <ViewportButton
                     tooltipText={"Perspective Camera"}
                     tooltipPlacement="left"
-                    icon={"perspective-icon"}
+                    icon={IconGlyphs.Perspective}
                     radioGroupPosition={"bottom"}
                     clickHandler={() => {
                         setCameraProjectionType(PERSPECTIVE);
@@ -209,7 +210,7 @@ const CameraControls = ({
             <ViewportButton
                 tooltipText={"Home view (H)"}
                 tooltipPlacement="left"
-                icon={"reset-icon"}
+                icon={IconGlyphs.Reset}
                 clickHandler={resetCamera}
             />
         </div>

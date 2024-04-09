@@ -4,6 +4,7 @@ import classNames from "classnames";
 
 import theme from "../theme/light-theme.css";
 import styles from "./style.css";
+import { IconGlyphs } from "../../constants/interfaces";
 
 type OmittedProps =
     | "onCancel"
@@ -34,10 +35,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
     const title = (
         <>
             <span>{titleText}</span>
-            <span
-                className={classNames("icon-moon", "anticon", "close-icon")}
-                onClick={closeHandler}
-            ></span>
+            <span className={IconGlyphs.Close} onClick={closeHandler}></span>
         </>
     );
 
@@ -49,6 +47,8 @@ const CustomModal: React.FC<CustomModalProps> = ({
             </div>
         </>
     );
+
+    console.log("incm");
 
     return (
         <Modal
