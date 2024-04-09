@@ -1,23 +1,4 @@
-.error-modal :global(.ant-modal-title) {
-    font-size: 14px;
-    font-weight: 400;
-}
-
-.error-modal :global(.ant-modal-body) {
-    font-size: 14px;
-    padding: 15px 15px 0px 15px;
-}
-
 .error-modal .warning-text {
-    color: var(--warning-text-color);
-    padding: 10px 0px;
-}
-
-.error-modal :global(.ant-modal-footer) {
-    background-color: var(--modal-content-bg);
-    padding: 16px 12px 12px;
-}
-
-.error-modal :global(.ant-modal-header) {
-    padding: 12px 24px;
+    color: var(--cancel-icon-color);
+    padding-bottom: 0.5em;
 }

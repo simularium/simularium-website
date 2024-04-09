@@ -50,7 +50,7 @@ const ConversionProcessingOverlay = ({
                 </div>
                 <h3>Open another instance of Simularium </h3>
                 <Button
-                    className={styles.button}
+                    className="secondary-button"
                     href={`https://simularium.allencell.org/viewer`}
                     target="_blank"
                 >
@@ -61,7 +61,7 @@ const ConversionProcessingOverlay = ({
                 <Divider> </Divider>
             </div>
             <Button
-                className={styles.button}
+                className="secondary-button"
                 onClick={() => setCancelModalOpen(true)}
             >
                 Cancel file import

@@ -1,5 +1,6 @@
 import { Button } from "antd";
 import React from "react";
+import classNames from "classnames";
 
 import CustomModal from "../CustomModal";
 
@@ -16,22 +17,24 @@ const ConversionCancelModal: React.FC<ConversionCancelModalProps> = ({
 }) => {
     const footerButtons = (
         <>
-            <Button onClick={continueProcessing}>No</Button>
-            <Button type="primary" onClick={cancelProcessing}>
+            <Button
+                className={classNames("primary-button", styles.wideButton)}
+                onClick={cancelProcessing}
+            >
                 Yes, cancel
+            </Button>
+            <Button className="secondary-button" onClick={continueProcessing}>
+                No
             </Button>
         </>
     );
 
     return (
         <CustomModal
-            className={styles.cancelModal}
-            title="Cancel file import"
-            open
-            footer={footerButtons}
+            titleText="Cancel file import"
+            footerButtons={footerButtons}
             width={341}
-            centered
-            onCancel={continueProcessing}
+            closeHandler={continueProcessing}
         >
             <p>
                 Information provided will not be saved. Are you sure you want to
