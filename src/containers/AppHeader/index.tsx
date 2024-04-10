@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 
 import {
     ClearSimFileDataAction,
-    ConversionStatus,
     isLocalFileInterface,
     isNetworkSimFileInterface,
     LocalSimFile,
@@ -13,6 +12,7 @@ import {
     RequestLocalFileAction,
     RequestNetworkFileAction,
     SetConversionStatusAction,
+    ConversionStatus,
 } from "../../state/trajectory/types";
 import LoadFileMenu from "../../components/LoadFileMenu";
 import ViewerTitle from "../../components/ViewerTitle";

@@ -37,6 +37,7 @@ function useLocationChange() {
             location.pathname !== EMBED_PATHNAME
         ) {
             batch(() => {
+                // if we're navigating away from the viewer, stop playing and reset state
                 dispatch(setIsPlaying(false));
                 dispatch(clearSimulariumFile({ newFile: false }));
             });
