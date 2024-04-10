@@ -270,7 +270,11 @@ class App extends React.Component<AppProps, AppState> {
                                 />
                             )}
                         </Content>
-                        <SideBar onCollapse={this.onPanelCollapse} type="right">
+                        <SideBar
+                            onCollapse={this.onPanelCollapse}
+                            isEmbedded={isEmbedded}
+                            type="right"
+                        >
                             <ResultsPanel />
                         </SideBar>
                     </Layout>

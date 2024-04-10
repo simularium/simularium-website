@@ -69,7 +69,3 @@
 .lastFrameTime {
     color: var(--dark-theme-dim-color);
 }
-
-.remove-border{
-    border: none;
-}
