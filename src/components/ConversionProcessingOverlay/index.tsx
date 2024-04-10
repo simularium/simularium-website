@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Divider, Spin } from "antd";
 
 import ConversionCancelModal from "../ConversionCancelModal";
-import { UpRightArrow, LeftArrow } from "../Icons";
+import { UpRightArrow, GoBack } from "../Icons";
 
 import styles from "./style.css";
 
@@ -40,7 +40,7 @@ const ConversionProcessingOverlay = ({
                     onClick={() => setCancelModalOpen(true)}
                 >
                     {" "}
-                    {LeftArrow} Stop and go back to form{" "}
+                    {GoBack} Stop and go back to form{" "}
                 </a>
                 <div className={styles.processingIndicator}>
                     <div className={styles.spinContainer}>
