@@ -1,8 +1,9 @@
 export enum AvailableEngines {
-    Cytosim = "cytosim",
-    CellPack = "cellPACK",
+    // todo restore these when autoconversion handles more file types
+    // Cytosim = "cytosim",
+    // CellPack = "cellPACK",
     Smoldyn = "Smoldyn",
-    SpringSalad = "SpringSaLaD",
+    // SpringSalad = "SpringSaLaD",
 }
 
 export interface CustomType {
