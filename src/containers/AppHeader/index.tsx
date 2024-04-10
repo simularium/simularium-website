@@ -5,12 +5,14 @@ import { connect } from "react-redux";
 
 import {
     ClearSimFileDataAction,
+    ConversionStatus,
     isLocalFileInterface,
     isNetworkSimFileInterface,
     LocalSimFile,
     NetworkedSimFile,
     RequestLocalFileAction,
     RequestNetworkFileAction,
+    SetConversionStatusAction,
 } from "../../state/trajectory/types";
 import LoadFileMenu from "../../components/LoadFileMenu";
 import ViewerTitle from "../../components/ViewerTitle";
@@ -38,6 +40,8 @@ interface AppHeaderProps {
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setError: ActionCreator<SetErrorAction>;
+    conversionStatus: ConversionStatus;
+    setConversionStatus: ActionCreator<SetConversionStatusAction>;
 }
 
 const AppHeader: React.FC<AppHeaderProps> = ({
@@ -49,6 +53,8 @@ const AppHeader: React.FC<AppHeaderProps> = ({
     clearSimulariumFile,
     setError,
     isNetworkedFile,
+    conversionStatus,
+    setConversionStatus,
 }) => {
     const history = useHistory();
 
@@ -94,6 +100,8 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                     setViewerStatus={setViewerStatus}
                     isBuffering={isBuffering}
                     setError={setError}
+                    conversionStatus={conversionStatus}
+                    setConversionStatus={setConversionStatus}
                 />
                 <HelpMenu key="help" />
                 <DownloadTrajectoryMenu
@@ -117,6 +125,8 @@ function mapStateToProps(state: State) {
         isBuffering: viewerStateBranch.selectors.getIsBuffering(state),
         isNetworkedFile:
             trajectoryStateBranch.selectors.getIsNetworkedFile(state),
+        conversionStatus:
+            trajectoryStateBranch.selectors.getConversionStatus(state),
     };
 }
 
@@ -127,6 +137,7 @@ const dispatchToPropsMap = {
     clearSimulariumFile: trajectoryStateBranch.actions.clearSimulariumFile,
     setViewerStatus: viewerStateBranch.actions.setStatus,
     setError: viewerStateBranch.actions.setError,
+    setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(AppHeader);

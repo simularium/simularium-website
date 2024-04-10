@@ -1,0 +1,3 @@
+:global(.ant-btn):global(.primary-button).wide-button {
+    width: 114px;
+}

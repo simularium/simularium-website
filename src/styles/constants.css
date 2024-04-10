@@ -1,4 +1,13 @@
 :root {
     --header-height: 60px;
     --dropdown-menu-width: 190px;
+    --light-button-default-color: var(--light-theme-btn-default-color);
+    --light-button-default-border: var(--light-theme-btn-default-color);
+    --light-button-default-background: transparent;
+    --light-button-primary-color: var(--light-theme-btn-primary-color);
+    --light-button-primary-border: none;
+    --light-button-primary-background: var(--light-theme-btn-primary-bg);
+    --light-button-disabled-color: var(--light-theme-btn-primary-disabled-color);
+    --light-button-disabled-border: none;
+    --light-button-disabled-background: var(--light-theme-btn-primary-disabled-bg);
 }
