@@ -19,13 +19,25 @@ you'd like to see documented.
 
 ___
 
-## How to Contribute
+## How to Contribute as a non team member 
 
 1. Fork the repo on GitHub.
 2. Create a branch and make your edits on your branch, pushing back to your fork.
 3. Make sure `npm run typeCheck`, `npm run test` and `npm run lint` all exit without errors. Add tests and documentation as needed.
 4. Submit a pull request back to the main branch via GitHub.
 
+
+## How to Contribute as a team member 
+
+1. Clone the repo on GitHub.
+2. Create a branch: for new features name your branch `feature/[THE NEW FEATURE]` for bug fixes name your branch `fix[BUG FIX]`. Commit edits to your branch. Ideally your commit messages complete the sentence "This commit will ____". 
+3. Make sure `npm run typeCheck`, `npm run test` and `npm run lint` all exit without errors. Add tests and documentation as needed.
+4. Submit a pull request back to the main branch via GitHub.
+
+## Updating the viewer
+1. Follow steps 1 and 2 above. 
+2. Run `npm run update-viewer` from the terminal 
+3. Submit a PR back to the main branch 
 
 ### Structure
 src/<br/>
