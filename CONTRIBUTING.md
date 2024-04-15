@@ -30,7 +30,7 @@ ___
 ## How to Contribute as a team member 
 
 1. Clone the repo on GitHub.
-2. Create a branch: for new features name your branch `feature/[THE NEW FEATURE]` for bug fixes name your branch `fix[BUG FIX]`. Commit edits to your branch. Ideally your commit messages complete the sentence "This commit will ____". 
+2. Create a branch: for new features name your branch `feature/[THE NEW FEATURE]` for bug fixes name your branch `fix/[BUG FIX]`. Commit edits to your branch. Ideally your commit messages complete the sentence "This commit will ____". 
 3. Make sure `npm run typeCheck`, `npm run test` and `npm run lint` all exit without errors. Add tests and documentation as needed.
 4. Submit a pull request back to the main branch via GitHub.
 
