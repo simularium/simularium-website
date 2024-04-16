@@ -76,12 +76,12 @@ const RecordMovieComponent = (props: RecordMovieComponentProps) => {
         <div className={classNames([styles.redCircle, styles.animate])}></div>
     );
 
-    const stopRecordingIcon = isHovering
-        ? "stop-record-icon"
-        : activeRecordingIcon;
-
     const getIcon = () => {
-        return isRecording ? stopRecordingIcon : startRecordingIcon;
+        if (!isRecording) {
+            return startRecordingIcon;
+        } else if (isHovering) {
+            return "stop-record-icon";
+        } else return activeRecordingIcon;
     };
 
     const getTooltipText = () => {
