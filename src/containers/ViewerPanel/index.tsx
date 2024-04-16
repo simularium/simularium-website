@@ -40,8 +40,6 @@ import {
     LocalSimFile,
     TimeUnits,
     SetUrlParamsAction,
-    NetworkedSimFile,
-    isNetworkSimFileInterface,
 } from "../../state/trajectory/types";
 import { batchActions } from "../../state/util";
 import PlaybackControls from "../../components/PlaybackControls";
@@ -55,6 +53,7 @@ import {
     convertUIDataToSelectionData,
     getDisplayTimes,
     getSelectionStateInfoForViewer,
+    getMovieTitle,
 } from "./selectors";
 import { AGENT_COLORS } from "./constants";
 import { DisplayTimes } from "./types";
@@ -78,7 +77,6 @@ interface ViewerPanelProps {
     numFrames: number;
     isBuffering: boolean;
     scaleBarLabel: string;
-    simulariumFile: LocalSimFile | NetworkedSimFile;
     setUrlParams: ActionCreator<SetUrlParamsAction>;
     simulariumController: SimulariumController;
     changeTime: ActionCreator<ChangeTimeAction>;
@@ -96,6 +94,7 @@ interface ViewerPanelProps {
     error: ViewerError;
     setBuffering: ActionCreator<ToggleAction>;
     setError: ActionCreator<SetErrorAction>;
+    movieTitle: string;
 }
 
 interface ViewerPanelState {
@@ -386,17 +385,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         });
     };
 
-    private getMovieTitle = () => {
-        const { simulariumFile } = this.props;
-        const fileExtensionRegex = /\.simularium$/;
-        const movieTitle =
-            isNetworkSimFileInterface(simulariumFile) && simulariumFile.title
-                ? simulariumFile.title
-                : simulariumFile.name.replace(fileExtensionRegex, "") ||
-                  "simularium";
-        return movieTitle;
-    };
-
     public render(): JSX.Element {
         const {
             time,
@@ -414,6 +402,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             status,
             setError,
             scaleBarLabel,
+            movieTitle,
         } = this.props;
         return (
             <div
@@ -470,7 +459,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                         />
                         <RecordMoviesComponent
                             movieUrl={this.state.movieURL}
-                            movieTitle={this.getMovieTitle()}
+                            movieTitle={movieTitle}
                             cleanupMovieState={this.cleanupMovieState}
                             startRecording={simulariumController.startRecording}
                             stopRecording={simulariumController.stopRecording}
@@ -518,8 +507,7 @@ function mapStateToProps(state: State) {
         isBuffering: viewerStateBranch.selectors.getIsBuffering(state),
         isPlaying: viewerStateBranch.selectors.getIsPlaying(state),
         isLooping: viewerStateBranch.selectors.getIsLooping(state),
-        simulariumFile:
-            trajectoryStateBranch.selectors.getSimulariumFile(state),
+        movieTitle: getMovieTitle(state),
     };
 }
 
