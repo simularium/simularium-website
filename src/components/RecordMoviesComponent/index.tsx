@@ -9,7 +9,7 @@ import styles from "./style.css";
 interface RecordMovieComponentProps {
     movieUrl: string;
     movieTitle: string;
-    cleanupMovieState: () => void;
+    resetAfterMovieRecording: () => void;
     startRecording: () => void;
     stopRecording: () => void;
 }
@@ -18,7 +18,7 @@ const RecordMovieComponent = (props: RecordMovieComponentProps) => {
     const {
         movieUrl,
         movieTitle,
-        cleanupMovieState,
+        resetAfterMovieRecording,
         startRecording,
         stopRecording,
     } = props;
@@ -29,7 +29,7 @@ const RecordMovieComponent = (props: RecordMovieComponentProps) => {
     const supportedBrowser = "VideoEncoder" in window;
 
     const closeModal = () => {
-        cleanupMovieState();
+        resetAfterMovieRecording();
         setModalVisible(false);
     };
 
@@ -55,7 +55,7 @@ const RecordMovieComponent = (props: RecordMovieComponentProps) => {
         document.body.appendChild(anchor);
         anchor.click();
         document.body.removeChild(anchor);
-        cleanupMovieState();
+        resetAfterMovieRecording();
     };
 
     /**

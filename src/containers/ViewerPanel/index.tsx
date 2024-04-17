@@ -369,7 +369,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
     };
 
-    public cleanupMovieState = () => {
+    public resetAfterMovieRecording = () => {
         if (this.state.movieURL) {
             URL.revokeObjectURL(this.state.movieURL);
         }
@@ -460,7 +460,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                         <RecordMoviesComponent
                             movieUrl={this.state.movieURL}
                             movieTitle={movieTitle}
-                            cleanupMovieState={this.cleanupMovieState}
+                            resetAfterMovieRecording={
+                                this.resetAfterMovieRecording
+                            }
                             startRecording={simulariumController.startRecording}
                             stopRecording={simulariumController.stopRecording}
                         />
