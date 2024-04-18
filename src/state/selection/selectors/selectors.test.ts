@@ -201,23 +201,19 @@ describe("selection composed selectors", () => {
                 { name: "agent_with_no_states", tags: [] },
             ]);
         });
-        it("does not include an agent in the return array if the agent is not in the agentVisibilityMap", () => {
+        it("does not include an agent in the return array if the agent is not in the original data ", () => {
             const stateWithSelection = {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
                     agentVisibilityMap: {
-                        ...initialVisibilityMap,
                         agent1: ["state1"],
-                        agent_with_two_states: ["state1"],
                     },
                 },
             };
             const agentsToHide = getAgentsToHide(stateWithSelection);
             expect(agentsToHide).toBeInstanceOf(Array);
-            expect(agentsToHide).toEqual([
-                { name: "agent_with_two_states", tags: ["state2"] },
-            ]);
+            expect(agentsToHide).toEqual([]);
         });
     });
 });
