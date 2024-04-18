@@ -121,7 +121,7 @@ describe("selection composed selectors", () => {
         });
     });
     describe("getAgentsToHide", () => {
-        it("returns an array of agent names and states that are not in the visibility map and therefore not currently visible", () => {
+        it("for each agent in the visibility map: it returns state tags that are no included, and therefore not visible", () => {
             const stateWithSelection = {
                 ...mockState,
                 selection: {
