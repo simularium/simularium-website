@@ -9,7 +9,7 @@ import {
     SetColorChangeAction,
     SetRecentColorsAction,
     SetVisibleAction,
-    VisibilitySelectionMap,
+    AgentRenderingCheckboxMap,
 } from "../../state/selection/types";
 import SharedCheckbox from "../SharedCheckbox";
 import AgentTreeSubmenu from "../AgentTreeSubmenu";
@@ -36,13 +36,13 @@ export interface AgentDisplayNode {
 
 interface AgentTreeProps {
     treeData: AgentDisplayNode[];
-    agentsChecked: VisibilitySelectionMap;
-    agentsHighlighted: VisibilitySelectionMap;
+    agentsChecked: AgentRenderingCheckboxMap;
+    agentsHighlighted: AgentRenderingCheckboxMap;
     handleAgentCheck: ActionCreator<ChangeAgentsRenderingStateAction>;
     handleHighlight: ActionCreator<ChangeAgentsRenderingStateAction>;
     setAgentsVisible: ActionCreator<SetVisibleAction>;
-    payloadForSelectAll: VisibilitySelectionMap;
-    payloadForSelectNone: VisibilitySelectionMap;
+    payloadForSelectAll: AgentRenderingCheckboxMap;
+    payloadForSelectNone: AgentRenderingCheckboxMap;
     isSharedCheckboxIndeterminate: boolean;
     recentColors: string[];
     setColorChange: ActionCreator<SetColorChangeAction>;

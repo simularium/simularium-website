@@ -16,7 +16,7 @@ import {
     getCurrentTime,
     getHighlightedAgents,
 } from "../../state/selection/selectors";
-import { VisibilitySelectionMap } from "../../state/selection/types";
+import { AgentRenderingCheckboxMap } from "../../state/selection/types";
 import { roundTimeForDisplay } from "../../util";
 import { DisplayTimes } from "./types";
 
@@ -35,8 +35,8 @@ export const getSelectionStateInfoForViewer = createSelector(
 
 export const convertUIDataToSelectionData = (
     uiData: UIDisplayData
-): VisibilitySelectionMap => {
-    const returnData: VisibilitySelectionMap = {};
+): AgentRenderingCheckboxMap => {
+    const returnData: AgentRenderingCheckboxMap = {};
     return uiData.reduce((acc, agent) => {
         acc[agent.name] = [];
         if (agent.displayStates && agent.displayStates.length > 0) {

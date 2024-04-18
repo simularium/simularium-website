@@ -4,13 +4,13 @@ import { isEmpty } from "lodash";
 import { AgentDisplayNode } from "../../components/AgentTree";
 import { getUiDisplayDataTree } from "../../state/trajectory/selectors";
 import { getAgentVisibilityMap } from "../../state/selection/selectors";
-import { VisibilitySelectionMap } from "../../state/selection/types";
+import { AgentRenderingCheckboxMap } from "../../state/selection/types";
 
 // Returns an agent visibility map that indicates all states should be visible
 export const getSelectAllVisibilityMap = createSelector(
     [getUiDisplayDataTree],
-    (treeData: AgentDisplayNode[]): VisibilitySelectionMap => {
-        const returnData: VisibilitySelectionMap = {};
+    (treeData: AgentDisplayNode[]): AgentRenderingCheckboxMap => {
+        const returnData: AgentRenderingCheckboxMap = {};
         return treeData.reduce((acc, agent: AgentDisplayNode) => {
             const { key } = agent;
             acc[key] = [];
@@ -27,8 +27,8 @@ export const getSelectAllVisibilityMap = createSelector(
 // Returns an agent visibility map that indicates no states should be visible
 export const getSelectNoneVisibilityMap = createSelector(
     [getUiDisplayDataTree],
-    (treeData: AgentDisplayNode[]): VisibilitySelectionMap => {
-        const returnData: VisibilitySelectionMap = {};
+    (treeData: AgentDisplayNode[]): AgentRenderingCheckboxMap => {
+        const returnData: AgentRenderingCheckboxMap = {};
         return treeData.reduce((acc, agent) => {
             acc[agent.key] = [];
             return acc;
@@ -41,7 +41,7 @@ export const getIsSharedCheckboxIndeterminate = createSelector(
     [getUiDisplayDataTree, getAgentVisibilityMap],
     (
         allAgents: AgentDisplayNode[],
-        agentVisibilityMap: VisibilitySelectionMap
+        agentVisibilityMap: AgentRenderingCheckboxMap
     ): boolean => {
         if (isEmpty(agentVisibilityMap)) return false;
 
