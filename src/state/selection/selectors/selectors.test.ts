@@ -1,6 +1,7 @@
 import { initialState } from "../../index";
 import { State } from "../../types";
 import { getHighlightedAgents, getAgentsToHide } from ".";
+import { AgentRenderingCheckboxMap } from "../types";
 const mockUIDisplayData = [
     {
         name: "agent_with_two_states",
@@ -104,7 +105,10 @@ describe("selection composed selectors", () => {
             const highlightedNames = getHighlightedAgents(stateWithSelection);
             expect(highlightedNames).toBeInstanceOf(Array);
             expect(highlightedNames).toEqual([
-                { name: "agent_with_unmodified_state", tags: ["", "state1"] },
+                {
+                    name: "agent_with_unmodified_state",
+                    tags: ["", "state1"],
+                },
             ]);
         });
         it("only returns names included in the display data from the backend", () => {
@@ -121,12 +125,24 @@ describe("selection composed selectors", () => {
         });
     });
     describe("getAgentsToHide", () => {
+        // initially all agents and children are on
+        const init = <AgentRenderingCheckboxMap>{};
+        const initialVisibilityMap = mockUIDisplayData.reduce((acc, cur) => {
+            if (cur.displayStates.length) {
+                acc[cur.name] = cur.displayStates.map((state) => state.id);
+            } else {
+                acc[cur.name] = [cur.name];
+            }
+            return acc;
+        }, init);
+
         it("for each agent in the visibility map: it returns state tags that are no included, and therefore not visible", () => {
             const stateWithSelection = {
                 ...mockState,
                 selection: {
                     ...mockState.selection,
                     agentVisibilityMap: {
+                        ...initialVisibilityMap,
                         agent_with_two_states: ["state1"],
                     },
                 },
@@ -159,6 +175,7 @@ describe("selection composed selectors", () => {
                 selection: {
                     ...mockState.selection,
                     agentVisibilityMap: {
+                        ...initialVisibilityMap,
                         agent_with_no_states: ["agent_with_no_states"],
                     },
                 },
@@ -173,6 +190,7 @@ describe("selection composed selectors", () => {
                 selection: {
                     ...mockState.selection,
                     agentVisibilityMap: {
+                        ...initialVisibilityMap,
                         agent_with_no_states: [],
                     },
                 },
@@ -189,6 +207,7 @@ describe("selection composed selectors", () => {
                 selection: {
                     ...mockState.selection,
                     agentVisibilityMap: {
+                        ...initialVisibilityMap,
                         agent1: ["state1"],
                         agent_with_two_states: ["state1"],
                     },
