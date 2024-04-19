@@ -37,7 +37,7 @@ export interface HighlightAgentAction {
  * {
  *    [agentName]: ["agentName"]
  * }
- * means that checkbox is current checked. The agent name is basically treated
+ * means that checkbox is currently checked. The agent name is basically treated
  * as a display state
  *
  *
