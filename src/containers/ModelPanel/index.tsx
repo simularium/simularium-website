@@ -29,7 +29,7 @@ import {
     ChangeAgentsRenderingStateAction,
     SetColorChangeAction,
     SetVisibleAction,
-    VisibilitySelectionMap,
+    AgentRenderingCheckboxMap,
     SetRecentColorsAction,
 } from "../../state/selection/types";
 import CheckBoxTree, { AgentDisplayNode } from "../../components/AgentTree";
@@ -54,13 +54,13 @@ import styles from "./style.css";
 
 interface ModelPanelProps {
     uiDisplayDataTree: AgentDisplayNode[];
-    agentHighlightMap: VisibilitySelectionMap;
-    agentVisibilityMap: VisibilitySelectionMap;
+    agentHighlightMap: AgentRenderingCheckboxMap;
+    agentVisibilityMap: AgentRenderingCheckboxMap;
     turnAgentsOnByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
     highlightAgentsByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
     setAgentsVisible: ActionCreator<SetVisibleAction>;
-    payloadForSelectAll: VisibilitySelectionMap;
-    payloadForSelectNone: VisibilitySelectionMap;
+    payloadForSelectAll: AgentRenderingCheckboxMap;
+    payloadForSelectNone: AgentRenderingCheckboxMap;
     isSharedCheckboxIndeterminate: boolean;
     viewerStatus: ViewerStatus;
     isNetworkedFile: boolean;
