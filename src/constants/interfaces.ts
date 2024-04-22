@@ -39,7 +39,7 @@ export type TooltipPlacement =
     | "rightTop"
     | "rightBottom";
 
-export enum ButtonType {
+export enum ButtonClass {
     Primary = "primary-button",
     Secondary = "secondary-button",
     Action = "action-button",

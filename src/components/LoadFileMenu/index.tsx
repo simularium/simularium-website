@@ -14,7 +14,7 @@ import {
     SetErrorAction,
     SetViewerStatusAction,
 } from "../../state/viewer/types";
-import { TrajectoryDisplayData } from "../../constants/interfaces";
+import { ButtonClass, TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
 import { DownArrow } from "../Icons";
 import FileUploadModal from "../FileUploadModal";
@@ -101,7 +101,7 @@ const LoadFileMenu = ({
                 <NavButton
                     titleText={"Load model"}
                     icon={DownArrow}
-                    buttonType="primary"
+                    buttonType={ButtonClass.Primary}
                 />
             </Dropdown>
             {/* 

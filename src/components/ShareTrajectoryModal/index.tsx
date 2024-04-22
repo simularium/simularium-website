@@ -11,7 +11,7 @@ import { DisplayTimes } from "../../containers/ViewerPanel/types";
 import CustomModal from "../CustomModal";
 import { Link, Warn } from "../Icons";
 import { URL_PARAM_KEY_TIME } from "../../constants";
-import { ButtonType } from "../../constants/interfaces";
+import { ButtonClass } from "../../constants/interfaces";
 import { editUrlParams } from "../../util";
 
 import styles from "./style.css";
@@ -165,7 +165,7 @@ const ShareTrajectoryModal = ({
                 </div>
             ),
             footer: (
-                <Button className={ButtonType.Secondary} onClick={closeModal}>
+                <Button className={ButtonClass.Secondary} onClick={closeModal}>
                     Close
                 </Button>
             ),

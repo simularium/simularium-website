@@ -4,7 +4,7 @@ import { Button, message, Upload, UploadProps } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import { RcFile } from "antd/lib/upload";
 
-import { ButtonType } from "../../constants/interfaces";
+import { ButtonClass } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
 
 import styles from "./style.css";
@@ -71,7 +71,7 @@ const LocalFileUpload: React.FC<FileUploadProps> = ({
                 }}
             >
                 {children || (
-                    <Button className={ButtonType.Primary}>Select file</Button>
+                    <Button className={ButtonClass.Primary}>Select file</Button>
                 )}
             </Link>
         </Upload>
