@@ -28,15 +28,15 @@ export const Pause = <PauseOutlined />;
 export const UploadFile = <ImportOutlined />;
 export const DownArrow = <DownOutlined />;
 export const CaretRight = <CaretRightOutlined />;
-export const GoBack = <ArrowLeftOutlined />;
+export const LeftArrow = <ArrowLeftOutlined />;
 export const Reset = <HomeOutlined />;
 export const ZoomIn = <PlusOutlined />;
 export const Cancel = <PlusOutlined style={{ transform: "rotate(45deg)" }} />;
 export const ZoomOut = <MinusOutlined />;
-export const Share = <ShareAltOutlined style={{ fontSize: "15px" }} />;
+export const Share = <ShareAltOutlined />;
 export const Warn = <WarningOutlined />;
 export const Link = <LinkOutlined />;
-export const Download = <DownloadOutlined style={{ fontSize: "15px" }} />;
+export const Download = <DownloadOutlined size={32} />;
 export const LoopOutlined = <RetweetOutlined />;
 export const Exclamation = <ExclamationCircleFilled />;
 
@@ -59,7 +59,7 @@ export default {
     DownArrow,
     CaretRight,
     ArrowLeftOutlined,
-    GoBack,
+    LeftArrow,
     PurpleArrow,
     AicsLogo,
     Reset,

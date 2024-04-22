@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 
 import {
     ClearSimFileDataAction,
+    ConversionStatus,
     isLocalFileInterface,
     isNetworkSimFileInterface,
     LocalSimFile,

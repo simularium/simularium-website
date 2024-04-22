@@ -27,6 +27,10 @@ import FileUploadModal from "../FileUploadModal";
 import NavButton from "../NavButton";
 
 import styles from "./style.css";
+import {
+    CONVERSION_INACTIVE,
+    CONVERSION_NO_SERVER,
+} from "../../state/trajectory/constants";
 
 interface LoadFileMenuProps {
     isBuffering: boolean;
@@ -40,8 +44,8 @@ interface LoadFileMenuProps {
 }
 
 const LoadFileMenu = ({
-    isBuffering,
     clearSimulariumFile,
+    isBuffering,
     loadLocalFile,
     selectFile,
     setViewerStatus,
