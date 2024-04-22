@@ -76,11 +76,9 @@ import {
     Template,
 } from "./conversion-data-types";
 
-// TODO: this will need to be configured to point to the ECS instance once this is updated,
-// currently this requires running Octopus locally.
 const netConnectionSettings: NetConnectionParams = {
-    serverIp: "0.0.0.0",
-    serverPort: 8765,
+    serverIp: process.env.BACKEND_SERVER_IP,
+    serverPort: 443,
     useOctopus: true,
     secureConnection: true,
 };
