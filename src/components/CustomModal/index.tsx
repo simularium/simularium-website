@@ -2,9 +2,9 @@ import React from "react";
 import { Divider, Modal, ModalProps } from "antd";
 import classNames from "classnames";
 
+import { IconGlyphs } from "../../constants/interfaces";
 import theme from "../theme/light-theme.css";
 import styles from "./style.css";
-import { IconGlyphs } from "../../constants/interfaces";
 
 type OmittedProps =
     | "onCancel"

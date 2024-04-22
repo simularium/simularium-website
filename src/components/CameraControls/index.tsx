@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useHotkeys, useIsHotkeyPressed } from "react-hotkeys-hook";
 
+import { IconGlyphs } from "../../constants/interfaces";
 import { ZoomIn, ZoomOut } from "../Icons";
 import ViewportButton from "../ViewportButton";
 
 import styles from "./style.css";
-import { IconGlyphs } from "../../constants/interfaces";
 
 const PAN = "pan";
 const ROTATE = "rotate";

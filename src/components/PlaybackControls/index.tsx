@@ -5,11 +5,11 @@ import { compareTimes } from "@aics/simularium-viewer";
 
 import { DisplayTimes } from "../../containers/ViewerPanel/types";
 import { TimeUnits } from "../../state/trajectory/types";
+import { IconGlyphs } from "../../constants/interfaces";
 import { Pause, Play } from "../Icons";
 import ViewportButton from "../ViewportButton";
 
 import styles from "./style.css";
-import { IconGlyphs } from "../../constants/interfaces";
 
 interface PlayBackProps {
     playHandler: (timeOverride?: number) => void;
