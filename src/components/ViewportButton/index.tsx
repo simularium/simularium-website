@@ -8,7 +8,7 @@ import styles from "./style.css";
 interface ViewportButtonProps extends ButtonProps {
     tooltipText?: string;
     tooltipPlacement?: TooltipProps["placement"];
-    icon?: ReactNode | string; // When using an icomoon icon, pass the icon name as defined in selectors in src/styles.css
+    icon?: ReactNode | string; // When using an icomoon icon, pass the right IconGlyphs member as defined in src/constants/interfaces
     radioGroupPosition?: "top" | "bottom";
     clickHandler?: () => void;
     disabled?: boolean;
