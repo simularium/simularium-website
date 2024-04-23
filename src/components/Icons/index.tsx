@@ -28,7 +28,7 @@ export const Pause = <PauseOutlined />;
 export const UploadFile = <ImportOutlined />;
 export const DownArrow = <DownOutlined />;
 export const CaretRight = <CaretRightOutlined />;
-export const LeftArrow = <ArrowLeftOutlined />;
+export const GoBack = <ArrowLeftOutlined />;
 export const Reset = <HomeOutlined />;
 export const ZoomIn = <PlusOutlined />;
 export const Cancel = <PlusOutlined style={{ transform: "rotate(45deg)" }} />;
@@ -59,7 +59,7 @@ export default {
     DownArrow,
     CaretRight,
     ArrowLeftOutlined,
-    LeftArrow,
+    GoBack,
     PurpleArrow,
     AicsLogo,
     Reset,

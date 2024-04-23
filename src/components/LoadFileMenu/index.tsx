@@ -16,6 +16,10 @@ import {
     SetErrorAction,
     SetViewerStatusAction,
 } from "../../state/viewer/types";
+import {
+    CONVERSION_INACTIVE,
+    CONVERSION_NO_SERVER,
+} from "../../state/trajectory/constants";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
 import { DownArrow } from "../Icons";
@@ -23,10 +27,6 @@ import FileUploadModal from "../FileUploadModal";
 import NavButton from "../NavButton";
 
 import styles from "./style.css";
-import {
-    CONVERSION_INACTIVE,
-    CONVERSION_NO_SERVER,
-} from "../../state/trajectory/constants";
 
 interface LoadFileMenuProps {
     isBuffering: boolean;

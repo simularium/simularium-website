@@ -48,11 +48,11 @@ interface ConversionProps {
 }
 
 const validFileExtensions: ExtensionMap = {
-    // TODO: update this with correct extensions
+    // TODO: update this with correct extensions when conversion is ready
     Smoldyn: "txt",
-    cytosim: "txt",
-    cellPACK: "txt",
-    SpringSaLaD: "txt",
+    // cytosim: "txt",
+    // cellPACK: "txt",
+    // SpringSaLaD: "txt",
 };
 
 const selectOptions = Object.keys(AvailableEngines).map(

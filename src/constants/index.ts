@@ -49,9 +49,10 @@ export const SUPPORTED_ENGINES = [
 ];
 export const ENGINE_TO_TEMPLATE_MAP: { [key in AvailableEngines]: string } = {
     [AvailableEngines.Smoldyn]: "smoldyn_data",
-    [AvailableEngines.Cytosim]: "cytosim_data",
-    [AvailableEngines.CellPack]: "cellpack_data",
-    [AvailableEngines.SpringSalad]: "springsalad_data",
+    // todo: restore these when these engines are ready
+    // [AvailableEngines.Cytosim]: "cytosim_data",
+    // [AvailableEngines.CellPack]: "cellpack_data",
+    // [AvailableEngines.SpringSalad]: "springsalad_data",
 };
 
 // If any these URLs are used as a trajUrl param, we want to redirect to a networked file
