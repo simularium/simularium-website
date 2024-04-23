@@ -48,8 +48,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
         </>
     );
 
-    console.log("incm");
-
     return (
         <Modal
             {...props}
