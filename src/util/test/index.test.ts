@@ -13,6 +13,7 @@ import {
     wrapText,
     hasUrlParamsSettings,
     editUrlParams,
+    getIconGlyphClasses,
 } from "../";
 import {
     getFileIdFromUrl,
@@ -23,6 +24,7 @@ import {
     isOnlineTrajectory,
     urlCheck,
 } from "../userUrlHandling";
+import { IconGlyphs } from "../../constants/interfaces";
 
 process.env.GOOGLE_API_KEY = "key";
 describe("General utilities", () => {
@@ -393,6 +395,12 @@ describe("User Url handling", () => {
             const url = `simularium?other_url_param=value`;
             const result = isOnlineTrajectory(url);
             expect(result).toBeFalsy;
+        });
+    });
+    describe("getIconGlyphClasses", () => {
+        it("returns a string of icon-moon, anticon, and the passed in glyph", () => {
+            const glyphClassName = getIconGlyphClasses(IconGlyphs.StarEmpty);
+            expect(glyphClassName).toEqual("icon-moon anticon star-empty-icon");
         });
     });
 });
