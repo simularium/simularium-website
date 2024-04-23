@@ -6,6 +6,7 @@ import { compareTimes } from "@aics/simularium-viewer";
 import { DisplayTimes } from "../../containers/ViewerPanel/types";
 import { TimeUnits } from "../../state/trajectory/types";
 import { IconGlyphs } from "../../constants/interfaces";
+import { getIconGlyphClasses } from "../../util";
 import { Pause, Play } from "../Icons";
 import ViewportButton from "../ViewportButton";
 
@@ -121,7 +122,7 @@ const PlayBackControls = ({
                 <ViewportButton
                     tooltipText="Skip 1 frame back"
                     tooltipPlacement="top"
-                    icon={IconGlyphs.StepBack}
+                    icon={getIconGlyphClasses(IconGlyphs.StepBack)}
                     clickHandler={prevHandler}
                     disabled={isStepBackDisabled || loading || isEmpty}
                     loading={loading}
@@ -139,7 +140,7 @@ const PlayBackControls = ({
                 <ViewportButton
                     tooltipText={"Skip 1 frame ahead"}
                     tooltipPlacement="top"
-                    icon={IconGlyphs.StepForward}
+                    icon={getIconGlyphClasses(IconGlyphs.StepForward)}
                     clickHandler={nextHandler}
                     disabled={isStepForwardDisabled || loading || isEmpty}
                     loading={loading}
@@ -176,7 +177,7 @@ const PlayBackControls = ({
             <ViewportButton
                 tooltipText={isLooping ? "Turn off looping" : "Turn on looping"}
                 tooltipPlacement="top"
-                icon={IconGlyphs.Loop}
+                icon={getIconGlyphClasses(IconGlyphs.Loop)}
                 clickHandler={loopHandler}
                 disabled={isEmpty}
                 active={isLooping}

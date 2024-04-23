@@ -4,9 +4,10 @@ import { Tooltip } from "antd";
 import { CheckboxProps } from "antd/lib/checkbox";
 
 import { TOOLTIP_DELAY, TOOLTIP_COLOR } from "../../constants";
+import { IconGlyphs } from "../../constants/interfaces";
+import { getIconGlyphClasses } from "../../util";
 
 import styles from "./style.css";
-import { IconGlyphs } from "../../constants/interfaces";
 
 const StarCheckbox = ({
     checked,
@@ -22,12 +23,12 @@ const StarCheckbox = ({
     const wrapperClassnames = classNames([...parentClassnames, styles.wrapper]);
     const getIcon = () => {
         if (checked) {
-            return IconGlyphs.StarFull;
+            return getIconGlyphClasses(IconGlyphs.StarFull);
         }
         if (indeterminate) {
-            return IconGlyphs.StarDashed;
+            return getIconGlyphClasses(IconGlyphs.StarDashed);
         }
-        return IconGlyphs.StarEmpty;
+        return getIconGlyphClasses(IconGlyphs.StarEmpty);
     };
     const checkboxClassNames = classNames(getIcon(), styles.checkbox);
 

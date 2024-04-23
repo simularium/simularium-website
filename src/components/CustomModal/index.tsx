@@ -3,6 +3,7 @@ import { Divider, Modal, ModalProps } from "antd";
 import classNames from "classnames";
 
 import { IconGlyphs } from "../../constants/interfaces";
+import { getIconGlyphClasses } from "../../util";
 import theme from "../theme/light-theme.css";
 import styles from "./style.css";
 
@@ -35,7 +36,10 @@ const CustomModal: React.FC<CustomModalProps> = ({
     const title = (
         <>
             <span>{titleText}</span>
-            <span className={IconGlyphs.Close} onClick={closeHandler}></span>
+            <span
+                className={getIconGlyphClasses(IconGlyphs.Close)}
+                onClick={closeHandler}
+            ></span>
         </>
     );
 
