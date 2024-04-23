@@ -15,7 +15,7 @@ import {
     SelectMetadataAction,
     ChangeTimeAction,
     SetVisibleAction,
-    VisibilitySelectionMap,
+    AgentRenderingCheckboxMap,
     ResetAction,
     SetColorChangeAction,
     SetRecentColorsAction,
@@ -36,7 +36,7 @@ export function onSidePanelCollapse(numberCollapsed: number) {
 }
 
 export function setAgentsVisible(
-    agentNames: VisibilitySelectionMap
+    agentNames: AgentRenderingCheckboxMap
 ): SetVisibleAction {
     return {
         payload: agentNames,
@@ -45,7 +45,7 @@ export function setAgentsVisible(
 }
 
 export function turnAgentsOnByDisplayKey(
-    agentNames: VisibilitySelectionMap
+    agentNames: AgentRenderingCheckboxMap
 ): ChangeAgentsRenderingStateAction {
     return {
         payload: agentNames,
@@ -54,7 +54,7 @@ export function turnAgentsOnByDisplayKey(
 }
 
 export function highlightAgentsByDisplayKey(
-    agentNames: VisibilitySelectionMap
+    agentNames: AgentRenderingCheckboxMap
 ): ChangeAgentsRenderingStateAction {
     return {
         payload: agentNames,
