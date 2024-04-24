@@ -8,6 +8,7 @@ import styles from "./style.css";
 interface ViewportButtonProps extends ButtonProps {
     tooltipText?: string;
     tooltipPlacement?: TooltipProps["placement"];
+    tooltipWhenDisabled?: boolean;
     icon?: ReactNode | string; // When using an icomoon icon, pass the right IconGlyphs member as defined in src/constants/interfaces
     radioGroupPosition?: "top" | "bottom";
     clickHandler?: () => void;
@@ -20,6 +21,7 @@ const ViewportButton: React.FC<ViewportButtonProps> = ({
     className,
     tooltipText,
     tooltipPlacement,
+    tooltipWhenDisabled,
     icon,
     clickHandler,
     disabled,
@@ -51,6 +53,11 @@ const ViewportButton: React.FC<ViewportButtonProps> = ({
         }
     };
 
+    const getTooltip = () =>
+        !disabled || tooltipWhenDisabled ? tooltipText : "";
+
+    const getClickHandler = () => (!disabled ? clickHandler : undefined);
+
     const buttonClassNames = classNames([
         className,
         styles.viewportButton,
@@ -61,13 +68,13 @@ const ViewportButton: React.FC<ViewportButtonProps> = ({
     return (
         <Tooltip
             placement={tooltipPlacement}
-            title={!disabled && tooltipText}
+            title={getTooltip()}
             color={TOOLTIP_COLOR}
         >
             <Button
                 {...props}
                 className={buttonClassNames}
-                onClick={clickHandler}
+                onClick={getClickHandler()}
                 loading={loading}
                 icon={getIcon()}
             />
