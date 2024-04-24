@@ -4,6 +4,7 @@ import {
     convertUIDataToSelectionData,
     getDisplayTimes,
     getMaxNumChars,
+    getMovieTitle,
     getSelectionStateInfoForViewer,
 } from "./selectors";
 
@@ -224,6 +225,44 @@ describe("ViewerPanel selectors", () => {
                 roundedTimeStep: 0.08,
                 maxNumChars: "0.000004".length,
             });
+        });
+    });
+    describe("getMovieTitle", () => {
+        it("returns file's title when file has one", () => {
+            const mockState: State = {
+                ...initialState,
+                trajectory: {
+                    simulariumFile: { name: "fakeName", title: "fakeTitle" },
+                },
+            };
+            expect(mockState.trajectory.simulariumFile.title).toBe("fakeTitle");
+
+            const movieTitle = getMovieTitle(mockState);
+
+            expect(movieTitle).toEqual("fakeTitle");
+        });
+        it("if no title, it returns the filename stripped of extension", () => {
+            const mockState: State = {
+                ...initialState,
+                trajectory: {
+                    simulariumFile: {
+                        name: "fakeName",
+                    },
+                },
+            };
+            expect(mockState.trajectory.simulariumFile.name).toBe("fakeName");
+
+            const movieTitle = getMovieTitle(mockState);
+
+            expect(movieTitle).toEqual("fakeName");
+        });
+        it("if no title or filename it returns simularium", () => {
+            const mockState: State = initialState;
+            expect(mockState.trajectory.simulariumFile.name).toBe("");
+
+            const movieTitle = getMovieTitle(mockState);
+
+            expect(movieTitle).toEqual("simularium");
         });
     });
 });
