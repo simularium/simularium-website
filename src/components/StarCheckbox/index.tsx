@@ -21,7 +21,7 @@ const StarCheckbox = ({
 
     const parentClassnames = className ? className.split(" ") : [];
     const wrapperClassnames = classNames([...parentClassnames, styles.wrapper]);
-    const getIcon = () => {
+    const getIconClasses = () => {
         if (checked) {
             return getIconGlyphClasses(IconGlyphs.StarFull);
         }
@@ -30,7 +30,7 @@ const StarCheckbox = ({
         }
         return getIconGlyphClasses(IconGlyphs.StarEmpty);
     };
-    const checkboxClassNames = classNames(getIcon(), styles.checkbox);
+    const checkboxClassNames = classNames(getIconClasses(), styles.checkbox);
 
     const updateTooltipTitle = () => {
         const text = checked ? "Remove highlight" : "Highlight";
