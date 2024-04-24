@@ -6,6 +6,7 @@ import queryString from "query-string";
 import {
     ErrorLevel,
     FrontEndError,
+    NetConnectionParams,
     loadSimulariumFile,
 } from "@aics/simularium-viewer";
 
@@ -47,9 +48,11 @@ import {
 import { ReceiveAction, LocalSimFile } from "./types";
 import { initialState } from "./reducer";
 
-const netConnectionSettings = {
+const netConnectionSettings: NetConnectionParams = {
     serverIp: process.env.BACKEND_SERVER_IP,
-    serverPort: 9002,
+    serverPort: 443,
+    useOctopus: true,
+    secureConnection: true,
 };
 
 const resetSimulariumFileState = createLogic({
