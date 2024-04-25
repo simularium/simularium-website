@@ -24,6 +24,10 @@ export interface ReduxLogicDeps {
     httpClient: AxiosInstance;
     getState: () => State;
     ctx?: any;
+    uiTemplateUrlRoot: string;
+    uiTemplateDownloadUrlRoot: string;
+    uiBaseTypes: string;
+    uiCustomTypes: string;
 }
 
 export type ReduxLogicNextCb = (action: AnyAction) => void;
