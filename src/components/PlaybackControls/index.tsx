@@ -132,7 +132,7 @@ const PlayBackControls = ({
                     clickHandler={
                         isPlaying ? pauseHandler : () => playHandler()
                     }
-                    disabled={isStepForwardDisabled || loading || isEmpty}
+                    disabled={loading || isEmpty}
                     loading={loading}
                 />
                 <ViewportButton
