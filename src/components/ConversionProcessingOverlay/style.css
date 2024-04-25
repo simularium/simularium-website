@@ -3,7 +3,7 @@
     height: calc(100vh - var(--header-height));
     width: 100%;
     z-index: 300;
-    background-color: var(--overlay-purple);
+    background-color: var(--light-theme-bg);
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -11,12 +11,12 @@
 }
 
 .title {
-    color: var(--light-theme-text-primary-color);
+    color: var(--light-theme-color);
     font-weight: 700;
 }
 
 .content {
-    color: var(--light-theme-text-primary-color);
+    color: var(--light-theme-color);
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -44,9 +44,5 @@
 }
 
 .divider-container :global(.ant-divider) {
-    background-color: var(--heather);
-}
-
-.button {
-    border: 1.75px solid var(--dark-four);
+    background-color: var(--light-theme-divider);
 }

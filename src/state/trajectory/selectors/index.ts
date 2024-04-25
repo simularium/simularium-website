@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+import { find } from "lodash";
 import { UIDisplayData } from "@aics/simularium-viewer";
 
 import {
@@ -7,6 +8,7 @@ import {
     NetworkedSimFile,
 } from "../types";
 
+import TRAJECTORIES from "../../../constants/networked-trajectories";
 import { getSimulariumFile, getAgentDisplayNamesAndStates } from "./basic";
 
 export const getIsNetworkedFile = createSelector(

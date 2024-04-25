@@ -21,17 +21,6 @@
     color: var(--dark-theme-primary-color);
 }
 
-.page-header :global(.ant-btn-primary) {
-    text-shadow: none;
-}
-
-.page-header :global(.ant-btn-ghost) {
-    color: var(--dark-theme-primary-color);
-    border-color: var(--dark-theme-primary-color);
-    border-radius: 3px;
-    margin-left: 12px;
-}
-
 .left-links {
     white-space: nowrap;
     margin-right: 2em;
@@ -53,10 +42,9 @@
     font-weight: 100;
 }
 
-.buttons {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+.pipe {
+    padding-left: 2px;
+    color: var(--text-gray);
 }
 
 .pipe {
@@ -96,27 +84,8 @@
     }
 }
 
-/* Styling rules for Share and Download buttons */
-.page-header .buttons .action-buttons :global(.ant-btn) {
-    color: var(--dark-theme-primary-color);
-    background-color: var(--dark-theme-header-bg);
-    border: none;
-    padding-right: 8px;
-    padding-left: 22px;
-}
-
-.page-header .buttons .action-buttons .disabled :global(.ant-btn) {
-    color: var(--dim-gray-two);
-}
-
-.page-header .buttons .action-buttons :global(.ant-tooltip-open.ant-btn) {
-    color: var(--baby-purple-two);
-}
-
-.page-header .buttons .action-buttons :global(.anticon) {
-    font-size: 16px;
-}
-
-.page-header .buttons .action-buttons {
+.page-header .button-container {
     display: flex;
+    align-items: center;
+    gap: 16px;
 }

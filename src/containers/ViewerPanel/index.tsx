@@ -50,6 +50,7 @@ import {
 } from "../../state/trajectory/constants";
 import { batchActions } from "../../state/util";
 import PlaybackControls from "../../components/PlaybackControls";
+import RecordMoviesComponent from "../../components/RecordMoviesComponent";
 import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
 import { TUTORIAL_PATHNAME } from "../../routes";
@@ -61,6 +62,7 @@ import {
     convertUIDataToSelectionData,
     getDisplayTimes,
     getSelectionStateInfoForViewer,
+    getMovieTitle,
 } from "./selectors";
 import { AGENT_COLORS } from "./constants";
 import { DisplayTimes } from "./types";
@@ -99,8 +101,9 @@ interface ViewerPanelProps {
     error: ViewerError;
     setBuffering: ActionCreator<ToggleAction>;
     setError: ActionCreator<SetErrorAction>;
+    movieTitle: string;
     conversionStatus: ConversionStatus;
-    receiveConvertedFile: ActionCreator<ReceiveAction>;
+    setConversionStatus: ActionCreator<SetConversionStatusAction>;
 }
 
 interface ViewerPanelState {
@@ -108,6 +111,7 @@ interface ViewerPanelState {
     particleTypeIds: string[];
     height: number;
     width: number;
+    movieURL: string;
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -132,6 +136,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             particleTypeIds: [],
             height: 0,
             width: 0,
+            movieURL: "",
         };
     }
 
@@ -397,6 +402,22 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
     };
 
+    public resetAfterMovieRecording = () => {
+        if (this.state.movieURL) {
+            URL.revokeObjectURL(this.state.movieURL);
+        }
+        this.setState({
+            movieURL: "",
+        });
+    };
+
+    public onRecordedMovie = (videoBlob: Blob) => {
+        const url = URL.createObjectURL(videoBlob);
+        this.setState({
+            movieURL: url,
+        });
+    };
+
     public render(): JSX.Element {
         const {
             time,
@@ -414,6 +435,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             status,
             setError,
             scaleBarLabel,
+            movieTitle,
         } = this.props;
         return (
             <div
@@ -446,27 +468,40 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     onTrajectoryFileInfoChanged={
                         this.onTrajectoryFileInfoChanged
                     }
+                    onRecordedMovie={this.onRecordedMovie}
                 />
                 {firstFrameTime !== lastFrameTime && (
-                    <PlaybackControls
-                        playHandler={this.startPlay}
-                        time={time}
-                        timeStep={timeStep}
-                        displayTimes={displayTimes}
-                        timeUnits={timeUnits}
-                        onTimeChange={this.skipToTime}
-                        pauseHandler={this.pause}
-                        prevHandler={this.playBackOne}
-                        nextHandler={this.playForwardOne}
-                        isPlaying={isPlaying}
-                        isLooping={isLooping}
-                        loopHandler={this.toggleLooping}
-                        firstFrameTime={firstFrameTime}
-                        lastFrameTime={lastFrameTime}
-                        loading={isBuffering}
-                        isEmpty={status === VIEWER_EMPTY}
-                    />
+                    <div className={styles.bottomControlsContainer}>
+                        <PlaybackControls
+                            playHandler={this.startPlay}
+                            time={time}
+                            timeStep={timeStep}
+                            displayTimes={displayTimes}
+                            timeUnits={timeUnits}
+                            onTimeChange={this.skipToTime}
+                            pauseHandler={this.pause}
+                            prevHandler={this.playBackOne}
+                            nextHandler={this.playForwardOne}
+                            isPlaying={isPlaying}
+                            isLooping={isLooping}
+                            loopHandler={this.toggleLooping}
+                            firstFrameTime={firstFrameTime}
+                            lastFrameTime={lastFrameTime}
+                            loading={isBuffering}
+                            isEmpty={status === VIEWER_EMPTY}
+                        />
+                        <RecordMoviesComponent
+                            movieUrl={this.state.movieURL}
+                            movieTitle={movieTitle}
+                            resetAfterMovieRecording={
+                                this.resetAfterMovieRecording
+                            }
+                            startRecording={simulariumController.startRecording}
+                            stopRecording={simulariumController.stopRecording}
+                        />
+                    </div>
                 )}
+
                 <ScaleBar label={scaleBarLabel} />
                 <CameraControls
                     resetCamera={simulariumController.resetCamera}
@@ -507,6 +542,7 @@ function mapStateToProps(state: State) {
         isBuffering: viewerStateBranch.selectors.getIsBuffering(state),
         isPlaying: viewerStateBranch.selectors.getIsPlaying(state),
         isLooping: viewerStateBranch.selectors.getIsLooping(state),
+        movieTitle: getMovieTitle(state),
         conversionStatus:
             trajectoryStateBranch.selectors.getConversionStatus(state),
     };
@@ -527,6 +563,7 @@ const dispatchToPropsMap = {
     setIsLooping: viewerStateBranch.actions.setIsLooping,
     setError: viewerStateBranch.actions.setError,
     receiveConvertedFile: trajectoryStateBranch.actions.receiveConvertedFile,
+    setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
 };
 

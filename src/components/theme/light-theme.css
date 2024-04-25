@@ -1,30 +1,41 @@
-/* Default and primary button colors differ within modals */
-.light-theme :global(.ant-btn-default) {
-    background-color: var(--light-button-default-background);
-    border-color: var(--light-theme-modal-btn-default-color);
-    color: var(--light-button-default-color);
-}
+/* Primary and secondary button colors differ within modals */
 
-.light-theme :global(.ant-btn-primary) {
+/* primary buttons */
+.light-theme :global(.primary-button),
+.light-theme :global(.primary-button):focus {
     background-color: var(--light-theme-btn-primary-bg);
-    border: var(--light-button-primary-border);
+    border: var(--light-theme-btn-primary-border);
     color: var(--light-theme-btn-primary-color);
 }
 
-.light-theme :global(.ant-btn-primary[disabled]) {
-    background: var(--light-button-disabled-background);
-    border: var(--light-button-disabled-border);
-    color: var(--light-theme-btn-primary-color);
-}
-
-.light-theme :global(.ant-btn-text) {
-    background-color: var(--dark-four);
-    border-color: var(--dark-four);
-    color: var(--white-three);
-}
-
-
-.light-theme :global(.ant-btn-primary):hover {
+.light-theme :global(.primary-button:hover) {
     background-color: var(--light-theme-btn-primary-hover-bg);
+    border: var(--light-theme-btn-primary-hover-border);
     color: var(--light-theme-btn-primary-hover-color);
+}
+
+.light-theme :global(.primary-button[disabled]) {
+    background: var(--light-theme-btn-primary-disabled-bg);
+    border: var(--light-theme-btn-primary-disabled-border);
+    color: var(--light-theme-btn-primary-disabled-color);
+}
+
+/* secondary buttons: typically: close, ok, cancel */
+.light-theme :global(.secondary-button),
+.light-theme :global(.secondary-button):focus {
+    background-color: var(--light-theme-btn-secondary-bg);
+    border-color: var(--light-theme-btn-secondary-border);
+    color: var(--light-theme-btn-secondary-color);
+}
+
+.light-theme :global(.secondary-button:hover) {
+    background-color: var(--light-theme-btn-secondary-hover-bg);
+    border-color: var(--light-theme-btn-secondary-hover-border);
+    color: var(--light-theme-btn-secondary-hover-color);
+}
+
+.light-theme :global(.secondary-button[disabled]) {
+    background: var(--light-theme-btn-secondary-disabled-bg);
+    border: var(--light-theme-btn-secondary-disabled-border);
+    color: var(--light-theme-btn-secondary-disabled-color);
 }

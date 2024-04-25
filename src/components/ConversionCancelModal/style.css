@@ -1,7 +1,3 @@
-.cancel-modal p {
-    font-size: 14px;
-}
-
-.cancel-modal :global(.ant-modal-footer) {
-    background-color: var(--modal-content-bg);
+:global(.ant-btn):global(.primary-button).wide-button {
+    width: 114px;
 }

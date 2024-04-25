@@ -56,6 +56,10 @@ import ConversionForm from "../ConversionForm";
 const { Content } = Layout;
 
 import styles from "./style.css";
+import classNames from "classnames";
+import { EMBED_PATHNAME } from "../../routes";
+import EmbedOverlay from "../../components/EmbedOverlay";
+
 interface AppProps {
     onSidePanelCollapse: (number: number) => void;
     simulariumFile: LocalSimFile;
@@ -202,11 +206,11 @@ class App extends React.Component<AppProps, AppState> {
         }
     }
 
-    public render(): JSX.Element {
+    public renderOverlay(isEmbedded: boolean) {
         const {
-            simulariumController,
-            changeToLocalSimulariumFile,
+            simulariumFile,
             resetDragOverViewer,
+            changeToLocalSimulariumFile,
             viewerStatus,
             fileIsDraggedOverViewer,
             setViewerStatus,
@@ -214,24 +218,49 @@ class App extends React.Component<AppProps, AppState> {
             setError,
             conversionStatus,
         } = this.props;
+        if (isEmbedded) {
+            return <EmbedOverlay title={simulariumFile.name} />;
+        } else {
+            return (
+                <ViewerOverlayTarget
+                    key="drop"
+                    clearSimulariumFile={clearSimulariumFile}
+                    loadLocalFile={changeToLocalSimulariumFile}
+                    isLoading={viewerStatus === VIEWER_LOADING}
+                    resetDragOverViewer={resetDragOverViewer}
+                    fileIsDraggedOver={fileIsDraggedOverViewer}
+                    setViewerStatus={setViewerStatus}
+                    setError={setError}
+                />
+            );
+        }
+    }
+
+    public render(): JSX.Element {
+        const {
+            simulariumController,
+            changeToLocalSimulariumFile,
+            conversionStatus,
+        } = this.props;
+        const isEmbedded = location.pathname === EMBED_PATHNAME;
         return (
-            <Layout className={styles.container}>
+            <Layout
+                className={classNames([
+                    styles.container,
+                    { [styles.embed]: isEmbedded },
+                ])}
+            >
                 <div ref={this.interactiveContent}>
                     {conversionStatus !== CONVERSION_INACTIVE && (
                         <ConversionForm />
                     )}
                     <Layout className={styles.content}>
-                        <ViewerOverlayTarget
-                            key="drop"
-                            clearSimulariumFile={clearSimulariumFile}
-                            loadLocalFile={changeToLocalSimulariumFile}
-                            isLoading={viewerStatus === VIEWER_LOADING}
-                            resetDragOverViewer={resetDragOverViewer}
-                            fileIsDraggedOver={fileIsDraggedOverViewer}
-                            setViewerStatus={setViewerStatus}
-                            setError={setError}
-                        />
-                        <SideBar onCollapse={this.onPanelCollapse} type="left">
+                        {this.renderOverlay(isEmbedded)}
+                        <SideBar
+                            onCollapse={this.onPanelCollapse}
+                            isEmbedded={isEmbedded}
+                            type="left"
+                        >
                             <ModelPanel />
                         </SideBar>
                         <Content>

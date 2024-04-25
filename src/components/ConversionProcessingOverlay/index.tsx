@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Divider, Spin } from "antd";
 
 import ConversionCancelModal from "../ConversionCancelModal";
-import { UpRightArrow, LeftArrow } from "../Icons";
+import { UpRightArrow, GoBack } from "../Icons";
 
 import styles from "./style.css";
 
@@ -40,7 +40,7 @@ const ConversionProcessingOverlay = ({
                     onClick={() => setCancelModalOpen(true)}
                 >
                     {" "}
-                    {LeftArrow} Stop and go back to form{" "}
+                    {GoBack} Stop and go back to form{" "}
                 </a>
                 <div className={styles.processingIndicator}>
                     <div className={styles.spinContainer}>
@@ -50,7 +50,7 @@ const ConversionProcessingOverlay = ({
                 </div>
                 <h3>Open another instance of Simularium </h3>
                 <Button
-                    className={styles.button}
+                    className="secondary-button"
                     href={`https://simularium.allencell.org/viewer`}
                     target="_blank"
                 >
@@ -61,7 +61,7 @@ const ConversionProcessingOverlay = ({
                 <Divider> </Divider>
             </div>
             <Button
-                className={styles.button}
+                className="secondary-button"
                 onClick={() => setCancelModalOpen(true)}
             >
                 Cancel file import

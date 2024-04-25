@@ -9,6 +9,7 @@ import {
     getTimeUnits,
     getTimeStep,
     getFirstFrameTimeOfCachedSimulation,
+    getSimulariumFile,
 } from "../../state/trajectory/selectors";
 import {
     getAgentsToHide,
@@ -16,9 +17,10 @@ import {
     getCurrentTime,
     getHighlightedAgents,
 } from "../../state/selection/selectors";
-import { VisibilitySelectionMap } from "../../state/selection/types";
+import { AgentRenderingCheckboxMap } from "../../state/selection/types";
 import { roundTimeForDisplay } from "../../util";
 import { DisplayTimes } from "./types";
+import { isNetworkSimFileInterface } from "../../state/trajectory/types";
 
 export const getSelectionStateInfoForViewer = createSelector(
     [getHighlightedAgents, getAgentsToHide, getColorChange],
@@ -35,8 +37,8 @@ export const getSelectionStateInfoForViewer = createSelector(
 
 export const convertUIDataToSelectionData = (
     uiData: UIDisplayData
-): VisibilitySelectionMap => {
-    const returnData: VisibilitySelectionMap = {};
+): AgentRenderingCheckboxMap => {
+    const returnData: AgentRenderingCheckboxMap = {};
     return uiData.reduce((acc, agent) => {
         acc[agent.name] = [];
         if (agent.displayStates && agent.displayStates.length > 0) {
@@ -116,5 +118,18 @@ export const getDisplayTimes = createSelector(
             roundedTimeStep: roundedTimeStep,
             maxNumChars: maxNumChars,
         };
+    }
+);
+
+export const getMovieTitle = createSelector(
+    [getSimulariumFile],
+    (simulariumFile): string => {
+        const fileExtensionRegex = /\.simularium$/;
+        const movieTitle =
+            isNetworkSimFileInterface(simulariumFile) && simulariumFile.title
+                ? simulariumFile.title
+                : simulariumFile.name.replace(fileExtensionRegex, "") ||
+                  "simularium";
+        return movieTitle;
     }
 );

@@ -1,11 +1,30 @@
 .file-upload :global(.ant-upload-list) {
     min-height: 30px;
 }
+.file-upload :global(.ant-upload-list-item):hover,
+.file-upload :global(.ant-upload-list-item-list-type-text):focus,
+.file-upload :global(.ant-upload-list-item-list-type-text) :global(.ant-upload-list-item-info):hover {
+    background-color: transparent;
+}
 
 .file-upload :global(.ant-upload-list-item-card-actions-btn) {
     border: none;
 }
 
-.file-upload :global(.ant-upload-list-item-card-actions-btn) svg {
-    color: var(--brick-red);
+.file-upload :global(.ant-upload-list-item-card-actions-btn) {
+    opacity: initial;
 }
+
+.file-upload :global(.ant-upload-list-item-card-actions-btn) svg {
+    color: var(--cancel-icon-color);
+}
+
+.file-upload :global(.ant-upload-list-text .ant-upload-list-item-name) {
+    padding: 0;
+}
+
+.file-upload :global(.ant-upload-span) {
+    justify-content: flex-start;
+    width: max-content;
+}
+

@@ -18,7 +18,7 @@
     width: 740px;
     display: block;
     margin: 1em auto 2em auto;
-    background-color: var(--light-theme-background-purple);
+    background-color: var(--light-theme-visual-glossary-header-bg);
     border: transparent;
     border-radius: 3px;
     font-size: 20px;
@@ -30,7 +30,7 @@
 }
 
 .container :global(.ant-collapse-content) {
-    background-color: var(--light-theme-background-off-white);
+    background-color: var(--light-theme-visual-glossary-content-bg);
     font-size: 16px;
     border: none;
     height: 417px;

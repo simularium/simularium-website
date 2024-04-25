@@ -12,20 +12,21 @@ import {
     RequestNetworkFileAction,
     SetConversionStatusAction,
 } from "../../state/trajectory/types";
-import { TrajectoryDisplayData } from "../../constants/interfaces";
-import { VIEWER_PATHNAME } from "../../routes";
-import FileUploadModal from "../FileUploadModal";
-import { DownArrow } from "../Icons";
 import {
     SetErrorAction,
     SetViewerStatusAction,
 } from "../../state/viewer/types";
-
-import styles from "./style.css";
 import {
     CONVERSION_INACTIVE,
     CONVERSION_NO_SERVER,
 } from "../../state/trajectory/constants";
+import { TrajectoryDisplayData } from "../../constants/interfaces";
+import { VIEWER_PATHNAME } from "../../routes";
+import { DownArrow } from "../Icons";
+import FileUploadModal from "../FileUploadModal";
+import NavButton from "../NavButton";
+
+import styles from "./style.css";
 
 interface LoadFileMenuProps {
     isBuffering: boolean;
@@ -115,22 +116,21 @@ const LoadFileMenu = ({
         },
     ];
 
+    const isDisabled = isBuffering || conversionStatus !== CONVERSION_INACTIVE;
+
     return (
         <>
             <Dropdown
                 menu={{ items, theme: "dark", className: styles.menu }}
                 placement="bottomRight"
-                disabled={
-                    isBuffering || conversionStatus !== CONVERSION_INACTIVE
-                }
+                disabled={isDisabled}
             >
-                <Button
-                    className="ant-dropdown-link"
-                    onClick={(e) => e.preventDefault()}
-                    type="primary"
-                >
-                    Load model {DownArrow}
-                </Button>
+                <NavButton
+                    titleText={"Load model"}
+                    icon={DownArrow}
+                    buttonType="primary"
+                    isDisabled={isDisabled}
+                />
             </Dropdown>
             {/* 
                 Conditionally rendering the modal this way instead of as a `visible` prop

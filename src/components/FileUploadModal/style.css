@@ -1,5 +1,6 @@
 .upload-modal .extra-info {
     margin-top: .25rem;
+    margin-bottom: 0rem;
     color: var(--light-theme-modal-supplemental-text);
     font-size: 14px;
 }
@@ -10,11 +11,6 @@
 
 .upload-modal :global(.ant-form-item) {
     margin-bottom: 0;
-}
-
-.upload-modal :global(.ant-input-affix-wrapper) {
-    border-radius: 3px;
-    border-color: var(--input-border-highlight);
 }
 
 .upload-modal :global(.ant-input-suffix svg) {
@@ -31,5 +27,9 @@
 
 .upload-modal :global(.ant-tabs .ant-tabs-tab) {
     padding: 0;
+    font-size: 16px;
+}
+
+.upload-modal :global(.ant-tabs .ant-tabs-tab-active) {
     font-weight: 600;
 }

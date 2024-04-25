@@ -48,11 +48,11 @@ interface ConversionProps {
 }
 
 const validFileExtensions: ExtensionMap = {
-    // TODO: update this with correct extensions
+    // TODO: update this with correct extensions when conversion is ready
     Smoldyn: "txt",
-    cytosim: "txt",
-    cellPACK: "txt",
-    SpringSaLaD: "txt",
+    // cytosim: "txt",
+    // cellPACK: "txt",
+    // SpringSaLaD: "txt",
 };
 
 const selectOptions = Object.keys(AvailableEngines).map(
@@ -225,7 +225,7 @@ const ConversionForm = ({
                             handleFileSelection(file);
                         }}
                     >
-                        <Button type="default">Select file</Button>
+                        <Button className="primary-button">Select file</Button>
                     </Upload>
                     {fileToConvert && (
                         <button
@@ -236,12 +236,12 @@ const ConversionForm = ({
                         </button>
                     )}
                 </div>
-                <Divider orientation="right" orientationMargin={400} />
-                <Button ghost onClick={cancelConversion}>
+                <Divider className={styles.divider} orientation="right" />
+                <Button className="secondary-button" onClick={cancelConversion}>
                     Cancel
                 </Button>
                 <Button
-                    type="primary"
+                    className="primary-button"
                     disabled={!fileToConvert || !engineSelected}
                     onClick={sendFileToConvert}
                 >
