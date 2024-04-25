@@ -1,3 +1,5 @@
+import { AvailableEngines } from "../state/trajectory/conversion-data-types";
+
 export const APP_ID = "simularium-ui";
 export const API_VERSION = "v1";
 export const HEADER_HEIGHT = 113;
@@ -9,6 +11,8 @@ export type CHECKBOX_TYPE_STAR = typeof CHECKBOX_TYPE_STAR;
 export const TOOLTIP_COLOR = "#3B3649";
 export const TOOLTIP_DELAY = 1; // in seconds
 export const NAV_BAR_TOOLTIP_OFFSET = [0, 10];
+export const URL_PARAM_BASE_TYPES = "base_types.json";
+export const URL_PARAM_CUSTOM_TYPES = "custom-types";
 // URLs
 export const BASE_API_URL = `/api/${API_VERSION}`;
 export const DATA_BUCKET_URL =
@@ -29,6 +33,10 @@ export const MCELL_URL = "https://mcell.org/";
 export const SMOLDYN_URL = "http://www.smoldyn.org/";
 export const SPRINGSALAD_URL = "https://vcell.org/ssalad";
 export const MEDYAN_URL = "http://medyan.org/";
+export const UI_TEMPLATE_URL_ROOT =
+    "https://api.github.com/repos/simularium/simulariumio/contents/ui-templates";
+export const UI_TEMPLATE_DOWNLOAD_URL_ROOT =
+    "https://raw.githubusercontent.com/simularium/simulariumio/main/ui-templates";
 
 export const SUPPORTED_ENGINES = [
     ["ReaDDy", READDY_URL],
@@ -39,6 +47,13 @@ export const SUPPORTED_ENGINES = [
     ["SpringSaLaD", SPRINGSALAD_URL],
     ["MEDYAN", MEDYAN_URL],
 ];
+export const ENGINE_TO_TEMPLATE_MAP: { [key in AvailableEngines]: string } = {
+    [AvailableEngines.Smoldyn]: "smoldyn_data",
+    // todo: restore these when these engines are ready
+    // [AvailableEngines.Cytosim]: "cytosim_data",
+    // [AvailableEngines.CellPack]: "cellpack_data",
+    // [AvailableEngines.SpringSalad]: "springsalad_data",
+};
 
 // If any these URLs are used as a trajUrl param, we want to redirect to a networked file
 // More info: https://github.com/simularium/simularium-website/issues/213

@@ -34,6 +34,10 @@
     padding: 24px 24px 10px 24px;
 }
 
+.modal :global(.ant-modal-body) p {
+    margin-bottom: 0px;
+}
+
 .modal.divider :global(.ant-modal-body)  {
     padding: 24px;
 }
