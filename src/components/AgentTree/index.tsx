@@ -257,9 +257,7 @@ class AgentTree extends React.Component<AgentTreeProps> {
                 <TreeNode headerContent={this.renderCheckAllButton()} />
                 {treeData.map((nodeData) => {
                     const childrenHaveDifferentColors = nodeData.children.some(
-                        (child) => {
-                            return child.color !== nodeData.children[0].color;
-                        }
+                        (child, _, arr) => child.color !== arr[0].color
                     );
                     return (
                         <TreeNode
