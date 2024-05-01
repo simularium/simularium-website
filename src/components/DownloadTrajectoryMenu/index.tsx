@@ -22,7 +22,7 @@ const DownloadTrajectoryMenu = ({
 
     const getHref = () => {
         if (isNetworkedFile) {
-            return `${DATA_BUCKET_URL}/trajectory/${simulariumFile.name}`;
+            return `${DATA_BUCKET_URL}?file=${simulariumFile.name}`;
         } else {
             const localFile = simulariumFile as LocalSimFile; // isNetworkedFile checks for this
             const data: ISimulariumFile = localFile.data;

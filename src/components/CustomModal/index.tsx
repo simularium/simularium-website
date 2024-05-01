@@ -4,7 +4,6 @@ import classNames from "classnames";
 
 import theme from "../theme/light-theme.css";
 import styles from "./style.css";
-import theme from "../theme/light-theme.css";
 
 type OmittedProps =
     | "onCancel"

@@ -1,4 +1,5 @@
 import { UploadRequestOption } from "rc-upload/lib/interface";
+import { v4 as uuidv4 } from "uuid";
 import { ViewerError } from "../../state/viewer/types";
 import { ErrorLevel, FrontEndError } from "@aics/simularium-viewer";
 import { ReceiveFileToConvertAction } from "../../state/trajectory/types";

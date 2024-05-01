@@ -49,4 +49,5 @@ export type ConversionProcessingData = {
     fileToConvert: string;
     fileName: string;
     engineType: AvailableEngines;
+    fileId: string;
 };

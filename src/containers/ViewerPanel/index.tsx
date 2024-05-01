@@ -42,12 +42,8 @@ import {
     ConversionStatus,
     SetConversionStatusAction,
     SetUrlParamsAction,
-    RequestNetworkFileAction,
 } from "../../state/trajectory/types";
-import {
-    CONVERSION_ACTIVE,
-    CONVERSION_INACTIVE,
-} from "../../state/trajectory/constants";
+import { CONVERSION_ACTIVE } from "../../state/trajectory/constants";
 import { batchActions } from "../../state/util";
 import PlaybackControls from "../../components/PlaybackControls";
 import RecordMoviesComponent from "../../components/RecordMoviesComponent";
@@ -57,6 +53,7 @@ import { TUTORIAL_PATHNAME } from "../../routes";
 import ErrorNotification from "../../components/ErrorNotification";
 import { MOBILE_CUTOFF } from "../../constants";
 import { hasUrlParamsSettings } from "../../util";
+import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
 
 import {
     convertUIDataToSelectionData,
@@ -104,6 +101,8 @@ interface ViewerPanelProps {
     movieTitle: string;
     conversionStatus: ConversionStatus;
     setConversionStatus: ActionCreator<SetConversionStatusAction>;
+    receiveConvertedFile: ActionCreator<ReceiveAction>;
+    conversionProcessingData: ConversionProcessingData;
 }
 
 interface ViewerPanelState {
@@ -266,28 +265,39 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleIncomingConvertedFile(data: TrajectoryFileInfo) {
-        const { conversionStatus, receiveConvertedFile } = this.props;
-        if (conversionStatus === CONVERSION_ACTIVE) {
-            // todo:
-            // TFI v4? and/or address the fact that this typing is not actually enforced
-            // on the incoming data... it's misleading to import the type from the viewer
-            // but have the viewer send data that doesn't match the type
-            interface TrajectoryFileInfoWithFileName
-                extends TrajectoryFileInfo {
-                fileName: string;
-            }
-            const dataWithFileName = data as TrajectoryFileInfoWithFileName;
-
-            receiveConvertedFile({
-                name: dataWithFileName.fileName,
-                title: dataWithFileName.trajectoryTitle,
-            });
-        }
+        const { receiveConvertedFile, conversionProcessingData } = this.props;
+        /**
+             * todo:
+             * this is a stopgap prior to addressing the next iteration of TrajectoryFileInfo
+             * TFI when arriving from the viewer has a fileName field so we extend that 
+             * interface here to use the incoming data, even though the TFI type imprted from the viewer
+             * does not expect that field.
+            //  */
+        // interface TrajectoryFileInfoWithFileName
+        //     extends TrajectoryFileInfo {
+        //     fileName: string;
+        // }
+        // const dataWithFileName = data as TrajectoryFileInfoWithFileName;
+        // const trajTitle = data.trajectoryTitle || dataWithFileName.fileName;
+        // receiveConvertedFile({
+        //     name: dataWithFileName.fileName,
+        //     title: trajTitle,
+        // });
+        const fileId = conversionProcessingData.fileId;
+        const hasTitle =
+            data.trajectoryTitle !== undefined &&
+            data.trajectoryTitle.length > 0;
+        const title = hasTitle ? data.trajectoryTitle : fileId;
+        receiveConvertedFile({
+            name: fileId,
+            title: title,
+        });
     }
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
         const { receiveTrajectory, simulariumController, conversionStatus } =
             this.props;
+        console.log("onTrajectoryFileInfoChanged", data);
         if (conversionStatus === CONVERSION_ACTIVE) {
             this.handleIncomingConvertedFile(data);
         }
@@ -545,6 +555,8 @@ function mapStateToProps(state: State) {
         movieTitle: getMovieTitle(state),
         conversionStatus:
             trajectoryStateBranch.selectors.getConversionStatus(state),
+        conversionProcessingData:
+            trajectoryStateBranch.selectors.getConversionProcessingData(state),
     };
 }
 

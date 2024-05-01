@@ -65,6 +65,7 @@ import {
     CONVERSION_INACTIVE,
     CONVERT_FILE,
     CONVERSION_ACTIVE,
+    RECEIVE_CONVERTED_FILE,
 } from "./constants";
 import { ReceiveAction, LocalSimFile, HealthCheckTimeout } from "./types";
 import { initialState } from "./reducer";
@@ -215,6 +216,9 @@ const loadNetworkedFile = createLogic({
                     })
                 );
             })
+            // .then(() => {
+            //     simulariumController.gotoTime(0);
+            // })
             .then(done)
             .catch((error: FrontEndError) => {
                 handleFileLoadError(error, dispatch);
@@ -546,7 +550,7 @@ const convertFileLogic = createLogic({
         dispatch: <T extends AnyAction>(action: T) => T,
         done
     ) {
-        const { getState } = deps;
+        const { action, getState } = deps;
 
         const { engineType, fileToConvert, fileName } =
             getConversionProcessingData(getState());
@@ -555,6 +559,15 @@ const convertFileLogic = createLogic({
             metaData: { trajectoryTitle: fileName },
         };
         const controller = getSimulariumController(getState());
+        // console.log(
+        //     "args for convert and load, netConnectionSettings: ",
+        //     netConnectionSettings,
+        //     "fileContents: ",
+        //     fileContents,
+        //     "engineType: ",
+        //     engineType
+        // );
+        const fileId = action.payload;
         // convert the file
         dispatch(
             setConversionStatus({
@@ -565,7 +578,8 @@ const convertFileLogic = createLogic({
             .convertAndLoadTrajectory(
                 netConnectionSettings,
                 fileContents,
-                engineType
+                engineType,
+                fileId
             )
             .catch((err: Error) => {
                 console.error(err);
@@ -576,12 +590,41 @@ const convertFileLogic = createLogic({
 });
 
 const receiveConvertedFileLogic = createLogic({
-    process(deps: ReduxLogicDeps, dispatch) {
+    process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
         const currentState = getState();
+
         const conversionStatus = getConversionStatus(currentState);
         const simulariumFile = action.payload;
+
+        batch(() => {
+            dispatch(
+                setStatus({
+                    status: VIEWER_LOADING,
+                })
+            );
+            dispatch({
+                payload: { newFile: true },
+                type: CLEAR_SIMULARIUM_FILE,
+            });
+        });
+        // console.log(
+        //     "simulariumFile in receiveConvertedFileLogic file: ",
+        //     simulariumFile,
+        //     "name: ",
+        //     simulariumFile.name
+        // );
+        const simulariumController = getSimulariumController(currentState);
+        // simulariumController.resetForConvertedFile();
         dispatch(receiveSimulariumFile(simulariumFile));
+
+        simulariumController.changeFile(
+            {
+                netConnectionSettings: netConnectionSettings,
+            },
+            simulariumFile.name
+        );
+
         clearOutFileTrajectoryUrlParam();
         history.replaceState(
             {},
@@ -591,6 +634,8 @@ const receiveConvertedFileLogic = createLogic({
         if (conversionStatus !== CONVERSION_INACTIVE) {
             dispatch(setConversionStatus({ status: CONVERSION_INACTIVE }));
         }
+        simulariumController.gotoTime(0);
+        done();
     },
     type: RECEIVE_CONVERTED_FILE,
 });

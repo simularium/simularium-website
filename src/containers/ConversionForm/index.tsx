@@ -3,6 +3,7 @@ import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 import { Upload, Select, Divider, Button } from "antd";
 import { UploadFile } from "antd/lib/upload";
+import { v4 as uuidv4 } from "uuid";
 import classNames from "classnames";
 
 import { State } from "../../state";
@@ -157,7 +158,9 @@ const ConversionForm = ({
                 // and arriving here because the server went down while a conversion was in process
                 setIsProcessing(true);
                 setConversionStatus({ status: CONVERSION_ACTIVE });
-                convertFile();
+                const fileId = uuidv4();
+                convertFile(fileId);
+                // convertFile();
             }
         }
     };
@@ -168,7 +171,8 @@ const ConversionForm = ({
     };
 
     // TODO: use conversion template data to render the form
-    console.log("conversion form data", conversionProcessingData);
+    // console.log("conversion form data", conversionProcessingData);
+    // console.log("conversion status", conversionStatus);
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
             {serverErrorModalOpen && (

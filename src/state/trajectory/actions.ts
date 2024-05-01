@@ -175,8 +175,9 @@ export function setConversionEngine(
     };
 }
 
-export function convertFile(): ConvertFileAction {
+export function convertFile(payload: { fileId: string }): ConvertFileAction {
     return {
+        payload,
         type: CONVERT_FILE,
     };
 }
