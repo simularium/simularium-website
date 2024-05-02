@@ -8,6 +8,7 @@ import SimulariumViewer, {
     ErrorLevel,
     TrajectoryFileInfo,
     TimeData,
+    ColorChange,
 } from "@aics/simularium-viewer";
 import "@aics/simularium-viewer/style/style.css";
 import { connect } from "react-redux";
@@ -25,8 +26,10 @@ import {
 } from "../../state/viewer/constants";
 import {
     ChangeTimeAction,
+    SetColorChangeAction,
     SetVisibleAction,
 } from "../../state/selection/types";
+import { setSessionColorChanges } from "../../state/selection/actions";
 import {
     ResetDragOverViewerAction,
     DragOverViewerAction,
@@ -42,6 +45,7 @@ import {
     ConversionStatus,
     SetConversionStatusAction,
     SetUrlParamsAction,
+    NetworkedSimFile,
 } from "../../state/trajectory/types";
 import { CONVERSION_INACTIVE } from "../../state/trajectory/constants";
 import { batchActions } from "../../state/util";
@@ -100,6 +104,10 @@ interface ViewerPanelProps {
     movieTitle: string;
     conversionStatus: ConversionStatus;
     setConversionStatus: ActionCreator<SetConversionStatusAction>;
+    sessionColorChanges: ColorChange[];
+    simulariumFile: NetworkedSimFile;
+    setColorChange: ActionCreator<SetColorChangeAction>;
+    applySessionColorChanges: ActionCreator<SetColorChangeAction>;
 }
 
 interface ViewerPanelState {
@@ -262,7 +270,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
-        const { conversionStatus, setConversionStatus } = this.props;
+        const {
+            conversionStatus,
+            setConversionStatus,
+            simulariumFile,
+            applySessionColorChanges,
+        } = this.props;
         if (conversionStatus !== CONVERSION_INACTIVE) {
             setConversionStatus({ status: CONVERSION_INACTIVE });
         }
@@ -285,6 +298,37 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         this.setState({
             isInitialPlay: true,
         });
+
+        async function processColorChanges(colorChanges: ColorChange[]) {
+            for (const colorChange of colorChanges) {
+                console.log("calling set color Change: ", colorChange);
+                applySessionColorChanges(colorChange);
+                /**
+                 * color changes are passed to the viewer via the
+                 * selection state info one at a time.
+                 * waiting for this promise to resolve before moving on
+                 * ensures the color change we just applied is reflected
+                 * in the selection state info before we do the next one
+                 *
+                 * this could be handled differently if we wanted to add
+                 * code to the viewer, or change the way we handle color changes
+                 * or derive the selection state info, but this works for now and
+                 * requires the least changes to other parts of the code
+                 */
+
+                await new Promise((resolve) => setTimeout(resolve, 1));
+            }
+            setSessionColorChanges([]);
+
+            colorChanges.forEach;
+        }
+
+        const storedColorChanges = sessionStorage.getItem(simulariumFile.name);
+
+        if (storedColorChanges) {
+            const parsedChanges = JSON.parse(storedColorChanges);
+            processColorChanges(parsedChanges);
+        }
     }
 
     public receiveTimeChange(timeData: TimeData): void {
@@ -522,6 +566,10 @@ function mapStateToProps(state: State) {
         movieTitle: getMovieTitle(state),
         conversionStatus:
             trajectoryStateBranch.selectors.getConversionStatus(state),
+        sessionColorChanges:
+            selectionStateBranch.selectors.getSessionColorChanges(state),
+        simulariumFile:
+            trajectoryStateBranch.selectors.getSimulariumFile(state),
     };
 }
 
@@ -541,6 +589,9 @@ const dispatchToPropsMap = {
     setError: viewerStateBranch.actions.setError,
     setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
+    setColorChange: selectionStateBranch.actions.setColorChange,
+    applySessionColorChanges:
+        selectionStateBranch.actions.applySessionColorChanges,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);

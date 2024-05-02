@@ -1,9 +1,12 @@
 import { createLogic } from "redux-logic";
 import { UIDisplayData } from "@aics/simularium-viewer";
 
-import { SET_COLOR_CHANGES } from "./constants";
+import { APPLY_SESSION_COLOR_CHANGES, SET_COLOR_CHANGES } from "./constants";
 import { ReduxLogicDeps } from "../types";
-import { getAgentDisplayNamesAndStates } from "../trajectory/selectors";
+import {
+    getAgentDisplayNamesAndStates,
+    getSimulariumFile,
+} from "../trajectory/selectors";
 import { receiveAgentNamesAndStates } from "../trajectory/actions";
 
 const storeColorsLogic = createLogic({
@@ -35,7 +38,25 @@ const storeColorsLogic = createLogic({
         dispatch(receiveAgentNamesAndStates(newUiData));
         done();
     },
+    type: [SET_COLOR_CHANGES, APPLY_SESSION_COLOR_CHANGES],
+});
+
+const storeSessionColorsLogic = createLogic({
+    process(deps: ReduxLogicDeps, dispatch, done) {
+        const { action, getState } = deps;
+        const colorChange = action.payload;
+        const fileKey = getSimulariumFile(getState()).name;
+        const existingStorage = JSON.parse(
+            sessionStorage.getItem(fileKey) || "[]"
+        );
+        existingStorage.push(colorChange);
+        sessionStorage.setItem(fileKey, JSON.stringify(existingStorage));
+        // todo: for development purposes its nice to be able to uncomment the line below
+        // to quickly clear our sessionStorage
+        // sessionStorage.removeItem(fileKey);
+        done();
+    },
     type: SET_COLOR_CHANGES,
 });
 
-export default [storeColorsLogic];
+export default [storeColorsLogic, storeSessionColorsLogic];

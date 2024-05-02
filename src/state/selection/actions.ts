@@ -9,6 +9,8 @@ import {
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
     SET_COLOR_CHANGES,
     SET_RECENT_COLORS,
+    SET_SESSION_COLOR_CHANGES,
+    APPLY_SESSION_COLOR_CHANGES,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -19,6 +21,8 @@ import {
     ResetAction,
     SetColorChangeAction,
     SetRecentColorsAction,
+    SetSessionColorChangesAction,
+    ApplySessionColorChangeAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -90,5 +94,23 @@ export function setRecentColors(colors: string[]): SetRecentColorsAction {
     return {
         payload: colors,
         type: SET_RECENT_COLORS,
+    };
+}
+
+export function setSessionColorChanges(
+    colorChanges: ColorChange[]
+): SetSessionColorChangesAction {
+    return {
+        payload: colorChanges,
+        type: SET_SESSION_COLOR_CHANGES,
+    };
+}
+
+export function applySessionColorChanges(
+    colorChange: ColorChange
+): ApplySessionColorChangeAction {
+    return {
+        payload: colorChange,
+        type: APPLY_SESSION_COLOR_CHANGES,
     };
 }

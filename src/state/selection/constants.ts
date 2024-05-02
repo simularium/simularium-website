@@ -20,3 +20,9 @@ export const RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS = makeSelectConstant(
 );
 export const SET_COLOR_CHANGES = makeSelectConstant("set-color-changes");
 export const SET_RECENT_COLORS = makeSelectConstant("set-recent-colors");
+export const SET_SESSION_COLOR_CHANGES = makeSelectConstant(
+    "set-session-color-changes"
+);
+export const APPLY_SESSION_COLOR_CHANGES = makeSelectConstant(
+    "apply-session-color-changes"
+);

@@ -76,3 +76,13 @@ export interface SetRecentColorsAction {
     payload: string[];
     type: string;
 }
+
+export interface SetSessionColorChangesAction {
+    payload: ColorChange[];
+    type: string;
+}
+
+export interface ApplySessionColorChangeAction {
+    payload: ColorChange;
+    type: string;
+}
