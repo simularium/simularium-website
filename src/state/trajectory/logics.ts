@@ -556,18 +556,10 @@ const convertFileLogic = createLogic({
             getConversionProcessingData(getState());
         const fileContents: Record<string, any> = {
             fileContents: { fileContents: fileToConvert },
-            metaData: { trajectoryTitle: fileName },
+            trajectoryTitle: fileName,
         };
         const controller = getSimulariumController(getState());
-        // console.log(
-        //     "args for convert and load, netConnectionSettings: ",
-        //     netConnectionSettings,
-        //     "fileContents: ",
-        //     fileContents,
-        //     "engineType: ",
-        //     engineType
-        // );
-        const fileId = action.payload;
+        const providedFileName = action.payload + ".simularium";
         // convert the file
         dispatch(
             setConversionStatus({
@@ -579,7 +571,7 @@ const convertFileLogic = createLogic({
                 netConnectionSettings,
                 fileContents,
                 engineType,
-                fileId
+                providedFileName
             )
             .catch((err: Error) => {
                 console.error(err);
@@ -596,34 +588,10 @@ const receiveConvertedFileLogic = createLogic({
 
         const conversionStatus = getConversionStatus(currentState);
         const simulariumFile = action.payload;
-
-        batch(() => {
-            dispatch(
-                setStatus({
-                    status: VIEWER_LOADING,
-                })
-            );
-            dispatch({
-                payload: { newFile: true },
-                type: CLEAR_SIMULARIUM_FILE,
-            });
-        });
-        // console.log(
-        //     "simulariumFile in receiveConvertedFileLogic file: ",
-        //     simulariumFile,
-        //     "name: ",
-        //     simulariumFile.name
-        // );
         const simulariumController = getSimulariumController(currentState);
-        // simulariumController.resetForConvertedFile();
         dispatch(receiveSimulariumFile(simulariumFile));
 
-        simulariumController.changeFile(
-            {
-                netConnectionSettings: netConnectionSettings,
-            },
-            simulariumFile.name
-        );
+        simulariumController.changeToConvertedFile(simulariumFile.name);
 
         clearOutFileTrajectoryUrlParam();
         history.replaceState(
