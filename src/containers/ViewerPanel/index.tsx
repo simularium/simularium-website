@@ -266,24 +266,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public handleIncomingConvertedFile(data: TrajectoryFileInfo) {
         const { receiveConvertedFile, conversionProcessingData } = this.props;
-        /**
-             * todo:
-             * this is a stopgap prior to addressing the next iteration of TrajectoryFileInfo
-             * TFI when arriving from the viewer has a fileName field so we extend that 
-             * interface here to use the incoming data, even though the TFI type imprted from the viewer
-             * does not expect that field.
-            //  */
-        // interface TrajectoryFileInfoWithFileName
-        //     extends TrajectoryFileInfo {
-        //     fileName: string;
-        // }
-        // const dataWithFileName = data as TrajectoryFileInfoWithFileName;
-        // const trajTitle = data.trajectoryTitle || dataWithFileName.fileName;
-        // receiveConvertedFile({
-        //     name: dataWithFileName.fileName,
-        //     title: trajTitle,
-        // });
-        const fileId = conversionProcessingData.fileId;
+        const fileId = conversionProcessingData.fileId + ".simularium";
         const hasTitle =
             data.trajectoryTitle !== undefined &&
             data.trajectoryTitle.length > 0;
