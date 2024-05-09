@@ -160,7 +160,6 @@ const ConversionForm = ({
                 setConversionStatus({ status: CONVERSION_ACTIVE });
                 const fileId = uuidv4();
                 convertFile(fileId);
-                // convertFile();
             }
         }
     };
@@ -171,8 +170,6 @@ const ConversionForm = ({
     };
 
     // TODO: use conversion template data to render the form
-    // console.log("conversion form data", conversionProcessingData);
-    // console.log("conversion status", conversionStatus);
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
             {serverErrorModalOpen && (

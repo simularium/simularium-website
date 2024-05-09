@@ -216,9 +216,6 @@ const loadNetworkedFile = createLogic({
                     })
                 );
             })
-            // .then(() => {
-            //     simulariumController.gotoTime(0);
-            // })
             .then(done)
             .catch((error: FrontEndError) => {
                 handleFileLoadError(error, dispatch);

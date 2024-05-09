@@ -216,7 +216,6 @@ class App extends React.Component<AppProps, AppState> {
             setViewerStatus,
             clearSimulariumFile,
             setError,
-            conversionStatus,
         } = this.props;
         if (isEmbedded) {
             return <EmbedOverlay title={simulariumFile.name} />;

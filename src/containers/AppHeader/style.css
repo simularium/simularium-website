@@ -47,11 +47,6 @@
     color: var(--text-gray);
 }
 
-.pipe {
-    padding-left: 2px;
-    color: var(--text-gray);
-}
-
 /* For large screens only */
 @media screen and (min-width: 768px) {
     .page-header {

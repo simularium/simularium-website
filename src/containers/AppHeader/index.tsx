@@ -60,15 +60,10 @@ const AppHeader: React.FC<AppHeaderProps> = ({
 
     let lastModified = 0;
     let displayName = "";
-    // console.log("in app header", simulariumFile);
-    // console.log("in app header is local?", isLocalFileInterface(simulariumFile));
-    // console.log("in app header is network?", isNetworkSimFileInterface(simulariumFile));
-    // console.log("in app header file.title check", !!simulariumFile.title);
     if (isLocalFileInterface(simulariumFile)) {
         displayName = simulariumFile.name;
         lastModified = simulariumFile.lastModified;
     } else if (isNetworkSimFileInterface(simulariumFile)) {
-        // console.log("in app header", simulariumFile);
         displayName = simulariumFile.title || simulariumFile.name;
     }
 
