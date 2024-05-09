@@ -20,7 +20,7 @@ import {
     CONVERSION_INACTIVE,
     CONVERSION_NO_SERVER,
 } from "../../state/trajectory/constants";
-import { TrajectoryDisplayData } from "../../constants/interfaces";
+import { ButtonClass, TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
 import { DownArrow } from "../Icons";
 import FileUploadModal from "../FileUploadModal";
@@ -128,7 +128,7 @@ const LoadFileMenu = ({
                 <NavButton
                     titleText={"Load model"}
                     icon={DownArrow}
-                    buttonType="primary"
+                    buttonType={ButtonClass.Primary}
                     isDisabled={isDisabled}
                 />
             </Dropdown>

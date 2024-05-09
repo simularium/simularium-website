@@ -38,3 +38,25 @@ export type TooltipPlacement =
     | "leftBottom"
     | "rightTop"
     | "rightBottom";
+
+export enum ButtonClass {
+    Primary = "primary-button",
+    Secondary = "secondary-button",
+    Action = "action-button",
+}
+
+export enum IconGlyphs {
+    StarEmpty = "star-empty-icon",
+    StarDashed = "star-dashed-icon",
+    StarFull = "star-full-icon",
+    StepBack = "step-back-icon",
+    StepForward = "step-forward-icon",
+    Loop = "looping-icon",
+    Rotate = "rotate-icon",
+    Pan = "pan-icon",
+    Focus = "focus-icon",
+    Orthographic = "orthographic-icon",
+    Perspective = "perspective-icon",
+    Reset = "reset-icon",
+    Close = "close-icon",
+}

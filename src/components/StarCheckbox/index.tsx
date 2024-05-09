@@ -4,6 +4,8 @@ import { Tooltip } from "antd";
 import { CheckboxProps } from "antd/lib/checkbox";
 
 import { TOOLTIP_DELAY, TOOLTIP_COLOR } from "../../constants";
+import { IconGlyphs } from "../../constants/interfaces";
+import { getIconGlyphClasses } from "../../util";
 
 import styles from "./style.css";
 
@@ -19,13 +21,16 @@ const StarCheckbox = ({
 
     const parentClassnames = className ? className.split(" ") : [];
     const wrapperClassnames = classNames([...parentClassnames, styles.wrapper]);
-    const checkboxClassNames = classNames(
-        ["icon-moon", "star-empty-icon", styles.checkbox],
-        {
-            ["star-full-icon"]: checked,
-            ["star-dashed-icon"]: indeterminate,
+    const getIconClasses = () => {
+        if (checked) {
+            return getIconGlyphClasses(IconGlyphs.StarFull);
         }
-    );
+        if (indeterminate) {
+            return getIconGlyphClasses(IconGlyphs.StarDashed);
+        }
+        return getIconGlyphClasses(IconGlyphs.StarEmpty);
+    };
+    const checkboxClassNames = classNames(getIconClasses(), styles.checkbox);
 
     const updateTooltipTitle = () => {
         const text = checked ? "Remove highlight" : "Highlight";

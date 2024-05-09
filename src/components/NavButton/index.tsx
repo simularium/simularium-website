@@ -3,6 +3,7 @@ import { Button, ButtonProps } from "antd";
 import classNames from "classnames";
 
 import styles from "./style.css";
+import { ButtonClass } from "../../constants/interfaces";
 
 export interface NavButtonProps extends ButtonProps {
     titleText?: string;
@@ -15,7 +16,7 @@ export interface NavButtonProps extends ButtonProps {
 const NavButton: React.FC<NavButtonProps> = ({
     className,
     titleText,
-    buttonType = "action",
+    buttonType = ButtonClass.Action,
     icon,
     clickHandler,
     isDisabled,

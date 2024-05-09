@@ -9,7 +9,12 @@ interface ViewportButtonProps extends ButtonProps {
     tooltipText?: string;
     tooltipPlacement?: TooltipProps["placement"];
     tooltipWhenDisabled?: boolean;
-    icon?: ReactNode | string; // When using an icomoon icon, pass the icon name as defined in selectors in src/styles.css
+    /**
+     * When using an icomoon icon, pass the right IconGlyphs member as defined in
+     * src/constants/interfaces to the util getIconMoonClasses which will add
+     * the necesarry CSS class names to use that icon.
+     */
+    icon?: ReactNode | string;
     radioGroupPosition?: "top" | "bottom";
     clickHandler?: () => void;
     disabled?: boolean;
@@ -38,9 +43,7 @@ const ViewportButton: React.FC<ViewportButtonProps> = ({
             return icon;
         }
         if (typeof icon === "string") {
-            return (
-                <span className={classNames(["icon-moon", "anticon", icon])} />
-            );
+            return <span className={icon} />;
         }
     };
 

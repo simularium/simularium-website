@@ -9,6 +9,7 @@ import {
     GITHUB_URL,
     ISSUE_URL,
 } from "../../constants";
+import { ButtonClass } from "../../constants/interfaces";
 import { DownArrow } from "../Icons";
 import VersionModal from "../VersionModal";
 import NavButton from "../NavButton";
@@ -105,7 +106,7 @@ const HelpMenu = (): JSX.Element => {
                 <NavButton
                     titleText={"Help "}
                     icon={DownArrow}
-                    buttonType="secondary"
+                    buttonType={ButtonClass.Secondary}
                 />
             </Dropdown>
             {modalVisible && <VersionModal setModalVisible={setModalVisible} />}
