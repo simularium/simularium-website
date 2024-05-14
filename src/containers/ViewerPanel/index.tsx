@@ -280,7 +280,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
         const { receiveTrajectory, simulariumController, conversionStatus } =
             this.props;
-        console.log("onTrajectoryFileInfoChanged", data);
         if (conversionStatus === CONVERSION_ACTIVE) {
             this.handleIncomingConvertedFile(data);
         }
