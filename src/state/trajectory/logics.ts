@@ -582,11 +582,10 @@ const receiveConvertedFileLogic = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
         const currentState = getState();
-
         const conversionStatus = getConversionStatus(currentState);
-        const simulariumFile = action.payload;
         const simulariumController = getSimulariumController(currentState);
-        dispatch(receiveSimulariumFile(simulariumFile));
+        const simulariumFile = action.payload;
+
         simulariumController.changeFile(
             netConnectionSettings,
             simulariumFile.name,
