@@ -564,7 +564,7 @@ const convertFileLogic = createLogic({
             })
         );
         controller
-            .convertAndLoadTrajectory(
+            .convertTrajectory(
                 netConnectionSettings,
                 fileContents,
                 engineType,
@@ -587,8 +587,11 @@ const receiveConvertedFileLogic = createLogic({
         const simulariumFile = action.payload;
         const simulariumController = getSimulariumController(currentState);
         dispatch(receiveSimulariumFile(simulariumFile));
-
-        simulariumController.changeToConvertedFile(simulariumFile.name);
+        simulariumController.changeFile(
+            netConnectionSettings,
+            simulariumFile.name,
+            true
+        );
 
         clearOutFileTrajectoryUrlParam();
         history.replaceState(
