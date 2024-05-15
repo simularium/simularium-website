@@ -4,12 +4,6 @@ import {
     Template,
     TemplateMap,
 } from "./conversion-data-types";
-import {
-    CONVERSION_NO_SERVER,
-    CONVERSION_SERVER_LIVE,
-    CONVERSION_ACTIVE,
-    CONVERSION_INACTIVE,
-} from "./constants";
 export interface TrajectoryStateBranch {
     [key: string]: any;
 }
@@ -117,8 +111,15 @@ export interface HealthCheckTimeout {
     [requestId: string]: NodeJS.Timeout;
 }
 
-export type ConversionStatus =
-    | typeof CONVERSION_INACTIVE
-    | typeof CONVERSION_NO_SERVER
-    | typeof CONVERSION_SERVER_LIVE
-    | typeof CONVERSION_ACTIVE;
+// export type ConversionStatus =
+//     | typeof CONVERSION_INACTIVE
+//     | typeof CONVERSION_NO_SERVER
+//     | typeof CONVERSION_SERVER_LIVE
+//     | typeof CONVERSION_ACTIVE;
+
+export enum ConversionStatus {
+    Inactive = "CONVERSION_INACTIVE",
+    NoServer = "CONVERSION_NO_SERVER",
+    ServerLive = "CONVERSION_SERVER_LIVE",
+    Active = "CONVERSION_ACTIVE",
+}

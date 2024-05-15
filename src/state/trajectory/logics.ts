@@ -22,11 +22,6 @@ import {
 import { clearBrowserUrlParams } from "../../util";
 import { getUserTrajectoryUrl } from "../../util/userUrlHandling";
 import {
-    VIEWER_LOADING,
-    VIEWER_EMPTY,
-    VIEWER_ERROR,
-} from "../viewer/constants";
-import {
     changeTime,
     resetAgentSelectionsAndHighlights,
 } from "../selection/actions";
@@ -60,13 +55,14 @@ import {
     INITIALIZE_CONVERSION,
     SET_CONVERSION_ENGINE,
     SET_CONVERSION_TEMPLATE,
-    CONVERSION_NO_SERVER,
-    CONVERSION_SERVER_LIVE,
-    CONVERSION_INACTIVE,
     CONVERT_FILE,
-    CONVERSION_ACTIVE,
 } from "./constants";
-import { ReceiveAction, LocalSimFile, HealthCheckTimeout } from "./types";
+import {
+    ReceiveAction,
+    LocalSimFile,
+    HealthCheckTimeout,
+    ConversionStatus,
+} from "./types";
 import { initialState } from "./reducer";
 import {
     TemplateMap,
@@ -75,6 +71,7 @@ import {
     AvailableEngines,
     Template,
 } from "./conversion-data-types";
+import { ViewerStatus } from "../viewer/types";
 
 const netConnectionSettings: NetConnectionParams = {
     serverIp: process.env.BACKEND_SERVER_IP,
@@ -101,12 +98,12 @@ const resetSimulariumFileState = createLogic({
             }
             clearTrajectory = receiveTrajectory({ ...initialState });
             const setViewerStatusAction = setStatus({
-                status: VIEWER_EMPTY,
+                status: ViewerStatus.Empty,
             });
             actions.push(setViewerStatusAction);
         } else {
             const setViewerStatusAction = setStatus({
-                status: VIEWER_LOADING,
+                status: ViewerStatus.Loading,
             });
             actions.push(setViewerStatusAction);
             // plot data is a separate request, clear it out to avoid
@@ -157,7 +154,7 @@ const handleFileLoadError = (
             })
         );
         if (error.level === ErrorLevel.ERROR) {
-            dispatch(setStatus({ status: VIEWER_ERROR }));
+            dispatch(setStatus({ status: ViewerStatus.Error }));
             dispatch(clearSimulariumFile({ newFile: false }));
         }
     });
@@ -176,7 +173,7 @@ const loadNetworkedFile = createLogic({
         batch(() => {
             dispatch(
                 setStatus({
-                    status: VIEWER_LOADING,
+                    status: ViewerStatus.Loading,
                 })
             );
             dispatch({
@@ -292,7 +289,7 @@ const loadFileViaUrl = createLogic({
         const currentState = getState();
         dispatch(
             setStatus({
-                status: VIEWER_LOADING,
+                status: ViewerStatus.Loading,
             })
         );
         let simulariumController = getSimulariumController(currentState);
@@ -339,7 +336,7 @@ const loadFileViaUrl = createLogic({
                         "<br/><br/>Try uploading your trajectory file from a Dropbox, Google Drive, or Amazon S3 link instead.";
                 }
                 batch(() => {
-                    dispatch(setStatus({ status: VIEWER_ERROR }));
+                    dispatch(setStatus({ status: ViewerStatus.Error }));
                     dispatch(
                         setError({
                             level: ErrorLevel.ERROR,
@@ -423,12 +420,15 @@ const initializeFileConversionLogic = createLogic({
             controller.checkServerHealth(() => {
                 // callback/handler for viewer function
                 // only handle if we're still on the conversion page
-                if (getConversionStatus(getState()) !== CONVERSION_INACTIVE) {
+                if (
+                    getConversionStatus(getState()) !==
+                    ConversionStatus.Inactive
+                ) {
                     healthCheckSuccessful = true;
                     clearTimeout(healthCheckTimeouts[requestId]);
                     dispatch(
                         setConversionStatus({
-                            status: CONVERSION_SERVER_LIVE,
+                            status: ConversionStatus.ServerLive,
                         })
                     );
                     done();
@@ -442,12 +442,13 @@ const initializeFileConversionLogic = createLogic({
                     clearTimeout(healthCheckTimeouts[requestId]);
                     // stop process if user has navigated away from conversion page
                     if (
-                        getConversionStatus(getState()) !== CONVERSION_INACTIVE
+                        getConversionStatus(getState()) !==
+                        ConversionStatus.Inactive
                     ) {
                         if (attempts < MAX_ATTEMPTS) {
                             dispatch(
                                 setConversionStatus({
-                                    status: CONVERSION_NO_SERVER,
+                                    status: ConversionStatus.NoServer,
                                 })
                             );
                             // retry the health check with incremented count
@@ -558,15 +559,11 @@ const convertFileLogic = createLogic({
         // convert the file
         dispatch(
             setConversionStatus({
-                status: CONVERSION_ACTIVE,
+                status: ConversionStatus.Active,
             })
         );
         controller
-            .convertAndLoadTrajectory(
-                netConnectionSettings,
-                fileContents,
-                engineType
-            )
+            .convertTrajectory(netConnectionSettings, fileContents, engineType)
             .catch((err: Error) => {
                 console.error(err);
             });

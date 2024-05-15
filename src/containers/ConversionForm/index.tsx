@@ -26,11 +26,6 @@ import ConversionProcessingOverlay from "../../components/ConversionProcessingOv
 import ConversionServerErrorModal from "../../components/ConversionServerErrorModal";
 import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
 import { Cancel, DownCaret } from "../../components/Icons";
-import {
-    CONVERSION_ACTIVE,
-    CONVERSION_INACTIVE,
-    CONVERSION_NO_SERVER,
-} from "../../state/trajectory/constants";
 import customRequest from "./custom-request";
 
 import theme from "../../components/theme/light-theme.css";
@@ -85,13 +80,13 @@ const ConversionForm = ({
 
     useEffect(() => {
         // on page load assume server is down until we hear back from it
-        setConversionStatus({ status: CONVERSION_NO_SERVER });
+        setConversionStatus({ status: ConversionStatus.NoServer });
         initializeConversion();
     }, []);
 
     useEffect(() => {
         // this is to account for the server going down while a conversion is in process
-        if (isProcessing && conversionStatus === CONVERSION_NO_SERVER) {
+        if (isProcessing && conversionStatus === ConversionStatus.NoServer) {
             setIsProcessing(false);
             setServerErrorModalOpen(true);
         }
@@ -108,11 +103,11 @@ const ConversionForm = ({
 
     const cancelProcessing = () => {
         setIsProcessing(false);
-        setConversionStatus({ status: CONVERSION_NO_SERVER });
+        setConversionStatus({ status: ConversionStatus.Inactive });
     };
 
     const cancelConversion = () => {
-        setConversionStatus({ status: CONVERSION_INACTIVE });
+        setConversionStatus({ status: ConversionStatus.Inactive });
     };
 
     const handleEngineChange = (selectedValue: string) => {
@@ -150,13 +145,13 @@ const ConversionForm = ({
             fileToConvert &&
             validateFileType(fileToConvert.name)
         ) {
-            if (conversionStatus === CONVERSION_NO_SERVER) {
+            if (conversionStatus === ConversionStatus.NoServer) {
                 setServerErrorModalOpen(true);
             } else {
                 // we now use this local state lets us distinguish between arriving on this page normally
                 // and arriving here because the server went down while a conversion was in process
                 setIsProcessing(true);
-                setConversionStatus({ status: CONVERSION_ACTIVE });
+                setConversionStatus({ status: ConversionStatus.Active });
                 convertFile();
             }
         }
@@ -182,7 +177,7 @@ const ConversionForm = ({
                     engineType={conversionProcessingData.engineType}
                 />
             )}
-            {conversionStatus === CONVERSION_ACTIVE && (
+            {conversionStatus === ConversionStatus.Active && (
                 <ConversionProcessingOverlay
                     fileName={conversionProcessingData.fileName}
                     cancelProcessing={cancelProcessing}
