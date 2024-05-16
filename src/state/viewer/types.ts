@@ -34,12 +34,6 @@ export interface ViewerError {
     onClose?: () => void;
 }
 
-// export type ViewerStatus =
-//     | typeof VIEWER_LOADING
-//     | typeof VIEWER_ERROR
-//     | typeof VIEWER_EMPTY
-//     | typeof VIEWER_SUCCESS;
-
 export enum ViewerStatus {
     Loading = "VIEWER_LOADING",
     Error = "VIEWER_ERROR",

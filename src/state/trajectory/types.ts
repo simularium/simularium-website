@@ -111,12 +111,6 @@ export interface HealthCheckTimeout {
     [requestId: string]: NodeJS.Timeout;
 }
 
-// export type ConversionStatus =
-//     | typeof CONVERSION_INACTIVE
-//     | typeof CONVERSION_NO_SERVER
-//     | typeof CONVERSION_SERVER_LIVE
-//     | typeof CONVERSION_ACTIVE;
-
 export enum ConversionStatus {
     Inactive = "CONVERSION_INACTIVE",
     NoServer = "CONVERSION_NO_SERVER",
