@@ -129,8 +129,8 @@ const ConversionForm = ({
     };
 
     const handleFileSelection = async (file: UploadFile) => {
+        // 200 MB limit
         if (file.size !== undefined && file.size > 2e8) {
-            // 200 MB limit
             setConversionError(ConversionError.FILE_SIZE_ERROR);
             return;
         }
