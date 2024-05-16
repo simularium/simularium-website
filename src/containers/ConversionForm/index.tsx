@@ -85,12 +85,12 @@ const ConversionForm = ({
 }: ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile | null>();
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
-    const [errorType, setErrorType] = useState<ConversionError>(
+    const [conversionError, setConversionError] = useState<ConversionError>(
         ConversionError.NO_ERROR
     );
 
     const engineSelected = !!conversionProcessingData.engineType;
-    const errorModalOpen = errorType !== ConversionError.NO_ERROR;
+    const errorModalOpen = conversionError !== ConversionError.NO_ERROR;
 
     useEffect(() => {
         // on page load assume server is down until we hear back from it
@@ -102,12 +102,12 @@ const ConversionForm = ({
         // this is to account for the server going down while a conversion is in process
         if (isProcessing && conversionStatus === CONVERSION_NO_SERVER) {
             setIsProcessing(false);
-            setErrorType(ConversionError.SERVER_ERROR);
+            setConversionError(ConversionError.SERVER_ERROR);
         }
     }, [conversionStatus]);
 
     const closeErrorModal = () => {
-        setErrorType(ConversionError.NO_ERROR);
+        setConversionError(ConversionError.NO_ERROR);
     };
 
     const cancelProcessing = () => {
@@ -131,7 +131,7 @@ const ConversionForm = ({
     const handleFileSelection = async (file: UploadFile) => {
         if (file.size !== undefined && file.size > 2e8) {
             // 200 MB limit
-            setErrorType(ConversionError.FILE_SIZE_ERROR);
+            setConversionError(ConversionError.FILE_SIZE_ERROR);
             return;
         }
         setFileToConvert(file);
@@ -148,7 +148,7 @@ const ConversionForm = ({
                 return true;
             }
         }
-        setErrorType(ConversionError.FILE_TYPE_ERROR);
+        setConversionError(ConversionError.FILE_TYPE_ERROR);
         return false;
     };
 
@@ -159,7 +159,7 @@ const ConversionForm = ({
             validateFileType(fileToConvert.name)
         ) {
             if (conversionStatus === CONVERSION_NO_SERVER) {
-                setErrorType(ConversionError.SERVER_ERROR);
+                setConversionError(ConversionError.SERVER_ERROR);
             } else {
                 // we now use this local state lets us distinguish between arriving on this page normally
                 // and arriving here because the server went down while a conversion was in process
@@ -176,7 +176,7 @@ const ConversionForm = ({
     };
 
     const getErrorModal = () => {
-        switch (errorType) {
+        switch (conversionError) {
             case ConversionError.SERVER_ERROR:
                 return (
                     <ConversionServerErrorModal closeModal={closeErrorModal} />
