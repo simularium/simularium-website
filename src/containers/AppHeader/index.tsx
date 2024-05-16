@@ -64,7 +64,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
         displayName = simulariumFile.name;
         lastModified = simulariumFile.lastModified;
     } else if (isNetworkSimFileInterface(simulariumFile)) {
-        displayName = simulariumFile.title || simulariumFile.name;
+        displayName = simulariumFile.title;
     }
 
     return (
