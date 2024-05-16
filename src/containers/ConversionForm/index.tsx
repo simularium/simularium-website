@@ -113,7 +113,7 @@ const ConversionForm = ({
     const cancelProcessing = () => {
         setIsProcessing(false);
         setConversionStatus({ status: CONVERSION_NO_SERVER });
-        // todo - keep on trajectory and timestamp
+        // todo - keep old trajectory and timestamp when cancelling conversion request
         clearSimulariumFile({ newFile: false });
     };
 
