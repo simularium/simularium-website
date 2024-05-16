@@ -25,6 +25,7 @@ import {
 import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
 import ConversionServerErrorModal from "../../components/ConversionServerErrorModal";
 import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
+import ConversionFileSizeErrorModal from "../../components/ConversionFileSizeErrorModal";
 import { Cancel, DownCaret } from "../../components/Icons";
 import {
     CONVERSION_ACTIVE,
@@ -65,6 +66,13 @@ const selectOptions = Object.keys(AvailableEngines).map(
     }
 );
 
+enum ConversionError {
+    SERVER_ERROR = "serverError",
+    FILE_TYPE_ERROR = "fileTypeError",
+    FILE_SIZE_ERROR = "fileSizeError",
+    NO_ERROR = "noError",
+}
+
 const ConversionForm = ({
     setConversionEngine,
     conversionProcessingData,
@@ -77,11 +85,12 @@ const ConversionForm = ({
 }: ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile | null>();
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
-    const [serverErrorModalOpen, setServerErrorModalOpen] =
-        useState<boolean>(false);
-    const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(false);
+    const [errorType, setErrorType] = useState<ConversionError>(
+        ConversionError.NO_ERROR
+    );
 
     const engineSelected = !!conversionProcessingData.engineType;
+    const errorModalOpen = errorType !== ConversionError.NO_ERROR;
 
     useEffect(() => {
         // on page load assume server is down until we hear back from it
@@ -93,17 +102,12 @@ const ConversionForm = ({
         // this is to account for the server going down while a conversion is in process
         if (isProcessing && conversionStatus === CONVERSION_NO_SERVER) {
             setIsProcessing(false);
-            setServerErrorModalOpen(true);
+            setErrorType(ConversionError.SERVER_ERROR);
         }
     }, [conversionStatus]);
 
-    // callbacks for state variables
-    const toggleServerCheckModal = () => {
-        setServerErrorModalOpen(!serverErrorModalOpen);
-    };
-
-    const toggleFileTypeModal = () => {
-        setFileTypeErrorModalOpen(!fileTypeErrorModalOpen);
+    const closeErrorModal = () => {
+        setErrorType(ConversionError.NO_ERROR);
     };
 
     const cancelProcessing = () => {
@@ -125,6 +129,11 @@ const ConversionForm = ({
     };
 
     const handleFileSelection = async (file: UploadFile) => {
+        if (file.size !== undefined && file.size > 2e8) {
+            // 200 MB limit
+            setErrorType(ConversionError.FILE_SIZE_ERROR);
+            return;
+        }
         setFileToConvert(file);
         customRequest(file, receiveFileToConvert, setError);
     };
@@ -139,8 +148,7 @@ const ConversionForm = ({
                 return true;
             }
         }
-
-        setFileTypeErrorModalOpen(true);
+        setErrorType(ConversionError.FILE_TYPE_ERROR);
         return false;
     };
 
@@ -151,7 +159,7 @@ const ConversionForm = ({
             validateFileType(fileToConvert.name)
         ) {
             if (conversionStatus === CONVERSION_NO_SERVER) {
-                setServerErrorModalOpen(true);
+                setErrorType(ConversionError.SERVER_ERROR);
             } else {
                 // we now use this local state lets us distinguish between arriving on this page normally
                 // and arriving here because the server went down while a conversion was in process
@@ -167,27 +175,41 @@ const ConversionForm = ({
         return <span className={styles.renderedFileName}>{fileName}</span>;
     };
 
+    const getErrorModal = () => {
+        switch (errorType) {
+            case ConversionError.SERVER_ERROR:
+                return (
+                    <ConversionServerErrorModal closeModal={closeErrorModal} />
+                );
+            case ConversionError.FILE_TYPE_ERROR:
+                return (
+                    <ConversionFileErrorModal
+                        closeModal={closeErrorModal}
+                        engineType={conversionProcessingData.engineType}
+                    />
+                );
+            case ConversionError.FILE_SIZE_ERROR:
+                return (
+                    <ConversionFileSizeErrorModal
+                        closeModal={closeErrorModal}
+                    />
+                );
+            default:
+                return null;
+        }
+    };
+
     // TODO: use conversion template data to render the form
     console.log("conversion form data", conversionProcessingData);
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
-            {serverErrorModalOpen && (
-                <ConversionServerErrorModal
-                    closeModal={toggleServerCheckModal}
-                />
-            )}
-            {fileTypeErrorModalOpen && (
-                <ConversionFileErrorModal
-                    closeModal={toggleFileTypeModal}
-                    engineType={conversionProcessingData.engineType}
-                />
-            )}
             {conversionStatus === CONVERSION_ACTIVE && (
                 <ConversionProcessingOverlay
                     fileName={conversionProcessingData.fileName}
                     cancelProcessing={cancelProcessing}
                 />
             )}
+            {errorModalOpen && getErrorModal()}
             <div className={styles.formContent}>
                 <h3 className={styles.title}>Import a non-native file type</h3>
                 <h3>
