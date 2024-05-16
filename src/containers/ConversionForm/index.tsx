@@ -84,6 +84,14 @@ const ConversionForm = ({
     const engineSelected = !!conversionProcessingData.engineType;
     const errorModalOpen = conversionError !== ConversionError.NO_ERROR;
 
+    const errorMessage = {
+        [ConversionError.SERVER_ERROR]: "Please try again at a later time.",
+        [ConversionError.FILE_TYPE_ERROR]: `You may want to double check that the file you selected is a valid ${conversionProcessingData.engineType}
+                        file and try again.`,
+        [ConversionError.FILE_SIZE_ERROR]:
+            "Your file exceeds the maximum allowed size of 200 MB, please try uploading a smaller file.",
+    };
+
     useEffect(() => {
         // on page load assume server is down until we hear back from it
         setConversionStatus({ status: CONVERSION_NO_SERVER });
@@ -180,8 +188,10 @@ const ConversionForm = ({
             {errorModalOpen && (
                 <ConversionErrorModal
                     closeModal={closeErrorModal}
-                    conversionError={conversionError}
-                    engineType={conversionProcessingData.engineType}
+                    showForumMessage={
+                        conversionError !== ConversionError.FILE_SIZE_ERROR
+                    }
+                    errorMessage={errorMessage[conversionError] || ""}
                 />
             )}
             <div className={styles.formContent}>
