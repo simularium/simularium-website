@@ -23,9 +23,6 @@ import {
     ExtensionMap,
 } from "../../state/trajectory/conversion-data-types";
 import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
-import ConversionServerErrorModal from "../../components/ConversionServerErrorModal";
-import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
-import ConversionFileSizeErrorModal from "../../components/ConversionFileSizeErrorModal";
 import { Cancel, DownCaret } from "../../components/Icons";
 import {
     CONVERSION_ACTIVE,
@@ -36,6 +33,8 @@ import customRequest from "./custom-request";
 
 import theme from "../../components/theme/light-theme.css";
 import styles from "./style.css";
+import { ConversionError } from "../../constants/interfaces";
+import ConversionErrorModal from "../../components/ConversionErrorModal";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
@@ -66,13 +65,6 @@ const selectOptions = Object.keys(AvailableEngines).map(
     }
 );
 
-enum ConversionError {
-    SERVER_ERROR = "serverError",
-    FILE_TYPE_ERROR = "fileTypeError",
-    FILE_SIZE_ERROR = "fileSizeError",
-    NO_ERROR = "noError",
-}
-
 const ConversionForm = ({
     setConversionEngine,
     conversionProcessingData,
@@ -86,7 +78,7 @@ const ConversionForm = ({
     const [fileToConvert, setFileToConvert] = useState<UploadFile | null>();
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
     const [conversionError, setConversionError] = useState<ConversionError>(
-        ConversionError.NO_ERROR
+        ConversionError.SERVER_ERROR
     );
 
     const engineSelected = !!conversionProcessingData.engineType;
@@ -175,30 +167,6 @@ const ConversionForm = ({
         return <span className={styles.renderedFileName}>{fileName}</span>;
     };
 
-    const getErrorModal = () => {
-        switch (conversionError) {
-            case ConversionError.SERVER_ERROR:
-                return (
-                    <ConversionServerErrorModal closeModal={closeErrorModal} />
-                );
-            case ConversionError.FILE_TYPE_ERROR:
-                return (
-                    <ConversionFileErrorModal
-                        closeModal={closeErrorModal}
-                        engineType={conversionProcessingData.engineType}
-                    />
-                );
-            case ConversionError.FILE_SIZE_ERROR:
-                return (
-                    <ConversionFileSizeErrorModal
-                        closeModal={closeErrorModal}
-                    />
-                );
-            default:
-                return null;
-        }
-    };
-
     // TODO: use conversion template data to render the form
     console.log("conversion form data", conversionProcessingData);
     const conversionForm = (
@@ -209,7 +177,13 @@ const ConversionForm = ({
                     cancelProcessing={cancelProcessing}
                 />
             )}
-            {errorModalOpen && getErrorModal()}
+            {errorModalOpen && (
+                <ConversionErrorModal
+                    closeModal={closeErrorModal}
+                    conversionError={conversionError}
+                    engineType={conversionProcessingData.engineType}
+                />
+            )}
             <div className={styles.formContent}>
                 <h3 className={styles.title}>Import a non-native file type</h3>
                 <h3>
