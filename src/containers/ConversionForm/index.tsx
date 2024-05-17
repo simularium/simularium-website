@@ -79,7 +79,7 @@ const ConversionForm = ({
     const [fileToConvert, setFileToConvert] = useState<UploadFile | null>();
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
     const [conversionError, setConversionError] = useState<ConversionError>(
-        ConversionError.SERVER_ERROR
+        ConversionError.NO_ERROR
     );
 
     const engineSelected = !!conversionProcessingData.engineType;
