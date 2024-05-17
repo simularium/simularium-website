@@ -35,6 +35,7 @@ import theme from "../../components/theme/light-theme.css";
 import styles from "./style.css";
 import { ConversionError } from "../../constants/interfaces";
 import ConversionErrorModal from "../../components/ConversionErrorModal";
+import { MAX_CONVERSION_FILE_SIZE } from "../../constants";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
@@ -130,7 +131,7 @@ const ConversionForm = ({
 
     const handleFileSelection = async (file: UploadFile) => {
         // 200 MB limit
-        if (file.size !== undefined && file.size > 2e8) {
+        if (file.size !== undefined && file.size > MAX_CONVERSION_FILE_SIZE) {
             setConversionError(ConversionError.FILE_SIZE_ERROR);
             return;
         }
