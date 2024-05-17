@@ -86,9 +86,10 @@ const ConversionForm = ({
     const errorModalOpen = conversionError !== ConversionError.NO_ERROR;
 
     const errorMessage = {
-        [ConversionError.SERVER_ERROR]: "Please try again at a later time.",
+        [ConversionError.SERVER_ERROR]: `We're sorry, the server is currently
+                experiencing an issue. Please try again at a later time. `,
         [ConversionError.FILE_TYPE_ERROR]: `You may want to double check that the file you selected is a valid ${conversionProcessingData.engineType}
-                        file and try again.`,
+                        file and try again. `,
         [ConversionError.FILE_SIZE_ERROR]:
             "Your file exceeds the maximum allowed size of 200 MB, please try uploading a smaller file.",
     };
