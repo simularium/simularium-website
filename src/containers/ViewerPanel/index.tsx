@@ -270,7 +270,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const hasTitle =
             data.trajectoryTitle !== undefined &&
             data.trajectoryTitle.length > 0;
-        const title = hasTitle ? data.trajectoryTitle : fileId;
+        const title = data.trajectoryTitle  || fileId;
         receiveConvertedFile({
             name: fileId,
             title: title,
