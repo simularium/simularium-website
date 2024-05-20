@@ -585,10 +585,9 @@ const receiveConvertedFileLogic = createLogic({
         const conversionStatus = getConversionStatus(currentState);
         const simulariumController = getSimulariumController(currentState);
         const simulariumFile = action.payload;
-
         simulariumController.changeFile(
             netConnectionSettings,
-            simulariumFile.name,
+            `${simulariumFile.name}.simularium`,
             true
         );
 
