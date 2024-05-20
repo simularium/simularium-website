@@ -556,7 +556,7 @@ const convertFileLogic = createLogic({
             trajectoryTitle: fileName,
         };
         const controller = getSimulariumController(getState());
-        const providedFileName = action.payload + ".simularium";
+        const providedFileName = `${action.payload}.simularium`;
         // convert the file
         dispatch(
             setConversionStatus({
