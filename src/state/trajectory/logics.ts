@@ -585,23 +585,38 @@ const receiveConvertedFileLogic = createLogic({
         const conversionStatus = getConversionStatus(currentState);
         const simulariumController = getSimulariumController(currentState);
         const simulariumFile = action.payload;
-        simulariumController.changeFile(
-            netConnectionSettings,
-            `${simulariumFile.name}.simularium`,
-            true
-        );
 
-        clearOutFileTrajectoryUrlParam();
-        history.replaceState(
-            {},
-            "",
-            `${location.origin}${location.pathname}?${URL_PARAM_KEY_FILE_NAME}=${simulariumFile.name}`
-        );
-        if (conversionStatus !== CONVERSION_INACTIVE) {
-            dispatch(setConversionStatus({ status: CONVERSION_INACTIVE }));
-        }
-        simulariumController.gotoTime(0);
-        done();
+        simulariumController
+            .changeFile(
+                netConnectionSettings,
+                `${simulariumFile.name}.simularium`,
+                true
+            )
+            .then(() => {
+                clearOutFileTrajectoryUrlParam();
+                history.replaceState(
+                    {},
+                    "",
+                    `${location.origin}${location.pathname}?${URL_PARAM_KEY_FILE_NAME}=${simulariumFile.name}`
+                );
+            })
+            .then(() => {
+                if (conversionStatus !== CONVERSION_INACTIVE) {
+                    dispatch(
+                        setConversionStatus({
+                            status: CONVERSION_INACTIVE,
+                        })
+                    );
+                }
+            })
+            .then(() => {
+                simulariumController.gotoTime(0);
+            })
+            .then(done)
+            .catch((error: FrontEndError) => {
+                handleFileLoadError(error, dispatch);
+                done();
+            });
     },
     type: RECEIVE_CONVERTED_FILE,
 });
