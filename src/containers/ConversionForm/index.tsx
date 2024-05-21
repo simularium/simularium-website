@@ -23,13 +23,14 @@ import {
     ExtensionMap,
 } from "../../state/trajectory/conversion-data-types";
 import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
-import ConversionServerErrorModal from "../../components/ConversionServerErrorModal";
-import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
 import { Cancel, DownCaret } from "../../components/Icons";
 import customRequest from "./custom-request";
 
 import theme from "../../components/theme/light-theme.css";
 import styles from "./style.css";
+import { ConversionError } from "../../constants/interfaces";
+import ConversionErrorModal from "../../components/ConversionErrorModal";
+import { MAX_CONVERSION_FILE_SIZE } from "../../constants";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
@@ -72,11 +73,21 @@ const ConversionForm = ({
 }: ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile | null>();
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
-    const [serverErrorModalOpen, setServerErrorModalOpen] =
-        useState<boolean>(false);
-    const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(false);
+    const [conversionError, setConversionError] = useState<ConversionError>(
+        ConversionError.NO_ERROR
+    );
 
     const engineSelected = !!conversionProcessingData.engineType;
+    const errorModalOpen = conversionError !== ConversionError.NO_ERROR;
+
+    const errorMessage = {
+        [ConversionError.SERVER_ERROR]:
+            "We're sorry, the server is currently experiencing an issue. Please try again at a later time. ",
+        [ConversionError.FILE_TYPE_ERROR]: `You may want to double check that the file you selected is a valid ${conversionProcessingData.engineType}
+                        file and try again. `,
+        [ConversionError.FILE_SIZE_ERROR]:
+            "Your file exceeds the maximum allowed size of 200 MB, please try uploading a smaller file.",
+    };
 
     useEffect(() => {
         // on page load assume server is down until we hear back from it
@@ -88,17 +99,12 @@ const ConversionForm = ({
         // this is to account for the server going down while a conversion is in process
         if (isProcessing && conversionStatus === ConversionStatus.NoServer) {
             setIsProcessing(false);
-            setServerErrorModalOpen(true);
+            setConversionError(ConversionError.SERVER_ERROR);
         }
     }, [conversionStatus]);
 
-    // callbacks for state variables
-    const toggleServerCheckModal = () => {
-        setServerErrorModalOpen(!serverErrorModalOpen);
-    };
-
-    const toggleFileTypeModal = () => {
-        setFileTypeErrorModalOpen(!fileTypeErrorModalOpen);
+    const closeErrorModal = () => {
+        setConversionError(ConversionError.NO_ERROR);
     };
 
     const cancelProcessing = () => {
@@ -120,6 +126,11 @@ const ConversionForm = ({
     };
 
     const handleFileSelection = async (file: UploadFile) => {
+        // 200 MB limit
+        if (file.size !== undefined && file.size > MAX_CONVERSION_FILE_SIZE) {
+            setConversionError(ConversionError.FILE_SIZE_ERROR);
+            return;
+        }
         setFileToConvert(file);
         customRequest(file, receiveFileToConvert, setError);
     };
@@ -134,8 +145,7 @@ const ConversionForm = ({
                 return true;
             }
         }
-
-        setFileTypeErrorModalOpen(true);
+        setConversionError(ConversionError.FILE_TYPE_ERROR);
         return false;
     };
 
@@ -166,21 +176,19 @@ const ConversionForm = ({
     console.log("conversion form data", conversionProcessingData);
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
-            {serverErrorModalOpen && (
-                <ConversionServerErrorModal
-                    closeModal={toggleServerCheckModal}
-                />
-            )}
-            {fileTypeErrorModalOpen && (
-                <ConversionFileErrorModal
-                    closeModal={toggleFileTypeModal}
-                    engineType={conversionProcessingData.engineType}
-                />
-            )}
             {conversionStatus === ConversionStatus.Active && (
                 <ConversionProcessingOverlay
                     fileName={conversionProcessingData.fileName}
                     cancelProcessing={cancelProcessing}
+                />
+            )}
+            {errorModalOpen && (
+                <ConversionErrorModal
+                    closeModal={closeErrorModal}
+                    showForumMessage={
+                        conversionError !== ConversionError.FILE_SIZE_ERROR
+                    }
+                    errorMessage={errorMessage[conversionError] || ""}
                 />
             )}
             <div className={styles.formContent}>
