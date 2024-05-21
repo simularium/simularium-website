@@ -255,7 +255,7 @@ const loadLocalFile = createLogic({
         }
 
         clearOutFileTrajectoryUrlParam();
-
+        const plots = simulariumFile.data.getPlotData();
         simulariumController
             .changeFile(
                 {
@@ -268,10 +268,10 @@ const loadLocalFile = createLogic({
                 dispatch(receiveSimulariumFile(simulariumFile));
             })
             .then(() => {
-                if (simulariumFile.data.plotData) {
+                if (plots) {
                     dispatch(
                         receiveTrajectory({
-                            plotData: simulariumFile.data.plotData.data,
+                            plotData: plots.data,
                         })
                     );
                 }
