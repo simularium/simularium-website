@@ -60,3 +60,10 @@ export enum IconGlyphs {
     Reset = "reset-icon",
     Close = "close-icon",
 }
+
+export enum ConversionError {
+    SERVER_ERROR = "serverError",
+    FILE_TYPE_ERROR = "fileTypeError",
+    FILE_SIZE_ERROR = "fileSizeError",
+    NO_ERROR = "noError",
+}
