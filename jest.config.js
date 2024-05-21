@@ -17,18 +17,6 @@ module.exports = {
             lines: 50,
             statements: 50,
         },
-        "./src/state/*/logics.ts": {
-            branches: 0,
-            functions: 0,
-            lines: 0,
-            statements: 0,
-        },
-        "./src/state/*/actions.ts": {
-            branches: 0,
-            functions: 0,
-            lines: 0,
-            statements: 0,
-        },
         "./src/state/*/selectors/index.ts": {
             branches: 100,
             functions: 100,
