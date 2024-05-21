@@ -271,7 +271,7 @@ const loadLocalFile = createLogic({
                 if (plots) {
                     dispatch(
                         receiveTrajectory({
-                            plotData: plots.data,
+                            plotData: plots,
                         })
                     );
                 }
