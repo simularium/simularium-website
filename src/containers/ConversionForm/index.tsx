@@ -156,7 +156,7 @@ const ConversionForm = ({
             validateFileType(fileToConvert.name)
         ) {
             if (conversionStatus === ConversionStatus.NoServer) {
-                setServerErrorModalOpen(true);
+                setConversionError(ConversionError.SERVER_ERROR);
             } else {
                 // we now use this local state lets us distinguish between arriving on this page normally
                 // and arriving here because the server went down while a conversion was in process
