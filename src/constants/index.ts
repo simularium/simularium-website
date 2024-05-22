@@ -15,7 +15,6 @@ export const URL_PARAM_BASE_TYPES = "base_types.json";
 export const URL_PARAM_CUSTOM_TYPES = "custom-types";
 // URLs
 export const BASE_API_URL = `/api/${API_VERSION}`;
-// todo octopus launch: this is pointing to the staging octopus http endpoint
 export const DATA_BUCKET_URL = `https://${process.env.BACKEND_SERVER_IP}:443/download`;
 export const FORUM_URL =
     "https://forum.allencell.org/c/software-code/simularium/";
