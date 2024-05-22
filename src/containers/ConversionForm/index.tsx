@@ -146,37 +146,34 @@ const ConversionForm = ({
         customRequest(file, receiveFileToConvert, setError);
     };
 
-    const validateFileType = (fileName: string) => {
-        const fileExtension = fileName.split(".").pop();
-        if (fileExtension) {
-            if (
-                validFileExtensions[conversionProcessingData.engineType] ===
+    const validateFileType = () => {
+        const fileExtension = fileToConvert?.name.split(".").pop();
+        if (
+            fileExtension &&
+            validFileExtensions[conversionProcessingData.engineType] ===
                 fileExtension.toLowerCase()
-            ) {
-                return true;
-            }
+        ) {
+            return true;
+        } else {
+            setConversionError(ConversionError.FILE_TYPE_ERROR);
+            return false;
         }
-        setConversionError(ConversionError.FILE_TYPE_ERROR);
-        return false;
     };
 
     const sendFileToConvert = () => {
-        if (
-            engineSelected &&
-            fileToConvert &&
-            validateFileType(fileToConvert.name)
-        ) {
-            if (conversionStatus === CONVERSION_NO_SERVER) {
-                setConversionError(ConversionError.SERVER_ERROR);
-            } else {
-                // we now use this local state lets us distinguish between arriving on this page normally
-                // and arriving here because the server went down while a conversion was in process
-                setIsProcessing(true);
-                setConversionStatus({ status: CONVERSION_ACTIVE });
-                const fileId = `${uuidv4()}.simularium`;
-                convertFile(fileId);
-            }
+        if (conversionStatus === CONVERSION_NO_SERVER) {
+            setConversionError(ConversionError.SERVER_ERROR);
+            return;
         }
+        if (!validateFileType()) {
+            return;
+        }
+        // we now use this local state lets us distinguish between arriving on this page normally
+        // and arriving here because the server went down while a conversion was in process
+        setIsProcessing(true);
+        setConversionStatus({ status: CONVERSION_ACTIVE });
+        const fileId = `${uuidv4()}.simularium`;
+        convertFile(fileId);
     };
 
     const renderUploadFile = (): JSX.Element => {
