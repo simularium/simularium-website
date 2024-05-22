@@ -173,7 +173,7 @@ const ConversionForm = ({
                 // and arriving here because the server went down while a conversion was in process
                 setIsProcessing(true);
                 setConversionStatus({ status: CONVERSION_ACTIVE });
-                const fileId = uuidv4() + `.simularium`;
+                const fileId = `${uuidv4()}.simularium`;
                 convertFile(fileId);
             }
         }
