@@ -109,7 +109,7 @@ const ConversionForm = ({
 
     const cancelProcessing = () => {
         setIsProcessing(false);
-        setConversionStatus({ status: ConversionStatus.Inactive });
+        setConversionStatus({ status: ConversionStatus.NoServer });
     };
 
     const cancelConversion = () => {
