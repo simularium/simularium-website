@@ -267,7 +267,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     public handleIncomingConvertedFile(data: TrajectoryFileInfo) {
         const { receiveConvertedFile, conversionProcessingData } = this.props;
         const { fileId } = conversionProcessingData;
-        const title = data.trajectoryTitle || `${fileId}.simularium`;
+        const title = data.trajectoryTitle || fileId;
         receiveConvertedFile({
             name: fileId,
             title: title,
