@@ -6,12 +6,10 @@ import { makeReducer } from "../util";
 import {
     SET_STATUS,
     SET_ERROR,
-    VIEWER_EMPTY,
     DRAG_FILE_OVER,
     RESET_DRAG_FILE_OVER,
     SET_BUFFERING,
     SET_IS_PLAYING,
-    VIEWER_ERROR,
     SET_IS_LOOPING,
 } from "./constants";
 import {
@@ -21,10 +19,11 @@ import {
     ResetDragOverViewerAction,
     ToggleAction,
     SetErrorAction,
+    ViewerStatus,
 } from "./types";
 
 export const initialState = {
-    status: VIEWER_EMPTY,
+    status: ViewerStatus.Empty,
     error: null,
     fileDraggedOver: false,
     isBuffering: false,
@@ -37,7 +36,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
         accepts: (action: AnyAction): action is SetViewerStatusAction =>
             action.type === SET_STATUS,
         perform: (state: ViewerStateBranch, action: SetViewerStatusAction) => {
-            if (action.payload.status !== VIEWER_ERROR) {
+            if (action.payload.status !== ViewerStatus.Error) {
                 return {
                     ...state,
                     status: action.payload.status,

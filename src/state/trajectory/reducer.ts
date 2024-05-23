@@ -13,7 +13,6 @@ import {
     RECEIVE_FILE_TO_CONVERT,
     SET_CONVERSION_ENGINE,
     SET_CONVERSION_STATUS,
-    CONVERSION_INACTIVE,
 } from "./constants";
 import {
     TrajectoryStateBranch,
@@ -23,6 +22,7 @@ import {
     ReceiveFileToConvertAction,
     SetConversionEngineAction,
     SetConversionStatusAction,
+    ConversionStatus,
 } from "./types";
 
 export const initialState = {
@@ -39,7 +39,7 @@ export const initialState = {
         data: null,
         lastModified: null,
     },
-    conversionStatus: CONVERSION_INACTIVE,
+    conversionStatus: ConversionStatus.Inactive,
     processingData: {
         engineType: "",
         template: null,
