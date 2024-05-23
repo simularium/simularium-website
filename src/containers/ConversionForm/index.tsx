@@ -117,8 +117,8 @@ const ConversionForm = ({
     const cancelProcessing = () => {
         setIsProcessing(false);
         // todo - keep old trajectory and timestamp when cancelling conversion request
-        clearSimulariumFile({ newFile: false });
         cancelAutoconversion();
+        clearSimulariumFile({ newFile: false });
     };
 
     const cancelConversion = () => {
