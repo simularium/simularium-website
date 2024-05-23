@@ -35,9 +35,9 @@ import {
     InitializeConversionAction,
     SetConversionEngineAction,
     ReceiveFileToConvertAction,
-    ConversionStatus,
     SetConversionStatusAction,
     ConvertFileAction,
+    ConversionStatus,
 } from "./types";
 
 export function receiveTrajectory(

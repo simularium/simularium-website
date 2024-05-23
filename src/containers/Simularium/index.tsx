@@ -22,12 +22,11 @@ import {
     SetUrlParamsAction,
 } from "../../state/trajectory/types";
 import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
-import { CONVERSION_INACTIVE } from "../../state/trajectory/constants";
 import {
     SetErrorAction,
     SetViewerStatusAction,
+    ViewerStatus,
 } from "../../state/viewer/types";
-import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/viewer/constants";
 import {
     DragOverViewerAction,
     ResetDragOverViewerAction,
@@ -155,7 +154,7 @@ class App extends React.Component<AppProps, AppState> {
                         "make sure to include 'http/https' at the beginning of the url, and check for typos",
                     onClose: clearBrowserUrlParams,
                 });
-                setViewerStatus({ status: VIEWER_ERROR });
+                setViewerStatus({ status: ViewerStatus.Error });
                 setSimulariumController(controller);
             }
         };
@@ -225,7 +224,7 @@ class App extends React.Component<AppProps, AppState> {
                     key="drop"
                     clearSimulariumFile={clearSimulariumFile}
                     loadLocalFile={changeToLocalSimulariumFile}
-                    isLoading={viewerStatus === VIEWER_LOADING}
+                    isLoading={viewerStatus === ViewerStatus.Loading}
                     resetDragOverViewer={resetDragOverViewer}
                     fileIsDraggedOver={fileIsDraggedOverViewer}
                     setViewerStatus={setViewerStatus}
@@ -250,7 +249,7 @@ class App extends React.Component<AppProps, AppState> {
                 ])}
             >
                 <div ref={this.interactiveContent}>
-                    {conversionStatus !== CONVERSION_INACTIVE && (
+                    {conversionStatus !== ConversionStatus.Inactive && (
                         <ConversionForm />
                     )}
                     <Layout className={styles.content}>

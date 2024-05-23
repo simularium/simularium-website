@@ -16,10 +16,6 @@ import {
     SetErrorAction,
     SetViewerStatusAction,
 } from "../../state/viewer/types";
-import {
-    CONVERSION_INACTIVE,
-    CONVERSION_NO_SERVER,
-} from "../../state/trajectory/constants";
 import { ButtonClass, TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
 import { DownArrow } from "../Icons";
@@ -61,7 +57,7 @@ const LoadFileMenu = ({
     };
 
     const openConversionForm = () => {
-        setConversionStatus({ status: CONVERSION_NO_SERVER });
+        setConversionStatus({ status: ConversionStatus.NoServer });
     };
 
     const onClick = (trajectoryData: TrajectoryDisplayData) => {
@@ -116,7 +112,8 @@ const LoadFileMenu = ({
         },
     ];
 
-    const isDisabled = isBuffering || conversionStatus !== CONVERSION_INACTIVE;
+    const isDisabled =
+        isBuffering || conversionStatus !== ConversionStatus.Inactive;
 
     return (
         <>

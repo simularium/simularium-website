@@ -19,11 +19,6 @@ import selectionStateBranch from "../../state/selection";
 import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
 import {
-    VIEWER_EMPTY,
-    VIEWER_SUCCESS,
-    VIEWER_ERROR,
-} from "../../state/viewer/constants";
-import {
     ChangeTimeAction,
     SetVisibleAction,
 } from "../../state/selection/types";
@@ -34,6 +29,7 @@ import {
     SetViewerStatusAction,
     ViewerError,
     SetErrorAction,
+    ViewerStatus,
 } from "../../state/viewer/types";
 import {
     ReceiveAction,
@@ -43,7 +39,6 @@ import {
     SetConversionStatusAction,
     SetUrlParamsAction,
 } from "../../state/trajectory/types";
-import { CONVERSION_ACTIVE } from "../../state/trajectory/constants";
 import { batchActions } from "../../state/util";
 import PlaybackControls from "../../components/PlaybackControls";
 import RecordMoviesComponent from "../../components/RecordMoviesComponent";
@@ -277,7 +272,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
         const { receiveTrajectory, simulariumController, conversionStatus } =
             this.props;
-        if (conversionStatus === CONVERSION_ACTIVE) {
+        if (conversionStatus === ConversionStatus.Active) {
             this.handleIncomingConvertedFile(data);
         }
         const tickIntervalLength = simulariumController.tickIntervalLength;
@@ -330,8 +325,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setBuffering(false),
         ];
 
-        if (status !== VIEWER_SUCCESS) {
-            actions.push(setStatus({ status: VIEWER_SUCCESS }));
+        if (status !== ViewerStatus.Success) {
+            actions.push(setStatus({ status: ViewerStatus.Success }));
         }
 
         const atLastFrame =
@@ -451,7 +446,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                             htmlData: error.htmlData,
                         });
                         if (error.level === ErrorLevel.ERROR) {
-                            setStatus({ status: VIEWER_ERROR });
+                            setStatus({ status: ViewerStatus.Error });
                         }
                     }}
                     onTrajectoryFileInfoChanged={
@@ -477,7 +472,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                             firstFrameTime={firstFrameTime}
                             lastFrameTime={lastFrameTime}
                             loading={isBuffering}
-                            isEmpty={status === VIEWER_EMPTY}
+                            isEmpty={status === ViewerStatus.Empty}
                         />
                         <RecordMoviesComponent
                             movieUrl={this.state.movieURL}

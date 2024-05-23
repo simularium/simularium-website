@@ -39,7 +39,3 @@ export const RECEIVE_CONVERTED_FILE =
     makeTrajectoryConstant("receive-converted");
 
 export const SET_CONVERSION_STATUS = makeTrajectoryConstant("set-status");
-export const CONVERSION_INACTIVE = "conversion-inactive";
-export const CONVERSION_NO_SERVER = "conversion-no-server";
-export const CONVERSION_SERVER_LIVE = "conversion-server-live";
-export const CONVERSION_ACTIVE = "conversion-active";
