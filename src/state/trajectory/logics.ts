@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import {
     ErrorLevel,
     FrontEndError,
+    ISimulariumFile,
     NetConnectionParams,
     SimulariumController,
     loadSimulariumFile,
@@ -242,12 +243,12 @@ const loadLocalFile = createLogic({
             getSimulariumController(currentState) || action.controller;
         const lastSimulariumFile: LocalSimFile =
             getSimulariumFile(currentState);
-        const simulariumFile = action.payload;
+        const localSimFile: LocalSimFile = action.payload;
 
         if (lastSimulariumFile) {
             if (
-                lastSimulariumFile.name === simulariumFile.name &&
-                lastSimulariumFile.lastModified === simulariumFile.lastModified
+                lastSimulariumFile.name === localSimFile.name &&
+                lastSimulariumFile.lastModified === localSimFile.lastModified
             ) {
                 // exact same file loaded again, don't need to reload anything
                 return;
@@ -255,23 +256,24 @@ const loadLocalFile = createLogic({
         }
 
         clearOutFileTrajectoryUrlParam();
-        const plots = simulariumFile.data.getPlotData();
         simulariumController
             .changeFile(
                 {
-                    simulariumFile: simulariumFile.data,
-                    geoAssets: simulariumFile.geoAssets,
+                    simulariumFile: localSimFile.data,
+                    geoAssets: localSimFile.geoAssets,
                 },
-                simulariumFile.name
+                localSimFile.name
             )
             .then(() => {
-                dispatch(receiveSimulariumFile(simulariumFile));
+                dispatch(receiveSimulariumFile(localSimFile));
+                return localSimFile.data;
             })
-            .then(() => {
+            .then((simulariumFile: ISimulariumFile) => {
+                const plots = simulariumFile.getPlotData();
                 if (plots) {
                     dispatch(
                         receiveTrajectory({
-                            plotData: plots.data,
+                            plotData: plots,
                         })
                     );
                 }
