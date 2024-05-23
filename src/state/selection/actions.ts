@@ -1,4 +1,4 @@
-import { ColorChange } from "@aics/simularium-viewer";
+import { ColorChange, UIDisplayData } from "@aics/simularium-viewer";
 import {
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
@@ -9,8 +9,7 @@ import {
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
     SET_COLOR_CHANGES,
     SET_RECENT_COLORS,
-    SET_SESSION_COLOR_CHANGES,
-    APPLY_SESSION_COLOR_CHANGES,
+    STORE_UI_DATA_IN_BROWSER,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -21,8 +20,6 @@ import {
     ResetAction,
     SetColorChangeAction,
     SetRecentColorsAction,
-    SetSessionColorChangesAction,
-    ApplySessionColorChangeAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -97,20 +94,9 @@ export function setRecentColors(colors: string[]): SetRecentColorsAction {
     };
 }
 
-export function setSessionColorChanges(
-    colorChanges: ColorChange[]
-): SetSessionColorChangesAction {
+export function storeColorsInLocalStorage(payload: UIDisplayData) {
     return {
-        payload: colorChanges,
-        type: SET_SESSION_COLOR_CHANGES,
-    };
-}
-
-export function applySessionColorChanges(
-    colorChange: ColorChange
-): ApplySessionColorChangeAction {
-    return {
-        payload: colorChange,
-        type: APPLY_SESSION_COLOR_CHANGES,
+        payload,
+        type: STORE_UI_DATA_IN_BROWSER,
     };
 }

@@ -18,3 +18,5 @@ export const getConversionProcessingData = (state: State) =>
     state.trajectory.processingData;
 export const getConversionStatus = (state: State) =>
     state.trajectory.conversionStatus;
+export const getSessionUIData = (state: State) =>
+    state.trajectory.sessionUIData;

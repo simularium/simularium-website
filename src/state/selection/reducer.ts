@@ -13,8 +13,6 @@ import {
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
     SET_COLOR_CHANGES,
     SET_RECENT_COLORS,
-    SET_SESSION_COLOR_CHANGES,
-    APPLY_SESSION_COLOR_CHANGES,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -26,8 +24,6 @@ import {
     ResetAction,
     SetColorChangeAction,
     SetRecentColorsAction,
-    SetSessionColorChangesAction,
-    ApplySessionColorChangeAction,
 } from "./types";
 
 export const initialState = {
@@ -37,7 +33,6 @@ export const initialState = {
     agentHighlightMap: {},
     colorChange: null,
     recentColors: [],
-    sessionColorChanges: [],
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -155,32 +150,6 @@ const actionToConfigMap: TypeToDescriptionMap = {
             return {
                 ...state,
                 recentColors: action.payload,
-            };
-        },
-    },
-    [SET_SESSION_COLOR_CHANGES]: {
-        accepts: (action: AnyAction): action is SetSessionColorChangesAction =>
-            action.type === SET_SESSION_COLOR_CHANGES,
-        perform: (
-            state: SelectionStateBranch,
-            action: SetSessionColorChangesAction
-        ) => {
-            return {
-                ...state,
-                sessionColorChanges: action.payload,
-            };
-        },
-    },
-    [APPLY_SESSION_COLOR_CHANGES]: {
-        accepts: (action: AnyAction): action is ApplySessionColorChangeAction =>
-            action.type === APPLY_SESSION_COLOR_CHANGES,
-        perform: (
-            state: SelectionStateBranch,
-            action: SetColorChangeAction
-        ) => {
-            return {
-                ...state,
-                colorChange: action.payload,
             };
         },
     },

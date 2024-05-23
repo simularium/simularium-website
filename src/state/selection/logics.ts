@@ -1,16 +1,27 @@
 import { createLogic } from "redux-logic";
 import { UIDisplayData } from "@aics/simularium-viewer";
 
-import { APPLY_SESSION_COLOR_CHANGES, SET_COLOR_CHANGES } from "./constants";
+import {
+    SET_AGENTS_VISIBLE,
+    SET_COLOR_CHANGES,
+    STORE_UI_DATA_IN_BROWSER,
+} from "./constants";
 import { ReduxLogicDeps } from "../types";
 import {
     getAgentDisplayNamesAndStates,
     getSimulariumFile,
 } from "../trajectory/selectors";
-import { receiveAgentNamesAndStates } from "../trajectory/actions";
+import {
+    receiveAgentNamesAndStates,
+    setSessionUIData,
+} from "../trajectory/actions";
+import { storeColorsInLocalStorage } from "./actions";
 
 const storeColorsLogic = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
+        // todo: is this still true? i think we are not doing this anymore with stored color changers
+        // applies color changes either by the user
+        // or from local storage
         const { action, getState } = deps;
         const uiData: UIDisplayData = getAgentDisplayNamesAndStates(getState());
         const colorChange = action.payload;
@@ -36,27 +47,41 @@ const storeColorsLogic = createLogic({
             return newAgent;
         });
         dispatch(receiveAgentNamesAndStates(newUiData));
+        dispatch(storeColorsInLocalStorage(newUiData));
         done();
     },
-    type: [SET_COLOR_CHANGES, APPLY_SESSION_COLOR_CHANGES],
+    type: [SET_COLOR_CHANGES],
 });
 
 const storeSessionColorsLogic = createLogic({
-    process(deps: ReduxLogicDeps, dispatch, done) {
-        const { action, getState } = deps;
-        const colorChange = action.payload;
+    process(deps: ReduxLogicDeps) {
+        // syncs color changes to local browser storage
+        // fired every time the user makes a color change
+        const { getState, action } = deps;
         const fileKey = getSimulariumFile(getState()).name;
-        const existingStorage = JSON.parse(
-            sessionStorage.getItem(fileKey) || "[]"
-        );
-        existingStorage.push(colorChange);
-        sessionStorage.setItem(fileKey, JSON.stringify(existingStorage));
-        // todo: for development purposes its nice to be able to uncomment the line below
-        // to quickly clear our sessionStorage
-        // sessionStorage.removeItem(fileKey);
-        done();
+        localStorage.setItem(fileKey, JSON.stringify(action.payload));
     },
-    type: SET_COLOR_CHANGES,
+    type: STORE_UI_DATA_IN_BROWSER,
 });
 
-export default [storeColorsLogic, storeSessionColorsLogic];
+const restoreSessionColorsLogic = createLogic({
+    process(deps: ReduxLogicDeps, dispatch, done) {
+        const { getState } = deps;
+
+        const simulariumFile = getSimulariumFile(getState());
+        const storedColorChanges = localStorage.getItem(simulariumFile.name);
+        if (storedColorChanges) {
+            const uiData = JSON.parse(storedColorChanges);
+            dispatch(setSessionUIData(uiData));
+            dispatch(receiveAgentNamesAndStates(uiData));
+            done();
+        }
+    },
+    type: SET_AGENTS_VISIBLE,
+});
+
+export default [
+    storeColorsLogic,
+    storeSessionColorsLogic,
+    restoreSessionColorsLogic,
+];

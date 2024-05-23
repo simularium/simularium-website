@@ -14,6 +14,7 @@ import {
     SET_CONVERSION_ENGINE,
     SET_CONVERSION_STATUS,
     CONVERSION_INACTIVE,
+    SET_SESSION_UI_DATA,
 } from "./constants";
 import {
     TrajectoryStateBranch,
@@ -23,6 +24,7 @@ import {
     ReceiveFileToConvertAction,
     SetConversionEngineAction,
     SetConversionStatusAction,
+    SetSessionUIDataAction,
 } from "./types";
 
 export const initialState = {
@@ -47,6 +49,7 @@ export const initialState = {
         fileToConvert: null,
         fileName: "",
     },
+    sessionUIData: [],
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -143,6 +146,19 @@ const actionToConfigMap: TypeToDescriptionMap = {
                     fileToConvert: action.payload.fileContents,
                     fileName: action.payload.fileName,
                 },
+            };
+        },
+    },
+    [SET_SESSION_UI_DATA]: {
+        accepts: (action: AnyAction): action is SetSessionUIDataAction =>
+            action.type === SET_SESSION_UI_DATA,
+        perform: (
+            state: TrajectoryStateBranch,
+            action: SetSessionUIDataAction
+        ) => {
+            return {
+                ...state,
+                sessionUIData: action.payload,
             };
         },
     },

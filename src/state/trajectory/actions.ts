@@ -1,4 +1,4 @@
-import { SimulariumController } from "@aics/simularium-viewer";
+import { SimulariumController, UIDisplayData } from "@aics/simularium-viewer";
 
 import {
     RECEIVE_TRAJECTORY,
@@ -17,6 +17,7 @@ import {
     RECEIVE_FILE_TO_CONVERT,
     SET_CONVERSION_STATUS,
     CONVERT_FILE,
+    SET_SESSION_UI_DATA,
 } from "./constants";
 import { AvailableEngines } from "./conversion-data-types";
 import {
@@ -37,6 +38,7 @@ import {
     ConversionStatus,
     SetConversionStatusAction,
     ConvertFileAction,
+    SetSessionUIDataAction,
 } from "./types";
 
 export function receiveTrajectory(
@@ -75,6 +77,7 @@ export function receiveAgentTypeIds(
 export function receiveAgentNamesAndStates(
     payload: TrajectoryStateBranch
 ): ReceiveAction {
+    console.log("payload in receiveAgentNamesAndStates", payload);
     return {
         payload,
         type: RECEIVE_AGENT_NAMES,
@@ -177,5 +180,14 @@ export function setConversionEngine(
 export function convertFile(): ConvertFileAction {
     return {
         type: CONVERT_FILE,
+    };
+}
+
+export function setSessionUIData(
+    payload: UIDisplayData
+): SetSessionUIDataAction {
+    return {
+        payload,
+        type: SET_SESSION_UI_DATA,
     };
 }

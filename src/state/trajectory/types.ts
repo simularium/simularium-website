@@ -1,4 +1,8 @@
-import { ISimulariumFile, SimulariumController } from "@aics/simularium-viewer";
+import {
+    ISimulariumFile,
+    SimulariumController,
+    UIDisplayData,
+} from "@aics/simularium-viewer";
 import {
     AvailableEngines,
     Template,
@@ -115,6 +119,11 @@ export interface SetUrlParamsAction {
 
 export interface HealthCheckTimeout {
     [requestId: string]: NodeJS.Timeout;
+}
+
+export interface SetSessionUIDataAction {
+    payload: UIDisplayData;
+    type: string;
 }
 
 export type ConversionStatus =
