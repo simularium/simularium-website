@@ -3,12 +3,14 @@ import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 import { Upload, Select, Divider, Button } from "antd";
 import { UploadFile } from "antd/lib/upload";
+import { v4 as uuidv4 } from "uuid";
 import classNames from "classnames";
 
 import { State } from "../../state";
 import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
 import {
+    ClearSimFileDataAction,
     ConversionStatus,
     ConvertFileAction,
     InitializeConversionAction,
@@ -41,6 +43,7 @@ interface ConversionProps {
     convertFile: ActionCreator<ConvertFileAction>;
     conversionStatus: ConversionStatus;
     setConversionStatus: ActionCreator<SetConversionStatusAction>;
+    clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
 }
 
 const validFileExtensions: ExtensionMap = {
@@ -70,6 +73,7 @@ const ConversionForm = ({
     conversionStatus,
     convertFile,
     setConversionStatus,
+    clearSimulariumFile,
 }: ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile | null>();
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
@@ -110,6 +114,8 @@ const ConversionForm = ({
     const cancelProcessing = () => {
         setIsProcessing(false);
         setConversionStatus({ status: ConversionStatus.NoServer });
+        // todo - keep old trajectory and timestamp when cancelling conversion request
+        clearSimulariumFile({ newFile: false });
     };
 
     const cancelConversion = () => {
@@ -135,36 +141,34 @@ const ConversionForm = ({
         customRequest(file, receiveFileToConvert, setError);
     };
 
-    const validateFileType = (fileName: string) => {
-        const fileExtension = fileName.split(".").pop();
-        if (fileExtension) {
-            if (
-                validFileExtensions[conversionProcessingData.engineType] ===
+    const validateFileType = () => {
+        const fileExtension = fileToConvert?.name.split(".").pop();
+        if (
+            fileExtension &&
+            validFileExtensions[conversionProcessingData.engineType] ===
                 fileExtension.toLowerCase()
-            ) {
-                return true;
-            }
+        ) {
+            return true;
+        } else {
+            setConversionError(ConversionError.FILE_TYPE_ERROR);
+            return false;
         }
-        setConversionError(ConversionError.FILE_TYPE_ERROR);
-        return false;
     };
 
     const sendFileToConvert = () => {
-        if (
-            engineSelected &&
-            fileToConvert &&
-            validateFileType(fileToConvert.name)
-        ) {
-            if (conversionStatus === ConversionStatus.NoServer) {
-                setConversionError(ConversionError.SERVER_ERROR);
-            } else {
-                // we now use this local state lets us distinguish between arriving on this page normally
-                // and arriving here because the server went down while a conversion was in process
-                setIsProcessing(true);
-                setConversionStatus({ status: ConversionStatus.Active });
-                convertFile();
-            }
+        if (conversionStatus === ConversionStatus.NoServer) {
+            setConversionError(ConversionError.SERVER_ERROR);
+            return;
         }
+        if (!validateFileType()) {
+            return;
+        }
+        // we now use this local state lets us distinguish between arriving on this page normally
+        // and arriving here because the server went down while a conversion was in process
+        setIsProcessing(true);
+        setConversionStatus({ status: ConversionStatus.Active });
+        const fileId = `${uuidv4()}.simularium`;
+        convertFile(fileId);
     };
 
     const renderUploadFile = (): JSX.Element => {
@@ -173,7 +177,6 @@ const ConversionForm = ({
     };
 
     // TODO: use conversion template data to render the form
-    console.log("conversion form data", conversionProcessingData);
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
             {conversionStatus === ConversionStatus.Active && (
@@ -273,6 +276,7 @@ const dispatchToPropsMap = {
     initializeConversion: trajectoryStateBranch.actions.initializeConversion,
     convertFile: trajectoryStateBranch.actions.convertFile,
     setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
+    clearSimulariumFile: trajectoryStateBranch.actions.clearSimulariumFile,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ConversionForm);

@@ -48,6 +48,7 @@ import { TUTORIAL_PATHNAME } from "../../routes";
 import ErrorNotification from "../../components/ErrorNotification";
 import { MOBILE_CUTOFF } from "../../constants";
 import { hasUrlParamsSettings } from "../../util";
+import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
 
 import {
     convertUIDataToSelectionData,
@@ -95,6 +96,8 @@ interface ViewerPanelProps {
     movieTitle: string;
     conversionStatus: ConversionStatus;
     setConversionStatus: ActionCreator<SetConversionStatusAction>;
+    receiveConvertedFile: ActionCreator<ReceiveAction>;
+    conversionProcessingData: ConversionProcessingData;
 }
 
 interface ViewerPanelState {
@@ -256,13 +259,22 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         setIsLooping(!isLooping);
     }
 
-    public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
-        const { conversionStatus, setConversionStatus } = this.props;
-        if (conversionStatus !== ConversionStatus.Inactive) {
-            setConversionStatus({ status: ConversionStatus.Inactive });
-        }
+    public handleIncomingConvertedFile(data: TrajectoryFileInfo) {
+        const { receiveConvertedFile, conversionProcessingData } = this.props;
+        const { fileId } = conversionProcessingData;
+        const title = data.trajectoryTitle || fileId;
+        receiveConvertedFile({
+            name: fileId,
+            title: title,
+        });
+    }
 
-        const { receiveTrajectory, simulariumController } = this.props;
+    public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
+        const { receiveTrajectory, simulariumController, conversionStatus } =
+            this.props;
+        if (conversionStatus === ConversionStatus.Active) {
+            this.handleIncomingConvertedFile(data);
+        }
         const tickIntervalLength = simulariumController.tickIntervalLength;
 
         let scaleBarLabelNumber =
@@ -517,6 +529,8 @@ function mapStateToProps(state: State) {
         movieTitle: getMovieTitle(state),
         conversionStatus:
             trajectoryStateBranch.selectors.getConversionStatus(state),
+        conversionProcessingData:
+            trajectoryStateBranch.selectors.getConversionProcessingData(state),
     };
 }
 
@@ -534,6 +548,7 @@ const dispatchToPropsMap = {
     setIsPlaying: viewerStateBranch.actions.setIsPlaying,
     setIsLooping: viewerStateBranch.actions.setIsLooping,
     setError: viewerStateBranch.actions.setError,
+    receiveConvertedFile: trajectoryStateBranch.actions.receiveConvertedFile,
     setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
 };
