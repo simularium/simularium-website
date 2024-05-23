@@ -59,6 +59,7 @@ import {
     SET_CONVERSION_TEMPLATE,
     CONVERT_FILE,
     RECEIVE_CONVERTED_FILE,
+    CANCEL_CONVERSION,
 } from "./constants";
 import {
     ReceiveAction,
@@ -620,6 +621,21 @@ const receiveConvertedFileLogic = createLogic({
     type: RECEIVE_CONVERTED_FILE,
 });
 
+const cancelConversionLogic = createLogic({
+    process(deps: ReduxLogicDeps, dispatch) {
+        const { getState } = deps;
+        const currentState = getState();
+        const simulariumController = getSimulariumController(currentState);
+        simulariumController.cancelConversion();
+        dispatch(
+            setConversionStatus({
+                status: ConversionStatus.NoServer,
+            })
+        );
+    },
+    type: CANCEL_CONVERSION,
+});
+
 export default [
     requestPlotDataLogic,
     loadLocalFile,
@@ -631,4 +647,5 @@ export default [
     initializeFileConversionLogic,
     convertFileLogic,
     receiveConvertedFileLogic,
+    cancelConversionLogic,
 ];

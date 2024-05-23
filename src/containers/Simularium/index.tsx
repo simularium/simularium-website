@@ -20,6 +20,7 @@ import {
     RequestLocalFileAction,
     RequestNetworkFileAction,
     SetUrlParamsAction,
+    CancelConversionAction,
 } from "../../state/trajectory/types";
 import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
 import {
@@ -78,6 +79,7 @@ interface AppProps {
     conversionStatus: ConversionStatus;
     initializeConversion: ActionCreator<InitializeConversionAction>;
     setUrlParams: ActionCreator<SetUrlParamsAction>;
+    cancelAutoconversion: ActionCreator<CancelConversionAction>;
 }
 
 interface AppState {
@@ -309,6 +311,7 @@ const dispatchToPropsMap = {
     setViewerStatus: viewerStateBranch.actions.setStatus,
     setError: viewerStateBranch.actions.setError,
     initializeConversion: trajectoryStateBranch.actions.initializeConversion,
+    cancelAutoconversion: trajectoryStateBranch.actions.cancelAutoconversion,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(App);

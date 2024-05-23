@@ -18,6 +18,7 @@ import {
     SET_CONVERSION_STATUS,
     CONVERT_FILE,
     RECEIVE_CONVERTED_FILE,
+    CANCEL_CONVERSION,
 } from "./constants";
 import { AvailableEngines } from "./conversion-data-types";
 import {
@@ -38,6 +39,7 @@ import {
     SetConversionStatusAction,
     ConvertFileAction,
     ConversionStatus,
+    CancelConversionAction,
 } from "./types";
 
 export function receiveTrajectory(
@@ -186,5 +188,11 @@ export function receiveConvertedFile(payload: NetworkedSimFile): ReceiveAction {
     return {
         payload,
         type: RECEIVE_CONVERTED_FILE,
+    };
+}
+
+export function cancelAutoconversion(): CancelConversionAction {
+    return {
+        type: CANCEL_CONVERSION,
     };
 }

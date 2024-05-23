@@ -17,6 +17,7 @@ import {
     ReceiveFileToConvertAction,
     SetConversionEngineAction,
     SetConversionStatusAction,
+    CancelConversionAction,
 } from "../../state/trajectory/types";
 import { SetErrorAction } from "../../state/viewer/types";
 import {
@@ -44,6 +45,7 @@ interface ConversionProps {
     conversionStatus: ConversionStatus;
     setConversionStatus: ActionCreator<SetConversionStatusAction>;
     clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
+    cancelAutoconversion: ActionCreator<CancelConversionAction>;
 }
 
 const validFileExtensions: ExtensionMap = {
@@ -74,6 +76,7 @@ const ConversionForm = ({
     convertFile,
     setConversionStatus,
     clearSimulariumFile,
+    cancelAutoconversion,
 }: ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile | null>();
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
@@ -113,8 +116,8 @@ const ConversionForm = ({
 
     const cancelProcessing = () => {
         setIsProcessing(false);
-        setConversionStatus({ status: ConversionStatus.NoServer });
         // todo - keep old trajectory and timestamp when cancelling conversion request
+        cancelAutoconversion();
         clearSimulariumFile({ newFile: false });
     };
 
@@ -277,6 +280,7 @@ const dispatchToPropsMap = {
     convertFile: trajectoryStateBranch.actions.convertFile,
     setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
     clearSimulariumFile: trajectoryStateBranch.actions.clearSimulariumFile,
+    cancelAutoconversion: trajectoryStateBranch.actions.cancelAutoconversion,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ConversionForm);

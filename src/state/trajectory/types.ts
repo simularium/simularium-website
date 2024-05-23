@@ -81,6 +81,10 @@ export interface SetConversionStatusAction {
     type: string;
 }
 
+export interface CancelConversionAction {
+    type: string;
+}
+
 export interface LocalSimFile {
     name: string;
     data: ISimulariumFile;
