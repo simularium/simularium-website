@@ -22,6 +22,7 @@ import {
 } from "../../constants";
 import { clearBrowserUrlParams } from "../../util";
 import { getUserTrajectoryUrl } from "../../util/userUrlHandling";
+import { ViewerStatus } from "../viewer/types";
 import {
     changeTime,
     resetAgentSelectionsAndHighlights,
@@ -57,6 +58,7 @@ import {
     SET_CONVERSION_ENGINE,
     SET_CONVERSION_TEMPLATE,
     CONVERT_FILE,
+    RECEIVE_CONVERTED_FILE,
 } from "./constants";
 import {
     ReceiveAction,
@@ -72,7 +74,6 @@ import {
     AvailableEngines,
     Template,
 } from "./conversion-data-types";
-import { ViewerStatus } from "../viewer/types";
 
 const netConnectionSettings: NetConnectionParams = {
     serverIp: process.env.BACKEND_SERVER_IP,

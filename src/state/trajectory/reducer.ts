@@ -13,6 +13,8 @@ import {
     RECEIVE_FILE_TO_CONVERT,
     SET_CONVERSION_ENGINE,
     SET_CONVERSION_STATUS,
+    CONVERT_FILE,
+    RECEIVE_CONVERTED_FILE,
 } from "./constants";
 import {
     TrajectoryStateBranch,
