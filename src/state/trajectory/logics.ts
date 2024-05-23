@@ -430,7 +430,7 @@ const initializeFileConversionLogic = createLogic({
                     clearTimeout(healthCheckTimeouts[requestId]);
                     dispatch(
                         setConversionStatus({
-                            status: ConversionStatus.ServerLive,
+                            status: ConversionStatus.ServerConfirmed,
                         })
                     );
                     done();

@@ -114,6 +114,6 @@ export interface HealthCheckTimeout {
 export enum ConversionStatus {
     Inactive = "CONVERSION_INACTIVE",
     NoServer = "CONVERSION_NO_SERVER",
-    ServerLive = "CONVERSION_SERVER_LIVE",
+    ServerConfirmed = "CONVERSION_SERVER_CONFIRMED",
     Active = "CONVERSION_ACTIVE",
 }
