@@ -599,10 +599,10 @@ const receiveConvertedFileLogic = createLogic({
                 );
             })
             .then(() => {
-                if (conversionStatus !== CONVERSION_INACTIVE) {
+                if (conversionStatus !== ConversionStatus.Inactive) {
                     dispatch(
                         setConversionStatus({
-                            status: CONVERSION_INACTIVE,
+                            status: ConversionStatus.Inactive,
                         })
                     );
                 }
