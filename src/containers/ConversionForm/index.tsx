@@ -116,7 +116,6 @@ const ConversionForm = ({
 
     const cancelProcessing = () => {
         setIsProcessing(false);
-        setConversionStatus({ status: ConversionStatus.NoServer });
         // todo - keep old trajectory and timestamp when cancelling conversion request
         clearSimulariumFile({ newFile: false });
         cancelAutoconversion();
