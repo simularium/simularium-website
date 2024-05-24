@@ -78,9 +78,7 @@ import {
 
 const netConnectionSettings: NetConnectionParams = {
     serverIp: process.env.BACKEND_SERVER_IP,
-    serverPort: 443,
-    useOctopus: true,
-    secureConnection: true,
+    serverPort: 9002,
 };
 
 const resetSimulariumFileState = createLogic({
