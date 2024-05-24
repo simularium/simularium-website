@@ -75,18 +75,18 @@ const BUNDLE_ANALYZER = [
 const PLUGINS_BY_ENV = {
     [Env.PRODUCTION]: [
         new webpack.EnvironmentPlugin({
-            BACKEND_SERVER_IP: `production-simularium-ecs.allencell.org`,
+            BACKEND_SERVER_IP: `production-node1-agentviz-backend.cellexplore.net`,
         }),
     ],
     [Env.STAGE]: [
         new webpack.EnvironmentPlugin({
-            BACKEND_SERVER_IP: `staging-simularium-ecs.allencell.org`,
+            BACKEND_SERVER_IP: `staging-node1-agentviz-backend.cellexplore.net`,
         }),
     ],
     [Env.DEVELOPMENT]: [
         new webpack.EnvironmentPlugin({
             // FIXME: make a dev server
-            BACKEND_SERVER_IP: `staging-simularium-ecs.allencell.org`,
+            BACKEND_SERVER_IP: `staging-node1-agentviz-backend.cellexplore.net`,
         }),
     ],
 };

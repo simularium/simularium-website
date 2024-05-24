@@ -104,11 +104,6 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                     setConversionStatus={setConversionStatus}
                 />
                 <HelpMenu key="help" />
-                <DownloadTrajectoryMenu
-                    isBuffering={isBuffering}
-                    simulariumFile={simulariumFile}
-                    isNetworkedFile={isNetworkedFile}
-                />
                 <ShareTrajectoryButton
                     simulariumFile={simulariumFile}
                     isBuffering={isBuffering}

@@ -99,17 +99,6 @@ const LoadFileMenu = ({
                 </Button>
             ),
         },
-        {
-            key: "file-convert",
-            label: (
-                <Link
-                    onClick={openConversionForm}
-                    to={{ pathname: VIEWER_PATHNAME }}
-                >
-                    Import other file type
-                </Link>
-            ),
-        },
     ];
 
     const isDisabled =
