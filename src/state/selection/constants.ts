@@ -23,3 +23,6 @@ export const SET_RECENT_COLORS = makeSelectConstant("set-recent-colors");
 export const STORE_UI_DATA_IN_BROWSER = makeSelectConstant(
     "store-ui-data-in-browser"
 );
+export const GET_UI_DATA_FROM_BROWSER = makeSelectConstant(
+    "get-ui-data-from-browser"
+);

@@ -10,6 +10,7 @@ import {
     SET_COLOR_CHANGES,
     SET_RECENT_COLORS,
     STORE_UI_DATA_IN_BROWSER,
+    GET_UI_DATA_FROM_BROWSER,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -98,5 +99,11 @@ export function storeColorsInLocalStorage(payload: UIDisplayData) {
     return {
         payload,
         type: STORE_UI_DATA_IN_BROWSER,
+    };
+}
+
+export function getColorsFromLocalStorage() {
+    return {
+        type: GET_UI_DATA_FROM_BROWSER,
     };
 }

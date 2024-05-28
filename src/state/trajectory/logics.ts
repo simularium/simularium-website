@@ -28,6 +28,7 @@ import {
 } from "../viewer/constants";
 import {
     changeTime,
+    getColorsFromLocalStorage,
     resetAgentSelectionsAndHighlights,
 } from "../selection/actions";
 import { setSimulariumController } from "../simularium/actions";
@@ -215,6 +216,9 @@ const loadNetworkedFile = createLogic({
                     })
                 );
             })
+            .then(() => {
+                dispatch(getColorsFromLocalStorage());
+            })
             .then(done)
             .catch((error: FrontEndError) => {
                 handleFileLoadError(error, dispatch);
@@ -276,6 +280,9 @@ const loadLocalFile = createLogic({
                     );
                 }
             })
+            .then(() => {
+                dispatch(getColorsFromLocalStorage());
+            })
             .then(done)
             .catch((error: FrontEndError) => {
                 handleFileLoadError(error, dispatch);
@@ -329,6 +336,9 @@ const loadFileViaUrl = createLogic({
                         simulariumController
                     )
                 );
+            })
+            .then(() => {
+                dispatch(getColorsFromLocalStorage());
                 done();
             })
             .catch((error) => {

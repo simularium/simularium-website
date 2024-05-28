@@ -2,6 +2,7 @@ import { createLogic } from "redux-logic";
 import { UIDisplayData } from "@aics/simularium-viewer";
 
 import {
+    GET_UI_DATA_FROM_BROWSER,
     SET_AGENTS_VISIBLE,
     SET_COLOR_CHANGES,
     STORE_UI_DATA_IN_BROWSER,
@@ -70,14 +71,14 @@ const restoreSessionColorsLogic = createLogic({
 
         const simulariumFile = getSimulariumFile(getState());
         const storedColorChanges = localStorage.getItem(simulariumFile.name);
-        if (storedColorChanges) {
+        if (storedColorChanges !== "undefined" && storedColorChanges !== null) {
             const uiData = JSON.parse(storedColorChanges);
             dispatch(setSessionUIData(uiData));
             dispatch(receiveAgentNamesAndStates(uiData));
             done();
         }
     },
-    type: SET_AGENTS_VISIBLE,
+    type: [SET_AGENTS_VISIBLE, GET_UI_DATA_FROM_BROWSER],
 });
 
 export default [
