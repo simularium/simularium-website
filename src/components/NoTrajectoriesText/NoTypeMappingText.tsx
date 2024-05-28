@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { TUTORIAL_PATHNAME } from "../../routes";
-import { DATA_BUCKET_URL } from "../../constants";
+import { DOWNLOAD_URL } from "../../constants";
 
 import styles from "../NoTrajectoriesText/style.css";
 
@@ -11,9 +11,7 @@ const NoTypeMappingText = (): JSX.Element => {
             <h3>Unable to load UI controls</h3>
             <p>
                 Review the{" "}
-                <a
-                    href={`${DATA_BUCKET_URL}/trajectory/endocytosis.simularium`}
-                >
+                <a href={`${DOWNLOAD_URL}/trajectory/endocytosis.simularium`}>
                     example data
                 </a>{" "}
                 or{" "}

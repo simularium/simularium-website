@@ -19,11 +19,6 @@ import selectionStateBranch from "../../state/selection";
 import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
 import {
-    VIEWER_EMPTY,
-    VIEWER_SUCCESS,
-    VIEWER_ERROR,
-} from "../../state/viewer/constants";
-import {
     ChangeTimeAction,
     SetFollowAgentDataAction,
     SetVisibleAction,
@@ -35,24 +30,32 @@ import {
     SetViewerStatusAction,
     ViewerError,
     SetErrorAction,
+    ViewerStatus,
 } from "../../state/viewer/types";
 import {
     ReceiveAction,
     LocalSimFile,
     TimeUnits,
+    ConversionStatus,
+    SetConversionStatusAction,
     SetUrlParamsAction,
 } from "../../state/trajectory/types";
 import { batchActions } from "../../state/util";
 import PlaybackControls from "../../components/PlaybackControls";
+import RecordMoviesComponent from "../../components/RecordMoviesComponent";
 import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
 import { TUTORIAL_PATHNAME } from "../../routes";
 import ErrorNotification from "../../components/ErrorNotification";
+import { MOBILE_CUTOFF } from "../../constants";
+import { hasUrlParamsSettings } from "../../util";
+import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
 
 import {
     convertUIDataToSelectionData,
     getDisplayTimes,
     getSelectionStateInfoForViewer,
+    getMovieTitle,
 } from "./selectors";
 import { AGENT_COLORS } from "./constants";
 import { DisplayTimes } from "./types";
@@ -94,6 +97,11 @@ interface ViewerPanelProps {
     error: ViewerError;
     setBuffering: ActionCreator<ToggleAction>;
     setError: ActionCreator<SetErrorAction>;
+    movieTitle: string;
+    conversionStatus: ConversionStatus;
+    setConversionStatus: ActionCreator<SetConversionStatusAction>;
+    receiveConvertedFile: ActionCreator<ReceiveAction>;
+    conversionProcessingData: ConversionProcessingData;
     setFollowAgentData: ActionCreator<SetFollowAgentDataAction>;
 }
 
@@ -102,6 +110,7 @@ interface ViewerPanelState {
     particleTypeIds: string[];
     height: number;
     width: number;
+    movieURL: string;
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -126,6 +135,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             particleTypeIds: [],
             height: 0,
             width: 0,
+            movieURL: "",
         };
     }
 
@@ -254,9 +264,22 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         setIsLooping(!isLooping);
     }
 
+    public handleIncomingConvertedFile(data: TrajectoryFileInfo) {
+        const { receiveConvertedFile, conversionProcessingData } = this.props;
+        const { fileId } = conversionProcessingData;
+        const title = data.trajectoryTitle || fileId;
+        receiveConvertedFile({
+            name: fileId,
+            title: title,
+        });
+    }
+
     public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
-        console.log("onTrajectoryFileInfoChanged", data);
-        const { receiveTrajectory, simulariumController } = this.props;
+        const { receiveTrajectory, simulariumController, conversionStatus } =
+            this.props;
+        if (conversionStatus === ConversionStatus.Active) {
+            this.handleIncomingConvertedFile(data);
+        }
         const tickIntervalLength = simulariumController.tickIntervalLength;
 
         let scaleBarLabelNumber =
@@ -307,8 +330,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setBuffering(false),
         ];
 
-        if (status !== VIEWER_SUCCESS) {
-            actions.push(setStatus({ status: VIEWER_SUCCESS }));
+        if (status !== ViewerStatus.Success) {
+            actions.push(setStatus({ status: ViewerStatus.Success }));
         }
 
         const atLastFrame =
@@ -368,6 +391,22 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
     };
 
+    public resetAfterMovieRecording = () => {
+        if (this.state.movieURL) {
+            URL.revokeObjectURL(this.state.movieURL);
+        }
+        this.setState({
+            movieURL: "",
+        });
+    };
+
+    public onRecordedMovie = (videoBlob: Blob) => {
+        const url = URL.createObjectURL(videoBlob);
+        this.setState({
+            movieURL: url,
+        });
+    };
+
     public onFollowObjectChange = (
         newFollowObject: number,
         oldFollowObject: number,
@@ -396,6 +435,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             status,
             setError,
             scaleBarLabel,
+            movieTitle,
         } = this.props;
         return (
             <div
@@ -422,34 +462,47 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                             htmlData: error.htmlData,
                         });
                         if (error.level === ErrorLevel.ERROR) {
-                            setStatus({ status: VIEWER_ERROR });
+                            setStatus({ status: ViewerStatus.Error });
                         }
                     }}
                     onTrajectoryFileInfoChanged={
                         this.onTrajectoryFileInfoChanged
                     }
+                    onRecordedMovie={this.onRecordedMovie}
                     followObjectCallback={this.onFollowObjectChange}
                 />
                 {firstFrameTime !== lastFrameTime && (
-                    <PlaybackControls
-                        playHandler={this.startPlay}
-                        time={time}
-                        timeStep={timeStep}
-                        displayTimes={displayTimes}
-                        timeUnits={timeUnits}
-                        onTimeChange={this.skipToTime}
-                        pauseHandler={this.pause}
-                        prevHandler={this.playBackOne}
-                        nextHandler={this.playForwardOne}
-                        isPlaying={isPlaying}
-                        isLooping={isLooping}
-                        loopHandler={this.toggleLooping}
-                        firstFrameTime={firstFrameTime}
-                        lastFrameTime={lastFrameTime}
-                        loading={isBuffering}
-                        isEmpty={status === VIEWER_EMPTY}
-                    />
+                    <div className={styles.bottomControlsContainer}>
+                        <PlaybackControls
+                            playHandler={this.startPlay}
+                            time={time}
+                            timeStep={timeStep}
+                            displayTimes={displayTimes}
+                            timeUnits={timeUnits}
+                            onTimeChange={this.skipToTime}
+                            pauseHandler={this.pause}
+                            prevHandler={this.playBackOne}
+                            nextHandler={this.playForwardOne}
+                            isPlaying={isPlaying}
+                            isLooping={isLooping}
+                            loopHandler={this.toggleLooping}
+                            firstFrameTime={firstFrameTime}
+                            lastFrameTime={lastFrameTime}
+                            loading={isBuffering}
+                            isEmpty={status === ViewerStatus.Empty}
+                        />
+                        <RecordMoviesComponent
+                            movieUrl={this.state.movieURL}
+                            movieTitle={movieTitle}
+                            resetAfterMovieRecording={
+                                this.resetAfterMovieRecording
+                            }
+                            startRecording={simulariumController.startRecording}
+                            stopRecording={simulariumController.stopRecording}
+                        />
+                    </div>
                 )}
+
                 <ScaleBar label={scaleBarLabel} />
                 <CameraControls
                     resetCamera={simulariumController.resetCamera}
@@ -490,6 +543,11 @@ function mapStateToProps(state: State) {
         isBuffering: viewerStateBranch.selectors.getIsBuffering(state),
         isPlaying: viewerStateBranch.selectors.getIsPlaying(state),
         isLooping: viewerStateBranch.selectors.getIsLooping(state),
+        movieTitle: getMovieTitle(state),
+        conversionStatus:
+            trajectoryStateBranch.selectors.getConversionStatus(state),
+        conversionProcessingData:
+            trajectoryStateBranch.selectors.getConversionProcessingData(state),
     };
 }
 
@@ -507,6 +565,8 @@ const dispatchToPropsMap = {
     setIsPlaying: viewerStateBranch.actions.setIsPlaying,
     setIsLooping: viewerStateBranch.actions.setIsLooping,
     setError: viewerStateBranch.actions.setError,
+    receiveConvertedFile: trajectoryStateBranch.actions.receiveConvertedFile,
+    setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
     setFollowAgentData: selectionStateBranch.actions.setFollowAgentData,
 };

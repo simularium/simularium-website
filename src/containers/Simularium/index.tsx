@@ -6,39 +6,37 @@ import queryString from "query-string";
 import { SimulariumController, ErrorLevel } from "@aics/simularium-viewer";
 import { find } from "lodash";
 
-import SideBar from "../../components/SideBar";
-import ResultsPanel from "../ResultsPanel";
-import ModelPanel from "../ModelPanel";
-import ViewerPanel from "../ViewerPanel";
 import { State } from "../../state/types";
-
 import trajectoryStateBranch from "../../state/trajectory";
 import selectionStateBranch from "../../state/selection";
 import viewerStateBranch from "../../state/viewer";
 import simulariumStateBranch from "../../state/simularium";
 import {
-    URL_PARAM_KEY_FILE_NAME,
-    URL_PARAM_KEY_USER_URL,
-} from "../../constants";
-import {
     ClearSimFileDataAction,
+    ConversionStatus,
+    InitializeConversionAction,
     LoadViaUrlAction,
     LocalSimFile,
     RequestLocalFileAction,
     RequestNetworkFileAction,
     SetUrlParamsAction,
+    CancelConversionAction,
 } from "../../state/trajectory/types";
+import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
 import {
     SetErrorAction,
     SetViewerStatusAction,
+    ViewerStatus,
 } from "../../state/viewer/types";
-import { SetSimulariumControllerAction } from "../../state/simularium/types";
-import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
 import {
     DragOverViewerAction,
     ResetDragOverViewerAction,
 } from "../../state/viewer/types";
-import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/viewer/constants";
+import { SetSimulariumControllerAction } from "../../state/simularium/types";
+import {
+    URL_PARAM_KEY_FILE_NAME,
+    URL_PARAM_KEY_USER_URL,
+} from "../../constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
 import { clearBrowserUrlParams } from "../../util";
@@ -47,6 +45,14 @@ import {
     urlCheck,
     getRedirectUrl,
 } from "../../util/userUrlHandling";
+
+import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
+import SideBar from "../../components/SideBar";
+import ResultsPanel from "../ResultsPanel";
+import ModelPanel from "../ModelPanel";
+import ViewerPanel from "../ViewerPanel";
+import ConversionForm from "../ConversionForm";
+
 const { Content } = Layout;
 
 import styles from "./style.css";
@@ -69,7 +75,11 @@ interface AppProps {
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
     setError: ActionCreator<SetErrorAction>;
+    conversionProcessingData: ConversionProcessingData;
+    conversionStatus: ConversionStatus;
+    initializeConversion: ActionCreator<InitializeConversionAction>;
     setUrlParams: ActionCreator<SetUrlParamsAction>;
+    cancelAutoconversion: ActionCreator<CancelConversionAction>;
 }
 
 interface AppState {
@@ -146,7 +156,7 @@ class App extends React.Component<AppProps, AppState> {
                         "make sure to include 'http/https' at the beginning of the url, and check for typos",
                     onClose: clearBrowserUrlParams,
                 });
-                setViewerStatus({ status: VIEWER_ERROR });
+                setViewerStatus({ status: ViewerStatus.Error });
                 setSimulariumController(controller);
             }
         };
@@ -216,7 +226,7 @@ class App extends React.Component<AppProps, AppState> {
                     key="drop"
                     clearSimulariumFile={clearSimulariumFile}
                     loadLocalFile={changeToLocalSimulariumFile}
-                    isLoading={viewerStatus === VIEWER_LOADING}
+                    isLoading={viewerStatus === ViewerStatus.Loading}
                     resetDragOverViewer={resetDragOverViewer}
                     fileIsDraggedOver={fileIsDraggedOverViewer}
                     setViewerStatus={setViewerStatus}
@@ -227,8 +237,11 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     public render(): JSX.Element {
-        const { simulariumController, changeToLocalSimulariumFile } =
-            this.props;
+        const {
+            simulariumController,
+            changeToLocalSimulariumFile,
+            conversionStatus,
+        } = this.props;
         const isEmbedded = location.pathname === EMBED_PATHNAME;
 
         return (
@@ -239,6 +252,9 @@ class App extends React.Component<AppProps, AppState> {
                 ])}
             >
                 <div ref={this.interactiveContent}>
+                    {conversionStatus !== ConversionStatus.Inactive && (
+                        <ConversionForm />
+                    )}
                     <Layout className={styles.content}>
                         {this.renderOverlay(isEmbedded)}
                         <SideBar
@@ -258,11 +274,7 @@ class App extends React.Component<AppProps, AppState> {
                                 />
                             )}
                         </Content>
-                        <SideBar
-                            onCollapse={this.onPanelCollapse}
-                            isEmbedded={isEmbedded}
-                            type="right"
-                        >
+                        <SideBar onCollapse={this.onPanelCollapse} type="right">
                             <ResultsPanel />
                         </SideBar>
                     </Layout>
@@ -281,6 +293,10 @@ function mapStateToProps(state: State) {
         fileIsDraggedOverViewer:
             viewerStateBranch.selectors.getFileDraggedOver(state),
         viewerStatus: viewerStateBranch.selectors.getStatus(state),
+        conversionStatus:
+            trajectoryStateBranch.selectors.getConversionStatus(state),
+        conversionProcessingData:
+            trajectoryStateBranch.selectors.getConversionProcessingData(state),
     };
 }
 
@@ -297,6 +313,8 @@ const dispatchToPropsMap = {
     dragOverViewer: viewerStateBranch.actions.dragOverViewer,
     setViewerStatus: viewerStateBranch.actions.setStatus,
     setError: viewerStateBranch.actions.setError,
+    initializeConversion: trajectoryStateBranch.actions.initializeConversion,
+    cancelAutoconversion: trajectoryStateBranch.actions.cancelAutoconversion,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(App);

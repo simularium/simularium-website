@@ -2,7 +2,14 @@ import axios from "axios";
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import { createLogicMiddleware } from "redux-logic";
 
-import { BASE_API_URL, DATA_BUCKET_URL } from "../constants";
+import {
+    BASE_API_URL,
+    DOWNLOAD_URL,
+    UI_TEMPLATE_DOWNLOAD_URL_ROOT,
+    UI_TEMPLATE_URL_ROOT,
+    URL_PARAM_BASE_TYPES,
+    URL_PARAM_CUSTOM_TYPES,
+} from "../constants";
 
 import {
     enableBatching,
@@ -30,8 +37,12 @@ const logics = [
 
 const reduxLogicDependencies = {
     baseApiUrl: BASE_API_URL,
-    plotDataUrl: DATA_BUCKET_URL,
+    plotDataUrl: DOWNLOAD_URL,
     httpClient: axios,
+    uiTemplateUrlRoot: UI_TEMPLATE_URL_ROOT,
+    uiTemplateDownloadUrlRoot: UI_TEMPLATE_DOWNLOAD_URL_ROOT,
+    uiBaseTypes: URL_PARAM_BASE_TYPES,
+    uiCustomTypes: URL_PARAM_CUSTOM_TYPES,
 };
 
 export default function createReduxStore(preloadedState?: State) {

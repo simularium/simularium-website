@@ -1,12 +1,5 @@
 import { ErrorLevel } from "@aics/simularium-viewer";
 
-import {
-    VIEWER_LOADING,
-    VIEWER_ERROR,
-    VIEWER_EMPTY,
-    VIEWER_SUCCESS,
-} from "./constants";
-
 export interface ViewerStateBranch {
     [key: string]: any;
 }
@@ -41,12 +34,9 @@ export interface ViewerError {
     onClose?: () => void;
 }
 
-type VIEWER_LOADING = typeof VIEWER_LOADING;
-type VIEWER_ERROR = typeof VIEWER_ERROR;
-type VIEWER_EMPTY = typeof VIEWER_EMPTY;
-type VIEWER_SUCCESS = typeof VIEWER_SUCCESS;
-export type ViewerStatus =
-    | VIEWER_LOADING
-    | VIEWER_ERROR
-    | VIEWER_EMPTY
-    | VIEWER_SUCCESS;
+export enum ViewerStatus {
+    Loading = "VIEWER_LOADING",
+    Error = "VIEWER_ERROR",
+    Empty = "VIEWER_EMPTY",
+    Success = "VIEWER_SUCCESS",
+}

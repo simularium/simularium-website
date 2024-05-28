@@ -18,4 +18,8 @@ and can be applied to elements to render the glyphs. */
     --star-dashed: "\e907";
     --star-full: "\e9d9";
     --rotate: "\e999";
+    --close: "\e90f";
+    --start-record-ring: "\e90d";
+    --start-record-circle: "\e90e";
+    --stop-record: "\e90c";
 }

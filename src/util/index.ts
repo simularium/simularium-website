@@ -2,6 +2,7 @@ import { forOwn, isFunction } from "lodash";
 import React from "react";
 import queryString from "query-string";
 import { URL_PARAM_KEY_TIME } from "../constants";
+import { IconGlyphs } from "../constants/interfaces";
 
 type AnyFunction = () => any;
 
@@ -111,4 +112,8 @@ export const roundTimeForDisplay = (time: number): number => {
         return 0;
     }
     return parseFloat(time.toPrecision(3));
+};
+
+export const getIconGlyphClasses = (name: IconGlyphs) => {
+    return `icon-moon anticon ${name}`;
 };

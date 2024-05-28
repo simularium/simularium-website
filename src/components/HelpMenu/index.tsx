@@ -1,19 +1,20 @@
 import * as React from "react";
 import { useLocation, Link } from "react-router-dom";
-import { Dropdown, Button, MenuProps } from "antd";
+import { Dropdown, MenuProps } from "antd";
 
 import { TUTORIAL_PATHNAME } from "../../routes";
-import { DownArrow } from "../Icons";
 import {
     FORUM_URL,
     FORUM_BUG_REPORT_URL,
     GITHUB_URL,
     ISSUE_URL,
 } from "../../constants";
+import { ButtonClass } from "../../constants/interfaces";
+import { DownArrow } from "../Icons";
+import VersionModal from "../VersionModal";
+import NavButton from "../NavButton";
 
 import styles from "./style.css";
-
-import VersionModal from "../VersionModal";
 
 const HelpMenu = (): JSX.Element => {
     const [modalVisible, setModalVisible] = React.useState(false);
@@ -102,9 +103,11 @@ const HelpMenu = (): JSX.Element => {
     return (
         <>
             <Dropdown menu={{ items, theme: "dark", className: styles.menu }}>
-                <Button onClick={(e) => e.preventDefault()} type="ghost">
-                    Help {DownArrow}
-                </Button>
+                <NavButton
+                    titleText={"Help "}
+                    icon={DownArrow}
+                    buttonType={ButtonClass.Secondary}
+                />
             </Dropdown>
             {modalVisible && <VersionModal setModalVisible={setModalVisible} />}
         </>

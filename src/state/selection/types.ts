@@ -30,13 +30,31 @@ export interface HighlightAgentAction {
     payload: string;
     type: string;
 }
-
-export interface VisibilitySelectionMap {
+/**
+ * AgentRenderingCheckboxMap represents the state of the visibility checkboxes
+ * and the highlight checkboxes
+ * In the case of agents with no displaystates/children:
+ * {
+ *    [agentName]: ["agentName"]
+ * }
+ * means that checkbox is currently checked. The agent name is basically treated
+ * as a display state
+ *
+ *
+ * in the case of agents with children:
+ * {
+ *     [agentName]: [...everyChild]
+ * }
+ * means the parent and all the children are current checked. The parent is the key
+ * in the map, but not included as a name because it's only the title and not an actual
+ * agent state
+ */
+export interface AgentRenderingCheckboxMap {
     [key: string]: string[];
 }
 
 export interface SetVisibleAction {
-    payload: VisibilitySelectionMap;
+    payload: AgentRenderingCheckboxMap;
     type: string;
 }
 

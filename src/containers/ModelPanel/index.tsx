@@ -30,7 +30,7 @@ import {
     ChangeAgentsRenderingStateAction,
     SetColorChangeAction,
     SetVisibleAction,
-    VisibilitySelectionMap,
+    AgentRenderingCheckboxMap,
     SetRecentColorsAction,
 } from "../../state/selection/types";
 import CheckBoxTree, { AgentDisplayNode } from "../../components/AgentTree";
@@ -39,12 +39,6 @@ import {
     getSelectNoneVisibilityMap,
     getIsSharedCheckboxIndeterminate,
 } from "./selectors";
-import {
-    VIEWER_EMPTY,
-    VIEWER_ERROR,
-    VIEWER_LOADING,
-    VIEWER_SUCCESS,
-} from "../../state/viewer/constants";
 import NoTrajectoriesText from "../../components/NoTrajectoriesText";
 import { RequestNetworkFileAction } from "../../state/trajectory/types";
 import { ViewerStatus } from "../../state/viewer/types";
@@ -59,13 +53,13 @@ import { AgentData } from "@aics/simularium-viewer/type-declarations/simularium/
 
 interface ModelPanelProps {
     uiDisplayDataTree: AgentDisplayNode[];
-    agentHighlightMap: VisibilitySelectionMap;
-    agentVisibilityMap: VisibilitySelectionMap;
+    agentHighlightMap: AgentRenderingCheckboxMap;
+    agentVisibilityMap: AgentRenderingCheckboxMap;
     turnAgentsOnByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
     highlightAgentsByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
     setAgentsVisible: ActionCreator<SetVisibleAction>;
-    payloadForSelectAll: VisibilitySelectionMap;
-    payloadForSelectNone: VisibilitySelectionMap;
+    payloadForSelectAll: AgentRenderingCheckboxMap;
+    payloadForSelectNone: AgentRenderingCheckboxMap;
     isSharedCheckboxIndeterminate: boolean;
     viewerStatus: ViewerStatus;
     isNetworkedFile: boolean;
@@ -116,10 +110,12 @@ class ModelPanel extends React.Component<ModelPanelProps> {
             />
         );
         const contentMap = {
-            [VIEWER_SUCCESS]: checkboxTree,
-            [VIEWER_EMPTY]: <NoTrajectoriesText selectFile={loadNetworkFile} />,
-            [VIEWER_LOADING]: <div />,
-            [VIEWER_ERROR]: isNetworkedFile ? (
+            [ViewerStatus.Success]: checkboxTree,
+            [ViewerStatus.Empty]: (
+                <NoTrajectoriesText selectFile={loadNetworkFile} />
+            ),
+            [ViewerStatus.Loading]: <div />,
+            [ViewerStatus.Error]: isNetworkedFile ? (
                 <NetworkFileFailedText />
             ) : (
                 <NoTypeMappingText />

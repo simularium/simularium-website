@@ -7,17 +7,20 @@ import TRAJECTORIES from "../../constants/networked-trajectories";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import {
     ClearSimFileDataAction,
+    ConversionStatus,
     RequestLocalFileAction,
     RequestNetworkFileAction,
+    SetConversionStatusAction,
 } from "../../state/trajectory/types";
-import { TrajectoryDisplayData } from "../../constants/interfaces";
-import { VIEWER_PATHNAME } from "../../routes";
-import FileUploadModal from "../FileUploadModal";
-import { DownArrow } from "../Icons";
 import {
     SetErrorAction,
     SetViewerStatusAction,
 } from "../../state/viewer/types";
+import { ButtonClass, TrajectoryDisplayData } from "../../constants/interfaces";
+import { VIEWER_PATHNAME } from "../../routes";
+import { DownArrow } from "../Icons";
+import FileUploadModal from "../FileUploadModal";
+import NavButton from "../NavButton";
 
 import styles from "./style.css";
 
@@ -28,15 +31,19 @@ interface LoadFileMenuProps {
     loadLocalFile: ActionCreator<RequestLocalFileAction>;
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     setError: ActionCreator<SetErrorAction>;
+    conversionStatus: ConversionStatus;
+    setConversionStatus: ActionCreator<SetConversionStatusAction>;
 }
 
 const LoadFileMenu = ({
-    isBuffering,
     clearSimulariumFile,
+    isBuffering,
     loadLocalFile,
     selectFile,
     setViewerStatus,
     setError,
+    conversionStatus,
+    setConversionStatus,
 }: LoadFileMenuProps): JSX.Element => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const location = useLocation();
@@ -47,6 +54,10 @@ const LoadFileMenu = ({
             history.push(VIEWER_PATHNAME);
         }
         setIsModalVisible(true);
+    };
+
+    const openConversionForm = () => {
+        setConversionStatus({ status: ConversionStatus.NoServer });
     };
 
     const onClick = (trajectoryData: TrajectoryDisplayData) => {
@@ -88,22 +99,35 @@ const LoadFileMenu = ({
                 </Button>
             ),
         },
+        {
+            key: "file-convert",
+            label: (
+                <Link
+                    onClick={openConversionForm}
+                    to={{ pathname: VIEWER_PATHNAME }}
+                >
+                    Import other file type
+                </Link>
+            ),
+        },
     ];
+
+    const isDisabled =
+        isBuffering || conversionStatus !== ConversionStatus.Inactive;
 
     return (
         <>
             <Dropdown
                 menu={{ items, theme: "dark", className: styles.menu }}
                 placement="bottomRight"
-                disabled={isBuffering}
+                disabled={isDisabled}
             >
-                <Button
-                    className="ant-dropdown-link"
-                    onClick={(e) => e.preventDefault()}
-                    type="primary"
-                >
-                    Load model {DownArrow}
-                </Button>
+                <NavButton
+                    titleText={"Load model"}
+                    icon={DownArrow}
+                    buttonType={ButtonClass.Primary}
+                    isDisabled={isDisabled}
+                />
             </Dropdown>
             {/* 
                 Conditionally rendering the modal this way instead of as a `visible` prop

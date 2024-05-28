@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useHotkeys, useIsHotkeyPressed } from "react-hotkeys-hook";
 
+import { IconGlyphs } from "../../constants/interfaces";
+import { getIconGlyphClasses } from "../../util";
 import { ZoomIn, ZoomOut } from "../Icons";
 import ViewportButton from "../ViewportButton";
 
@@ -161,7 +163,7 @@ const CameraControls = ({
                         mode === ROTATE ? "Rotate" : "Rotate (hold SHIFT)"
                     }
                     tooltipPlacement="left"
-                    icon={"rotate-icon"}
+                    icon={getIconGlyphClasses(IconGlyphs.Rotate)}
                     radioGroupPosition={"top"}
                     clickHandler={() => setMode(ROTATE)}
                     active={mode === ROTATE}
@@ -169,7 +171,7 @@ const CameraControls = ({
                 <ViewportButton
                     tooltipText={mode === PAN ? "Pan" : "Pan (hold SHIFT)"}
                     tooltipPlacement="left"
-                    icon={"pan-icon"}
+                    icon={getIconGlyphClasses(IconGlyphs.Pan)}
                     radioGroupPosition={"bottom"}
                     clickHandler={() => setMode(PAN)}
                     active={mode === PAN}
@@ -178,7 +180,7 @@ const CameraControls = ({
             <ViewportButton
                 tooltipText={"Focus (F)"}
                 tooltipPlacement="left"
-                icon={"focus-icon"}
+                icon={getIconGlyphClasses(IconGlyphs.Focus)}
                 clickHandler={() => {
                     saveFocusMode(!isFocused);
                 }}
@@ -188,7 +190,7 @@ const CameraControls = ({
                 <ViewportButton
                     tooltipText={"Orthographic Camera"}
                     tooltipPlacement="left"
-                    icon={"orthographic-icon"}
+                    icon={getIconGlyphClasses(IconGlyphs.Orthographic)}
                     radioGroupPosition={"top"}
                     clickHandler={() => {
                         setCameraProjectionType(ORTHOGRAPHIC);
@@ -198,7 +200,7 @@ const CameraControls = ({
                 <ViewportButton
                     tooltipText={"Perspective Camera"}
                     tooltipPlacement="left"
-                    icon={"perspective-icon"}
+                    icon={getIconGlyphClasses(IconGlyphs.Perspective)}
                     radioGroupPosition={"bottom"}
                     clickHandler={() => {
                         setCameraProjectionType(PERSPECTIVE);
@@ -209,7 +211,7 @@ const CameraControls = ({
             <ViewportButton
                 tooltipText={"Home view (H)"}
                 tooltipPlacement="left"
-                icon={"reset-icon"}
+                icon={getIconGlyphClasses(IconGlyphs.Reset)}
                 clickHandler={resetCamera}
             />
         </div>

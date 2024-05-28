@@ -12,7 +12,15 @@ import {
     CLEAR_SIMULARIUM_FILE,
     LOAD_FILE_VIA_URL,
     SET_URL_PARAMS,
+    INITIALIZE_CONVERSION,
+    SET_CONVERSION_ENGINE,
+    RECEIVE_FILE_TO_CONVERT,
+    SET_CONVERSION_STATUS,
+    CONVERT_FILE,
+    RECEIVE_CONVERTED_FILE,
+    CANCEL_CONVERSION,
 } from "./constants";
+import { AvailableEngines } from "./conversion-data-types";
 import {
     TrajectoryStateBranch,
     ReceiveAction,
@@ -25,6 +33,13 @@ import {
     ClearSimFileDataAction,
     LoadViaUrlAction,
     SetUrlParamsAction,
+    InitializeConversionAction,
+    SetConversionEngineAction,
+    ReceiveFileToConvertAction,
+    SetConversionStatusAction,
+    ConvertFileAction,
+    ConversionStatus,
+    CancelConversionAction,
 } from "./types";
 
 export function receiveTrajectory(
@@ -125,5 +140,59 @@ export function loadViaUrl(
 export function setUrlParams(): SetUrlParamsAction {
     return {
         type: SET_URL_PARAMS,
+    };
+}
+
+export function setConversionStatus(payload: {
+    status: ConversionStatus;
+}): SetConversionStatusAction {
+    return {
+        payload,
+        type: SET_CONVERSION_STATUS,
+    };
+}
+
+export function initializeConversion(): InitializeConversionAction {
+    return {
+        type: INITIALIZE_CONVERSION,
+    };
+}
+
+export function receiveFileToConvert(
+    fileContents: string,
+    fileName: string
+): ReceiveFileToConvertAction {
+    return {
+        type: RECEIVE_FILE_TO_CONVERT,
+        payload: { fileContents, fileName },
+    };
+}
+
+export function setConversionEngine(
+    payload: AvailableEngines
+): SetConversionEngineAction {
+    return {
+        payload,
+        type: SET_CONVERSION_ENGINE,
+    };
+}
+
+export function convertFile(payload: { fileId: string }): ConvertFileAction {
+    return {
+        payload,
+        type: CONVERT_FILE,
+    };
+}
+
+export function receiveConvertedFile(payload: NetworkedSimFile): ReceiveAction {
+    return {
+        payload,
+        type: RECEIVE_CONVERTED_FILE,
+    };
+}
+
+export function cancelAutoconversion(): CancelConversionAction {
+    return {
+        type: CANCEL_CONVERSION,
     };
 }
