@@ -5,7 +5,6 @@ import { createLogicMiddleware } from "redux-logic";
 import {
     BASE_API_URL,
     DATA_BUCKET_URL,
-    DOWNLOAD_URL,
     UI_TEMPLATE_DOWNLOAD_URL_ROOT,
     UI_TEMPLATE_URL_ROOT,
     URL_PARAM_BASE_TYPES,
