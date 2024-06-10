@@ -18,6 +18,7 @@ import {
     SET_CONVERSION_STATUS,
     CONVERT_FILE,
     SET_SESSION_UI_DATA,
+    SET_DEFAULT_UI_DATA,
 } from "./constants";
 import { AvailableEngines } from "./conversion-data-types";
 import {
@@ -39,6 +40,7 @@ import {
     SetConversionStatusAction,
     ConvertFileAction,
     SetSessionUIDataAction,
+    SetDefaultUIDataAction,
 } from "./types";
 
 export function receiveTrajectory(
@@ -77,7 +79,6 @@ export function receiveAgentTypeIds(
 export function receiveAgentNamesAndStates(
     payload: TrajectoryStateBranch
 ): ReceiveAction {
-    console.log("payload in receiveAgentNamesAndStates", payload);
     return {
         payload,
         type: RECEIVE_AGENT_NAMES,
@@ -189,5 +190,14 @@ export function setSessionUIData(
     return {
         payload,
         type: SET_SESSION_UI_DATA,
+    };
+}
+
+export function setDefaultUIData(
+    payload: UIDisplayData
+): SetDefaultUIDataAction {
+    return {
+        payload,
+        type: SET_DEFAULT_UI_DATA,
     };
 }

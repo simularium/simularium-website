@@ -15,6 +15,7 @@ import {
     SET_CONVERSION_STATUS,
     CONVERSION_INACTIVE,
     SET_SESSION_UI_DATA,
+    SET_DEFAULT_UI_DATA,
 } from "./constants";
 import {
     TrajectoryStateBranch,
@@ -25,6 +26,7 @@ import {
     SetConversionEngineAction,
     SetConversionStatusAction,
     SetSessionUIDataAction,
+    SetDefaultUIDataAction,
 } from "./types";
 
 export const initialState = {
@@ -50,6 +52,7 @@ export const initialState = {
         fileName: "",
     },
     sessionUIData: [],
+    defaultUIData: [],
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -159,6 +162,19 @@ const actionToConfigMap: TypeToDescriptionMap = {
             return {
                 ...state,
                 sessionUIData: action.payload,
+            };
+        },
+    },
+    [SET_DEFAULT_UI_DATA]: {
+        accepts: (action: AnyAction): action is SetDefaultUIDataAction =>
+            action.type === SET_DEFAULT_UI_DATA,
+        perform: (
+            state: TrajectoryStateBranch,
+            action: SetDefaultUIDataAction
+        ) => {
+            return {
+                ...state,
+                defaultUIData: action.payload,
             };
         },
     },

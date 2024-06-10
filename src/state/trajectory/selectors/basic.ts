@@ -20,3 +20,5 @@ export const getConversionStatus = (state: State) =>
     state.trajectory.conversionStatus;
 export const getSessionUIData = (state: State) =>
     state.trajectory.sessionUIData;
+export const getDefaultUIData = (state: State) =>
+    state.trajectory.defaultUIData;

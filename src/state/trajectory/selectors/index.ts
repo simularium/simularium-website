@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { find } from "lodash";
+import { find, isEqual } from "lodash";
 import { UIDisplayData } from "@aics/simularium-viewer";
 
 import {
@@ -9,7 +9,12 @@ import {
 } from "../types";
 
 import TRAJECTORIES from "../../../constants/networked-trajectories";
-import { getSimulariumFile, getAgentDisplayNamesAndStates } from "./basic";
+import {
+    getSimulariumFile,
+    getAgentDisplayNamesAndStates,
+    getDefaultUIData,
+    getSessionUIData,
+} from "./basic";
 
 export const getIsNetworkedFile = createSelector(
     [getSimulariumFile],
@@ -44,6 +49,16 @@ export const getUiDisplayDataTree = createSelector(
                   ]
                 : [],
         }));
+    }
+);
+
+export const getDefaultUISettingsApplied = createSelector(
+    [getSessionUIData, getDefaultUIData],
+    (sessionUIData, defaultUIData) => {
+        if (sessionUIData.length === 0) {
+            return true;
+        }
+        return isEqual(sessionUIData, defaultUIData);
     }
 );
 

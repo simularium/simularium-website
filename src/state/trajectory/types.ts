@@ -126,6 +126,11 @@ export interface SetSessionUIDataAction {
     type: string;
 }
 
+export interface SetDefaultUIDataAction {
+    payload: UIDisplayData;
+    type: string;
+}
+
 export type ConversionStatus =
     | typeof CONVERSION_INACTIVE
     | typeof CONVERSION_NO_SERVER
