@@ -26,7 +26,6 @@ import {
 } from "../../state/viewer/constants";
 import {
     ChangeTimeAction,
-    SetColorChangeAction,
     SetVisibleAction,
 } from "../../state/selection/types";
 import {
@@ -45,6 +44,7 @@ import {
     SetConversionStatusAction,
     SetUrlParamsAction,
     NetworkedSimFile,
+    SetDefaultUIDataAction,
 } from "../../state/trajectory/types";
 import { CONVERSION_INACTIVE } from "../../state/trajectory/constants";
 import { batchActions } from "../../state/util";
@@ -103,10 +103,9 @@ interface ViewerPanelProps {
     movieTitle: string;
     conversionStatus: ConversionStatus;
     setConversionStatus: ActionCreator<SetConversionStatusAction>;
-    sessionColorChanges: ColorChange[];
     simulariumFile: NetworkedSimFile;
-    setColorChange: ActionCreator<SetColorChangeAction>;
     sessionUIData: UIDisplayData;
+    setDefaultUIData: ActionCreator<SetDefaultUIDataAction>;
 }
 
 interface ViewerPanelState {
@@ -366,14 +365,24 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         simulariumController.gotoTime(time);
     }
 
-    public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
-        const { receiveAgentNamesAndStates, setAgentsVisible } = this.props;
+    public handleUiDisplayDataChanged = (
+        uiData: UIDisplayData,
+        setDefault = false
+    ) => {
+        const {
+            receiveAgentNamesAndStates,
+            setAgentsVisible,
+            setDefaultUIData,
+        } = this.props;
 
         const selectedAgents = convertUIDataToSelectionData(uiData);
         const actions = [
             receiveAgentNamesAndStates(uiData),
             setAgentsVisible(selectedAgents),
         ];
+        if (setDefault) {
+            actions.push(setDefaultUIData(uiData));
+        }
         batchActions(actions);
     };
 
@@ -531,8 +540,6 @@ function mapStateToProps(state: State) {
         movieTitle: getMovieTitle(state),
         conversionStatus:
             trajectoryStateBranch.selectors.getConversionStatus(state),
-        sessionColorChanges:
-            selectionStateBranch.selectors.getSessionColorChanges(state),
         simulariumFile:
             trajectoryStateBranch.selectors.getSimulariumFile(state),
         sessionUIData: trajectoryStateBranch.selectors.getSessionUIData(state),
@@ -555,7 +562,7 @@ const dispatchToPropsMap = {
     setError: viewerStateBranch.actions.setError,
     setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
-    setColorChange: selectionStateBranch.actions.setColorChange,
+    setDefaultUIData: trajectoryStateBranch.actions.setDefaultUIData,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);

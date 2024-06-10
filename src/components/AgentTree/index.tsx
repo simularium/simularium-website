@@ -3,13 +3,14 @@ import { Col, Row, Typography } from "antd";
 import { ActionCreator } from "redux";
 import { CheckboxChangeEvent, CheckboxOptionType } from "antd/lib/checkbox";
 import { map, filter, isEmpty } from "lodash";
+import { ColorChange } from "@aics/simularium-viewer";
 
 import {
     ChangeAgentsRenderingStateAction,
-    SetColorChangeAction,
     SetRecentColorsAction,
     SetVisibleAction,
     AgentRenderingCheckboxMap,
+    StoreUIDataInBrowserAction,
 } from "../../state/selection/types";
 import SharedCheckbox from "../SharedCheckbox";
 import AgentTreeSubmenu from "../AgentTreeSubmenu";
@@ -45,8 +46,9 @@ interface AgentTreeProps {
     payloadForSelectNone: AgentRenderingCheckboxMap;
     isSharedCheckboxIndeterminate: boolean;
     recentColors: string[];
-    setColorChange: ActionCreator<SetColorChangeAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
+    storeColorsInLocalStorage: ActionCreator<StoreUIDataInBrowserAction>;
+    changeColor: (change: ColorChange) => void;
 }
 const CHECKBOX_SPAN_NO = 2;
 import styles from "./style.css";
@@ -214,7 +216,12 @@ class AgentTree extends React.Component<AgentTreeProps> {
     };
 
     renderParentColorPicker = (nodeData: AgentDisplayNode) => {
-        const { recentColors, setColorChange, setRecentColors } = this.props;
+        const {
+            recentColors,
+            setRecentColors,
+            changeColor,
+            storeColorsInLocalStorage,
+        } = this.props;
         const childrenHaveDifferentColors = !nodeData.children.every(
             (el) =>
                 el.color.toLowerCase() ===
@@ -227,8 +234,9 @@ class AgentTree extends React.Component<AgentTreeProps> {
                 agentName={nodeData.title}
                 tags={this.getAgentTags(nodeData.title)}
                 recentColors={recentColors}
-                setColorChange={setColorChange}
+                storeColorsInLocalStorage={storeColorsInLocalStorage}
                 setRecentColors={setRecentColors}
+                changeColor={changeColor}
             />
         );
     };
@@ -237,15 +245,21 @@ class AgentTree extends React.Component<AgentTreeProps> {
         nodeData: AgentDisplayNode,
         value: CheckBoxWithColor
     ) => {
-        const { recentColors, setColorChange, setRecentColors } = this.props;
+        const {
+            recentColors,
+            setRecentColors,
+            changeColor,
+            storeColorsInLocalStorage,
+        } = this.props;
         return (
             <ColorPicker
                 selectedColor={value.color || nodeData.color}
                 agentName={nodeData.title}
                 tags={[value.value as string]}
                 recentColors={recentColors}
-                setColorChange={setColorChange}
                 setRecentColors={setRecentColors}
+                storeColorsInLocalStorage={storeColorsInLocalStorage}
+                changeColor={changeColor}
             />
         );
     };

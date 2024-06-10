@@ -1,54 +1,73 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
+import {
+    ColorChange,
+    SimulariumController,
+    UIDisplayData,
+} from "@aics/simularium-viewer";
 
-import SideBarContents from "../../components/SideBarContents";
-import {
-    requestTrajectory,
-    changeToNetworkedFile,
-} from "../../state/trajectory/actions";
-import {
-    getUiDisplayDataTree,
-    getIsNetworkedFile,
-} from "../../state/trajectory/selectors";
-import { getStatus } from "../../state/viewer/selectors";
 import { State } from "../../state/types";
-import {
-    getAgentVisibilityMap,
-    getAgentHighlightMap,
-    getRecentColors,
-} from "../../state/selection/selectors";
-import {
-    turnAgentsOnByDisplayKey,
-    highlightAgentsByDisplayKey,
-    setAgentsVisible,
-    setColorChange,
-    setRecentColors,
-} from "../../state/selection/actions";
-import {
-    ChangeAgentsRenderingStateAction,
-    SetColorChangeAction,
-    SetVisibleAction,
-    AgentRenderingCheckboxMap,
-    SetRecentColorsAction,
-} from "../../state/selection/types";
-import CheckBoxTree, { AgentDisplayNode } from "../../components/AgentTree";
-import {
-    getSelectAllVisibilityMap,
-    getSelectNoneVisibilityMap,
-    getIsSharedCheckboxIndeterminate,
-} from "./selectors";
+import { getSimulariumController } from "../../state/simularium/selectors";
+import { getStatus } from "../../state/viewer/selectors";
+import { ViewerStatus } from "../../state/viewer/types";
 import {
     VIEWER_EMPTY,
     VIEWER_ERROR,
     VIEWER_LOADING,
     VIEWER_SUCCESS,
 } from "../../state/viewer/constants";
-import NoTrajectoriesText from "../../components/NoTrajectoriesText";
-import { RequestNetworkFileAction } from "../../state/trajectory/types";
-import { ViewerStatus } from "../../state/viewer/types";
+import {
+    ReceiveAction,
+    RequestNetworkFileAction,
+} from "../../state/trajectory/types";
+import {
+    requestTrajectory,
+    changeToNetworkedFile,
+    receiveAgentNamesAndStates,
+} from "../../state/trajectory/actions";
+import {
+    getUiDisplayDataTree,
+    getIsNetworkedFile,
+    getDefaultUISettingsApplied,
+    getDefaultUIData,
+    getSessionUIData,
+} from "../../state/trajectory/selectors";
+import {
+    ChangeAgentsRenderingStateAction,
+    SetVisibleAction,
+    AgentRenderingCheckboxMap,
+    SetRecentColorsAction,
+    ResetAction,
+    StoreUIDataInBrowserAction,
+} from "../../state/selection/types";
+import {
+    turnAgentsOnByDisplayKey,
+    highlightAgentsByDisplayKey,
+    setAgentsVisible,
+    setRecentColors,
+    clearSessionColorsFromStateAndBrowser,
+    storeColorsInLocalStorage,
+} from "../../state/selection/actions";
+import {
+    getAgentVisibilityMap,
+    getAgentHighlightMap,
+    getRecentColors,
+} from "../../state/selection/selectors";
+
+import CheckBoxTree, { AgentDisplayNode } from "../../components/AgentTree";
+import SideBarContents from "../../components/SideBarContents";
 import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFileFailedText";
 import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
+import NoTrajectoriesText from "../../components/NoTrajectoriesText";
+import NavButton from "../../components/NavButton";
+import { ButtonClass } from "../../constants/interfaces";
+
+import {
+    getSelectAllVisibilityMap,
+    getSelectNoneVisibilityMap,
+    getIsSharedCheckboxIndeterminate,
+} from "./selectors";
 
 import styles from "./style.css";
 
@@ -59,6 +78,7 @@ interface ModelPanelProps {
     turnAgentsOnByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
     highlightAgentsByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
     setAgentsVisible: ActionCreator<SetVisibleAction>;
+    receiveAgentNamesAndStates: ActionCreator<ReceiveAction>;
     payloadForSelectAll: AgentRenderingCheckboxMap;
     payloadForSelectNone: AgentRenderingCheckboxMap;
     isSharedCheckboxIndeterminate: boolean;
@@ -66,71 +86,103 @@ interface ModelPanelProps {
     isNetworkedFile: boolean;
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
     recentColors: string[];
-    setColorChange: ActionCreator<SetColorChangeAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
+    storeColorsInLocalStorage: ActionCreator<StoreUIDataInBrowserAction>;
+    simulariumController: SimulariumController;
+    clearSessionColorsFromStateAndBrowser: ActionCreator<ResetAction>;
+    defaultUiSettingsApplied: boolean;
+    defaultUIData: UIDisplayData;
+    sessionUIData: UIDisplayData;
 }
 
-class ModelPanel extends React.Component<ModelPanelProps> {
-    public render(): JSX.Element {
-        const {
-            agentVisibilityMap,
-            uiDisplayDataTree,
-            turnAgentsOnByDisplayKey,
-            highlightAgentsByDisplayKey,
-            agentHighlightMap,
-            setAgentsVisible,
-            payloadForSelectAll,
-            payloadForSelectNone,
-            isSharedCheckboxIndeterminate,
-            viewerStatus,
-            isNetworkedFile,
-            changeToNetworkedFile: loadNetworkFile,
-            recentColors,
-            setColorChange,
-            setRecentColors,
-        } = this.props;
-        const checkboxTree = (
-            <CheckBoxTree
-                treeData={uiDisplayDataTree}
-                handleAgentCheck={turnAgentsOnByDisplayKey}
-                agentsChecked={agentVisibilityMap}
-                handleHighlight={highlightAgentsByDisplayKey}
-                agentsHighlighted={agentHighlightMap}
-                setAgentsVisible={setAgentsVisible}
-                payloadForSelectAll={payloadForSelectAll}
-                payloadForSelectNone={payloadForSelectNone}
-                isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
-                recentColors={recentColors}
-                setColorChange={setColorChange}
-                setRecentColors={setRecentColors}
+const ModelPanel: React.FC<ModelPanelProps> = ({
+    agentVisibilityMap,
+    uiDisplayDataTree,
+    turnAgentsOnByDisplayKey,
+    highlightAgentsByDisplayKey,
+    agentHighlightMap,
+    setAgentsVisible,
+    payloadForSelectAll,
+    payloadForSelectNone,
+    isSharedCheckboxIndeterminate,
+    viewerStatus,
+    isNetworkedFile,
+    changeToNetworkedFile: loadNetworkFile,
+    recentColors,
+    setRecentColors,
+    simulariumController,
+    clearSessionColorsFromStateAndBrowser,
+    storeColorsInLocalStorage,
+    defaultUiSettingsApplied,
+    defaultUIData,
+    sessionUIData,
+}) => {
+    const checkboxTree = (
+        <CheckBoxTree
+            treeData={uiDisplayDataTree}
+            handleAgentCheck={turnAgentsOnByDisplayKey}
+            agentsChecked={agentVisibilityMap}
+            handleHighlight={highlightAgentsByDisplayKey}
+            agentsHighlighted={agentHighlightMap}
+            setAgentsVisible={setAgentsVisible}
+            payloadForSelectAll={payloadForSelectAll}
+            payloadForSelectNone={payloadForSelectNone}
+            isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
+            recentColors={recentColors}
+            setRecentColors={setRecentColors}
+            changeColor={(colorChange: ColorChange) =>
+                simulariumController.applyColorChange(colorChange)
+            }
+            storeColorsInLocalStorage={storeColorsInLocalStorage}
+        />
+    );
+
+    const contentMap = {
+        [VIEWER_SUCCESS]: checkboxTree,
+        [VIEWER_EMPTY]: <NoTrajectoriesText selectFile={loadNetworkFile} />,
+        [VIEWER_LOADING]: <div />,
+        [VIEWER_ERROR]: isNetworkedFile ? (
+            <NetworkFileFailedText />
+        ) : (
+            <NoTypeMappingText />
+        ),
+    };
+    return (
+        <div className={styles.container}>
+            <SideBarContents
+                mainTitle="Agents"
+                content={[
+                    <div className={styles.container} key="molecules">
+                        {contentMap[viewerStatus]}
+                        {!defaultUiSettingsApplied && (
+                            <NavButton
+                                titleText={"Restore color defaults"}
+                                buttonType={ButtonClass.Action}
+                                clickHandler={() => {
+                                    clearSessionColorsFromStateAndBrowser();
+                                    simulariumController.applyColorSettings(
+                                        defaultUIData
+                                    );
+                                }}
+                                onMouseEnter={() =>
+                                    simulariumController.applyColorSettings(
+                                        defaultUIData
+                                    )
+                                }
+                                onMouseLeave={() => {
+                                    simulariumController.applyColorSettings(
+                                        sessionUIData
+                                    );
+                                }}
+                            />
+                        )}
+                    </div>,
+                    null,
+                ]}
             />
-        );
-        const contentMap = {
-            [VIEWER_SUCCESS]: checkboxTree,
-            [VIEWER_EMPTY]: <NoTrajectoriesText selectFile={loadNetworkFile} />,
-            [VIEWER_LOADING]: <div />,
-            [VIEWER_ERROR]: isNetworkedFile ? (
-                <NetworkFileFailedText />
-            ) : (
-                <NoTypeMappingText />
-            ),
-        };
-
-        return (
-            <div className={styles.container}>
-                <SideBarContents
-                    mainTitle="Agents"
-                    content={[
-                        <div className={styles.container} key="molecules">
-                            {contentMap[viewerStatus]}
-                        </div>,
-                        null,
-                    ]}
-                />
-            </div>
-        );
-    }
-}
+        </div>
+    );
+};
 
 function mapStateToProps(state: State) {
     return {
@@ -143,6 +195,10 @@ function mapStateToProps(state: State) {
         viewerStatus: getStatus(state),
         isNetworkedFile: getIsNetworkedFile(state),
         recentColors: getRecentColors(state),
+        simulariumController: getSimulariumController(state),
+        defaultUiSettingsApplied: getDefaultUISettingsApplied(state),
+        defaultUIData: getDefaultUIData(state),
+        sessionUIData: getSessionUIData(state),
     };
 }
 
@@ -152,8 +208,10 @@ const dispatchToPropsMap = {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
     setAgentsVisible,
-    setColorChange,
     setRecentColors,
+    receiveAgentNamesAndStates,
+    clearSessionColorsFromStateAndBrowser,
+    storeColorsInLocalStorage,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ModelPanel);

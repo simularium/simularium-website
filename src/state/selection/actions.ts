@@ -1,4 +1,4 @@
-import { ColorChange, UIDisplayData } from "@aics/simularium-viewer";
+import { ColorChange } from "@aics/simularium-viewer";
 import {
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
@@ -7,10 +7,10 @@ import {
     HIGHLIGHT_AGENTS_BY_KEY,
     SET_AGENTS_VISIBLE,
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
-    SET_COLOR_CHANGES,
     SET_RECENT_COLORS,
     STORE_UI_DATA_IN_BROWSER,
     GET_UI_DATA_FROM_BROWSER,
+    CLEAR_UI_DATA_FROM_BROWSER_AND_STATE,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -19,8 +19,8 @@ import {
     SetVisibleAction,
     AgentRenderingCheckboxMap,
     ResetAction,
-    SetColorChangeAction,
     SetRecentColorsAction,
+    StoreUIDataInBrowserAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -64,13 +64,6 @@ export function highlightAgentsByDisplayKey(
     };
 }
 
-export function setColorChange(colorChange: ColorChange): SetColorChangeAction {
-    return {
-        payload: colorChange,
-        type: SET_COLOR_CHANGES,
-    };
-}
-
 export function selectMetadata(
     key: string,
     payload: string | number
@@ -95,11 +88,17 @@ export function setRecentColors(colors: string[]): SetRecentColorsAction {
     };
 }
 
-export function storeColorsInLocalStorage(payload: UIDisplayData) {
+export function storeColorsInLocalStorage(
+    payload: ColorChange
+): StoreUIDataInBrowserAction {
     return {
         payload,
         type: STORE_UI_DATA_IN_BROWSER,
     };
+}
+
+export function clearSessionColorsFromStateAndBrowser(): ResetAction {
+    return { type: CLEAR_UI_DATA_FROM_BROWSER_AND_STATE };
 }
 
 export function getColorsFromLocalStorage() {
