@@ -49,35 +49,7 @@ const PlayBackControls = ({
     timeUnits,
     isEmpty,
 }: PlayBackProps): JSX.Element => {
-    // Where to resume playing if simulation was playing before scrubbing
-    const [timeToResumeAfterScrubbing, setTimeToResumeAfterScrubbing] =
-        useState(-1);
     const [timeInput, setTimeInput] = useState(firstFrameTime);
-
-    // - Gets called once when the user clicks on the slider to skip to a specific time
-    // - Gets called multiple times when user is scrubbing (every time the play head
-    //     passes through a time value associated with a frame)
-    const handleTimeChange = (sliderValue: number): void => {
-        onTimeChange(sliderValue);
-        if (isPlaying) {
-            // Need to save the sliderValue as timeToResumeAfterScrubbing to use in handleSliderMouseUp,
-            // because the sliderValue argument available in handleSliderMouseUp is not accurate
-            // when the time between mouse down and mouse up is short.
-            setTimeToResumeAfterScrubbing(sliderValue);
-            pauseHandler();
-        } else if (timeToResumeAfterScrubbing >= 0) {
-            // Update value if user is still dragging
-            setTimeToResumeAfterScrubbing(sliderValue);
-        }
-    };
-
-    const handleSliderMouseUp = (): void => {
-        // Resume playing if simulation was playing before
-        if (timeToResumeAfterScrubbing >= 0) {
-            playHandler(timeToResumeAfterScrubbing);
-            setTimeToResumeAfterScrubbing(-1);
-        }
-    };
 
     // Called after every keystroke
     const handleTimeInputChange = (userInput: number | null): void => {
@@ -148,8 +120,7 @@ const PlayBackControls = ({
             </div>
             <Slider
                 value={time}
-                onChange={handleTimeChange}
-                onAfterChange={handleSliderMouseUp}
+                onChange={onTimeChange}
                 tooltip={{ open: false }}
                 className={classNames(styles.slider, styles.item)}
                 step={timeStep}
