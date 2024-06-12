@@ -115,34 +115,32 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
     };
 
     return (
-        <div className={styles.container}>
+        <div
+            className={classNames(
+                styles.container,
+                { [styles.collapsed]: !panelExpanded },
+                { [styles.agentSelected]: agentSelected && panelExpanded }
+            )}
+        >
             <div
-                className={classNames(
-                    styles.content,
-                    { [styles.collapsed]: !panelExpanded },
-                    { [styles.agentSelected]: agentSelected && panelExpanded }
-                )}
+                className={styles.title}
+                onClick={() => setPanelExpanded(!panelExpanded)}
+                role="button"
             >
+                <h3>Agent Metadata</h3>
                 <div
-                    className={styles.title}
-                    onClick={() => setPanelExpanded(!panelExpanded)}
-                    role="button"
+                    className={classNames(styles.icon, {
+                        [styles.rotate]: !panelExpanded,
+                    })}
                 >
-                    <h3>Agent Metadata</h3>
-                    <div
-                        className={classNames(styles.icon, {
-                            [styles.rotate]: !panelExpanded,
-                        })}
-                    >
-                        {FilledCaret}
-                    </div>
+                    {FilledCaret}
                 </div>
-                {panelExpanded && (
-                    <div className={styles.panelContents}>
-                        {renderPanelContent()}
-                    </div>
-                )}
             </div>
+            {panelExpanded && (
+                <div className={styles.panelContents}>
+                    {renderPanelContent()}
+                </div>
+            )}
         </div>
     );
 };
