@@ -24,9 +24,6 @@
 .sider :global(.ant-layout-sider-children) {
     overflow-y: visible;
     overflow-x: visible;
-
-    /* overflow-x: visible;
-    overflow-y: hidden; */
 }
 
 :global(.ant-collapse),
