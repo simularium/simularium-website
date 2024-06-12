@@ -243,7 +243,6 @@ class App extends React.Component<AppProps, AppState> {
             conversionStatus,
         } = this.props;
         const isEmbedded = location.pathname === EMBED_PATHNAME;
-
         return (
             <Layout
                 className={classNames([
