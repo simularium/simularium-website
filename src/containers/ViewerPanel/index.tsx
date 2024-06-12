@@ -20,7 +20,7 @@ import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
 import {
     ChangeTimeAction,
-    SetFollowObjectDataAction,
+    SetFollowObjectAction,
     SetVisibleAction,
 } from "../../state/selection/types";
 import {
@@ -99,7 +99,7 @@ interface ViewerPanelProps {
     setConversionStatus: ActionCreator<SetConversionStatusAction>;
     receiveConvertedFile: ActionCreator<ReceiveAction>;
     conversionProcessingData: ConversionProcessingData;
-    setFollowObjectData: ActionCreator<SetFollowObjectDataAction>;
+    setFollowObject: ActionCreator<SetFollowObjectAction>;
 }
 
 interface ViewerPanelState {
@@ -405,7 +405,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     };
 
     public onFollowObjectChange = (agentData: AgentData) => {
-        this.props.setFollowObjectData(agentData);
+        this.props.setFollowObject(agentData);
     };
 
     public render(): JSX.Element {
@@ -558,7 +558,7 @@ const dispatchToPropsMap = {
     receiveConvertedFile: trajectoryStateBranch.actions.receiveConvertedFile,
     setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
-    setFollowObjectData: selectionStateBranch.actions.setFollowObjectData,
+    setFollowObject: selectionStateBranch.actions.setFollowObject,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);

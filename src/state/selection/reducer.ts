@@ -25,7 +25,7 @@ import {
     ResetAction,
     SetColorChangeAction,
     SetRecentColorsAction,
-    SetFollowObjectDataAction,
+    SetFollowObjectAction,
 } from "./types";
 
 export const initialState = {
@@ -35,7 +35,7 @@ export const initialState = {
     agentHighlightMap: {},
     colorChange: null,
     recentColors: [],
-    followObjectData: { instanceId: -1 },
+    followObject: { instanceId: -1 },
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -157,15 +157,15 @@ const actionToConfigMap: TypeToDescriptionMap = {
         },
     },
     [SET_FOLLOW_OBJECT]: {
-        accepts: (action: AnyAction): action is SetFollowObjectDataAction =>
+        accepts: (action: AnyAction): action is SetFollowObjectAction =>
             action.type === SET_FOLLOW_OBJECT,
         perform: (
             state: SelectionStateBranch,
-            action: SetFollowObjectDataAction
+            action: SetFollowObjectAction
         ) => {
             return {
                 ...state,
-                followObjectData: action.payload,
+                followObject: action.payload,
             };
         },
     },

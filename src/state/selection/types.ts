@@ -77,7 +77,7 @@ export interface SetRecentColorsAction {
     type: string;
 }
 
-export interface SetFollowObjectDataAction {
+export interface SetFollowObjectAction {
     payload: number;
     type: string;
 }

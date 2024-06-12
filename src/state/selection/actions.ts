@@ -20,7 +20,7 @@ import {
     ResetAction,
     SetColorChangeAction,
     SetRecentColorsAction,
-    SetFollowObjectDataAction,
+    SetFollowObjectAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -95,9 +95,7 @@ export function setRecentColors(colors: string[]): SetRecentColorsAction {
     };
 }
 
-export function setFollowObjectData(
-    agentData: number
-): SetFollowObjectDataAction {
+export function setFollowObject(agentData: number): SetFollowObjectAction {
     return {
         payload: agentData,
         type: SET_FOLLOW_OBJECT,
