@@ -31,7 +31,11 @@ h3 {
     background-color: transparent;
     border: none;
     color: var(--warm-gray);
-    font-size: 20px;
+    font-size: 18px;
+}
+
+.title:hover .icon {
+    color: var(--pure-white);
 }
 
 .rotate span {
@@ -60,6 +64,7 @@ h3 {
 .agent-missing-text {
     font-size: 13px;
     font-weight: 400;
+    margin-top: 4px;
 }
 
 .row {
