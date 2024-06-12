@@ -262,9 +262,7 @@ class App extends React.Component<AppProps, AppState> {
                             isEmbedded={isEmbedded}
                             type="left"
                         >
-                            <ModelPanel
-                                simulariumController={simulariumController}
-                            />
+                            <ModelPanel />
                         </SideBar>
                         <Content>
                             {simulariumController && (
