@@ -1,36 +1,81 @@
 .container {
     color: var(--dark-theme-text-color-bright);
+    overflow: hidden;
     position: relative;
-    overflow: visible;
 }
 
-/* todo make icon button type a thing? */
-.icon {
-    background-color: transparent;
-    border: none;
+.agent-selected {
+    min-height: 245px;
+}
+
+.content-visible {
+    padding: 16px 14px 10px 24px;
+}
+
+.collapsed {
+    padding: 14px 8px 8px 16px;
 }
 
 .title {
     display: flex;
     justify-content: space-between;
-    /* background-color: aqua; */
+}
+
+h3 {
+    color: var(--pure-white);
+}
+
+.icon {
+    background-color: transparent;
+    border: none;
+    color: var(--warm-gray);
+}
+
+.rotate span {
+    transform: rotate(180deg);
+}
+
+.panel-contents {
+    color: var(--medium-gray);
+    margin: 6px 0px;
+}
+
+.no-agent-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--white-two);
+}
+
+.no-agent-text {
+    font-size: 12px;
+    font-weight: 100px;
+}
+
+.agent-missing-text {
+    font-size: 13px;
+    font-weight: 400;
+}
+
+
+.row {
+    display: flex;
+    font-size: 12px;
+    font-weight: 100;
+    line-height: normal;
+}
+
+.key {
+    color: var(--medium-gray);
+    min-width: 120px;
+    align-self: flex-start;
+}
+
+.value {
+    color: var(--white-two);
 }
 
 .divider {
-    background-color: var(--dark-theme-divider);
-    box-sizing: content-box;
-    padding-left: 10px;
-    margin: 0px;
-}
-
-.content {
-    padding: 10px 6px 10px 16px;
-    box-sizing: content-box;
-    /* padding-left: 10px; */
-    /* background-color: violet; */
-    /* margin: 0px; */
-}
-
-.content-expanded {
-    padding: 10px 6px 10px 16px;
+    background-color: var(--dim-gray-two);
+    margin: 4px 0px;
 }

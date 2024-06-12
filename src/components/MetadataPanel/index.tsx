@@ -1,168 +1,189 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Divider } from "antd";
-
-import styles from "./style.css";
-import { DownCaretFilled, UpCaretFilled } from "../Icons";
-import { UIDisplayData } from "@aics/simularium-viewer";
-import { AgentDisplayNode } from "../AgentTree";
+import classNames from "classnames";
+// todo bump this export in viewer to top level or redeclare here
 import { AgentData } from "@aics/simularium-viewer/type-declarations/simularium/types";
 
-interface MetadataPanelProps {
-    followObject: AgentData;
-    uidisplayData: AgentDisplayNode[];
+import { FilledCaret } from "../Icons";
+import { AgentDisplayNode } from "../AgentTree";
+
+import styles from "./style.css";
+
+interface PositionRotation {
+    x: number;
+    y: number;
+    z: number;
 }
+
+type AgentMetadataValue = number | string | PositionRotation;
 
 interface AgentMetadata {
-    uniqueId?: number;
-    agentType?: string;
-    position?: { x: number; y: number; z: number };
-    rotation?: { x: number; y: number; z: number };
-    raidus?: number;
-    velocity?: { value: number; distanceUnit: string; timeUnit: string };
+    uniqueId: number;
+    agentType: string;
+    position: PositionRotation;
+    rotation: PositionRotation;
+    radius: number;
 }
-const MetadataPanel: React.FC<MetadataPanelProps> = (props) => {
-    const { followObject, uidisplayData } = props;
 
+const MetadataLabels: { [key: string]: JSX.Element } = {
+    uniqueId: <span>Unique ID</span>,
+    agentType: <span>Agent Type</span>,
+    position: <span>Position</span>,
+    rotation: (
+        <>
+            Rotation
+            <br />
+            (degrees)
+        </>
+    ),
+    radius: <span>Radius</span>,
+};
+
+const isValidKey = (key: string): key is keyof AgentMetadata => {
+    return Object.keys(MetadataLabels).includes(key);
+};
+interface MetadataPanelProps {
+    followObject: AgentData;
+    uiDisplayData: AgentDisplayNode[];
+}
+
+const MetadataPanel: React.FC<MetadataPanelProps> = ({
+    followObject,
+    uiDisplayData,
+}) => {
     const [panelExpanded, setPanelExpanded] = React.useState(false);
-    const [agentMetadata, setAgentMetadata] = React.useState<AgentMetadata>({});
+    const [agentMetadata, setAgentMetadata] = React.useState<AgentMetadata>({
+        uniqueId: -1,
+        agentType: "",
+        position: { x: 0, y: 0, z: 0 },
+        rotation: { x: 0, y: 0, z: 0 },
+        radius: 0,
+    });
 
-    /*
-todos:
-get radius
-get velocity
-update meta data in real time during playback (position is static on selection of agent currently)
-general clean up
-only metadata when side panel i open
-add "agent has left the simulation" message
-add null state for when no agent is selected
-*/
+    const agentSelected = followObject.instanceId !== -1;
+    const selectedAgentNotRendered = followObject.type >= uiDisplayData.length;
+
     useEffect(() => {
-        console.log("meta data panel", followObject, uidisplayData);
-        let agentType = "";
-        if (
-            uidisplayData[followObject.type] !== undefined &&
-            uidisplayData[followObject.type].title !== undefined
-        ) {
-            agentType = uidisplayData[followObject.type].title;
-        }
-        const position = {
-            x: followObject.x,
-            y: followObject.y,
-            z: followObject.z,
-        };
-        const rotation = {
-            x: followObject.xrot,
-            y: followObject.yrot,
-            z: followObject.zrot,
-        };
-        setAgentMetadata({
-            ...agentMetadata,
-            uniqueId: followObject.instanceId,
-            agentType: agentType,
-            position: position,
-            rotation: rotation,
-        });
-    }, [followObject]);
-
-    //agent tupe is giving position, rotation, and unique id
-    //agent type
-
-    const agentWasSelected = (): void => {
-        if (!panelExpanded && followObject.instanceId !== -1) {
+        if (agentSelected) {
             setPanelExpanded(true);
+            setAgentMetadata({
+                uniqueId: followObject.instanceId,
+                agentType: uiDisplayData[followObject.type]?.title ?? "",
+                position: {
+                    x: followObject.x,
+                    y: followObject.y,
+                    z: followObject.z,
+                },
+                rotation: {
+                    x: followObject.xrot,
+                    y: followObject.yrot,
+                    z: followObject.zrot,
+                },
+                radius: followObject.cr,
+            });
+        } else {
+            setPanelExpanded(false);
         }
-    };
-    useEffect(() => {
-        agentWasSelected();
     }, [followObject]);
 
-    const isValidKey = (key: string): key is keyof AgentMetadata => {
-        return (
-            key === "uniqueId" ||
-            key === "agentType" ||
-            key === "position" ||
-            key === "rotation" ||
-            key === "radius" ||
-            key === "velocity"
-        );
+    const formatFloatForDisplay = (float: number): string => {
+        return parseFloat(float.toPrecision(2)).toString();
     };
 
-    const getPanelRow = (key: keyof AgentMetadata, value: any): JSX.Element => {
-        if (key === "position" || key === "rotation") {
+    const getFormattedValue = (
+        value: AgentMetadataValue
+    ): JSX.Element | string => {
+        if (selectedAgentNotRendered) {
+            return "-";
+        }
+        if (typeof value === "object") {
+            const posRot = value as PositionRotation;
             return (
-                <div className={styles.row}>
-                    <div className={styles.key}>{key}</div>
-                    <div className={styles.value}>
-                        {value.x}, {value.y}, {value.z}
-                    </div>
-                </div>
-            );
-        } else if (key === "velocity") {
-            return (
-                <div className={styles.row}>
-                    <div className={styles.key}>{key}</div>
-                    <div className={styles.value}>
-                        {value.value} {value.distanceUnit}/{value.timeUnit}
-                    </div>
-                </div>
+                <>
+                    <div> x = {formatFloatForDisplay(posRot.x)}</div>
+                    <div> y = {formatFloatForDisplay(posRot.y)}</div>
+                    <div> z = {formatFloatForDisplay(posRot.z)}</div>
+                </>
             );
         }
-        return (
-            <div className={styles.row}>
-                <div className={styles.key}>{key}</div>
-                <div className={styles.value}>{value}</div>
-            </div>
-        );
+        if (typeof value === "number") {
+            return <div> {formatFloatForDisplay(value as number)}</div>;
+        }
+        return value;
     };
 
-    const getPanelContents = (agentMetadata: AgentMetadata): JSX.Element[] => {
-        const panelRows: JSX.Element[] = [];
-        for (const key in agentMetadata) {
+    const getMetadataRows = useMemo(() => {
+        return Object.keys(agentMetadata).map((key, index) => {
             if (isValidKey(key)) {
-                panelRows.push(getPanelRow(key, agentMetadata[key]));
+                return (
+                    <React.Fragment key={key}>
+                        <div className={styles.row}>
+                            <div className={styles.key}>
+                                {MetadataLabels[key]}
+                            </div>
+                            <div className={styles.value}>
+                                {getFormattedValue(agentMetadata[key])}
+                            </div>
+                        </div>
+                        {index < Object.keys(agentMetadata).length - 1 && (
+                            <Divider className={styles.divider} />
+                        )}
+                    </React.Fragment>
+                );
             }
+            return null;
+        });
+    }, [agentMetadata]);
+
+    const renderPanelContent = (): JSX.Element => {
+        if (!agentSelected) {
+            return (
+                <div className={styles.noAgentRow}>
+                    <p>Nothing to see here...</p>
+                    <p className={styles.noAgentText}>
+                        Select an agent in the viewport to view its metadata.
+                    </p>
+                </div>
+            );
         }
-        return panelRows;
+        return (
+            <>
+                {selectedAgentNotRendered && (
+                    <p className={styles.agentMissingText}>
+                        Agent no longer in the simulation
+                    </p>
+                )}
+                {getMetadataRows}
+            </>
+        );
     };
-
-    const panelContents = getPanelContents(agentMetadata);
-
-    // (
-    //     <div>
-    //                     {for (const key in AgentMetadata ) {
-    //          getPanelRow(key, agentMetadata[key]) }}
-    //          </div>
-
-    // rows
-    //each row has a key field of equal width
-    // then a value field
-    // between rows a divider
-
-    // value fields can be one offs, or for the x,y,zs they are three values
-
-    // );
-
-    const panelContent = (
-        <div
-            className={panelExpanded ? styles.contentExpanded : styles.content}
-        >
-            <div className={styles.title}>
-                <div> Agent Metadata</div>
-                <button
-                    className={styles.icon}
-                    onClick={() => setPanelExpanded(!panelExpanded)}
-                >
-                    {panelExpanded ? DownCaretFilled : UpCaretFilled}
-                </button>
-            </div>
-            {panelExpanded && <div> {panelContents} </div>}
-        </div>
-    );
 
     return (
         <div className={styles.container}>
-            <Divider className={styles.divider} />
-            {panelContent}
+            <div
+                className={classNames(
+                    agentSelected ? styles.agentSelected : null,
+                    panelExpanded ? styles.contentVisible : styles.collapsed
+                )}
+            >
+                <div className={styles.title}>
+                    <h3>Agent Metadata</h3>
+                    <button
+                        className={classNames(
+                            styles.icon,
+                            !panelExpanded ? styles.rotate : null
+                        )}
+                        onClick={() => setPanelExpanded(!panelExpanded)}
+                    >
+                        {FilledCaret}
+                    </button>
+                </div>
+                {panelExpanded && (
+                    <div className={styles.panelContents}>
+                        {renderPanelContent()}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
