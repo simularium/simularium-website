@@ -15,6 +15,8 @@ export const URL_PARAM_BASE_TYPES = "base_types.json";
 export const URL_PARAM_CUSTOM_TYPES = "custom-types";
 // URLs
 export const BASE_API_URL = `/api/${API_VERSION}`;
+export const DATA_BUCKET_URL =
+    "https://aics-simularium-data.s3.us-east-2.amazonaws.com";
 export const DOWNLOAD_URL = `https://${process.env.BACKEND_SERVER_IP}:443/download`;
 export const FORUM_URL =
     "https://forum.allencell.org/c/software-code/simularium/";
