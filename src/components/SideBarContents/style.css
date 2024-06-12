@@ -12,8 +12,14 @@
 
 .card {
     flex: 1;
-    overflow-y: auto;
     background-color: var(--dark-theme-sidebar-bg);
+}
+
+.divider {
+    background-color: var(--dark-theme-divider);
+    box-sizing: content-box;
+    padding-left: 10px;
+    margin: 0px;
 }
 
 .card :global(.ant-card-head-title) {

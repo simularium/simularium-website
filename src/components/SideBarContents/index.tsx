@@ -1,12 +1,11 @@
 import * as React from "react";
-import { Card } from "antd";
-
-import styles from "./style.css";
-import MetadataPanel from "../MetadataPanel";
-import { UIDisplayData } from "@aics/simularium-viewer";
-import { AgentDisplayNode } from "../AgentTree";
+import { Card, Divider } from "antd";
 import { AgentData } from "@aics/simularium-viewer/type-declarations/simularium/types";
 
+import MetadataPanel from "../MetadataPanel";
+import { AgentDisplayNode } from "../AgentTree";
+
+import styles from "./style.css";
 interface SideBarContentsProps {
     mainTitle: string;
     content: (JSX.Element | null)[];
@@ -15,33 +14,32 @@ interface SideBarContentsProps {
     uidisplayData?: AgentDisplayNode[];
 }
 
-export default class SideBarContents extends React.Component<SideBarContentsProps> {
-    public render(): JSX.Element {
-        const {
-            mainTitle,
-            content,
-            followObject,
-            hasMetadataPanel,
-            uidisplayData = [],
-        } = this.props;
-        return (
-            <div className={styles.container}>
-                <Card
-                    title={mainTitle}
-                    className={styles.card}
-                    bordered={false}
-                >
-                    <div className={styles.agentContainer}> {content[0]}</div>
-                </Card>
-                {hasMetadataPanel && followObject && (
-                    <div className={styles.metadataPanel}>
-                        <MetadataPanel
-                            followObject={followObject}
-                            uidisplayData={uidisplayData}
-                        />
-                    </div>
-                )}
-            </div>
-        );
-    }
-}
+const SideBarContents: React.FC<SideBarContentsProps> = ({
+    mainTitle,
+    content,
+    followObject,
+    hasMetadataPanel,
+    uidisplayData = [],
+}) => {
+    const showMetadataPanel =
+        hasMetadataPanel && followObject && uidisplayData.length > 0;
+
+    return (
+        <div className={styles.container}>
+            <Card title={mainTitle} className={styles.card} bordered={false}>
+                <div className={styles.agentContainer}>{content[0]}</div>
+            </Card>
+            {showMetadataPanel && (
+                <>
+                    <Divider className={styles.divider}></Divider>
+                    <MetadataPanel
+                        followObject={followObject}
+                        uiDisplayData={uidisplayData}
+                    />
+                </>
+            )}
+        </div>
+    );
+};
+
+export default SideBarContents;
