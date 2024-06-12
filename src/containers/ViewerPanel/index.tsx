@@ -61,8 +61,7 @@ import { AGENT_COLORS } from "./constants";
 import { DisplayTimes } from "./types";
 
 import styles from "./style.css";
-import { MOBILE_CUTOFF } from "../../constants";
-import { hasUrlParamsSettings } from "../../util";
+
 import { AgentData } from "@aics/simularium-viewer/type-declarations/simularium/types";
 
 interface ViewerPanelProps {
@@ -407,15 +406,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         });
     };
 
-    public onFollowObjectChange = (
-        newFollowObject: number,
-        oldFollowObject: number,
-        agentData: AgentData
-    ) => {
-        const { setFollowAgentData: setFollowAgentData } = this.props;
-        if (newFollowObject !== oldFollowObject) {
-            setFollowAgentData(agentData);
-        }
+    public onFollowObjectChange = (agentData: AgentData) => {
+        this.props.setFollowAgentData(agentData);
     };
 
     public render(): JSX.Element {
@@ -469,7 +461,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                         this.onTrajectoryFileInfoChanged
                     }
                     onRecordedMovie={this.onRecordedMovie}
-                    followObjectCallback={this.onFollowObjectChange}
+                    onFollowObjectChanged={this.onFollowObjectChange}
                 />
                 {firstFrameTime !== lastFrameTime && (
                     <div className={styles.bottomControlsContainer}>
