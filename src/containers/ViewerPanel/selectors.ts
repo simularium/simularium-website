@@ -24,14 +24,9 @@ import { isNetworkSimFileInterface } from "../../state/trajectory/types";
 
 export const getSelectionStateInfoForViewer = createSelector(
     [getHighlightedAgents, getAgentsToHide, getColorChange],
-    (
+    (highlightedAgents, hiddenAgents): SelectionStateInfo => ({
         highlightedAgents,
         hiddenAgents,
-        colorChange: ColorChange
-    ): SelectionStateInfo => ({
-        highlightedAgents,
-        hiddenAgents,
-        colorChange,
     })
 );
 
