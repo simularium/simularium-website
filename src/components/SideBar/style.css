@@ -3,7 +3,6 @@
     left: 0;
     z-index: 100;
     background-color: var(--dark-theme-sidebar-bg);
-    padding: 0 10px 0 0;
 }
 .sider.embed {
     height: 100vh;

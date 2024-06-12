@@ -1,7 +1,5 @@
 .container {
     color: var(--dark-theme-text-color-bright);
-    overflow: hidden;
-    position: relative;
 }
 
 .agent-selected {

@@ -2,8 +2,7 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    position: relative;
-    justify-content: space-between;
+    overflow-y: auto;
 }
 
 .container label {
@@ -13,13 +12,16 @@
 .card {
     flex: 1;
     background-color: var(--dark-theme-sidebar-bg);
+    padding-right: 10px;
 }
 
-.divider {
-    background-color: var(--dark-theme-divider);
-    box-sizing: content-box;
-    padding-left: 10px;
-    margin: 0px;
+.card :global(.ant-card-head) {
+    background-color: var(--dark-theme-sidebar-header-bg);
+    height: 44px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    border: none;
 }
 
 .card :global(.ant-card-head-title) {
@@ -30,11 +32,7 @@
     background: var(--dark-theme-sidebar-bg);
 }
 
-.card :global(.ant-card-head) {
-    background-color: var(--dark-theme-sidebar-header-bg);
-    height: 44px;
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-    border: none;
+.divider {
+    background-color: var(--dark-theme-divider);
+    margin: 0px;
 }

@@ -117,19 +117,11 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     return (
         <div className={styles.container}>
             <SideBarContents
+                mainTitle="Agents"
+                content={[contentMap[viewerStatus]]}
+                hasMetadataPanel={true}
                 followObject={followObject}
                 uidisplayData={uiDisplayDataTree}
-                hasMetadataPanel={true}
-                mainTitle="Agents"
-                content={[
-                    <div
-                        className={styles.sidebarContentsContainer}
-                        key="molecules"
-                    >
-                        {contentMap[viewerStatus]}
-                    </div>,
-                    null,
-                ]}
             />
         </div>
     );

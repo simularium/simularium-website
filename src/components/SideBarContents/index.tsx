@@ -27,15 +27,17 @@ const SideBarContents: React.FC<SideBarContentsProps> = ({
     return (
         <div className={styles.container}>
             <Card title={mainTitle} className={styles.card} bordered={false}>
-                <div className={styles.agentContainer}>{content[0]}</div>
+                {content[0]}
             </Card>
             {showMetadataPanel && (
                 <>
                     <Divider className={styles.divider}></Divider>
-                    <MetadataPanel
-                        followObject={followObject}
-                        uiDisplayData={uidisplayData}
-                    />
+                    <div>
+                        <MetadataPanel
+                            followObject={followObject}
+                            uiDisplayData={uidisplayData}
+                        />
+                    </div>
                 </>
             )}
         </div>
