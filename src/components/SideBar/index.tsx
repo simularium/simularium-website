@@ -64,7 +64,7 @@ export default class SideBar extends React.Component<SiderProps, SiderState> {
                 <div className={triggerClass} onClick={this.handleTriggerClick}>
                     {PurpleArrow}
                 </div>
-                {children}
+                {!this.state.collapsed && children}
             </Sider>
         );
     }
