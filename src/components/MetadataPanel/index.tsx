@@ -65,7 +65,9 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
 
     useEffect(() => {
         if (agentSelected) {
-            setPanelExpanded(true);
+            if (agentMetadata.uniqueId !== followObject.instanceId) {
+                setPanelExpanded(true);
+            }
             setAgentMetadata({
                 uniqueId: followObject.instanceId,
                 agentType: uiDisplayData[followObject.type]?.title ?? "",
@@ -84,7 +86,7 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
         } else {
             setPanelExpanded(false);
         }
-    }, [followObject, agentSelected, uiDisplayData]);
+    }, [followObject]);
 
     const getFormattedValue = (
         value: AgentMetadataValue
