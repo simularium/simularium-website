@@ -43,12 +43,12 @@ const formatFloatForDisplay = (float: number): string => {
     return parseFloat(float.toPrecision(2)).toString();
 };
 interface MetadataPanelProps {
-    followObject: AgentData;
+    selectedAgent: AgentData;
     uiDisplayData: AgentDisplayNode[];
 }
 
 const MetadataPanel: React.FC<MetadataPanelProps> = ({
-    followObject,
+    selectedAgent,
     uiDisplayData,
 }) => {
     const [panelExpanded, setPanelExpanded] = React.useState(false);
@@ -60,33 +60,36 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
         radius: 0,
     });
 
-    const agentSelected = followObject.instanceId !== -1;
-    const selectedAgentNotRendered = followObject.type >= uiDisplayData.length;
+    const agentSelected = !!selectedAgent;
+    const selectedAgentNotRendered = selectedAgent.type >= uiDisplayData.length;
 
     useEffect(() => {
         if (agentSelected) {
-            if (agentMetadata.uniqueId !== followObject.instanceId) {
+            if (
+                selectedAgent &&
+                agentMetadata.uniqueId !== selectedAgent.instanceId
+            ) {
                 setPanelExpanded(true);
             }
             setAgentMetadata({
-                uniqueId: followObject.instanceId,
-                agentType: uiDisplayData[followObject.type]?.title ?? "",
+                uniqueId: selectedAgent.instanceId,
+                agentType: uiDisplayData[selectedAgent.type]?.title ?? "",
                 position: {
-                    x: followObject.x,
-                    y: followObject.y,
-                    z: followObject.z,
+                    x: selectedAgent.x,
+                    y: selectedAgent.y,
+                    z: selectedAgent.z,
                 },
                 rotation: {
-                    x: followObject.xrot,
-                    y: followObject.yrot,
-                    z: followObject.zrot,
+                    x: selectedAgent.xrot,
+                    y: selectedAgent.yrot,
+                    z: selectedAgent.zrot,
                 },
-                radius: followObject.cr,
+                radius: selectedAgent.cr,
             });
         } else {
             setPanelExpanded(false);
         }
-    }, [followObject]);
+    }, [selectedAgent]);
 
     const getFormattedValue = (
         value: AgentMetadataValue

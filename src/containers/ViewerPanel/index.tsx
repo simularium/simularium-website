@@ -20,7 +20,7 @@ import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
 import {
     ChangeTimeAction,
-    SetFollowObjectAction,
+    SetSelectedAgentAction,
     SetVisibleAction,
 } from "../../state/selection/types";
 import {
@@ -99,7 +99,7 @@ interface ViewerPanelProps {
     setConversionStatus: ActionCreator<SetConversionStatusAction>;
     receiveConvertedFile: ActionCreator<ReceiveAction>;
     conversionProcessingData: ConversionProcessingData;
-    setFollowObject: ActionCreator<SetFollowObjectAction>;
+    setSelectedAgent: ActionCreator<SetSelectedAgentAction>;
 }
 
 interface ViewerPanelState {
@@ -404,8 +404,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         });
     };
 
-    public onFollowObjectChange = (agentData: AgentData) => {
-        this.props.setFollowObject(agentData);
+    public onSelectedAgentChange = (agentData: AgentData) => {
+        if (agentData.instanceId !== -1) {
+            this.props.setSelectedAgent(agentData);
+        } else {
+            this.props.setSelectedAgent(null);
+        }
     };
 
     public render(): JSX.Element {
@@ -459,7 +463,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                         this.onTrajectoryFileInfoChanged
                     }
                     onRecordedMovie={this.onRecordedMovie}
-                    onFollowObjectChanged={this.onFollowObjectChange}
+                    onFollowObjectChanged={this.onSelectedAgentChange}
                 />
                 {firstFrameTime !== lastFrameTime && (
                     <div className={styles.bottomControlsContainer}>
@@ -558,7 +562,7 @@ const dispatchToPropsMap = {
     receiveConvertedFile: trajectoryStateBranch.actions.receiveConvertedFile,
     setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
-    setFollowObject: selectionStateBranch.actions.setFollowObject,
+    setSelectedAgent: selectionStateBranch.actions.setSelectedAgent,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);
