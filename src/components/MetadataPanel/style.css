@@ -5,7 +5,7 @@
 }
 
 .agent-selected {
-    min-height: 245px;
+    min-height: 265px;
 }
 
 .content-visible {
@@ -23,12 +23,15 @@
 
 h3 {
     color: var(--pure-white);
+    font-weight: 800;
+    margin: 0px;
 }
 
 .icon {
     background-color: transparent;
     border: none;
     color: var(--warm-gray);
+    font-size: 20px;
 }
 
 .rotate span {
@@ -37,14 +40,16 @@ h3 {
 
 .panel-contents {
     color: var(--medium-gray);
-    margin: 6px 0px;
 }
 
 .no-agent-row {
     display: flex;
     flex-direction: column;
-    gap: 8px;
     color: var(--white-two);
+}
+
+.no-agent-row p {
+    margin-bottom: 4px;
 }
 
 .no-agent-text {
@@ -57,12 +62,10 @@ h3 {
     font-weight: 400;
 }
 
-
 .row {
     display: flex;
     font-size: 12px;
     font-weight: 100;
-    line-height: normal;
 }
 
 .key {
