@@ -67,76 +67,73 @@ interface ModelPanelProps {
     followObject: AgentData;
 }
 
-class ModelPanel extends React.Component<ModelPanelProps> {
-    public render(): JSX.Element {
-        const {
-            agentVisibilityMap,
-            uiDisplayDataTree,
-            turnAgentsOnByDisplayKey,
-            highlightAgentsByDisplayKey,
-            agentHighlightMap,
-            setAgentsVisible,
-            payloadForSelectAll,
-            payloadForSelectNone,
-            isSharedCheckboxIndeterminate,
-            viewerStatus,
-            isNetworkedFile,
-            changeToNetworkedFile: loadNetworkFile,
-            recentColors,
-            setColorChange,
-            setRecentColors,
-            followObject,
-        } = this.props;
-        const checkboxTree = (
-            <CheckBoxTree
-                treeData={uiDisplayDataTree}
-                handleAgentCheck={turnAgentsOnByDisplayKey}
-                agentsChecked={agentVisibilityMap}
-                handleHighlight={highlightAgentsByDisplayKey}
-                agentsHighlighted={agentHighlightMap}
-                setAgentsVisible={setAgentsVisible}
-                payloadForSelectAll={payloadForSelectAll}
-                payloadForSelectNone={payloadForSelectNone}
-                isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
-                recentColors={recentColors}
-                setColorChange={setColorChange}
-                setRecentColors={setRecentColors}
-            />
-        );
-        const contentMap = {
-            [ViewerStatus.Success]: checkboxTree,
-            [ViewerStatus.Empty]: (
-                <NoTrajectoriesText selectFile={loadNetworkFile} />
-            ),
-            [ViewerStatus.Loading]: <div />,
-            [ViewerStatus.Error]: isNetworkedFile ? (
-                <NetworkFileFailedText />
-            ) : (
-                <NoTypeMappingText />
-            ),
-        };
+const ModelPanel: React.FC<ModelPanelProps> = ({
+    uiDisplayDataTree,
+    agentHighlightMap,
+    agentVisibilityMap,
+    turnAgentsOnByDisplayKey,
+    highlightAgentsByDisplayKey,
+    setAgentsVisible,
+    payloadForSelectAll,
+    payloadForSelectNone,
+    isSharedCheckboxIndeterminate,
+    viewerStatus,
+    isNetworkedFile,
+    changeToNetworkedFile: loadNetworkFile,
+    recentColors,
+    setColorChange,
+    setRecentColors,
+    followObject,
+}): JSX.Element => {
+    const checkboxTree = (
+        <CheckBoxTree
+            treeData={uiDisplayDataTree}
+            handleAgentCheck={turnAgentsOnByDisplayKey}
+            agentsChecked={agentVisibilityMap}
+            handleHighlight={highlightAgentsByDisplayKey}
+            agentsHighlighted={agentHighlightMap}
+            setAgentsVisible={setAgentsVisible}
+            payloadForSelectAll={payloadForSelectAll}
+            payloadForSelectNone={payloadForSelectNone}
+            isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
+            recentColors={recentColors}
+            setColorChange={setColorChange}
+            setRecentColors={setRecentColors}
+        />
+    );
+    const contentMap = {
+        [ViewerStatus.Success]: checkboxTree,
+        [ViewerStatus.Empty]: (
+            <NoTrajectoriesText selectFile={loadNetworkFile} />
+        ),
+        [ViewerStatus.Loading]: <div />,
+        [ViewerStatus.Error]: isNetworkedFile ? (
+            <NetworkFileFailedText />
+        ) : (
+            <NoTypeMappingText />
+        ),
+    };
 
-        return (
-            <div className={styles.container}>
-                <SideBarContents
-                    followObject={followObject}
-                    uidisplayData={uiDisplayDataTree}
-                    hasMetadataPanel={true}
-                    mainTitle="Agents"
-                    content={[
-                        <div
-                            className={styles.sidebarContentsContainer}
-                            key="molecules"
-                        >
-                            {contentMap[viewerStatus]}
-                        </div>,
-                        null,
-                    ]}
-                />
-            </div>
-        );
-    }
-}
+    return (
+        <div className={styles.container}>
+            <SideBarContents
+                followObject={followObject}
+                uidisplayData={uiDisplayDataTree}
+                hasMetadataPanel={true}
+                mainTitle="Agents"
+                content={[
+                    <div
+                        className={styles.sidebarContentsContainer}
+                        key="molecules"
+                    >
+                        {contentMap[viewerStatus]}
+                    </div>,
+                    null,
+                ]}
+            />
+        </div>
+    );
+};
 
 function mapStateToProps(state: State) {
     return {
