@@ -9,7 +9,7 @@ import SimulariumViewer, {
     TrajectoryFileInfo,
     TimeData,
 } from "@aics/simularium-viewer";
-import "@aics/simularium-viewer/style/style.css";
+import { AgentData } from "@aics/simularium-viewer/type-declarations/simularium/types";
 import { connect } from "react-redux";
 import { Modal } from "antd";
 import Bowser from "bowser";
@@ -20,7 +20,7 @@ import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
 import {
     ChangeTimeAction,
-    SetFollowAgentDataAction,
+    SetFollowObjectDataAction,
     SetVisibleAction,
 } from "../../state/selection/types";
 import {
@@ -62,8 +62,6 @@ import { DisplayTimes } from "./types";
 
 import styles from "./style.css";
 
-import { AgentData } from "@aics/simularium-viewer/type-declarations/simularium/types";
-
 interface ViewerPanelProps {
     time: number;
     numberPanelsCollapsed: number;
@@ -101,7 +99,7 @@ interface ViewerPanelProps {
     setConversionStatus: ActionCreator<SetConversionStatusAction>;
     receiveConvertedFile: ActionCreator<ReceiveAction>;
     conversionProcessingData: ConversionProcessingData;
-    setFollowAgentData: ActionCreator<SetFollowAgentDataAction>;
+    setFollowObjectData: ActionCreator<SetFollowObjectDataAction>;
 }
 
 interface ViewerPanelState {
@@ -407,7 +405,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     };
 
     public onFollowObjectChange = (agentData: AgentData) => {
-        this.props.setFollowAgentData(agentData);
+        this.props.setFollowObjectData(agentData);
     };
 
     public render(): JSX.Element {
@@ -560,7 +558,7 @@ const dispatchToPropsMap = {
     receiveConvertedFile: trajectoryStateBranch.actions.receiveConvertedFile,
     setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
-    setFollowAgentData: selectionStateBranch.actions.setFollowAgentData,
+    setFollowObjectData: selectionStateBranch.actions.setFollowObjectData,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);
