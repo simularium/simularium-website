@@ -35,16 +35,17 @@ import {
     SetRecentColorsAction,
 } from "../../state/selection/types";
 import CheckBoxTree, { AgentDisplayNode } from "../../components/AgentTree";
-import {
-    getSelectAllVisibilityMap,
-    getSelectNoneVisibilityMap,
-    getIsSharedCheckboxIndeterminate,
-} from "./selectors";
+import { AgentMetadata } from "../../constants/interfaces";
 import NoTrajectoriesText from "../../components/NoTrajectoriesText";
 import { RequestNetworkFileAction } from "../../state/trajectory/types";
 import { ViewerStatus } from "../../state/viewer/types";
 import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFileFailedText";
 import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
+import {
+    getSelectAllVisibilityMap,
+    getSelectNoneVisibilityMap,
+    getIsSharedCheckboxIndeterminate,
+} from "./selectors";
 
 import styles from "./style.css";
 
@@ -64,7 +65,7 @@ interface ModelPanelProps {
     recentColors: string[];
     setColorChange: ActionCreator<SetColorChangeAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
-    selectedAgent: AgentData;
+    selectedAgent: AgentMetadata;
 }
 
 const ModelPanel: React.FC<ModelPanelProps> = ({

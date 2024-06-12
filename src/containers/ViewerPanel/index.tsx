@@ -406,9 +406,23 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public onSelectedAgentChange = (agentData: AgentData) => {
         if (agentData.instanceId !== -1) {
-            this.props.setSelectedAgent(agentData);
+            this.props.setSelectedAgent({
+                uniqueId: agentData.instanceId,
+                agentType: agentData.type,
+                position: {
+                    x: agentData.x,
+                    y: agentData.y,
+                    z: agentData.z,
+                },
+                rotation: {
+                    x: agentData.xrot,
+                    y: agentData.yrot,
+                    z: agentData.zrot,
+                },
+                radius: agentData.cr,
+            });
         } else {
-            this.props.setSelectedAgent(null);
+            this.props.setSelectedAgent({});
         }
     };
 

@@ -35,7 +35,7 @@ export const initialState = {
     agentHighlightMap: {},
     colorChange: null,
     recentColors: [],
-    selectedAgent: null,
+    selectedAgent: {},
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {

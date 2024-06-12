@@ -67,3 +67,15 @@ export enum ConversionError {
     FILE_SIZE_ERROR = "fileSizeError",
     NO_ERROR = "noError",
 }
+export interface PositionRotation {
+    x: number;
+    y: number;
+    z: number;
+}
+export interface AgentMetadata {
+    uniqueId: number;
+    agentType: number;
+    position: PositionRotation;
+    rotation: PositionRotation;
+    radius: number;
+}

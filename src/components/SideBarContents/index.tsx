@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Card, Divider } from "antd";
-import { AgentData } from "@aics/simularium-viewer/type-declarations/simularium/types";
 
+import { AgentMetadata } from "../../constants/interfaces";
 import MetadataPanel from "../MetadataPanel";
 import { AgentDisplayNode } from "../AgentTree";
 
@@ -9,7 +9,7 @@ import styles from "./style.css";
 interface SideBarContentsProps {
     mainTitle: string;
     content: (JSX.Element | null)[];
-    selectedAgent?: AgentData;
+    selectedAgent?: AgentMetadata;
     uidisplayData?: AgentDisplayNode[];
 }
 
