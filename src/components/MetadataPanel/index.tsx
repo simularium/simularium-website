@@ -19,7 +19,6 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
     uiDisplayData,
 }) => {
     const [panelExpanded, setPanelExpanded] = React.useState(false);
-    const [previousId, setPreviousId] = React.useState(0);
 
     const agentSelected = !!selectedAgent.uniqueId;
     const selectedAgentNotRendered =
@@ -28,13 +27,10 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
     useEffect(() => {
         if (!agentSelected) {
             setPanelExpanded(false);
-            return;
-        }
-        if (previousId !== selectedAgent.uniqueId) {
+        } else {
             setPanelExpanded(true);
         }
-        setPreviousId(selectedAgent.uniqueId);
-    }, [selectedAgent]);
+    }, [selectedAgent.uniqueId]);
 
     const MetadataLabels: Record<keyof AgentMetadata, JSX.Element> = {
         uniqueId: <span>Unique ID</span>,
