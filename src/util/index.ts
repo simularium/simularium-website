@@ -119,5 +119,5 @@ export const getIconGlyphClasses = (name: IconGlyphs) => {
 };
 
 export const formatFloatForDisplay = (float: number): string => {
-    return parseFloat(float.toPrecision(2)).toString();
+    return parseFloat(float.toFixed(2)).toString();
 };
