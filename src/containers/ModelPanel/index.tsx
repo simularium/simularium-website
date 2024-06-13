@@ -1,7 +1,6 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
-import { AgentData } from "@aics/simularium-viewer/type-declarations/simularium/types";
 
 import SideBarContents from "../../components/SideBarContents";
 import {
