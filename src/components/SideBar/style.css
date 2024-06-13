@@ -8,6 +8,10 @@
     height: 100vh;
 }
 
+.sider.left.collapsed {
+    padding: 0 10px 0 0;
+}
+
 .sider.right {
     right: 0;
     left: inherit;
@@ -24,6 +28,7 @@
 .sider :global(.ant-layout-sider-children) {
     overflow-y: visible;
     overflow-x: visible;
+    /* overflow: auto; */
 }
 
 :global(.ant-collapse),
