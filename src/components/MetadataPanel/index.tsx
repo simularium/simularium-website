@@ -3,28 +3,12 @@ import { Divider } from "antd";
 import classNames from "classnames";
 
 import { AgentMetadata, PositionRotation } from "../../constants/interfaces";
+import { formatFloatForDisplay } from "../../util";
 import { FilledCaret } from "../Icons";
 import { AgentDisplayNode } from "../AgentTree";
 
 import styles from "./style.css";
 
-const MetadataLabels: Record<keyof AgentMetadata, JSX.Element> = {
-    uniqueId: <span>Unique ID</span>,
-    agentType: <span>Agent Type</span>,
-    position: <span>Position</span>,
-    rotation: (
-        <>
-            Rotation
-            <br />
-            (degrees)
-        </>
-    ),
-    radius: <span>Radius</span>,
-};
-
-const formatFloatForDisplay = (float: number): string => {
-    return parseFloat(float.toPrecision(2)).toString();
-};
 interface MetadataPanelProps {
     selectedAgent: AgentMetadata;
     uiDisplayData: AgentDisplayNode[];
@@ -52,6 +36,20 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
         setPreviousId(selectedAgent.uniqueId);
     }, [selectedAgent]);
 
+    const MetadataLabels: Record<keyof AgentMetadata, JSX.Element> = {
+        uniqueId: <span>Unique ID</span>,
+        agentType: <span>Agent Type</span>,
+        position: <span>Position</span>,
+        rotation: (
+            <>
+                Rotation
+                <br />
+                (degrees)
+            </>
+        ),
+        radius: <span>Radius</span>,
+    };
+
     const getFormattedValue = (
         key: string,
         value: number | PositionRotation
@@ -62,7 +60,10 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
         if (key === "agentType") {
             return uiDisplayData[selectedAgent.agentType].title;
         }
-        if (typeof value === "object") {
+        if (
+            typeof value === "object" &&
+            (key === "position" || key === "rotation")
+        ) {
             return (
                 <>
                     <div> x = {formatFloatForDisplay(value.x)}</div>
@@ -71,7 +72,7 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 </>
             );
         }
-        return formatFloatForDisplay(value);
+        return formatFloatForDisplay(value as number);
     };
 
     const getMetadataRows = useMemo(() => {
