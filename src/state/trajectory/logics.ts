@@ -627,7 +627,7 @@ const cancelConversionLogic = createLogic({
         simulariumController.cancelConversion();
         dispatch(
             setConversionStatus({
-                status: ConversionStatus.NoServer,
+                status: ConversionStatus.Inactive,
             })
         );
     },
