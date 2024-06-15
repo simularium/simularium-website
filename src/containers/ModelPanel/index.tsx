@@ -120,7 +120,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
                 mainTitle="Agents"
                 content={[contentMap[viewerStatus]]}
                 selectedAgent={selectedAgent}
-                uidisplayData={uiDisplayDataTree}
+                uiDisplayData={uiDisplayDataTree}
             />
         </div>
     );

@@ -10,16 +10,16 @@ interface SideBarContentsProps {
     mainTitle: string;
     content: (JSX.Element | null)[];
     selectedAgent?: AgentMetadata;
-    uidisplayData?: AgentDisplayNode[];
+    uiDisplayData?: AgentDisplayNode[];
 }
 
 const SideBarContents: React.FC<SideBarContentsProps> = ({
     mainTitle,
     content,
     selectedAgent,
-    uidisplayData = [],
+    uiDisplayData = [],
 }) => {
-    const showMetadataPanel = selectedAgent && uidisplayData.length > 0;
+    const showMetadataPanel = selectedAgent && uiDisplayData.length > 0;
 
     return (
         <div className={styles.container}>
@@ -32,7 +32,7 @@ const SideBarContents: React.FC<SideBarContentsProps> = ({
                     <div>
                         <MetadataPanel
                             selectedAgent={selectedAgent}
-                            uiDisplayData={uidisplayData}
+                            uiDisplayData={uiDisplayData}
                         />
                     </div>
                 </>

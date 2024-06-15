@@ -67,7 +67,7 @@ export enum ConversionError {
     FILE_SIZE_ERROR = "fileSizeError",
     NO_ERROR = "noError",
 }
-export interface PositionRotation {
+export interface Vector3D {
     x: number;
     y: number;
     z: number;
@@ -75,7 +75,12 @@ export interface PositionRotation {
 export interface AgentMetadata {
     uniqueId: number;
     agentType: number;
-    position: PositionRotation;
-    rotation: PositionRotation;
+    position: Vector3D;
+    rotation: Vector3D;
     radius: number;
+}
+
+export interface MetadataDisplay {
+    label: JSX.Element;
+    value: () => JSX.Element | string;
 }
