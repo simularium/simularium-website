@@ -209,7 +209,6 @@ class App extends React.Component<AppProps, AppState> {
 
     public renderOverlay(isEmbedded: boolean) {
         const {
-            simulariumFile,
             resetDragOverViewer,
             changeToLocalSimulariumFile,
             viewerStatus,
@@ -219,7 +218,7 @@ class App extends React.Component<AppProps, AppState> {
             setError,
         } = this.props;
         if (isEmbedded) {
-            return <EmbedOverlay title={simulariumFile.name} />;
+            return <EmbedOverlay />;
         } else {
             return (
                 <ViewerOverlayTarget
