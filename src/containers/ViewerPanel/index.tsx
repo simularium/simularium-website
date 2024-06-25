@@ -60,7 +60,6 @@ import { AGENT_COLORS } from "./constants";
 import { DisplayTimes } from "./types";
 
 import styles from "./style.css";
-import { useLocation } from "react-router-dom";
 
 interface ViewerPanelProps {
     time: number;
