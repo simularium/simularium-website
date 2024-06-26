@@ -9,17 +9,17 @@ import styles from "./style.css";
 interface SideBarContentsProps {
     mainTitle: string;
     content: (JSX.Element | null)[];
-    selectedAgent?: AgentMetadata;
+    selectedAgentMetadata?: AgentMetadata;
     uiDisplayData?: AgentDisplayNode[];
 }
 
 const SideBarContents: React.FC<SideBarContentsProps> = ({
     mainTitle,
     content,
-    selectedAgent,
+    selectedAgentMetadata,
     uiDisplayData = [],
 }) => {
-    const showMetadataPanel = selectedAgent && uiDisplayData.length > 0;
+    const showMetadataPanel = selectedAgentMetadata && uiDisplayData.length > 0;
 
     return (
         <div className={styles.container}>
@@ -31,7 +31,7 @@ const SideBarContents: React.FC<SideBarContentsProps> = ({
                     <Divider className={styles.divider}></Divider>
                     <div>
                         <MetadataPanel
-                            selectedAgent={selectedAgent}
+                            selectedAgentMetadata={selectedAgentMetadata}
                             uiDisplayData={uiDisplayData}
                         />
                     </div>

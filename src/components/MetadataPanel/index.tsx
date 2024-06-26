@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import { Divider } from "antd";
 import classNames from "classnames";
 
@@ -10,41 +10,40 @@ import { AgentDisplayNode } from "../AgentTree";
 import styles from "./style.css";
 
 interface MetadataPanelProps {
-    selectedAgent: AgentMetadata;
+    selectedAgentMetadata: AgentMetadata;
     uiDisplayData: AgentDisplayNode[];
 }
 
 const MetadataPanel: React.FC<MetadataPanelProps> = ({
-    selectedAgent,
+    selectedAgentMetadata,
     uiDisplayData,
 }) => {
     const [panelExpanded, setPanelExpanded] = React.useState(false);
 
-    const agentSelected = !!selectedAgent.uniqueId;
     const selectedAgentNotRendered =
-        selectedAgent.agentType >= uiDisplayData.length;
+        selectedAgentMetadata.agentType >= uiDisplayData.length;
 
     useEffect(() => {
-        if (!agentSelected) {
+        if (!selectedAgentMetadata.uniqueId) {
             setPanelExpanded(false);
         } else {
             setPanelExpanded(true);
         }
-    }, [selectedAgent.uniqueId]);
+    }, [selectedAgentMetadata.uniqueId]);
 
     const displayValues: Record<keyof AgentMetadata, MetadataDisplay> = {
         uniqueId: {
             label: <span>Unique ID</span>,
-            value: () => formatFloatForDisplay(selectedAgent.uniqueId),
+            value: () => formatFloatForDisplay(selectedAgentMetadata.uniqueId),
         },
         agentType: {
             label: <span>Agent Type</span>,
-            value: () => uiDisplayData[selectedAgent.agentType].title,
+            value: () => uiDisplayData[selectedAgentMetadata.agentType].title,
         },
         position: {
             label: <span>Position</span>,
             value: () => {
-                const pos = selectedAgent.position;
+                const pos = selectedAgentMetadata.position;
                 return (
                     <>
                         <div>x = {formatFloatForDisplay(pos.x)}</div>
@@ -63,7 +62,7 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 </>
             ),
             value: () => {
-                const rot = selectedAgent.rotation;
+                const rot = selectedAgentMetadata.rotation;
                 return (
                     <>
                         <div>x = {formatFloatForDisplay(rot.x)}</div>
@@ -75,18 +74,22 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
         },
         radius: {
             label: <span>Radius</span>,
-            value: () => formatFloatForDisplay(selectedAgent.radius),
+            value: () => formatFloatForDisplay(selectedAgentMetadata.radius),
         },
     };
 
-    const metadataRows = useMemo(() => {
-        const keys = Object.keys(selectedAgent) as (keyof AgentMetadata)[];
+    const getMetadataRows = () => {
+        const keys = Object.keys(
+            selectedAgentMetadata
+        ) as (keyof AgentMetadata)[];
         return keys.map((key, index) => (
             <React.Fragment key={key}>
                 <div className={styles.row}>
                     <div className={styles.key}>{displayValues[key].label}</div>
-                    <div className={styles.value}>
-                        {displayValues[key].value()}
+                    <div>
+                        {selectedAgentNotRendered
+                            ? "-"
+                            : displayValues[key].value()}
                     </div>
                 </div>
                 {index < keys.length - 1 && (
@@ -94,16 +97,14 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 )}
             </React.Fragment>
         ));
-    }, [selectedAgent, selectedAgentNotRendered]);
+    };
 
     const panelContent = (): JSX.Element => {
-        if (!agentSelected) {
+        if (!selectedAgentMetadata.uniqueId) {
             return (
                 <div className={styles.noAgentRow}>
-                    <p>Nothing to see here...</p>
-                    <p className={styles.noAgentText}>
-                        Select an agent in the viewport to view its metadata.
-                    </p>
+                    <p className={styles.noAgentText}>Nothing to see here...</p>
+                    <p>Select an agent in the viewport to view its metadata.</p>
                 </div>
             );
         }
@@ -114,7 +115,7 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                         Agent no longer in simulation
                     </p>
                 )}
-                {metadataRows}
+                {getMetadataRows()}
             </>
         );
     };
@@ -124,7 +125,10 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
             className={classNames(
                 styles.container,
                 { [styles.collapsed]: !panelExpanded },
-                { [styles.agentSelected]: agentSelected && panelExpanded }
+                {
+                    [styles.agentSelected]:
+                        !selectedAgentMetadata.uniqueId && panelExpanded,
+                }
             )}
         >
             <div

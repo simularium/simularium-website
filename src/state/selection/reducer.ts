@@ -25,7 +25,7 @@ import {
     ResetAction,
     SetColorChangeAction,
     SetRecentColorsAction,
-    SetSelectedAgentAction,
+    SetSelectedAgentMetadataAction,
 } from "./types";
 
 export const initialState = {
@@ -35,7 +35,7 @@ export const initialState = {
     agentHighlightMap: {},
     colorChange: null,
     recentColors: [],
-    selectedAgent: {},
+    selectedAgentMetadata: {},
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -157,15 +157,17 @@ const actionToConfigMap: TypeToDescriptionMap = {
         },
     },
     [SET_SELECTED_AGENT]: {
-        accepts: (action: AnyAction): action is SetSelectedAgentAction =>
+        accepts: (
+            action: AnyAction
+        ): action is SetSelectedAgentMetadataAction =>
             action.type === SET_SELECTED_AGENT,
         perform: (
             state: SelectionStateBranch,
-            action: SetSelectedAgentAction
+            action: SetSelectedAgentMetadataAction
         ) => {
             return {
                 ...state,
-                selectedAgent: action.payload,
+                selectedAgentMetadata: action.payload,
             };
         },
     },

@@ -9,4 +9,5 @@ export const getColorChange = (state: State) => state.selection.colorChange;
 export const getNumberCollapsed = (state: State) =>
     state.selection.numberPanelsCollapsed;
 export const getRecentColors = (state: State) => state.selection.recentColors;
-export const getSelectedAgent = (state: State) => state.selection.selectedAgent;
+export const getSelectedAgentMetadata = (state: State) =>
+    state.selection.selectedAgentMetadata;

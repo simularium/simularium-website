@@ -1,4 +1,5 @@
 import { ColorChange } from "@aics/simularium-viewer";
+import { AgentMetadata } from "../../constants/interfaces";
 import {
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
@@ -20,7 +21,7 @@ import {
     ResetAction,
     SetColorChangeAction,
     SetRecentColorsAction,
-    SetSelectedAgentAction,
+    SetSelectedAgentMetadataAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -95,9 +96,11 @@ export function setRecentColors(colors: string[]): SetRecentColorsAction {
     };
 }
 
-export function setSelectedAgent(agentData: number): SetSelectedAgentAction {
+export function setSelectedAgentMetadata(
+    metaData: AgentMetadata
+): SetSelectedAgentMetadataAction {
     return {
-        payload: agentData,
+        payload: metaData,
         type: SET_SELECTED_AGENT,
     };
 }

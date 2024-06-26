@@ -20,7 +20,7 @@ import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
 import {
     ChangeTimeAction,
-    SetSelectedAgentAction,
+    SetSelectedAgentMetadataAction,
     SetVisibleAction,
 } from "../../state/selection/types";
 import {
@@ -99,7 +99,7 @@ interface ViewerPanelProps {
     setConversionStatus: ActionCreator<SetConversionStatusAction>;
     receiveConvertedFile: ActionCreator<ReceiveAction>;
     conversionProcessingData: ConversionProcessingData;
-    setSelectedAgent: ActionCreator<SetSelectedAgentAction>;
+    setSelectedAgentMetadata: ActionCreator<SetSelectedAgentMetadataAction>;
 }
 
 interface ViewerPanelState {
@@ -406,7 +406,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public onSelectedAgentChange = (agentData: AgentData) => {
         if (agentData.instanceId !== -1) {
-            this.props.setSelectedAgent({
+            this.props.setSelectedAgentMetadata({
                 uniqueId: agentData.instanceId,
                 agentType: agentData.type,
                 position: {
@@ -422,7 +422,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 radius: agentData.cr,
             });
         } else {
-            this.props.setSelectedAgent({});
+            this.props.setSelectedAgentMetadata({});
         }
     };
 
@@ -576,7 +576,8 @@ const dispatchToPropsMap = {
     receiveConvertedFile: trajectoryStateBranch.actions.receiveConvertedFile,
     setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
-    setSelectedAgent: selectionStateBranch.actions.setSelectedAgent,
+    setSelectedAgentMetadata:
+        selectionStateBranch.actions.setSelectedAgentMetadata,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);

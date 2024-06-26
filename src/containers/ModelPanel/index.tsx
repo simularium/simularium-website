@@ -17,7 +17,7 @@ import {
     getAgentVisibilityMap,
     getAgentHighlightMap,
     getRecentColors,
-    getSelectedAgent,
+    getSelectedAgentMetadata,
 } from "../../state/selection/selectors";
 import {
     turnAgentsOnByDisplayKey,
@@ -64,7 +64,7 @@ interface ModelPanelProps {
     recentColors: string[];
     setColorChange: ActionCreator<SetColorChangeAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
-    selectedAgent: AgentMetadata;
+    selectedAgentMetadata: AgentMetadata;
 }
 
 const ModelPanel: React.FC<ModelPanelProps> = ({
@@ -83,7 +83,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     recentColors,
     setColorChange,
     setRecentColors,
-    selectedAgent,
+    selectedAgentMetadata,
 }): JSX.Element => {
     const checkboxTree = (
         <CheckBoxTree
@@ -119,7 +119,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
             <SideBarContents
                 mainTitle="Agents"
                 content={[contentMap[viewerStatus]]}
-                selectedAgent={selectedAgent}
+                selectedAgentMetadata={selectedAgentMetadata}
                 uiDisplayData={uiDisplayDataTree}
             />
         </div>
@@ -137,7 +137,7 @@ function mapStateToProps(state: State) {
         viewerStatus: getStatus(state),
         isNetworkedFile: getIsNetworkedFile(state),
         recentColors: getRecentColors(state),
-        selectedAgent: getSelectedAgent(state),
+        selectedAgentMetadata: getSelectedAgentMetadata(state),
     };
 }
 
