@@ -127,7 +127,7 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 { [styles.collapsed]: !panelExpanded },
                 {
                     [styles.agentSelected]:
-                        !selectedAgentMetadata.uniqueId && panelExpanded,
+                        selectedAgentMetadata.uniqueId && panelExpanded,
                 }
             )}
         >
