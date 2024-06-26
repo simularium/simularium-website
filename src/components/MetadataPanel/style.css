@@ -1,6 +1,6 @@
 .container {
-    color: var(--dark-theme-text-color-bright);
-        padding: 16px 14px 16px 24px;
+    color: var(--dark-theme-sidebar-text);
+    padding: 16px 14px 16px 24px;
 }
 
 .collapsed {
@@ -17,8 +17,8 @@
     margin-bottom: 4px;
 }
 
-h3 {
-    color: var(--pure-white);
+.container h3 {
+    color: var(--dark-theme-text-color-bright);
     font-weight: 800;
     margin: 0px;
 }
@@ -26,12 +26,12 @@ h3 {
 .icon {
     background-color: transparent;
     border: none;
-    color: var(--warm-gray);
+    color: var(--dark-theme-icon-color);
     font-size: 18px;
 }
 
 .title:hover .icon {
-    color: var(--pure-white);
+    color: var(--dark-theme-menu-text-hover);
 }
 
 .rotate span {
@@ -39,13 +39,13 @@ h3 {
 }
 
 .panel-contents {
-    color: var(--medium-gray);
+    font-size: 12px;
+    font-weight: 400;
 }
 
 .no-agent-row {
     display: flex;
     flex-direction: column;
-    color: var(--white-two);
 }
 
 .no-agent-row p {
@@ -53,32 +53,26 @@ h3 {
 }
 
 .no-agent-text {
-    font-size: 12px;
-    font-weight: 100px;
+    font-size: 14px;
 }
 
 .agent-missing-text {
+    color: var(--dark-theme-sidebar-text-dim);
     font-size: 13px;
-    font-weight: 400;
 }
 
 .row {
     display: flex;
-    font-size: 12px;
     font-weight: 100;
 }
 
 .key {
-    color: var(--medium-gray);
+    color: var(--dark-theme-sidebar-text-dim);
     min-width: 120px;
     align-self: flex-start;
 }
 
-.value {
-    color: var(--white-two);
-}
-
 .divider {
-    background-color: var(--dim-gray-two);
+    background-color: var(--dark-theme-divider-dim);
     margin: 4px 0px;
 }
