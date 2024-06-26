@@ -44,7 +44,7 @@ import PlaybackControls from "../../components/PlaybackControls";
 import RecordMoviesComponent from "../../components/RecordMoviesComponent";
 import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
-import { TUTORIAL_PATHNAME } from "../../routes";
+import { EMBED_PATHNAME, TUTORIAL_PATHNAME } from "../../routes";
 import ErrorNotification from "../../components/ErrorNotification";
 import { MOBILE_CUTOFF } from "../../constants";
 import { hasUrlParamsSettings } from "../../util";
@@ -162,8 +162,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 ),
             });
         }
-
-        if (window.matchMedia(MOBILE_CUTOFF).matches) {
+        // disable small screen warning on embed page
+        const location = window.location;
+        if (
+            window.matchMedia(MOBILE_CUTOFF).matches &&
+            location.pathname !== EMBED_PATHNAME
+        ) {
             Modal.warning({
                 title: "Small screens are not supported",
                 content:

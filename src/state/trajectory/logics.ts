@@ -620,7 +620,7 @@ const receiveConvertedFileLogic = createLogic({
 });
 
 const cancelConversionLogic = createLogic({
-    process(deps: ReduxLogicDeps, dispatch) {
+    process(deps: ReduxLogicDeps, dispatch, done) {
         const { getState } = deps;
         const currentState = getState();
         const simulariumController = getSimulariumController(currentState);
@@ -630,6 +630,7 @@ const cancelConversionLogic = createLogic({
                 status: ConversionStatus.Inactive,
             })
         );
+        done();
     },
     type: CANCEL_CONVERSION,
 });
