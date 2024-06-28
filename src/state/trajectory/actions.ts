@@ -17,6 +17,8 @@ import {
     RECEIVE_FILE_TO_CONVERT,
     SET_CONVERSION_STATUS,
     CONVERT_FILE,
+    RECEIVE_CONVERTED_FILE,
+    CANCEL_CONVERSION,
     SET_SESSION_UI_DATA,
     SET_DEFAULT_UI_DATA,
 } from "./constants";
@@ -36,9 +38,10 @@ import {
     InitializeConversionAction,
     SetConversionEngineAction,
     ReceiveFileToConvertAction,
-    ConversionStatus,
     SetConversionStatusAction,
     ConvertFileAction,
+    ConversionStatus,
+    CancelConversionAction,
     SetSessionUIDataAction,
     SetDefaultUIDataAction,
 } from "./types";
@@ -178,9 +181,23 @@ export function setConversionEngine(
     };
 }
 
-export function convertFile(): ConvertFileAction {
+export function convertFile(payload: { fileId: string }): ConvertFileAction {
     return {
+        payload,
         type: CONVERT_FILE,
+    };
+}
+
+export function receiveConvertedFile(payload: NetworkedSimFile): ReceiveAction {
+    return {
+        payload,
+        type: RECEIVE_CONVERTED_FILE,
+    };
+}
+
+export function cancelAutoconversion(): CancelConversionAction {
+    return {
+        type: CANCEL_CONVERSION,
     };
 }
 

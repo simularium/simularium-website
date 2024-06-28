@@ -3,18 +3,21 @@ import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 import { Upload, Select, Divider, Button } from "antd";
 import { UploadFile } from "antd/lib/upload";
+import { v4 as uuidv4 } from "uuid";
 import classNames from "classnames";
 
 import { State } from "../../state";
 import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
 import {
+    ClearSimFileDataAction,
     ConversionStatus,
     ConvertFileAction,
     InitializeConversionAction,
     ReceiveFileToConvertAction,
     SetConversionEngineAction,
     SetConversionStatusAction,
+    CancelConversionAction,
 } from "../../state/trajectory/types";
 import { SetErrorAction } from "../../state/viewer/types";
 import {
@@ -23,18 +26,14 @@ import {
     ExtensionMap,
 } from "../../state/trajectory/conversion-data-types";
 import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
-import ConversionServerErrorModal from "../../components/ConversionServerErrorModal";
-import ConversionFileErrorModal from "../../components/ConversionFileErrorModal";
 import { Cancel, DownCaret } from "../../components/Icons";
-import {
-    CONVERSION_ACTIVE,
-    CONVERSION_INACTIVE,
-    CONVERSION_NO_SERVER,
-} from "../../state/trajectory/constants";
 import customRequest from "./custom-request";
 
 import theme from "../../components/theme/light-theme.css";
 import styles from "./style.css";
+import { ConversionError } from "../../constants/interfaces";
+import ConversionErrorModal from "../../components/ConversionErrorModal";
+import { MAX_CONVERSION_FILE_SIZE } from "../../constants";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
@@ -45,6 +44,8 @@ interface ConversionProps {
     convertFile: ActionCreator<ConvertFileAction>;
     conversionStatus: ConversionStatus;
     setConversionStatus: ActionCreator<SetConversionStatusAction>;
+    clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
+    cancelAutoconversion: ActionCreator<CancelConversionAction>;
 }
 
 const validFileExtensions: ExtensionMap = {
@@ -74,45 +75,52 @@ const ConversionForm = ({
     conversionStatus,
     convertFile,
     setConversionStatus,
+    clearSimulariumFile,
+    cancelAutoconversion,
 }: ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile | null>();
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
-    const [serverErrorModalOpen, setServerErrorModalOpen] =
-        useState<boolean>(false);
-    const [fileTypeErrorModalOpen, setFileTypeErrorModalOpen] = useState(false);
+    const [conversionError, setConversionError] = useState<ConversionError>(
+        ConversionError.NO_ERROR
+    );
 
     const engineSelected = !!conversionProcessingData.engineType;
+    const errorModalOpen = conversionError !== ConversionError.NO_ERROR;
+
+    const errorMessage = {
+        [ConversionError.SERVER_ERROR]:
+            "We're sorry, the server is currently experiencing an issue. Please try again at a later time. ",
+        [ConversionError.FILE_TYPE_ERROR]: `You may want to double check that the file you selected is a valid ${conversionProcessingData.engineType}
+                        file and try again. `,
+        [ConversionError.FILE_SIZE_ERROR]:
+            "Your file exceeds the maximum allowed size of 200 MB, please try uploading a smaller file.",
+    };
 
     useEffect(() => {
         // on page load assume server is down until we hear back from it
-        setConversionStatus({ status: CONVERSION_NO_SERVER });
+        setConversionStatus({ status: ConversionStatus.NoServer });
         initializeConversion();
     }, []);
 
     useEffect(() => {
         // this is to account for the server going down while a conversion is in process
-        if (isProcessing && conversionStatus === CONVERSION_NO_SERVER) {
+        if (isProcessing && conversionStatus === ConversionStatus.NoServer) {
             setIsProcessing(false);
-            setServerErrorModalOpen(true);
+            setConversionError(ConversionError.SERVER_ERROR);
         }
     }, [conversionStatus]);
 
-    // callbacks for state variables
-    const toggleServerCheckModal = () => {
-        setServerErrorModalOpen(!serverErrorModalOpen);
-    };
-
-    const toggleFileTypeModal = () => {
-        setFileTypeErrorModalOpen(!fileTypeErrorModalOpen);
+    const closeErrorModal = () => {
+        setConversionError(ConversionError.NO_ERROR);
     };
 
     const cancelProcessing = () => {
         setIsProcessing(false);
-        setConversionStatus({ status: CONVERSION_NO_SERVER });
+        cancelAutoconversion();
     };
 
     const cancelConversion = () => {
-        setConversionStatus({ status: CONVERSION_INACTIVE });
+        setConversionStatus({ status: ConversionStatus.Inactive });
     };
 
     const handleEngineChange = (selectedValue: string) => {
@@ -125,41 +133,43 @@ const ConversionForm = ({
     };
 
     const handleFileSelection = async (file: UploadFile) => {
+        // 200 MB limit
+        if (file.size !== undefined && file.size > MAX_CONVERSION_FILE_SIZE) {
+            setConversionError(ConversionError.FILE_SIZE_ERROR);
+            return;
+        }
         setFileToConvert(file);
         customRequest(file, receiveFileToConvert, setError);
     };
 
-    const validateFileType = (fileName: string) => {
-        const fileExtension = fileName.split(".").pop();
-        if (fileExtension) {
-            if (
-                validFileExtensions[conversionProcessingData.engineType] ===
+    const validateFileType = () => {
+        const fileExtension = fileToConvert?.name.split(".").pop();
+        if (
+            fileExtension &&
+            validFileExtensions[conversionProcessingData.engineType] ===
                 fileExtension.toLowerCase()
-            ) {
-                return true;
-            }
+        ) {
+            return true;
+        } else {
+            setConversionError(ConversionError.FILE_TYPE_ERROR);
+            return false;
         }
-
-        setFileTypeErrorModalOpen(true);
-        return false;
     };
 
     const sendFileToConvert = () => {
-        if (
-            engineSelected &&
-            fileToConvert &&
-            validateFileType(fileToConvert.name)
-        ) {
-            if (conversionStatus === CONVERSION_NO_SERVER) {
-                setServerErrorModalOpen(true);
-            } else {
-                // we now use this local state lets us distinguish between arriving on this page normally
-                // and arriving here because the server went down while a conversion was in process
-                setIsProcessing(true);
-                setConversionStatus({ status: CONVERSION_ACTIVE });
-                convertFile();
-            }
+        if (conversionStatus === ConversionStatus.NoServer) {
+            setConversionError(ConversionError.SERVER_ERROR);
+            return;
         }
+        if (!validateFileType()) {
+            return;
+        }
+        // we now use this local state lets us distinguish between arriving on this page normally
+        // and arriving here because the server went down while a conversion was in process
+        setIsProcessing(true);
+        setConversionStatus({ status: ConversionStatus.Active });
+        const fileId = `${uuidv4()}.simularium`;
+        convertFile(fileId);
     };
 
     const renderUploadFile = (): JSX.Element => {
@@ -168,24 +178,21 @@ const ConversionForm = ({
     };
 
     // TODO: use conversion template data to render the form
-    console.log("conversion form data", conversionProcessingData);
     const conversionForm = (
         <div className={classNames(styles.container, theme.lightTheme)}>
-            {serverErrorModalOpen && (
-                <ConversionServerErrorModal
-                    closeModal={toggleServerCheckModal}
-                />
-            )}
-            {fileTypeErrorModalOpen && (
-                <ConversionFileErrorModal
-                    closeModal={toggleFileTypeModal}
-                    engineType={conversionProcessingData.engineType}
-                />
-            )}
-            {conversionStatus === CONVERSION_ACTIVE && (
+            {conversionStatus === ConversionStatus.Active && (
                 <ConversionProcessingOverlay
                     fileName={conversionProcessingData.fileName}
                     cancelProcessing={cancelProcessing}
+                />
+            )}
+            {errorModalOpen && (
+                <ConversionErrorModal
+                    closeModal={closeErrorModal}
+                    showForumMessage={
+                        conversionError !== ConversionError.FILE_SIZE_ERROR
+                    }
+                    errorMessage={errorMessage[conversionError] || ""}
                 />
             )}
             <div className={styles.formContent}>
@@ -270,6 +277,8 @@ const dispatchToPropsMap = {
     initializeConversion: trajectoryStateBranch.actions.initializeConversion,
     convertFile: trajectoryStateBranch.actions.convertFile,
     setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
+    clearSimulariumFile: trajectoryStateBranch.actions.clearSimulariumFile,
+    cancelAutoconversion: trajectoryStateBranch.actions.cancelAutoconversion,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ConversionForm);

@@ -11,7 +11,6 @@ import {
 } from "rc-upload/lib/interface";
 
 import { LocalSimFile } from "../../state/trajectory/types";
-import { VIEWER_ERROR } from "../../state/viewer/constants";
 import { ViewerError, ViewerStatus } from "../../state/viewer/types";
 import { clearBrowserUrlParams } from "../../util";
 
@@ -124,7 +123,7 @@ export default async (
             }
         }
         setError({ level, message, htmlData: "" });
-        setViewerStatus({ status: VIEWER_ERROR });
+        setViewerStatus({ status: ViewerStatus.Error });
         clearSimulariumFile({ newFile: false });
         clearBrowserUrlParams();
         if (rcRequest?.onError) {

@@ -1,4 +1,4 @@
-name: 'coverage'
+name: "coverage"
 on:
     pull_request:
         branches:
@@ -12,4 +12,4 @@ jobs:
             - uses: ArtiomTr/jest-coverage-report-action@v2.2.4
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
-                  annotations: coverage
+                  annotations: failed-tests

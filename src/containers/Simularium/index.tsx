@@ -20,14 +20,14 @@ import {
     RequestLocalFileAction,
     RequestNetworkFileAction,
     SetUrlParamsAction,
+    CancelConversionAction,
 } from "../../state/trajectory/types";
 import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
-import { CONVERSION_INACTIVE } from "../../state/trajectory/constants";
 import {
     SetErrorAction,
     SetViewerStatusAction,
+    ViewerStatus,
 } from "../../state/viewer/types";
-import { VIEWER_ERROR, VIEWER_LOADING } from "../../state/viewer/constants";
 import {
     DragOverViewerAction,
     ResetDragOverViewerAction,
@@ -79,6 +79,7 @@ interface AppProps {
     conversionStatus: ConversionStatus;
     initializeConversion: ActionCreator<InitializeConversionAction>;
     setUrlParams: ActionCreator<SetUrlParamsAction>;
+    cancelAutoconversion: ActionCreator<CancelConversionAction>;
 }
 
 interface AppState {
@@ -155,7 +156,7 @@ class App extends React.Component<AppProps, AppState> {
                         "make sure to include 'http/https' at the beginning of the url, and check for typos",
                     onClose: clearBrowserUrlParams,
                 });
-                setViewerStatus({ status: VIEWER_ERROR });
+                setViewerStatus({ status: ViewerStatus.Error });
                 setSimulariumController(controller);
             }
         };
@@ -208,7 +209,6 @@ class App extends React.Component<AppProps, AppState> {
 
     public renderOverlay(isEmbedded: boolean) {
         const {
-            simulariumFile,
             resetDragOverViewer,
             changeToLocalSimulariumFile,
             viewerStatus,
@@ -218,14 +218,14 @@ class App extends React.Component<AppProps, AppState> {
             setError,
         } = this.props;
         if (isEmbedded) {
-            return <EmbedOverlay title={simulariumFile.name} />;
+            return <EmbedOverlay />;
         } else {
             return (
                 <ViewerOverlayTarget
                     key="drop"
                     clearSimulariumFile={clearSimulariumFile}
                     loadLocalFile={changeToLocalSimulariumFile}
-                    isLoading={viewerStatus === VIEWER_LOADING}
+                    isLoading={viewerStatus === ViewerStatus.Loading}
                     resetDragOverViewer={resetDragOverViewer}
                     fileIsDraggedOver={fileIsDraggedOverViewer}
                     setViewerStatus={setViewerStatus}
@@ -250,7 +250,7 @@ class App extends React.Component<AppProps, AppState> {
                 ])}
             >
                 <div ref={this.interactiveContent}>
-                    {conversionStatus !== CONVERSION_INACTIVE && (
+                    {conversionStatus !== ConversionStatus.Inactive && (
                         <ConversionForm />
                     )}
                     <Layout className={styles.content}>
@@ -270,7 +270,11 @@ class App extends React.Component<AppProps, AppState> {
                                 />
                             )}
                         </Content>
-                        <SideBar onCollapse={this.onPanelCollapse} type="right">
+                        <SideBar
+                            onCollapse={this.onPanelCollapse}
+                            isEmbedded={isEmbedded}
+                            type="right"
+                        >
                             <ResultsPanel />
                         </SideBar>
                     </Layout>
@@ -310,6 +314,7 @@ const dispatchToPropsMap = {
     setViewerStatus: viewerStateBranch.actions.setStatus,
     setError: viewerStateBranch.actions.setError,
     initializeConversion: trajectoryStateBranch.actions.initializeConversion,
+    cancelAutoconversion: trajectoryStateBranch.actions.cancelAutoconversion,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(App);

@@ -22,10 +22,7 @@ export const getIsNetworkedFile = createSelector(
         if (!simFile.name) {
             return false;
         }
-        return (
-            !!find(TRAJECTORIES, { id: simFile.name }) &&
-            isNetworkSimFileInterface(simFile)
-        );
+        return isNetworkSimFileInterface(simFile);
     }
 );
 

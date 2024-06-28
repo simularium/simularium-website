@@ -20,11 +20,6 @@ import selectionStateBranch from "../../state/selection";
 import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
 import {
-    VIEWER_EMPTY,
-    VIEWER_SUCCESS,
-    VIEWER_ERROR,
-} from "../../state/viewer/constants";
-import {
     ChangeTimeAction,
     SetVisibleAction,
 } from "../../state/selection/types";
@@ -35,6 +30,7 @@ import {
     SetViewerStatusAction,
     ViewerError,
     SetErrorAction,
+    ViewerStatus,
 } from "../../state/viewer/types";
 import {
     ReceiveAction,
@@ -46,16 +42,16 @@ import {
     NetworkedSimFile,
     SetDefaultUIDataAction,
 } from "../../state/trajectory/types";
-import { CONVERSION_INACTIVE } from "../../state/trajectory/constants";
 import { batchActions } from "../../state/util";
 import PlaybackControls from "../../components/PlaybackControls";
 import RecordMoviesComponent from "../../components/RecordMoviesComponent";
 import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
-import { TUTORIAL_PATHNAME } from "../../routes";
+import { EMBED_PATHNAME, TUTORIAL_PATHNAME } from "../../routes";
 import ErrorNotification from "../../components/ErrorNotification";
 import { MOBILE_CUTOFF } from "../../constants";
 import { hasUrlParamsSettings } from "../../util";
+import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
 
 import {
     convertUIDataToSelectionData,
@@ -103,6 +99,8 @@ interface ViewerPanelProps {
     movieTitle: string;
     conversionStatus: ConversionStatus;
     setConversionStatus: ActionCreator<SetConversionStatusAction>;
+    receiveConvertedFile: ActionCreator<ReceiveAction>;
+    conversionProcessingData: ConversionProcessingData;
     simulariumFile: NetworkedSimFile;
     sessionUIData: UIDisplayData;
     setDefaultUIData: ActionCreator<SetDefaultUIDataAction>;
@@ -170,8 +168,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 ),
             });
         }
-
-        if (window.matchMedia(MOBILE_CUTOFF).matches) {
+        // disable small screen warning on embed page
+        const location = window.location;
+        if (
+            window.matchMedia(MOBILE_CUTOFF).matches &&
+            location.pathname !== EMBED_PATHNAME
+        ) {
             Modal.warning({
                 title: "Small screens are not supported",
                 content:
@@ -267,13 +269,22 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         setIsLooping(!isLooping);
     }
 
-    public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
-        const { conversionStatus, setConversionStatus } = this.props;
-        if (conversionStatus !== CONVERSION_INACTIVE) {
-            setConversionStatus({ status: CONVERSION_INACTIVE });
-        }
+    public handleIncomingConvertedFile(data: TrajectoryFileInfo) {
+        const { receiveConvertedFile, conversionProcessingData } = this.props;
+        const { fileId } = conversionProcessingData;
+        const title = data.trajectoryTitle || fileId;
+        receiveConvertedFile({
+            name: fileId,
+            title: title,
+        });
+    }
 
-        const { receiveTrajectory, simulariumController } = this.props;
+    public onTrajectoryFileInfoChanged(data: TrajectoryFileInfo) {
+        const { receiveTrajectory, simulariumController, conversionStatus } =
+            this.props;
+        if (conversionStatus === ConversionStatus.Active) {
+            this.handleIncomingConvertedFile(data);
+        }
         const tickIntervalLength = simulariumController.tickIntervalLength;
 
         let scaleBarLabelNumber =
@@ -324,8 +335,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setBuffering(false),
         ];
 
-        if (status !== VIEWER_SUCCESS) {
-            actions.push(setStatus({ status: VIEWER_SUCCESS }));
+        if (status !== ViewerStatus.Success) {
+            actions.push(setStatus({ status: ViewerStatus.Success }));
         }
 
         const atLastFrame =
@@ -456,7 +467,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                             htmlData: error.htmlData,
                         });
                         if (error.level === ErrorLevel.ERROR) {
-                            setStatus({ status: VIEWER_ERROR });
+                            setStatus({ status: ViewerStatus.Error });
                         }
                     }}
                     onTrajectoryFileInfoChanged={
@@ -483,7 +494,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                             firstFrameTime={firstFrameTime}
                             lastFrameTime={lastFrameTime}
                             loading={isBuffering}
-                            isEmpty={status === VIEWER_EMPTY}
+                            isEmpty={status === ViewerStatus.Empty}
                         />
                         <RecordMoviesComponent
                             movieUrl={this.state.movieURL}
@@ -540,6 +551,8 @@ function mapStateToProps(state: State) {
         movieTitle: getMovieTitle(state),
         conversionStatus:
             trajectoryStateBranch.selectors.getConversionStatus(state),
+        conversionProcessingData:
+            trajectoryStateBranch.selectors.getConversionProcessingData(state),
         simulariumFile:
             trajectoryStateBranch.selectors.getSimulariumFile(state),
         sessionUIData: trajectoryStateBranch.selectors.getSessionUIData(state),
@@ -560,6 +573,7 @@ const dispatchToPropsMap = {
     setIsPlaying: viewerStateBranch.actions.setIsPlaying,
     setIsLooping: viewerStateBranch.actions.setIsLooping,
     setError: viewerStateBranch.actions.setError,
+    receiveConvertedFile: trajectoryStateBranch.actions.receiveConvertedFile,
     setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
     setDefaultUIData: trajectoryStateBranch.actions.setDefaultUIData,

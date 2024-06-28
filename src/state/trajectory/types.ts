@@ -8,12 +8,6 @@ import {
     Template,
     TemplateMap,
 } from "./conversion-data-types";
-import {
-    CONVERSION_NO_SERVER,
-    CONVERSION_SERVER_LIVE,
-    CONVERSION_ACTIVE,
-    CONVERSION_INACTIVE,
-} from "./constants";
 export interface TrajectoryStateBranch {
     [key: string]: any;
 }
@@ -73,6 +67,7 @@ export interface SetConversionEngineAction {
 }
 
 export interface ConvertFileAction {
+    payload: { fileId: string };
     type: string;
 }
 
@@ -87,6 +82,10 @@ export interface SetConversionTemplateData {
 
 export interface SetConversionStatusAction {
     payload: { status: ConversionStatus };
+    type: string;
+}
+
+export interface CancelConversionAction {
     type: string;
 }
 
@@ -131,8 +130,9 @@ export interface SetDefaultUIDataAction {
     type: string;
 }
 
-export type ConversionStatus =
-    | typeof CONVERSION_INACTIVE
-    | typeof CONVERSION_NO_SERVER
-    | typeof CONVERSION_SERVER_LIVE
-    | typeof CONVERSION_ACTIVE;
+export enum ConversionStatus {
+    Inactive = "CONVERSION_INACTIVE",
+    NoServer = "CONVERSION_NO_SERVER",
+    ServerConfirmed = "CONVERSION_SERVER_CONFIRMED",
+    Active = "CONVERSION_ACTIVE",
+}

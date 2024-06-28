@@ -5,7 +5,7 @@ import { Layout, Typography } from "antd";
 import dragDropImage from "../../assets/drag-drop.gif";
 import { VIEWER_PATHNAME } from "../../routes";
 import VisualGlossary from "../VisualGlossary";
-import { SUPPORTED_ENGINES, DATA_BUCKET_URL } from "../../constants";
+import { SUPPORTED_ENGINES, DOWNLOAD_URL } from "../../constants";
 import Footer from "../Footer";
 
 const { Content } = Layout;
@@ -23,7 +23,7 @@ const TutorialPage = (): JSX.Element => {
                     <p className={styles.intro}>
                         To try out the Simularium Viewer, either{" "}
                         <a
-                            href={`${DATA_BUCKET_URL}/trajectory/endocytosis.simularium`}
+                            href={`${DOWNLOAD_URL}/trajectory/endocytosis.simularium`}
                         >
                             download
                         </a>{" "}
@@ -48,7 +48,7 @@ const TutorialPage = (): JSX.Element => {
                             <li>
                                 Download the example data{" "}
                                 <a
-                                    href={`${DATA_BUCKET_URL}/trajectory/endocytosis.simularium`}
+                                    href={`${DOWNLOAD_URL}/trajectory/endocytosis.simularium`}
                                 >
                                     here
                                 </a>

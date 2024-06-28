@@ -1,7 +1,7 @@
 import React from "react";
 import { ISimulariumFile } from "@aics/simularium-viewer";
 
-import { DATA_BUCKET_URL } from "../../constants";
+import { DOWNLOAD_URL } from "../../constants";
 import { NetworkedSimFile, LocalSimFile } from "../../state/trajectory/types";
 import { Download } from "../Icons";
 import NavButtonWithTooltip from "../NavButtonWithTooltip";
@@ -22,7 +22,7 @@ const DownloadTrajectoryMenu = ({
 
     const getHref = () => {
         if (isNetworkedFile) {
-            return `${DATA_BUCKET_URL}/trajectory/${simulariumFile.name}`;
+            return `${DOWNLOAD_URL}?file=${simulariumFile.name}`;
         } else {
             const localFile = simulariumFile as LocalSimFile; // isNetworkedFile checks for this
             const data: ISimulariumFile = localFile.data;

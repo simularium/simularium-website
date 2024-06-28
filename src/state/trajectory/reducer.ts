@@ -13,7 +13,8 @@ import {
     RECEIVE_FILE_TO_CONVERT,
     SET_CONVERSION_ENGINE,
     SET_CONVERSION_STATUS,
-    CONVERSION_INACTIVE,
+    CONVERT_FILE,
+    RECEIVE_CONVERTED_FILE,
     SET_SESSION_UI_DATA,
     SET_DEFAULT_UI_DATA,
 } from "./constants";
@@ -25,6 +26,8 @@ import {
     ReceiveFileToConvertAction,
     SetConversionEngineAction,
     SetConversionStatusAction,
+    ConversionStatus,
+    ConvertFileAction,
     SetSessionUIDataAction,
     SetDefaultUIDataAction,
 } from "./types";
@@ -43,13 +46,14 @@ export const initialState = {
         data: null,
         lastModified: null,
     },
-    conversionStatus: CONVERSION_INACTIVE,
+    conversionStatus: ConversionStatus.Inactive,
     processingData: {
         engineType: "",
         template: null,
         templateMap: null,
         fileToConvert: null,
         fileName: "",
+        fileId: "",
     },
     sessionUIData: [],
     defaultUIData: [],
@@ -151,6 +155,27 @@ const actionToConfigMap: TypeToDescriptionMap = {
                 },
             };
         },
+    },
+    [CONVERT_FILE]: {
+        accepts: (action: AnyAction): action is ConvertFileAction =>
+            action.type === CONVERT_FILE,
+        perform: (state: TrajectoryStateBranch, action: ConvertFileAction) => {
+            return {
+                ...state,
+                processingData: {
+                    ...state.processingData,
+                    fileId: action.payload,
+                },
+            };
+        },
+    },
+    [RECEIVE_CONVERTED_FILE]: {
+        accepts: (action: AnyAction): action is ReceiveAction =>
+            action.type === RECEIVE_CONVERTED_FILE,
+        perform: (state: TrajectoryStateBranch, action: ReceiveAction) => ({
+            ...state,
+            simulariumFile: action.payload,
+        }),
     },
     [SET_SESSION_UI_DATA]: {
         accepts: (action: AnyAction): action is SetSessionUIDataAction =>
