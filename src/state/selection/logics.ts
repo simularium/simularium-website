@@ -126,8 +126,9 @@ const applySessionColorsLogic = createLogic({
              * TODO: make sure color changes work like this as well
              */
             // dispatch(receiveAgentNamesAndStates(uiData));
-            done();
+            // done();
         }
+        done();
     },
     type: GET_UI_DATA_FROM_BROWSER,
 });

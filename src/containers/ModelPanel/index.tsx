@@ -12,12 +12,6 @@ import { getSimulariumController } from "../../state/simularium/selectors";
 import { getStatus } from "../../state/viewer/selectors";
 import { ViewerStatus } from "../../state/viewer/types";
 import {
-    VIEWER_EMPTY,
-    VIEWER_ERROR,
-    VIEWER_LOADING,
-    VIEWER_SUCCESS,
-} from "../../state/viewer/constants";
-import {
     ReceiveAction,
     RequestNetworkFileAction,
 } from "../../state/trajectory/types";
@@ -138,10 +132,12 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     );
 
     const contentMap = {
-        [VIEWER_SUCCESS]: checkboxTree,
-        [VIEWER_EMPTY]: <NoTrajectoriesText selectFile={loadNetworkFile} />,
-        [VIEWER_LOADING]: <div />,
-        [VIEWER_ERROR]: isNetworkedFile ? (
+        [ViewerStatus.Success]: checkboxTree,
+        [ViewerStatus.Empty]: (
+            <NoTrajectoriesText selectFile={loadNetworkFile} />
+        ),
+        [ViewerStatus.Loading]: <div />,
+        [ViewerStatus.Error]: isNetworkedFile ? (
             <NetworkFileFailedText />
         ) : (
             <NoTypeMappingText />
