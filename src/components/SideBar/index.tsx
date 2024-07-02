@@ -12,8 +12,8 @@ import styles from "./style.css";
 interface SiderProps {
     type: string;
     onCollapse: (open: boolean) => void;
+    isEmbedded: boolean;
     children?: React.ReactNode;
-    isEmbedded?: boolean;
 }
 
 interface SiderState {
