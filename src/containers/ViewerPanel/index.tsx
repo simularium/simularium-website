@@ -9,7 +9,7 @@ import SimulariumViewer, {
     TrajectoryFileInfo,
     TimeData,
 } from "@aics/simularium-viewer";
-import "@aics/simularium-viewer/style/style.css";
+import { AgentData } from "@aics/simularium-viewer/type-declarations/simularium/types";
 import { connect } from "react-redux";
 import { Modal } from "antd";
 import Bowser from "bowser";
@@ -20,6 +20,7 @@ import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
 import {
     ChangeTimeAction,
+    SetSelectedAgentMetadataAction,
     SetVisibleAction,
 } from "../../state/selection/types";
 import {
@@ -98,6 +99,7 @@ interface ViewerPanelProps {
     setConversionStatus: ActionCreator<SetConversionStatusAction>;
     receiveConvertedFile: ActionCreator<ReceiveAction>;
     conversionProcessingData: ConversionProcessingData;
+    setSelectedAgentMetadata: ActionCreator<SetSelectedAgentMetadataAction>;
 }
 
 interface ViewerPanelState {
@@ -406,6 +408,28 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         });
     };
 
+    public onSelectedAgentChange = (agentData: AgentData) => {
+        if (agentData.instanceId !== -1) {
+            this.props.setSelectedAgentMetadata({
+                uniqueId: agentData.instanceId,
+                agentType: agentData.type,
+                position: {
+                    x: agentData.x,
+                    y: agentData.y,
+                    z: agentData.z,
+                },
+                rotation: {
+                    x: agentData.xrot,
+                    y: agentData.yrot,
+                    z: agentData.zrot,
+                },
+                radius: agentData.cr,
+            });
+        } else {
+            this.props.setSelectedAgentMetadata({});
+        }
+    };
+
     public render(): JSX.Element {
         const {
             time,
@@ -457,6 +481,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                         this.onTrajectoryFileInfoChanged
                     }
                     onRecordedMovie={this.onRecordedMovie}
+                    onFollowObjectChanged={this.onSelectedAgentChange}
                 />
                 {firstFrameTime !== lastFrameTime && (
                     <div className={styles.bottomControlsContainer}>
@@ -555,6 +580,8 @@ const dispatchToPropsMap = {
     receiveConvertedFile: trajectoryStateBranch.actions.receiveConvertedFile,
     setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
+    setSelectedAgentMetadata:
+        selectionStateBranch.actions.setSelectedAgentMetadata,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);

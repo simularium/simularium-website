@@ -14,6 +14,7 @@ import {
     hasUrlParamsSettings,
     editUrlParams,
     getIconGlyphClasses,
+    formatFloatForDisplay,
 } from "../";
 import {
     getFileIdFromUrl,
@@ -401,6 +402,29 @@ describe("User Url handling", () => {
         it("returns a string of icon-moon, anticon, and the passed in glyph", () => {
             const glyphClassName = getIconGlyphClasses(IconGlyphs.StarEmpty);
             expect(glyphClassName).toEqual("icon-moon anticon star-empty-icon");
+        });
+    });
+    describe("formatFloatForDisplay", () => {
+        it("returns a string with the requisite number of sig figs as is", () => {
+            expect(formatFloatForDisplay(1.23)).toBe("1.23");
+        });
+        it("returns zero if given zero", () => {
+            expect(formatFloatForDisplay(0)).toBe("0");
+        });
+        it("returns a float with less than the requisite number of sig figs as is", () => {
+            expect(formatFloatForDisplay(1.2)).toBe("1.2");
+        });
+        it("rounds a float with greater than the requisite number of sig figs", () => {
+            expect(formatFloatForDisplay(1.234123)).toBe("1.23");
+        });
+        it("returns an integer with the requisite number of sig figs as is", () => {
+            expect(formatFloatForDisplay(123)).toBe("123");
+        });
+        it("returns an integer with less than the requisite number of sig figs as is", () => {
+            expect(formatFloatForDisplay(12)).toBe("12");
+        });
+        it("does not include unnecessary zeros", () => {
+            expect(formatFloatForDisplay(1.20000001)).toBe("1.2");
         });
     });
 });
