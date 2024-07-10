@@ -17,6 +17,7 @@ import {
     getAgentVisibilityMap,
     getAgentHighlightMap,
     getRecentColors,
+    getSelectedAgentMetadata,
 } from "../../state/selection/selectors";
 import {
     turnAgentsOnByDisplayKey,
@@ -33,16 +34,17 @@ import {
     SetRecentColorsAction,
 } from "../../state/selection/types";
 import CheckBoxTree, { AgentDisplayNode } from "../../components/AgentTree";
-import {
-    getSelectAllVisibilityMap,
-    getSelectNoneVisibilityMap,
-    getIsSharedCheckboxIndeterminate,
-} from "./selectors";
+import { AgentMetadata } from "../../constants/interfaces";
 import NoTrajectoriesText from "../../components/NoTrajectoriesText";
 import { RequestNetworkFileAction } from "../../state/trajectory/types";
 import { ViewerStatus } from "../../state/viewer/types";
 import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFileFailedText";
 import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
+import {
+    getSelectAllVisibilityMap,
+    getSelectNoneVisibilityMap,
+    getIsSharedCheckboxIndeterminate,
+} from "./selectors";
 
 import styles from "./style.css";
 
@@ -62,71 +64,67 @@ interface ModelPanelProps {
     recentColors: string[];
     setColorChange: ActionCreator<SetColorChangeAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
+    selectedAgentMetadata: AgentMetadata;
 }
 
-class ModelPanel extends React.Component<ModelPanelProps> {
-    public render(): JSX.Element {
-        const {
-            agentVisibilityMap,
-            uiDisplayDataTree,
-            turnAgentsOnByDisplayKey,
-            highlightAgentsByDisplayKey,
-            agentHighlightMap,
-            setAgentsVisible,
-            payloadForSelectAll,
-            payloadForSelectNone,
-            isSharedCheckboxIndeterminate,
-            viewerStatus,
-            isNetworkedFile,
-            changeToNetworkedFile: loadNetworkFile,
-            recentColors,
-            setColorChange,
-            setRecentColors,
-        } = this.props;
-        const checkboxTree = (
-            <CheckBoxTree
-                treeData={uiDisplayDataTree}
-                handleAgentCheck={turnAgentsOnByDisplayKey}
-                agentsChecked={agentVisibilityMap}
-                handleHighlight={highlightAgentsByDisplayKey}
-                agentsHighlighted={agentHighlightMap}
-                setAgentsVisible={setAgentsVisible}
-                payloadForSelectAll={payloadForSelectAll}
-                payloadForSelectNone={payloadForSelectNone}
-                isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
-                recentColors={recentColors}
-                setColorChange={setColorChange}
-                setRecentColors={setRecentColors}
+const ModelPanel: React.FC<ModelPanelProps> = ({
+    uiDisplayDataTree,
+    agentHighlightMap,
+    agentVisibilityMap,
+    turnAgentsOnByDisplayKey,
+    highlightAgentsByDisplayKey,
+    setAgentsVisible,
+    payloadForSelectAll,
+    payloadForSelectNone,
+    isSharedCheckboxIndeterminate,
+    viewerStatus,
+    isNetworkedFile,
+    changeToNetworkedFile: loadNetworkFile,
+    recentColors,
+    setColorChange,
+    setRecentColors,
+    selectedAgentMetadata,
+}): JSX.Element => {
+    const checkboxTree = (
+        <CheckBoxTree
+            treeData={uiDisplayDataTree}
+            handleAgentCheck={turnAgentsOnByDisplayKey}
+            agentsChecked={agentVisibilityMap}
+            handleHighlight={highlightAgentsByDisplayKey}
+            agentsHighlighted={agentHighlightMap}
+            setAgentsVisible={setAgentsVisible}
+            payloadForSelectAll={payloadForSelectAll}
+            payloadForSelectNone={payloadForSelectNone}
+            isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
+            recentColors={recentColors}
+            setColorChange={setColorChange}
+            setRecentColors={setRecentColors}
+        />
+    );
+    const contentMap = {
+        [ViewerStatus.Success]: checkboxTree,
+        [ViewerStatus.Empty]: (
+            <NoTrajectoriesText selectFile={loadNetworkFile} />
+        ),
+        [ViewerStatus.Loading]: <div />,
+        [ViewerStatus.Error]: isNetworkedFile ? (
+            <NetworkFileFailedText />
+        ) : (
+            <NoTypeMappingText />
+        ),
+    };
+
+    return (
+        <div className={styles.container}>
+            <SideBarContents
+                mainTitle="Agents"
+                content={[contentMap[viewerStatus]]}
+                selectedAgentMetadata={selectedAgentMetadata}
+                uiDisplayData={uiDisplayDataTree}
             />
-        );
-        const contentMap = {
-            [ViewerStatus.Success]: checkboxTree,
-            [ViewerStatus.Empty]: (
-                <NoTrajectoriesText selectFile={loadNetworkFile} />
-            ),
-            [ViewerStatus.Loading]: <div />,
-            [ViewerStatus.Error]: isNetworkedFile ? (
-                <NetworkFileFailedText />
-            ) : (
-                <NoTypeMappingText />
-            ),
-        };
-
-        return (
-            <div className={styles.container}>
-                <SideBarContents
-                    mainTitle="Agents"
-                    content={[
-                        <div className={styles.container} key="molecules">
-                            {contentMap[viewerStatus]}
-                        </div>,
-                        null,
-                    ]}
-                />
-            </div>
-        );
-    }
-}
+        </div>
+    );
+};
 
 function mapStateToProps(state: State) {
     return {
@@ -139,6 +137,7 @@ function mapStateToProps(state: State) {
         viewerStatus: getStatus(state),
         isNetworkedFile: getIsNetworkedFile(state),
         recentColors: getRecentColors(state),
+        selectedAgentMetadata: getSelectedAgentMetadata(state),
     };
 }
 

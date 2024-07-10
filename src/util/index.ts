@@ -117,3 +117,7 @@ export const roundTimeForDisplay = (time: number): number => {
 export const getIconGlyphClasses = (name: IconGlyphs) => {
     return `icon-moon anticon ${name}`;
 };
+
+export const formatFloatForDisplay = (float: number): string => {
+    return parseFloat(float.toFixed(2)).toString();
+};
