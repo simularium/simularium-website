@@ -2,13 +2,13 @@ import { createSelector } from "reselect";
 import { reduce } from "lodash";
 import { SelectionEntry, UIDisplayData } from "@aics/simularium-viewer";
 
-import { getAgentDisplayNamesAndStates } from "../../trajectory/selectors";
+import { getCurrentUIData } from "../../trajectory/selectors";
 import { AgentRenderingCheckboxMap } from "../types";
 
 import { getAgentHighlightMap, getAgentVisibilityMap } from "./basic";
 
 export const getHighlightedAgents = createSelector(
-    [getAgentHighlightMap, getAgentDisplayNamesAndStates],
+    [getAgentHighlightMap, getCurrentUIData],
     (
         highlightedAgents: AgentRenderingCheckboxMap,
         allAgents: UIDisplayData
@@ -50,7 +50,7 @@ export const getHighlightedAgents = createSelector(
 );
 
 export const getAgentsToHide = createSelector(
-    [getAgentVisibilityMap, getAgentDisplayNamesAndStates],
+    [getAgentVisibilityMap, getCurrentUIData],
     (
         agentVisibilityMap: AgentRenderingCheckboxMap,
         agentDisplayData: UIDisplayData

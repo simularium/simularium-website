@@ -8,12 +8,11 @@ import {
     NetworkedSimFile,
 } from "../types";
 
-import TRAJECTORIES from "../../../constants/networked-trajectories";
 import {
     getSimulariumFile,
-    getAgentDisplayNamesAndStates,
     getDefaultUIData,
     getSessionUIData,
+    getCurrentUIData,
 } from "./basic";
 
 export const getIsNetworkedFile = createSelector(
@@ -27,7 +26,7 @@ export const getIsNetworkedFile = createSelector(
 );
 
 export const getUiDisplayDataTree = createSelector(
-    [getAgentDisplayNamesAndStates],
+    [getCurrentUIData],
     (uiDisplayData: UIDisplayData) => {
         if (!uiDisplayData.length) {
             return [];

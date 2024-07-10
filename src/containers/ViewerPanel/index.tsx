@@ -84,7 +84,7 @@ interface ViewerPanelProps {
     changeTime: ActionCreator<ChangeTimeAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
     receiveTrajectory: ActionCreator<ReceiveAction>;
-    receiveAgentNamesAndStates: ActionCreator<ReceiveAction>;
+    setCurrentUIData: ActionCreator<ReceiveAction>;
     selectionStateInfoForViewer: SelectionStateInfo;
     setIsPlaying: ActionCreator<ToggleAction>;
     setIsLooping: ActionCreator<ToggleAction>;
@@ -378,7 +378,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
         const {
-            receiveAgentNamesAndStates,
+            setCurrentUIData,
             setAgentsVisible,
             setDefaultUIData,
             sessionUIData,
@@ -391,7 +391,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const selectedAgents = convertUIDataToSelectionData(uiData);
         const actions = [
             setDefaultUIData(uiData),
-            receiveAgentNamesAndStates(uiDataToApply),
+            setCurrentUIData(uiDataToApply),
             setAgentsVisible(selectedAgents),
         ];
         batchActions(actions);
@@ -564,8 +564,7 @@ const dispatchToPropsMap = {
     setAgentsVisible: selectionStateBranch.actions.setAgentsVisible,
     receiveTrajectory: trajectoryStateBranch.actions.receiveTrajectory,
     receiveAgentTypeIds: trajectoryStateBranch.actions.receiveAgentTypeIds,
-    receiveAgentNamesAndStates:
-        trajectoryStateBranch.actions.receiveAgentNamesAndStates,
+    setCurrentUIData: trajectoryStateBranch.actions.setCurrentUIData,
     setStatus: viewerStateBranch.actions.setStatus,
     dragOverViewer: viewerStateBranch.actions.dragOverViewer,
     resetDragOverViewer: viewerStateBranch.actions.resetDragOverViewer,

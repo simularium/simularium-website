@@ -39,7 +39,9 @@ export const initialState = {
     timeUnits: null,
     scaleBarLabel: "",
     agentIds: [],
-    agentUiNames: [], // session colors to do: rename, currentUiData? these are the currently active color settings
+    currentUIData: [], // session colors to do: rename, currentUiData? these are the currently active color settings
+    sessionUIData: [], // session colors to do: user selected color settings, possibly from current selections, browser storage, or a combination
+    defaultUIData: [], // session colors to do: the default color settings from the parsed trajectory
     plotData: [],
     simulariumFile: {
         name: "",
@@ -55,8 +57,6 @@ export const initialState = {
         fileName: "",
         fileId: "",
     },
-    sessionUIData: [], // session colors to do: user selected color settings, possibly from current selections, browser storage, or a combination
-    defaultUIData: [], // session colors to do: the default color settings from the parsed trajectory
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -81,7 +81,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
             action.type === RECEIVE_AGENT_NAMES,
         perform: (state: TrajectoryStateBranch, action: ReceiveAction) => ({
             ...state,
-            agentUiNames: action.payload,
+            currentUIData: action.payload,
         }),
     },
     [RECEIVE_SIMULARIUM_FILE]: {

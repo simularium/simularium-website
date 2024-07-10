@@ -7,20 +7,14 @@ import {
     STORE_UI_DATA_IN_BROWSER,
 } from "./constants";
 import { ReduxLogicDeps } from "../types";
-import {
-    getAgentDisplayNamesAndStates,
-    getSimulariumFile,
-} from "../trajectory/selectors";
-import {
-    receiveAgentNamesAndStates,
-    setSessionUIData,
-} from "../trajectory/actions";
+import { getCurrentUIData, getSimulariumFile } from "../trajectory/selectors";
+import { setCurrentUIData, setSessionUIData } from "../trajectory/actions";
 
 // session colors to do: rename or break up this logic
 const storeSessionColorsLogic = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
-        const uiData: UIDisplayData = getAgentDisplayNamesAndStates(getState()); // gets current UIDD from redux
+        const uiData: UIDisplayData = getCurrentUIData(getState()); // gets current UIDD from redux
         const colorChange = action.payload;
         const newUiData = uiData.map((agent) => {
             // apply payload color change to make new UIDD
@@ -48,7 +42,7 @@ const storeSessionColorsLogic = createLogic({
         const fileKey = getSimulariumFile(getState()).name;
         localStorage.setItem(fileKey, JSON.stringify(newUiData)); // store new UIDD in browser
         dispatch(setSessionUIData(newUiData)); // store new session UIDD in redux
-        dispatch(receiveAgentNamesAndStates(newUiData)); // set current UIDD equal to session UIDD
+        dispatch(setCurrentUIData(newUiData)); // set current UIDD equal to session UIDD
         done();
     },
     type: STORE_UI_DATA_IN_BROWSER,
@@ -75,7 +69,7 @@ const applySessionColorsLogic = createLogic({
         if (storedColorChanges !== "undefined" && storedColorChanges !== null) {
             const uiData = JSON.parse(storedColorChanges);
             dispatch(setSessionUIData(uiData));
-            dispatch(receiveAgentNamesAndStates(uiData));
+            dispatch(setCurrentUIData(uiData));
         }
         done();
     },

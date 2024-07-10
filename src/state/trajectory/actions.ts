@@ -79,7 +79,7 @@ export function receiveAgentTypeIds(
     };
 }
 
-export function receiveAgentNamesAndStates(
+export function setCurrentUIData(
     payload: TrajectoryStateBranch
 ): ReceiveAction {
     return {

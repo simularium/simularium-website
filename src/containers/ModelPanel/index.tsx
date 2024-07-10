@@ -18,7 +18,7 @@ import {
 import {
     requestTrajectory,
     changeToNetworkedFile,
-    receiveAgentNamesAndStates,
+    setCurrentUIData,
 } from "../../state/trajectory/actions";
 import {
     getUiDisplayDataTree,
@@ -72,7 +72,7 @@ interface ModelPanelProps {
     turnAgentsOnByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
     highlightAgentsByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
     setAgentsVisible: ActionCreator<SetVisibleAction>;
-    receiveAgentNamesAndStates: ActionCreator<ReceiveAction>;
+    setCurrentUIData: ActionCreator<ReceiveAction>;
     payloadForSelectAll: AgentRenderingCheckboxMap;
     payloadForSelectNone: AgentRenderingCheckboxMap;
     isSharedCheckboxIndeterminate: boolean;
@@ -109,7 +109,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     defaultUiSettingsApplied,
     defaultUIData,
     sessionUIData,
-    receiveAgentNamesAndStates,
+    setCurrentUIData,
 }) => {
     const checkboxTree = (
         <CheckBoxTree
@@ -155,13 +155,13 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
                                 buttonType={ButtonClass.Action}
                                 clickHandler={() => {
                                     clearSessionColorsFromStateAndBrowser();
-                                    receiveAgentNamesAndStates(defaultUIData);
+                                    setCurrentUIData(defaultUIData);
                                 }}
                                 onMouseEnter={() => {
-                                    receiveAgentNamesAndStates(defaultUIData);
+                                    setCurrentUIData(defaultUIData);
                                 }}
                                 onMouseLeave={() => {
-                                    receiveAgentNamesAndStates(sessionUIData);
+                                    setCurrentUIData(sessionUIData);
                                 }}
                             />
                         )}
@@ -198,7 +198,7 @@ const dispatchToPropsMap = {
     highlightAgentsByDisplayKey,
     setAgentsVisible,
     setRecentColors,
-    receiveAgentNamesAndStates,
+    setCurrentUIData,
     clearSessionColorsFromStateAndBrowser,
     storeColorsInLocalStorage,
 };
