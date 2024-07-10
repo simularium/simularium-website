@@ -47,7 +47,6 @@ interface AgentTreeProps {
     isSharedCheckboxIndeterminate: boolean;
     recentColors: string[];
     setRecentColors: ActionCreator<SetRecentColorsAction>;
-    storeColorsInLocalStorage: ActionCreator<StoreUIDataInBrowserAction>;
     changeColor: (change: ColorChange) => void;
 }
 const CHECKBOX_SPAN_NO = 2;
@@ -216,12 +215,7 @@ class AgentTree extends React.Component<AgentTreeProps> {
     };
 
     renderParentColorPicker = (nodeData: AgentDisplayNode) => {
-        const {
-            recentColors,
-            setRecentColors,
-            changeColor,
-            storeColorsInLocalStorage,
-        } = this.props;
+        const { recentColors, setRecentColors, changeColor } = this.props;
         const childrenHaveDifferentColors = !nodeData.children.every(
             (el) =>
                 el.color.toLowerCase() ===
@@ -234,7 +228,6 @@ class AgentTree extends React.Component<AgentTreeProps> {
                 agentName={nodeData.title}
                 tags={this.getAgentTags(nodeData.title)}
                 recentColors={recentColors}
-                storeColorsInLocalStorage={storeColorsInLocalStorage}
                 setRecentColors={setRecentColors}
                 changeColor={changeColor}
             />
@@ -245,12 +238,7 @@ class AgentTree extends React.Component<AgentTreeProps> {
         nodeData: AgentDisplayNode,
         value: CheckBoxWithColor
     ) => {
-        const {
-            recentColors,
-            setRecentColors,
-            changeColor,
-            storeColorsInLocalStorage,
-        } = this.props;
+        const { recentColors, setRecentColors, changeColor } = this.props;
         return (
             <ColorPicker
                 selectedColor={value.color || nodeData.color}
@@ -258,7 +246,6 @@ class AgentTree extends React.Component<AgentTreeProps> {
                 tags={[value.value as string]}
                 recentColors={recentColors}
                 setRecentColors={setRecentColors}
-                storeColorsInLocalStorage={storeColorsInLocalStorage}
                 changeColor={changeColor}
             />
         );

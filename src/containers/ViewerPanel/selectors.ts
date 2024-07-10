@@ -1,5 +1,5 @@
 import {
-    ColorChange,
+    // ColorChange,
     SelectionStateInfo,
     UIDisplayData,
 } from "@aics/simularium-viewer";
@@ -10,10 +10,11 @@ import {
     getTimeStep,
     getFirstFrameTimeOfCachedSimulation,
     getSimulariumFile,
+    getCurrentUIData,
+    getDefaultUIData,
 } from "../../state/trajectory/selectors";
 import {
     getAgentsToHide,
-    getColorChange,
     getCurrentTime,
     getHighlightedAgents,
 } from "../../state/selection/selectors";
@@ -23,13 +24,24 @@ import { DisplayTimes } from "./types";
 import { isNetworkSimFileInterface } from "../../state/trajectory/types";
 
 export const getSelectionStateInfoForViewer = createSelector(
-    [getHighlightedAgents, getAgentsToHide, getColorChange],
-    (highlightedAgents, hiddenAgents): SelectionStateInfo => ({
+    [getHighlightedAgents, getAgentsToHide, getCurrentUIData, getDefaultUIData],
+    (
         highlightedAgents,
         hiddenAgents,
-    })
+        currentUIData,
+        defaultUIData
+    ): SelectionStateInfo => {
+        // session colors to do: could this be cleaned up?
+        const fileHasBeenParsed = defaultUIData.length > 0;
+        const colorSettingsForViewer = fileHasBeenParsed ? currentUIData : [];
+        return {
+            highlightedAgents,
+            hiddenAgents,
+            colorSettings: colorSettingsForViewer,
+        };
+    }
 );
-
+// session colors to do, update this at all?
 export const convertUIDataToSelectionData = (
     uiData: UIDisplayData
 ): AgentRenderingCheckboxMap => {

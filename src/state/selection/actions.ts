@@ -88,6 +88,7 @@ export function setRecentColors(colors: string[]): SetRecentColorsAction {
     };
 }
 
+// session colors to do: rename to describe scope of what it does, same for type
 export function storeColorsInLocalStorage(
     payload: ColorChange
 ): StoreUIDataInBrowserAction {

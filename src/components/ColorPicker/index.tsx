@@ -7,10 +7,7 @@ import { useDebounce } from "use-debounce";
 import { ColorChange } from "@aics/simularium-viewer";
 
 import { AGENT_COLORS } from "../../containers/ViewerPanel/constants";
-import {
-    SetRecentColorsAction,
-    StoreUIDataInBrowserAction,
-} from "../../state/selection/types";
+import { SetRecentColorsAction } from "../../state/selection/types";
 
 import styles from "./style.css";
 
@@ -20,7 +17,6 @@ interface ColorPickerProps {
     agentName: string;
     tags: string[];
     recentColors: string[];
-    storeColorsInLocalStorage: ActionCreator<StoreUIDataInBrowserAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
     changeColor: (change: ColorChange) => void;
 }
@@ -33,7 +29,6 @@ const ColorPicker = ({
     selectedColor: initialColor,
     childrenHaveDifferentColors,
     changeColor,
-    storeColorsInLocalStorage,
 }: ColorPickerProps): JSX.Element => {
     const [currentColor, setCurrentColor] = useState(initialColor);
     const [debouncedColor] = useDebounce(currentColor, 250);
@@ -55,8 +50,7 @@ const ColorPicker = ({
             agent: { name: agentName, tags: tags },
             color: newColor.toLowerCase(),
         };
-        changeColor(colorChange); // controller method
-        storeColorsInLocalStorage(colorChange); // redux logic -> browser storage
+        changeColor(colorChange);
         updateRecentColors(debouncedColor);
     };
 

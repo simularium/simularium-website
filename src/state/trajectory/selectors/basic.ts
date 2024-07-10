@@ -22,3 +22,4 @@ export const getSessionUIData = (state: State) =>
     state.trajectory.sessionUIData;
 export const getDefaultUIData = (state: State) =>
     state.trajectory.defaultUIData;
+export const getCurrentUIData = (state: State) => state.trajectory.agentUiNames;

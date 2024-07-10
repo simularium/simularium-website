@@ -376,24 +376,24 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         simulariumController.gotoTime(time);
     }
 
-    public handleUiDisplayDataChanged = (
-        uiData: UIDisplayData,
-        setDefault = false
-    ) => {
+    public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
         const {
             receiveAgentNamesAndStates,
             setAgentsVisible,
             setDefaultUIData,
+            sessionUIData,
         } = this.props;
+
+        // session colors to do
+        // could this be improved?
+        const uiDataToApply = sessionUIData.length > 0 ? sessionUIData : uiData;
 
         const selectedAgents = convertUIDataToSelectionData(uiData);
         const actions = [
-            receiveAgentNamesAndStates(uiData),
+            setDefaultUIData(uiData),
+            receiveAgentNamesAndStates(uiDataToApply),
             setAgentsVisible(selectedAgents),
         ];
-        if (setDefault) {
-            actions.push(setDefaultUIData(uiData));
-        }
         batchActions(actions);
     };
 

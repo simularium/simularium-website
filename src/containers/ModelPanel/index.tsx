@@ -104,12 +104,12 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     changeToNetworkedFile: loadNetworkFile,
     recentColors,
     setRecentColors,
-    simulariumController,
     clearSessionColorsFromStateAndBrowser,
     storeColorsInLocalStorage,
     defaultUiSettingsApplied,
     defaultUIData,
     sessionUIData,
+    receiveAgentNamesAndStates,
 }) => {
     const checkboxTree = (
         <CheckBoxTree
@@ -124,10 +124,9 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
             isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
             recentColors={recentColors}
             setRecentColors={setRecentColors}
-            changeColor={(colorChange: ColorChange) =>
-                simulariumController.applyColorChange(colorChange)
-            }
-            storeColorsInLocalStorage={storeColorsInLocalStorage}
+            changeColor={(colorChange: ColorChange) => {
+                storeColorsInLocalStorage(colorChange);
+            }}
         />
     );
 
@@ -156,19 +155,13 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
                                 buttonType={ButtonClass.Action}
                                 clickHandler={() => {
                                     clearSessionColorsFromStateAndBrowser();
-                                    simulariumController.applyColorSettings(
-                                        defaultUIData
-                                    );
+                                    receiveAgentNamesAndStates(defaultUIData);
                                 }}
-                                onMouseEnter={() =>
-                                    simulariumController.applyColorSettings(
-                                        defaultUIData
-                                    )
-                                }
+                                onMouseEnter={() => {
+                                    receiveAgentNamesAndStates(defaultUIData);
+                                }}
                                 onMouseLeave={() => {
-                                    simulariumController.applyColorSettings(
-                                        sessionUIData
-                                    );
+                                    receiveAgentNamesAndStates(sessionUIData);
                                 }}
                             />
                         )}

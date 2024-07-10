@@ -39,7 +39,7 @@ export const initialState = {
     timeUnits: null,
     scaleBarLabel: "",
     agentIds: [],
-    agentUiNames: [],
+    agentUiNames: [], // session colors to do: rename, currentUiData? these are the currently active color settings
     plotData: [],
     simulariumFile: {
         name: "",
@@ -55,8 +55,8 @@ export const initialState = {
         fileName: "",
         fileId: "",
     },
-    sessionUIData: [],
-    defaultUIData: [],
+    sessionUIData: [], // session colors to do: user selected color settings, possibly from current selections, browser storage, or a combination
+    defaultUIData: [], // session colors to do: the default color settings from the parsed trajectory
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
