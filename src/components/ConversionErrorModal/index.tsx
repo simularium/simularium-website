@@ -31,14 +31,14 @@ const ConversionErrorModal: React.FC<ConversionErrorModalProps> = ({
             closeHandler={closeModal}
         >
             <p className={classNames(styles.warningText)}>
-                {Exclamation}
-                We&apos;re sorry, there was a problem importing your file.
+                {Exclamation} We&apos;re sorry, there was a problem importing
+                your file.
             </p>
             <p>
                 {errorMessage}
                 {showForumMessage && (
                     <>
-                        <>For further assistance, please visit </>
+                        <>For further assistance, please visit: </>
                         <a
                             href="https://forum.allencell.org/"
                             target="_blank"

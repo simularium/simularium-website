@@ -1,26 +1,29 @@
 /* Default and primary button colors differ within modals */
 .modal :global(.ant-modal-content) {
     /* prevents modal body color rendering under header/footer at corners */
-    border-radius: 3px;
     color: var(--light-theme-modal-color);
 }
 
 .modal :global(.ant-modal-header) {
     display: flex;
-    height: 46px;
     justify-content: center;
+    padding: 26px 24px 14px;
 }
 
 .modal :global(.ant-modal-title) {
+    font-size: 21px;
     align-items: center;
     display: flex;
-    font-size: 16px;
+    font-size: 21px;
     font-weight: 400;
 }
 
-.modal :global(.close-icon) {
+.modal :global(.close-icon::after) {
+    font-size: 16px;
+    color: var(--light-theme-modal-color);
     cursor: pointer;
     display: flex;
+    padding-bottom: 10px;
     position: absolute;
     right: 24px;
 }
@@ -31,18 +34,19 @@
 
 .modal :global(.ant-modal-body) {
     font-size: 16px;
-    padding: 24px 24px 10px 24px;
+    padding: 16px 24px 26px 24px;
 }
 
 .modal :global(.ant-modal-body) p {
     margin-bottom: 0px;
 }
 
-.modal.divider :global(.ant-modal-body)  {
+.modal.divider :global(.ant-modal-body) {
     padding: 24px;
 }
 
 .modal :global(.ant-modal-footer) {
+    /* border-radius: 6px; */
     background-color: var(--light-theme-modal-bg);
     padding: 0px;
 }
@@ -52,7 +56,7 @@
     flex-direction: row-reverse;
     gap: 12px;
     margin: 0px;
-    padding: 14px 24px;
+    padding: 20px 24px;
 }
 
 .modal :global(.ant-modal-footer) button {
