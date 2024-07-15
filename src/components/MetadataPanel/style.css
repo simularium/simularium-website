@@ -19,7 +19,7 @@
 
 .container h3 {
     color: var(--dark-theme-text-color-bright);
-    font-weight: 800;
+    font-weight: 400;
     margin: 0px;
 }
 
@@ -63,7 +63,7 @@
 
 .row {
     display: flex;
-    font-weight: 100;
+    font-weight: 100; 
 }
 
 .key {
