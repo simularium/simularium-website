@@ -31,5 +31,5 @@
 }
 
 .upload-modal :global(.ant-tabs .ant-tabs-tab-active) {
-    font-weight: 600;
+    font-weight: 400;
 }
