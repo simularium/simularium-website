@@ -50,7 +50,6 @@
 }
 
 .time {
-    font-weight: 300;
     background-color: var(--dark-theme-viewport-button-bg);
     color: var(--dark-theme-viewport-button-color);
     height: 26px;
