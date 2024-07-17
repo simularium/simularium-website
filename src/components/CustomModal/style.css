@@ -46,7 +46,6 @@
 }
 
 .modal :global(.ant-modal-footer) {
-    /* border-radius: 6px; */
     background-color: var(--light-theme-modal-bg);
     padding: 0px;
 }

@@ -15,10 +15,11 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 4px;
+    cursor: pointer;
 }
 
 .container h3 {
-    color: var(--dark-theme-text-color-bright);
+    color: var(--dark-theme-sidebar-text);
     font-weight: 400;
     margin: 0px;
 }
