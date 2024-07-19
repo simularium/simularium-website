@@ -44,7 +44,6 @@ interface ConversionProps {
     convertFile: ActionCreator<ConvertFileAction>;
     conversionStatus: ConversionStatus;
     setConversionStatus: ActionCreator<SetConversionStatusAction>;
-    clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
     cancelAutoconversion: ActionCreator<CancelConversionAction>;
 }
 
@@ -75,7 +74,6 @@ const ConversionForm = ({
     conversionStatus,
     convertFile,
     setConversionStatus,
-    clearSimulariumFile,
     cancelAutoconversion,
 }: ConversionProps): JSX.Element => {
     const [fileToConvert, setFileToConvert] = useState<UploadFile | null>();
@@ -277,7 +275,6 @@ const dispatchToPropsMap = {
     initializeConversion: trajectoryStateBranch.actions.initializeConversion,
     convertFile: trajectoryStateBranch.actions.convertFile,
     setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
-    clearSimulariumFile: trajectoryStateBranch.actions.clearSimulariumFile,
     cancelAutoconversion: trajectoryStateBranch.actions.cancelAutoconversion,
 };
 
