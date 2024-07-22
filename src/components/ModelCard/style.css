@@ -1,4 +1,5 @@
 .card {
+    border-radius: 6px;
     width: 400px;
     padding: 15px 15px 5px 15px;
     background-color: var(--light-theme-card-bg-white);

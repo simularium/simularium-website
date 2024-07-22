@@ -42,6 +42,7 @@ import {
     getAgentVisibilityMap,
     getAgentHighlightMap,
     getRecentColors,
+    getSelectedAgentMetadata,
 } from "../../state/selection/selectors";
 
 import CheckBoxTree, { AgentDisplayNode } from "../../components/AgentTree";
@@ -52,6 +53,7 @@ import NoTrajectoriesText from "../../components/NoTrajectoriesText";
 import NavButton from "../../components/NavButton";
 import { ButtonClass } from "../../constants/interfaces";
 
+import { AgentMetadata } from "../../constants/interfaces";
 import {
     getSelectAllVisibilityMap,
     getSelectNoneVisibilityMap,
@@ -75,6 +77,7 @@ interface ModelPanelProps {
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
     recentColors: string[];
     setRecentColors: ActionCreator<SetRecentColorsAction>;
+    selectedAgentMetadata: AgentMetadata;
     storeColorsInLocalStorage: ActionCreator<StoreUIDataInBrowserAction>;
     simulariumController: SimulariumController;
     setCurrentColorSettings: ActionCreator<SetCurrentColorSettingsAction>;
@@ -101,6 +104,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     storeColorsInLocalStorage,
     defaultUiSettingsApplied,
     setCurrentColorSettings,
+    selectedAgentMetadata,
 }) => {
     const checkboxTree = (
         <CheckBoxTree
@@ -168,6 +172,8 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
                     </div>,
                     null,
                 ]}
+                selectedAgentMetadata={selectedAgentMetadata}
+                uiDisplayData={uiDisplayDataTree}
             />
         </div>
     );
@@ -184,6 +190,7 @@ function mapStateToProps(state: State) {
         viewerStatus: getStatus(state),
         isNetworkedFile: getIsNetworkedFile(state),
         recentColors: getRecentColors(state),
+        selectedAgentMetadata: getSelectedAgentMetadata(state),
         simulariumController: getSimulariumController(state),
         defaultUiSettingsApplied: getDefaultUISettingsApplied(state),
     };

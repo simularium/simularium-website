@@ -12,6 +12,7 @@ import {
     SET_AGENTS_VISIBLE,
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
     SET_RECENT_COLORS,
+    SET_SELECTED_AGENT,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -22,6 +23,7 @@ import {
     SetVisibleAction,
     ResetAction,
     SetRecentColorsAction,
+    SetSelectedAgentMetadataAction,
 } from "./types";
 
 export const initialState = {
@@ -30,6 +32,7 @@ export const initialState = {
     agentVisibilityMap: {},
     agentHighlightMap: {},
     recentColors: [],
+    selectedAgentMetadata: {},
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -133,6 +136,21 @@ const actionToConfigMap: TypeToDescriptionMap = {
             return {
                 ...state,
                 recentColors: action.payload,
+            };
+        },
+    },
+    [SET_SELECTED_AGENT]: {
+        accepts: (
+            action: AnyAction
+        ): action is SetSelectedAgentMetadataAction =>
+            action.type === SET_SELECTED_AGENT,
+        perform: (
+            state: SelectionStateBranch,
+            action: SetSelectedAgentMetadataAction
+        ) => {
+            return {
+                ...state,
+                selectedAgentMetadata: action.payload,
             };
         },
     },

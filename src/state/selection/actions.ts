@@ -1,4 +1,5 @@
 import { ColorChange } from "@aics/simularium-viewer";
+import { AgentMetadata } from "../../constants/interfaces";
 import {
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
@@ -8,6 +9,7 @@ import {
     SET_AGENTS_VISIBLE,
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
     SET_RECENT_COLORS,
+    SET_SELECTED_AGENT,
     STORE_UI_DATA_IN_BROWSER,
     GET_UI_DATA_FROM_BROWSER,
     CLEAR_UI_DATA_FROM_BROWSER_AND_STATE,
@@ -20,6 +22,7 @@ import {
     AgentRenderingCheckboxMap,
     ResetAction,
     SetRecentColorsAction,
+    SetSelectedAgentMetadataAction,
     StoreUIDataInBrowserAction,
 } from "./types";
 
@@ -85,6 +88,15 @@ export function setRecentColors(colors: string[]): SetRecentColorsAction {
     return {
         payload: colors,
         type: SET_RECENT_COLORS,
+    };
+}
+
+export function setSelectedAgentMetadata(
+    metaData: AgentMetadata
+): SetSelectedAgentMetadataAction {
+    return {
+        payload: metaData,
+        type: SET_SELECTED_AGENT,
     };
 }
 

@@ -76,6 +76,7 @@
     --dark-theme-body-bg: var(--black);
     --dark-theme-header-bg: var(--dark-three);
     --dark-theme-text-color: var(--off-white);
+    --dark-theme-text-color-bright: var(--pure-white);
     --dark-theme-dim-color: var(--text-gray);
     --dark-theme-slider-handle-color: var(--white-three);
     --dark-theme-primary-color: var(--baby-purple);
@@ -91,11 +92,14 @@
     --dark-theme-sidebar-header-bg: var(--dark-three);
     --dark-theme-sidebar-item-bg: var(--dark-two);
     --dark-theme-sidebar-text: var(--white-two);
+    --dark-theme-sidebar-text-dim: var(--medium-gray);
     --dark-theme-btn-hover-bg: var(--grayish-brown);
     --dark-theme-tooltip-bg: var(--charcoal-gray);
     --dark-theme-version-badge-purple: var(--dark-five);
-    --dark-theme-star-icon-color: var(--warm-gray);
+    --dark-theme-icon-color: var(--warm-gray);
     --dark-theme-star-icon-active-color: var(--white-two);
+    --dark-theme-divider: var(--white-two);
+    --dark-theme-divider-dim: var(--dim-gray-two);
     /* Light theme */
     /* general */
     --light-theme-bg: var(--light-purple);

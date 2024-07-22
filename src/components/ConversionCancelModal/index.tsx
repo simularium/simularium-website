@@ -33,7 +33,7 @@ const ConversionCancelModal: React.FC<ConversionCancelModalProps> = ({
         <CustomModal
             titleText="Cancel file import"
             footerButtons={footerButtons}
-            width={341}
+            width={426}
             closeHandler={continueProcessing}
         >
             <p>

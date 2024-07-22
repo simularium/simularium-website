@@ -1,4 +1,5 @@
 import { ColorChange } from "@aics/simularium-viewer";
+import { AgentMetadata } from "../../constants/interfaces";
 import { TrajectoryStateBranch } from "../trajectory/types";
 
 export interface SelectionStateBranch {
@@ -79,5 +80,10 @@ export interface ApplySessionColorChangeAction {
 
 export interface StoreUIDataInBrowserAction {
     payload: ColorChange;
+    type: string;
+}
+
+export interface SetSelectedAgentMetadataAction {
+    payload: AgentMetadata;
     type: string;
 }

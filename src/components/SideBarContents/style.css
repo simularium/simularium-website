@@ -1,20 +1,40 @@
-.container :global(.ant-card-body) {
-    background: var(--dark-theme-sidebar-bg);
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
 }
 
-.container :global(.ant-card-head) {
+.container label {
+    color: var(--dark-theme-sidebar-text) !important;
+}
+
+.card {
+    border-radius: 6px;
+    flex: 1;
+    background-color: var(--dark-theme-sidebar-bg);
+    padding-right: 10px;
+}
+
+.card :global(.ant-card-head) {
     background-color: var(--dark-theme-sidebar-header-bg);
     height: 44px;
     padding: 0 20px;
     display: flex;
     align-items: center;
     border: none;
+    margin-bottom: 3px;
 }
 
-.container :global(.ant-card-head-title) {
+.card :global(.ant-card-head-title) {
     color: var(--dark-theme-sidebar-text);
 }
 
-.container label {
-    color: var(--dark-theme-sidebar-text)!important;
+.card :global(.ant-card-body) {
+    background: var(--dark-theme-sidebar-bg);
+}
+
+.divider {
+    background-color: var(--dark-theme-divider);
+    margin: 0px;
 }

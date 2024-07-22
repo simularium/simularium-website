@@ -15,6 +15,7 @@ import {
     DownloadOutlined,
     RetweetOutlined,
     ExclamationCircleFilled,
+    CaretDownFilled,
 } from "@ant-design/icons";
 
 import PurpleArrowPointingRight from "../../assets/open-arrow.svg";
@@ -50,6 +51,7 @@ export const DownCaret = (
         style={{ width: "16px", transform: "rotate(180deg)" }}
     />
 );
+export const FilledCaret = <CaretDownFilled />;
 
 export default {
     Play,
@@ -74,4 +76,5 @@ export default {
     UpRightArrow,
     Exclamation,
     Cancel,
+    FilledCaret,
 };
