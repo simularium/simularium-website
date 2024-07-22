@@ -8,7 +8,6 @@ import SimulariumViewer, {
     ErrorLevel,
     TrajectoryFileInfo,
     TimeData,
-    ColorChange,
 } from "@aics/simularium-viewer";
 import "@aics/simularium-viewer/style/style.css";
 import { connect } from "react-redux";
@@ -84,7 +83,6 @@ interface ViewerPanelProps {
     changeTime: ActionCreator<ChangeTimeAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
     receiveTrajectory: ActionCreator<ReceiveAction>;
-    setCurrentUIData: ActionCreator<ReceiveAction>;
     selectionStateInfoForViewer: SelectionStateInfo;
     setIsPlaying: ActionCreator<ToggleAction>;
     setIsLooping: ActionCreator<ToggleAction>;
@@ -102,7 +100,6 @@ interface ViewerPanelProps {
     receiveConvertedFile: ActionCreator<ReceiveAction>;
     conversionProcessingData: ConversionProcessingData;
     simulariumFile: NetworkedSimFile;
-    sessionUIData: UIDisplayData;
     setDefaultUIData: ActionCreator<SetDefaultUIDataAction>;
 }
 
@@ -377,21 +374,11 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
-        const {
-            setCurrentUIData,
-            setAgentsVisible,
-            setDefaultUIData,
-            sessionUIData,
-        } = this.props;
-
-        // session colors to do
-        // could this be improved?
-        const uiDataToApply = sessionUIData.length > 0 ? sessionUIData : uiData;
+        const { setAgentsVisible, setDefaultUIData } = this.props;
 
         const selectedAgents = convertUIDataToSelectionData(uiData);
         const actions = [
             setDefaultUIData(uiData),
-            setCurrentUIData(uiDataToApply),
             setAgentsVisible(selectedAgents),
         ];
         batchActions(actions);
@@ -440,7 +427,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setError,
             scaleBarLabel,
             movieTitle,
-            sessionUIData,
         } = this.props;
         return (
             <div
@@ -474,7 +460,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                         this.onTrajectoryFileInfoChanged
                     }
                     onRecordedMovie={this.onRecordedMovie}
-                    sessionUIData={sessionUIData}
                 />
                 {firstFrameTime !== lastFrameTime && (
                     <div className={styles.bottomControlsContainer}>
@@ -555,7 +540,6 @@ function mapStateToProps(state: State) {
             trajectoryStateBranch.selectors.getConversionProcessingData(state),
         simulariumFile:
             trajectoryStateBranch.selectors.getSimulariumFile(state),
-        sessionUIData: trajectoryStateBranch.selectors.getSessionUIData(state),
     };
 }
 
@@ -564,7 +548,6 @@ const dispatchToPropsMap = {
     setAgentsVisible: selectionStateBranch.actions.setAgentsVisible,
     receiveTrajectory: trajectoryStateBranch.actions.receiveTrajectory,
     receiveAgentTypeIds: trajectoryStateBranch.actions.receiveAgentTypeIds,
-    setCurrentUIData: trajectoryStateBranch.actions.setCurrentUIData,
     setStatus: viewerStateBranch.actions.setStatus,
     dragOverViewer: viewerStateBranch.actions.dragOverViewer,
     resetDragOverViewer: viewerStateBranch.actions.resetDragOverViewer,

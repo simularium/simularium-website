@@ -7,9 +7,6 @@ const makeTrajectoryConstant = (constant: string) =>
 export const RECEIVE_TRAJECTORY = makeTrajectoryConstant("receive");
 export const REQUEST_TRAJECTORY = makeTrajectoryConstant("request");
 export const RECEIVE_AGENT_IDS = makeTrajectoryConstant("receive-ids");
-export const RECEIVE_AGENT_NAMES = makeTrajectoryConstant(
-    "receive-agent-names"
-);
 export const RECEIVE_SIMULARIUM_FILE = makeTrajectoryConstant(
     "receive-simularium-file"
 );
@@ -38,7 +35,7 @@ export const CONVERT_FILE = makeTrajectoryConstant("convert-file");
 export const RECEIVE_CONVERTED_FILE =
     makeTrajectoryConstant("receive-converted");
 export const CANCEL_CONVERSION = makeTrajectoryConstant("cancel-conversion");
-export const SET_SESSION_UI_DATA = makeTrajectoryConstant(
+export const SET_USER_SELECTED_UI_DATA = makeTrajectoryConstant(
     "set-session-ui-data"
 );
 export const SET_DEFAULT_UI_DATA = makeTrajectoryConstant(
@@ -46,3 +43,6 @@ export const SET_DEFAULT_UI_DATA = makeTrajectoryConstant(
 );
 
 export const SET_CONVERSION_STATUS = makeTrajectoryConstant("set-status");
+export const SET_CURRENT_COLOR_SETTINGS =
+    makeTrajectoryConstant("set-apply-colors");
+export const CLEAR_UI_DATA_FROM_STATE = makeTrajectoryConstant("clear-ui-data");

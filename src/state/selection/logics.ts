@@ -8,7 +8,11 @@ import {
 } from "./constants";
 import { ReduxLogicDeps } from "../types";
 import { getCurrentUIData, getSimulariumFile } from "../trajectory/selectors";
-import { setCurrentUIData, setSessionUIData } from "../trajectory/actions";
+import {
+    setCurrentColorSettings,
+    setUserSelectedUIData,
+} from "../trajectory/actions";
+import { ColorSettings } from "../trajectory/types";
 
 // session colors to do: rename or break up this logic
 const storeSessionColorsLogic = createLogic({
@@ -40,9 +44,13 @@ const storeSessionColorsLogic = createLogic({
             return newAgent;
         });
         const fileKey = getSimulariumFile(getState()).name;
-        localStorage.setItem(fileKey, JSON.stringify(newUiData)); // store new UIDD in browser
-        dispatch(setSessionUIData(newUiData)); // store new session UIDD in redux
-        dispatch(setCurrentUIData(newUiData)); // set current UIDD equal to session UIDD
+        localStorage.setItem(fileKey, JSON.stringify(newUiData));
+        dispatch(setUserSelectedUIData(newUiData));
+        dispatch(
+            setCurrentColorSettings({
+                currentColorSettings: ColorSettings.UserSelected,
+            })
+        );
         done();
     },
     type: STORE_UI_DATA_IN_BROWSER,
@@ -52,9 +60,8 @@ const clearSessionColorsLogic = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         const { getState } = deps;
         const fileKey = getSimulariumFile(getState()).name;
-        console.log("clear logic, filekey", fileKey);
         localStorage.removeItem(fileKey);
-        dispatch(setSessionUIData([]));
+        dispatch(setUserSelectedUIData([]));
         done();
     },
     type: CLEAR_UI_DATA_FROM_BROWSER_AND_STATE,
@@ -68,8 +75,12 @@ const applySessionColorsLogic = createLogic({
         const storedColorChanges = localStorage.getItem(simulariumFile.name);
         if (storedColorChanges !== "undefined" && storedColorChanges !== null) {
             const uiData = JSON.parse(storedColorChanges);
-            dispatch(setSessionUIData(uiData));
-            dispatch(setCurrentUIData(uiData));
+            dispatch(setUserSelectedUIData(uiData));
+            dispatch(
+                setCurrentColorSettings({
+                    currentColorSettings: ColorSettings.UserSelected,
+                })
+            );
         }
         done();
     },

@@ -4,7 +4,6 @@ import {
     RECEIVE_TRAJECTORY,
     REQUEST_TRAJECTORY,
     RECEIVE_AGENT_IDS,
-    RECEIVE_AGENT_NAMES,
     RECEIVE_SIMULARIUM_FILE,
     LOAD_LOCAL_FILE_IN_VIEWER,
     LOAD_NETWORKED_FILE_IN_VIEWER,
@@ -19,8 +18,10 @@ import {
     CONVERT_FILE,
     RECEIVE_CONVERTED_FILE,
     CANCEL_CONVERSION,
-    SET_SESSION_UI_DATA,
     SET_DEFAULT_UI_DATA,
+    SET_CURRENT_COLOR_SETTINGS,
+    SET_USER_SELECTED_UI_DATA,
+    CLEAR_UI_DATA_FROM_STATE,
 } from "./constants";
 import { AvailableEngines } from "./conversion-data-types";
 import {
@@ -42,8 +43,11 @@ import {
     ConvertFileAction,
     ConversionStatus,
     CancelConversionAction,
-    SetSessionUIDataAction,
+    SetUserSelectedUIDataAction,
     SetDefaultUIDataAction,
+    SetCurrentColorSettingsAction,
+    ColorSettings,
+    ClearUIDataAction,
 } from "./types";
 
 export function receiveTrajectory(
@@ -76,15 +80,6 @@ export function receiveAgentTypeIds(
     return {
         payload,
         type: RECEIVE_AGENT_IDS,
-    };
-}
-
-export function setCurrentUIData(
-    payload: TrajectoryStateBranch
-): ReceiveAction {
-    return {
-        payload,
-        type: RECEIVE_AGENT_NAMES,
     };
 }
 
@@ -201,12 +196,12 @@ export function cancelAutoconversion(): CancelConversionAction {
     };
 }
 
-export function setSessionUIData(
+export function setUserSelectedUIData(
     payload: UIDisplayData
-): SetSessionUIDataAction {
+): SetUserSelectedUIDataAction {
     return {
         payload,
-        type: SET_SESSION_UI_DATA,
+        type: SET_USER_SELECTED_UI_DATA,
     };
 }
 
@@ -216,5 +211,20 @@ export function setDefaultUIData(
     return {
         payload,
         type: SET_DEFAULT_UI_DATA,
+    };
+}
+
+export function setCurrentColorSettings(payload: {
+    currentColorSettings: ColorSettings;
+}): SetCurrentColorSettingsAction {
+    return {
+        payload,
+        type: SET_CURRENT_COLOR_SETTINGS,
+    };
+}
+
+export function clearUIDataFromState(): ClearUIDataAction {
+    return {
+        type: CLEAR_UI_DATA_FROM_STATE,
     };
 }

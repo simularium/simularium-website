@@ -6,7 +6,6 @@ import { makeReducer } from "../util";
 import {
     RECEIVE_TRAJECTORY,
     RECEIVE_AGENT_IDS,
-    RECEIVE_AGENT_NAMES,
     RECEIVE_SIMULARIUM_FILE,
     CLEAR_SIMULARIUM_FILE,
     SET_CONVERSION_TEMPLATE,
@@ -15,8 +14,10 @@ import {
     SET_CONVERSION_STATUS,
     CONVERT_FILE,
     RECEIVE_CONVERTED_FILE,
-    SET_SESSION_UI_DATA,
     SET_DEFAULT_UI_DATA,
+    SET_USER_SELECTED_UI_DATA,
+    SET_CURRENT_COLOR_SETTINGS,
+    CLEAR_UI_DATA_FROM_STATE,
 } from "./constants";
 import {
     TrajectoryStateBranch,
@@ -28,8 +29,11 @@ import {
     SetConversionStatusAction,
     ConversionStatus,
     ConvertFileAction,
-    SetSessionUIDataAction,
+    SetUserSelectedUIDataAction,
     SetDefaultUIDataAction,
+    SetCurrentColorSettingsAction,
+    ColorSettings,
+    ClearUIDataAction,
 } from "./types";
 
 export const initialState = {
@@ -39,9 +43,9 @@ export const initialState = {
     timeUnits: null,
     scaleBarLabel: "",
     agentIds: [],
-    currentUIData: [], // session colors to do: rename, currentUiData? these are the currently active color settings
-    sessionUIData: [], // session colors to do: user selected color settings, possibly from current selections, browser storage, or a combination
-    defaultUIData: [], // session colors to do: the default color settings from the parsed trajectory
+    userSelectedUIData: [],
+    defaultUIData: [],
+    currentColorSettings: ColorSettings.Default,
     plotData: [],
     simulariumFile: {
         name: "",
@@ -74,14 +78,6 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: TrajectoryStateBranch, action: ReceiveAction) => ({
             ...state,
             agentIds: action.payload,
-        }),
-    },
-    [RECEIVE_AGENT_NAMES]: {
-        accepts: (action: AnyAction): action is ReceiveAction =>
-            action.type === RECEIVE_AGENT_NAMES,
-        perform: (state: TrajectoryStateBranch, action: ReceiveAction) => ({
-            ...state,
-            currentUIData: action.payload,
         }),
     },
     [RECEIVE_SIMULARIUM_FILE]: {
@@ -177,16 +173,16 @@ const actionToConfigMap: TypeToDescriptionMap = {
             simulariumFile: action.payload,
         }),
     },
-    [SET_SESSION_UI_DATA]: {
-        accepts: (action: AnyAction): action is SetSessionUIDataAction =>
-            action.type === SET_SESSION_UI_DATA,
+    [SET_USER_SELECTED_UI_DATA]: {
+        accepts: (action: AnyAction): action is SetUserSelectedUIDataAction =>
+            action.type === SET_USER_SELECTED_UI_DATA,
         perform: (
             state: TrajectoryStateBranch,
-            action: SetSessionUIDataAction
+            action: SetUserSelectedUIDataAction
         ) => {
             return {
                 ...state,
-                sessionUIData: action.payload,
+                userSelectedUIData: action.payload,
             };
         },
     },
@@ -200,6 +196,31 @@ const actionToConfigMap: TypeToDescriptionMap = {
             return {
                 ...state,
                 defaultUIData: action.payload,
+            };
+        },
+    },
+    [SET_CURRENT_COLOR_SETTINGS]: {
+        accepts: (action: AnyAction): action is SetCurrentColorSettingsAction =>
+            action.type === SET_CURRENT_COLOR_SETTINGS,
+        perform: (
+            state: TrajectoryStateBranch,
+            action: SetCurrentColorSettingsAction
+        ) => {
+            return {
+                ...state,
+                currentColorSettings: action.payload,
+            };
+        },
+    },
+    [CLEAR_UI_DATA_FROM_STATE]: {
+        accepts: (action: AnyAction): action is ClearUIDataAction =>
+            action.type === CLEAR_UI_DATA_FROM_STATE,
+        perform: (state: TrajectoryStateBranch) => {
+            return {
+                ...state,
+                userSelectedUIData: [],
+                defaultUIData: [],
+                currentColorSettings: ColorSettings.Default,
             };
         },
     },

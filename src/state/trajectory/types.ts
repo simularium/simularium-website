@@ -120,7 +120,14 @@ export interface HealthCheckTimeout {
     [requestId: string]: NodeJS.Timeout;
 }
 
-export interface SetSessionUIDataAction {
+export enum ConversionStatus {
+    Inactive = "CONVERSION_INACTIVE",
+    NoServer = "CONVERSION_NO_SERVER",
+    ServerConfirmed = "CONVERSION_SERVER_CONFIRMED",
+    Active = "CONVERSION_ACTIVE",
+}
+
+export interface SetUserSelectedUIDataAction {
     payload: UIDisplayData;
     type: string;
 }
@@ -130,9 +137,16 @@ export interface SetDefaultUIDataAction {
     type: string;
 }
 
-export enum ConversionStatus {
-    Inactive = "CONVERSION_INACTIVE",
-    NoServer = "CONVERSION_NO_SERVER",
-    ServerConfirmed = "CONVERSION_SERVER_CONFIRMED",
-    Active = "CONVERSION_ACTIVE",
+export interface ClearUIDataAction {
+    type: string;
+}
+
+export enum ColorSettings {
+    UserSelected = "userSelected",
+    Default = "default",
+}
+
+export interface SetCurrentColorSettingsAction {
+    payload: { currentColorSettings: ColorSettings };
+    type: string;
 }

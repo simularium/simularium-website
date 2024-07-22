@@ -12,13 +12,13 @@ export const getScaleBarLabel = (state: State) =>
     state.trajectory.scaleBarLabel;
 export const getSimulariumFile = (state: State) =>
     state.trajectory.simulariumFile;
-export const getCurrentUIData = (state: State) =>
-    state.trajectory.currentUIData;
 export const getConversionProcessingData = (state: State) =>
     state.trajectory.processingData;
 export const getConversionStatus = (state: State) =>
     state.trajectory.conversionStatus;
-export const getSessionUIData = (state: State) =>
-    state.trajectory.sessionUIData;
+export const getCurrentColorSettings = (state: State) =>
+    state.trajectory.currentColorSettings;
+export const getUserSelectedUIData = (state: State) =>
+    state.trajectory.userSelectedUIData;
 export const getDefaultUIData = (state: State) =>
     state.trajectory.defaultUIData;

@@ -1,8 +1,4 @@
-import {
-    // ColorChange,
-    SelectionStateInfo,
-    UIDisplayData,
-} from "@aics/simularium-viewer";
+import { SelectionStateInfo, UIDisplayData } from "@aics/simularium-viewer";
 import { createSelector } from "reselect";
 import {
     getLastFrameTimeOfCachedSimulation,
@@ -11,7 +7,6 @@ import {
     getFirstFrameTimeOfCachedSimulation,
     getSimulariumFile,
     getCurrentUIData,
-    getDefaultUIData,
 } from "../../state/trajectory/selectors";
 import {
     getAgentsToHide,
@@ -24,20 +19,12 @@ import { DisplayTimes } from "./types";
 import { isNetworkSimFileInterface } from "../../state/trajectory/types";
 
 export const getSelectionStateInfoForViewer = createSelector(
-    [getHighlightedAgents, getAgentsToHide, getCurrentUIData, getDefaultUIData],
-    (
-        highlightedAgents,
-        hiddenAgents,
-        currentUIData,
-        defaultUIData
-    ): SelectionStateInfo => {
-        // session colors to do: could this be cleaned up?
-        const fileHasBeenParsed = defaultUIData.length > 0;
-        const colorSettingsForViewer = fileHasBeenParsed ? currentUIData : [];
+    [getHighlightedAgents, getAgentsToHide, getCurrentUIData],
+    (highlightedAgents, hiddenAgents, appliedColors): SelectionStateInfo => {
         return {
             highlightedAgents,
             hiddenAgents,
-            colorSettings: colorSettingsForViewer,
+            appliedColors,
         };
     }
 );

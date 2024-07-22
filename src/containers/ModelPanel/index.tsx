@@ -1,31 +1,26 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
-import {
-    ColorChange,
-    SimulariumController,
-    UIDisplayData,
-} from "@aics/simularium-viewer";
+import { ColorChange, SimulariumController } from "@aics/simularium-viewer";
 
 import { State } from "../../state/types";
 import { getSimulariumController } from "../../state/simularium/selectors";
 import { getStatus } from "../../state/viewer/selectors";
 import { ViewerStatus } from "../../state/viewer/types";
 import {
-    ReceiveAction,
     RequestNetworkFileAction,
+    ColorSettings,
+    SetCurrentColorSettingsAction,
 } from "../../state/trajectory/types";
 import {
     requestTrajectory,
     changeToNetworkedFile,
-    setCurrentUIData,
+    setCurrentColorSettings,
 } from "../../state/trajectory/actions";
 import {
     getUiDisplayDataTree,
     getIsNetworkedFile,
     getDefaultUISettingsApplied,
-    getDefaultUIData,
-    getSessionUIData,
 } from "../../state/trajectory/selectors";
 import {
     ChangeAgentsRenderingStateAction,
@@ -40,7 +35,7 @@ import {
     highlightAgentsByDisplayKey,
     setAgentsVisible,
     setRecentColors,
-    clearSessionColorsFromStateAndBrowser,
+    clearUserSelectedColorsFromStateAndBrowser,
     storeColorsInLocalStorage,
 } from "../../state/selection/actions";
 import {
@@ -72,7 +67,6 @@ interface ModelPanelProps {
     turnAgentsOnByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
     highlightAgentsByDisplayKey: ActionCreator<ChangeAgentsRenderingStateAction>;
     setAgentsVisible: ActionCreator<SetVisibleAction>;
-    setCurrentUIData: ActionCreator<ReceiveAction>;
     payloadForSelectAll: AgentRenderingCheckboxMap;
     payloadForSelectNone: AgentRenderingCheckboxMap;
     isSharedCheckboxIndeterminate: boolean;
@@ -83,10 +77,9 @@ interface ModelPanelProps {
     setRecentColors: ActionCreator<SetRecentColorsAction>;
     storeColorsInLocalStorage: ActionCreator<StoreUIDataInBrowserAction>;
     simulariumController: SimulariumController;
-    clearSessionColorsFromStateAndBrowser: ActionCreator<ResetAction>;
+    setCurrentColorSettings: ActionCreator<SetCurrentColorSettingsAction>;
+    clearUserSelectedColorsFromStateAndBrowser: ActionCreator<ResetAction>;
     defaultUiSettingsApplied: boolean;
-    defaultUIData: UIDisplayData;
-    sessionUIData: UIDisplayData;
 }
 
 const ModelPanel: React.FC<ModelPanelProps> = ({
@@ -104,12 +97,10 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     changeToNetworkedFile: loadNetworkFile,
     recentColors,
     setRecentColors,
-    clearSessionColorsFromStateAndBrowser,
+    clearUserSelectedColorsFromStateAndBrowser,
     storeColorsInLocalStorage,
     defaultUiSettingsApplied,
-    defaultUIData,
-    sessionUIData,
-    setCurrentUIData,
+    setCurrentColorSettings,
 }) => {
     const checkboxTree = (
         <CheckBoxTree
@@ -154,14 +145,23 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
                                 titleText={"Restore color defaults"}
                                 buttonType={ButtonClass.Action}
                                 clickHandler={() => {
-                                    clearSessionColorsFromStateAndBrowser();
-                                    setCurrentUIData(defaultUIData);
+                                    clearUserSelectedColorsFromStateAndBrowser();
+                                    setCurrentColorSettings({
+                                        currentColorSettings:
+                                            ColorSettings.Default,
+                                    });
                                 }}
                                 onMouseEnter={() => {
-                                    setCurrentUIData(defaultUIData);
+                                    setCurrentColorSettings({
+                                        currentColorSettings:
+                                            ColorSettings.Default,
+                                    });
                                 }}
                                 onMouseLeave={() => {
-                                    setCurrentUIData(sessionUIData);
+                                    setCurrentColorSettings({
+                                        currentColorSettings:
+                                            ColorSettings.UserSelected,
+                                    });
                                 }}
                             />
                         )}
@@ -186,8 +186,6 @@ function mapStateToProps(state: State) {
         recentColors: getRecentColors(state),
         simulariumController: getSimulariumController(state),
         defaultUiSettingsApplied: getDefaultUISettingsApplied(state),
-        defaultUIData: getDefaultUIData(state),
-        sessionUIData: getSessionUIData(state),
     };
 }
 
@@ -198,8 +196,8 @@ const dispatchToPropsMap = {
     highlightAgentsByDisplayKey,
     setAgentsVisible,
     setRecentColors,
-    setCurrentUIData,
-    clearSessionColorsFromStateAndBrowser,
+    setCurrentColorSettings,
+    clearUserSelectedColorsFromStateAndBrowser,
     storeColorsInLocalStorage,
 };
 

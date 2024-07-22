@@ -47,6 +47,7 @@ import {
     requestCachedPlotData,
     clearSimulariumFile,
     setConversionStatus,
+    clearUIDataFromState,
 } from "./actions";
 import {
     LOAD_LOCAL_FILE_IN_VIEWER,
@@ -90,9 +91,10 @@ const resetSimulariumFileState = createLogic({
         const resetTime = changeTime(initialSelectionState.time);
         const resetVisibility = resetAgentSelectionsAndHighlights();
         const stopPlay = setIsPlaying(false);
+        const clearUIData = clearUIDataFromState();
         let clearTrajectory;
 
-        const actions = [resetTime, resetVisibility, stopPlay];
+        const actions = [resetTime, resetVisibility, stopPlay, clearUIData];
         if (!action.payload.newFile) {
             //only clear controller if not requesting new sim file
             if (controller) {
@@ -178,10 +180,7 @@ const loadNetworkedFile = createLogic({
                     status: ViewerStatus.Loading,
                 })
             );
-            dispatch({
-                payload: { newFile: true },
-                type: CLEAR_SIMULARIUM_FILE,
-            });
+            dispatch(clearSimulariumFile({ newFile: true }));
         });
 
         let simulariumController = getSimulariumController(currentState);
@@ -257,6 +256,7 @@ const loadLocalFile = createLogic({
         }
 
         clearOutFileTrajectoryUrlParam();
+        clearUIDataFromState();
         simulariumController
             .changeFile(
                 {
@@ -320,6 +320,7 @@ const loadFileViaUrl = createLogic({
                 }
             })
             .then((blob) => {
+                dispatch(clearUIDataFromState());
                 return loadSimulariumFile(blob);
             })
             .then((simulariumFile) => {

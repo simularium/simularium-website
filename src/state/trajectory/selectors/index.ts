@@ -1,8 +1,9 @@
 import { createSelector } from "reselect";
-import { find, isEqual } from "lodash";
+import { isEqual } from "lodash";
 import { UIDisplayData } from "@aics/simularium-viewer";
 
 import {
+    ColorSettings,
     isNetworkSimFileInterface,
     LocalSimFile,
     NetworkedSimFile,
@@ -11,8 +12,8 @@ import {
 import {
     getSimulariumFile,
     getDefaultUIData,
-    getSessionUIData,
-    getCurrentUIData,
+    getUserSelectedUIData,
+    getCurrentColorSettings,
 } from "./basic";
 
 export const getIsNetworkedFile = createSelector(
@@ -22,6 +23,20 @@ export const getIsNetworkedFile = createSelector(
             return false;
         }
         return isNetworkSimFileInterface(simFile);
+    }
+);
+
+export const getCurrentUIData = createSelector(
+    [getCurrentColorSettings, getUserSelectedUIData, getDefaultUIData],
+    (colorSetting, sessionData, defaultData) => {
+        const fileHasBeenParsed = defaultData.length > 0;
+        if (!fileHasBeenParsed) {
+            return [];
+        }
+        if (colorSetting.currentColorSettings === ColorSettings.UserSelected) {
+            return sessionData;
+        }
+        return defaultData;
     }
 );
 
@@ -49,12 +64,14 @@ export const getUiDisplayDataTree = createSelector(
 );
 
 export const getDefaultUISettingsApplied = createSelector(
-    [getSessionUIData, getDefaultUIData],
-    (sessionUIData, defaultUIData) => {
-        if (sessionUIData.length === 0) {
-            return true;
-        }
-        return isEqual(sessionUIData, defaultUIData);
+    [getUserSelectedUIData, getDefaultUIData],
+    (userSelectedUIData, defaultUIData) => {
+        // it doesn't work to check if currentColorSettings is equal to ColorSettings.Default
+        // because currentColorSettings can be used to preview settings, before they are applied
+        return (
+            userSelectedUIData.length === 0 ||
+            isEqual(userSelectedUIData, defaultUIData)
+        );
     }
 );
 

@@ -98,7 +98,7 @@ export function storeColorsInLocalStorage(
     };
 }
 
-export function clearSessionColorsFromStateAndBrowser(): ResetAction {
+export function clearUserSelectedColorsFromStateAndBrowser(): ResetAction {
     return { type: CLEAR_UI_DATA_FROM_BROWSER_AND_STATE };
 }
 
