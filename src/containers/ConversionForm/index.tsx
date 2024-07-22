@@ -10,7 +10,6 @@ import { State } from "../../state";
 import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
 import {
-    ClearSimFileDataAction,
     ConversionStatus,
     ConvertFileAction,
     InitializeConversionAction,
