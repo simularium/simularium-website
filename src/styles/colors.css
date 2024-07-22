@@ -98,7 +98,7 @@
     --dark-theme-version-badge-purple: var(--dark-five);
     --dark-theme-icon-color: var(--warm-gray);
     --dark-theme-star-icon-active-color: var(--white-two);
-    --dark-theme-divider: var(--pure-white);
+    --dark-theme-divider: var(--white-two);
     --dark-theme-divider-dim: var(--dim-gray-two);
     /* Light theme */
     /* general */

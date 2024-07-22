@@ -16,3 +16,8 @@
 .container :global(.js-plotly-plot) {
     margin-bottom: 5px;
 }
+
+/* this global class name is applied by plotly */
+.container :global(.main-svg) {
+    border-radius: 6px;
+}
