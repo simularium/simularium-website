@@ -15,7 +15,6 @@
 
 .text {
     font-size: 12px;
-    font-weight: 300;
     color: var(--dark-theme-dim-color);
 }
 
