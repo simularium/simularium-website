@@ -25,6 +25,7 @@ import {
     setAgentsVisible,
     setColorChange,
     setRecentColors,
+    storeColorsInState,
 } from "../../state/selection/actions";
 import {
     ChangeAgentsRenderingStateAction,
@@ -32,6 +33,7 @@ import {
     SetVisibleAction,
     AgentRenderingCheckboxMap,
     SetRecentColorsAction,
+    StoreColorsInStateAction,
 } from "../../state/selection/types";
 import CheckBoxTree, { AgentDisplayNode } from "../../components/AgentTree";
 import { AgentMetadata } from "../../constants/interfaces";
@@ -47,6 +49,7 @@ import {
 } from "./selectors";
 
 import styles from "./style.css";
+import { ColorChange } from "@aics/simularium-viewer";
 
 interface ModelPanelProps {
     uiDisplayDataTree: AgentDisplayNode[];
@@ -65,6 +68,7 @@ interface ModelPanelProps {
     setColorChange: ActionCreator<SetColorChangeAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
     selectedAgentMetadata: AgentMetadata;
+    storeColorsInState: ActionCreator<StoreColorsInStateAction>;
 }
 
 const ModelPanel: React.FC<ModelPanelProps> = ({
@@ -81,9 +85,9 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     isNetworkedFile,
     changeToNetworkedFile: loadNetworkFile,
     recentColors,
-    setColorChange,
     setRecentColors,
     selectedAgentMetadata,
+    storeColorsInState,
 }): JSX.Element => {
     const checkboxTree = (
         <CheckBoxTree
@@ -97,8 +101,10 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
             payloadForSelectNone={payloadForSelectNone}
             isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
             recentColors={recentColors}
-            setColorChange={setColorChange}
             setRecentColors={setRecentColors}
+            changeColor={(colorChange: ColorChange) => {
+                storeColorsInState(colorChange);
+            }}
         />
     );
     const contentMap = {
@@ -149,6 +155,7 @@ const dispatchToPropsMap = {
     setAgentsVisible,
     setColorChange,
     setRecentColors,
+    storeColorsInState,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ModelPanel);

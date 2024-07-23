@@ -7,10 +7,7 @@ import { useDebounce } from "use-debounce";
 import { ColorChange } from "@aics/simularium-viewer";
 
 import { AGENT_COLORS } from "../../containers/ViewerPanel/constants";
-import {
-    SetColorChangeAction,
-    SetRecentColorsAction,
-} from "../../state/selection/types";
+import { SetRecentColorsAction } from "../../state/selection/types";
 
 import styles from "./style.css";
 
@@ -20,18 +17,18 @@ interface ColorPickerProps {
     agentName: string;
     tags: string[];
     recentColors: string[];
-    setColorChange: ActionCreator<SetColorChangeAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
+    changeColor: (change: ColorChange) => void;
 }
 
 const ColorPicker = ({
     agentName,
     tags,
     recentColors,
-    setColorChange,
     setRecentColors,
     selectedColor: initialColor,
     childrenHaveDifferentColors,
+    changeColor,
 }: ColorPickerProps): JSX.Element => {
     const [currentColor, setCurrentColor] = useState(initialColor);
     const [debouncedColor] = useDebounce(currentColor, 250);
@@ -53,7 +50,9 @@ const ColorPicker = ({
             agent: { name: agentName, tags: tags },
             color: newColor.toLowerCase(),
         };
-        setColorChange(colorChange);
+        console.log("color change in handleColorChange, ", colorChange);
+        changeColor(colorChange);
+        updateRecentColors(debouncedColor);
     };
 
     useEffect(() => {

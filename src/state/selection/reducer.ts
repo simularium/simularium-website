@@ -11,7 +11,6 @@ import {
     HIGHLIGHT_AGENTS_BY_KEY,
     SET_AGENTS_VISIBLE,
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
-    SET_COLOR_CHANGES,
     SET_RECENT_COLORS,
     SET_SELECTED_AGENT,
 } from "./constants";
@@ -23,7 +22,6 @@ import {
     ChangeNumberCollapsedPanelsAction,
     SetVisibleAction,
     ResetAction,
-    SetColorChangeAction,
     SetRecentColorsAction,
     SetSelectedAgentMetadataAction,
 } from "./types";
@@ -33,7 +31,6 @@ export const initialState = {
     numberPanelsCollapsed: 0,
     agentVisibilityMap: {},
     agentHighlightMap: {},
-    colorChange: null,
     recentColors: [],
     selectedAgentMetadata: {},
 };
@@ -47,7 +44,6 @@ const actionToConfigMap: TypeToDescriptionMap = {
                 ...state,
                 agentVisibilityMap: initialState.agentVisibilityMap,
                 agentHighlightMap: initialState.agentHighlightMap,
-                colorChange: initialState.colorChange,
             };
         },
     },
@@ -129,19 +125,6 @@ const actionToConfigMap: TypeToDescriptionMap = {
                 ...action.payload,
             },
         }),
-    },
-    [SET_COLOR_CHANGES]: {
-        accepts: (action: AnyAction): action is SetColorChangeAction =>
-            action.type === SET_COLOR_CHANGES,
-        perform: (
-            state: SelectionStateBranch,
-            action: SetColorChangeAction
-        ) => {
-            return {
-                ...state,
-                colorChange: action.payload,
-            };
-        },
     },
     [SET_RECENT_COLORS]: {
         accepts: (action: AnyAction): action is SetRecentColorsAction =>

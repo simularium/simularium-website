@@ -11,6 +11,7 @@ import {
     SET_COLOR_CHANGES,
     SET_RECENT_COLORS,
     SET_SELECTED_AGENT,
+    STORE_COLORS_IN_STATE,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -22,6 +23,7 @@ import {
     SetColorChangeAction,
     SetRecentColorsAction,
     SetSelectedAgentMetadataAction,
+    StoreColorsInStateAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -102,5 +104,14 @@ export function setSelectedAgentMetadata(
     return {
         payload: metaData,
         type: SET_SELECTED_AGENT,
+    };
+}
+
+export function storeColorsInState(
+    colorChange: ColorChange
+): StoreColorsInStateAction {
+    return {
+        payload: colorChange,
+        type: STORE_COLORS_IN_STATE,
     };
 }

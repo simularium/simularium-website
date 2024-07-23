@@ -1,10 +1,10 @@
 import { createLogic } from "redux-logic";
 import { UIDisplayData } from "@aics/simularium-viewer";
 
-import { SET_COLOR_CHANGES } from "./constants";
 import { ReduxLogicDeps } from "../types";
 import { getAgentDisplayNamesAndStates } from "../trajectory/selectors";
 import { receiveAgentNamesAndStates } from "../trajectory/actions";
+import { STORE_COLORS_IN_STATE } from "./constants";
 
 const storeColorsLogic = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
@@ -35,7 +35,7 @@ const storeColorsLogic = createLogic({
         dispatch(receiveAgentNamesAndStates(newUiData));
         done();
     },
-    type: SET_COLOR_CHANGES,
+    type: STORE_COLORS_IN_STATE,
 });
 
 export default [storeColorsLogic];
