@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
+import { ColorChange } from "@aics/simularium-viewer";
 
 import SideBarContents from "../../components/SideBarContents";
 import {
@@ -49,8 +50,6 @@ import {
 } from "./selectors";
 
 import styles from "./style.css";
-import { ColorChange } from "@aics/simularium-viewer";
-
 interface ModelPanelProps {
     uiDisplayDataTree: AgentDisplayNode[];
     agentHighlightMap: AgentRenderingCheckboxMap;

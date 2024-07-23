@@ -50,7 +50,6 @@ const ColorPicker = ({
             agent: { name: agentName, tags: tags },
             color: newColor.toLowerCase(),
         };
-        console.log("color change in handleColorChange, ", colorChange);
         changeColor(colorChange);
         updateRecentColors(debouncedColor);
     };
