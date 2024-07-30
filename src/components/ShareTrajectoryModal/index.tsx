@@ -221,9 +221,6 @@ const ShareTrajectoryModal = ({
                             <div className={styles.proportionSettings}>
                                 {" "}
                                 <Input
-                                    key="embed-height"
-                                    type="text"
-                                    inputMode="numeric"
                                     disabled={
                                         !embedSettings.userProvidedProportions
                                     }
@@ -238,8 +235,6 @@ const ShareTrajectoryModal = ({
                                 />
                                 <p> x </p>
                                 <Input
-                                    key="embed-width"
-                                    type="text"
                                     disabled={
                                         !embedSettings.userProvidedProportions
                                     }
