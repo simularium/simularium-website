@@ -81,8 +81,6 @@
     padding-left: 10px;
 }
 
-/* .url-input[disabled]:global(.ant-input) { */
-
 .embed-input[disabled]:global(.ant-input) {
     height: 98px;
     color: var(--light-theme-modal-input-color);
