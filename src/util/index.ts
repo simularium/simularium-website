@@ -88,6 +88,12 @@ export const hasUrlParamsSettings = () => {
     return false;
 };
 
+export const getUrlParamValue = (url: string, param: string) => {
+    const urlObj = new URL(url);
+    const params = new URLSearchParams(urlObj.search);
+    return params.get(param);
+};
+
 export const editUrlParams = (
     url: string,
     value: string,
@@ -120,4 +126,12 @@ export const getIconGlyphClasses = (name: IconGlyphs) => {
 
 export const formatFloatForDisplay = (float: number): string => {
     return parseFloat(float.toFixed(2)).toString();
+};
+
+export const copyToClipboard = async (text: string): Promise<void> => {
+    try {
+        await navigator.clipboard.writeText(text);
+    } catch (err) {
+        console.error("Failed to copy text: ", err);
+    }
 };
