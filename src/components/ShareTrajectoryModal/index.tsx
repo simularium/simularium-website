@@ -29,7 +29,7 @@ const ShareTrajectoryModal = ({
     timeUnits,
     displayTimes,
 }: ShareTrajectoryModalProps): JSX.Element => {
-    /** URL Link */
+    /** URL Link Section */
     const roundToTimestepPrecision = (
         input: number,
         timestep: number
@@ -81,7 +81,7 @@ const ShareTrajectoryModal = ({
         );
     };
 
-    const [timeSettingRadioValue, setTimeSettingRadioValue] = React.useState(1);
+    const [timeRadioGroupValue, setTimeRadioGroupValue] = React.useState(1);
     const [allowTimeInput, setAllowTimeInput] = React.useState(true);
     const currentTime = roundToTimestepPrecision(
         displayTimes.roundedTime,
@@ -97,72 +97,16 @@ const ShareTrajectoryModal = ({
     const [lastEnteredNumber, setLastEnteredNumber] =
         React.useState(currentTime);
     const onRadioChange = (e: RadioChangeEvent) => {
-        setTimeSettingRadioValue(e.target.value);
+        setTimeRadioGroupValue(e.target.value);
         handleAllowTimeInput();
     };
 
-    /** Embedded Snippet */
-    interface EmbedSettings {
-        width: number;
-        height: number;
-        userProvidedProportions: boolean;
-    }
-
-    const defaultEmbedSettings: EmbedSettings = {
-        width: 834,
-        height: 480,
-        userProvidedProportions: false,
-    };
-
-    const trajectory = getUrlParamValue(
-        window.location.href,
-        URL_PARAM_KEY_FILE_NAME
-    );
-    const [embedSettings, setEmbedSettings] =
-        React.useState(defaultEmbedSettings);
-    const [showEmbedSettingsPanel, setShowEmbedSettingsPanel] =
-        React.useState(false);
-
-    const generateEmbedSnippet = (): string => {
-        const { width, height } = embedSettings;
-
-        const snippetHeight =
-            embedSettings.userProvidedProportions && embedSettings.height
-                ? height
-                : defaultEmbedSettings.height;
-        const snippetWidth =
-            embedSettings.userProvidedProportions && embedSettings.width
-                ? width
-                : defaultEmbedSettings.width;
-        const url = `https://simularium.allencell.org/embed?trajFileName=${trajectory}&t=0`;
-        return `<iframe height="${snippetHeight}" width="${snippetWidth}"src="${url}" title="Simularium" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
-    };
-
-    const [embedSnippet, setEmbedSnippet] = React.useState(
-        generateEmbedSnippet()
-    );
-
-    useEffect(() => {
-        setEmbedSnippet(generateEmbedSnippet());
-    }, [embedSettings]);
-
-    const handleEmbeddedSizeInputs = (
-        setting: "height" | "width",
-        input: string
-    ) => {
-        const numericInput = input ? parseInt(input) : 0;
-        const roundedLimitedInput = numericInput >= 3840 ? 3840 : numericInput;
-        setEmbedSettings({ ...embedSettings, [setting]: roundedLimitedInput });
-    };
-
-    /** JSX Elements for sections: URL Link and Embed Snippet, and Error/Shareable options */
-
-    const ShareableLinkPanel: JSX.Element = (
+    const UrlLinkPanel: JSX.Element = (
         <>
             <VerticalFlexbox gap={2}>
                 <Radio.Group
                     className={styles.customRadioGroup}
-                    value={timeSettingRadioValue}
+                    value={timeRadioGroupValue}
                     onChange={onRadioChange}
                 >
                     <Space direction="vertical">
@@ -201,6 +145,60 @@ const ShareTrajectoryModal = ({
             </VerticalFlexbox>
         </>
     );
+
+    /** Embedded Snippet */
+    interface EmbedSettings {
+        width: number;
+        height: number;
+        userProvidedProportions: boolean;
+    }
+
+    const defaultEmbedSettings: EmbedSettings = {
+        width: 834,
+        height: 480,
+        userProvidedProportions: false,
+    };
+
+    const trajectory = getUrlParamValue(
+        window.location.href,
+        URL_PARAM_KEY_FILE_NAME
+    );
+    const [embedSettings, setEmbedSettings] =
+        React.useState(defaultEmbedSettings);
+    const [showEmbedSettingsPanel, setShowEmbedSettingsPanel] =
+        React.useState(false);
+
+    const generateEmbedSnippet = (): string => {
+        const { width, height } = embedSettings;
+
+        const snippetHeight =
+            embedSettings.userProvidedProportions && embedSettings.height
+                ? height
+                : defaultEmbedSettings.height;
+        const snippetWidth =
+            embedSettings.userProvidedProportions && embedSettings.width
+                ? width
+                : defaultEmbedSettings.width;
+        const url = `https://simularium.allencell.org/embed?trajFileName=${trajectory}&t=0`;
+        return `<iframe height="${snippetHeight}" width="${snippetWidth} "src="${url}" title="Simularium" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+    };
+
+    const [embedSnippet, setEmbedSnippet] = React.useState(
+        generateEmbedSnippet()
+    );
+
+    useEffect(() => {
+        setEmbedSnippet(generateEmbedSnippet());
+    }, [embedSettings]);
+
+    const handleEmbeddedSizeInputs = (
+        setting: "height" | "width",
+        input: string
+    ) => {
+        const numericInput = input ? parseInt(input) : 0;
+        const roundedLimitedInput = numericInput >= 3840 ? 3840 : numericInput;
+        setEmbedSettings({ ...embedSettings, [setting]: roundedLimitedInput });
+    };
 
     const EmbedSnippetPanel: JSX.Element = (
         <VerticalFlexbox gap={8}>
@@ -288,6 +286,7 @@ const ShareTrajectoryModal = ({
         </VerticalFlexbox>
     );
 
+    /** Rendering options for local/networked files */
     const modalOptions = {
         errorMessage: {
             content: (
@@ -319,7 +318,7 @@ const ShareTrajectoryModal = ({
         isShareable: {
             content: (
                 <VerticalFlexbox gap={30} className={styles.shareContainer}>
-                    {ShareableLinkPanel}
+                    {UrlLinkPanel}
                     {EmbedSnippetPanel}
                 </VerticalFlexbox>
             ),
