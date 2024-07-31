@@ -15,6 +15,8 @@ import {
     editUrlParams,
     getIconGlyphClasses,
     formatFloatForDisplay,
+    copyToClipboard,
+    getUrlParamValue,
 } from "../";
 import {
     getFileIdFromUrl,
@@ -425,6 +427,91 @@ describe("User Url handling", () => {
         });
         it("does not include unnecessary zeros", () => {
             expect(formatFloatForDisplay(1.20000001)).toBe("1.2");
+        });
+    });
+
+    describe("copyToClipboard", () => {
+        beforeAll(() => {
+            // Mock the clipboard API
+            Object.defineProperty(navigator, "clipboard", {
+                value: {
+                    writeText: jest.fn(),
+                },
+                writable: true,
+            });
+        });
+
+        beforeEach(() => {
+            jest.clearAllMocks();
+        });
+
+        it("should copy text to clipboard", async () => {
+            const text = "Hello, World!";
+
+            await copyToClipboard(text);
+
+            expect(navigator.clipboard.writeText).toHaveBeenCalledWith(text);
+        });
+
+        it("should handle error if writing to clipboard fails", async () => {
+            const text = "Hello, World!";
+            const error = new Error("Failed to write to clipboard");
+            console.error = jest.fn();
+
+            (navigator.clipboard.writeText as jest.Mock).mockRejectedValueOnce(
+                error
+            );
+
+            await copyToClipboard(text);
+
+            expect(console.error).toHaveBeenCalledWith(
+                "Failed to copy text: ",
+                error
+            );
+        });
+    });
+
+    describe("getUrlParamValue", () => {
+        it("should return the value of the given parameter from the URL", () => {
+            const url = "https://example.com?param1=value1&param2=value2";
+            const param = "param1";
+            const result = getUrlParamValue(url, param);
+            expect(result).toBe("value1");
+        });
+
+        it("should return null if the parameter does not exist in the URL", () => {
+            const url = "https://example.com?param1=value1&param2=value2";
+            const param = "param3";
+            const result = getUrlParamValue(url, param);
+            expect(result).toBeNull();
+        });
+
+        it("should return null if the URL has no parameters", () => {
+            const url = "https://example.com";
+            const param = "param1";
+            const result = getUrlParamValue(url, param);
+            expect(result).toBeNull();
+        });
+
+        it("should return null if param is an empty string", () => {
+            const url = "https://example.com?param1=value1&param2=value2";
+            const param = "";
+            const result = getUrlParamValue(url, param);
+            expect(result).toBeNull();
+        });
+
+        it("should return null if value is an empty string", () => {
+            const url = "https://example.com?param1=&param2=value2";
+            const param = "param1";
+            const result = getUrlParamValue(url, param);
+            expect(result).toBe("");
+        });
+
+        it("should handle parameters with special characters", () => {
+            const url = "https://example.com?param%201=value%201&param2=value2";
+            const param = "param 1";
+            const result = getUrlParamValue(url, param);
+            expect(result).toBe("value 1");
         });
     });
 });

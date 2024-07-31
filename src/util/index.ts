@@ -88,12 +88,6 @@ export const hasUrlParamsSettings = () => {
     return false;
 };
 
-export const getUrlParamValue = (url: string, param: string) => {
-    const urlObj = new URL(url);
-    const params = new URLSearchParams(urlObj.search);
-    return params.get(param);
-};
-
 export const editUrlParams = (
     url: string,
     value: string,
@@ -134,4 +128,10 @@ export const copyToClipboard = async (text: string): Promise<void> => {
     } catch (err) {
         console.error("Failed to copy text: ", err);
     }
+};
+
+export const getUrlParamValue = (url: string, param: string) => {
+    const urlObj = new URL(url);
+    const params = new URLSearchParams(urlObj.search);
+    return params.get(param);
 };
