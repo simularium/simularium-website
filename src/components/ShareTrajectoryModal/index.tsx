@@ -196,7 +196,14 @@ const ShareTrajectoryModal = ({
         input: string
     ) => {
         const numericInput = input ? parseInt(input) : 0;
-        const roundedLimitedInput = numericInput >= 3840 ? 3840 : numericInput;
+        let roundedLimitedInput;
+
+        if (setting === "width") {
+            roundedLimitedInput = numericInput >= 3840 ? 3840 : numericInput;
+        } else if (setting === "height") {
+            roundedLimitedInput = numericInput >= 2160 ? 2160 : numericInput;
+        }
+
         setEmbedSettings({ ...embedSettings, [setting]: roundedLimitedInput });
     };
 
