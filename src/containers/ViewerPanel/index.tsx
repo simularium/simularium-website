@@ -355,7 +355,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             lastFrameTime,
             timeStep,
             isBuffering,
-            setBuffering,
         } = this.props;
         if (isBuffering) {
             return;
@@ -368,8 +367,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         if (isTimeGreaterThanLastFrameTime || isTimeLessThanFirstFrameTime) {
             return;
         }
-
-        setBuffering(true);
         simulariumController.gotoTime(time);
     }
 
