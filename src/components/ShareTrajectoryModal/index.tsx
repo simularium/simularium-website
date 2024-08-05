@@ -82,17 +82,15 @@ const ShareTrajectoryModal = ({
         setUserEnteredTime(timeValue);
     };
 
-    const onRadioChange = (e: RadioChangeEvent) => {
-        setStartTimeToUse(e.target.value);
-    };
-
     const UrlLinkPanel: JSX.Element = (
         <>
             <VerticalFlexbox gap={2}>
                 <Radio.Group
                     className={styles.customRadioGroup}
                     value={startTimeToUse}
-                    onChange={onRadioChange}
+                    onChange={(e: RadioChangeEvent) => {
+                        setStartTimeToUse(e.target.value);
+                    }}
                 >
                     <Space direction="vertical">
                         <Radio value={TimeToUse.BEGINNING}>
