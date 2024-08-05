@@ -11,10 +11,16 @@ import CustomModal from "../CustomModal";
 import { DownArrow, Link, Warn } from "../Icons";
 import { URL_PARAM_KEY_FILE_NAME, URL_PARAM_KEY_TIME } from "../../constants";
 import { ButtonClass } from "../../constants/interfaces";
-import { copyToClipboard, editUrlParams, getUrlParamValue } from "../../util";
+import {
+    copyToClipboard,
+    editUrlParams,
+    getUrlParamValue,
+    roundToTimeStepPrecision,
+} from "../../util";
 import VerticalFlexbox from "../../styles/utils";
 
 import styles from "./style.css";
+import EmbedSnippetPanel from "./EmbedSnippetPanel";
 
 interface ShareTrajectoryModalProps {
     trajectoryIsShareable: boolean;
@@ -29,27 +35,37 @@ const ShareTrajectoryModal = ({
     timeUnits,
     displayTimes,
 }: ShareTrajectoryModalProps): JSX.Element => {
-    /** URL Link Section */
-    const roundToTimestepPrecision = (
-        input: number,
-        timestep: number
-    ): number => {
-        const precision = (timestep.toString().split(".")[1] || "").length;
-        const multiplier = Math.pow(10, precision);
-        return Math.round(input * multiplier) / multiplier;
-    };
+    enum TimeToUse {
+        BEGINNING = "beginning",
+        USER_ENTERED = "user-entered",
+    }
+    const [startTimeToUse, setStartTimeToUse] = React.useState(
+        TimeToUse.BEGINNING
+    );
+    const currentTime = roundToTimeStepPrecision(
+        displayTimes.roundedTime,
+        displayTimes.roundedTimeStep
+    );
 
-    const handleAllowTimeInput = (): void => {
-        const timeValue = allowTimeInput ? lastEnteredNumber : currentTime;
-        setLinkUrl(
-            editUrlParams(
-                window.location.href,
-                timeValue.toString(),
-                URL_PARAM_KEY_TIME
-            )
-        );
-        setAllowTimeInput((allowTimeInput) => !allowTimeInput);
-    };
+    const [userEnteredTime, setUserEnteredTime] = React.useState(currentTime);
+
+    const [linkUrl, setLinkUrl] = React.useState(
+        editUrlParams(
+            window.location.href,
+            currentTime.toString(),
+            URL_PARAM_KEY_TIME
+        )
+    );
+    // const handleAllowTimeInput = (): void => {
+    //     const timeValue = userEnteredTime ? lastEnteredNumber : currentTime;
+    //     setLinkUrl(
+    //         editUrlParams(
+    //             window.location.href,
+    //             timeValue.toString(),
+    //             URL_PARAM_KEY_TIME
+    //         )
+    //     );
+    // };
 
     const handleTimeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputAsNumber = parseFloat(e.target.value);
@@ -66,39 +82,16 @@ const ShareTrajectoryModal = ({
                 displayTimes.roundedLastFrameTime -
                 displayTimes.roundedTimeStep;
         } else {
-            timeValue = roundToTimestepPrecision(
+            timeValue = roundToTimeStepPrecision(
                 inputAsNumber,
                 displayTimes.roundedTimeStep
             );
         }
-        setLastEnteredNumber(timeValue);
-        setLinkUrl(
-            editUrlParams(
-                window.location.href,
-                timeValue.toString(),
-                URL_PARAM_KEY_TIME
-            )
-        );
+        setUserEnteredTime(timeValue);
     };
 
-    const [timeRadioGroupValue, setTimeRadioGroupValue] = React.useState(1);
-    const [allowTimeInput, setAllowTimeInput] = React.useState(true);
-    const currentTime = roundToTimestepPrecision(
-        displayTimes.roundedTime,
-        displayTimes.roundedTimeStep
-    );
-    const [linkUrl, setLinkUrl] = React.useState(
-        editUrlParams(
-            window.location.href,
-            currentTime.toString(),
-            URL_PARAM_KEY_TIME
-        )
-    );
-    const [lastEnteredNumber, setLastEnteredNumber] =
-        React.useState(currentTime);
     const onRadioChange = (e: RadioChangeEvent) => {
-        setTimeRadioGroupValue(e.target.value);
-        handleAllowTimeInput();
+        setStartTimeToUse(e.target.value);
     };
 
     const UrlLinkPanel: JSX.Element = (
@@ -106,16 +99,18 @@ const ShareTrajectoryModal = ({
             <VerticalFlexbox gap={2}>
                 <Radio.Group
                     className={styles.customRadioGroup}
-                    value={timeRadioGroupValue}
+                    value={startTimeToUse}
                     onChange={onRadioChange}
                 >
                     <Space direction="vertical">
-                        <Radio value={1}>From beginning</Radio>
-                        <Radio value={2}>
+                        <Radio value={TimeToUse.BEGINNING}>
+                            From beginning
+                        </Radio>
+                        <Radio value={TimeToUse.USER_ENTERED}>
                             Start at{" "}
                             <Input
                                 className={styles.timeInput}
-                                disabled={allowTimeInput}
+                                // disabled={userEnteredTime}
                                 defaultValue={currentTime}
                                 onChange={handleTimeInput}
                             />
@@ -144,148 +139,6 @@ const ShareTrajectoryModal = ({
                 </div>
             </VerticalFlexbox>
         </>
-    );
-
-    /** Embedded Snippet */
-    interface EmbedSettings {
-        width: number;
-        height: number;
-        userProvidedProportions: boolean;
-    }
-
-    const defaultEmbedSettings: EmbedSettings = {
-        width: 834,
-        height: 480,
-        userProvidedProportions: false,
-    };
-
-    const trajectory = getUrlParamValue(
-        window.location.href,
-        URL_PARAM_KEY_FILE_NAME
-    );
-    const [embedSettings, setEmbedSettings] =
-        React.useState(defaultEmbedSettings);
-    const [showEmbedSettingsPanel, setShowEmbedSettingsPanel] =
-        React.useState(false);
-
-    const generateEmbedSnippet = (): string => {
-        const { width, height } = embedSettings;
-
-        const snippetHeight =
-            embedSettings.userProvidedProportions && embedSettings.height
-                ? height
-                : defaultEmbedSettings.height;
-        const snippetWidth =
-            embedSettings.userProvidedProportions && embedSettings.width
-                ? width
-                : defaultEmbedSettings.width;
-        const url = `https://simularium.allencell.org/embed?trajFileName=${trajectory}&t=0`;
-        return `<iframe height="${snippetHeight}" width="${snippetWidth} "src="${url}" title="Simularium" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
-    };
-
-    const [embedSnippet, setEmbedSnippet] = React.useState(
-        generateEmbedSnippet()
-    );
-
-    useEffect(() => {
-        setEmbedSnippet(generateEmbedSnippet());
-    }, [embedSettings]);
-
-    const handleEmbeddedSizeInputs = (
-        setting: "height" | "width",
-        input: string
-    ) => {
-        const numericInput = input ? parseInt(input) : 0;
-        let roundedLimitedInput;
-
-        if (setting === "width") {
-            roundedLimitedInput = numericInput >= 3840 ? 3840 : numericInput;
-        } else if (setting === "height") {
-            roundedLimitedInput = numericInput >= 2160 ? 2160 : numericInput;
-        }
-
-        setEmbedSettings({ ...embedSettings, [setting]: roundedLimitedInput });
-    };
-
-    const EmbedSnippetPanel: JSX.Element = (
-        <VerticalFlexbox gap={8}>
-            <div className={styles.embedHeader}>
-                <h4>Embed &lt;/&gt;</h4>
-                <button
-                    className={styles.settingsButton}
-                    onClick={() => {
-                        setShowEmbedSettingsPanel(!showEmbedSettingsPanel);
-                    }}
-                >
-                    Show settings {DownArrow}
-                </button>
-            </div>
-            {showEmbedSettingsPanel && (
-                <div className={styles.embedSettings}>
-                    <VerticalFlexbox gap={4}>
-                        <p className={styles.accentText}> Size </p>
-                        <VerticalFlexbox gap={24}>
-                            <div className={styles.proportionSettings}>
-                                {" "}
-                                <Input
-                                    disabled={
-                                        !embedSettings.userProvidedProportions
-                                    }
-                                    defaultValue={embedSettings.height}
-                                    className={styles.numberInputs}
-                                    onChange={(e) => {
-                                        handleEmbeddedSizeInputs(
-                                            "height",
-                                            e.target.value
-                                        );
-                                    }}
-                                />
-                                <p> x </p>
-                                <Input
-                                    disabled={
-                                        !embedSettings.userProvidedProportions
-                                    }
-                                    value={embedSettings.width}
-                                    className={styles.numberInputs}
-                                    onChange={(e) => {
-                                        handleEmbeddedSizeInputs(
-                                            "width",
-                                            e.target.value
-                                        );
-                                    }}
-                                />
-                                <p> pixels </p>
-                                <div className={styles.constrainProportions}>
-                                    <Checkbox
-                                        onChange={() => {
-                                            setEmbedSettings({
-                                                ...embedSettings,
-                                                ["userProvidedProportions"]:
-                                                    !embedSettings.userProvidedProportions,
-                                            });
-                                        }}
-                                    ></Checkbox>
-                                    <p>Constrain proportions</p>
-                                </div>
-                            </div>
-                        </VerticalFlexbox>
-                    </VerticalFlexbox>
-                </div>
-            )}
-            <VerticalFlexbox gap={8} alignItems="end">
-                <Input.TextArea
-                    className={styles.embedInput}
-                    value={embedSnippet}
-                    disabled
-                />
-                <Button
-                    className={"primary-button"}
-                    onClick={() => copyToClipboard(embedSnippet)}
-                >
-                    Copy
-                </Button>
-            </VerticalFlexbox>
-        </VerticalFlexbox>
     );
 
     /** Rendering options for local/networked files */
@@ -321,7 +174,7 @@ const ShareTrajectoryModal = ({
             content: (
                 <VerticalFlexbox gap={30} className={styles.shareContainer}>
                     {UrlLinkPanel}
-                    {EmbedSnippetPanel}
+                    <EmbedSnippetPanel />
                 </VerticalFlexbox>
             ),
             footer: (
