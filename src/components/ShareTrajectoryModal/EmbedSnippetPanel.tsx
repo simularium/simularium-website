@@ -33,15 +33,24 @@ const EmbedSnippetPanel = () => {
     };
 
     const handleChangeWidth = (input: string) => {
+        const currentRatio = width / height;
         const numericInput = inputIsValid(input) ? parseInt(input) : width;
         const roundedLimitedInput = Math.min(MAX_WIDTH, numericInput);
         setWidth(roundedLimitedInput);
+        if (constrainProportions) {
+            setHeight(Math.round(roundedLimitedInput / currentRatio));
+        }
     };
 
     const handleChangeHeight = (input: string) => {
+        const currentRatio = width / height;
+
         const numericInput = inputIsValid(input) ? parseInt(input) : height;
         const roundedLimitedInput = Math.min(MAX_HEIGHT, numericInput);
         setHeight(roundedLimitedInput);
+        if (constrainProportions) {
+            setWidth(Math.round(roundedLimitedInput * currentRatio));
+        }
     };
 
     return (
