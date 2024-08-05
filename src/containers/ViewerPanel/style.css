@@ -9,7 +9,16 @@
     display: flex;
     gap: 4px;
     bottom: 0;
-    right: 25%;
-    width: 50%;
     margin-bottom: 20px;
+}
+
+.standard-controls {
+        right: 25%;
+    width: 50%;
+
+}
+
+.minimal-controls {
+    right: 5%;
+    left: 5%;
 }

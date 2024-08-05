@@ -16,6 +16,8 @@ import {
     RetweetOutlined,
     ExclamationCircleFilled,
     CaretDownFilled,
+    FullscreenOutlined,
+    FullscreenExitOutlined,
 } from "@ant-design/icons";
 
 import PurpleArrowPointingRight from "../../assets/open-arrow.svg";
@@ -40,6 +42,8 @@ export const Link = <LinkOutlined />;
 export const Download = <DownloadOutlined size={32} />;
 export const LoopOutlined = <RetweetOutlined />;
 export const Exclamation = <ExclamationCircleFilled />;
+export const FullScreen = <FullscreenOutlined />;
+export const ExitFullScreen = <FullscreenExitOutlined />;
 
 export const PurpleArrow = <img src={PurpleArrowPointingRight} />;
 export const AicsLogo = <img src={AicsLogoWhite} style={{ width: "140px" }} />;

@@ -19,7 +19,6 @@ import {
     LocalSimFile,
     RequestLocalFileAction,
     RequestNetworkFileAction,
-    SetUrlParamsAction,
     CancelConversionAction,
 } from "../../state/trajectory/types";
 import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
@@ -34,6 +33,7 @@ import {
 } from "../../state/viewer/types";
 import { SetSimulariumControllerAction } from "../../state/simularium/types";
 import {
+    EMBEDDED_SIDE_PANEL_MINIMUM_WIDTH,
     URL_PARAM_KEY_FILE_NAME,
     URL_PARAM_KEY_USER_URL,
 } from "../../constants";
@@ -78,8 +78,8 @@ interface AppProps {
     conversionProcessingData: ConversionProcessingData;
     conversionStatus: ConversionStatus;
     initializeConversion: ActionCreator<InitializeConversionAction>;
-    setUrlParams: ActionCreator<SetUrlParamsAction>;
     cancelAutoconversion: ActionCreator<CancelConversionAction>;
+    embedFullscreen: boolean;
 }
 
 interface AppState {
@@ -240,8 +240,13 @@ class App extends React.Component<AppProps, AppState> {
             simulariumController,
             changeToLocalSimulariumFile,
             conversionStatus,
+            embedFullscreen,
         } = this.props;
         const isEmbedded = location.pathname === EMBED_PATHNAME;
+        const hideSidePanels =
+            isEmbedded &&
+            window.innerWidth <= EMBEDDED_SIDE_PANEL_MINIMUM_WIDTH &&
+            !embedFullscreen;
         return (
             <Layout
                 className={classNames([
@@ -255,13 +260,15 @@ class App extends React.Component<AppProps, AppState> {
                     )}
                     <Layout className={styles.content}>
                         {this.renderOverlay(isEmbedded)}
-                        <SideBar
-                            onCollapse={this.onPanelCollapse}
-                            isEmbedded={isEmbedded}
-                            type="left"
-                        >
-                            <ModelPanel />
-                        </SideBar>
+                        {!hideSidePanels && (
+                            <SideBar
+                                onCollapse={this.onPanelCollapse}
+                                isEmbedded={isEmbedded}
+                                type="left"
+                            >
+                                <ModelPanel />
+                            </SideBar>
+                        )}
                         <Content>
                             {simulariumController && (
                                 <ViewerPanel
@@ -270,13 +277,15 @@ class App extends React.Component<AppProps, AppState> {
                                 />
                             )}
                         </Content>
-                        <SideBar
-                            onCollapse={this.onPanelCollapse}
-                            isEmbedded={isEmbedded}
-                            type="right"
-                        >
-                            <ResultsPanel />
-                        </SideBar>
+                        {!hideSidePanels && (
+                            <SideBar
+                                onCollapse={this.onPanelCollapse}
+                                isEmbedded={isEmbedded}
+                                type="right"
+                            >
+                                <ResultsPanel />
+                            </SideBar>
+                        )}
                     </Layout>
                 </div>
             </Layout>
@@ -297,6 +306,7 @@ function mapStateToProps(state: State) {
             trajectoryStateBranch.selectors.getConversionStatus(state),
         conversionProcessingData:
             trajectoryStateBranch.selectors.getConversionProcessingData(state),
+        embedFullscreen: viewerStateBranch.selectors.getEmbedFullscreen(state),
     };
 }
 

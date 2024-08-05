@@ -179,7 +179,8 @@ const ShareTrajectoryModal = ({
             embedSettings.userProvidedProportions && embedSettings.width
                 ? width
                 : defaultEmbedSettings.width;
-        const url = `https://simularium.allencell.org/embed?trajFileName=${trajectory}&t=0`;
+        // to do use simularium.allencell.org instead of localhost:9001
+        const url = `http://localhost:9001/embed?trajFileName=${trajectory}&t=0`;
         return `<iframe height="${snippetHeight}" width="${snippetWidth} "src="${url}" title="Simularium" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
     };
 
@@ -206,6 +207,58 @@ const ShareTrajectoryModal = ({
 
         setEmbedSettings({ ...embedSettings, [setting]: roundedLimitedInput });
     };
+
+    // todo, preview currently for dev use, remove before PR:
+
+    const [preview, setPreview] = React.useState(false);
+
+    const getPreviewModalSize = () => {
+        const { width, height } = embedSettings;
+        const modalWidth = width + 50; // 25px on each side
+        const modalHeight = height + 150; // 25px on each side
+        console.log("modalWidth", modalWidth, "modalHeight", modalHeight);
+        return {
+            width: modalWidth,
+            height: modalHeight,
+        };
+    };
+
+    const modalSize = getPreviewModalSize();
+    const uniqueClassName = `custom-modal-size-${modalSize.width}-${modalSize.height}`;
+
+    const [className, setClassName] = React.useState("");
+
+    useEffect(() => {
+        setClassName(uniqueClassName);
+
+        const style = document.createElement("style");
+        style.innerHTML = `
+      .${uniqueClassName} .ant-modal-content {
+        width: ${modalSize.width}px !important;
+        height: ${modalSize.height}px !important;
+      }
+    `;
+        document.head.appendChild(style);
+
+        return () => {
+            document.head.removeChild(style);
+        };
+    }, [uniqueClassName, modalSize]);
+
+    const getJSXSnippet = () => {
+        return (
+            <CustomModal
+                closeHandler={() => {
+                    setPreview(!preview);
+                }}
+                titleText="Preview"
+                className={className}
+            >
+                <div dangerouslySetInnerHTML={{ __html: embedSnippet }} />
+            </CustomModal>
+        );
+    };
+    // to do end preview section
 
     const EmbedSnippetPanel: JSX.Element = (
         <VerticalFlexbox gap={8}>
@@ -268,6 +321,11 @@ const ShareTrajectoryModal = ({
                                     <p>Constrain proportions</p>
                                 </div>
                             </div>
+                            {/* TODO DEV ONLY REMOVE FOR PR, UNLESS?? */}
+                            <Button onClick={() => setPreview(!preview)}>
+                                Preview
+                            </Button>
+                            {preview && getJSXSnippet()}
                         </VerticalFlexbox>
                     </VerticalFlexbox>
                 </div>
@@ -346,6 +404,8 @@ const ShareTrajectoryModal = ({
             {trajectoryIsShareable
                 ? modalOptions.isShareable.content
                 : modalOptions.errorMessage.content}
+            {/* to do dev only preview remove after */}
+            {getJSXSnippet()}
         </CustomModal>
     );
 };

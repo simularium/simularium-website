@@ -1,7 +1,7 @@
 import React, { KeyboardEvent, useState } from "react";
 import { Slider, InputNumber } from "antd";
 import classNames from "classnames";
-import { compareTimes } from "@aics/simularium-viewer";
+import { SimulariumController, compareTimes } from "@aics/simularium-viewer";
 
 import { DisplayTimes } from "../../containers/ViewerPanel/types";
 import { TimeUnits } from "../../state/trajectory/types";
@@ -29,6 +29,8 @@ interface PlayBackProps {
     displayTimes: DisplayTimes;
     timeUnits: TimeUnits;
     isEmpty: boolean;
+    minimalControls: boolean;
+    simulariumController: SimulariumController;
 }
 
 const PlayBackControls = ({
@@ -48,6 +50,8 @@ const PlayBackControls = ({
     displayTimes,
     timeUnits,
     isEmpty,
+    minimalControls,
+    simulariumController,
 }: PlayBackProps): JSX.Element => {
     // Where to resume playing if simulation was playing before scrubbing
     const [timeToResumeAfterScrubbing, setTimeToResumeAfterScrubbing] =
@@ -116,7 +120,48 @@ const PlayBackControls = ({
     const isStepForwardDisabled =
         compareTimes(time + timeStep, lastFrameTime, timeStep) === 1;
 
-    return (
+    const PlayPauseButton = (
+        <ViewportButton
+            tooltipText={isPlaying ? "Pause" : "Play"}
+            tooltipPlacement="top"
+            icon={isPlaying ? Pause : Play}
+            clickHandler={isPlaying ? pauseHandler : playHandler}
+            disabled={loading || isEmpty}
+            loading={loading}
+        />
+    );
+
+    const TimeSlider = (
+        <Slider
+            value={time}
+            onChange={handleTimeChange}
+            onAfterChange={handleSliderMouseUp}
+            tooltip={{ open: false }}
+            className={classNames(styles.slider, styles.item)}
+            step={timeStep}
+            min={firstFrameTime}
+            max={lastFrameTime}
+            disabled={loading || isEmpty}
+            range={false}
+        />
+    );
+
+    const minimalEmbeddedControls = (
+        <div className={styles.embedContainer}>
+            {PlayPauseButton}
+            {TimeSlider}
+            <div className={styles.buttonContainer}>
+                <ViewportButton
+                    tooltipText="Home view (H)"
+                    tooltipPlacement="left"
+                    icon={getIconGlyphClasses(IconGlyphs.Reset)}
+                    clickHandler={simulariumController.resetCamera}
+                />
+            </div>
+        </div>
+    );
+
+    const fullControls = (
         <div className={styles.container}>
             <div className={styles.buttonContainer}>
                 <ViewportButton
@@ -127,18 +172,9 @@ const PlayBackControls = ({
                     disabled={isStepBackDisabled || loading || isEmpty}
                     loading={loading}
                 />
+                {PlayPauseButton}
                 <ViewportButton
-                    tooltipText={isPlaying ? "Pause" : "Play"}
-                    tooltipPlacement="top"
-                    icon={isPlaying ? Pause : Play}
-                    clickHandler={
-                        isPlaying ? pauseHandler : () => playHandler()
-                    }
-                    disabled={loading || isEmpty}
-                    loading={loading}
-                />
-                <ViewportButton
-                    tooltipText={"Skip 1 frame ahead"}
+                    tooltipText="Skip 1 frame ahead"
                     tooltipPlacement="top"
                     icon={getIconGlyphClasses(IconGlyphs.StepForward)}
                     clickHandler={nextHandler}
@@ -146,18 +182,7 @@ const PlayBackControls = ({
                     loading={loading}
                 />
             </div>
-            <Slider
-                value={time}
-                onChange={handleTimeChange}
-                onAfterChange={handleSliderMouseUp}
-                tooltip={{ open: false }}
-                className={classNames(styles.slider, styles.item)}
-                step={timeStep}
-                min={firstFrameTime}
-                max={lastFrameTime}
-                disabled={loading || isEmpty}
-                range={false}
-            />
+            {TimeSlider}
             <div className={styles.time}>
                 <InputNumber
                     // key is necessary to re-render this component and override user input
@@ -185,5 +210,12 @@ const PlayBackControls = ({
             />
         </div>
     );
+
+    return (
+        <div className={styles.container}>
+            {minimalControls ? minimalEmbeddedControls : fullControls}
+        </div>
+    );
 };
+
 export default PlayBackControls;

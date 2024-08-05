@@ -33,6 +33,7 @@ interface CameraControlsProps {
     setPanningMode: (value: boolean) => void;
     setFocusMode: (value: boolean) => void;
     setCameraType: (value: boolean) => void;
+    minimalControls?: boolean;
 }
 
 const CameraControls = ({
@@ -42,6 +43,7 @@ const CameraControls = ({
     setPanningMode,
     setFocusMode,
     setCameraType,
+    minimalControls,
 }: CameraControlsProps): JSX.Element => {
     const [isFocused, saveFocusMode] = useState(true);
     const [mode, setMode] = useState(ROTATE);
@@ -141,7 +143,21 @@ const CameraControls = ({
         }
         lastKeyPressed.current = keyPressed;
     }, [keyPressed]);
-    return (
+
+    const homeViewButton = (
+        <ViewportButton
+            tooltipText={"Home view (H)"}
+            tooltipPlacement="left"
+            icon={getIconGlyphClasses(IconGlyphs.Reset)}
+            clickHandler={resetCamera}
+        />
+    );
+
+    const minimalEmbeddedControls = (
+        <div className={styles.container}>{homeViewButton}</div>
+    );
+
+    const fullControls = (
         <div className={styles.container}>
             <div className={styles.zoomGroup}>
                 <ViewportButton
@@ -208,13 +224,14 @@ const CameraControls = ({
                     active={cameraProjectionType === PERSPECTIVE}
                 />
             </div>
-            <ViewportButton
-                tooltipText={"Home view (H)"}
-                tooltipPlacement="left"
-                icon={getIconGlyphClasses(IconGlyphs.Reset)}
-                clickHandler={resetCamera}
-            />
+            {homeViewButton}
         </div>
     );
+
+    const renderControls = minimalControls
+        ? minimalEmbeddedControls
+        : fullControls;
+
+    return renderControls;
 };
 export default CameraControls;

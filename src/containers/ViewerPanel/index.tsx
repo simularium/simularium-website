@@ -13,6 +13,7 @@ import { AgentData } from "@aics/simularium-viewer/type-declarations/simularium/
 import { connect } from "react-redux";
 import { Modal } from "antd";
 import Bowser from "bowser";
+import classNames from "classnames";
 
 import { State } from "../../state/types";
 import selectionStateBranch from "../../state/selection";
@@ -45,9 +46,15 @@ import PlaybackControls from "../../components/PlaybackControls";
 import RecordMoviesComponent from "../../components/RecordMoviesComponent";
 import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
+import ViewportButton from "../../components/ViewportButton";
+import { FullScreen } from "../../components/Icons";
 import { EMBED_PATHNAME, TUTORIAL_PATHNAME } from "../../routes";
 import ErrorNotification from "../../components/ErrorNotification";
-import { MOBILE_CUTOFF } from "../../constants";
+import {
+    EMBEDDED_STANDARD_CONTROLS_MINIMUM_HEIGHT,
+    EMBEDDED_STANDARD_CONTROLS_MINIMUM_WIDTH,
+    MOBILE_CUTOFF,
+} from "../../constants";
 import { hasUrlParamsSettings } from "../../util";
 import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
 
@@ -100,6 +107,8 @@ interface ViewerPanelProps {
     receiveConvertedFile: ActionCreator<ReceiveAction>;
     conversionProcessingData: ConversionProcessingData;
     setSelectedAgentMetadata: ActionCreator<SetSelectedAgentMetadataAction>;
+    setEmbedFullscreen: ActionCreator<ToggleAction>;
+    embedFullscreen: boolean;
 }
 
 interface ViewerPanelState {
@@ -108,6 +117,8 @@ interface ViewerPanelState {
     height: number;
     width: number;
     movieURL: string;
+    belowControlHeightBreakPoint: boolean;
+    belowControlWidthBreakpoint: boolean;
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -133,6 +144,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             height: 0,
             width: 0,
             movieURL: "",
+            belowControlHeightBreakPoint: false,
+            belowControlWidthBreakpoint: false,
         };
     }
 
@@ -176,7 +189,11 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     "The Simularium Viewer does not support small screens at this time. Please use a larger screen for the best experience.",
             });
         }
-
+        this.updateBreakpoints();
+        document.addEventListener(
+            "fullscreenchange",
+            this.handleFullscreenChange
+        );
         const current = this.centerContent.current;
         if (current) {
             window.addEventListener("resize", () => this.resize(current));
@@ -216,6 +233,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 this.resize(current);
             }, 200);
         }
+    }
+
+    public componentWillUnmount(): void {
+        document.removeEventListener(
+            "fullscreenchange",
+            this.handleFullscreenChange
+        );
     }
 
     public playForwardOne() {
@@ -430,6 +454,40 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
     };
 
+    private updateBreakpoints = () => {
+        this.setState({
+            belowControlHeightBreakPoint:
+                window.innerHeight <= EMBEDDED_STANDARD_CONTROLS_MINIMUM_HEIGHT,
+            belowControlWidthBreakpoint:
+                window.innerWidth <= EMBEDDED_STANDARD_CONTROLS_MINIMUM_WIDTH,
+        });
+    };
+
+    private handleFullscreenChange = () => {
+        const { setEmbedFullscreen } = this.props;
+        setEmbedFullscreen(!!document.fullscreenElement);
+        const current = this.centerContent.current;
+        if (current) {
+            setTimeout(() => {
+                this.resize(current);
+                this.updateBreakpoints();
+            }, 100);
+        }
+    };
+
+    private toggleFullscreen = () => {
+        const { embedFullscreen } = this.props;
+        if (embedFullscreen) {
+            document.exitFullscreen();
+        } else {
+            document.documentElement.requestFullscreen().catch((err) => {
+                console.error(
+                    `Error attempting to enable fullscreen: ${err.message}`
+                );
+            });
+        }
+    };
+
     public render(): JSX.Element {
         const {
             time,
@@ -484,7 +542,14 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     onFollowObjectChanged={this.onSelectedAgentChange}
                 />
                 {firstFrameTime !== lastFrameTime && (
-                    <div className={styles.bottomControlsContainer}>
+                    <div
+                        className={classNames(
+                            styles.bottomControlsContainer,
+                            this.state.belowControlWidthBreakpoint
+                                ? styles.minimalControls
+                                : styles.standardControls
+                        )}
+                    >
                         <PlaybackControls
                             playHandler={this.startPlay}
                             time={time}
@@ -502,28 +567,52 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                             lastFrameTime={lastFrameTime}
                             loading={isBuffering}
                             isEmpty={status === ViewerStatus.Empty}
-                        />
-                        <RecordMoviesComponent
-                            movieUrl={this.state.movieURL}
-                            movieTitle={movieTitle}
-                            resetAfterMovieRecording={
-                                this.resetAfterMovieRecording
+                            minimalControls={
+                                this.state.belowControlWidthBreakpoint
                             }
-                            startRecording={simulariumController.startRecording}
-                            stopRecording={simulariumController.stopRecording}
+                            simulariumController={simulariumController}
                         />
+                        {!this.state.belowControlWidthBreakpoint && (
+                            <RecordMoviesComponent
+                                movieUrl={this.state.movieURL}
+                                movieTitle={movieTitle}
+                                resetAfterMovieRecording={
+                                    this.resetAfterMovieRecording
+                                }
+                                startRecording={
+                                    simulariumController.startRecording
+                                }
+                                stopRecording={
+                                    simulariumController.stopRecording
+                                }
+                            />
+                        )}
+                        {location.pathname === EMBED_PATHNAME && (
+                            <ViewportButton
+                                tooltipText="Fullscreen"
+                                tooltipPlacement="top"
+                                icon={FullScreen}
+                                clickHandler={this.toggleFullscreen}
+                            />
+                        )}
                     </div>
                 )}
-
-                <ScaleBar label={scaleBarLabel} />
-                <CameraControls
-                    resetCamera={simulariumController.resetCamera}
-                    zoomIn={simulariumController.zoomIn}
-                    zoomOut={simulariumController.zoomOut}
-                    setPanningMode={simulariumController.setPanningMode}
-                    setFocusMode={simulariumController.setFocusMode}
-                    setCameraType={simulariumController.setCameraType}
-                />
+                {!this.state.belowControlWidthBreakpoint && (
+                    <>
+                        <ScaleBar label={scaleBarLabel} />
+                        <CameraControls
+                            resetCamera={simulariumController.resetCamera}
+                            zoomIn={simulariumController.zoomIn}
+                            zoomOut={simulariumController.zoomOut}
+                            setPanningMode={simulariumController.setPanningMode}
+                            setFocusMode={simulariumController.setFocusMode}
+                            setCameraType={simulariumController.setCameraType}
+                            minimalControls={
+                                this.state.belowControlHeightBreakPoint
+                            }
+                        />
+                    </>
+                )}
             </div>
         );
     }
@@ -560,6 +649,7 @@ function mapStateToProps(state: State) {
             trajectoryStateBranch.selectors.getConversionStatus(state),
         conversionProcessingData:
             trajectoryStateBranch.selectors.getConversionProcessingData(state),
+        embedFullscreen: viewerStateBranch.selectors.getEmbedFullscreen(state),
     };
 }
 
@@ -582,6 +672,7 @@ const dispatchToPropsMap = {
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
     setSelectedAgentMetadata:
         selectionStateBranch.actions.setSelectedAgentMetadata,
+    setEmbedFullscreen: viewerStateBranch.actions.setEmbedFullscreen,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);
