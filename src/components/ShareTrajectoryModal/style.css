@@ -52,7 +52,7 @@
 
 .settings-button {
     border: none;
-    background-color: (var(--light-theme-bg));
+    background-color: var(--light-theme-bg);
     font-size: 16px;
     cursor: pointer;
 }
@@ -70,8 +70,6 @@
     align-items: center;
     display: flex;
     gap: 8px;
-    font-size: 16px;
-    font-weight: 400;
 }
 
 .number-inputs {

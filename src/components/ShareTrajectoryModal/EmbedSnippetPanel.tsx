@@ -84,7 +84,7 @@ const EmbedSnippetPanel = ({ startTime }: EmbedSnippetPanelProps) => {
                                         handleChangeHeight(e.target.value);
                                     }}
                                 />
-                                <p> x </p>
+                                <span> x </span>
                                 <Input
                                     value={width}
                                     className={styles.numberInputs}
@@ -92,8 +92,8 @@ const EmbedSnippetPanel = ({ startTime }: EmbedSnippetPanelProps) => {
                                         handleChangeWidth(e.target.value);
                                     }}
                                 />
-                                <p> pixels </p>
-                                <div className={styles.constrainProportions}>
+                                <label> pixels </label>
+                                <label className={styles.constrainProportions}>
                                     <Checkbox
                                         onChange={() => {
                                             setConstrainProportions(
@@ -101,8 +101,8 @@ const EmbedSnippetPanel = ({ startTime }: EmbedSnippetPanelProps) => {
                                             );
                                         }}
                                     ></Checkbox>
-                                    <p>Constrain proportions</p>
-                                </div>
+                                    Constrain proportions
+                                </label>
                             </div>
                         </VerticalFlexbox>
                     </VerticalFlexbox>
