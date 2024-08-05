@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import { Input, Checkbox, Button } from "antd";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import VerticalFlexbox from "../../styles/utils";
@@ -70,8 +71,12 @@ const EmbedSnippetPanel = ({ startTime }: EmbedSnippetPanelProps) => {
                     Show settings {DownArrow}
                 </button>
             </div>
-            {showEmbedSettingsPanel && (
-                <div className={styles.embedSettings}>
+            <div
+                className={classNames(styles.embedSettings, {
+                    [styles.open]: showEmbedSettingsPanel,
+                })}
+            >
+                {showEmbedSettingsPanel && (
                     <VerticalFlexbox gap={4}>
                         <p className={styles.accentText}> Size </p>
                         <VerticalFlexbox gap={24}>
@@ -106,8 +111,8 @@ const EmbedSnippetPanel = ({ startTime }: EmbedSnippetPanelProps) => {
                             </div>
                         </VerticalFlexbox>
                     </VerticalFlexbox>
-                </div>
-            )}
+                )}
+            </div>
             <VerticalFlexbox gap={8} alignItems="end">
                 <Input.TextArea
                     className={styles.embedInput}

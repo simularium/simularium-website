@@ -58,7 +58,13 @@
 }
 
 .embed-settings {
+    transition: height 0.3s;
+    height: 0px;
+}
+
+.embed-settings.open {
     margin-bottom: 10px;
+    height: 56px;
 }
 
 .accent-text {
