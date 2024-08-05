@@ -21,6 +21,7 @@ import VerticalFlexbox from "../../styles/utils";
 
 import styles from "./style.css";
 import EmbedSnippetPanel from "./EmbedSnippetPanel";
+import classNames from "classnames";
 
 interface ShareTrajectoryModalProps {
     trajectoryIsShareable: boolean;
@@ -49,23 +50,13 @@ const ShareTrajectoryModal = ({
 
     const [userEnteredTime, setUserEnteredTime] = React.useState(currentTime);
 
-    const [linkUrl, setLinkUrl] = React.useState(
-        editUrlParams(
-            window.location.href,
-            currentTime.toString(),
-            URL_PARAM_KEY_TIME
-        )
+    const startTime =
+        startTimeToUse === TimeToUse.BEGINNING ? 0 : userEnteredTime;
+    const linkUrl = editUrlParams(
+        window.location.href,
+        startTime.toString(),
+        URL_PARAM_KEY_TIME
     );
-    // const handleAllowTimeInput = (): void => {
-    //     const timeValue = userEnteredTime ? lastEnteredNumber : currentTime;
-    //     setLinkUrl(
-    //         editUrlParams(
-    //             window.location.href,
-    //             timeValue.toString(),
-    //             URL_PARAM_KEY_TIME
-    //         )
-    //     );
-    // };
 
     const handleTimeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputAsNumber = parseFloat(e.target.value);
@@ -78,6 +69,7 @@ const ShareTrajectoryModal = ({
             inputAsNumber + displayTimes.roundedTimeStep >=
             displayTimes.roundedLastFrameTime
         ) {
+            // set time to last frame time
             timeValue =
                 displayTimes.roundedLastFrameTime -
                 displayTimes.roundedTimeStep;
@@ -109,10 +101,16 @@ const ShareTrajectoryModal = ({
                         <Radio value={TimeToUse.USER_ENTERED}>
                             Start at{" "}
                             <Input
-                                className={styles.timeInput}
-                                // disabled={userEnteredTime}
+                                className={classNames(styles.timeInput, {
+                                    [styles.disabled]:
+                                        startTimeToUse === TimeToUse.BEGINNING,
+                                })}
                                 defaultValue={currentTime}
                                 onChange={handleTimeInput}
+                                value={userEnteredTime}
+                                onClick={() => {
+                                    setStartTimeToUse(TimeToUse.USER_ENTERED);
+                                }}
                             />
                             <div>
                                 /{displayTimes.roundedLastFrameTime}
@@ -174,7 +172,7 @@ const ShareTrajectoryModal = ({
             content: (
                 <VerticalFlexbox gap={30} className={styles.shareContainer}>
                     {UrlLinkPanel}
-                    <EmbedSnippetPanel />
+                    <EmbedSnippetPanel startTime={startTime} />
                 </VerticalFlexbox>
             ),
             footer: (

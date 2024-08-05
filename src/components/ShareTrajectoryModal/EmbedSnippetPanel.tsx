@@ -12,7 +12,11 @@ const DEFAULT_HEIGHT = 480;
 const MAX_WIDTH = 3840;
 const MAX_HEIGHT = 2160;
 
-const EmbedSnippetPanel = () => {
+interface EmbedSnippetPanelProps {
+    startTime: number;
+}
+
+const EmbedSnippetPanel = ({ startTime }: EmbedSnippetPanelProps) => {
     const trajectory = getUrlParamValue(
         window.location.href,
         URL_PARAM_KEY_FILE_NAME
@@ -26,7 +30,7 @@ const EmbedSnippetPanel = () => {
     const [showEmbedSettingsPanel, setShowEmbedSettingsPanel] =
         React.useState(false);
 
-    const url = `https://simularium.allencell.org/embed?trajFileName=${trajectory}&t=0`;
+    const url = `https://simularium.allencell.org/embed?trajFileName=${trajectory}&t=${startTime}`;
     const embedSnippet = `<iframe height="${width}" width="${height}" src="${url}" title="Simularium" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
     const inputIsValid = (input: string) => {
         return !Number.isNaN(parseInt(input));

@@ -25,6 +25,11 @@
     width: 64px;
 }
 
+.time-input.disabled {
+    color: var(--medium-grey);
+    background-color: var(--light-purple);
+}
+
 .url-input-container {
     display: flex;
     gap: 6px;
