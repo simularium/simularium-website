@@ -17,6 +17,7 @@ import {
     formatFloatForDisplay,
     copyToClipboard,
     getUrlParamValue,
+    roundToTimeStepPrecision,
 } from "../";
 import {
     getFileIdFromUrl,
@@ -512,6 +513,23 @@ describe("User Url handling", () => {
             const param = "param 1";
             const result = getUrlParamValue(url, param);
             expect(result).toBe("value 1");
+        });
+    });
+    describe("roundToTimeStepPrecision", () => {
+        it("should round the input to the precision of the timestep", () => {
+            const input = 1.23456789;
+            const timestep = 0.1;
+            const result = roundToTimeStepPrecision(input, timestep);
+            expect(result).toBe(1.2);
+            expect(result.toString().split(".")[1].length).toEqual(
+                timestep.toString().split(".")[1].length
+            );
+        });
+        it("will return no decimal places if the timestep is an integer", () => {
+            const input = 1.23456789;
+            const timestep = 1;
+            const result = roundToTimeStepPrecision(input, timestep);
+            expect(result).toBe(1);
         });
     });
 });
