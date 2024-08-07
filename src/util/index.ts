@@ -135,3 +135,12 @@ export const getUrlParamValue = (url: string, param: string) => {
     const params = new URLSearchParams(urlObj.search);
     return params.get(param);
 };
+
+export const roundToTimeStepPrecision = (
+    input: number,
+    timestep: number
+): number => {
+    const precision = (timestep.toString().split(".")[1] || "").length;
+    const multiplier = Math.pow(10, precision);
+    return Math.round(input * multiplier) / multiplier;
+};

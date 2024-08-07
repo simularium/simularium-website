@@ -25,6 +25,11 @@
     width: 64px;
 }
 
+.time-input.disabled {
+    color: var(--medium-grey);
+    background-color: var(--light-purple);
+}
+
 .url-input-container {
     display: flex;
     gap: 6px;
@@ -47,13 +52,19 @@
 
 .settings-button {
     border: none;
-    background-color: (var(--light-theme-bg));
+    background-color: var(--light-theme-bg);
     font-size: 16px;
     cursor: pointer;
 }
 
 .embed-settings {
+    transition: height 0.3s;
+    height: 0px;
+}
+
+.embed-settings.open {
     margin-bottom: 10px;
+    height: 56px;
 }
 
 .accent-text {
@@ -65,8 +76,6 @@
     align-items: center;
     display: flex;
     gap: 8px;
-    font-size: 16px;
-    font-weight: 400;
 }
 
 .number-inputs {
