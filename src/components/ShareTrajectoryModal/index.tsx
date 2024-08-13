@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Button, Input, Radio, RadioChangeEvent, Space } from "antd";
+import classNames from "classnames";
 
 import { State } from "../../state/types";
 import { TimeUnits } from "../../state/trajectory/types";
@@ -16,11 +17,10 @@ import {
     editUrlParams,
     roundToTimeStepPrecision,
 } from "../../util";
-import VerticalFlexbox from "../../styles/utils";
+import VerticalFlexbox from "../VerticalFlexbox";
+import EmbedSnippetPanel from "./EmbedSnippetPanel";
 
 import styles from "./style.css";
-import EmbedSnippetPanel from "./EmbedSnippetPanel";
-import classNames from "classnames";
 
 interface ShareTrajectoryModalProps {
     trajectoryIsShareable: boolean;

@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import { Input, Checkbox, Button } from "antd";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
-import VerticalFlexbox from "../../styles/utils";
+import VerticalFlexbox from "../VerticalFlexbox";
 import { getUrlParamValue, copyToClipboard } from "../../util";
 import { DownArrow } from "../Icons";
 
