@@ -12,7 +12,7 @@ import {
 
 import { LocalSimFile } from "../../state/trajectory/types";
 import { ViewerError, ViewerStatus } from "../../state/viewer/types";
-import { clearBrowserUrlParams } from "../../util";
+import { clearBrowserUrlParams } from "../../util/userUrlHandling";
 
 let numRequests = 0;
 

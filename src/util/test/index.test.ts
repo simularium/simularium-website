@@ -9,14 +9,10 @@ import {
     bindAll,
     convertToSentenceCase,
     roundTimeForDisplay,
-    clearBrowserUrlParams,
     wrapText,
-    hasUrlParamsSettings,
-    editUrlParams,
     getIconGlyphClasses,
     formatFloatForDisplay,
     copyToClipboard,
-    getUrlParamValue,
     roundToTimeStepPrecision,
 } from "../";
 import {
@@ -27,6 +23,10 @@ import {
     isGoogleDriveUrl,
     isOnlineTrajectory,
     urlCheck,
+    hasUrlParamsSettings,
+    editUrlParams,
+    clearBrowserUrlParams,
+    getUrlParamValue,
 } from "../userUrlHandling";
 import { IconGlyphs } from "../../constants/interfaces";
 
