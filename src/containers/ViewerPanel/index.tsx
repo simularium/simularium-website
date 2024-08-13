@@ -9,6 +9,7 @@ import SimulariumViewer, {
     TrajectoryFileInfo,
     TimeData,
 } from "@aics/simularium-viewer";
+import "@aics/simularium-viewer/style/style.css";
 import { AgentData } from "@aics/simularium-viewer/type-declarations/simularium/types";
 import { connect } from "react-redux";
 import { Modal } from "antd";
