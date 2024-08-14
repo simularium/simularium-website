@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
-import { Upload, Select, Divider, Button } from "antd";
+import { Upload, Select, Divider, Button, Input } from "antd";
 import { UploadFile } from "antd/lib/upload";
 import { v4 as uuidv4 } from "uuid";
 import classNames from "classnames";
@@ -17,6 +17,7 @@ import {
     SetConversionEngineAction,
     SetConversionStatusAction,
     CancelConversionAction,
+    SetConversionTitleAction,
 } from "../../state/trajectory/types";
 import { SetErrorAction } from "../../state/viewer/types";
 import {
@@ -36,6 +37,7 @@ import { MAX_CONVERSION_FILE_SIZE } from "../../constants";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
+    setConversionTitle: ActionCreator<SetConversionTitleAction>;
     conversionProcessingData: ConversionProcessingData;
     receiveFileToConvert: ActionCreator<ReceiveFileToConvertAction>;
     setError: ActionCreator<SetErrorAction>;
@@ -66,6 +68,7 @@ const selectOptions = Object.keys(AvailableEngines).map(
 
 const ConversionForm = ({
     setConversionEngine,
+    setConversionTitle,
     conversionProcessingData,
     setError,
     receiveFileToConvert,
@@ -240,6 +243,20 @@ const ConversionForm = ({
                         </button>
                     )}
                 </div>
+                {fileToConvert && (
+                    <>
+                        <p className={styles.optionalTitle}>
+                            Trajectory title (optional)
+                        </p>
+                        <Input
+                            className={styles.titleInput}
+                            placeholder="Start typing..."
+                            onChange={(e) => {
+                                setConversionTitle(e.target.value);
+                            }}
+                        ></Input>
+                    </>
+                )}
                 <Divider className={styles.divider} orientation="right" />
                 <Button className="secondary-button" onClick={cancelConversion}>
                     Cancel
@@ -271,6 +288,7 @@ const dispatchToPropsMap = {
     receiveFileToConvert: trajectoryStateBranch.actions.receiveFileToConvert,
     setError: viewerStateBranch.actions.setError,
     setConversionEngine: trajectoryStateBranch.actions.setConversionEngine,
+    setConversionTitle: trajectoryStateBranch.actions.setConversionTitle,
     initializeConversion: trajectoryStateBranch.actions.initializeConversion,
     convertFile: trajectoryStateBranch.actions.convertFile,
     setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,

@@ -19,6 +19,7 @@ import {
     CONVERT_FILE,
     RECEIVE_CONVERTED_FILE,
     CANCEL_CONVERSION,
+    SET_CONVERSION_TITLE,
 } from "./constants";
 import { AvailableEngines } from "./conversion-data-types";
 import {
@@ -40,6 +41,7 @@ import {
     ConvertFileAction,
     ConversionStatus,
     CancelConversionAction,
+    SetConversionTitleAction,
 } from "./types";
 
 export function receiveTrajectory(
@@ -174,6 +176,13 @@ export function setConversionEngine(
     return {
         payload,
         type: SET_CONVERSION_ENGINE,
+    };
+}
+
+export function setConversionTitle(payload: string): SetConversionTitleAction {
+    return {
+        payload,
+        type: SET_CONVERSION_TITLE,
     };
 }
 

@@ -551,11 +551,12 @@ const convertFileLogic = createLogic({
     ) {
         const { action, getState } = deps;
 
-        const { engineType, fileToConvert, fileName } =
+        const { engineType, fileToConvert, fileName, optionalTitle } =
             getConversionProcessingData(getState());
+        const providedTitle = optionalTitle || fileName;
         const fileContents: Record<string, any> = {
             fileContents: { fileContents: fileToConvert },
-            trajectoryTitle: fileName,
+            trajectoryTitle: providedTitle,
         };
         const controller = getSimulariumController(getState());
         const providedFileName = action.payload;

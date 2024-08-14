@@ -1,6 +1,7 @@
 .container {
     position: absolute;
     background-color: var(--light-theme-bg);
+    color: var(--light-theme-color);
     height: calc(100vh - var(--header-height));
     width: 100%;
     z-index: 1000;
@@ -32,13 +33,13 @@
     margin-bottom: 0px;
 }
 
-.selector-box {
+.selector-box, .title-input {
     margin-right: 20px;
     width: 200px;
 }
 
 /* two parent classes needed here to overide specificity of antd classes */
-.upload-container .selector-box :global(.ant-select-selector) {
+.upload-container .selector-box :global(.ant-select-selector), .title-input {
     border-radius: 3px;
     border: 1px solid var(--light-theme-select-border-color);
 }
@@ -77,6 +78,10 @@
 
 .remove-file-icon svg {
     fill: var(--cancel-icon-color);
+}
+
+.optional-title {
+    margin-top: 22px;
 }
 
 .divider {
