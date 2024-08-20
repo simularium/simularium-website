@@ -20,8 +20,10 @@ import {
     URL_PARAM_KEY_FILE_NAME,
     URL_PARAM_KEY_TIME,
 } from "../../constants";
-import { clearBrowserUrlParams } from "../../util";
-import { getUserTrajectoryUrl } from "../../util/userUrlHandling";
+import {
+    getUserTrajectoryUrl,
+    clearBrowserUrlParams,
+} from "../../util/userUrlHandling";
 import { ViewerStatus } from "../viewer/types";
 import {
     changeTime,

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Checkbox, Input } from "antd";
+import { Button, Input, Radio, RadioChangeEvent, Space } from "antd";
 import classNames from "classnames";
 
 import { State } from "../../state/types";
@@ -12,7 +12,10 @@ import CustomModal from "../CustomModal";
 import { Link, Warn } from "../Icons";
 import { URL_PARAM_KEY_TIME } from "../../constants";
 import { ButtonClass } from "../../constants/interfaces";
-import { editUrlParams } from "../../util";
+import { copyToClipboard, roundToTimeStepPrecision } from "../../util";
+import { editUrlParams } from "../../util/userUrlHandling";
+import VerticalFlexbox from "../VerticalFlexbox";
+import EmbedSnippetPanel from "./EmbedSnippetPanel";
 
 import styles from "./style.css";
 
@@ -29,41 +32,29 @@ const ShareTrajectoryModal = ({
     timeUnits,
     displayTimes,
 }: ShareTrajectoryModalProps): JSX.Element => {
-    const currentTime = roundToTimestepPrecision(
+    enum TimeToUse {
+        BEGINNING = "beginning",
+        USER_ENTERED = "user-entered",
+    }
+    const [startTimeToUse, setStartTimeToUse] = React.useState(
+        TimeToUse.BEGINNING
+    );
+    const currentTime = roundToTimeStepPrecision(
         displayTimes.roundedTime,
         displayTimes.roundedTimeStep
     );
 
-    const [allowTimeInput, setAllowTimeInput] = React.useState(true);
-    const [url, setUrl] = React.useState(
-        editUrlParams(
-            window.location.href,
-            currentTime.toString(),
-            URL_PARAM_KEY_TIME
-        )
+    const [userEnteredTime, setUserEnteredTime] = React.useState(currentTime);
+
+    const startTime =
+        startTimeToUse === TimeToUse.BEGINNING ? 0 : userEnteredTime;
+    const linkUrl = editUrlParams(
+        window.location.href,
+        startTime.toString(),
+        URL_PARAM_KEY_TIME
     );
-    const [lastEnteredNumber, setLastEnteredNumber] =
-        React.useState(currentTime);
 
-    const handleAllowUserInput = (): void => {
-        const timeValue = allowTimeInput ? lastEnteredNumber : currentTime;
-        setUrl(
-            editUrlParams(
-                window.location.href,
-                timeValue.toString(),
-                URL_PARAM_KEY_TIME
-            )
-        );
-        setAllowTimeInput((allowTimeInput) => !allowTimeInput);
-    };
-
-    function roundToTimestepPrecision(input: number, timestep: number): number {
-        const precision = (timestep.toString().split(".")[1] || "").length;
-        const multiplier = Math.pow(10, precision);
-        return Math.round(input * multiplier) / multiplier;
-    }
-
-    const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTimeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputAsNumber = parseFloat(e.target.value);
         let timeValue = null;
         if (Number.isNaN(inputAsNumber)) {
@@ -74,37 +65,79 @@ const ShareTrajectoryModal = ({
             inputAsNumber + displayTimes.roundedTimeStep >=
             displayTimes.roundedLastFrameTime
         ) {
+            // set time to last frame time
             timeValue =
                 displayTimes.roundedLastFrameTime -
                 displayTimes.roundedTimeStep;
         } else {
-            timeValue = roundToTimestepPrecision(
+            timeValue = roundToTimeStepPrecision(
                 inputAsNumber,
                 displayTimes.roundedTimeStep
             );
         }
-        setLastEnteredNumber(timeValue);
-        setUrl(
-            editUrlParams(
-                window.location.href,
-                timeValue.toString(),
-                URL_PARAM_KEY_TIME
-            )
-        );
+        setUserEnteredTime(timeValue);
     };
 
-    const copyToClipboard = async (): Promise<void> => {
-        try {
-            await navigator.clipboard.writeText(url);
-        } catch (err) {
-            console.error("Failed to copy text: ", err);
-        }
-    };
+    const UrlLinkPanel: JSX.Element = (
+        <>
+            <VerticalFlexbox gap={2}>
+                <Radio.Group
+                    className={styles.customRadioGroup}
+                    value={startTimeToUse}
+                    onChange={(e: RadioChangeEvent) => {
+                        setStartTimeToUse(e.target.value);
+                    }}
+                >
+                    <Space direction="vertical">
+                        <Radio value={TimeToUse.BEGINNING}>
+                            From beginning
+                        </Radio>
+                        <Radio value={TimeToUse.USER_ENTERED}>
+                            Start at{" "}
+                            <Input
+                                className={classNames(styles.timeInput, {
+                                    [styles.disabled]:
+                                        startTimeToUse === TimeToUse.BEGINNING,
+                                })}
+                                defaultValue={currentTime}
+                                onChange={handleTimeInput}
+                                value={userEnteredTime}
+                                onClick={() => {
+                                    setStartTimeToUse(TimeToUse.USER_ENTERED);
+                                }}
+                            />
+                            <div>
+                                /{displayTimes.roundedLastFrameTime}
+                                {timeUnits ? timeUnits.name : null}
+                            </div>{" "}
+                        </Radio>
+                    </Space>
+                </Radio.Group>
+            </VerticalFlexbox>
+            <VerticalFlexbox gap={10}>
+                <h4> Copy link {Link} </h4>
+                <div className={styles.urlInputContainer}>
+                    <Input
+                        className={styles.urlInput}
+                        value={linkUrl}
+                        disabled
+                    />
+                    <Button
+                        className={"primary-button"}
+                        onClick={() => copyToClipboard(linkUrl)}
+                    >
+                        Copy
+                    </Button>
+                </div>
+            </VerticalFlexbox>
+        </>
+    );
 
+    /** Rendering options for local/networked files */
     const modalOptions = {
         errorMessage: {
             content: (
-                <div className={styles.errorContainer}>
+                <div>
                     <h4>{Warn} The current file is stored on your device.</h4>
                     <div>
                         <h5>
@@ -131,42 +164,14 @@ const ShareTrajectoryModal = ({
         },
         isShareable: {
             content: (
-                <div className={styles.shareContainer}>
-                    <div className={styles.urlInputContainer}>
-                        <Input
-                            className={styles.urlInput}
-                            value={url}
-                            disabled
-                        />
-                        <Button
-                            className={classNames(
-                                "primary-button",
-                                styles.copyButton
-                            )}
-                            onClick={copyToClipboard}
-                        >
-                            Copy {Link}
-                        </Button>
-                    </div>
-                    <div className={styles.timeInputContainer}>
-                        <Checkbox onChange={handleAllowUserInput}></Checkbox>
-                        <p className={styles.timeInputText}>Start at</p>
-                        <Input
-                            className={styles.timeInput}
-                            disabled={allowTimeInput}
-                            defaultValue={currentTime}
-                            onChange={handleUserInput}
-                        />
-                        <div>
-                            /{displayTimes.roundedLastFrameTime}
-                            {timeUnits ? timeUnits.name : null}
-                        </div>
-                    </div>
-                </div>
+                <VerticalFlexbox gap={30} className={styles.shareContainer}>
+                    {UrlLinkPanel}
+                    <EmbedSnippetPanel startTime={startTime} />
+                </VerticalFlexbox>
             ),
             footer: (
                 <Button className={ButtonClass.Secondary} onClick={closeModal}>
-                    Close
+                    Done
                 </Button>
             ),
         },
@@ -175,9 +180,7 @@ const ShareTrajectoryModal = ({
     return (
         <CustomModal
             closeHandler={closeModal}
-            className={styles.uploadModal}
             titleText="Share trajectory"
-            divider={true}
             width={trajectoryIsShareable ? 550 : 611}
             footerButtons={
                 trajectoryIsShareable
