@@ -97,12 +97,6 @@ export const copyToClipboard = async (text: string): Promise<void> => {
     }
 };
 
-export const getUrlParamValue = (url: string, param: string) => {
-    const urlObj = new URL(url);
-    const params = new URLSearchParams(urlObj.search);
-    return params.get(param);
-};
-
 export const roundToTimeStepPrecision = (
     input: number,
     timestep: number
