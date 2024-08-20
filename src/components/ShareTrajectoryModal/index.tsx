@@ -12,11 +12,8 @@ import CustomModal from "../CustomModal";
 import { Link, Warn } from "../Icons";
 import { URL_PARAM_KEY_TIME } from "../../constants";
 import { ButtonClass } from "../../constants/interfaces";
-import {
-    copyToClipboard,
-    editUrlParams,
-    roundToTimeStepPrecision,
-} from "../../util";
+import { copyToClipboard, roundToTimeStepPrecision } from "../../util";
+import { editUrlParams } from "../../util/userUrlHandling";
 import VerticalFlexbox from "../VerticalFlexbox";
 import EmbedSnippetPanel from "./EmbedSnippetPanel";
 

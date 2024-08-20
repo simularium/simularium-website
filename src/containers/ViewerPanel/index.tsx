@@ -49,7 +49,7 @@ import ScaleBar from "../../components/ScaleBar";
 import { EMBED_PATHNAME, TUTORIAL_PATHNAME } from "../../routes";
 import ErrorNotification from "../../components/ErrorNotification";
 import { MOBILE_CUTOFF } from "../../constants";
-import { hasUrlParamsSettings } from "../../util";
+import { hasUrlParamsSettings } from "../../util/userUrlHandling";
 import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
 
 import {

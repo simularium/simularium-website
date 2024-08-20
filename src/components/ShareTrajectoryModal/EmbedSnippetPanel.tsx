@@ -3,7 +3,8 @@ import classNames from "classnames";
 import { Input, Checkbox, Button } from "antd";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import VerticalFlexbox from "../VerticalFlexbox";
-import { getUrlParamValue, copyToClipboard } from "../../util";
+import { copyToClipboard } from "../../util";
+import { getUrlParamValue } from "../../util/userUrlHandling";
 import { DownArrow } from "../Icons";
 
 import styles from "./style.css";
