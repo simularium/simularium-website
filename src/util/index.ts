@@ -121,3 +121,26 @@ export const getIconGlyphClasses = (name: IconGlyphs) => {
 export const formatFloatForDisplay = (float: number): string => {
     return parseFloat(float.toFixed(2)).toString();
 };
+
+export const copyToClipboard = async (text: string): Promise<void> => {
+    try {
+        await navigator.clipboard.writeText(text);
+    } catch (err) {
+        console.error("Failed to copy text: ", err);
+    }
+};
+
+export const getUrlParamValue = (url: string, param: string) => {
+    const urlObj = new URL(url);
+    const params = new URLSearchParams(urlObj.search);
+    return params.get(param);
+};
+
+export const roundToTimeStepPrecision = (
+    input: number,
+    timestep: number
+): number => {
+    const precision = (timestep.toString().split(".")[1] || "").length;
+    const multiplier = Math.pow(10, precision);
+    return Math.round(input * multiplier) / multiplier;
+};
