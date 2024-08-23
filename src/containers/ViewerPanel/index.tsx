@@ -40,7 +40,6 @@ import {
     ConversionStatus,
     SetConversionStatusAction,
     SetUrlParamsAction,
-    NetworkedSimFile,
     SetDefaultUIDataAction,
 } from "../../state/trajectory/types";
 import { batchActions } from "../../state/util";
@@ -102,7 +101,6 @@ interface ViewerPanelProps {
     receiveConvertedFile: ActionCreator<ReceiveAction>;
     conversionProcessingData: ConversionProcessingData;
     setSelectedAgentMetadata: ActionCreator<SetSelectedAgentMetadataAction>;
-    simulariumFile: NetworkedSimFile;
     setDefaultUIData: ActionCreator<SetDefaultUIDataAction>;
 }
 
@@ -564,8 +562,6 @@ function mapStateToProps(state: State) {
             trajectoryStateBranch.selectors.getConversionStatus(state),
         conversionProcessingData:
             trajectoryStateBranch.selectors.getConversionProcessingData(state),
-        simulariumFile:
-            trajectoryStateBranch.selectors.getSimulariumFile(state),
     };
 }
 
