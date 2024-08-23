@@ -1,7 +1,5 @@
 import { forOwn, isFunction } from "lodash";
 import React from "react";
-import queryString from "query-string";
-import { URL_PARAM_KEY_TIME } from "../constants";
 import { IconGlyphs } from "../constants/interfaces";
 
 type AnyFunction = () => any;
@@ -76,37 +74,6 @@ export const wrapText = (
     };
 };
 
-export const hasUrlParamsSettings = () => {
-    const urlSettings = [URL_PARAM_KEY_TIME];
-    const parsed = queryString.parse(location.search);
-    for (let index = 0; index < urlSettings.length; index++) {
-        const paramName = urlSettings[index];
-        if (parsed[paramName] !== undefined) {
-            return true;
-        }
-    }
-    return false;
-};
-
-export const editUrlParams = (
-    url: string,
-    value: string,
-    paramKey: string
-): string => {
-    // this returns a new url as a string, does not change current url shown in browser
-    const currentUrl = new URL(url);
-    const params = new URLSearchParams(currentUrl.search);
-    params.set(paramKey, value);
-    currentUrl.search = params.toString();
-    return currentUrl.toString();
-};
-
-export const clearBrowserUrlParams = () => {
-    // Removes the query string from the current URL shown in the browser
-    // ex) https://mysite.com/path?city=seattle -> https://mysite.com/path
-    history.replaceState({}, "", `${location.origin}${location.pathname}`);
-};
-
 export const roundTimeForDisplay = (time: number): number => {
     if (time === 0) {
         return 0;
@@ -120,4 +87,21 @@ export const getIconGlyphClasses = (name: IconGlyphs) => {
 
 export const formatFloatForDisplay = (float: number): string => {
     return parseFloat(float.toFixed(2)).toString();
+};
+
+export const copyToClipboard = async (text: string): Promise<void> => {
+    try {
+        await navigator.clipboard.writeText(text);
+    } catch (err) {
+        console.error("Failed to copy text: ", err);
+    }
+};
+
+export const roundToTimeStepPrecision = (
+    input: number,
+    timestep: number
+): number => {
+    const precision = (timestep.toString().split(".")[1] || "").length;
+    const multiplier = Math.pow(10, precision);
+    return Math.round(input * multiplier) / multiplier;
 };

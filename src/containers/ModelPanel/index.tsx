@@ -6,7 +6,6 @@ import { ColorChange, SimulariumController } from "@aics/simularium-viewer";
 import { State } from "../../state/types";
 import { getSimulariumController } from "../../state/simularium/selectors";
 import { getStatus } from "../../state/viewer/selectors";
-import { ViewerStatus } from "../../state/viewer/types";
 import {
     RequestNetworkFileAction,
     ColorSettings,
@@ -23,14 +22,6 @@ import {
     getDefaultUISettingsApplied,
 } from "../../state/trajectory/selectors";
 import {
-    ChangeAgentsRenderingStateAction,
-    SetVisibleAction,
-    AgentRenderingCheckboxMap,
-    SetRecentColorsAction,
-    ResetAction,
-    StoreUIDataInBrowserAction,
-} from "../../state/selection/types";
-import {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
     setAgentsVisible,
@@ -46,19 +37,15 @@ import {
 } from "../../state/selection/selectors";
 
 import CheckBoxTree, { AgentDisplayNode } from "../../components/AgentTree";
-import SideBarContents from "../../components/SideBarContents";
-import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFileFailedText";
-import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
-import NoTrajectoriesText from "../../components/NoTrajectoriesText";
-import NavButton from "../../components/NavButton";
-import { ButtonClass } from "../../constants/interfaces";
-
-import { AgentMetadata } from "../../constants/interfaces";
 import {
     getSelectAllVisibilityMap,
     getSelectNoneVisibilityMap,
     getIsSharedCheckboxIndeterminate,
 } from "./selectors";
+import NoTrajectoriesText from "../../components/NoTrajectoriesText";
+import { ViewerStatus } from "../../state/viewer/types";
+import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFileFailedText";
+import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
 
 import styles from "./style.css";
 

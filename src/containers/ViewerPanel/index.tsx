@@ -9,6 +9,7 @@ import SimulariumViewer, {
     TrajectoryFileInfo,
     TimeData,
 } from "@aics/simularium-viewer";
+import "@aics/simularium-viewer/style/style.css";
 import { AgentData } from "@aics/simularium-viewer/type-declarations/simularium/types";
 import { connect } from "react-redux";
 import { Modal } from "antd";
@@ -50,7 +51,7 @@ import ScaleBar from "../../components/ScaleBar";
 import { EMBED_PATHNAME, TUTORIAL_PATHNAME } from "../../routes";
 import ErrorNotification from "../../components/ErrorNotification";
 import { MOBILE_CUTOFF } from "../../constants";
-import { hasUrlParamsSettings } from "../../util";
+import { hasUrlParamsSettings } from "../../util/userUrlHandling";
 import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
 
 import {

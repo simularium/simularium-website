@@ -1,13 +1,32 @@
-.error-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.custom-radio-group
+    :global(.ant-radio-checked)
+    :global(.ant-radio-inner)::after {
+    background-color: var(--light-theme-modal-color);
 }
 
-.share-container {
+.custom-radio-group :global(.ant-radio-inner) {
+    background-color: var(--light-theme-white-bg);
+}
+
+.custom-radio-group :global(.ant-radio-checked) :global(.ant-radio-inner) {
+    border-color: var(--light-theme-modal-color);
+}
+
+.custom-radio-group :global(.ant-radio-wrapper) span {
+    align-items: center;
     display: flex;
-    flex-direction: column;
-    gap: 16px;
+    gap: 7px;
+    font-size: 16px;
+}
+
+.time-input {
+    text-align: right;
+    width: 64px;
+}
+
+.time-input.disabled {
+    color: var(--medium-grey);
+    background-color: var(--light-purple);
 }
 
 .url-input-container {
@@ -25,28 +44,60 @@
     width: 395px;
 }
 
-.copy-button {
+.embed-header {
     display: flex;
-    align-items: center;
-    gap: 6px;
+    justify-content: space-between;
 }
 
-.copy-button span:global(.anticon) {
-    margin: 0px;
-    padding-top: 2px;
+.settings-button {
+    border: none;
+    background-color: var(--light-theme-bg);
+    font-size: 16px;
+    cursor: pointer;
 }
 
-.time-input-container {
+.embed-settings {
+    transition: height 0.3s;
+    height: 0px;
+}
+
+.embed-settings.open {
+    margin-bottom: 10px;
+    height: 56px;
+}
+
+.accent-text {
+    font-weight: 600;
+}
+
+.proportion-settings {
     align-items: center;
     display: flex;
-    gap: 7px;
+    gap: 8px;
 }
 
-.time-input {
+.number-inputs {
     text-align: right;
     width: 64px;
 }
 
-.time-input-text {
+.constrain-proportions {
+    align-items: center;
+    display: flex;
+    gap: 7px;
+    padding-left: 10px;
+}
+
+.embed-input[disabled]:global(.ant-input) {
+    height: 98px;
+    color: var(--light-theme-modal-input-color);
+    background-color: var(--light-theme-modal-input-bg);
+    cursor: auto;
+    width: 502px;
+    scrollbar-width: thin;
+}
+
+.share-container h4 {
+    font-size: 19px;
     margin: 0px;
 }
