@@ -24,8 +24,6 @@ const applyUserSelectedColorsLogic = createLogic({
         const uiData: UIDisplayData = getCurrentUIData(getState()); // gets current UIDD from redux
         const colorChange = action.payload;
         const newUiData = uiData.map((agent) => {
-            // apply payload color change to make new UIDD
-            // color sessions to do: make this a util?
             const newAgent = { ...agent };
             if (agent.name === colorChange.agent.name) {
                 if (colorChange.agent.tags.includes("")) {

@@ -84,6 +84,7 @@ interface ViewerPanelProps {
     changeTime: ActionCreator<ChangeTimeAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
     receiveTrajectory: ActionCreator<ReceiveAction>;
+    setDefaultUIData: ActionCreator<SetDefaultUIDataAction>;
     selectionStateInfoForViewer: SelectionStateInfo;
     setIsPlaying: ActionCreator<ToggleAction>;
     setIsLooping: ActionCreator<ToggleAction>;
@@ -101,7 +102,6 @@ interface ViewerPanelProps {
     receiveConvertedFile: ActionCreator<ReceiveAction>;
     conversionProcessingData: ConversionProcessingData;
     setSelectedAgentMetadata: ActionCreator<SetSelectedAgentMetadataAction>;
-    setDefaultUIData: ActionCreator<SetDefaultUIDataAction>;
 }
 
 interface ViewerPanelState {
@@ -570,6 +570,7 @@ const dispatchToPropsMap = {
     setAgentsVisible: selectionStateBranch.actions.setAgentsVisible,
     receiveTrajectory: trajectoryStateBranch.actions.receiveTrajectory,
     receiveAgentTypeIds: trajectoryStateBranch.actions.receiveAgentTypeIds,
+    setDefaultUIData: trajectoryStateBranch.actions.setDefaultUIData,
     setStatus: viewerStateBranch.actions.setStatus,
     dragOverViewer: viewerStateBranch.actions.dragOverViewer,
     resetDragOverViewer: viewerStateBranch.actions.resetDragOverViewer,
@@ -582,7 +583,6 @@ const dispatchToPropsMap = {
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
     setSelectedAgentMetadata:
         selectionStateBranch.actions.setSelectedAgentMetadata,
-    setDefaultUIData: trajectoryStateBranch.actions.setDefaultUIData,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);
