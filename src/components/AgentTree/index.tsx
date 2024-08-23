@@ -3,7 +3,6 @@ import { Col, Row, Typography } from "antd";
 import { ActionCreator } from "redux";
 import { CheckboxChangeEvent, CheckboxOptionType } from "antd/lib/checkbox";
 import { map, filter, isEmpty } from "lodash";
-import { ColorChange } from "@aics/simularium-viewer";
 
 import {
     ChangeAgentsRenderingStateAction,
