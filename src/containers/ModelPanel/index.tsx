@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
-import { ColorChange, SimulariumController } from "@aics/simularium-viewer";
+import { SimulariumController } from "@aics/simularium-viewer";
 
 import { State } from "../../state/types";
 import { getSimulariumController } from "../../state/simularium/selectors";
@@ -26,8 +26,8 @@ import {
     highlightAgentsByDisplayKey,
     setAgentsVisible,
     setRecentColors,
-    clearUserSelectedColorsFromStateAndBrowser,
-    storeColorsInLocalStorage,
+    clearUserSelectedColors,
+    applyUserColorSelection,
 } from "../../state/selection/actions";
 import {
     getAgentVisibilityMap,
@@ -56,7 +56,7 @@ import {
     ChangeAgentsRenderingStateAction,
     SetVisibleAction,
     SetRecentColorsAction,
-    StoreUIDataInBrowserAction,
+    ApplyUserColorSelectionAction,
     ResetAction,
 } from "../../state/selection/types";
 
@@ -76,19 +76,19 @@ interface ModelPanelProps {
     recentColors: string[];
     setRecentColors: ActionCreator<SetRecentColorsAction>;
     selectedAgentMetadata: AgentMetadata;
-    storeColorsInLocalStorage: ActionCreator<StoreUIDataInBrowserAction>;
+    applyUserColorSelection: ActionCreator<ApplyUserColorSelectionAction>;
     simulariumController: SimulariumController;
     setCurrentColorSettings: ActionCreator<SetCurrentColorSettingsAction>;
-    clearUserSelectedColorsFromStateAndBrowser: ActionCreator<ResetAction>;
+    clearUserSelectedColors: ActionCreator<ResetAction>;
     defaultUiSettingsApplied: boolean;
 }
 
 const ModelPanel: React.FC<ModelPanelProps> = ({
-    agentVisibilityMap,
     uiDisplayDataTree,
+    agentHighlightMap,
+    agentVisibilityMap,
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
-    agentHighlightMap,
     setAgentsVisible,
     payloadForSelectAll,
     payloadForSelectNone,
@@ -98,8 +98,8 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     changeToNetworkedFile: loadNetworkFile,
     recentColors,
     setRecentColors,
-    clearUserSelectedColorsFromStateAndBrowser,
-    storeColorsInLocalStorage,
+    clearUserSelectedColors,
+    applyUserColorSelection,
     defaultUiSettingsApplied,
     setCurrentColorSettings,
     selectedAgentMetadata,
@@ -116,10 +116,8 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
             payloadForSelectNone={payloadForSelectNone}
             isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
             recentColors={recentColors}
+            applyUserColorSelection={applyUserColorSelection}
             setRecentColors={setRecentColors}
-            changeColor={(colorChange: ColorChange) => {
-                storeColorsInLocalStorage(colorChange);
-            }}
         />
     );
 
@@ -147,7 +145,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
                                 titleText={"Restore color defaults"}
                                 buttonType={ButtonClass.Action}
                                 clickHandler={() => {
-                                    clearUserSelectedColorsFromStateAndBrowser();
+                                    clearUserSelectedColors();
                                     setCurrentColorSettings({
                                         currentColorSettings:
                                             ColorSettings.Default,
@@ -202,8 +200,8 @@ const dispatchToPropsMap = {
     setAgentsVisible,
     setRecentColors,
     setCurrentColorSettings,
-    clearUserSelectedColorsFromStateAndBrowser,
-    storeColorsInLocalStorage,
+    clearUserSelectedColors: clearUserSelectedColors,
+    applyUserColorSelection,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ModelPanel);

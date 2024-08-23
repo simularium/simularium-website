@@ -28,7 +28,7 @@ export const getSelectionStateInfoForViewer = createSelector(
         };
     }
 );
-// session colors to do, update this at all?
+
 export const convertUIDataToSelectionData = (
     uiData: UIDisplayData
 ): AgentRenderingCheckboxMap => {

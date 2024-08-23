@@ -4,7 +4,7 @@ import { UIDisplayData } from "@aics/simularium-viewer";
 import {
     CLEAR_UI_DATA_FROM_BROWSER_AND_STATE,
     GET_UI_DATA_FROM_BROWSER,
-    STORE_UI_DATA_IN_BROWSER,
+    APPLY_USER_COLOR_SELECTION,
 } from "./constants";
 import { ReduxLogicDeps } from "../types";
 import { getCurrentUIData, getSimulariumFile } from "../trajectory/selectors";
@@ -14,8 +14,11 @@ import {
 } from "../trajectory/actions";
 import { ColorSettings } from "../trajectory/types";
 
-// session colors to do: rename or break up this logic
-const storeSessionColorsLogic = createLogic({
+// primary functionality to store and apply user selected colors
+// takes in colorChange payload and generates new UIDisplayData
+// stores that data in local storage and redux
+// and sets the current color settings to user selected
+const applyUserSelectedColorsLogic = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
         const uiData: UIDisplayData = getCurrentUIData(getState()); // gets current UIDD from redux
@@ -53,7 +56,7 @@ const storeSessionColorsLogic = createLogic({
         );
         done();
     },
-    type: STORE_UI_DATA_IN_BROWSER,
+    type: APPLY_USER_COLOR_SELECTION,
 });
 
 const clearSessionColorsLogic = createLogic({
@@ -88,7 +91,7 @@ const applySessionColorsLogic = createLogic({
 });
 
 export default [
-    storeSessionColorsLogic,
+    applyUserSelectedColorsLogic,
     applySessionColorsLogic,
     clearSessionColorsLogic,
 ];

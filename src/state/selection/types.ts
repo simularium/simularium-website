@@ -78,7 +78,7 @@ export interface ApplySessionColorChangeAction {
     type: string;
 }
 
-export interface StoreUIDataInBrowserAction {
+export interface ApplyUserColorSelectionAction {
     payload: ColorChange;
     type: string;
 }

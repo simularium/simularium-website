@@ -10,7 +10,7 @@ import {
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
     SET_RECENT_COLORS,
     SET_SELECTED_AGENT,
-    STORE_UI_DATA_IN_BROWSER,
+    APPLY_USER_COLOR_SELECTION,
     GET_UI_DATA_FROM_BROWSER,
     CLEAR_UI_DATA_FROM_BROWSER_AND_STATE,
 } from "./constants";
@@ -23,7 +23,7 @@ import {
     ResetAction,
     SetRecentColorsAction,
     SetSelectedAgentMetadataAction,
-    StoreUIDataInBrowserAction,
+    ApplyUserColorSelectionAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -100,17 +100,16 @@ export function setSelectedAgentMetadata(
     };
 }
 
-// session colors to do: rename to describe scope of what it does, same for type
-export function storeColorsInLocalStorage(
+export function applyUserColorSelection(
     payload: ColorChange
-): StoreUIDataInBrowserAction {
+): ApplyUserColorSelectionAction {
     return {
         payload,
-        type: STORE_UI_DATA_IN_BROWSER,
+        type: APPLY_USER_COLOR_SELECTION,
     };
 }
 
-export function clearUserSelectedColorsFromStateAndBrowser(): ResetAction {
+export function clearUserSelectedColors(): ResetAction {
     return { type: CLEAR_UI_DATA_FROM_BROWSER_AND_STATE };
 }
 
