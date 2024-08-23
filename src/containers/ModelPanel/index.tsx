@@ -1,10 +1,9 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
-import { SimulariumController } from "@aics/simularium-viewer";
 
 import { State } from "../../state/types";
-import { getSimulariumController } from "../../state/simularium/selectors";
+import { ViewerStatus } from "../../state/viewer/types";
 import { getStatus } from "../../state/viewer/selectors";
 import {
     RequestNetworkFileAction,
@@ -22,6 +21,14 @@ import {
     getDefaultUISettingsApplied,
 } from "../../state/trajectory/selectors";
 import {
+    AgentRenderingCheckboxMap,
+    ChangeAgentsRenderingStateAction,
+    SetVisibleAction,
+    SetRecentColorsAction,
+    ApplyUserColorSelectionAction,
+    ResetAction,
+} from "../../state/selection/types";
+import {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
     setAgentsVisible,
@@ -35,30 +42,20 @@ import {
     getRecentColors,
     getSelectedAgentMetadata,
 } from "../../state/selection/selectors";
-
 import CheckBoxTree, { AgentDisplayNode } from "../../components/AgentTree";
+import NoTrajectoriesText from "../../components/NoTrajectoriesText";
+import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFileFailedText";
+import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
+import NavButton from "../../components/NavButton";
+import SideBarContents from "../../components/SideBarContents";
+import { AgentMetadata, ButtonClass } from "../../constants/interfaces";
 import {
     getSelectAllVisibilityMap,
     getSelectNoneVisibilityMap,
     getIsSharedCheckboxIndeterminate,
 } from "./selectors";
-import NoTrajectoriesText from "../../components/NoTrajectoriesText";
-import { ViewerStatus } from "../../state/viewer/types";
-import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFileFailedText";
-import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
 
 import styles from "./style.css";
-import NavButton from "../../components/NavButton";
-import SideBarContents from "../../components/SideBarContents";
-import { AgentMetadata, ButtonClass } from "../../constants/interfaces";
-import {
-    AgentRenderingCheckboxMap,
-    ChangeAgentsRenderingStateAction,
-    SetVisibleAction,
-    SetRecentColorsAction,
-    ApplyUserColorSelectionAction,
-    ResetAction,
-} from "../../state/selection/types";
 
 interface ModelPanelProps {
     uiDisplayDataTree: AgentDisplayNode[];
@@ -77,7 +74,6 @@ interface ModelPanelProps {
     setRecentColors: ActionCreator<SetRecentColorsAction>;
     selectedAgentMetadata: AgentMetadata;
     applyUserColorSelection: ActionCreator<ApplyUserColorSelectionAction>;
-    simulariumController: SimulariumController;
     setCurrentColorSettings: ActionCreator<SetCurrentColorSettingsAction>;
     clearUserSelectedColors: ActionCreator<ResetAction>;
     defaultUiSettingsApplied: boolean;
@@ -187,7 +183,6 @@ function mapStateToProps(state: State) {
         isNetworkedFile: getIsNetworkedFile(state),
         recentColors: getRecentColors(state),
         selectedAgentMetadata: getSelectedAgentMetadata(state),
-        simulariumController: getSimulariumController(state),
         defaultUiSettingsApplied: getDefaultUISettingsApplied(state),
     };
 }
@@ -200,7 +195,7 @@ const dispatchToPropsMap = {
     setAgentsVisible,
     setRecentColors,
     setCurrentColorSettings,
-    clearUserSelectedColors: clearUserSelectedColors,
+    clearUserSelectedColors,
     applyUserColorSelection,
 };
 
