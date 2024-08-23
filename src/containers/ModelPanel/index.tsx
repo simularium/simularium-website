@@ -1,7 +1,6 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
-import { ColorChange } from "@aics/simularium-viewer";
 
 import SideBarContents from "../../components/SideBarContents";
 import {
@@ -98,9 +97,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
             payloadForSelectNone={payloadForSelectNone}
             isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
             recentColors={recentColors}
-            changeColor={(colorChange: ColorChange) => {
-                setColorChange(colorChange);
-            }}
+            setColorChange={setColorChange}
             setRecentColors={setRecentColors}
         />
     );
