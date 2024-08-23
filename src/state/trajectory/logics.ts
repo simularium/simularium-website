@@ -20,6 +20,7 @@ import {
     URL_PARAM_KEY_FILE_NAME,
     URL_PARAM_KEY_TIME,
 } from "../../constants";
+import { compareAgentTrees } from "../../util";
 import {
     getUserTrajectoryUrl,
     clearBrowserUrlParams,
@@ -41,6 +42,7 @@ import {
     getConversionProcessingData,
     getConversionStatus,
     getSimulariumFile,
+    getUserSelectedUIData,
 } from "./selectors";
 import {
     changeToLocalSimulariumFile,
@@ -50,6 +52,8 @@ import {
     clearSimulariumFile,
     setConversionStatus,
     clearUIDataFromState,
+    setCurrentColorSettings,
+    setUserSelectedUIData,
 } from "./actions";
 import {
     LOAD_LOCAL_FILE_IN_VIEWER,
@@ -64,12 +68,14 @@ import {
     CONVERT_FILE,
     RECEIVE_CONVERTED_FILE,
     CANCEL_CONVERSION,
+    SET_DEFAULT_UI_DATA,
 } from "./constants";
 import {
     ReceiveAction,
     LocalSimFile,
     HealthCheckTimeout,
     ConversionStatus,
+    ColorSettings,
 } from "./types";
 import { initialState } from "./reducer";
 import {
@@ -281,6 +287,13 @@ const loadLocalFile = createLogic({
                     );
                 }
             })
+            /**
+             * for local files we need to retrieve colors here,
+             * where .then chaining ensures that the file name is set
+             * in state so the correct local storage is accessed,
+             * onUIDisplayData can be called too quickly with local files
+             * and the local storage will not be retrieved
+             */
             .then(() => {
                 dispatch(getColorsFromLocalStorage());
             })
@@ -648,6 +661,34 @@ const cancelConversionLogic = createLogic({
     type: CANCEL_CONVERSION,
 });
 
+const receiveDefaultUIDataLogic = createLogic({
+    process(deps: ReduxLogicDeps, dispatch, done) {
+        const { getState, action } = deps;
+        const browserStoredUIData = getUserSelectedUIData(getState());
+        /**
+         * If the conditions below are true, then valid color settings were
+         * retrieved from browser storage before the default ui data arrived
+         * and those settings should be applied.
+         * If false then userSelected data either doesn't exist, hasn't arrived yet, or
+         * is invalid: set to empty array for now.
+         */
+        if (
+            browserStoredUIData.length > 0 &&
+            compareAgentTrees(browserStoredUIData, action.payload)
+        ) {
+            dispatch(
+                setCurrentColorSettings({
+                    currentColorSettings: ColorSettings.UserSelected,
+                })
+            );
+        } else {
+            dispatch(setUserSelectedUIData([]));
+        }
+        done();
+    },
+    type: SET_DEFAULT_UI_DATA,
+});
+
 export default [
     requestPlotDataLogic,
     loadLocalFile,
@@ -660,4 +701,5 @@ export default [
     convertFileLogic,
     receiveConvertedFileLogic,
     cancelConversionLogic,
+    receiveDefaultUIDataLogic,
 ];

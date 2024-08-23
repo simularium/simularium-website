@@ -1,27 +1,34 @@
 import { createLogic } from "redux-logic";
 import { UIDisplayData } from "@aics/simularium-viewer";
 
-import {
-    CLEAR_UI_DATA_FROM_BROWSER_AND_STATE,
-    GET_UI_DATA_FROM_BROWSER,
-    APPLY_USER_COLOR_SELECTION,
-} from "./constants";
+import { compareAgentTrees } from "../../util";
 import { ReduxLogicDeps } from "../types";
-import { getCurrentUIData, getSimulariumFile } from "../trajectory/selectors";
+import {
+    getCurrentUIData,
+    getDefaultUIData,
+    getSimulariumFile,
+} from "../trajectory/selectors";
 import {
     setCurrentColorSettings,
     setUserSelectedUIData,
 } from "../trajectory/actions";
 import { ColorSettings } from "../trajectory/types";
+import {
+    CLEAR_UI_DATA_FROM_BROWSER_AND_STATE,
+    GET_UI_DATA_FROM_BROWSER,
+    APPLY_USER_COLOR_SELECTION,
+} from "./constants";
 
-// primary functionality to store and apply user selected colors
-// takes in colorChange payload and generates new UIDisplayData
-// stores that data in local storage and redux
-// and sets the current color settings to user selected
+/**
+ * In response to user selections, this logic
+ * takes in a colorChange payload and generates new UIDisplayData
+ * stores that data in local storage and redux
+ * and sets the current color settings to user selected
+ */
 const applyUserSelectedColorsLogic = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
-        const uiData: UIDisplayData = getCurrentUIData(getState()); // gets current UIDD from redux
+        const uiData: UIDisplayData = getCurrentUIData(getState());
         const colorChange = action.payload;
         const newUiData = uiData.map((agent) => {
             const newAgent = { ...agent };
@@ -44,8 +51,11 @@ const applyUserSelectedColorsLogic = createLogic({
             }
             return newAgent;
         });
+        // store color changes in local browser storage
         const fileKey = getSimulariumFile(getState()).name;
         localStorage.setItem(fileKey, JSON.stringify(newUiData));
+        // update redux state to store new color changes
+        // and apply them via currentColorSettings
         dispatch(setUserSelectedUIData(newUiData));
         dispatch(
             setCurrentColorSettings({
@@ -73,9 +83,29 @@ const applySessionColorsLogic = createLogic({
         const { getState } = deps;
 
         const simulariumFile = getSimulariumFile(getState());
+        const defaultUIData = getDefaultUIData(getState());
         const storedColorChanges = localStorage.getItem(simulariumFile.name);
         if (storedColorChanges !== "undefined" && storedColorChanges !== null) {
             const uiData = JSON.parse(storedColorChanges);
+            // if default UI data hasn't been received from the viewer
+            // store these settings but dont apply them until a matching
+            // agent structure is verified
+            if (defaultUIData.length === 0) {
+                dispatch(setUserSelectedUIData(uiData));
+                done();
+                return;
+            }
+            const agentStructuresMatch = compareAgentTrees(
+                uiData,
+                defaultUIData
+            );
+            if (!agentStructuresMatch) {
+                console.warn(
+                    "Agent structures do not match, not applying color settings from browser storage"
+                );
+                done();
+                return;
+            }
             dispatch(setUserSelectedUIData(uiData));
             dispatch(
                 setCurrentColorSettings({
