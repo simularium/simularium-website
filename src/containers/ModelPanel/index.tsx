@@ -48,6 +48,7 @@ import {
 } from "./selectors";
 
 import styles from "./style.css";
+
 interface ModelPanelProps {
     uiDisplayDataTree: AgentDisplayNode[];
     agentHighlightMap: AgentRenderingCheckboxMap;
@@ -81,9 +82,9 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     isNetworkedFile,
     changeToNetworkedFile: loadNetworkFile,
     recentColors,
+    setColorChange,
     setRecentColors,
     selectedAgentMetadata,
-    setColorChange,
 }): JSX.Element => {
     const checkboxTree = (
         <CheckBoxTree
@@ -97,10 +98,10 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
             payloadForSelectNone={payloadForSelectNone}
             isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
             recentColors={recentColors}
-            setRecentColors={setRecentColors}
             changeColor={(colorChange: ColorChange) => {
                 setColorChange(colorChange);
             }}
+            setRecentColors={setRecentColors}
         />
     );
     const contentMap = {

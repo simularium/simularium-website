@@ -66,7 +66,6 @@ export function highlightAgentsByDisplayKey(
 }
 
 export function setColorChange(colorChange: ColorChange): SetColorChangeAction {
-    console.log("firingaction with payload: ", colorChange);
     return {
         payload: colorChange,
         type: SET_COLOR_CHANGES,

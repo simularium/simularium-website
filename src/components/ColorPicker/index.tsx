@@ -17,18 +17,18 @@ interface ColorPickerProps {
     agentName: string;
     tags: string[];
     recentColors: string[];
-    setRecentColors: ActionCreator<SetRecentColorsAction>;
     changeColor: (change: ColorChange) => void;
+    setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 
 const ColorPicker = ({
     agentName,
     tags,
     recentColors,
+    changeColor,
     setRecentColors,
     selectedColor: initialColor,
     childrenHaveDifferentColors,
-    changeColor,
 }: ColorPickerProps): JSX.Element => {
     const [currentColor, setCurrentColor] = useState(initialColor);
     const [debouncedColor] = useDebounce(currentColor, 250);
