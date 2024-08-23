@@ -129,6 +129,30 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
             <NoTypeMappingText />
         ),
     };
+
+    const handleRestorDefaultClick = () => {
+        clearUserSelectedColors();
+        setCurrentColorSettings({
+            currentColorSettings: ColorSettings.Default,
+        });
+    };
+
+    const handleRestoreDefaultMouseEnter = () => {
+        if (!defaultUiSettingsApplied) {
+            setCurrentColorSettings({
+                currentColorSettings: ColorSettings.Default,
+            });
+        }
+    };
+
+    const handleRestoreDefaultMouseLeave = () => {
+        if (!defaultUiSettingsApplied) {
+            setCurrentColorSettings({
+                currentColorSettings: ColorSettings.UserSelected,
+            });
+        }
+    };
+
     return (
         <div className={styles.container}>
             <SideBarContents
@@ -136,31 +160,14 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
                 content={[
                     <div className={styles.container} key="molecules">
                         {contentMap[viewerStatus]}
-                        {!defaultUiSettingsApplied && (
-                            <NavButton
-                                titleText={"Restore color defaults"}
-                                buttonType={ButtonClass.Action}
-                                clickHandler={() => {
-                                    clearUserSelectedColors();
-                                    setCurrentColorSettings({
-                                        currentColorSettings:
-                                            ColorSettings.Default,
-                                    });
-                                }}
-                                onMouseEnter={() => {
-                                    setCurrentColorSettings({
-                                        currentColorSettings:
-                                            ColorSettings.Default,
-                                    });
-                                }}
-                                onMouseLeave={() => {
-                                    setCurrentColorSettings({
-                                        currentColorSettings:
-                                            ColorSettings.UserSelected,
-                                    });
-                                }}
-                            />
-                        )}
+                        <NavButton
+                            titleText={"Restore color defaults"}
+                            buttonType={ButtonClass.Action}
+                            isDisabled={defaultUiSettingsApplied}
+                            clickHandler={handleRestorDefaultClick}
+                            onMouseEnter={handleRestoreDefaultMouseEnter}
+                            onMouseLeave={handleRestoreDefaultMouseLeave}
+                        />
                     </div>,
                     null,
                 ]}
