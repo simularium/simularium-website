@@ -48,6 +48,17 @@ import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFi
 import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
 
 import styles from "./style.css";
+import NavButton from "../../components/NavButton";
+import SideBarContents from "../../components/SideBarContents";
+import { AgentMetadata, ButtonClass } from "../../constants/interfaces";
+import {
+    AgentRenderingCheckboxMap,
+    ChangeAgentsRenderingStateAction,
+    SetVisibleAction,
+    SetRecentColorsAction,
+    StoreUIDataInBrowserAction,
+    ResetAction,
+} from "../../state/selection/types";
 
 interface ModelPanelProps {
     uiDisplayDataTree: AgentDisplayNode[];
