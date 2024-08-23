@@ -87,8 +87,3 @@ export interface SetSelectedAgentMetadataAction {
     payload: AgentMetadata;
     type: string;
 }
-
-export interface SetColorChangeAction {
-    payload: ColorChange;
-    type: string;
-}
