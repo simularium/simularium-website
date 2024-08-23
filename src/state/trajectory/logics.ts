@@ -287,13 +287,6 @@ const loadLocalFile = createLogic({
                     );
                 }
             })
-            /**
-             * for local files we need to retrieve colors here,
-             * where .then chaining ensures that the file name is set
-             * in state so the correct local storage is accessed,
-             * onUIDisplayData can be called too quickly with local files
-             * and the local storage will not be retrieved
-             */
             .then(() => {
                 dispatch(getColorsFromLocalStorage());
             })
