@@ -26,7 +26,6 @@ import {
     setAgentsVisible,
     setColorChange,
     setRecentColors,
-    storeColorsInState,
 } from "../../state/selection/actions";
 import {
     ChangeAgentsRenderingStateAction,
@@ -34,7 +33,6 @@ import {
     SetVisibleAction,
     AgentRenderingCheckboxMap,
     SetRecentColorsAction,
-    StoreColorsInStateAction,
 } from "../../state/selection/types";
 import CheckBoxTree, { AgentDisplayNode } from "../../components/AgentTree";
 import { AgentMetadata } from "../../constants/interfaces";
@@ -67,7 +65,6 @@ interface ModelPanelProps {
     setColorChange: ActionCreator<SetColorChangeAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
     selectedAgentMetadata: AgentMetadata;
-    storeColorsInState: ActionCreator<StoreColorsInStateAction>;
 }
 
 const ModelPanel: React.FC<ModelPanelProps> = ({
@@ -86,7 +83,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     recentColors,
     setRecentColors,
     selectedAgentMetadata,
-    storeColorsInState,
+    setColorChange,
 }): JSX.Element => {
     const checkboxTree = (
         <CheckBoxTree
@@ -102,7 +99,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
             recentColors={recentColors}
             setRecentColors={setRecentColors}
             changeColor={(colorChange: ColorChange) => {
-                storeColorsInState(colorChange);
+                setColorChange(colorChange);
             }}
         />
     );
@@ -154,7 +151,6 @@ const dispatchToPropsMap = {
     setAgentsVisible,
     setColorChange,
     setRecentColors,
-    storeColorsInState,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ModelPanel);

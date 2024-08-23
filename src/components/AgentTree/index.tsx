@@ -45,8 +45,8 @@ interface AgentTreeProps {
     payloadForSelectNone: AgentRenderingCheckboxMap;
     isSharedCheckboxIndeterminate: boolean;
     recentColors: string[];
-    setRecentColors: ActionCreator<SetRecentColorsAction>;
     changeColor: (change: ColorChange) => void;
+    setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 const CHECKBOX_SPAN_NO = 2;
 import styles from "./style.css";
@@ -227,8 +227,8 @@ class AgentTree extends React.Component<AgentTreeProps> {
                 agentName={nodeData.title}
                 tags={this.getAgentTags(nodeData.title)}
                 recentColors={recentColors}
-                setRecentColors={setRecentColors}
                 changeColor={changeColor}
+                setRecentColors={setRecentColors}
             />
         );
     };
@@ -244,8 +244,8 @@ class AgentTree extends React.Component<AgentTreeProps> {
                 agentName={nodeData.title}
                 tags={[value.value as string]}
                 recentColors={recentColors}
-                setRecentColors={setRecentColors}
                 changeColor={changeColor}
+                setRecentColors={setRecentColors}
             />
         );
     };

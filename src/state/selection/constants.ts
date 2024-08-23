@@ -21,6 +21,3 @@ export const RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS = makeSelectConstant(
 export const SET_COLOR_CHANGES = makeSelectConstant("set-color-changes");
 export const SET_RECENT_COLORS = makeSelectConstant("set-recent-colors");
 export const SET_SELECTED_AGENT = makeSelectConstant("set-selected-agent");
-export const STORE_COLORS_IN_STATE = makeSelectConstant(
-    "store-colors-in-state"
-);
