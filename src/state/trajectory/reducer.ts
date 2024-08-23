@@ -208,7 +208,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
         ) => {
             return {
                 ...state,
-                currentColorSettings: action.payload,
+                currentColorSettings: action.payload.currentColorSettings,
             };
         },
     },

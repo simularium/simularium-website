@@ -33,7 +33,7 @@ export const getCurrentUIData = createSelector(
         if (!fileHasBeenParsed) {
             return [];
         }
-        if (colorSetting.currentColorSettings === ColorSettings.UserSelected) {
+        if (colorSetting === ColorSettings.UserSelected) {
             return sessionData;
         }
         return defaultData;
@@ -66,8 +66,10 @@ export const getUiDisplayDataTree = createSelector(
 export const getDefaultUISettingsApplied = createSelector(
     [getUserSelectedUIData, getDefaultUIData],
     (userSelectedUIData, defaultUIData) => {
-        // it doesn't work to check if currentColorSettings is equal to ColorSettings.Default
-        // because currentColorSettings can be used to preview settings, before they are applied
+        /**
+         * we can't simply check if currentColorSettings === ColorSettings.Default
+         * because that state can be used to preview settings before they are applied
+         */
         return (
             userSelectedUIData.length === 0 ||
             isEqual(userSelectedUIData, defaultUIData)

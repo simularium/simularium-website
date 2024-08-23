@@ -1,7 +1,13 @@
 import { initialState } from "../../index";
 import { State } from "../../types";
 
-import { getIsNetworkedFile, getUiDisplayDataTree } from ".";
+import { ColorSettings } from "../types";
+import {
+    getCurrentUIData,
+    getDefaultUISettingsApplied,
+    getIsNetworkedFile,
+    getUiDisplayDataTree,
+} from ".";
 
 describe("trajectory composed selectors", () => {
     describe("getIsNetworkedFile", () => {
@@ -35,6 +41,75 @@ describe("trajectory composed selectors", () => {
                 },
             };
             expect(getIsNetworkedFile(state)).toBe(true);
+        });
+    });
+
+    describe("getCurrentUIData", () => {
+        it("returns empty array if default UI data has not been entered yet", () => {
+            expect(getCurrentUIData(initialState)).toEqual([]);
+        });
+        it("returns userSelectedUIData if colorSetting is equal to ColorSettings.UserSelected", () => {
+            expect(
+                getCurrentUIData({
+                    ...initialState,
+                    trajectory: {
+                        ...initialState.trajectory,
+                        currentColorSettings: ColorSettings.UserSelected,
+                        defaultUIData: [
+                            {
+                                name: "agent1",
+                                displayStates: [],
+                                color: "#bbbbbb",
+                            },
+                        ],
+                        userSelectedUIData: [
+                            {
+                                name: "agent1",
+                                displayStates: [],
+                                color: "#000",
+                            },
+                        ],
+                    },
+                })
+            ).toEqual([
+                {
+                    name: "agent1",
+                    displayStates: [],
+                    color: "#000",
+                },
+            ]);
+        });
+
+        it("returns defaultUIData if colorSetting is euqal to ColorSettings.Default", () => {
+            expect(
+                getCurrentUIData({
+                    ...initialState,
+                    trajectory: {
+                        ...initialState.trajectory,
+                        currentColorSettings: ColorSettings.Default,
+                        defaultUIData: [
+                            {
+                                name: "agent1",
+                                displayStates: [],
+                                color: "#bbbbbb",
+                            },
+                        ],
+                        userSelectedUIData: [
+                            {
+                                name: "agent1",
+                                displayStates: [],
+                                color: "#000",
+                            },
+                        ],
+                    },
+                })
+            ).toEqual([
+                {
+                    name: "agent1",
+                    displayStates: [],
+                    color: "#bbbbbb",
+                },
+            ]);
         });
     });
 
@@ -100,6 +175,72 @@ describe("trajectory composed selectors", () => {
             ];
 
             expect(getUiDisplayDataTree(state)).toStrictEqual(expected);
+        });
+    });
+
+    describe("getDefaultUISettingsApplied", () => {
+        it("returns false if userSelectedUIData contains selections and userSelectedUIData and defaultUIData are not equal", () => {
+            expect(
+                getDefaultUISettingsApplied({
+                    ...initialState,
+                    trajectory: {
+                        defaultUIData: [
+                            {
+                                name: "agent1",
+                                displayStates: [],
+                                color: "#bbbbbb",
+                            },
+                        ],
+                        userSelectedUIData: [
+                            {
+                                name: "agent1",
+                                displayStates: [],
+                                color: "#000",
+                            },
+                        ],
+                    },
+                })
+            ).toBe(false);
+        });
+        it("returns true if userSelectedUIData contains no selections", () => {
+            expect(
+                getDefaultUISettingsApplied({
+                    ...initialState,
+                    trajectory: {
+                        defaultUIData: [
+                            {
+                                name: "agent1",
+                                displayStates: [],
+                                color: "#bbbbbb",
+                            },
+                        ],
+                        userSelectedUIData: [],
+                    },
+                })
+            ).toBe(true);
+        });
+        it("returns true if userSelectedUIData and userSelectedUIData are equal", () => {
+            expect(
+                getDefaultUISettingsApplied({
+                    ...initialState,
+                    trajectory: {
+                        defaultUIData: [
+                            {
+                                name: "agent1",
+                                displayStates: [],
+                                color: "#bbbbbb",
+                            },
+                        ],
+                        userSelectedUIData: [
+                            {
+                                name: "agent1",
+                                displayStates: [],
+                                color: "#bbbbbb",
+                            },
+                        ],
+                    },
+                })
+            ).toBe(true);
         });
     });
 });
