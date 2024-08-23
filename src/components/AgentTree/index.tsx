@@ -6,10 +6,10 @@ import { map, filter, isEmpty } from "lodash";
 
 import {
     ChangeAgentsRenderingStateAction,
+    ApplyUserColorSelectionAction,
     SetRecentColorsAction,
     SetVisibleAction,
     AgentRenderingCheckboxMap,
-    ApplyUserColorSelectionAction,
 } from "../../state/selection/types";
 import SharedCheckbox from "../SharedCheckbox";
 import AgentTreeSubmenu from "../AgentTreeSubmenu";
