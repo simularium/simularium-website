@@ -17,12 +17,16 @@
     display: flex;
     gap: 7px;
     font-size: 16px;
-    font-weight: 400;
 }
 
 .time-input {
     text-align: right;
     width: 64px;
+}
+
+.time-input.disabled {
+    color: var(--medium-grey);
+    background-color: var(--light-purple);
 }
 
 .url-input-container {
@@ -47,17 +51,22 @@
 
 .settings-button {
     border: none;
-    background-color: (var(--light-theme-bg));
+    background-color: var(--light-theme-bg);
     font-size: 16px;
     cursor: pointer;
 }
 
 .embed-settings {
+    transition: height 0.3s;
+    height: 0px;
+}
+
+.embed-settings.open {
     margin-bottom: 10px;
+    height: 56px;
 }
 
 .accent-text {
-    font-size: 16px;
     font-weight: 600;
 }
 
@@ -65,12 +74,10 @@
     align-items: center;
     display: flex;
     gap: 8px;
-    font-size: 16px;
-    font-weight: 400;
 }
 
 .number-inputs {
-    text-align: right !important;
+    text-align: right;
     width: 64px;
 }
 
@@ -92,6 +99,5 @@
 
 .share-container h4 {
     font-size: 19px;
-    font-weight: 500;
     margin: 0px;
 }

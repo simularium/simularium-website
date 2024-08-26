@@ -39,11 +39,11 @@ import {
 } from "../../constants";
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { TrajectoryDisplayData } from "../../constants/interfaces";
-import { clearBrowserUrlParams } from "../../util";
 import {
     getFileIdFromUrl,
     urlCheck,
     getRedirectUrl,
+    clearBrowserUrlParams,
 } from "../../util/userUrlHandling";
 
 import ViewerOverlayTarget from "../../components/ViewerOverlayTarget";
