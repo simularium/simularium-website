@@ -56,7 +56,6 @@ import {
     EMBEDDED_STANDARD_CONTROLS_MINIMUM_WIDTH,
     MOBILE_CUTOFF,
 } from "../../constants";
-import { hasUrlParamsSettings } from "../../util";
 import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
 
 import {
@@ -69,6 +68,7 @@ import { AGENT_COLORS } from "./constants";
 import { DisplayTimes } from "./types";
 
 import styles from "./style.css";
+import { hasUrlParamsSettings } from "../../util/userUrlHandling";
 
 interface ViewerPanelProps {
     time: number;

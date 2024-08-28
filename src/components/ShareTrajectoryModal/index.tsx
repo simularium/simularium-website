@@ -191,8 +191,6 @@ const ShareTrajectoryModal = ({
             {trajectoryIsShareable
                 ? modalOptions.isShareable.content
                 : modalOptions.errorMessage.content}
-            {/* to do dev only preview remove after */}
-            {getJSXSnippet()}
         </CustomModal>
     );
 };
