@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Button, Input, Radio, RadioChangeEvent, Space } from "antd";
 import classNames from "classnames";
@@ -9,8 +9,8 @@ import trajectoryStateBranch from "../../state/trajectory";
 import { getDisplayTimes } from "../../containers/ViewerPanel/selectors";
 import { DisplayTimes } from "../../containers/ViewerPanel/types";
 import CustomModal from "../CustomModal";
-import { DownArrow, Link, Warn } from "../Icons";
-import { URL_PARAM_KEY_FILE_NAME, URL_PARAM_KEY_TIME } from "../../constants";
+import { Link, Warn } from "../Icons";
+import { URL_PARAM_KEY_TIME } from "../../constants";
 import { ButtonClass } from "../../constants/interfaces";
 import { copyToClipboard, roundToTimeStepPrecision } from "../../util";
 import { editUrlParams } from "../../util/userUrlHandling";
