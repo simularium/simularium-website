@@ -52,11 +52,13 @@ import { FullScreen } from "../../components/Icons";
 import { EMBED_PATHNAME, TUTORIAL_PATHNAME } from "../../routes";
 import ErrorNotification from "../../components/ErrorNotification";
 import {
+    EMBEDDED_SCALE_BAR_MINIMUM_WIDTH,
     EMBEDDED_STANDARD_CONTROLS_MINIMUM_HEIGHT,
     EMBEDDED_STANDARD_CONTROLS_MINIMUM_WIDTH,
     MOBILE_CUTOFF,
 } from "../../constants";
 import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
+import { hasUrlParamsSettings } from "../../util/userUrlHandling";
 
 import {
     convertUIDataToSelectionData,
@@ -68,7 +70,6 @@ import { AGENT_COLORS } from "./constants";
 import { DisplayTimes } from "./types";
 
 import styles from "./style.css";
-import { hasUrlParamsSettings } from "../../util/userUrlHandling";
 
 interface ViewerPanelProps {
     time: number;
@@ -118,8 +119,13 @@ interface ViewerPanelState {
     height: number;
     width: number;
     movieURL: string;
-    belowControlHeightBreakPoint: boolean;
-    belowControlWidthBreakpoint: boolean;
+    embeddedDisplayCutoffs: {
+        minimalPlaybackControls: boolean;
+        minimalCameraControls: boolean;
+        showCameraControls: boolean;
+        showScaleBar: boolean;
+        onlyRenderBottomControls: boolean;
+    };
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -145,8 +151,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             height: 0,
             width: 0,
             movieURL: "",
-            belowControlHeightBreakPoint: false,
-            belowControlWidthBreakpoint: false,
+            embeddedDisplayCutoffs: {
+                minimalPlaybackControls: false,
+                minimalCameraControls: false,
+                showCameraControls: true,
+                showScaleBar: true,
+                onlyRenderBottomControls: false,
+            },
         };
     }
 
@@ -190,7 +201,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     "The Simularium Viewer does not support small screens at this time. Please use a larger screen for the best experience.",
             });
         }
-        this.updateBreakpoints();
+        this.updateDisplayBreakpoints();
         document.addEventListener(
             "fullscreenchange",
             this.handleFullscreenChange
@@ -455,13 +466,27 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
     };
 
-    private updateBreakpoints = () => {
-        this.setState({
-            belowControlHeightBreakPoint:
-                window.innerHeight <= EMBEDDED_STANDARD_CONTROLS_MINIMUM_HEIGHT,
-            belowControlWidthBreakpoint:
-                window.innerWidth <= EMBEDDED_STANDARD_CONTROLS_MINIMUM_WIDTH,
-        });
+    private updateDisplayBreakpoints = () => {
+        const belowHeightCutoff =
+            window.innerHeight <= EMBEDDED_STANDARD_CONTROLS_MINIMUM_HEIGHT;
+        const belowWidthCutoff =
+            window.innerWidth <= EMBEDDED_STANDARD_CONTROLS_MINIMUM_WIDTH;
+        const belowScaleBarWidthCutoff =
+            window.innerWidth <= EMBEDDED_SCALE_BAR_MINIMUM_WIDTH;
+        if (location.pathname === EMBED_PATHNAME) {
+            this.setState({
+                embeddedDisplayCutoffs: {
+                    minimalPlaybackControls: belowWidthCutoff,
+                    minimalCameraControls: belowHeightCutoff,
+                    onlyRenderBottomControls:
+                        belowWidthCutoff && belowHeightCutoff,
+                    showScaleBar:
+                        !belowScaleBarWidthCutoff &&
+                        (!belowWidthCutoff || !belowHeightCutoff),
+                    showCameraControls: !belowWidthCutoff || !belowHeightCutoff,
+                },
+            });
+        }
     };
 
     private handleFullscreenChange = () => {
@@ -471,7 +496,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         if (current) {
             setTimeout(() => {
                 this.resize(current);
-                this.updateBreakpoints();
+                this.updateDisplayBreakpoints();
             }, 100);
         }
     };
@@ -508,6 +533,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             scaleBarLabel,
             movieTitle,
         } = this.props;
+        const {
+            minimalCameraControls,
+            minimalPlaybackControls,
+            showScaleBar,
+            showCameraControls,
+            onlyRenderBottomControls,
+        } = this.state.embeddedDisplayCutoffs;
         return (
             <div
                 ref={this.centerContent}
@@ -546,9 +578,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     <div
                         className={classNames(
                             styles.bottomControlsContainer,
-                            this.state.belowControlWidthBreakpoint
-                                ? styles.minimalControls
-                                : styles.standardControls
+                            onlyRenderBottomControls
+                                ? styles.fullWidthBottomControls
+                                : styles.defaultControlSpacing
                         )}
                     >
                         <PlaybackControls
@@ -568,12 +600,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                             lastFrameTime={lastFrameTime}
                             loading={isBuffering}
                             isEmpty={status === ViewerStatus.Empty}
-                            minimalControls={
-                                this.state.belowControlWidthBreakpoint
-                            }
+                            minimalControls={minimalPlaybackControls}
+                            homeButton={onlyRenderBottomControls}
                             simulariumController={simulariumController}
                         />
-                        {!this.state.belowControlWidthBreakpoint && (
+
+                        {!minimalPlaybackControls && (
                             <RecordMoviesComponent
                                 movieUrl={this.state.movieURL}
                                 movieTitle={movieTitle}
@@ -598,21 +630,18 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                         )}
                     </div>
                 )}
-                {!this.state.belowControlWidthBreakpoint && (
-                    <>
-                        <ScaleBar label={scaleBarLabel} />
-                        <CameraControls
-                            resetCamera={simulariumController.resetCamera}
-                            zoomIn={simulariumController.zoomIn}
-                            zoomOut={simulariumController.zoomOut}
-                            setPanningMode={simulariumController.setPanningMode}
-                            setFocusMode={simulariumController.setFocusMode}
-                            setCameraType={simulariumController.setCameraType}
-                            minimalControls={
-                                this.state.belowControlHeightBreakPoint
-                            }
-                        />
-                    </>
+
+                {showScaleBar && <ScaleBar label={scaleBarLabel} />}
+                {showCameraControls && (
+                    <CameraControls
+                        resetCamera={simulariumController.resetCamera}
+                        zoomIn={simulariumController.zoomIn}
+                        zoomOut={simulariumController.zoomOut}
+                        setPanningMode={simulariumController.setPanningMode}
+                        setFocusMode={simulariumController.setFocusMode}
+                        setCameraType={simulariumController.setCameraType}
+                        minimalControls={minimalCameraControls}
+                    />
                 )}
             </div>
         );

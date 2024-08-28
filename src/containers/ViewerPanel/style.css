@@ -12,13 +12,12 @@
     margin-bottom: 20px;
 }
 
-.standard-controls {
-        right: 25%;
+.default-control-spacing {
+    right: 25%;
     width: 50%;
-
 }
 
-.minimal-controls {
+.full-width-bottom-controls {
     right: 5%;
     left: 5%;
 }

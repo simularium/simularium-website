@@ -30,6 +30,7 @@ interface PlayBackProps {
     timeUnits: TimeUnits;
     isEmpty: boolean;
     minimalControls: boolean;
+    homeButton: boolean;
     simulariumController: SimulariumController;
 }
 
@@ -51,6 +52,7 @@ const PlayBackControls = ({
     timeUnits,
     isEmpty,
     minimalControls,
+    homeButton,
     simulariumController,
 }: PlayBackProps): JSX.Element => {
     // Where to resume playing if simulation was playing before scrubbing
@@ -150,14 +152,16 @@ const PlayBackControls = ({
         <div className={styles.embedContainer}>
             {PlayPauseButton}
             {TimeSlider}
-            <div className={styles.buttonContainer}>
-                <ViewportButton
-                    tooltipText="Home view (H)"
-                    tooltipPlacement="left"
-                    icon={getIconGlyphClasses(IconGlyphs.Reset)}
-                    clickHandler={simulariumController.resetCamera}
-                />
-            </div>
+            {homeButton && (
+                <div className={styles.buttonContainer}>
+                    <ViewportButton
+                        tooltipText="PlaybackHome view (H)"
+                        tooltipPlacement="left"
+                        icon={getIconGlyphClasses(IconGlyphs.Reset)}
+                        clickHandler={simulariumController.resetCamera}
+                    />
+                </div>
+            )}
         </div>
     );
 
