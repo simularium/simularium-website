@@ -48,7 +48,7 @@ import RecordMoviesComponent from "../../components/RecordMoviesComponent";
 import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
 import ViewportButton from "../../components/ViewportButton";
-import { FullScreen } from "../../components/Icons";
+import { ExitFullScreen, FullScreen } from "../../components/Icons";
 import { EMBED_PATHNAME, TUTORIAL_PATHNAME } from "../../routes";
 import ErrorNotification from "../../components/ErrorNotification";
 import {
@@ -532,6 +532,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setError,
             scaleBarLabel,
             movieTitle,
+            embedFullscreen,
         } = this.props;
         const {
             minimalCameraControls,
@@ -622,9 +623,17 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                         )}
                         {location.pathname === EMBED_PATHNAME && (
                             <ViewportButton
-                                tooltipText="Fullscreen"
+                                tooltipText={
+                                    embedFullscreen
+                                        ? "Exit Fullscreen"
+                                        : "Fullscreen"
+                                }
                                 tooltipPlacement="top"
-                                icon={FullScreen}
+                                icon={
+                                    embedFullscreen
+                                        ? ExitFullScreen
+                                        : FullScreen
+                                }
                                 clickHandler={this.toggleFullscreen}
                             />
                         )}
