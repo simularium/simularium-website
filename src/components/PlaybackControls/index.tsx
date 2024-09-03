@@ -1,7 +1,7 @@
 import React, { KeyboardEvent, useState } from "react";
 import { Slider, InputNumber } from "antd";
 import classNames from "classnames";
-import { SimulariumController, compareTimes } from "@aics/simularium-viewer";
+import { compareTimes } from "@aics/simularium-viewer";
 
 import { DisplayTimes } from "../../containers/ViewerPanel/types";
 import { TimeUnits } from "../../state/trajectory/types";
@@ -30,8 +30,8 @@ interface PlayBackProps {
     timeUnits: TimeUnits;
     isEmpty: boolean;
     minimalControls: boolean;
-    homeButton: boolean;
-    simulariumController: SimulariumController;
+    showHomeViewButton: boolean;
+    resetCamera: () => void;
 }
 
 const PlayBackControls = ({
@@ -52,8 +52,8 @@ const PlayBackControls = ({
     timeUnits,
     isEmpty,
     minimalControls,
-    homeButton,
-    simulariumController,
+    showHomeViewButton,
+    resetCamera,
 }: PlayBackProps): JSX.Element => {
     // Where to resume playing if simulation was playing before scrubbing
     const [timeToResumeAfterScrubbing, setTimeToResumeAfterScrubbing] =
@@ -152,13 +152,13 @@ const PlayBackControls = ({
         <div className={styles.embedContainer}>
             {PlayPauseButton}
             {TimeSlider}
-            {homeButton && (
+            {showHomeViewButton && (
                 <div className={styles.buttonContainer}>
                     <ViewportButton
                         tooltipText="PlaybackHome view (H)"
                         tooltipPlacement="left"
                         icon={getIconGlyphClasses(IconGlyphs.Reset)}
-                        clickHandler={simulariumController.resetCamera}
+                        clickHandler={resetCamera}
                     />
                 </div>
             )}

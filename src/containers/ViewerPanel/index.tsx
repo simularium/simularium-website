@@ -603,11 +603,11 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                                 this.embedDisplaySettings
                                     .minimalPlaybackControls
                             }
-                            homeButton={
+                            showHomeViewButton={
                                 this.embedDisplaySettings
                                     .onlyRenderBottomControls
                             }
-                            simulariumController={simulariumController}
+                            resetCamera={simulariumController.resetCamera}
                         />
 
                         {!this.embedDisplaySettings.minimalPlaybackControls && (
