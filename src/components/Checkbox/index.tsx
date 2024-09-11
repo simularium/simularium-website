@@ -27,8 +27,10 @@ const tooltipOffsets: TooltipOffsets = {
 };
 
 const Checkbox = (props: CheckboxTypeProps): JSX.Element => {
+    const childProps = { ...props };
     // removing props that are only needed at this level
-    const { checkboxType, checkboxLevel: removedLevel, ...childProps } = props;
+    delete childProps.checkboxType;
+    delete childProps.checkboxLevel;
 
     const checkboxLevel = props.checkboxLevel ? props.checkboxLevel : "default";
 
