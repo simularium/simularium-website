@@ -1,3 +1,5 @@
+import { SelectionEntry } from "@aics/simularium-viewer";
+
 export interface TrajectoryDisplayData {
     modelName: string;
     id: string;
@@ -83,4 +85,9 @@ export interface AgentMetadata {
 export interface MetadataDisplay {
     label: JSX.Element;
     value: () => JSX.Element | string;
+}
+
+export interface ColorChange {
+    agent: SelectionEntry;
+    color: string;
 }
