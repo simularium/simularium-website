@@ -52,7 +52,7 @@ export const initialState = {
         fileToConvert: null,
         fileName: "",
         fileId: "",
-        optionalTitle: "",
+        title: "",
     },
 };
 
@@ -146,7 +146,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
             ...state,
             processingData: {
                 ...state.processingData,
-                optionalTitle: action.payload,
+                title: action.payload,
             },
         }),
     },
