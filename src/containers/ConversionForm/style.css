@@ -81,7 +81,9 @@
 }
 
 .optional-title {
+    font-size: 1.08em;
     margin-top: 22px;
+    margin-bottom: 0px;
 }
 
 .divider {

@@ -245,9 +245,9 @@ const ConversionForm = ({
                 </div>
                 {fileToConvert && (
                     <>
-                        <p className={styles.optionalTitle}>
+                        <h3 className={styles.optionalTitle}>
                             Trajectory title (optional)
-                        </p>
+                        </h3>
                         <Input
                             className={styles.titleInput}
                             placeholder="Start typing..."
