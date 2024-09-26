@@ -3,7 +3,10 @@ import { Slider, InputNumber } from "antd";
 import classNames from "classnames";
 import { compareTimes } from "@aics/simularium-viewer";
 
-import { DisplayTimes } from "../../containers/ViewerPanel/types";
+import {
+    DisplayTimes,
+    PlaybackControlsDisplay,
+} from "../../containers/ViewerPanel/types";
 import { TimeUnits } from "../../state/trajectory/types";
 import { IconGlyphs } from "../../constants/interfaces";
 import { getIconGlyphClasses } from "../../util";
@@ -29,8 +32,7 @@ interface PlayBackProps {
     displayTimes: DisplayTimes;
     timeUnits: TimeUnits;
     isEmpty: boolean;
-    minimalControls: boolean;
-    showHomeViewButton: boolean;
+    displayType: PlaybackControlsDisplay;
     resetCamera: () => void;
 }
 
@@ -51,8 +53,7 @@ const PlayBackControls = ({
     displayTimes,
     timeUnits,
     isEmpty,
-    minimalControls,
-    showHomeViewButton,
+    displayType,
     resetCamera,
 }: PlayBackProps): JSX.Element => {
     // Where to resume playing if simulation was playing before scrubbing
@@ -152,7 +153,7 @@ const PlayBackControls = ({
         <div className={styles.embedContainer}>
             {PlayPauseButton}
             {TimeSlider}
-            {showHomeViewButton && (
+            {displayType === PlaybackControlsDisplay.BottomOnly && (
                 <div className={styles.buttonContainer}>
                     <ViewportButton
                         tooltipText="PlaybackHome view (H)"
@@ -217,7 +218,9 @@ const PlayBackControls = ({
 
     return (
         <div className={styles.container}>
-            {minimalControls ? minimalEmbeddedControls : fullControls}
+            {PlaybackControlsDisplay.Full
+                ? fullControls
+                : minimalEmbeddedControls}
         </div>
     );
 };
