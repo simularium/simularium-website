@@ -218,7 +218,7 @@ const PlayBackControls = ({
 
     return (
         <div className={styles.container}>
-            {PlaybackControlsDisplay.Full
+            {displayType === PlaybackControlsDisplay.Full
                 ? fullControls
                 : minimalEmbeddedControls}
         </div>
