@@ -6,7 +6,6 @@ import { copyToClipboard } from "../../util";
 import { getUrlParamValue } from "../../util/userUrlHandling";
 import { DownArrow, UpArrow } from "../Icons";
 import { VerticalFlexbox, HorizontalFlexbox } from "../FlexboxUtility";
-import EmbedPreview from "./EmbedPreview";
 
 import styles from "./style.css";
 
@@ -32,8 +31,6 @@ const EmbedSnippetPanel = ({ startTime }: EmbedSnippetPanelProps) => {
 
     const [showEmbedSettingsPanel, setShowEmbedSettingsPanel] =
         React.useState(false);
-
-    const [showPreview, setShowPreview] = React.useState(false);
 
     const url = `http://${location.host}/embed?trajFileName=${trajectory}&t=${startTime}}`;
     const embedSnippet = `<iframe width="${width}" height="${height}" src="${url}" title="Simularium" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
@@ -72,15 +69,6 @@ const EmbedSnippetPanel = ({ startTime }: EmbedSnippetPanelProps) => {
 
     return (
         <>
-            {showPreview && (
-                <EmbedPreview
-                    embedSnippet={embedSnippet}
-                    height={height}
-                    width={width}
-                    preview={showPreview}
-                    setPreview={setShowPreview}
-                />
-            )}
             <VerticalFlexbox gap={8}>
                 <div className={styles.embedHeader}>
                     <h4>Embed &lt;/&gt;</h4>
@@ -142,22 +130,12 @@ const EmbedSnippetPanel = ({ startTime }: EmbedSnippetPanelProps) => {
                         value={embedSnippet}
                         disabled
                     />
-                    <HorizontalFlexbox gap={6}>
-                        <Button
-                            className={"secondary-button"}
-                            onClick={() => {
-                                setShowPreview(!showPreview);
-                            }}
-                        >
-                            Preview
-                        </Button>
-                        <Button
-                            className={"primary-button"}
-                            onClick={() => copyToClipboard(embedSnippet)}
-                        >
-                            Copy
-                        </Button>
-                    </HorizontalFlexbox>
+                    <Button
+                        className={"primary-button"}
+                        onClick={() => copyToClipboard(embedSnippet)}
+                    >
+                        Copy
+                    </Button>
                 </VerticalFlexbox>
             </VerticalFlexbox>
         </>
