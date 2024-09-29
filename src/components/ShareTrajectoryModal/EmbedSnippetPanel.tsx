@@ -35,7 +35,7 @@ const EmbedSnippetPanel = ({ startTime }: EmbedSnippetPanelProps) => {
 
     const [showPreview, setShowPreview] = React.useState(false);
 
-    const url = `https://simularium.allencell.org/embed?trajFileName=${trajectory}&t=${startTime}`;
+    const url = `http://${location.host}/embed?trajFileName=${trajectory}&t=${startTime}}`;
     const embedSnippet = `<iframe width="${width}" height="${height}" src="${url}" title="Simularium" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
     const inputIsValid = (input: string) => {
         return !Number.isNaN(parseInt(input));
