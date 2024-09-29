@@ -10,9 +10,6 @@
     gap: 4px;
     bottom: 0;
     margin-bottom: 20px;
-}
-
-.default-control-spacing {
     right: 25%;
     width: 50%;
 }
@@ -20,4 +17,5 @@
 .full-width-bottom-controls {
     right: 5%;
     left: 5%;
+    width: 90%;
 }

@@ -4,3 +4,15 @@ export interface DisplayTimes {
     roundedTimeStep: number;
     maxNumChars: number;
 }
+
+export enum PlaybackControlsDisplay {
+    Full = "Full",
+    Min = "Min",
+    BottomOnly = "BottomOnly",
+}
+
+export enum CameraControlsDisplay {
+    Full = "Full",
+    Min = "Min",
+    None = "None",
+}

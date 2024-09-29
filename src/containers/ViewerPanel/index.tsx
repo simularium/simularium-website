@@ -52,9 +52,9 @@ import { ExitFullScreen, FullScreen } from "../../components/Icons";
 import { EMBED_PATHNAME, TUTORIAL_PATHNAME } from "../../routes";
 import ErrorNotification from "../../components/ErrorNotification";
 import {
-    EMBEDDED_SCALE_BAR_MINIMUM_WIDTH,
-    EMBEDDED_STANDARD_CONTROLS_MINIMUM_HEIGHT,
-    EMBEDDED_STANDARD_CONTROLS_MINIMUM_WIDTH,
+    SCALE_BAR_MIN_WIDTH,
+    CONTROLS_MIN_HEIGHT,
+    CONTROLS_MIN_WIDTH,
     MOBILE_CUTOFF,
 } from "../../constants";
 import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
@@ -67,7 +67,11 @@ import {
     getMovieTitle,
 } from "./selectors";
 import { AGENT_COLORS } from "./constants";
-import { DisplayTimes } from "./types";
+import {
+    DisplayTimes,
+    PlaybackControlsDisplay,
+    CameraControlsDisplay,
+} from "./types";
 
 import styles from "./style.css";
 
@@ -197,7 +201,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     "The Simularium Viewer does not support small screens at this time. Please use a larger screen for the best experience.",
             });
         }
-        this.updateDisplayBreakpoints();
         document.addEventListener(
             "fullscreenchange",
             this.handleFullscreenChange
@@ -462,23 +465,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
     };
 
-    private updateDisplayBreakpoints = () => {
-        if (location.pathname === EMBED_PATHNAME) {
-            this.setState({
-                embedDisplayBreakpoints: {
-                    belowControlsHeight:
-                        window.innerHeight <=
-                        EMBEDDED_STANDARD_CONTROLS_MINIMUM_HEIGHT,
-                    belowControlsWidth:
-                        window.innerWidth <=
-                        EMBEDDED_STANDARD_CONTROLS_MINIMUM_WIDTH,
-                    belowScaleBarWidth:
-                        window.innerWidth <= EMBEDDED_SCALE_BAR_MINIMUM_WIDTH,
-                },
-            });
-        }
-    };
-
     private handleFullscreenChange = () => {
         const { setEmbedFullscreen } = this.props;
         setEmbedFullscreen(!!document.fullscreenElement);
@@ -486,7 +472,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         if (current) {
             setTimeout(() => {
                 this.resize(current);
-                this.updateDisplayBreakpoints();
             }, 100);
         }
     };
@@ -505,17 +490,36 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     };
 
     private get embedDisplaySettings() {
-        const { belowControlsHeight, belowControlsWidth, belowScaleBarWidth } =
-            this.state.embedDisplayBreakpoints;
-        return {
-            minimalPlaybackControls: belowControlsWidth,
-            minimalCameraControls: belowControlsHeight,
-            onlyRenderBottomControls: belowControlsWidth && belowControlsHeight,
-            showScaleBar:
-                !belowScaleBarWidth &&
-                (!belowControlsWidth || !belowControlsHeight),
-            showCameraControls: !belowControlsWidth || !belowControlsHeight,
-        };
+        const { height, width } = this.state;
+        const belowControlsHeight = height <= CONTROLS_MIN_HEIGHT;
+        const belowControlsWidth = width <= CONTROLS_MIN_WIDTH;
+        const showScaleBar = width > SCALE_BAR_MIN_WIDTH && (!belowControlsWidth || !belowControlsHeight);
+
+        if (belowControlsHeight && belowControlsWidth) {
+            return {
+                playBackControlsType: PlaybackControlsDisplay.BottomOnly,
+                cameraControlsType: CameraControlsDisplay.None,
+                showScaleBar,
+            };
+        } else if (belowControlsHeight) {
+            return {
+                playBackControlsType: PlaybackControlsDisplay.Full,
+                cameraControlsType: CameraControlsDisplay.Min,
+                showScaleBar,
+            };
+        } else if (belowControlsWidth) {
+            return {
+                playBackControlsType: PlaybackControlsDisplay.Min,
+                cameraControlsType: CameraControlsDisplay.Full,
+                showScaleBar,
+            };
+        } else {
+            return {
+                playBackControlsType: PlaybackControlsDisplay.Full,
+                cameraControlsType: CameraControlsDisplay.Full,
+                showScaleBar,
+            };
+        }
     }
 
     public render(): JSX.Element {
@@ -539,6 +543,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             embedFullscreen,
         } = this.props;
 
+        const { showScaleBar, cameraControlsType, playBackControlsType } =
+            this.embedDisplaySettings;
         return (
             <div
                 ref={this.centerContent}
@@ -575,12 +581,11 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 />
                 {firstFrameTime !== lastFrameTime && (
                     <div
-                        className={classNames(
-                            styles.bottomControlsContainer,
-                            this.embedDisplaySettings.onlyRenderBottomControls
-                                ? styles.fullWidthBottomControls
-                                : styles.defaultControlSpacing
-                        )}
+                        className={classNames(styles.bottomControlsContainer, {
+                            [styles.fullWidthBottomControls]:
+                                playBackControlsType ===
+                                PlaybackControlsDisplay.BottomOnly,
+                        })}
                     >
                         <PlaybackControls
                             playHandler={this.startPlay}
@@ -599,18 +604,12 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                             lastFrameTime={lastFrameTime}
                             loading={isBuffering}
                             isEmpty={status === ViewerStatus.Empty}
-                            minimalControls={
-                                this.embedDisplaySettings
-                                    .minimalPlaybackControls
-                            }
-                            showHomeViewButton={
-                                this.embedDisplaySettings
-                                    .onlyRenderBottomControls
-                            }
+                            displayType={playBackControlsType}
                             resetCamera={simulariumController.resetCamera}
                         />
 
-                        {!this.embedDisplaySettings.minimalPlaybackControls && (
+                        {playBackControlsType ===
+                            PlaybackControlsDisplay.Full && (
                             <RecordMoviesComponent
                                 movieUrl={this.state.movieURL}
                                 movieTitle={movieTitle}
@@ -644,22 +643,17 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     </div>
                 )}
 
-                {this.embedDisplaySettings.showScaleBar && (
-                    <ScaleBar label={scaleBarLabel} />
-                )}
-                {this.embedDisplaySettings.showCameraControls && (
-                    <CameraControls
-                        resetCamera={simulariumController.resetCamera}
-                        zoomIn={simulariumController.zoomIn}
-                        zoomOut={simulariumController.zoomOut}
-                        setPanningMode={simulariumController.setPanningMode}
-                        setFocusMode={simulariumController.setFocusMode}
-                        setCameraType={simulariumController.setCameraType}
-                        minimalControls={
-                            this.embedDisplaySettings.minimalCameraControls
-                        }
-                    />
-                )}
+                {showScaleBar && <ScaleBar label={scaleBarLabel} />}
+
+                <CameraControls
+                    resetCamera={simulariumController.resetCamera}
+                    zoomIn={simulariumController.zoomIn}
+                    zoomOut={simulariumController.zoomOut}
+                    setPanningMode={simulariumController.setPanningMode}
+                    setFocusMode={simulariumController.setFocusMode}
+                    setCameraType={simulariumController.setCameraType}
+                    displayType={cameraControlsType}
+                />
             </div>
         );
     }

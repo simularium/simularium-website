@@ -7,6 +7,7 @@ import { ZoomIn, ZoomOut } from "../Icons";
 import ViewportButton from "../ViewportButton";
 
 import styles from "./style.css";
+import { CameraControlsDisplay } from "../../containers/ViewerPanel/types";
 
 const PAN = "pan";
 const ROTATE = "rotate";
@@ -33,7 +34,7 @@ interface CameraControlsProps {
     setPanningMode: (value: boolean) => void;
     setFocusMode: (value: boolean) => void;
     setCameraType: (value: boolean) => void;
-    minimalControls?: boolean;
+    displayType: CameraControlsDisplay;
 }
 
 const CameraControls = ({
@@ -43,8 +44,8 @@ const CameraControls = ({
     setPanningMode,
     setFocusMode,
     setCameraType,
-    minimalControls,
-}: CameraControlsProps): JSX.Element => {
+    displayType,
+}: CameraControlsProps): JSX.Element | null => {
     const [isFocused, saveFocusMode] = useState(true);
     const [mode, setMode] = useState(ROTATE);
     const [cameraProjectionType, setCameraProjectionType] =
@@ -228,10 +229,12 @@ const CameraControls = ({
         </div>
     );
 
-    const renderControls = minimalControls
-        ? minimalEmbeddedControls
-        : fullControls;
-
-    return renderControls;
+    if (displayType === CameraControlsDisplay.None) {
+        return null;
+    } else if (displayType === CameraControlsDisplay.Min) {
+        return minimalEmbeddedControls;
+    } else {
+        return fullControls;
+    }
 };
 export default CameraControls;

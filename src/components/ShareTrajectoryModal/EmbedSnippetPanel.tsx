@@ -35,8 +35,8 @@ const EmbedSnippetPanel = ({ startTime }: EmbedSnippetPanelProps) => {
 
     const [showPreview, setShowPreview] = React.useState(false);
 
-    const url = `https://simularium.allencell.org/embed?trajFileName=${trajectory}&t=${startTime}`;
-    const embedSnippet = `<iframe height="${height}" width="${width}" src="${url}" title="Simularium" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+    const url = `http://${location.host}/embed?trajFileName=${trajectory}&t=${startTime}}`;
+    const embedSnippet = `<iframe width="${width}" height="${height}" src="${url}" title="Simularium" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
     const inputIsValid = (input: string) => {
         return !Number.isNaN(parseInt(input));
     };
@@ -104,18 +104,18 @@ const EmbedSnippetPanel = ({ startTime }: EmbedSnippetPanelProps) => {
                             <VerticalFlexbox gap={24}>
                                 <HorizontalFlexbox gap={8} alignItems="center">
                                     <Input
-                                        defaultValue={height}
-                                        className={styles.numberInputs}
-                                        onChange={(e) => {
-                                            handleChangeHeight(e.target.value);
-                                        }}
-                                    />
-                                    <span> x </span>
-                                    <Input
                                         value={width}
                                         className={styles.numberInputs}
                                         onChange={(e) => {
                                             handleChangeWidth(e.target.value);
+                                        }}
+                                    />
+                                    <span> x </span>
+                                    <Input
+                                        defaultValue={height}
+                                        className={styles.numberInputs}
+                                        onChange={(e) => {
+                                            handleChangeHeight(e.target.value);
                                         }}
                                     />
                                     <label> pixels </label>
