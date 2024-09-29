@@ -493,7 +493,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const { height, width } = this.state;
         const belowControlsHeight = height <= CONTROLS_MIN_HEIGHT;
         const belowControlsWidth = width <= CONTROLS_MIN_WIDTH;
-        const showScaleBar = width > SCALE_BAR_MIN_WIDTH;
+        const showScaleBar = width > SCALE_BAR_MIN_WIDTH && (!belowControlsWidth || !belowControlsHeight);
 
         if (belowControlsHeight && belowControlsWidth) {
             return {
