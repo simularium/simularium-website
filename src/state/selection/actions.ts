@@ -1,5 +1,4 @@
-import { ColorChange } from "@aics/simularium-viewer";
-import { AgentMetadata } from "../../constants/interfaces";
+import { AgentMetadata, ColorChange } from "../../constants/interfaces";
 import {
     SELECT_METADATA,
     CHANGE_TIME_HEAD,

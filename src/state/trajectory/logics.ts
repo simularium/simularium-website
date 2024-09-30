@@ -570,14 +570,15 @@ const convertFileLogic = createLogic({
     ) {
         const { action, getState } = deps;
 
-        const { engineType, fileToConvert, fileName } =
+        const { engineType, fileToConvert, fileName, title } =
             getConversionProcessingData(getState());
+        const trajectoryTitle = title || fileName;
         const fileContents: Record<string, any> = {
             fileContents: { fileContents: fileToConvert },
-            trajectoryTitle: fileName,
+            trajectoryTitle: trajectoryTitle,
         };
         const controller = getSimulariumController(getState());
-        const providedFileName = action.payload;
+        const backendFileName = action.payload;
         // convert the file
         dispatch(
             setConversionStatus({
@@ -589,7 +590,7 @@ const convertFileLogic = createLogic({
                 netConnectionSettings,
                 fileContents,
                 engineType,
-                providedFileName
+                backendFileName
             )
             .catch((err: Error) => {
                 console.error(err);

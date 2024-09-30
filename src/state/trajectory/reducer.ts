@@ -14,6 +14,7 @@ import {
     SET_CONVERSION_STATUS,
     CONVERT_FILE,
     RECEIVE_CONVERTED_FILE,
+    SET_CONVERSION_TITLE,
     SET_DEFAULT_UI_DATA,
     SET_USER_SELECTED_UI_DATA,
     SET_CURRENT_COLOR_SETTINGS,
@@ -29,6 +30,7 @@ import {
     SetConversionStatusAction,
     ConversionStatus,
     ConvertFileAction,
+    SetConversionTitleAction,
     SetUserSelectedUIDataAction,
     SetDefaultUIDataAction,
     SetCurrentColorSettingsAction,
@@ -60,6 +62,7 @@ export const initialState = {
         fileToConvert: null,
         fileName: "",
         fileId: "",
+        title: "",
     },
 };
 
@@ -135,6 +138,20 @@ const actionToConfigMap: TypeToDescriptionMap = {
             },
         }),
     },
+    [SET_CONVERSION_TITLE]: {
+        accepts: (action: AnyAction): action is SetConversionTitleAction =>
+            action.type === SET_CONVERSION_TITLE,
+        perform: (
+            state: TrajectoryStateBranch,
+            action: SetConversionTitleAction
+        ) => ({
+            ...state,
+            processingData: {
+                ...state.processingData,
+                title: action.payload,
+            },
+        }),
+    },
     [RECEIVE_FILE_TO_CONVERT]: {
         accepts: (action: AnyAction): action is ReceiveFileToConvertAction =>
             action.type === RECEIVE_FILE_TO_CONVERT,
@@ -171,6 +188,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: TrajectoryStateBranch, action: ReceiveAction) => ({
             ...state,
             simulariumFile: action.payload,
+            processingData: initialState.processingData,
         }),
     },
     [SET_USER_SELECTED_UI_DATA]: {

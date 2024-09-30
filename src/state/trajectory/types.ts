@@ -66,6 +66,11 @@ export interface SetConversionEngineAction {
     type: string;
 }
 
+export interface SetConversionTitleAction {
+    payload: string;
+    type: string;
+}
+
 export interface ConvertFileAction {
     payload: { fileId: string };
     type: string;

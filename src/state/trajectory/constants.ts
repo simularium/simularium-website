@@ -43,6 +43,9 @@ export const SET_DEFAULT_UI_DATA = makeTrajectoryConstant(
 );
 
 export const SET_CONVERSION_STATUS = makeTrajectoryConstant("set-status");
+export const SET_CONVERSION_TITLE = makeTrajectoryConstant(
+    "set-conversion-title"
+);
 export const SET_CURRENT_COLOR_SETTINGS =
     makeTrajectoryConstant("set-apply-colors");
 export const CLEAR_UI_DATA_FROM_STATE = makeTrajectoryConstant("clear-ui-data");

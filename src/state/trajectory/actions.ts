@@ -18,6 +18,7 @@ import {
     CONVERT_FILE,
     RECEIVE_CONVERTED_FILE,
     CANCEL_CONVERSION,
+    SET_CONVERSION_TITLE,
     SET_DEFAULT_UI_DATA,
     SET_CURRENT_COLOR_SETTINGS,
     SET_USER_SELECTED_UI_DATA,
@@ -43,6 +44,7 @@ import {
     ConvertFileAction,
     ConversionStatus,
     CancelConversionAction,
+    SetConversionTitleAction,
     SetUserSelectedUIDataAction,
     SetDefaultUIDataAction,
     SetCurrentColorSettingsAction,
@@ -173,6 +175,13 @@ export function setConversionEngine(
     return {
         payload,
         type: SET_CONVERSION_ENGINE,
+    };
+}
+
+export function setConversionTitle(payload: string): SetConversionTitleAction {
+    return {
+        payload,
+        type: SET_CONVERSION_TITLE,
     };
 }
 
