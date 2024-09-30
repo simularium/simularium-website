@@ -40,3 +40,6 @@ export const RECEIVE_CONVERTED_FILE =
 export const CANCEL_CONVERSION = makeTrajectoryConstant("cancel-conversion");
 
 export const SET_CONVERSION_STATUS = makeTrajectoryConstant("set-status");
+export const SET_CONVERSION_TITLE = makeTrajectoryConstant(
+    "set-conversion-title"
+);

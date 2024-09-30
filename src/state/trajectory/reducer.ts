@@ -15,6 +15,7 @@ import {
     SET_CONVERSION_STATUS,
     CONVERT_FILE,
     RECEIVE_CONVERTED_FILE,
+    SET_CONVERSION_TITLE,
 } from "./constants";
 import {
     TrajectoryStateBranch,
@@ -26,6 +27,7 @@ import {
     SetConversionStatusAction,
     ConversionStatus,
     ConvertFileAction,
+    SetConversionTitleAction,
 } from "./types";
 
 export const initialState = {
@@ -50,6 +52,7 @@ export const initialState = {
         fileToConvert: null,
         fileName: "",
         fileId: "",
+        title: "",
     },
 };
 
@@ -133,6 +136,20 @@ const actionToConfigMap: TypeToDescriptionMap = {
             },
         }),
     },
+    [SET_CONVERSION_TITLE]: {
+        accepts: (action: AnyAction): action is SetConversionTitleAction =>
+            action.type === SET_CONVERSION_TITLE,
+        perform: (
+            state: TrajectoryStateBranch,
+            action: SetConversionTitleAction
+        ) => ({
+            ...state,
+            processingData: {
+                ...state.processingData,
+                title: action.payload,
+            },
+        }),
+    },
     [RECEIVE_FILE_TO_CONVERT]: {
         accepts: (action: AnyAction): action is ReceiveFileToConvertAction =>
             action.type === RECEIVE_FILE_TO_CONVERT,
@@ -169,6 +186,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: TrajectoryStateBranch, action: ReceiveAction) => ({
             ...state,
             simulariumFile: action.payload,
+            processingData: initialState.processingData,
         }),
     },
 };
