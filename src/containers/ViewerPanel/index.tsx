@@ -113,8 +113,8 @@ interface ViewerPanelProps {
     receiveConvertedFile: ActionCreator<ReceiveAction>;
     conversionProcessingData: ConversionProcessingData;
     setSelectedAgentMetadata: ActionCreator<SetSelectedAgentMetadataAction>;
-    setEmbedFullscreen: ActionCreator<ToggleAction>;
-    embedFullscreen: boolean;
+    setIsFullScreen: ActionCreator<ToggleAction>;
+    isFullScreen: boolean;
 }
 
 interface ViewerPanelState {
@@ -191,10 +191,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     "The Simularium Viewer does not support small screens at this time. Please use a larger screen for the best experience.",
             });
         }
-        document.addEventListener(
-            "fullscreenchange",
-            this.handleFullscreenChange
-        );
         const current = this.centerContent.current;
         if (current) {
             window.addEventListener("resize", () => this.resize(current));
@@ -206,8 +202,24 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public componentDidUpdate(prevProps: ViewerPanelProps) {
-        const { error } = this.props;
+        const { error, isFullScreen } = this.props;
         const current = this.centerContent.current;
+
+        if (isFullScreen !== prevProps.isFullScreen) {
+            if (isFullScreen) {
+                document.documentElement
+                    .requestFullscreen()
+
+                    .catch((err) => {
+                        console.error(
+                            `Error attempting to enable fullscreen: ${err.message}`
+                        );
+                    });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
         const isNewError = () => {
             if (!prevProps.error && error) {
                 return true;
@@ -234,13 +246,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 this.resize(current);
             }, 200);
         }
-    }
-
-    public componentWillUnmount(): void {
-        document.removeEventListener(
-            "fullscreenchange",
-            this.handleFullscreenChange
-        );
     }
 
     public playForwardOne() {
@@ -455,28 +460,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
     };
 
-    private handleFullscreenChange = () => {
-        const { setEmbedFullscreen } = this.props;
-        setEmbedFullscreen(!!document.fullscreenElement);
-        const current = this.centerContent.current;
-        if (current) {
-            setTimeout(() => {
-                this.resize(current);
-            }, 100);
-        }
-    };
-
-    private toggleFullscreen = () => {
-        const { embedFullscreen } = this.props;
-        if (embedFullscreen) {
-            document.exitFullscreen();
-        } else {
-            document.documentElement.requestFullscreen().catch((err) => {
-                console.error(
-                    `Error attempting to enable fullscreen: ${err.message}`
-                );
-            });
-        }
+    private toggleIsFullScreen = () => {
+        const { setIsFullScreen, isFullScreen } = this.props;
+        setIsFullScreen(!isFullScreen);
     };
 
     private get embedDisplaySettings() {
@@ -532,7 +518,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setError,
             scaleBarLabel,
             movieTitle,
-            embedFullscreen,
+            isFullScreen,
         } = this.props;
 
         const { showScaleBar, cameraControlsType, playBackControlsType } =
@@ -619,17 +605,15 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                         {location.pathname === EMBED_PATHNAME && (
                             <ViewportButton
                                 tooltipText={
-                                    embedFullscreen
+                                    isFullScreen
                                         ? "Exit Fullscreen"
                                         : "Fullscreen"
                                 }
                                 tooltipPlacement="top"
                                 icon={
-                                    embedFullscreen
-                                        ? ExitFullScreen
-                                        : FullScreen
+                                    isFullScreen ? ExitFullScreen : FullScreen
                                 }
-                                clickHandler={this.toggleFullscreen}
+                                clickHandler={this.toggleIsFullScreen}
                             />
                         )}
                     </div>
@@ -682,7 +666,7 @@ function mapStateToProps(state: State) {
             trajectoryStateBranch.selectors.getConversionStatus(state),
         conversionProcessingData:
             trajectoryStateBranch.selectors.getConversionProcessingData(state),
-        embedFullscreen: viewerStateBranch.selectors.getEmbedFullscreen(state),
+        isFullScreen: viewerStateBranch.selectors.getIsFullScreen(state),
     };
 }
 
@@ -705,7 +689,7 @@ const dispatchToPropsMap = {
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
     setSelectedAgentMetadata:
         selectionStateBranch.actions.setSelectedAgentMetadata,
-    setEmbedFullscreen: viewerStateBranch.actions.setEmbedFullscreen,
+    setIsFullScreen: viewerStateBranch.actions.setIsFullScreen,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);

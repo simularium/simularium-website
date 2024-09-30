@@ -30,7 +30,7 @@ export const initialState = {
     isBuffering: false,
     isPlaying: false,
     isLooping: false,
-    embedFullscreen: false,
+    isFullScreen: false,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -104,7 +104,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
             action.type === SET_EMBED_FULLSCREEN,
         perform: (state: ViewerStateBranch, action: ToggleAction) => ({
             ...state,
-            embedFullscreen: action.payload,
+            isFullScreen: action.payload,
         }),
     },
 };

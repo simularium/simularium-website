@@ -67,7 +67,7 @@ export function setIsLooping(isLooping: boolean): ToggleAction {
     };
 }
 
-export function setEmbedFullscreen(fullscreen: boolean): ToggleAction {
+export function setIsFullScreen(fullscreen: boolean): ToggleAction {
     return {
         payload: fullscreen,
         type: SET_EMBED_FULLSCREEN,
