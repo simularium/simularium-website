@@ -123,11 +123,6 @@ interface ViewerPanelState {
     height: number;
     width: number;
     movieURL: string;
-    embedDisplayBreakpoints: {
-        belowControlsHeight: boolean;
-        belowControlsWidth: boolean;
-        belowScaleBarWidth: boolean;
-    };
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -153,11 +148,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             height: 0,
             width: 0,
             movieURL: "",
-            embedDisplayBreakpoints: {
-                belowControlsHeight: false,
-                belowControlsWidth: false,
-                belowScaleBarWidth: false,
-            },
         };
     }
 
@@ -493,7 +483,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const { height, width } = this.state;
         const belowControlsHeight = height <= CONTROLS_MIN_HEIGHT;
         const belowControlsWidth = width <= CONTROLS_MIN_WIDTH;
-        const showScaleBar = width > SCALE_BAR_MIN_WIDTH && (!belowControlsWidth || !belowControlsHeight);
+        const showScaleBar =
+            width > SCALE_BAR_MIN_WIDTH &&
+            (!belowControlsWidth || !belowControlsHeight);
 
         if (belowControlsHeight && belowControlsWidth) {
             return {
