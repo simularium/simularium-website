@@ -4,9 +4,9 @@ import { Popover, Tooltip } from "antd";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import classNames from "classnames";
 import { useDebounce } from "use-debounce";
-import { ColorChange } from "@aics/simularium-viewer";
 
 import { AGENT_COLORS } from "../../containers/ViewerPanel/constants";
+import { ColorChange } from "../../constants/interfaces";
 import {
     SetColorChangeAction,
     SetRecentColorsAction,
