@@ -32,8 +32,8 @@ const EmbedSnippetPanel = ({ startTime }: EmbedSnippetPanelProps) => {
     const [showEmbedSettingsPanel, setShowEmbedSettingsPanel] =
         React.useState(false);
 
-    const url = `http://${location.host}/embed?trajFileName=${trajectory}&t=${startTime}}`;
-    const embedSnippet = `<iframe width="${width}" height="${height}" src="${url}" title="Simularium" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+    const url = `${location.origin}/embed?trajFileName=${trajectory}&t=${startTime}`;
+    const embedSnippet = `<iframe width="${width}" height="${height}" src="${url}" title="Simularium" allow="accelerometer; autoplay; clipboard-write; encrypted-media; frameBorder="0"; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
     const inputIsValid = (input: string) => {
         return !Number.isNaN(parseInt(input));
     };
@@ -100,7 +100,7 @@ const EmbedSnippetPanel = ({ startTime }: EmbedSnippetPanelProps) => {
                                     />
                                     <span> x </span>
                                     <Input
-                                        defaultValue={height}
+                                        value={height}
                                         className={styles.numberInputs}
                                         onChange={(e) => {
                                             handleChangeHeight(e.target.value);
