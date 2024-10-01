@@ -47,7 +47,6 @@ import PlaybackControls from "../../components/PlaybackControls";
 import RecordMoviesComponent from "../../components/RecordMoviesComponent";
 import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
-import ViewportButton from "../../components/ViewportButton";
 import { EMBED_PATHNAME, TUTORIAL_PATHNAME } from "../../routes";
 import ErrorNotification from "../../components/ErrorNotification";
 import {
