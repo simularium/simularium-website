@@ -94,12 +94,12 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     changeToNetworkedFile: loadNetworkFile,
     recentColors,
     setRecentColors,
-    clearUserSelectedColors,
-    applyUserColorSelection,
-    defaultUiSettingsApplied,
-    setCurrentColorSettings,
     selectedAgentMetadata,
-}) => {
+    applyUserColorSelection,
+    setCurrentColorSettings,
+    clearUserSelectedColors,
+    defaultUiSettingsApplied,
+}): JSX.Element => {
     const checkboxTree = (
         <CheckBoxTree
             treeData={uiDisplayDataTree}
@@ -130,7 +130,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
         ),
     };
 
-    const handleRestorDefaultClick = () => {
+    const handleRestoreDefaultClick = () => {
         clearUserSelectedColors();
         setCurrentColorSettings({
             currentColorSettings: ColorSettings.Default,
@@ -164,7 +164,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
                             titleText={"Restore color defaults"}
                             buttonType={ButtonClass.Action}
                             isDisabled={defaultUiSettingsApplied}
-                            clickHandler={handleRestorDefaultClick}
+                            clickHandler={handleRestoreDefaultClick}
                             onMouseEnter={handleRestoreDefaultMouseEnter}
                             onMouseLeave={handleRestoreDefaultMouseLeave}
                         />
