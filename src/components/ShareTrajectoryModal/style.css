@@ -95,8 +95,3 @@
     font-size: 19px;
     margin: 0px;
 }
-
-.embed-preview-modal :global(.ant-modal-content) {
-    width: var(--embed-preview-modal-width); 
-    height: var(--embed-preview-modal-height);
-}
