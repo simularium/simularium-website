@@ -149,14 +149,14 @@ const PlayBackControls = ({
         />
     );
 
-    const minimalEmbeddedControls = (
-        <div className={styles.embedContainer}>
+    const minimalControlsContainer = (
+        <div className={styles.minimalControlsContainer}>
             {PlayPauseButton}
             {TimeSlider}
             {displayType === PlaybackControlsDisplay.BottomOnly && (
                 <div className={styles.buttonContainer}>
                     <ViewportButton
-                        tooltipText="PlaybackHome view (H)"
+                        tooltipText="Home view (H)"
                         tooltipPlacement="left"
                         icon={getIconGlyphClasses(IconGlyphs.Reset)}
                         clickHandler={resetCamera}
@@ -218,9 +218,9 @@ const PlayBackControls = ({
 
     return (
         <div className={styles.container}>
-            {PlaybackControlsDisplay.Full
+            {displayType === PlaybackControlsDisplay.Full
                 ? fullControls
-                : minimalEmbeddedControls}
+                : minimalControlsContainer}
         </div>
     );
 };
