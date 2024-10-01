@@ -23,9 +23,9 @@ export const SET_SELECTED_AGENT = makeSelectConstant("set-selected-agent");
 export const APPLY_USER_COLOR_SELECTION = makeSelectConstant(
     "apply-user-color-selection"
 );
-export const GET_UI_DATA_FROM_BROWSER = makeSelectConstant(
+export const GET_COLOR_SELECTIONS_FROM_BROWSER = makeSelectConstant(
     "get-ui-data-from-browser"
 );
-export const CLEAR_UI_DATA_FROM_BROWSER_AND_STATE = makeSelectConstant(
-    "clear-ui-data-from-browser"
+export const CLEAR_COLOR_SELECTIONS_FROM_BROWSER_AND_STATE = makeSelectConstant(
+    "clear-color-selections-from-browser"
 );

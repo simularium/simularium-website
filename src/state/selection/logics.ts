@@ -14,15 +14,15 @@ import {
 } from "../trajectory/actions";
 import { ColorSettings } from "../trajectory/types";
 import {
-    CLEAR_UI_DATA_FROM_BROWSER_AND_STATE,
-    GET_UI_DATA_FROM_BROWSER,
+    CLEAR_COLOR_SELECTIONS_FROM_BROWSER_AND_STATE,
+    GET_COLOR_SELECTIONS_FROM_BROWSER,
     APPLY_USER_COLOR_SELECTION,
 } from "./constants";
 
 /**
  * In response to user selections, this logic
  * takes in a colorChange payload and generates new UIDisplayData
- * stores that data in local storage and redux
+ * to store that data in local storage and redux
  * and sets the current color settings to user selected
  */
 const applyUserSelectedColorsLogic = createLogic({
@@ -75,7 +75,7 @@ const clearSessionColorsLogic = createLogic({
         dispatch(setUserSelectedUIData([]));
         done();
     },
-    type: CLEAR_UI_DATA_FROM_BROWSER_AND_STATE,
+    type: CLEAR_COLOR_SELECTIONS_FROM_BROWSER_AND_STATE,
 });
 
 const applySessionColorsLogic = createLogic({
@@ -95,6 +95,9 @@ const applySessionColorsLogic = createLogic({
                 done();
                 return;
             }
+            // if default UI data has been received, checl that the
+            // agent tree structures match before applying the stored
+            // color settings
             const agentStructuresMatch = compareAgentTrees(
                 uiData,
                 defaultUIData
@@ -115,7 +118,7 @@ const applySessionColorsLogic = createLogic({
         }
         done();
     },
-    type: GET_UI_DATA_FROM_BROWSER,
+    type: GET_COLOR_SELECTIONS_FROM_BROWSER,
 });
 
 export default [

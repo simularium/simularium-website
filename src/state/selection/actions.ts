@@ -10,8 +10,8 @@ import {
     SET_RECENT_COLORS,
     SET_SELECTED_AGENT,
     APPLY_USER_COLOR_SELECTION,
-    GET_UI_DATA_FROM_BROWSER,
-    CLEAR_UI_DATA_FROM_BROWSER_AND_STATE,
+    GET_COLOR_SELECTIONS_FROM_BROWSER,
+    CLEAR_COLOR_SELECTIONS_FROM_BROWSER_AND_STATE,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -109,11 +109,11 @@ export function applyUserColorSelection(
 }
 
 export function clearUserSelectedColors(): ResetAction {
-    return { type: CLEAR_UI_DATA_FROM_BROWSER_AND_STATE };
+    return { type: CLEAR_COLOR_SELECTIONS_FROM_BROWSER_AND_STATE };
 }
 
 export function getColorsFromLocalStorage() {
     return {
-        type: GET_UI_DATA_FROM_BROWSER,
+        type: GET_COLOR_SELECTIONS_FROM_BROWSER,
     };
 }
