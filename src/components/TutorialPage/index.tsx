@@ -283,20 +283,20 @@ const TutorialPage = (): JSX.Element => {
                     <h1 id="browser-support">Browser support</h1>
                     <ul>
                         <li>
-                            Currently, Simularium supports Firefox, Safari,
-                            Chrome, and Edge. Some features may not work on
+                            Currently, Simularium supports Chrome, Safari,
+                            Chrome, and Firefox. Some features may not work on
                             other browsers.
                         </li>
                         <li>
-                            If using Safari on a Mac and it is not working,
-                            update your browser to the most recent version. If
-                            you are using an older version, please enable WebGL
-                            2.0 by choosing Develop &gt; Experimental Features
-                            and enabling &quot;WebGL 2.0&quot; (If you do not
-                            have a Develop menu in your menu bar, first choose
-                            Safari &gt; Preferences &gt; Advanced and enable
-                            &quot;Show Develop menu in menu bar&quot;.) Then
-                            reload the viewer.
+                            If using Safari on a Mac and the viewer is not
+                            working, update your browser to the most recent
+                            version. If you are using an older version, enable
+                            WebGL 2.0 by choosing Develop &gt; Experimental
+                            Features and enabling &quot;WebGL 2.0&quot; (If you
+                            do not have a Develop menu in your menu bar, first
+                            choose Safari &gt; Preferences &gt; Advanced and
+                            enable &quot;Show Develop menu in menu bar&quot;.)
+                            Then reload the viewer.
                         </li>
                     </ul>
                 </div>
