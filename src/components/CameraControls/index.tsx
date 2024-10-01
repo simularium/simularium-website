@@ -154,7 +154,7 @@ const CameraControls = ({
         />
     );
 
-    const minimalEmbeddedControls = (
+    const minimalControlsContainer = (
         <div className={styles.container}>{homeViewButton}</div>
     );
 
@@ -232,7 +232,7 @@ const CameraControls = ({
     if (displayType === CameraControlsDisplay.None) {
         return null;
     } else if (displayType === CameraControlsDisplay.Min) {
-        return minimalEmbeddedControls;
+        return minimalControlsContainer;
     } else {
         return fullControls;
     }

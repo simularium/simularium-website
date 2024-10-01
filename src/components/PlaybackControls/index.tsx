@@ -149,8 +149,8 @@ const PlayBackControls = ({
         />
     );
 
-    const minimalEmbeddedControls = (
-        <div className={styles.embedContainer}>
+    const minimalControlsContainer = (
+        <div className={styles.minimalControlsContainer}>
             {PlayPauseButton}
             {TimeSlider}
             {displayType === PlaybackControlsDisplay.BottomOnly && (
@@ -220,7 +220,7 @@ const PlayBackControls = ({
         <div className={styles.container}>
             {displayType === PlaybackControlsDisplay.Full
                 ? fullControls
-                : minimalEmbeddedControls}
+                : minimalControlsContainer}
         </div>
     );
 };
