@@ -156,7 +156,7 @@ const PlayBackControls = ({
             {displayType === PlaybackControlsDisplay.BottomOnly && (
                 <div className={styles.buttonContainer}>
                     <ViewportButton
-                        tooltipText="PlaybackHome view (H)"
+                        tooltipText="Home view (H)"
                         tooltipPlacement="left"
                         icon={getIconGlyphClasses(IconGlyphs.Reset)}
                         clickHandler={resetCamera}
