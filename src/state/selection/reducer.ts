@@ -13,6 +13,9 @@ import {
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
     SET_RECENT_COLORS,
     SET_SELECTED_AGENT,
+    SET_CURRENT_COLOR_SETTINGS,
+    SET_USER_COLOR_SELECTIONS,
+    CLEAR_COLOR_SELECTIONS_FROM_STATE,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -24,6 +27,9 @@ import {
     ResetAction,
     SetRecentColorsAction,
     SetSelectedAgentMetadataAction,
+    SetCurrentColorSettingsAction,
+    SetUserColorSelectionsAction,
+    ColorSettings,
 } from "./types";
 
 export const initialState = {
@@ -33,6 +39,8 @@ export const initialState = {
     agentHighlightMap: {},
     recentColors: [],
     selectedAgentMetadata: {},
+    userColorSelections: [], // type: UIDisplayData
+    currentColorSettings: ColorSettings.Default,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -151,6 +159,43 @@ const actionToConfigMap: TypeToDescriptionMap = {
             return {
                 ...state,
                 selectedAgentMetadata: action.payload,
+            };
+        },
+    },
+    [SET_USER_COLOR_SELECTIONS]: {
+        accepts: (action: AnyAction): action is SetUserColorSelectionsAction =>
+            action.type === SET_USER_COLOR_SELECTIONS,
+        perform: (
+            state: SelectionStateBranch,
+            action: SetUserColorSelectionsAction
+        ) => {
+            return {
+                ...state,
+                userColorSelections: action.payload,
+            };
+        },
+    },
+    [SET_CURRENT_COLOR_SETTINGS]: {
+        accepts: (action: AnyAction): action is SetCurrentColorSettingsAction =>
+            action.type === SET_CURRENT_COLOR_SETTINGS,
+        perform: (
+            state: SelectionStateBranch,
+            action: SetCurrentColorSettingsAction
+        ) => {
+            return {
+                ...state,
+                currentColorSettings: action.payload.currentColorSettings,
+            };
+        },
+    },
+    [CLEAR_COLOR_SELECTIONS_FROM_STATE]: {
+        accepts: (action: AnyAction): action is ResetAction =>
+            action.type === CLEAR_COLOR_SELECTIONS_FROM_STATE,
+        perform: (state: SelectionStateBranch) => {
+            return {
+                ...state,
+                userColorSelections: initialState.userColorSelections,
+                currentColorSettings: initialState.currentColorSettings,
             };
         },
     },

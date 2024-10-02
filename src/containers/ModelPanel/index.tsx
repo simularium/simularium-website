@@ -13,6 +13,7 @@ import {
 import {
     getUiDisplayDataTree,
     getIsNetworkedFile,
+    getDefaultUISettingsApplied,
 } from "../../state/trajectory/selectors";
 import {
     AgentRenderingCheckboxMap,
@@ -20,13 +21,18 @@ import {
     SetVisibleAction,
     SetRecentColorsAction,
     ApplyUserColorSelectionAction,
+    ResetAction,
+    SetCurrentColorSettingsAction,
+    ColorSettings,
 } from "../../state/selection/types";
 import {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
     setAgentsVisible,
     setRecentColors,
+    clearUserSelectedColors,
     applyUserColorSelection,
+    setCurrentColorSettings,
 } from "../../state/selection/actions";
 import {
     getAgentVisibilityMap,
@@ -38,8 +44,9 @@ import CheckBoxTree, { AgentDisplayNode } from "../../components/AgentTree";
 import NoTrajectoriesText from "../../components/NoTrajectoriesText";
 import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFileFailedText";
 import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
+import NavButton from "../../components/NavButton";
 import SideBarContents from "../../components/SideBarContents";
-import { AgentMetadata } from "../../constants/interfaces";
+import { AgentMetadata, ButtonClass } from "../../constants/interfaces";
 import {
     getSelectAllVisibilityMap,
     getSelectNoneVisibilityMap,
@@ -62,9 +69,12 @@ interface ModelPanelProps {
     isNetworkedFile: boolean;
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
     recentColors: string[];
-    applyUserColorSelection: ActionCreator<ApplyUserColorSelectionAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
     selectedAgentMetadata: AgentMetadata;
+    applyUserColorSelection: ActionCreator<ApplyUserColorSelectionAction>;
+    setCurrentColorSettings: ActionCreator<SetCurrentColorSettingsAction>;
+    clearUserSelectedColors: ActionCreator<ResetAction>;
+    defaultUiSettingsApplied: boolean;
 }
 
 const ModelPanel: React.FC<ModelPanelProps> = ({
@@ -81,9 +91,12 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     isNetworkedFile,
     changeToNetworkedFile: loadNetworkFile,
     recentColors,
-    applyUserColorSelection,
     setRecentColors,
     selectedAgentMetadata,
+    applyUserColorSelection,
+    setCurrentColorSettings,
+    clearUserSelectedColors,
+    defaultUiSettingsApplied,
 }): JSX.Element => {
     const checkboxTree = (
         <CheckBoxTree
@@ -101,6 +114,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
             setRecentColors={setRecentColors}
         />
     );
+
     const contentMap = {
         [ViewerStatus.Success]: checkboxTree,
         [ViewerStatus.Empty]: (
@@ -114,11 +128,47 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
         ),
     };
 
+    const handleRestoreDefaultClick = () => {
+        clearUserSelectedColors();
+        setCurrentColorSettings({
+            currentColorSettings: ColorSettings.Default,
+        });
+    };
+
+    const handleRestoreDefaultMouseEnter = () => {
+        if (!defaultUiSettingsApplied) {
+            setCurrentColorSettings({
+                currentColorSettings: ColorSettings.Default,
+            });
+        }
+    };
+
+    const handleRestoreDefaultMouseLeave = () => {
+        if (!defaultUiSettingsApplied) {
+            setCurrentColorSettings({
+                currentColorSettings: ColorSettings.UserSelected,
+            });
+        }
+    };
+
     return (
         <div className={styles.container}>
             <SideBarContents
                 mainTitle="Agents"
-                content={[contentMap[viewerStatus]]}
+                content={[
+                    <div className={styles.container} key="molecules">
+                        {contentMap[viewerStatus]}
+                        <NavButton
+                            titleText={"Restore color defaults"}
+                            buttonType={ButtonClass.Action}
+                            isDisabled={defaultUiSettingsApplied}
+                            clickHandler={handleRestoreDefaultClick}
+                            onMouseEnter={handleRestoreDefaultMouseEnter}
+                            onMouseLeave={handleRestoreDefaultMouseLeave}
+                        />
+                    </div>,
+                    null,
+                ]}
                 selectedAgentMetadata={selectedAgentMetadata}
                 uiDisplayData={uiDisplayDataTree}
             />
@@ -138,6 +188,7 @@ function mapStateToProps(state: State) {
         isNetworkedFile: getIsNetworkedFile(state),
         recentColors: getRecentColors(state),
         selectedAgentMetadata: getSelectedAgentMetadata(state),
+        defaultUiSettingsApplied: getDefaultUISettingsApplied(state),
     };
 }
 
@@ -149,6 +200,8 @@ const dispatchToPropsMap = {
     setAgentsVisible,
     applyUserColorSelection,
     setRecentColors,
+    setCurrentColorSettings,
+    clearUserSelectedColors,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ModelPanel);

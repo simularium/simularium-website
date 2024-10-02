@@ -20,6 +20,7 @@ import {
     CANCEL_CONVERSION,
     SET_CONVERSION_TITLE,
     SET_DEFAULT_UI_DATA,
+    CLEAR_UI_DATA_FROM_STATE,
 } from "./constants";
 import { AvailableEngines } from "./conversion-data-types";
 import {
@@ -44,6 +45,7 @@ import {
     SetConversionTitleAction,
     SetDefaultUIDataAction,
 } from "./types";
+import { ResetAction } from "../selection/types";
 
 export function receiveTrajectory(
     payload: TrajectoryStateBranch
@@ -204,5 +206,11 @@ export function setDefaultUIData(
     return {
         payload,
         type: SET_DEFAULT_UI_DATA,
+    };
+}
+
+export function clearUIDataFromState(): ResetAction {
+    return {
+        type: CLEAR_UI_DATA_FROM_STATE,
     };
 }

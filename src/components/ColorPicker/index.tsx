@@ -54,14 +54,14 @@ const ColorPicker = ({
             color: newColor.toLowerCase(),
         };
         applyUserColorSelection(colorChange);
+        updateRecentColors(debouncedColor);
     };
 
     useEffect(() => {
         if (isInitialRender.current) {
             isInitialRender.current = false;
-        } else {
+        } else if (isColorPickerVisible) {
             handleColorChange(debouncedColor);
-            updateRecentColors(debouncedColor);
         }
     }, [debouncedColor]);
 

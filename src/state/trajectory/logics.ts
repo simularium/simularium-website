@@ -20,6 +20,7 @@ import {
     URL_PARAM_KEY_FILE_NAME,
     URL_PARAM_KEY_TIME,
 } from "../../constants";
+import { compareAgentTrees } from "../../util";
 import {
     getUserTrajectoryUrl,
     clearBrowserUrlParams,
@@ -27,7 +28,11 @@ import {
 import { ViewerStatus } from "../viewer/types";
 import {
     changeTime,
+    clearColorSelectionsFromState,
+    getColorsFromLocalStorage,
     resetAgentSelectionsAndHighlights,
+    setCurrentColorSettings,
+    setUserColorSelections,
 } from "../selection/actions";
 import { setSimulariumController } from "../simularium/actions";
 import { getSimulariumController } from "../simularium/selectors";
@@ -48,6 +53,7 @@ import {
     requestCachedPlotData,
     clearSimulariumFile,
     setConversionStatus,
+    clearUIDataFromState,
 } from "./actions";
 import {
     LOAD_LOCAL_FILE_IN_VIEWER,
@@ -62,6 +68,7 @@ import {
     CONVERT_FILE,
     RECEIVE_CONVERTED_FILE,
     CANCEL_CONVERSION,
+    SET_DEFAULT_UI_DATA,
 } from "./constants";
 import {
     ReceiveAction,
@@ -77,6 +84,8 @@ import {
     AvailableEngines,
     Template,
 } from "./conversion-data-types";
+import { ColorSettings } from "../selection/types";
+import { getUserColorSelections } from "../selection/selectors";
 
 const netConnectionSettings: NetConnectionParams = {
     serverIp: process.env.BACKEND_SERVER_IP,
@@ -91,9 +100,17 @@ const resetSimulariumFileState = createLogic({
         const resetTime = changeTime(initialSelectionState.time);
         const resetVisibility = resetAgentSelectionsAndHighlights();
         const stopPlay = setIsPlaying(false);
+        const clearUIData = clearUIDataFromState();
+        const clearColorSelections = clearColorSelectionsFromState();
         let clearTrajectory;
 
-        const actions = [resetTime, resetVisibility, stopPlay];
+        const actions = [
+            resetTime,
+            resetVisibility,
+            stopPlay,
+            clearUIData,
+            clearColorSelections,
+        ];
         if (!action.payload.newFile) {
             //only clear controller if not requesting new sim file
             if (controller) {
@@ -179,10 +196,7 @@ const loadNetworkedFile = createLogic({
                     status: ViewerStatus.Loading,
                 })
             );
-            dispatch({
-                payload: { newFile: true },
-                type: CLEAR_SIMULARIUM_FILE,
-            });
+            dispatch(clearSimulariumFile({ newFile: true }));
         });
 
         let simulariumController = getSimulariumController(currentState);
@@ -214,6 +228,9 @@ const loadNetworkedFile = createLogic({
                         }/plot-data.json`, // placeholder for however we organize this data in s3
                     })
                 );
+            })
+            .then(() => {
+                dispatch(getColorsFromLocalStorage());
             })
             .then(done)
             .catch((error: FrontEndError) => {
@@ -255,6 +272,8 @@ const loadLocalFile = createLogic({
         }
 
         clearOutFileTrajectoryUrlParam();
+        clearColorSelectionsFromState();
+        clearUIDataFromState();
         simulariumController
             .changeFile(
                 {
@@ -276,6 +295,9 @@ const loadLocalFile = createLogic({
                         })
                     );
                 }
+            })
+            .then(() => {
+                dispatch(getColorsFromLocalStorage());
             })
             .then(done)
             .catch((error: FrontEndError) => {
@@ -315,6 +337,8 @@ const loadFileViaUrl = createLogic({
                 }
             })
             .then((blob) => {
+                dispatch(clearUIDataFromState());
+                dispatch(clearColorSelectionsFromState());
                 return loadSimulariumFile(blob);
             })
             .then((simulariumFile) => {
@@ -330,6 +354,9 @@ const loadFileViaUrl = createLogic({
                         simulariumController
                     )
                 );
+            })
+            .then(() => {
+                dispatch(getColorsFromLocalStorage());
                 done();
             })
             .catch((error) => {
@@ -638,6 +665,34 @@ const cancelConversionLogic = createLogic({
     type: CANCEL_CONVERSION,
 });
 
+const receiveDefaultUIDataLogic = createLogic({
+    process(deps: ReduxLogicDeps, dispatch, done) {
+        const { getState, action } = deps;
+        const browserStoredUIData = getUserColorSelections(getState());
+        /**
+         * If the conditions below are true, then valid color settings were
+         * retrieved from browser storage before the default ui data arrived
+         * and those settings should be applied.
+         * If false then userSelected data either doesn't exist, hasn't arrived yet, or
+         * is invalid: set to empty array for now.
+         */
+        if (
+            browserStoredUIData.length > 0 &&
+            compareAgentTrees(browserStoredUIData, action.payload)
+        ) {
+            dispatch(
+                setCurrentColorSettings({
+                    currentColorSettings: ColorSettings.UserSelected,
+                })
+            );
+        } else {
+            dispatch(setUserColorSelections([]));
+        }
+        done();
+    },
+    type: SET_DEFAULT_UI_DATA,
+});
+
 export default [
     requestPlotDataLogic,
     loadLocalFile,
@@ -650,4 +705,5 @@ export default [
     convertFileLogic,
     receiveConvertedFileLogic,
     cancelConversionLogic,
+    receiveDefaultUIDataLogic,
 ];

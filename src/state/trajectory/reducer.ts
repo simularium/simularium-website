@@ -1,12 +1,12 @@
 import { AnyAction } from "redux";
 
+import { ResetAction } from "../selection/types";
 import { TypeToDescriptionMap } from "../types";
 import { makeReducer } from "../util";
 
 import {
     RECEIVE_TRAJECTORY,
     RECEIVE_AGENT_IDS,
-    SET_DEFAULT_UI_DATA,
     RECEIVE_SIMULARIUM_FILE,
     CLEAR_SIMULARIUM_FILE,
     SET_CONVERSION_TEMPLATE,
@@ -16,6 +16,8 @@ import {
     CONVERT_FILE,
     RECEIVE_CONVERTED_FILE,
     SET_CONVERSION_TITLE,
+    SET_DEFAULT_UI_DATA,
+    CLEAR_UI_DATA_FROM_STATE,
 } from "./constants";
 import {
     TrajectoryStateBranch,
@@ -192,6 +194,16 @@ const actionToConfigMap: TypeToDescriptionMap = {
             return {
                 ...state,
                 defaultUIData: action.payload,
+            };
+        },
+    },
+    [CLEAR_UI_DATA_FROM_STATE]: {
+        accepts: (action: AnyAction): action is ResetAction =>
+            action.type === CLEAR_UI_DATA_FROM_STATE,
+        perform: (state: TrajectoryStateBranch) => {
+            return {
+                ...state,
+                defaultUIData: initialState.defaultUIData,
             };
         },
     },

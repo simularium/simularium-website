@@ -1,6 +1,7 @@
 import { forOwn, isFunction } from "lodash";
 import React from "react";
 import { IconGlyphs } from "../constants/interfaces";
+import { UIDisplayData } from "@aics/simularium-viewer";
 
 type AnyFunction = () => any;
 
@@ -104,4 +105,27 @@ export const roundToTimeStepPrecision = (
     const precision = (timestep.toString().split(".")[1] || "").length;
     const multiplier = Math.pow(10, precision);
     return Math.round(input * multiplier) / multiplier;
+};
+
+export const compareAgentTrees = (a: UIDisplayData, b: UIDisplayData) => {
+    if (a.length !== b.length) {
+        return false;
+    }
+    for (let i = 0; i < a.length; i++) {
+        if (a[i].name !== b[i].name) {
+            return false;
+        }
+        if (a[i].displayStates.length !== b[i].displayStates.length) {
+            return false;
+        }
+        for (let j = 0; j < a[i].displayStates.length; j++) {
+            if (
+                a[i].displayStates[j].id !== b[i].displayStates[j].id ||
+                a[i].displayStates[j].name !== b[i].displayStates[j].name
+            ) {
+                return false;
+            }
+        }
+    }
+    return true;
 };

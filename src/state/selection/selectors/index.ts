@@ -2,7 +2,7 @@ import { createSelector } from "reselect";
 import { reduce } from "lodash";
 import { SelectionEntry, UIDisplayData } from "@aics/simularium-viewer";
 
-import { getDefaultUIData } from "../../trajectory/selectors";
+import { getDefaultUIData } from "../../trajectory/selectors/basic";
 import { AgentRenderingCheckboxMap } from "../types";
 
 import { getAgentHighlightMap, getAgentVisibilityMap } from "./basic";

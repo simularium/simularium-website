@@ -35,7 +35,6 @@ export const CONVERT_FILE = makeTrajectoryConstant("convert-file");
 export const RECEIVE_CONVERTED_FILE =
     makeTrajectoryConstant("receive-converted");
 export const CANCEL_CONVERSION = makeTrajectoryConstant("cancel-conversion");
-
 export const SET_CONVERSION_STATUS = makeTrajectoryConstant("set-status");
 export const SET_CONVERSION_TITLE = makeTrajectoryConstant(
     "set-conversion-title"
@@ -43,3 +42,4 @@ export const SET_CONVERSION_TITLE = makeTrajectoryConstant(
 export const SET_DEFAULT_UI_DATA = makeTrajectoryConstant(
     "set-default-ui-data"
 );
+export const CLEAR_UI_DATA_FROM_STATE = makeTrajectoryConstant("clear-ui-data");

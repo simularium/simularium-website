@@ -1,3 +1,4 @@
+import { UIDisplayData } from "@aics/simularium-viewer";
 import { AgentMetadata, ColorChange } from "../../constants/interfaces";
 import { TrajectoryStateBranch } from "../trajectory/types";
 
@@ -80,4 +81,18 @@ export interface SetRecentColorsAction {
 export interface SetSelectedAgentMetadataAction {
     payload: AgentMetadata;
     type: string;
+}
+export interface SetCurrentColorSettingsAction {
+    payload: { currentColorSettings: ColorSettings };
+    type: string;
+}
+
+export interface SetUserColorSelectionsAction {
+    payload: UIDisplayData;
+    type: string;
+}
+
+export enum ColorSettings {
+    UserSelected = "userSelected",
+    Default = "default",
 }

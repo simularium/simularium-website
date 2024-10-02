@@ -40,6 +40,7 @@ import {
     ConversionStatus,
     SetConversionStatusAction,
     SetUrlParamsAction,
+    SetDefaultUIDataAction,
 } from "../../state/trajectory/types";
 import { batchActions } from "../../state/util";
 import PlaybackControls from "../../components/PlaybackControls";
@@ -83,7 +84,7 @@ interface ViewerPanelProps {
     changeTime: ActionCreator<ChangeTimeAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
     receiveTrajectory: ActionCreator<ReceiveAction>;
-    setDefaultUIData: ActionCreator<ReceiveAction>;
+    setDefaultUIData: ActionCreator<SetDefaultUIDataAction>;
     selectionStateInfoForViewer: SelectionStateInfo;
     setIsPlaying: ActionCreator<ToggleAction>;
     setIsLooping: ActionCreator<ToggleAction>;
