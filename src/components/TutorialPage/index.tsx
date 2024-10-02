@@ -283,9 +283,9 @@ const TutorialPage = (): JSX.Element => {
                     <h1 id="browser-support">Browser support</h1>
                     <ul>
                         <li>
-                            Currently, Simularium supports Chrome, Safari,
-                            Chrome, and Firefox. Some features may not work on
-                            other browsers.
+                            Currently, Simularium supports Chrome, Safari, Edge,
+                            and Firefox. Some features may not work on other
+                            browsers.
                         </li>
                         <li>
                             If using Safari on a Mac and the viewer is not
