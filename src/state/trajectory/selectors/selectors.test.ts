@@ -48,13 +48,12 @@ describe("trajectory composed selectors", () => {
         it("returns empty array if default UI data has not been entered yet", () => {
             expect(getCurrentUIData(initialState)).toEqual([]);
         });
-        it("returns userSelectedUIData if colorSetting is equal to ColorSettings.UserSelected", () => {
+        it("returns userColorSelections if colorSetting is equal to ColorSettings.UserSelected", () => {
             expect(
                 getCurrentUIData({
                     ...initialState,
                     trajectory: {
                         ...initialState.trajectory,
-                        currentColorSettings: ColorSettings.UserSelected,
                         defaultUIData: [
                             {
                                 name: "agent1",
@@ -62,7 +61,11 @@ describe("trajectory composed selectors", () => {
                                 color: "#bbbbbb",
                             },
                         ],
-                        userSelectedUIData: [
+                    },
+                    selection: {
+                        ...initialState.selection,
+                        currentColorSettings: ColorSettings.UserSelected,
+                        userColorSelections: [
                             {
                                 name: "agent1",
                                 displayStates: [],
@@ -86,7 +89,6 @@ describe("trajectory composed selectors", () => {
                     ...initialState,
                     trajectory: {
                         ...initialState.trajectory,
-                        currentColorSettings: ColorSettings.Default,
                         defaultUIData: [
                             {
                                 name: "agent1",
@@ -94,7 +96,11 @@ describe("trajectory composed selectors", () => {
                                 color: "#bbbbbb",
                             },
                         ],
-                        userSelectedUIData: [
+                    },
+                    selection: {
+                        ...initialState.selection,
+                        currentColorSettings: ColorSettings.Default,
+                        userColorSelections: [
                             {
                                 name: "agent1",
                                 displayStates: [],
@@ -179,7 +185,7 @@ describe("trajectory composed selectors", () => {
     });
 
     describe("getDefaultUISettingsApplied", () => {
-        it("returns false if userSelectedUIData contains selections and userSelectedUIData and defaultUIData are not equal", () => {
+        it("returns false if userColorSelections contains selections and userColorSelections and defaultUIData are not equal", () => {
             expect(
                 getDefaultUISettingsApplied({
                     ...initialState,
@@ -191,7 +197,17 @@ describe("trajectory composed selectors", () => {
                                 color: "#bbbbbb",
                             },
                         ],
-                        userSelectedUIData: [
+                        userColorSelections: [
+                            {
+                                name: "agent1",
+                                displayStates: [],
+                                color: "#000",
+                            },
+                        ],
+                    },
+                    selection: {
+                        ...initialState.selection,
+                        userColorSelections: [
                             {
                                 name: "agent1",
                                 displayStates: [],
@@ -202,7 +218,7 @@ describe("trajectory composed selectors", () => {
                 })
             ).toBe(false);
         });
-        it("returns true if userSelectedUIData contains no selections", () => {
+        it("returns true if userColorSelections contains no selections", () => {
             expect(
                 getDefaultUISettingsApplied({
                     ...initialState,
@@ -214,12 +230,12 @@ describe("trajectory composed selectors", () => {
                                 color: "#bbbbbb",
                             },
                         ],
-                        userSelectedUIData: [],
+                        userColorSelections: [],
                     },
                 })
             ).toBe(true);
         });
-        it("returns true if userSelectedUIData and userSelectedUIData are equal", () => {
+        it("returns true if userColorSelections and defaultUIData are equal", () => {
             expect(
                 getDefaultUISettingsApplied({
                     ...initialState,
@@ -231,7 +247,7 @@ describe("trajectory composed selectors", () => {
                                 color: "#bbbbbb",
                             },
                         ],
-                        userSelectedUIData: [
+                        userColorSelections: [
                             {
                                 name: "agent1",
                                 displayStates: [],
