@@ -6,6 +6,7 @@ import {
     SET_IS_PLAYING,
     SET_ERROR,
     SET_IS_LOOPING,
+    SET_EMBED_FULLSCREEN,
 } from "./constants";
 import {
     ViewerStatus,

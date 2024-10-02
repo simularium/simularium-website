@@ -57,6 +57,8 @@ import {
 } from "../../constants";
 import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
 import { hasUrlParamsSettings } from "../../util/userUrlHandling";
+import { ExitFullScreen, FullScreen } from "../../components/Icons";
+import ViewportButton from "../../components/ViewportButton";
 
 import {
     convertUIDataToSelectionData,

@@ -11,6 +11,7 @@ import {
     SET_BUFFERING,
     SET_IS_PLAYING,
     SET_IS_LOOPING,
+    SET_EMBED_FULLSCREEN,
 } from "./constants";
 import {
     ViewerStateBranch,
