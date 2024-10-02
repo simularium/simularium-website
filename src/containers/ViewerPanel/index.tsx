@@ -157,7 +157,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 title: "The browser you are using is not supported.",
                 content: (
                     <p>
-                        Please use Chrome, Safari, Edge or Firebox. See more
+                        Please use Chrome, Safari, Edge or Firefox. See more
                         details{" "}
                         <a href={`${TUTORIAL_PATHNAME}#browser-support`}>
                             here
