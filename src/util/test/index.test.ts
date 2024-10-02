@@ -534,18 +534,6 @@ describe("User Url handling", () => {
             expect(result).toBe(1);
         });
     });
-
-    // interface DisplayStateEntry {
-    //     name: string;
-    //     id: string;
-    //     color: string;
-    // }
-    // export interface UIDisplayEntry {
-    //     name: string;
-    //     displayStates: DisplayStateEntry[];
-    //     color: string;
-    // }
-    // export declare type UIDisplayData = UIDisplayEntry[];
     describe("compareAgentTrees", () => {
         it("should return false if the arrays are different lengths", () => {
             const firstUIData: UIDisplayData = [
