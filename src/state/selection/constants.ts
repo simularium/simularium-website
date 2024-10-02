@@ -29,3 +29,12 @@ export const GET_COLOR_SELECTIONS_FROM_BROWSER = makeSelectConstant(
 export const CLEAR_COLOR_SELECTIONS_FROM_BROWSER_AND_STATE = makeSelectConstant(
     "clear-color-selections-from-browser"
 );
+export const SET_USER_COLOR_SELECTIONS = makeSelectConstant(
+    "set-user-color-selections"
+);
+export const SET_CURRENT_COLOR_SETTINGS = makeSelectConstant(
+    "set-current-color-settings"
+);
+export const CLEAR_COLOR_SELECTIONS_FROM_STATE = makeSelectConstant(
+    "reset-color-selection-state"
+);

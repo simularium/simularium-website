@@ -132,26 +132,7 @@ export enum ConversionStatus {
     Active = "CONVERSION_ACTIVE",
 }
 
-export interface SetUserSelectedUIDataAction {
-    payload: UIDisplayData;
-    type: string;
-}
-
 export interface SetDefaultUIDataAction {
     payload: UIDisplayData;
-    type: string;
-}
-
-export interface ClearUIDataAction {
-    type: string;
-}
-
-export enum ColorSettings {
-    UserSelected = "userSelected",
-    Default = "default",
-}
-
-export interface SetCurrentColorSettingsAction {
-    payload: { currentColorSettings: ColorSettings };
     type: string;
 }

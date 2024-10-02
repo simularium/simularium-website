@@ -20,8 +20,6 @@ import {
     CANCEL_CONVERSION,
     SET_CONVERSION_TITLE,
     SET_DEFAULT_UI_DATA,
-    SET_CURRENT_COLOR_SETTINGS,
-    SET_USER_SELECTED_UI_DATA,
     CLEAR_UI_DATA_FROM_STATE,
 } from "./constants";
 import { AvailableEngines } from "./conversion-data-types";
@@ -45,12 +43,9 @@ import {
     ConversionStatus,
     CancelConversionAction,
     SetConversionTitleAction,
-    SetUserSelectedUIDataAction,
     SetDefaultUIDataAction,
-    SetCurrentColorSettingsAction,
-    ColorSettings,
-    ClearUIDataAction,
 } from "./types";
+import { ResetAction } from "../selection/types";
 
 export function receiveTrajectory(
     payload: TrajectoryStateBranch
@@ -205,15 +200,6 @@ export function cancelAutoconversion(): CancelConversionAction {
     };
 }
 
-export function setUserSelectedUIData(
-    payload: UIDisplayData
-): SetUserSelectedUIDataAction {
-    return {
-        payload,
-        type: SET_USER_SELECTED_UI_DATA,
-    };
-}
-
 export function setDefaultUIData(
     payload: UIDisplayData
 ): SetDefaultUIDataAction {
@@ -223,16 +209,7 @@ export function setDefaultUIData(
     };
 }
 
-export function setCurrentColorSettings(payload: {
-    currentColorSettings: ColorSettings;
-}): SetCurrentColorSettingsAction {
-    return {
-        payload,
-        type: SET_CURRENT_COLOR_SETTINGS,
-    };
-}
-
-export function clearUIDataFromState(): ClearUIDataAction {
+export function clearUIDataFromState(): ResetAction {
     return {
         type: CLEAR_UI_DATA_FROM_STATE,
     };

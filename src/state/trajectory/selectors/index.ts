@@ -3,18 +3,16 @@ import { isEqual } from "lodash";
 import { UIDisplayData } from "@aics/simularium-viewer";
 
 import {
-    ColorSettings,
+    getCurrentColorSettings,
+    getUserColorSelections,
+} from "../../selection/selectors";
+import { ColorSettings } from "../../selection/types";
+import {
     isNetworkSimFileInterface,
     LocalSimFile,
     NetworkedSimFile,
 } from "../types";
-
-import {
-    getSimulariumFile,
-    getDefaultUIData,
-    getUserSelectedUIData,
-    getCurrentColorSettings,
-} from "./basic";
+import { getSimulariumFile, getDefaultUIData } from "./basic";
 
 export const getIsNetworkedFile = createSelector(
     [getSimulariumFile],
@@ -27,7 +25,7 @@ export const getIsNetworkedFile = createSelector(
 );
 
 export const getCurrentUIData = createSelector(
-    [getCurrentColorSettings, getUserSelectedUIData, getDefaultUIData],
+    [getCurrentColorSettings, getUserColorSelections, getDefaultUIData],
     (colorSetting, sessionData, defaultData) => {
         const fileHasBeenParsed = defaultData.length > 0;
         if (!fileHasBeenParsed) {
@@ -64,7 +62,7 @@ export const getUiDisplayDataTree = createSelector(
 );
 
 export const getDefaultUISettingsApplied = createSelector(
-    [getUserSelectedUIData, getDefaultUIData],
+    [getUserColorSelections, getDefaultUIData],
     (userSelectedUIData, defaultUIData) => {
         /**
          * we can't simply check if currentColorSettings === ColorSettings.Default

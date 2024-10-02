@@ -1,3 +1,4 @@
+import { UIDisplayData } from "@aics/simularium-viewer";
 import { AgentMetadata, ColorChange } from "../../constants/interfaces";
 import {
     SELECT_METADATA,
@@ -12,6 +13,9 @@ import {
     APPLY_USER_COLOR_SELECTION,
     GET_COLOR_SELECTIONS_FROM_BROWSER,
     CLEAR_COLOR_SELECTIONS_FROM_BROWSER_AND_STATE,
+    SET_CURRENT_COLOR_SETTINGS,
+    SET_USER_COLOR_SELECTIONS,
+    CLEAR_COLOR_SELECTIONS_FROM_STATE,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -23,6 +27,9 @@ import {
     SetRecentColorsAction,
     SetSelectedAgentMetadataAction,
     ApplyUserColorSelectionAction,
+    SetCurrentColorSettingsAction,
+    SetUserColorSelectionsAction,
+    ColorSettings,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -115,5 +122,29 @@ export function clearUserSelectedColors(): ResetAction {
 export function getColorsFromLocalStorage() {
     return {
         type: GET_COLOR_SELECTIONS_FROM_BROWSER,
+    };
+}
+
+export function setCurrentColorSettings(payload: {
+    currentColorSettings: ColorSettings;
+}): SetCurrentColorSettingsAction {
+    return {
+        payload,
+        type: SET_CURRENT_COLOR_SETTINGS,
+    };
+}
+
+export function setUserColorSelections(
+    payload: UIDisplayData
+): SetUserColorSelectionsAction {
+    return {
+        payload,
+        type: SET_USER_COLOR_SELECTIONS,
+    };
+}
+
+export function clearColorSelectionsFromState(): ResetAction {
+    return {
+        type: CLEAR_COLOR_SELECTIONS_FROM_STATE,
     };
 }

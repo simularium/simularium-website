@@ -1,5 +1,6 @@
 import { AnyAction } from "redux";
 
+import { ResetAction } from "../selection/types";
 import { TypeToDescriptionMap } from "../types";
 import { makeReducer } from "../util";
 
@@ -16,8 +17,6 @@ import {
     RECEIVE_CONVERTED_FILE,
     SET_CONVERSION_TITLE,
     SET_DEFAULT_UI_DATA,
-    SET_USER_SELECTED_UI_DATA,
-    SET_CURRENT_COLOR_SETTINGS,
     CLEAR_UI_DATA_FROM_STATE,
 } from "./constants";
 import {
@@ -31,11 +30,7 @@ import {
     ConversionStatus,
     ConvertFileAction,
     SetConversionTitleAction,
-    SetUserSelectedUIDataAction,
     SetDefaultUIDataAction,
-    SetCurrentColorSettingsAction,
-    ColorSettings,
-    ClearUIDataAction,
 } from "./types";
 
 export const initialState = {
@@ -45,9 +40,7 @@ export const initialState = {
     timeUnits: null,
     scaleBarLabel: "",
     agentIds: [],
-    userSelectedUIData: [],
     defaultUIData: [],
-    currentColorSettings: ColorSettings.Default,
     plotData: [],
     simulariumFile: {
         name: "",
@@ -191,19 +184,6 @@ const actionToConfigMap: TypeToDescriptionMap = {
             processingData: initialState.processingData,
         }),
     },
-    [SET_USER_SELECTED_UI_DATA]: {
-        accepts: (action: AnyAction): action is SetUserSelectedUIDataAction =>
-            action.type === SET_USER_SELECTED_UI_DATA,
-        perform: (
-            state: TrajectoryStateBranch,
-            action: SetUserSelectedUIDataAction
-        ) => {
-            return {
-                ...state,
-                userSelectedUIData: action.payload,
-            };
-        },
-    },
     [SET_DEFAULT_UI_DATA]: {
         accepts: (action: AnyAction): action is SetDefaultUIDataAction =>
             action.type === SET_DEFAULT_UI_DATA,
@@ -217,28 +197,13 @@ const actionToConfigMap: TypeToDescriptionMap = {
             };
         },
     },
-    [SET_CURRENT_COLOR_SETTINGS]: {
-        accepts: (action: AnyAction): action is SetCurrentColorSettingsAction =>
-            action.type === SET_CURRENT_COLOR_SETTINGS,
-        perform: (
-            state: TrajectoryStateBranch,
-            action: SetCurrentColorSettingsAction
-        ) => {
-            return {
-                ...state,
-                currentColorSettings: action.payload.currentColorSettings,
-            };
-        },
-    },
     [CLEAR_UI_DATA_FROM_STATE]: {
-        accepts: (action: AnyAction): action is ClearUIDataAction =>
+        accepts: (action: AnyAction): action is ResetAction =>
             action.type === CLEAR_UI_DATA_FROM_STATE,
         perform: (state: TrajectoryStateBranch) => {
             return {
                 ...state,
-                userSelectedUIData: [],
-                defaultUIData: [],
-                currentColorSettings: ColorSettings.Default,
+                defaultUIData: initialState.defaultUIData,
             };
         },
     },

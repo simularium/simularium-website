@@ -5,15 +5,10 @@ import { connect } from "react-redux";
 import { State } from "../../state/types";
 import { ViewerStatus } from "../../state/viewer/types";
 import { getStatus } from "../../state/viewer/selectors";
-import {
-    RequestNetworkFileAction,
-    ColorSettings,
-    SetCurrentColorSettingsAction,
-} from "../../state/trajectory/types";
+import { RequestNetworkFileAction } from "../../state/trajectory/types";
 import {
     requestTrajectory,
     changeToNetworkedFile,
-    setCurrentColorSettings,
 } from "../../state/trajectory/actions";
 import {
     getUiDisplayDataTree,
@@ -27,6 +22,8 @@ import {
     SetRecentColorsAction,
     ApplyUserColorSelectionAction,
     ResetAction,
+    SetCurrentColorSettingsAction,
+    ColorSettings,
 } from "../../state/selection/types";
 import {
     turnAgentsOnByDisplayKey,
@@ -35,6 +32,7 @@ import {
     setRecentColors,
     clearUserSelectedColors,
     applyUserColorSelection,
+    setCurrentColorSettings,
 } from "../../state/selection/actions";
 import {
     getAgentVisibilityMap,

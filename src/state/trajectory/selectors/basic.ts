@@ -16,9 +16,5 @@ export const getConversionProcessingData = (state: State) =>
     state.trajectory.processingData;
 export const getConversionStatus = (state: State) =>
     state.trajectory.conversionStatus;
-export const getCurrentColorSettings = (state: State) =>
-    state.trajectory.currentColorSettings;
-export const getUserSelectedUIData = (state: State) =>
-    state.trajectory.userSelectedUIData;
 export const getDefaultUIData = (state: State) =>
     state.trajectory.defaultUIData;

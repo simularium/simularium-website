@@ -9,15 +9,12 @@ import {
     getSimulariumFile,
 } from "../trajectory/selectors";
 import {
-    setCurrentColorSettings,
-    setUserSelectedUIData,
-} from "../trajectory/actions";
-import { ColorSettings } from "../trajectory/types";
-import {
     CLEAR_COLOR_SELECTIONS_FROM_BROWSER_AND_STATE,
     GET_COLOR_SELECTIONS_FROM_BROWSER,
     APPLY_USER_COLOR_SELECTION,
 } from "./constants";
+import { setUserColorSelections, setCurrentColorSettings } from "./actions";
+import { ColorSettings } from "./types";
 
 /**
  * In response to user selections, this logic
@@ -56,7 +53,7 @@ const applyUserSelectedColorsLogic = createLogic({
         localStorage.setItem(fileKey, JSON.stringify(newUiData));
         // update redux state to store new color changes
         // and apply them via currentColorSettings
-        dispatch(setUserSelectedUIData(newUiData));
+        dispatch(setUserColorSelections(newUiData));
         dispatch(
             setCurrentColorSettings({
                 currentColorSettings: ColorSettings.UserSelected,
@@ -72,7 +69,7 @@ const clearSessionColorsLogic = createLogic({
         const { getState } = deps;
         const fileKey = getSimulariumFile(getState()).name;
         localStorage.removeItem(fileKey);
-        dispatch(setUserSelectedUIData([]));
+        dispatch(setUserColorSelections([]));
         done();
     },
     type: CLEAR_COLOR_SELECTIONS_FROM_BROWSER_AND_STATE,
@@ -91,7 +88,7 @@ const applySessionColorsLogic = createLogic({
             // store these settings but dont apply them until a matching
             // agent structure is verified
             if (defaultUIData.length === 0) {
-                dispatch(setUserSelectedUIData(uiData));
+                dispatch(setUserColorSelections(uiData));
                 done();
                 return;
             }
@@ -109,7 +106,7 @@ const applySessionColorsLogic = createLogic({
                 done();
                 return;
             }
-            dispatch(setUserSelectedUIData(uiData));
+            dispatch(setUserColorSelections(uiData));
             dispatch(
                 setCurrentColorSettings({
                     currentColorSettings: ColorSettings.UserSelected,

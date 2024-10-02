@@ -1,7 +1,7 @@
 import { initialState } from "../../index";
 import { State } from "../../types";
 
-import { ColorSettings } from "../types";
+import { ColorSettings } from "../../selection/types";
 import {
     getCurrentUIData,
     getDefaultUISettingsApplied,
