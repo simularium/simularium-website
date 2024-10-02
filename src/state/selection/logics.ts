@@ -92,7 +92,7 @@ const applySessionColorsLogic = createLogic({
                 done();
                 return;
             }
-            // if default UI data has been received, checl that the
+            // if default UI data has been received, check that the
             // agent tree structures match before applying the stored
             // color settings
             const agentStructuresMatch = compareAgentTrees(
