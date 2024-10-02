@@ -68,13 +68,13 @@ export interface ResetAction {
     type: string;
 }
 
-export interface SetRecentColorsAction {
-    payload: string[];
+export interface ApplyUserColorSelectionAction {
+    payload: ColorChange;
     type: string;
 }
 
-export interface ApplyUserColorSelectionAction {
-    payload: ColorChange;
+export interface SetRecentColorsAction {
+    payload: string[];
     type: string;
 }
 
