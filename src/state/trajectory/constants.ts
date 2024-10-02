@@ -7,9 +7,6 @@ const makeTrajectoryConstant = (constant: string) =>
 export const RECEIVE_TRAJECTORY = makeTrajectoryConstant("receive");
 export const REQUEST_TRAJECTORY = makeTrajectoryConstant("request");
 export const RECEIVE_AGENT_IDS = makeTrajectoryConstant("receive-ids");
-export const RECEIVE_AGENT_NAMES = makeTrajectoryConstant(
-    "receive-agent-names"
-);
 export const RECEIVE_SIMULARIUM_FILE = makeTrajectoryConstant(
     "receive-simularium-file"
 );
@@ -42,4 +39,7 @@ export const CANCEL_CONVERSION = makeTrajectoryConstant("cancel-conversion");
 export const SET_CONVERSION_STATUS = makeTrajectoryConstant("set-status");
 export const SET_CONVERSION_TITLE = makeTrajectoryConstant(
     "set-conversion-title"
+);
+export const SET_DEFAULT_UI_DATA = makeTrajectoryConstant(
+    "set-default-ui-data"
 );

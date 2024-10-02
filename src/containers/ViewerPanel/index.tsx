@@ -83,7 +83,7 @@ interface ViewerPanelProps {
     changeTime: ActionCreator<ChangeTimeAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
     receiveTrajectory: ActionCreator<ReceiveAction>;
-    receiveAgentNamesAndStates: ActionCreator<ReceiveAction>;
+    setDefaultUIData: ActionCreator<ReceiveAction>;
     selectionStateInfoForViewer: SelectionStateInfo;
     setIsPlaying: ActionCreator<ToggleAction>;
     setIsLooping: ActionCreator<ToggleAction>;
@@ -376,11 +376,11 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
-        const { receiveAgentNamesAndStates, setAgentsVisible } = this.props;
+        const { setDefaultUIData, setAgentsVisible } = this.props;
 
         const selectedAgents = convertUIDataToSelectionData(uiData);
         const actions = [
-            receiveAgentNamesAndStates(uiData),
+            setDefaultUIData(uiData),
             setAgentsVisible(selectedAgents),
         ];
         batchActions(actions);
@@ -571,8 +571,7 @@ const dispatchToPropsMap = {
     setAgentsVisible: selectionStateBranch.actions.setAgentsVisible,
     receiveTrajectory: trajectoryStateBranch.actions.receiveTrajectory,
     receiveAgentTypeIds: trajectoryStateBranch.actions.receiveAgentTypeIds,
-    receiveAgentNamesAndStates:
-        trajectoryStateBranch.actions.receiveAgentNamesAndStates,
+    setDefaultUIData: trajectoryStateBranch.actions.setDefaultUIData,
     setStatus: viewerStateBranch.actions.setStatus,
     dragOverViewer: viewerStateBranch.actions.dragOverViewer,
     resetDragOverViewer: viewerStateBranch.actions.resetDragOverViewer,
