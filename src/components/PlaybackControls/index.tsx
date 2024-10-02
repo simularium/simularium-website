@@ -14,6 +14,7 @@ import { Pause, Play } from "../Icons";
 import ViewportButton from "../ViewportButton";
 
 import styles from "./style.css";
+import { CameraHomeButton } from "../CameraControls/HomeButton";
 
 interface PlayBackProps {
     playHandler: (timeOverride?: number) => void;
@@ -149,18 +150,13 @@ const PlayBackControls = ({
         />
     );
 
-    const minimalEmbeddedControls = (
-        <div className={styles.embedContainer}>
+    const minimalControlsContainer = (
+        <div className={styles.minimalControlsContainer}>
             {PlayPauseButton}
             {TimeSlider}
             {displayType === PlaybackControlsDisplay.BottomOnly && (
                 <div className={styles.buttonContainer}>
-                    <ViewportButton
-                        tooltipText="PlaybackHome view (H)"
-                        tooltipPlacement="left"
-                        icon={getIconGlyphClasses(IconGlyphs.Reset)}
-                        clickHandler={resetCamera}
-                    />
+                    <CameraHomeButton resetCamera={resetCamera} />
                 </div>
             )}
         </div>
@@ -220,7 +216,7 @@ const PlayBackControls = ({
         <div className={styles.container}>
             {displayType === PlaybackControlsDisplay.Full
                 ? fullControls
-                : minimalEmbeddedControls}
+                : minimalControlsContainer}
         </div>
     );
 };

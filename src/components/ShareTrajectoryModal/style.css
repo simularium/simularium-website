@@ -66,6 +66,7 @@
 }
 
 .accent-text {
+    font-size: 16px;
     font-weight: 600;
 }
 
@@ -93,9 +94,4 @@
 .share-container h4 {
     font-size: 19px;
     margin: 0px;
-}
-
-.embed-preview-modal :global(.ant-modal-content) {
-    width: var(--embed-preview-modal-width); 
-    height: var(--embed-preview-modal-height);
 }

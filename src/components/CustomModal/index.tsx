@@ -64,7 +64,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
             onCancel={closeHandler}
             closable={false}
             title={title}
-            footer={footerButtons ? footer : null}
+            footer={footer}
             open
             centered
         />

@@ -88,7 +88,7 @@ const EmbedSnippetPanel = ({ startTime }: EmbedSnippetPanelProps) => {
                 >
                     {showEmbedSettingsPanel && (
                         <VerticalFlexbox gap={4}>
-                            <p className={styles.accentText}> Size </p>
+                            <h5 className={styles.accentText}> Size </h5>
                             <VerticalFlexbox gap={24}>
                                 <HorizontalFlexbox gap={8} alignItems="center">
                                     <Input
