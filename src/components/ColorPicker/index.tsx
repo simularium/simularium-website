@@ -54,6 +54,7 @@ const ColorPicker = ({
             color: newColor.toLowerCase(),
         };
         applyUserColorSelection(colorChange);
+        updateRecentColors(debouncedColor);
     };
 
     useEffect(() => {
