@@ -19,7 +19,6 @@ import {
     LocalSimFile,
     RequestLocalFileAction,
     RequestNetworkFileAction,
-    SetUrlParamsAction,
     CancelConversionAction,
 } from "../../state/trajectory/types";
 import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
@@ -78,7 +77,6 @@ interface AppProps {
     conversionProcessingData: ConversionProcessingData;
     conversionStatus: ConversionStatus;
     initializeConversion: ActionCreator<InitializeConversionAction>;
-    setUrlParams: ActionCreator<SetUrlParamsAction>;
     cancelAutoconversion: ActionCreator<CancelConversionAction>;
 }
 
@@ -242,6 +240,7 @@ class App extends React.Component<AppProps, AppState> {
             conversionStatus,
         } = this.props;
         const isEmbedded = location.pathname === EMBED_PATHNAME;
+
         return (
             <Layout
                 className={classNames([
@@ -262,6 +261,7 @@ class App extends React.Component<AppProps, AppState> {
                         >
                             <ModelPanel />
                         </SideBar>
+
                         <Content>
                             {simulariumController && (
                                 <ViewerPanel
@@ -270,6 +270,7 @@ class App extends React.Component<AppProps, AppState> {
                                 />
                             )}
                         </Content>
+
                         <SideBar
                             onCollapse={this.onPanelCollapse}
                             isEmbedded={isEmbedded}
