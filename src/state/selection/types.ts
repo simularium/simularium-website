@@ -73,11 +73,6 @@ export interface SetRecentColorsAction {
     type: string;
 }
 
-export interface ApplySessionColorChangeAction {
-    payload: ColorChange;
-    type: string;
-}
-
 export interface ApplyUserColorSelectionAction {
     payload: ColorChange;
     type: string;
