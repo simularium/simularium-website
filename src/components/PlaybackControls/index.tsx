@@ -14,6 +14,7 @@ import { Pause, Play } from "../Icons";
 import ViewportButton from "../ViewportButton";
 
 import styles from "./style.css";
+import { CameraHomeButton } from "../CameraControls/HomeButton";
 
 interface PlayBackProps {
     playHandler: (timeOverride?: number) => void;
@@ -155,12 +156,7 @@ const PlayBackControls = ({
             {TimeSlider}
             {displayType === PlaybackControlsDisplay.BottomOnly && (
                 <div className={styles.buttonContainer}>
-                    <ViewportButton
-                        tooltipText="Home view (H)"
-                        tooltipPlacement="left"
-                        icon={getIconGlyphClasses(IconGlyphs.Reset)}
-                        clickHandler={resetCamera}
-                    />
+                    <CameraHomeButton resetCamera={resetCamera} />
                 </div>
             )}
         </div>

@@ -8,6 +8,7 @@ import ViewportButton from "../ViewportButton";
 
 import styles from "./style.css";
 import { CameraControlsDisplay } from "../../containers/ViewerPanel/types";
+import { CameraHomeButton } from "./HomeButton";
 
 const PAN = "pan";
 const ROTATE = "rotate";
@@ -145,17 +146,10 @@ const CameraControls = ({
         lastKeyPressed.current = keyPressed;
     }, [keyPressed]);
 
-    const homeViewButton = (
-        <ViewportButton
-            tooltipText={"Home view (H)"}
-            tooltipPlacement="left"
-            icon={getIconGlyphClasses(IconGlyphs.Reset)}
-            clickHandler={resetCamera}
-        />
-    );
-
     const minimalControlsContainer = (
-        <div className={styles.container}>{homeViewButton}</div>
+        <div className={styles.container}>
+            <CameraHomeButton resetCamera={resetCamera} />
+        </div>
     );
 
     const fullControls = (
@@ -225,7 +219,7 @@ const CameraControls = ({
                     active={cameraProjectionType === PERSPECTIVE}
                 />
             </div>
-            {homeViewButton}
+            <CameraHomeButton resetCamera={resetCamera} />
         </div>
     );
 
