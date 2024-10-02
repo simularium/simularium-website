@@ -151,13 +151,15 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             firefox: ">=51",
             chrome: ">=56",
             edge: ">=79",
+            safari: ">=15",
         });
         if (!isBrowserSupported) {
             Modal.info({
                 title: "The browser you are using is not supported.",
                 content: (
                     <p>
-                        Please use Firefox, Chrome, or Edge. See more details{" "}
+                        Please use Chrome, Safari, Edge or Firefox. See more
+                        details{" "}
                         <a href={`${TUTORIAL_PATHNAME}#browser-support`}>
                             here
                         </a>{" "}
