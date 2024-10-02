@@ -377,7 +377,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
-        const { setAgentsVisible, setDefaultUIData } = this.props;
+        const { setDefaultUIData, setAgentsVisible } = this.props;
 
         const selectedAgents = convertUIDataToSelectionData(uiData);
         const actions = [

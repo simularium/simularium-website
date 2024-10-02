@@ -73,6 +73,15 @@ export function highlightAgentsByDisplayKey(
     };
 }
 
+export function applyUserColorSelection(
+    payload: ColorChange
+): ApplyUserColorSelectionAction {
+    return {
+        payload,
+        type: APPLY_USER_COLOR_SELECTION,
+    };
+}
+
 export function selectMetadata(
     key: string,
     payload: string | number
@@ -103,15 +112,6 @@ export function setSelectedAgentMetadata(
     return {
         payload: metaData,
         type: SET_SELECTED_AGENT,
-    };
-}
-
-export function applyUserColorSelection(
-    payload: ColorChange
-): ApplyUserColorSelectionAction {
-    return {
-        payload,
-        type: APPLY_USER_COLOR_SELECTION,
     };
 }
 

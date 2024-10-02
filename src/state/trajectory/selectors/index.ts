@@ -39,7 +39,7 @@ export const getCurrentUIData = createSelector(
 );
 
 export const getUiDisplayDataTree = createSelector(
-    [getCurrentUIData],
+    [getDefaultUIData],
     (uiDisplayData: UIDisplayData) => {
         if (!uiDisplayData.length) {
             return [];

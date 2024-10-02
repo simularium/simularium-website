@@ -18,11 +18,11 @@ export const SET_AGENTS_VISIBLE = makeSelectConstant("set-agents-visible");
 export const RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS = makeSelectConstant(
     "reset-selections-and-highlighted-agents"
 );
-export const SET_RECENT_COLORS = makeSelectConstant("set-recent-colors");
-export const SET_SELECTED_AGENT = makeSelectConstant("set-selected-agent");
 export const APPLY_USER_COLOR_SELECTION = makeSelectConstant(
     "apply-user-color-selection"
 );
+export const SET_RECENT_COLORS = makeSelectConstant("set-recent-colors");
+export const SET_SELECTED_AGENT = makeSelectConstant("set-selected-agent");
 export const GET_COLOR_SELECTIONS_FROM_BROWSER = makeSelectConstant(
     "get-ui-data-from-browser"
 );

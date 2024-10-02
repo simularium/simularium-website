@@ -214,7 +214,7 @@ class AgentTree extends React.Component<AgentTreeProps> {
     };
 
     renderParentColorPicker = (nodeData: AgentDisplayNode) => {
-        const { recentColors, setRecentColors, applyUserColorSelection } =
+        const { recentColors, applyUserColorSelection, setRecentColors } =
             this.props;
         const childrenHaveDifferentColors = !nodeData.children.every(
             (el) =>
@@ -238,7 +238,7 @@ class AgentTree extends React.Component<AgentTreeProps> {
         nodeData: AgentDisplayNode,
         value: CheckBoxWithColor
     ) => {
-        const { recentColors, setRecentColors, applyUserColorSelection } =
+        const { recentColors, applyUserColorSelection, setRecentColors } =
             this.props;
         return (
             <ColorPicker

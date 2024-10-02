@@ -131,7 +131,6 @@ export enum ConversionStatus {
     ServerConfirmed = "CONVERSION_SERVER_CONFIRMED",
     Active = "CONVERSION_ACTIVE",
 }
-
 export interface SetDefaultUIDataAction {
     payload: UIDisplayData;
     type: string;

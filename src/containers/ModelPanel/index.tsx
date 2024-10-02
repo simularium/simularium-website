@@ -198,10 +198,10 @@ const dispatchToPropsMap = {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
     setAgentsVisible,
+    applyUserColorSelection,
     setRecentColors,
     setCurrentColorSettings,
     clearUserSelectedColors,
-    applyUserColorSelection,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ModelPanel);
