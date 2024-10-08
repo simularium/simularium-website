@@ -19,14 +19,14 @@ import {
     ChangeAgentsRenderingStateAction,
     SetVisibleAction,
     SetRecentColorsAction,
-    ApplyUserColorSelectionAction,
+    ApplyUserColorAction,
 } from "../../state/selection/types";
 import {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
     setAgentsVisible,
     setRecentColors,
-    applyUserColorSelection,
+    applyUserColor,
 } from "../../state/selection/actions";
 import {
     getAgentVisibilityMap,
@@ -62,7 +62,7 @@ interface ModelPanelProps {
     isNetworkedFile: boolean;
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
     recentColors: string[];
-    applyUserColorSelection: ActionCreator<ApplyUserColorSelectionAction>;
+    applyUserColorSelection: ActionCreator<ApplyUserColorAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
     selectedAgentMetadata: AgentMetadata;
 }
@@ -147,7 +147,7 @@ const dispatchToPropsMap = {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
     setAgentsVisible,
-    applyUserColorSelection,
+    applyUserColorSelection: applyUserColor,
     setRecentColors,
 };
 

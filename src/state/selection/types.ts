@@ -67,7 +67,7 @@ export interface ResetAction {
     type: string;
 }
 
-export interface ApplyUserColorSelectionAction {
+export interface ApplyUserColorAction {
     payload: ColorChange;
     type: string;
 }

@@ -6,7 +6,7 @@ import { map, filter, isEmpty } from "lodash";
 
 import {
     ChangeAgentsRenderingStateAction,
-    ApplyUserColorSelectionAction,
+    ApplyUserColorAction,
     SetRecentColorsAction,
     SetVisibleAction,
     AgentRenderingCheckboxMap,
@@ -45,7 +45,7 @@ interface AgentTreeProps {
     payloadForSelectNone: AgentRenderingCheckboxMap;
     isSharedCheckboxIndeterminate: boolean;
     recentColors: string[];
-    applyUserColorSelection: ActionCreator<ApplyUserColorSelectionAction>;
+    applyUserColorSelection: ActionCreator<ApplyUserColorAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 const CHECKBOX_SPAN_NO = 2;

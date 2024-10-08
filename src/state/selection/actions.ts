@@ -9,7 +9,7 @@ import {
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
     SET_RECENT_COLORS,
     SET_SELECTED_AGENT,
-    APPLY_USER_COLOR_SELECTION,
+    APPLY_USER_COLOR,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -18,7 +18,7 @@ import {
     SetVisibleAction,
     AgentRenderingCheckboxMap,
     ResetAction,
-    ApplyUserColorSelectionAction,
+    ApplyUserColorAction,
     SetRecentColorsAction,
     SetSelectedAgentMetadataAction,
 } from "./types";
@@ -64,12 +64,10 @@ export function highlightAgentsByDisplayKey(
     };
 }
 
-export function applyUserColorSelection(
-    payload: ColorChange
-): ApplyUserColorSelectionAction {
+export function applyUserColor(payload: ColorChange): ApplyUserColorAction {
     return {
         payload,
-        type: APPLY_USER_COLOR_SELECTION,
+        type: APPLY_USER_COLOR,
     };
 }
 
