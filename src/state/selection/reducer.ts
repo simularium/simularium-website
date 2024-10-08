@@ -14,6 +14,7 @@ import {
     SET_COLOR_CHANGES,
     SET_RECENT_COLORS,
     SET_SELECTED_AGENT,
+    SET_PREVENT_GLOBAL_HOTKEYS,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -26,6 +27,7 @@ import {
     SetColorChangeAction,
     SetRecentColorsAction,
     SetSelectedAgentMetadataAction,
+    SetPreventGlobalHotkeysAction,
 } from "./types";
 
 export const initialState = {
@@ -36,6 +38,7 @@ export const initialState = {
     colorChange: null,
     recentColors: [],
     selectedAgentMetadata: {},
+    preventGlobalHotkeys: false,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -168,6 +171,20 @@ const actionToConfigMap: TypeToDescriptionMap = {
             return {
                 ...state,
                 selectedAgentMetadata: action.payload,
+            };
+        },
+    },
+    [SET_PREVENT_GLOBAL_HOTKEYS]: {
+        accepts: (action: AnyAction): action is SetPreventGlobalHotkeysAction =>
+            action.type === SET_PREVENT_GLOBAL_HOTKEYS,
+        perform: (
+            state: SelectionStateBranch,
+            action: SetPreventGlobalHotkeysAction
+        ) => {
+            console.log("preventGlobalHotkeys in reducer", action.payload);
+            return {
+                ...state,
+                preventGlobalHotkeys: action.payload,
             };
         },
     },

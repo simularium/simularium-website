@@ -11,6 +11,7 @@ import {
     SET_COLOR_CHANGES,
     SET_RECENT_COLORS,
     SET_SELECTED_AGENT,
+    SET_PREVENT_GLOBAL_HOTKEYS,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -22,6 +23,7 @@ import {
     SetColorChangeAction,
     SetRecentColorsAction,
     SetSelectedAgentMetadataAction,
+    SetPreventGlobalHotkeysAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -102,5 +104,14 @@ export function setSelectedAgentMetadata(
     return {
         payload: metaData,
         type: SET_SELECTED_AGENT,
+    };
+}
+
+export function setPreventGlobalHotkeys(
+    preventGlobalHotkeys: boolean
+): SetPreventGlobalHotkeysAction {
+    return {
+        payload: preventGlobalHotkeys,
+        type: SET_PREVENT_GLOBAL_HOTKEYS,
     };
 }

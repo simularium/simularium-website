@@ -82,3 +82,8 @@ export interface SetSelectedAgentMetadataAction {
     payload: AgentMetadata;
     type: string;
 }
+
+export interface SetPreventGlobalHotkeysAction {
+    payload: boolean;
+    type: string;
+}
