@@ -6,7 +6,7 @@ import { makeReducer } from "../util";
 import {
     RECEIVE_TRAJECTORY,
     RECEIVE_AGENT_IDS,
-    RECEIVE_AGENT_NAMES,
+    SET_DEFAULT_UI_DATA,
     RECEIVE_SIMULARIUM_FILE,
     CLEAR_SIMULARIUM_FILE,
     SET_CONVERSION_TEMPLATE,
@@ -28,6 +28,7 @@ import {
     ConversionStatus,
     ConvertFileAction,
     SetConversionTitleAction,
+    SetDefaultUIDataAction,
 } from "./types";
 
 export const initialState = {
@@ -37,7 +38,7 @@ export const initialState = {
     timeUnits: null,
     scaleBarLabel: "",
     agentIds: [],
-    agentUiNames: [],
+    defaultUIData: [],
     plotData: [],
     simulariumFile: {
         name: "",
@@ -71,14 +72,6 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: TrajectoryStateBranch, action: ReceiveAction) => ({
             ...state,
             agentIds: action.payload,
-        }),
-    },
-    [RECEIVE_AGENT_NAMES]: {
-        accepts: (action: AnyAction): action is ReceiveAction =>
-            action.type === RECEIVE_AGENT_NAMES,
-        perform: (state: TrajectoryStateBranch, action: ReceiveAction) => ({
-            ...state,
-            agentUiNames: action.payload,
         }),
     },
     [RECEIVE_SIMULARIUM_FILE]: {
@@ -188,6 +181,19 @@ const actionToConfigMap: TypeToDescriptionMap = {
             simulariumFile: action.payload,
             processingData: initialState.processingData,
         }),
+    },
+    [SET_DEFAULT_UI_DATA]: {
+        accepts: (action: AnyAction): action is SetDefaultUIDataAction =>
+            action.type === SET_DEFAULT_UI_DATA,
+        perform: (
+            state: TrajectoryStateBranch,
+            action: SetDefaultUIDataAction
+        ) => {
+            return {
+                ...state,
+                defaultUIData: action.payload,
+            };
+        },
     },
 };
 

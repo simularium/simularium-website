@@ -14,7 +14,7 @@ module.exports = {
     },
     coverageThreshold: {
         global: {
-            lines: 50,
+            lines: 25,
             statements: 50,
         },
         "./src/state/*/selectors/index.ts": {

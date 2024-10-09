@@ -40,7 +40,7 @@ const mockState: State = {
     ...initialState,
     trajectory: {
         ...initialState.trajectory,
-        agentUiNames: mockUIDisplayData,
+        defaultUIData: mockUIDisplayData,
     },
 };
 
