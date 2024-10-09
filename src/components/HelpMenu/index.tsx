@@ -1,25 +1,57 @@
-import * as React from "react";
-import { useLocation, Link } from "react-router-dom";
-import { Dropdown, MenuProps } from "antd";
+import React, { useRef } from "react";
+import { Link } from "react-router-dom";
+import { MenuProps } from "antd";
 
 import { TUTORIAL_PATHNAME } from "../../routes";
 import {
-    FORUM_URL,
     FORUM_BUG_REPORT_URL,
+    FORUM_URL,
     GITHUB_URL,
     ISSUE_URL,
 } from "../../constants";
 import { ButtonClass } from "../../constants/interfaces";
 import { DownArrow } from "../Icons";
 import VersionModal from "../VersionModal";
-import NavButton from "../NavButton";
+import AccessibleDropdown from "../AccessibleDropdown.tsx";
 
 import styles from "./style.css";
 
-const HelpMenu = (): JSX.Element => {
+interface HelpMenuProps {
+    containerRef: React.RefObject<HTMLElement>;
+    preventGlobalHotkeys: any;
+}
+
+const HelpMenu = ({
+    containerRef,
+    preventGlobalHotkeys,
+}: HelpMenuProps): JSX.Element => {
     const [modalVisible, setModalVisible] = React.useState(false);
 
-    const location = useLocation();
+    const subMenuTriggerRef = useRef<HTMLAnchorElement>(null);
+
+    const subMenuItems: MenuProps["items"] = [
+        {
+            key: "via-github",
+            label: (
+                <a href={ISSUE_URL} target="_blank" rel="noopener noreferrer">
+                    via GitHub (preferred)
+                </a>
+            ),
+        },
+        {
+            key: "via-forum",
+            label: (
+                <a
+                    href={FORUM_BUG_REPORT_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    via Forum (for non-GitHub users)
+                </a>
+            ),
+        },
+    ];
+
     const tutorialLink =
         location.pathname === "/viewer" ? (
             <Link
@@ -56,42 +88,20 @@ const HelpMenu = (): JSX.Element => {
         },
         {
             key: "submit-issue",
-            label: "Submit issue",
-            popupClassName: styles.submenu,
-            popupOffset: [-0.45, -4],
-            children: [
-                {
-                    key: "via-github",
-                    label: (
-                        <a
-                            href={ISSUE_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            via GitHub (preferred)
-                        </a>
-                    ),
-                },
-                {
-                    key: "via-forum",
-                    label: (
-                        <a
-                            href={FORUM_BUG_REPORT_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            via Forum (for non-GitHub users)
-                        </a>
-                    ),
-                },
-            ],
+            label: (
+                <a ref={subMenuTriggerRef} id={"submenu-trigger"} href="#">
+                    Submit an issue
+                </a>
+            ),
         },
         {
             key: "version",
             label: (
                 <a
-                    onClick={() => {
-                        setModalVisible(!modalVisible);
+                    href="#" // <a> tag is not focusable without href
+                    onClick={(e) => {
+                        e.preventDefault();
+                        setModalVisible(true);
                     }}
                 >
                     Version info
@@ -101,16 +111,27 @@ const HelpMenu = (): JSX.Element => {
     ];
 
     return (
-        <>
-            <Dropdown menu={{ items, theme: "dark", className: styles.menu }}>
-                <NavButton
-                    titleText={"Help "}
-                    icon={DownArrow}
-                    buttonType={ButtonClass.Secondary}
+        <div>
+            <AccessibleDropdown
+                containerRef={containerRef}
+                preventGlobalHotkeys={preventGlobalHotkeys}
+                items={items}
+                className={styles.menu}
+                buttonText={"Help "}
+                buttonIcon={DownArrow}
+                buttonType={ButtonClass.Secondary}
+                subMenuTriggerRef={subMenuTriggerRef}
+                submenuTriggerKey="submit-issue"
+                subMenuItems={subMenuItems}
+                subMenuClassName={styles.submitIssueSubmenu}
+            />
+            {modalVisible && (
+                <VersionModal
+                    setModalVisible={() => setModalVisible(false)}
+                    isVisible={modalVisible}
                 />
-            </Dropdown>
-            {modalVisible && <VersionModal setModalVisible={setModalVisible} />}
-        </>
+            )}
+        </div>
     );
 };
 
