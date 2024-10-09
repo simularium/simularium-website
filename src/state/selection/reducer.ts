@@ -181,7 +181,6 @@ const actionToConfigMap: TypeToDescriptionMap = {
             state: SelectionStateBranch,
             action: SetPreventGlobalHotkeysAction
         ) => {
-            console.log("preventGlobalHotkeys in reducer", action.payload);
             return {
                 ...state,
                 preventGlobalHotkeys: action.payload,

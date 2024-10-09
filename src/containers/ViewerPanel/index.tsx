@@ -101,6 +101,7 @@ interface ViewerPanelProps {
     receiveConvertedFile: ActionCreator<ReceiveAction>;
     conversionProcessingData: ConversionProcessingData;
     setSelectedAgentMetadata: ActionCreator<SetSelectedAgentMetadataAction>;
+    preventGlobalHotkeys: boolean;
 }
 
 interface ViewerPanelState {
@@ -384,15 +385,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         batchActions(actions);
     };
 
-    public handleArrowKeyDown = (event: React.KeyboardEvent) => {
-        const { simulariumController } = this.props;
-        if (event.key === "ArrowUp") {
-            simulariumController.zoomIn();
-        } else if (event.key === "ArrowDown") {
-            simulariumController.zoomOut();
-        }
-    };
-
     public resetAfterMovieRecording = () => {
         if (this.state.movieURL) {
             URL.revokeObjectURL(this.state.movieURL);
@@ -449,13 +441,10 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setError,
             scaleBarLabel,
             movieTitle,
+            preventGlobalHotkeys,
         } = this.props;
         return (
-            <div
-                ref={this.centerContent}
-                className={styles.container}
-                onKeyDown={this.handleArrowKeyDown}
-            >
+            <div ref={this.centerContent} className={styles.container}>
                 <SimulariumViewer
                     height={this.state.height}
                     width={this.state.width}
@@ -524,6 +513,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     setPanningMode={simulariumController.setPanningMode}
                     setFocusMode={simulariumController.setFocusMode}
                     setCameraType={simulariumController.setCameraType}
+                    preventGlobalHotkeys={preventGlobalHotkeys}
                 />
             </div>
         );
@@ -561,6 +551,8 @@ function mapStateToProps(state: State) {
             trajectoryStateBranch.selectors.getConversionStatus(state),
         conversionProcessingData:
             trajectoryStateBranch.selectors.getConversionProcessingData(state),
+        preventGlobalHotkeys:
+            selectionStateBranch.selectors.getPreventGlobalHotkeys(state),
     };
 }
 

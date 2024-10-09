@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useHotkeys, useIsHotkeyPressed } from "react-hotkeys-hook";
 
 import { IconGlyphs } from "../../constants/interfaces";
@@ -33,6 +33,7 @@ interface CameraControlsProps {
     setPanningMode: (value: boolean) => void;
     setFocusMode: (value: boolean) => void;
     setCameraType: (value: boolean) => void;
+    preventGlobalHotkeys: boolean;
 }
 
 const CameraControls = ({
@@ -42,6 +43,7 @@ const CameraControls = ({
     setPanningMode,
     setFocusMode,
     setCameraType,
+    preventGlobalHotkeys,
 }: CameraControlsProps): JSX.Element => {
     const [isFocused, saveFocusMode] = useState(true);
     const [mode, setMode] = useState(ROTATE);
@@ -64,9 +66,34 @@ const CameraControls = ({
         }, "");
     };
 
+    /**
+     * Global toggle in Redux used when focus trapping menus are open,
+     * individual elements that need to capture hotkeys
+     * can use class "prevent-global-hotkeys" to prevent
+     * global hotkeys from being triggered
+     */
+
+    const globalHotkeyPrevented = (event: KeyboardEvent) => {
+        if (preventGlobalHotkeys) {
+            return true;
+        }
+        const target = event.target as HTMLElement;
+        if (
+            target &&
+            target.closest(".prevent-global-hotkeys") &&
+            (event.type === "keydown" || event.type === "keyup")
+        ) {
+            return true;
+        }
+        return false;
+    };
+
     useHotkeys(
         "*",
         (event) => {
+            if (globalHotkeyPrevented(event)) {
+                return;
+            }
             if (
                 CAMERA_MODE_MODIFIER_KEYS.includes(event.key) ||
                 HOT_KEYS.includes(event.key)
@@ -74,7 +101,8 @@ const CameraControls = ({
                 return setKeyPressed(event.key);
             }
         },
-        { keydown: true }
+        { keydown: true },
+        [preventGlobalHotkeys]
     );
 
     useHotkeys(
