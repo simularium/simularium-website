@@ -126,10 +126,7 @@ const HelpMenu = ({
                 subMenuClassName={styles.submitIssueSubmenu}
             />
             {modalVisible && (
-                <VersionModal
-                    setModalVisible={() => setModalVisible(false)}
-                    isVisible={modalVisible}
-                />
+                <VersionModal setModalVisible={() => setModalVisible(false)} />
             )}
         </div>
     );
