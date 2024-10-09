@@ -10,12 +10,14 @@ interface DownloadTrajectoryMenuProps {
     isBuffering: boolean;
     isNetworkedFile: boolean;
     simulariumFile: LocalSimFile | NetworkedSimFile;
+    className?: string;
 }
 
 const DownloadTrajectoryMenu = ({
     isBuffering,
     simulariumFile,
     isNetworkedFile,
+    className,
 }: DownloadTrajectoryMenuProps): JSX.Element => {
     const fileName = simulariumFile.name;
     const isDisabled = !fileName || isBuffering;
@@ -53,6 +55,7 @@ const DownloadTrajectoryMenu = ({
                 disabled: "Load a model to perform this action",
             }}
             tooltipPlacement="bottomLeft"
+            className={className}
         />
     );
 };

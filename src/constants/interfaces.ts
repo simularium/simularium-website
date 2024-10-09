@@ -84,3 +84,9 @@ export interface MetadataDisplay {
     label: JSX.Element;
     value: () => JSX.Element | string;
 }
+
+export enum DropdownState {
+    OPEN = "open",
+    CLOSED = "closed",
+    FORCED_OPEN = "forced_open",
+}

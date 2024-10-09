@@ -26,16 +26,16 @@
     margin-right: 2em;
 }
 
-.home {
+/* .home {
     margin-left: 2px;
     margin-right: 20px;
     font-weight: 400;
     font-size: 12px;
-}
+} */
 
 .vertical-bar {
     display: inline-block;
-    margin-right: 14px;
+    margin-right: 8px;
     margin-left: 14px;
     color: var(--dark-theme-header-text);
     font-size: 16px;
@@ -45,6 +45,11 @@
 .pipe {
     padding-left: 2px;
     color: var(--text-gray);
+}
+
+.share-download {
+    margin-left: -8px;
+    margin-right: -8px;
 }
 
 /* For large screens only */

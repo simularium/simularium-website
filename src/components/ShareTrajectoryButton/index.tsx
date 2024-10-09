@@ -9,11 +9,13 @@ import NavButtonWithTooltip from "../NavButtonWithTooltip";
 interface ShareTrajectoryButtonProps {
     isBuffering: boolean;
     simulariumFile: LocalSimFile | NetworkedSimFile;
+    className: string;
 }
 
 const ShareTrajectoryButton = ({
     isBuffering,
     simulariumFile,
+    className,
 }: ShareTrajectoryButtonProps): JSX.Element => {
     const [isSharing, setIsSharing] = React.useState(false);
 
@@ -40,6 +42,7 @@ const ShareTrajectoryButton = ({
                     default: "Share trajectory",
                     disabled: "Load a model to perform this action",
                 }}
+                className={className}
             />
         </>
     );

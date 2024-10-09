@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
@@ -17,8 +17,13 @@ import {
 import LoadFileMenu from "../../components/LoadFileMenu";
 import ViewerTitle from "../../components/ViewerTitle";
 import HelpMenu from "../../components/HelpMenu";
+import ShareTrajectoryButton from "../../components/ShareTrajectoryButton";
+import DownloadTrajectoryMenu from "../../components/DownloadTrajectoryMenu";
+import NavButton from "../../components/NavButton";
 import { AicsLogo } from "../../components/Icons";
 import { State } from "../../state/types";
+import { selection } from "../../state";
+import { SetPreventGlobalHotkeysAction } from "../../state/selection/types";
 import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
 import {
@@ -27,9 +32,6 @@ import {
 } from "../../state/viewer/types";
 
 import styles from "./style.css";
-import ShareTrajectoryButton from "../../components/ShareTrajectoryButton";
-import DownloadTrajectoryMenu from "../../components/DownloadTrajectoryMenu";
-import NavButton from "../../components/NavButton";
 
 interface AppHeaderProps {
     simulariumFile: LocalSimFile | NetworkedSimFile;
@@ -42,6 +44,7 @@ interface AppHeaderProps {
     setError: ActionCreator<SetErrorAction>;
     conversionStatus: ConversionStatus;
     setConversionStatus: ActionCreator<SetConversionStatusAction>;
+    preventGlobalHotkeys: ActionCreator<SetPreventGlobalHotkeysAction>;
 }
 
 const AppHeader: React.FC<AppHeaderProps> = ({
@@ -55,6 +58,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
     isNetworkedFile,
     conversionStatus,
     setConversionStatus,
+    preventGlobalHotkeys,
 }) => {
     const history = useHistory();
 
@@ -67,8 +71,10 @@ const AppHeader: React.FC<AppHeaderProps> = ({
         displayName = simulariumFile.title;
     }
 
+    const headerRef = useRef<HTMLDivElement>(null);
+
     return (
-        <div className={styles.pageHeader}>
+        <div className={styles.pageHeader} ref={headerRef}>
             <div className={styles.leftLinks}>
                 <a
                     href="https://allencell.org"
@@ -103,13 +109,19 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                     conversionStatus={conversionStatus}
                     setConversionStatus={setConversionStatus}
                 />
-                <HelpMenu key="help" />
+                <HelpMenu
+                    key="help"
+                    containerRef={headerRef}
+                    preventGlobalHotkeys={preventGlobalHotkeys}
+                />
                 <DownloadTrajectoryMenu
+                    className={styles.shareDownload}
                     isBuffering={isBuffering}
                     simulariumFile={simulariumFile}
                     isNetworkedFile={isNetworkedFile}
                 />
                 <ShareTrajectoryButton
+                    className={styles.shareDownload}
                     simulariumFile={simulariumFile}
                     isBuffering={isBuffering}
                 />
@@ -138,6 +150,7 @@ const dispatchToPropsMap = {
     setViewerStatus: viewerStateBranch.actions.setStatus,
     setError: viewerStateBranch.actions.setError,
     setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
+    preventGlobalHotkeys: selection.actions.setPreventGlobalHotkeys,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(AppHeader);
