@@ -21,8 +21,7 @@ import { VIEWER_PATHNAME } from "../../routes";
 import { DownArrow } from "../Icons";
 import FileUploadModal from "../FileUploadModal";
 import NavButton from "../NavButton";
-
-import styles from "./style.css";
+import CustomDropdown from "../CustomDropdown";
 
 interface LoadFileMenuProps {
     isBuffering: boolean;
@@ -73,7 +72,6 @@ const LoadFileMenu = ({
         {
             key: "from-examples",
             label: "Example models",
-            popupClassName: styles.submenu,
             popupOffset: [-0.45, -4],
             children: TRAJECTORIES.map((trajectory) => ({
                 key: trajectory.id,
@@ -119,18 +117,14 @@ const LoadFileMenu = ({
 
     return (
         <>
-            <Dropdown
-                menu={{ items, theme: "dark", className: styles.menu }}
+            <CustomDropdown
+                items={items}
+                titleText={"Load model"}
+                icon={DownArrow}
+                buttonType={ButtonClass.Primary}
                 placement="bottomRight"
                 disabled={isDisabled}
-            >
-                <NavButton
-                    titleText={"Load model"}
-                    icon={DownArrow}
-                    buttonType={ButtonClass.Primary}
-                    isDisabled={isDisabled}
-                />
-            </Dropdown>
+            />
             {/* 
                 Conditionally rendering the modal this way instead of as a `visible` prop
                 forces it to re-render every time it is opened, resetting the form inside.

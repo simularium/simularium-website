@@ -1,28 +1,23 @@
 .menu {
-    border-radius: 6px;
+    width: var(--dropdown-menu-width);
+}
+
+.menu.narrow {
     width: calc(var(--dropdown-menu-width) - 50px);
-    box-shadow: 0 1px 3px black;
 }
 
 .menu svg {
     fill: var(--dark-theme-menu-text-color);
 }
 
-.submenu {
-    box-shadow: 0 1px 3px black;
-    padding: 0;
-    width: fit-content;
-}
-
 .menu :global(.ant-dropdown-menu-item):focus-within,
-.menu :global(.ant-dropdown-menu-submenu):focus-within,
-.submenu :global(.ant-dropdown-menu-item):focus-within {
+.menu :global(.ant-dropdown-menu-submenu):focus-within {
     outline: 1px solid var(--dark-theme-dropdown-menu-item-focus-border);
     border-radius: 6px;
     outline-offset: -2px;
 }
 .menu :global(.ant-dropdown-menu-item) a,
-.submenu :global(.ant-dropdown-menu-item) a {
+.menu :global(.ant-dropdown-menu-submenu) a {
     color: var(--dark-theme-dropdown-menu-item-color);
 }
 
@@ -32,6 +27,6 @@
 }
 
 .menu :global(.ant-dropdown-menu-item) a:hover,
-.submenu :global(.ant-dropdown-menu-item) a:hover {
+.menu :global(.ant-dropdown-menu-submenu) a:hover {
     color: var(--dark-theme-dropdown-menu-item-hover-color);
 }
