@@ -30,6 +30,7 @@ import styles from "./style.css";
 import ShareTrajectoryButton from "../../components/ShareTrajectoryButton";
 import DownloadTrajectoryMenu from "../../components/DownloadTrajectoryMenu";
 import NavButton from "../../components/NavButton";
+import { ButtonClass } from "../../constants/interfaces";
 
 interface AppHeaderProps {
     simulariumFile: LocalSimFile | NetworkedSimFile;
@@ -70,6 +71,14 @@ const AppHeader: React.FC<AppHeaderProps> = ({
     return (
         <div className={styles.pageHeader}>
             <div className={styles.leftLinks}>
+                {/* <NavButton
+                    href="https://allencell.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    icon={AicsLogo}
+                    buttonType={ButtonClass.Action}
+                /> */}
+
                 <a
                     href="https://allencell.org"
                     title="Allen Cell Explorer"

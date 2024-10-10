@@ -57,6 +57,7 @@
     --dark-theme-action-button-color: var(--baby-purple);
     --dark-theme-action-button-hover-color: var(--light-purple-two);
     --dark-theme-action-button-focus-color: var(--light-purple-two);
+    --dark-theme-primary-button-focus-outline: var(--light-purple-two);
     --dark-theme-action-button-disabled-color: var(--dim-gray-two);
     /* dark theme primary buttons */
     --dark-theme-primary-button-bg: var(--baby-purple);
