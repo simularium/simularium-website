@@ -94,9 +94,11 @@ const LoadFileMenu = ({
         {
             key: "file-upload",
             label: (
-                <Button type="ghost" onClick={showModal}>
-                    Simularium file
-                </Button>
+                <NavButton
+                    titleText={"Simularium file"}
+                    clickHandler={showModal}
+                    buttonType={ButtonClass.DropdownItem}
+                />
             ),
         },
         {
