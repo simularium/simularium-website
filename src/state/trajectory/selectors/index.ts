@@ -6,7 +6,7 @@ import {
     LocalSimFile,
     NetworkedSimFile,
 } from "../types";
-import { getSimulariumFile, getDefaultUIData } from "./basic";
+import { getSimulariumFile, getDefaultUIDisplayData } from "./basic";
 
 export const getIsNetworkedFile = createSelector(
     [getSimulariumFile],
@@ -19,7 +19,7 @@ export const getIsNetworkedFile = createSelector(
 );
 
 export const getUiDisplayDataTree = createSelector(
-    [getDefaultUIData],
+    [getDefaultUIDisplayData],
     (uiDisplayData: UIDisplayData) => {
         if (!uiDisplayData.length) {
             return [];

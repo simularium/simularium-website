@@ -2,14 +2,14 @@ import { createLogic } from "redux-logic";
 import { UIDisplayData } from "@aics/simularium-viewer";
 
 import { ReduxLogicDeps } from "../types";
-import { getDefaultUIData } from "../trajectory/selectors";
+import { getDefaultUIDisplayData } from "../trajectory/selectors";
 import { setDefaultUIData } from "../trajectory/actions";
 import { APPLY_USER_COLOR } from "./constants";
 
 const storeColorsLogic = createLogic({
     process(deps: ReduxLogicDeps, dispatch, done) {
         const { action, getState } = deps;
-        const uiData: UIDisplayData = getDefaultUIData(getState());
+        const uiData: UIDisplayData = getDefaultUIDisplayData(getState());
         const colorChange = action.payload;
         const newUiData = uiData.map((agent) => {
             const newAgent = { ...agent };

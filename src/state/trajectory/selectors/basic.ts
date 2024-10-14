@@ -16,5 +16,5 @@ export const getConversionProcessingData = (state: State) =>
     state.trajectory.processingData;
 export const getConversionStatus = (state: State) =>
     state.trajectory.conversionStatus;
-export const getDefaultUIData = (state: State) =>
+export const getDefaultUIDisplayData = (state: State) =>
     state.trajectory.defaultUIData;
