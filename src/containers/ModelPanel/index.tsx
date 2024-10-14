@@ -62,7 +62,7 @@ interface ModelPanelProps {
     isNetworkedFile: boolean;
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
     recentColors: string[];
-    applyUserColorSelection: ActionCreator<ApplyUserColorAction>;
+    applyUserColor: ActionCreator<ApplyUserColorAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
     selectedAgentMetadata: AgentMetadata;
 }
@@ -81,7 +81,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     isNetworkedFile,
     changeToNetworkedFile: loadNetworkFile,
     recentColors,
-    applyUserColorSelection,
+    applyUserColor,
     setRecentColors,
     selectedAgentMetadata,
 }): JSX.Element => {
@@ -97,7 +97,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
             payloadForSelectNone={payloadForSelectNone}
             isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
             recentColors={recentColors}
-            applyUserColorSelection={applyUserColorSelection}
+            applyUserColor={applyUserColor}
             setRecentColors={setRecentColors}
         />
     );
@@ -147,7 +147,7 @@ const dispatchToPropsMap = {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
     setAgentsVisible,
-    applyUserColorSelection: applyUserColor,
+    applyUserColor,
     setRecentColors,
 };
 

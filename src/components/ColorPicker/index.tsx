@@ -20,7 +20,7 @@ interface ColorPickerProps {
     agentName: string;
     tags: string[];
     recentColors: string[];
-    applyUserColorSelection: ActionCreator<ApplyUserColorAction>;
+    applyUserColor: ActionCreator<ApplyUserColorAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 
@@ -28,7 +28,7 @@ const ColorPicker = ({
     agentName,
     tags,
     recentColors,
-    applyUserColorSelection,
+    applyUserColor,
     setRecentColors,
     selectedColor: initialColor,
     childrenHaveDifferentColors,
@@ -53,7 +53,7 @@ const ColorPicker = ({
             agent: { name: agentName, tags: tags },
             color: newColor.toLowerCase(),
         };
-        applyUserColorSelection(colorChange);
+        applyUserColor(colorChange);
     };
 
     useEffect(() => {
