@@ -6,12 +6,12 @@ import {
     getTimeStep,
     getFirstFrameTimeOfCachedSimulation,
     getSimulariumFile,
-    getDefaultUIDisplayData,
 } from "../../state/trajectory/selectors";
 import {
     getAgentsToHide,
     getCurrentTime,
     getHighlightedAgents,
+    getSelectedUIDisplayData,
 } from "../../state/selection/selectors";
 import { AgentRenderingCheckboxMap } from "../../state/selection/types";
 import { roundTimeForDisplay } from "../../util";
@@ -19,7 +19,7 @@ import { DisplayTimes } from "./types";
 import { isNetworkSimFileInterface } from "../../state/trajectory/types";
 
 export const getSelectionStateInfoForViewer = createSelector(
-    [getHighlightedAgents, getAgentsToHide, getDefaultUIDisplayData],
+    [getHighlightedAgents, getAgentsToHide, getSelectedUIDisplayData],
     (highlightedAgents, hiddenAgents, appliedColors): SelectionStateInfo => ({
         highlightedAgents,
         hiddenAgents,
