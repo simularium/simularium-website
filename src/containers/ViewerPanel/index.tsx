@@ -386,15 +386,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         batchActions(actions);
     };
 
-    public handleArrowKeyDown = (event: React.KeyboardEvent) => {
-        const { simulariumController } = this.props;
-        if (event.key === "ArrowUp") {
-            simulariumController.zoomIn();
-        } else if (event.key === "ArrowDown") {
-            simulariumController.zoomOut();
-        }
-    };
-
     public resetAfterMovieRecording = () => {
         if (this.state.movieURL) {
             URL.revokeObjectURL(this.state.movieURL);
@@ -453,11 +444,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             movieTitle,
         } = this.props;
         return (
-            <div
-                ref={this.centerContent}
-                className={styles.container}
-                onKeyDown={this.handleArrowKeyDown}
-            >
+            <div ref={this.centerContent} className={styles.container}>
                 <SimulariumViewer
                     height={this.state.height}
                     width={this.state.width}
