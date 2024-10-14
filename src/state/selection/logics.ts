@@ -2,6 +2,7 @@ import { createLogic } from "redux-logic";
 import { UIDisplayData } from "@aics/simularium-viewer";
 
 import { ReduxLogicDeps } from "../types";
+import { getSimulariumFile } from "../trajectory/selectors";
 import { APPLY_USER_COLOR } from "./constants";
 import { getSelectedUIDisplayData } from "./selectors";
 import { setSelectedUIDisplayData } from "./actions";
@@ -33,6 +34,9 @@ const storeColorsLogic = createLogic({
             return newAgent;
         });
         dispatch(setSelectedUIDisplayData(newUiData));
+        // store color changes in local browser storage
+        const fileKey = getSimulariumFile(getState()).name;
+        localStorage.setItem(fileKey, JSON.stringify(newUiData));
         done();
     },
     type: APPLY_USER_COLOR,
