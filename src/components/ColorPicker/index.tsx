@@ -8,7 +8,7 @@ import { useDebounce } from "use-debounce";
 import { AGENT_COLORS } from "../../containers/ViewerPanel/constants";
 import { ColorChange } from "../../constants/interfaces";
 import {
-    SetColorChangeAction,
+    ApplyUserColorAction,
     SetRecentColorsAction,
 } from "../../state/selection/types";
 
@@ -20,7 +20,7 @@ interface ColorPickerProps {
     agentName: string;
     tags: string[];
     recentColors: string[];
-    setColorChange: ActionCreator<SetColorChangeAction>;
+    applyUserColor: ActionCreator<ApplyUserColorAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 
@@ -28,7 +28,7 @@ const ColorPicker = ({
     agentName,
     tags,
     recentColors,
-    setColorChange,
+    applyUserColor,
     setRecentColors,
     selectedColor: initialColor,
     childrenHaveDifferentColors,
@@ -53,7 +53,7 @@ const ColorPicker = ({
             agent: { name: agentName, tags: tags },
             color: newColor.toLowerCase(),
         };
-        setColorChange(colorChange);
+        applyUserColor(colorChange);
     };
 
     useEffect(() => {
