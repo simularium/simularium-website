@@ -6,7 +6,7 @@ import { map, filter, isEmpty } from "lodash";
 
 import {
     ChangeAgentsRenderingStateAction,
-    SetColorChangeAction,
+    ApplyUserColorAction,
     SetRecentColorsAction,
     SetVisibleAction,
     AgentRenderingCheckboxMap,
@@ -45,7 +45,7 @@ interface AgentTreeProps {
     payloadForSelectNone: AgentRenderingCheckboxMap;
     isSharedCheckboxIndeterminate: boolean;
     recentColors: string[];
-    setColorChange: ActionCreator<SetColorChangeAction>;
+    applyUserColor: ActionCreator<ApplyUserColorAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 const CHECKBOX_SPAN_NO = 2;
@@ -214,7 +214,7 @@ class AgentTree extends React.Component<AgentTreeProps> {
     };
 
     renderParentColorPicker = (nodeData: AgentDisplayNode) => {
-        const { recentColors, setColorChange, setRecentColors } = this.props;
+        const { recentColors, applyUserColor, setRecentColors } = this.props;
         const childrenHaveDifferentColors = !nodeData.children.every(
             (el) =>
                 el.color.toLowerCase() ===
@@ -227,7 +227,7 @@ class AgentTree extends React.Component<AgentTreeProps> {
                 agentName={nodeData.title}
                 tags={this.getAgentTags(nodeData.title)}
                 recentColors={recentColors}
-                setColorChange={setColorChange}
+                applyUserColor={applyUserColor}
                 setRecentColors={setRecentColors}
             />
         );
@@ -237,14 +237,14 @@ class AgentTree extends React.Component<AgentTreeProps> {
         nodeData: AgentDisplayNode,
         value: CheckBoxWithColor
     ) => {
-        const { recentColors, setColorChange, setRecentColors } = this.props;
+        const { recentColors, applyUserColor, setRecentColors } = this.props;
         return (
             <ColorPicker
                 selectedColor={value.color || nodeData.color}
                 agentName={nodeData.title}
                 tags={[value.value as string]}
                 recentColors={recentColors}
-                setColorChange={setColorChange}
+                applyUserColor={applyUserColor}
                 setRecentColors={setRecentColors}
             />
         );
