@@ -11,6 +11,7 @@ import {
     SET_BUFFERING,
     SET_IS_PLAYING,
     SET_IS_LOOPING,
+    SET_EMBED_FULLSCREEN,
 } from "./constants";
 import {
     ViewerStateBranch,
@@ -29,6 +30,7 @@ export const initialState = {
     isBuffering: false,
     isPlaying: false,
     isLooping: false,
+    isFullScreen: false,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -95,6 +97,14 @@ const actionToConfigMap: TypeToDescriptionMap = {
         perform: (state: ViewerStateBranch, action: ToggleAction) => ({
             ...state,
             isLooping: action.payload,
+        }),
+    },
+    [SET_EMBED_FULLSCREEN]: {
+        accepts: (action: AnyAction): action is ToggleAction =>
+            action.type === SET_EMBED_FULLSCREEN,
+        perform: (state: ViewerStateBranch, action: ToggleAction) => ({
+            ...state,
+            isFullScreen: action.payload,
         }),
     },
 };

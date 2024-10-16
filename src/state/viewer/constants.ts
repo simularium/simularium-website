@@ -10,3 +10,4 @@ export const RESET_DRAG_FILE_OVER = makeViewerConstant("reset-drag-file-over");
 export const SET_BUFFERING = makeViewerConstant("set-buffering");
 export const SET_IS_PLAYING = makeViewerConstant("set-is-playing");
 export const SET_IS_LOOPING = makeViewerConstant("set-is-looping");
+export const SET_EMBED_FULLSCREEN = makeViewerConstant("set-embed-fullscreen");
