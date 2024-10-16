@@ -1,10 +1,9 @@
-import { SimulariumController } from "@aics/simularium-viewer";
+import { SimulariumController, UIDisplayData } from "@aics/simularium-viewer";
 
 import {
     RECEIVE_TRAJECTORY,
     REQUEST_TRAJECTORY,
     RECEIVE_AGENT_IDS,
-    RECEIVE_AGENT_NAMES,
     RECEIVE_SIMULARIUM_FILE,
     LOAD_LOCAL_FILE_IN_VIEWER,
     LOAD_NETWORKED_FILE_IN_VIEWER,
@@ -19,6 +18,8 @@ import {
     CONVERT_FILE,
     RECEIVE_CONVERTED_FILE,
     CANCEL_CONVERSION,
+    SET_CONVERSION_TITLE,
+    SET_DEFAULT_UI_DATA,
 } from "./constants";
 import { AvailableEngines } from "./conversion-data-types";
 import {
@@ -40,6 +41,8 @@ import {
     ConvertFileAction,
     ConversionStatus,
     CancelConversionAction,
+    SetConversionTitleAction,
+    SetDefaultUIDataAction,
 } from "./types";
 
 export function receiveTrajectory(
@@ -72,15 +75,6 @@ export function receiveAgentTypeIds(
     return {
         payload,
         type: RECEIVE_AGENT_IDS,
-    };
-}
-
-export function receiveAgentNamesAndStates(
-    payload: TrajectoryStateBranch
-): ReceiveAction {
-    return {
-        payload,
-        type: RECEIVE_AGENT_NAMES,
     };
 }
 
@@ -177,6 +171,13 @@ export function setConversionEngine(
     };
 }
 
+export function setConversionTitle(payload: string): SetConversionTitleAction {
+    return {
+        payload,
+        type: SET_CONVERSION_TITLE,
+    };
+}
+
 export function convertFile(payload: { fileId: string }): ConvertFileAction {
     return {
         payload,
@@ -194,5 +195,14 @@ export function receiveConvertedFile(payload: NetworkedSimFile): ReceiveAction {
 export function cancelAutoconversion(): CancelConversionAction {
     return {
         type: CANCEL_CONVERSION,
+    };
+}
+
+export function setDefaultUIData(
+    payload: UIDisplayData
+): SetDefaultUIDataAction {
+    return {
+        payload,
+        type: SET_DEFAULT_UI_DATA,
     };
 }

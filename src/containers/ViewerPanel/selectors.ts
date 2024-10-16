@@ -1,8 +1,4 @@
-import {
-    ColorChange,
-    SelectionStateInfo,
-    UIDisplayData,
-} from "@aics/simularium-viewer";
+import { SelectionStateInfo, UIDisplayData } from "@aics/simularium-viewer";
 import { createSelector } from "reselect";
 import {
     getLastFrameTimeOfCachedSimulation,
@@ -10,10 +6,10 @@ import {
     getTimeStep,
     getFirstFrameTimeOfCachedSimulation,
     getSimulariumFile,
+    getDefaultUIDisplayData,
 } from "../../state/trajectory/selectors";
 import {
     getAgentsToHide,
-    getColorChange,
     getCurrentTime,
     getHighlightedAgents,
 } from "../../state/selection/selectors";
@@ -23,15 +19,11 @@ import { DisplayTimes } from "./types";
 import { isNetworkSimFileInterface } from "../../state/trajectory/types";
 
 export const getSelectionStateInfoForViewer = createSelector(
-    [getHighlightedAgents, getAgentsToHide, getColorChange],
-    (
+    [getHighlightedAgents, getAgentsToHide, getDefaultUIDisplayData],
+    (highlightedAgents, hiddenAgents, appliedColors): SelectionStateInfo => ({
         highlightedAgents,
         hiddenAgents,
-        colorChange: ColorChange
-    ): SelectionStateInfo => ({
-        highlightedAgents,
-        hiddenAgents,
-        colorChange,
+        appliedColors,
     })
 );
 

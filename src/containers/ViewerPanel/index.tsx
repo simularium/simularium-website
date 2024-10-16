@@ -93,7 +93,7 @@ interface ViewerPanelProps {
     changeTime: ActionCreator<ChangeTimeAction>;
     receiveAgentTypeIds: ActionCreator<ReceiveAction>;
     receiveTrajectory: ActionCreator<ReceiveAction>;
-    receiveAgentNamesAndStates: ActionCreator<ReceiveAction>;
+    setDefaultUIData: ActionCreator<ReceiveAction>;
     selectionStateInfoForViewer: SelectionStateInfo;
     setIsPlaying: ActionCreator<ToggleAction>;
     setIsLooping: ActionCreator<ToggleAction>;
@@ -160,13 +160,15 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             firefox: ">=51",
             chrome: ">=56",
             edge: ">=79",
+            safari: ">=15",
         });
         if (!isBrowserSupported) {
             Modal.info({
                 title: "The browser you are using is not supported.",
                 content: (
                     <p>
-                        Please use Firefox, Chrome, or Edge. See more details{" "}
+                        Please use Chrome, Safari, Edge or Firefox. See more
+                        details{" "}
                         <a href={`${TUTORIAL_PATHNAME}#browser-support`}>
                             here
                         </a>{" "}
@@ -383,23 +385,14 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public handleUiDisplayDataChanged = (uiData: UIDisplayData) => {
-        const { receiveAgentNamesAndStates, setAgentsVisible } = this.props;
+        const { setDefaultUIData, setAgentsVisible } = this.props;
 
         const selectedAgents = convertUIDataToSelectionData(uiData);
         const actions = [
-            receiveAgentNamesAndStates(uiData),
+            setDefaultUIData(uiData),
             setAgentsVisible(selectedAgents),
         ];
         batchActions(actions);
-    };
-
-    public handleArrowKeyDown = (event: React.KeyboardEvent) => {
-        const { simulariumController } = this.props;
-        if (event.key === "ArrowUp") {
-            simulariumController.zoomIn();
-        } else if (event.key === "ArrowDown") {
-            simulariumController.zoomOut();
-        }
     };
 
     public resetAfterMovieRecording = () => {
@@ -495,11 +488,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         const { showScaleBar, cameraControlsType, playBackControlsType } =
             this.embedDisplaySettings;
         return (
-            <div
-                ref={this.centerContent}
-                className={styles.container}
-                onKeyDown={this.handleArrowKeyDown}
-            >
+            <div ref={this.centerContent} className={styles.container}>
                 <SimulariumViewer
                     height={this.state.height}
                     width={this.state.width}
@@ -631,8 +620,7 @@ const dispatchToPropsMap = {
     setAgentsVisible: selectionStateBranch.actions.setAgentsVisible,
     receiveTrajectory: trajectoryStateBranch.actions.receiveTrajectory,
     receiveAgentTypeIds: trajectoryStateBranch.actions.receiveAgentTypeIds,
-    receiveAgentNamesAndStates:
-        trajectoryStateBranch.actions.receiveAgentNamesAndStates,
+    setDefaultUIData: trajectoryStateBranch.actions.setDefaultUIData,
     setStatus: viewerStateBranch.actions.setStatus,
     dragOverViewer: viewerStateBranch.actions.dragOverViewer,
     resetDragOverViewer: viewerStateBranch.actions.resetDragOverViewer,

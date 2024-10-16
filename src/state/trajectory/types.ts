@@ -1,4 +1,8 @@
-import { ISimulariumFile, SimulariumController } from "@aics/simularium-viewer";
+import {
+    ISimulariumFile,
+    SimulariumController,
+    UIDisplayData,
+} from "@aics/simularium-viewer";
 import {
     AvailableEngines,
     Template,
@@ -62,6 +66,11 @@ export interface SetConversionEngineAction {
     type: string;
 }
 
+export interface SetConversionTitleAction {
+    payload: string;
+    type: string;
+}
+
 export interface ConvertFileAction {
     payload: { fileId: string };
     type: string;
@@ -121,4 +130,8 @@ export enum ConversionStatus {
     NoServer = "CONVERSION_NO_SERVER",
     ServerConfirmed = "CONVERSION_SERVER_CONFIRMED",
     Active = "CONVERSION_ACTIVE",
+}
+export interface SetDefaultUIDataAction {
+    payload: UIDisplayData;
+    type: string;
 }
