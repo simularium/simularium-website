@@ -1,3 +1,4 @@
+import { UIDisplayData } from "@aics/simularium-viewer";
 import { AgentMetadata, ColorChange } from "../../constants/interfaces";
 import {
     SELECT_METADATA,
@@ -10,6 +11,7 @@ import {
     SET_RECENT_COLORS,
     SET_SELECTED_AGENT,
     APPLY_USER_COLOR,
+    SET_SELECTED_DISPLAY_DATA,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -21,6 +23,7 @@ import {
     ApplyUserColorAction,
     SetRecentColorsAction,
     SetSelectedAgentMetadataAction,
+    SetSelectedUIDisplayDataAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -101,5 +104,14 @@ export function setSelectedAgentMetadata(
     return {
         payload: metaData,
         type: SET_SELECTED_AGENT,
+    };
+}
+
+export function setSelectedUIDisplayData(
+    displayData: UIDisplayData
+): SetSelectedUIDisplayDataAction {
+    return {
+        payload: displayData,
+        type: SET_SELECTED_DISPLAY_DATA,
     };
 }

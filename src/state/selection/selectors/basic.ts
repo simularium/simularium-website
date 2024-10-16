@@ -11,3 +11,5 @@ export const getNumberCollapsed = (state: State) =>
 export const getRecentColors = (state: State) => state.selection.recentColors;
 export const getSelectedAgentMetadata = (state: State) =>
     state.selection.selectedAgentMetadata;
+export const getSelectedUIDisplayData = (state: State) =>
+    state.selection.selectedUIDisplayData;
