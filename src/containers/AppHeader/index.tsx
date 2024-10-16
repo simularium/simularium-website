@@ -71,14 +71,6 @@ const AppHeader: React.FC<AppHeaderProps> = ({
     return (
         <div className={styles.pageHeader}>
             <div className={styles.leftLinks}>
-                {/* <NavButton
-                    href="https://allencell.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    icon={AicsLogo}
-                    buttonType={ButtonClass.Action}
-                /> */}
-
                 <a
                     href="https://allencell.org"
                     title="Allen Cell Explorer"

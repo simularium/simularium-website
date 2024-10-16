@@ -80,7 +80,6 @@
 }
 
 .nav-button.dropdown-item-button:global(.ant-btn) {
-    /* display: inherit; */
     background-color: inherit;
     border: inherit;
 }
