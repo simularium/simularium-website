@@ -39,6 +39,15 @@
     --color-picker-tooltip: var(--dark-blue-gray);
     --cancel-icon-color: var(--brick-red);
     /* Dark theme */
+    /* dark theme dropdown menu */
+    --dark-theme-dropdown-menu-bg: var(--charcoal-gray);
+    --dark-theme-dropdown-menu-item-bg: var(--charcoal-gray);
+    --dark-theme-dropdown-menu-item-color: var(--transparent-white);
+    --dark-theme-dropdown-menu-item-focus-outline: var(--light-purple-two);
+    --dark-theme-dropdown-menu-item-focus-bg: var(--light-purple-two);
+    --dark-theme-dropdown-menu-item-focus-color: var(--dark-two);
+    --dark-theme-dropdown-menu-item-hover-bg: var(--light-purple-two);
+    --dark-theme-dropdown-menu-item-hover-color: var(--dark-two);
     /* viewport-buttons */
     --dark-theme-viewport-button-bg: var(--dark-three);
     --dark-theme-viewport-button-border: var(--dark-three);
@@ -50,6 +59,8 @@
     --dark-theme-action-button-bg: transparent;
     --dark-theme-action-button-color: var(--baby-purple);
     --dark-theme-action-button-hover-color: var(--light-purple-two);
+    --dark-theme-action-button-focus-color: var(--light-purple-two);
+    --dark-theme-primary-button-focus-outline: var(--light-purple-two);
     --dark-theme-action-button-disabled-color: var(--dim-gray-two);
     /* dark theme primary buttons */
     --dark-theme-primary-button-bg: var(--baby-purple);
@@ -58,6 +69,10 @@
     --dark-theme-primary-button-hover-bg: var(--light-purple-two);
     --dark-theme-primary-button-hover-border: var(--light-purple-two);
     --dark-theme-primary-button-hover-color: var(--dark-two);
+    --dark-theme-primary-button-focus-bg: var(--light-purple-two);
+    --dark-theme-primary-button-focus-border: var(--dark-three);
+    --dark-theme-primary-button-focus-outline: var(--light-purple-two);
+    --dark-theme-primary-button-focus-color: var(--dark-two);
     --dark-theme-primary-button-disabled-bg: var(--slate-gray);
     --dark-theme-primary-button-disabled-border: var(--slate-gray);
     --dark-theme-primary-button-disabled-color: var(--text-gray);
@@ -68,6 +83,10 @@
     --dark-theme-secondary-button-hover-bg: var(--light-purple-two);
     --dark-theme-secondary-button-hover-border: var(--light-purple-two);
     --dark-theme-secondary-button-hover-color: var(--dark-two);
+    --dark-theme-secondary-button-focus-bg: var(--light-purple-two);
+    --dark-theme-secondary-button-focus-border: var(--dark-three);
+    --dark-theme-secondary-button-focus-outline: var(--light-purple-two);
+    --dark-theme-secondary-button-focus-color: var(--dark-two);
     --dark-theme-secondary-button-disabled-bg: transparent;
     --dark-theme-secondary-button-disabled-border: var(--dark-theme-header-bg);
     --dark-theme-secondary-button-disabled-color: var(--dim-gray-two);

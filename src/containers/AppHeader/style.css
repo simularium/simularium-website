@@ -26,6 +26,15 @@
     margin-right: 2em;
 }
 
+.left-links img {
+    padding: 6px;
+    border-radius: 6px;
+}
+
+.left-links a:focus img {
+    outline: 1px solid var(--dark-theme-primary-button-focus-outline);
+}
+
 .home {
     margin-left: 2px;
     margin-right: 20px;
