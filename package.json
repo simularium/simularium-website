@@ -94,11 +94,11 @@
         "webpack-dev-server": "^4.10.1"
     },
     "dependencies": {
-        "@aics/simularium-viewer": "^3.8.3",
+        "@aics/simularium-viewer": "^3.8.4",
         "@ant-design/css-animation": "^1.7.3",
         "@ant-design/icons": "^4.0.6",
         "antd": "^4.23.6",
-        "axios": "^1.6.0",
+        "axios": "^1.7.4",
         "bowser": "^2.11.0",
         "classnames": "2.2.5",
         "core-js": "2.5.5",

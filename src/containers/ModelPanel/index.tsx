@@ -2,7 +2,10 @@ import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 
-import SideBarContents from "../../components/SideBarContents";
+import { State } from "../../state/types";
+import { ViewerStatus } from "../../state/viewer/types";
+import { getStatus } from "../../state/viewer/selectors";
+import { RequestNetworkFileAction } from "../../state/trajectory/types";
 import {
     requestTrajectory,
     changeToNetworkedFile,
@@ -11,35 +14,32 @@ import {
     getUiDisplayDataTree,
     getIsNetworkedFile,
 } from "../../state/trajectory/selectors";
-import { getStatus } from "../../state/viewer/selectors";
-import { State } from "../../state/types";
+import {
+    AgentRenderingCheckboxMap,
+    ChangeAgentsRenderingStateAction,
+    SetVisibleAction,
+    SetRecentColorsAction,
+    ApplyUserColorAction,
+} from "../../state/selection/types";
+import {
+    turnAgentsOnByDisplayKey,
+    highlightAgentsByDisplayKey,
+    setAgentsVisible,
+    setRecentColors,
+    applyUserColor,
+} from "../../state/selection/actions";
 import {
     getAgentVisibilityMap,
     getAgentHighlightMap,
     getRecentColors,
     getSelectedAgentMetadata,
 } from "../../state/selection/selectors";
-import {
-    turnAgentsOnByDisplayKey,
-    highlightAgentsByDisplayKey,
-    setAgentsVisible,
-    setColorChange,
-    setRecentColors,
-} from "../../state/selection/actions";
-import {
-    ChangeAgentsRenderingStateAction,
-    SetColorChangeAction,
-    SetVisibleAction,
-    AgentRenderingCheckboxMap,
-    SetRecentColorsAction,
-} from "../../state/selection/types";
 import CheckBoxTree, { AgentDisplayNode } from "../../components/AgentTree";
-import { AgentMetadata } from "../../constants/interfaces";
 import NoTrajectoriesText from "../../components/NoTrajectoriesText";
-import { RequestNetworkFileAction } from "../../state/trajectory/types";
-import { ViewerStatus } from "../../state/viewer/types";
 import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFileFailedText";
 import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
+import SideBarContents from "../../components/SideBarContents";
+import { AgentMetadata } from "../../constants/interfaces";
 import {
     getSelectAllVisibilityMap,
     getSelectNoneVisibilityMap,
@@ -62,7 +62,7 @@ interface ModelPanelProps {
     isNetworkedFile: boolean;
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
     recentColors: string[];
-    setColorChange: ActionCreator<SetColorChangeAction>;
+    applyUserColor: ActionCreator<ApplyUserColorAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
     selectedAgentMetadata: AgentMetadata;
 }
@@ -81,7 +81,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     isNetworkedFile,
     changeToNetworkedFile: loadNetworkFile,
     recentColors,
-    setColorChange,
+    applyUserColor,
     setRecentColors,
     selectedAgentMetadata,
 }): JSX.Element => {
@@ -97,7 +97,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
             payloadForSelectNone={payloadForSelectNone}
             isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
             recentColors={recentColors}
-            setColorChange={setColorChange}
+            applyUserColor={applyUserColor}
             setRecentColors={setRecentColors}
         />
     );
@@ -147,7 +147,7 @@ const dispatchToPropsMap = {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
     setAgentsVisible,
-    setColorChange,
+    applyUserColor,
     setRecentColors,
 };
 

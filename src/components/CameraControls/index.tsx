@@ -5,10 +5,10 @@ import { IconGlyphs } from "../../constants/interfaces";
 import { getIconGlyphClasses } from "../../util";
 import { ZoomIn, ZoomOut } from "../Icons";
 import ViewportButton from "../ViewportButton";
+import { CameraControlsDisplay } from "../../containers/ViewerPanel/types";
+import CameraHomeButton from "./CameraHomeButton";
 
 import styles from "./style.css";
-import { CameraControlsDisplay } from "../../containers/ViewerPanel/types";
-import { CameraHomeButton } from "./HomeButton";
 
 const PAN = "pan";
 const ROTATE = "rotate";

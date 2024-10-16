@@ -1,5 +1,4 @@
-import { ColorChange } from "@aics/simularium-viewer";
-import { AgentMetadata } from "../../constants/interfaces";
+import { AgentMetadata, ColorChange } from "../../constants/interfaces";
 import {
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
@@ -8,9 +7,9 @@ import {
     HIGHLIGHT_AGENTS_BY_KEY,
     SET_AGENTS_VISIBLE,
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
-    SET_COLOR_CHANGES,
     SET_RECENT_COLORS,
     SET_SELECTED_AGENT,
+    APPLY_USER_COLOR,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -19,7 +18,7 @@ import {
     SetVisibleAction,
     AgentRenderingCheckboxMap,
     ResetAction,
-    SetColorChangeAction,
+    ApplyUserColorAction,
     SetRecentColorsAction,
     SetSelectedAgentMetadataAction,
 } from "./types";
@@ -65,10 +64,10 @@ export function highlightAgentsByDisplayKey(
     };
 }
 
-export function setColorChange(colorChange: ColorChange): SetColorChangeAction {
+export function applyUserColor(payload: ColorChange): ApplyUserColorAction {
     return {
-        payload: colorChange,
-        type: SET_COLOR_CHANGES,
+        payload,
+        type: APPLY_USER_COLOR,
     };
 }
 

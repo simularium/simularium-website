@@ -12,6 +12,7 @@ import { IconGlyphs } from "../../constants/interfaces";
 import { getIconGlyphClasses } from "../../util";
 import { Pause, Play } from "../Icons";
 import ViewportButton from "../ViewportButton";
+import CameraHomeButton from "../CameraControls/CameraHomeButton";
 
 import styles from "./style.css";
 import { CameraHomeButton } from "../CameraControls/HomeButton";

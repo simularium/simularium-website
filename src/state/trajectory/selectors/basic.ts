@@ -12,9 +12,9 @@ export const getScaleBarLabel = (state: State) =>
     state.trajectory.scaleBarLabel;
 export const getSimulariumFile = (state: State) =>
     state.trajectory.simulariumFile;
-export const getAgentDisplayNamesAndStates = (state: State) =>
-    state.trajectory.agentUiNames;
 export const getConversionProcessingData = (state: State) =>
     state.trajectory.processingData;
 export const getConversionStatus = (state: State) =>
     state.trajectory.conversionStatus;
+export const getDefaultUIDisplayData = (state: State) =>
+    state.trajectory.defaultUIData;

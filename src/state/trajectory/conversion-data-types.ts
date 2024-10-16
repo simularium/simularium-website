@@ -50,4 +50,5 @@ export type ConversionProcessingData = {
     fileName: string;
     engineType: AvailableEngines;
     fileId: string;
+    title?: string;
 };

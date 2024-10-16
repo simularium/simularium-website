@@ -47,7 +47,7 @@ describe("trajectory composed selectors", () => {
                 ...initialState,
                 trajectory: {
                     ...initialState.trajectory,
-                    agentUiNames: [
+                    defaultUIData: [
                         {
                             name: "agent1",
                             displayStates: [],
