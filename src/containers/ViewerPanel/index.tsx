@@ -14,6 +14,7 @@ import { AgentData } from "@aics/simularium-viewer/type-declarations/simularium/
 import { connect } from "react-redux";
 import { Modal } from "antd";
 import Bowser from "bowser";
+import classNames from "classnames";
 
 import { State } from "../../state/types";
 import selectionStateBranch from "../../state/selection";
@@ -48,9 +49,14 @@ import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
 import { EMBED_PATHNAME, TUTORIAL_PATHNAME } from "../../routes";
 import ErrorNotification from "../../components/ErrorNotification";
-import { MOBILE_CUTOFF } from "../../constants";
-import { hasUrlParamsSettings } from "../../util/userUrlHandling";
+import {
+    SCALE_BAR_MIN_WIDTH,
+    CONTROLS_MIN_HEIGHT,
+    CONTROLS_MIN_WIDTH,
+    MOBILE_CUTOFF,
+} from "../../constants";
 import { ConversionProcessingData } from "../../state/trajectory/conversion-data-types";
+import { hasUrlParamsSettings } from "../../util/userUrlHandling";
 
 import {
     convertUIDataToSelectionData,
@@ -59,7 +65,11 @@ import {
     getMovieTitle,
 } from "./selectors";
 import { AGENT_COLORS } from "./constants";
-import { DisplayTimes } from "./types";
+import {
+    DisplayTimes,
+    PlaybackControlsDisplay,
+    CameraControlsDisplay,
+} from "./types";
 
 import styles from "./style.css";
 
@@ -179,7 +189,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     "The Simularium Viewer does not support small screens at this time. Please use a larger screen for the best experience.",
             });
         }
-
         const current = this.centerContent.current;
         if (current) {
             window.addEventListener("resize", () => this.resize(current));
@@ -424,6 +433,38 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
     };
 
+    private get embedDisplaySettings() {
+        const { height, width } = this.state;
+        const belowControlsHeight = height <= CONTROLS_MIN_HEIGHT;
+        const belowControlsWidth = width <= CONTROLS_MIN_WIDTH;
+
+        if (belowControlsHeight && belowControlsWidth) {
+            return {
+                playBackControlsType: PlaybackControlsDisplay.BottomOnly,
+                cameraControlsType: CameraControlsDisplay.None,
+                showScaleBar: false,
+            };
+        } else if (belowControlsHeight) {
+            return {
+                playBackControlsType: PlaybackControlsDisplay.Full,
+                cameraControlsType: CameraControlsDisplay.Min,
+                showScaleBar: width > SCALE_BAR_MIN_WIDTH,
+            };
+        } else if (belowControlsWidth) {
+            return {
+                playBackControlsType: PlaybackControlsDisplay.Min,
+                cameraControlsType: CameraControlsDisplay.Full,
+                showScaleBar: width > SCALE_BAR_MIN_WIDTH,
+            };
+        } else {
+            return {
+                playBackControlsType: PlaybackControlsDisplay.Full,
+                cameraControlsType: CameraControlsDisplay.Full,
+                showScaleBar: true,
+            };
+        }
+    }
+
     public render(): JSX.Element {
         const {
             time,
@@ -443,6 +484,9 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             scaleBarLabel,
             movieTitle,
         } = this.props;
+
+        const { showScaleBar, cameraControlsType, playBackControlsType } =
+            this.embedDisplaySettings;
         return (
             <div ref={this.centerContent} className={styles.container}>
                 <SimulariumViewer
@@ -474,7 +518,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     onFollowObjectChanged={this.onSelectedAgentChange}
                 />
                 {firstFrameTime !== lastFrameTime && (
-                    <div className={styles.bottomControlsContainer}>
+                    <div
+                        className={classNames(styles.bottomControlsContainer, {
+                            [styles.fullWidthBottomControls]:
+                                playBackControlsType ===
+                                PlaybackControlsDisplay.BottomOnly,
+                        })}
+                    >
                         <PlaybackControls
                             playHandler={this.startPlay}
                             time={time}
@@ -492,20 +542,31 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                             lastFrameTime={lastFrameTime}
                             loading={isBuffering}
                             isEmpty={status === ViewerStatus.Empty}
+                            displayType={playBackControlsType}
+                            resetCamera={simulariumController.resetCamera}
                         />
-                        <RecordMoviesComponent
-                            movieUrl={this.state.movieURL}
-                            movieTitle={movieTitle}
-                            resetAfterMovieRecording={
-                                this.resetAfterMovieRecording
-                            }
-                            startRecording={simulariumController.startRecording}
-                            stopRecording={simulariumController.stopRecording}
-                        />
+
+                        {playBackControlsType ===
+                            PlaybackControlsDisplay.Full && (
+                            <RecordMoviesComponent
+                                movieUrl={this.state.movieURL}
+                                movieTitle={movieTitle}
+                                resetAfterMovieRecording={
+                                    this.resetAfterMovieRecording
+                                }
+                                startRecording={
+                                    simulariumController.startRecording
+                                }
+                                stopRecording={
+                                    simulariumController.stopRecording
+                                }
+                            />
+                        )}
                     </div>
                 )}
 
-                <ScaleBar label={scaleBarLabel} />
+                {showScaleBar && <ScaleBar label={scaleBarLabel} />}
+
                 <CameraControls
                     resetCamera={simulariumController.resetCamera}
                     zoomIn={simulariumController.zoomIn}
@@ -513,6 +574,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     setPanningMode={simulariumController.setPanningMode}
                     setFocusMode={simulariumController.setFocusMode}
                     setCameraType={simulariumController.setCameraType}
+                    displayType={cameraControlsType}
                 />
             </div>
         );
