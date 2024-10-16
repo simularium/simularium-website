@@ -19,3 +19,5 @@ export const CameraHomeButton: React.FC<CameraHomeButtonProps> = ({
         />
     );
 };
+
+export default CameraHomeButton;

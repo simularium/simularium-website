@@ -8,7 +8,7 @@ import ViewportButton from "../ViewportButton";
 
 import styles from "./style.css";
 import { CameraControlsDisplay } from "../../containers/ViewerPanel/types";
-import { CameraHomeButton } from "./HomeButton";
+import CameraHomeButton from "./CameraHomeButton";
 
 const PAN = "pan";
 const ROTATE = "rotate";

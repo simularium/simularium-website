@@ -28,7 +28,7 @@ export const Play = <CaretRightOutlined />;
 export const Pause = <PauseOutlined />;
 export const UploadFile = <ImportOutlined />;
 export const DownArrow = <DownOutlined />;
-export const UpArrow = <DownOutlined style={{ transform: "rotate(180deg" }} />;
+export const UpArrow = <DownOutlined style={{ transform: "rotate(180deg)" }} />;
 export const CaretRight = <CaretRightOutlined />;
 export const GoBack = <ArrowLeftOutlined />;
 export const Reset = <HomeOutlined />;
