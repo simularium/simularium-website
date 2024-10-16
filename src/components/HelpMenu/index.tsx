@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useLocation, Link } from "react-router-dom";
-import { Dropdown, MenuProps } from "antd";
+import { MenuProps } from "antd";
 
 import { TUTORIAL_PATHNAME } from "../../routes";
 import {

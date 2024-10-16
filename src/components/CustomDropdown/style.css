@@ -1,5 +1,8 @@
 .menu {
     width: var(--dropdown-menu-width);
+    background-color: var(--dark-theme-dropdown-menu-bg);
+    border-radius: 3px;
+    padding: 8px;
 }
 
 .menu.narrow {
@@ -10,23 +13,36 @@
     fill: var(--dark-theme-menu-text-color);
 }
 
+.menu :global(.ant-dropdown-menu-item),
+.menu :global(.ant-dropdown-menu-submenu) {
+    border: 2px solid var(--dark-theme-dropdown-menu-item-bg);
+    border-radius: 4px;
+    height: 32px;
+}
+
+.menu :global(.ant-dropdown-menu-item) :global(.ant-btn) {
+    color: var(--dark-theme-dropdown-menu-item-color);
+    padding: 0px;
+}
+
+.menu :global(.ant-dropdown-menu-item):hover,
+.menu :global(.ant-dropdown-menu-submenu):hover {
+    background-color: var(--dark-theme-dropdown-menu-item-hover-bg);
+}
+
+.menu :global(.ant-dropdown-menu-item):hover *,
+.menu :global(.ant-dropdown-menu-submenu):hover * {
+    color: var(--dark-theme-dropdown-menu-item-hover-color);
+    fill: var(--dark-theme-dropdown-menu-item-hover-color);
+}
+
 .menu :global(.ant-dropdown-menu-item):focus-within,
 .menu :global(.ant-dropdown-menu-submenu):focus-within {
-    outline: 1px solid var(--dark-theme-dropdown-menu-item-focus-border);
-    border-radius: 6px;
-    outline-offset: -2px;
-}
-.menu :global(.ant-dropdown-menu-item) a,
-.menu :global(.ant-dropdown-menu-submenu) a {
-    color: var(--dark-theme-dropdown-menu-item-color);
+    z-index: 1000;
+    background-color: var(--dark-theme-dropdown-menu-item-focus-bg);
+    outline: 1px solid var(--dark-theme-dropdown-menu-item-focus-outline);
 }
 
-.menu :global(.ant-dropdown-menu-item) a:focus,
-.submenu :global(.ant-dropdown-menu-item) a:focus {
+.menu :global(.ant-dropdown-menu-item) *:focus {
     color: var(--dark-theme-dropdown-menu-item-focus-color);
-}
-
-.menu :global(.ant-dropdown-menu-item) a:hover,
-.menu :global(.ant-dropdown-menu-submenu) a:hover {
-    color: var(--dark-theme-dropdown-menu-item-hover-color);
 }
