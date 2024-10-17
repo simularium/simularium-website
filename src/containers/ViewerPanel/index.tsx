@@ -203,7 +203,10 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
     }
 
-    public componentDidUpdate(prevProps: ViewerPanelProps) {
+    public componentDidUpdate(
+        prevProps: ViewerPanelProps,
+        prevState: ViewerPanelState
+    ) {
         const { error } = this.props;
         const current = this.centerContent.current;
 
@@ -232,6 +235,14 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 // wait for panel animation to finish.
                 this.resize(current);
             }, 200);
+        }
+
+        if (prevState.isFullScreen !== this.state.isFullScreen) {
+            if (this.state.isFullScreen) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
         }
     }
 
@@ -439,19 +450,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     };
 
     private toggleIsFullScreen = () => {
-        if (this.state.isFullScreen) {
-            document.exitFullscreen();
-        } else {
-            this.setState({ isFullScreen: !this.state.isFullScreen });
-            document.documentElement
-                .requestFullscreen()
-
-                .catch((err) => {
-                    console.error(
-                        `Error attempting to enable fullscreen: ${err.message}`
-                    );
-                });
-        }
+        this.setState({ isFullScreen: !this.state.isFullScreen });
     };
 
     private get embedDisplaySettings() {
