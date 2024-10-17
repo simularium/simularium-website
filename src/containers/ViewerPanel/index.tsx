@@ -49,6 +49,8 @@ import CameraControls from "../../components/CameraControls";
 import ScaleBar from "../../components/ScaleBar";
 import { EMBED_PATHNAME, TUTORIAL_PATHNAME } from "../../routes";
 import ErrorNotification from "../../components/ErrorNotification";
+import { ExitFullScreen, FullScreen } from "../../components/Icons";
+import ViewportButton from "../../components/ViewportButton";
 import {
     SCALE_BAR_MIN_WIDTH,
     CONTROLS_MIN_HEIGHT,
@@ -119,6 +121,7 @@ interface ViewerPanelState {
     height: number;
     width: number;
     movieURL: string;
+    isFullScreen: boolean;
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -144,6 +147,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             height: 0,
             width: 0,
             movieURL: "",
+            isFullScreen: false,
         };
     }
 
@@ -199,9 +203,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
     }
 
-    public componentDidUpdate(prevProps: ViewerPanelProps) {
+    public componentDidUpdate(
+        prevProps: ViewerPanelProps,
+        prevState: ViewerPanelState
+    ) {
         const { error } = this.props;
         const current = this.centerContent.current;
+
         const isNewError = () => {
             if (!prevProps.error && error) {
                 return true;
@@ -227,6 +235,14 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                 // wait for panel animation to finish.
                 this.resize(current);
             }, 200);
+        }
+
+        if (prevState.isFullScreen !== this.state.isFullScreen) {
+            if (this.state.isFullScreen) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
         }
     }
 
@@ -433,6 +449,10 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
     };
 
+    private toggleIsFullScreen = () => {
+        this.setState({ isFullScreen: !this.state.isFullScreen });
+    };
+
     private get embedDisplaySettings() {
         const { height, width } = this.state;
         const belowControlsHeight = height <= CONTROLS_MIN_HEIGHT;
@@ -560,6 +580,22 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                                 stopRecording={
                                     simulariumController.stopRecording
                                 }
+                            />
+                        )}
+                        {location.pathname === EMBED_PATHNAME && (
+                            <ViewportButton
+                                tooltipText={
+                                    this.state.isFullScreen
+                                        ? "Exit Fullscreen"
+                                        : "Fullscreen"
+                                }
+                                tooltipPlacement="top"
+                                icon={
+                                    this.state.isFullScreen
+                                        ? ExitFullScreen
+                                        : FullScreen
+                                }
+                                clickHandler={this.toggleIsFullScreen}
                             />
                         )}
                     </div>

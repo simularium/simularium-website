@@ -16,6 +16,8 @@ import {
     RetweetOutlined,
     ExclamationCircleFilled,
     CaretDownFilled,
+    FullscreenExitOutlined,
+    FullscreenOutlined,
 } from "@ant-design/icons";
 
 import PurpleArrowPointingRight from "../../assets/open-arrow.svg";
@@ -53,6 +55,8 @@ export const DownCaret = (
     />
 );
 export const FilledCaret = <CaretDownFilled />;
+export const FullScreen = <FullscreenOutlined />;
+export const ExitFullScreen = <FullscreenExitOutlined />;
 
 export default {
     Play,
