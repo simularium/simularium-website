@@ -113,8 +113,6 @@ interface ViewerPanelProps {
     receiveConvertedFile: ActionCreator<ReceiveAction>;
     conversionProcessingData: ConversionProcessingData;
     setSelectedAgentMetadata: ActionCreator<SetSelectedAgentMetadataAction>;
-    setIsFullScreen: ActionCreator<ToggleAction>;
-    isFullScreen: boolean;
 }
 
 interface ViewerPanelState {
@@ -123,6 +121,7 @@ interface ViewerPanelState {
     height: number;
     width: number;
     movieURL: string;
+    isFullScreen: boolean;
 }
 
 class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
@@ -148,6 +147,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             height: 0,
             width: 0,
             movieURL: "",
+            isFullScreen: false,
         };
     }
 
@@ -204,23 +204,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public componentDidUpdate(prevProps: ViewerPanelProps) {
-        const { error, isFullScreen } = this.props;
+        const { error } = this.props;
         const current = this.centerContent.current;
-
-        if (isFullScreen !== prevProps.isFullScreen) {
-            if (isFullScreen) {
-                document.documentElement
-                    .requestFullscreen()
-
-                    .catch((err) => {
-                        console.error(
-                            `Error attempting to enable fullscreen: ${err.message}`
-                        );
-                    });
-            } else {
-                document.exitFullscreen();
-            }
-        }
 
         const isNewError = () => {
             if (!prevProps.error && error) {
@@ -454,8 +439,19 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     };
 
     private toggleIsFullScreen = () => {
-        const { setIsFullScreen, isFullScreen } = this.props;
-        setIsFullScreen(!isFullScreen);
+        if (this.state.isFullScreen) {
+            document.exitFullscreen();
+        } else {
+            this.setState({ isFullScreen: !this.state.isFullScreen });
+            document.documentElement
+                .requestFullscreen()
+
+                .catch((err) => {
+                    console.error(
+                        `Error attempting to enable fullscreen: ${err.message}`
+                    );
+                });
+        }
     };
 
     private get embedDisplaySettings() {
@@ -508,7 +504,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setError,
             scaleBarLabel,
             movieTitle,
-            isFullScreen,
         } = this.props;
 
         const { showScaleBar, cameraControlsType, playBackControlsType } =
@@ -591,13 +586,15 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                         {location.pathname === EMBED_PATHNAME && (
                             <ViewportButton
                                 tooltipText={
-                                    isFullScreen
+                                    this.state.isFullScreen
                                         ? "Exit Fullscreen"
                                         : "Fullscreen"
                                 }
                                 tooltipPlacement="top"
                                 icon={
-                                    isFullScreen ? ExitFullScreen : FullScreen
+                                    this.state.isFullScreen
+                                        ? ExitFullScreen
+                                        : FullScreen
                                 }
                                 clickHandler={this.toggleIsFullScreen}
                             />
@@ -652,7 +649,6 @@ function mapStateToProps(state: State) {
             trajectoryStateBranch.selectors.getConversionStatus(state),
         conversionProcessingData:
             trajectoryStateBranch.selectors.getConversionProcessingData(state),
-        isFullScreen: viewerStateBranch.selectors.getIsFullScreen(state),
     };
 }
 
@@ -674,7 +670,6 @@ const dispatchToPropsMap = {
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
     setSelectedAgentMetadata:
         selectionStateBranch.actions.setSelectedAgentMetadata,
-    setIsFullScreen: viewerStateBranch.actions.setIsFullScreen,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);

@@ -6,7 +6,6 @@ import {
     SET_IS_PLAYING,
     SET_ERROR,
     SET_IS_LOOPING,
-    SET_EMBED_FULLSCREEN,
 } from "./constants";
 import {
     ViewerStatus,
@@ -64,12 +63,5 @@ export function setIsLooping(isLooping: boolean): ToggleAction {
     return {
         payload: isLooping,
         type: SET_IS_LOOPING,
-    };
-}
-
-export function setIsFullScreen(fullscreen: boolean): ToggleAction {
-    return {
-        payload: fullscreen,
-        type: SET_EMBED_FULLSCREEN,
     };
 }
