@@ -135,12 +135,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
                     );
                 }}
                 onKeyDown={handleKeyDown}
-                onMouseEnter={() => {
-                    if (dropdownState === DropdownState.FORCED_OPEN) {
-                        return;
-                    }
-                    setDropdownState(DropdownState.OPEN);
-                }}
+                onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeaveWithDelay}
                 ref={triggerRef as React.RefObject<HTMLButtonElement>}
             />
