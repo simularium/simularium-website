@@ -9,7 +9,13 @@
     display: flex;
     gap: 4px;
     bottom: 0;
+    margin-bottom: 20px;
     right: 25%;
     width: 50%;
-    margin-bottom: 20px;
+}
+
+.full-width-bottom-controls {
+    right: 5%;
+    left: 5%;
+    width: 90%;
 }
