@@ -66,4 +66,7 @@ export const USER_TRAJ_REDIRECTS = [
 
 export const MOBILE_CUTOFF = "(max-width: 900px)";
 export const MAX_CONVERSION_FILE_SIZE = 2e8; // 200 MB
+export const CONTROLS_MIN_WIDTH = 650;
+export const CONTROLS_MIN_HEIGHT = 320;
+export const SCALE_BAR_MIN_WIDTH = 550;
 export const DROPDOWN_HOVER_DELAY = 300;
