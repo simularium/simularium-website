@@ -14,7 +14,7 @@ import { URL_PARAM_KEY_TIME } from "../../constants";
 import { ButtonClass } from "../../constants/interfaces";
 import { copyToClipboard, roundToTimeStepPrecision } from "../../util";
 import { editUrlParams } from "../../util/userUrlHandling";
-import VerticalFlexbox from "../VerticalFlexbox";
+import { HorizontalFlexbox, VerticalFlexbox } from "../FlexboxUtility";
 import EmbedSnippetPanel from "./EmbedSnippetPanel";
 
 import styles from "./style.css";
@@ -116,7 +116,7 @@ const ShareTrajectoryModal = ({
             </VerticalFlexbox>
             <VerticalFlexbox gap={10}>
                 <h4> Copy link {Link} </h4>
-                <div className={styles.urlInputContainer}>
+                <HorizontalFlexbox gap={6}>
                     <Input
                         className={styles.urlInput}
                         value={linkUrl}
@@ -128,7 +128,7 @@ const ShareTrajectoryModal = ({
                     >
                         Copy
                     </Button>
-                </div>
+                </HorizontalFlexbox>
             </VerticalFlexbox>
         </>
     );
