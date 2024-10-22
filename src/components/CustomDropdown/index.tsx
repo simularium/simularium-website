@@ -100,6 +100,14 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
         }
     };
 
+    const buttonClickHandler = () => {
+        setDropdownState(
+            dropdownState === DropdownState.CLOSED
+                ? DropdownState.OPEN
+                : DropdownState.CLOSED
+        );
+    };
+
     const menuClassNames = narrow
         ? classNames(styles.menu, styles.narrow)
         : styles.menu;
@@ -124,20 +132,14 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
             )}
         >
             <NavButton
+                ref={triggerRef as React.RefObject<HTMLButtonElement>}
                 titleText={titleText}
                 icon={icon}
                 buttonType={buttonType}
-                clickHandler={() => {
-                    setDropdownState(
-                        dropdownState === DropdownState.CLOSED
-                            ? DropdownState.OPEN
-                            : DropdownState.CLOSED
-                    );
-                }}
+                clickHandler={buttonClickHandler}
                 onKeyDown={handleKeyDown}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeaveWithDelay}
-                ref={triggerRef as React.RefObject<HTMLButtonElement>}
             />
         </Dropdown>
     );
