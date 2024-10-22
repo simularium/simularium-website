@@ -651,7 +651,7 @@ describe("User Url handling", () => {
             const result = compareAgentTrees(firstUIData, secondUIData);
             expect(result).toBe(false);
         });
-        it("should return true if the agent tree structures match are identical", () => {
+        it("should return true if the agent tree structures match", () => {
             const firstUIData: UIDisplayData = [
                 {
                     name: "a",
