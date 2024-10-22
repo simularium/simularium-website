@@ -4,6 +4,12 @@
     justify-content: space-evenly;
 }
 
+.minimal-controls-container {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-evenly;
+}
+
 .button-container {
     display: flex;
     gap: 4px;
@@ -64,6 +70,6 @@
     color: var(--dark-theme-dim-color);
 }
 
-.remove-border{
+.remove-border {
     border: none;
 }

@@ -29,11 +29,6 @@
     background-color: var(--light-purple);
 }
 
-.url-input-container {
-    display: flex;
-    gap: 6px;
-}
-
 /* this input is functionally disabled but styled as though it is not */
 .url-input[disabled]:global(.ant-input) {
     flex-grow: 1;
@@ -56,6 +51,10 @@
     cursor: pointer;
 }
 
+.settings-button:hover {
+    font-weight: 500;
+}
+
 .embed-settings {
     transition: height 0.3s;
     height: 0px;
@@ -67,13 +66,8 @@
 }
 
 .accent-text {
+    font-size: 16px;
     font-weight: 600;
-}
-
-.proportion-settings {
-    align-items: center;
-    display: flex;
-    gap: 8px;
 }
 
 .number-inputs {

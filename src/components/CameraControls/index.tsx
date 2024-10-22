@@ -7,6 +7,8 @@ import { ZoomIn, ZoomOut } from "../Icons";
 import ViewportButton from "../ViewportButton";
 
 import styles from "./style.css";
+import { CameraControlsDisplay } from "../../containers/ViewerPanel/types";
+import CameraHomeButton from "./CameraHomeButton";
 
 const PAN = "pan";
 const ROTATE = "rotate";
@@ -33,6 +35,7 @@ interface CameraControlsProps {
     setPanningMode: (value: boolean) => void;
     setFocusMode: (value: boolean) => void;
     setCameraType: (value: boolean) => void;
+    displayType: CameraControlsDisplay;
 }
 
 const CameraControls = ({
@@ -42,7 +45,8 @@ const CameraControls = ({
     setPanningMode,
     setFocusMode,
     setCameraType,
-}: CameraControlsProps): JSX.Element => {
+    displayType,
+}: CameraControlsProps): JSX.Element | null => {
     const [isFocused, saveFocusMode] = useState(true);
     const [mode, setMode] = useState(ROTATE);
     const [cameraProjectionType, setCameraProjectionType] =
@@ -141,7 +145,14 @@ const CameraControls = ({
         }
         lastKeyPressed.current = keyPressed;
     }, [keyPressed]);
-    return (
+
+    const minimalControlsContainer = (
+        <div className={styles.container}>
+            <CameraHomeButton resetCamera={resetCamera} />
+        </div>
+    );
+
+    const fullControls = (
         <div className={styles.container}>
             <div className={styles.zoomGroup}>
                 <ViewportButton
@@ -208,13 +219,16 @@ const CameraControls = ({
                     active={cameraProjectionType === PERSPECTIVE}
                 />
             </div>
-            <ViewportButton
-                tooltipText={"Home view (H)"}
-                tooltipPlacement="left"
-                icon={getIconGlyphClasses(IconGlyphs.Reset)}
-                clickHandler={resetCamera}
-            />
+            <CameraHomeButton resetCamera={resetCamera} />
         </div>
     );
+
+    if (displayType === CameraControlsDisplay.None) {
+        return null;
+    } else if (displayType === CameraControlsDisplay.Min) {
+        return minimalControlsContainer;
+    } else {
+        return fullControls;
+    }
 };
 export default CameraControls;
