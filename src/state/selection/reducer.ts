@@ -13,6 +13,7 @@ import {
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
     SET_RECENT_COLORS,
     SET_SELECTED_AGENT,
+    SET_SELECTED_DISPLAY_DATA,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -24,6 +25,7 @@ import {
     ResetAction,
     SetRecentColorsAction,
     SetSelectedAgentMetadataAction,
+    SetSelectedUIDisplayDataAction,
 } from "./types";
 
 export const initialState = {
@@ -33,6 +35,7 @@ export const initialState = {
     agentHighlightMap: {},
     recentColors: [],
     selectedAgentMetadata: {},
+    selectedUIDisplayData: [],
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -151,6 +154,21 @@ const actionToConfigMap: TypeToDescriptionMap = {
             return {
                 ...state,
                 selectedAgentMetadata: action.payload,
+            };
+        },
+    },
+    [SET_SELECTED_DISPLAY_DATA]: {
+        accepts: (
+            action: AnyAction
+        ): action is SetSelectedUIDisplayDataAction =>
+            action.type === SET_SELECTED_DISPLAY_DATA,
+        perform: (
+            state: SelectionStateBranch,
+            action: SetSelectedUIDisplayDataAction
+        ) => {
+            return {
+                ...state,
+                selectedUIDisplayData: action.payload,
             };
         },
     },
