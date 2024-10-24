@@ -86,7 +86,7 @@
 }
 
 @media screen and (max-width: 590px) {
-    .sider.embed {
+    .sider {
         display: none;
     }
 }
