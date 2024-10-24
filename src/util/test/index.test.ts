@@ -14,6 +14,7 @@ import {
     formatFloatForDisplay,
     copyToClipboard,
     roundToTimeStepPrecision,
+    compareAgentTrees,
 } from "../";
 import {
     getFileIdFromUrl,
@@ -29,6 +30,7 @@ import {
     getUrlParamValue,
 } from "../userUrlHandling";
 import { IconGlyphs } from "../../constants/interfaces";
+import { UIDisplayData } from "@aics/simularium-viewer";
 
 process.env.GOOGLE_API_KEY = "key";
 describe("General utilities", () => {
@@ -530,6 +532,172 @@ describe("User Url handling", () => {
             const timestep = 1;
             const result = roundToTimeStepPrecision(input, timestep);
             expect(result).toBe(1);
+        });
+    });
+    describe("compareAgentTrees", () => {
+        it("should return false if the arrays are different lengths", () => {
+            const firstUIData: UIDisplayData = [
+                {
+                    name: "a",
+                    displayStates: [],
+                    color: "",
+                },
+            ];
+            const secondUIData: UIDisplayData = [];
+            const result = compareAgentTrees(firstUIData, secondUIData);
+            expect(result).toBe(false);
+        });
+        it("should return false if the names are different", () => {
+            const firstUIData: UIDisplayData = [
+                {
+                    name: "a",
+                    displayStates: [],
+                    color: "",
+                },
+            ];
+            const secondUIData: UIDisplayData = [
+                {
+                    name: "b",
+                    displayStates: [],
+                    color: "",
+                },
+            ];
+            const result = compareAgentTrees(firstUIData, secondUIData);
+            expect(result).toBe(false);
+        });
+        it("should return false if some entry names match, but others don't", () => {
+            const firstUIData: UIDisplayData = [
+                {
+                    name: "a",
+                    displayStates: [],
+                    color: "",
+                },
+                {
+                    name: "b",
+                    displayStates: [],
+                    color: "",
+                },
+            ];
+            const secondUIData: UIDisplayData = [
+                {
+                    name: "a",
+                    displayStates: [],
+                    color: "",
+                },
+                {
+                    name: "c",
+                    displayStates: [],
+                    color: "",
+                },
+            ];
+            const result = compareAgentTrees(firstUIData, secondUIData);
+            expect(result).toBe(false);
+        });
+        it("should return false if displayState lengths don't match", () => {
+            const firstUIData: UIDisplayData = [
+                {
+                    name: "a",
+                    displayStates: [],
+                    color: "",
+                },
+            ];
+            const secondUIData: UIDisplayData = [
+                {
+                    name: "a",
+                    displayStates: [{ name: "b", id: "1", color: "" }],
+                    color: "",
+                },
+            ];
+            const result = compareAgentTrees(firstUIData, secondUIData);
+            expect(result).toBe(false);
+        });
+        it("should return false if displayState names don't match", () => {
+            const firstUIData: UIDisplayData = [
+                {
+                    name: "a",
+                    displayStates: [{ name: "name", id: "1", color: "" }],
+                    color: "",
+                },
+            ];
+            const secondUIData: UIDisplayData = [
+                {
+                    name: "a",
+                    displayStates: [
+                        { name: "different name", id: "1", color: "" },
+                    ],
+                    color: "",
+                },
+            ];
+            const result = compareAgentTrees(firstUIData, secondUIData);
+            expect(result).toBe(false);
+        });
+        it("should return false if displayState ids don't match", () => {
+            const firstUIData: UIDisplayData = [
+                {
+                    name: "a",
+                    displayStates: [{ name: "name", id: "id", color: "" }],
+                    color: "",
+                },
+            ];
+            const secondUIData: UIDisplayData = [
+                {
+                    name: "a",
+                    displayStates: [
+                        { name: "name", id: "different id", color: "" },
+                    ],
+                    color: "",
+                },
+            ];
+            const result = compareAgentTrees(firstUIData, secondUIData);
+            expect(result).toBe(false);
+        });
+        it("should return true if the agent tree structures match", () => {
+            const firstUIData: UIDisplayData = [
+                {
+                    name: "a",
+                    displayStates: [{ name: "name", id: "id", color: "" }],
+                    color: "",
+                },
+            ];
+            const secondUIData: UIDisplayData = [
+                {
+                    name: "a",
+                    displayStates: [{ name: "name", id: "id", color: "" }],
+                    color: "",
+                },
+            ];
+            const result = compareAgentTrees(firstUIData, secondUIData);
+            expect(result).toBe(true);
+        });
+        it("should return true if the agent tree structures match but have different color properties", () => {
+            const firstUIData: UIDisplayData = [
+                {
+                    name: "a",
+                    displayStates: [
+                        {
+                            name: "name",
+                            id: "id",
+                            color: "red",
+                        },
+                    ],
+                    color: "red",
+                },
+            ];
+            const secondUIData: UIDisplayData = [
+                {
+                    name: "a",
+                    displayStates: [
+                        {
+                            name: "name",
+                            id: "id",
+                            color: "blue",
+                        },
+                    ],
+                    color: "blue",
+                },
+            ];
+            const result = compareAgentTrees(firstUIData, secondUIData);
+            expect(result).toBe(true);
         });
     });
 });
