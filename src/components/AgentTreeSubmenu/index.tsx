@@ -2,7 +2,6 @@ import React from "react";
 import { Checkbox as AntdCheckbox } from "antd";
 import { map, noop } from "lodash";
 import { CheckboxChangeEvent, CheckboxOptionType } from "antd/lib/checkbox";
-import { CheckboxValueType } from "antd/lib/checkbox/Group";
 const CheckboxGroup = AntdCheckbox.Group;
 
 import Checkbox from "../Checkbox";
@@ -11,7 +10,7 @@ import { CHECKBOX_TYPE_STAR } from "../../constants";
 interface AgentTreeSubmenuProps {
     checkedAgents: string[];
     options: CheckboxOptionType[];
-    onChange: (values: CheckboxValueType[]) => void;
+    onChange: (values: string[]) => void;
     checkboxType?: CHECKBOX_TYPE_STAR;
 }
 import styles from "./style.css";

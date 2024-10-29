@@ -94,9 +94,8 @@ const LoadFileMenu = ({
         {
             key: "file-upload",
             label: (
-                <Button type="ghost" onClick={showModal}>
-                    Simularium file
-                </Button>
+                // to do ant5: "ghost" type depecrecated and removed, update styling
+                <Button onClick={showModal}>Simularium file</Button>
             ),
         },
         {
