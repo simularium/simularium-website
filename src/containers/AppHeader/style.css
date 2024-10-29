@@ -31,7 +31,7 @@
     border-radius: 6px;
 }
 
-.left-links a:focus img {
+.left-links a:focus-visible img {
     outline: 1px solid var(--dark-theme-primary-button-focus-outline);
 }
 
