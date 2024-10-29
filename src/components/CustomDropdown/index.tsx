@@ -13,7 +13,6 @@ interface CustomDropdownProps {
     buttonType: ButtonClass;
     placement?: DropDownProps["placement"];
     disabled?: boolean;
-    narrow?: boolean;
 }
 
 const CustomDropdown: React.FC<CustomDropdownProps> = ({
@@ -23,14 +22,10 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
     buttonType,
     placement,
     disabled,
-    narrow,
 }) => {
-    const menuClassNames = narrow
-        ? classNames(styles.menu, styles.narrow)
-        : styles.menu;
     return (
         <Dropdown
-            menu={{ items, theme: "dark", className: menuClassNames }}
+            menu={{ items, theme: "dark", className: styles.menu }}
             placement={placement}
             disabled={disabled}
         >

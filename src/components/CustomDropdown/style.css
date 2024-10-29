@@ -1,12 +1,8 @@
 .menu {
-    width: var(--dropdown-menu-width);
+    width: fit-content;
     background-color: var(--dark-theme-dropdown-menu-bg);
     border-radius: 3px;
     padding: 8px;
-}
-
-.menu.narrow {
-    width: calc(var(--dropdown-menu-width) - 50px);
 }
 
 .menu svg {
@@ -43,6 +39,6 @@
     outline: 1px solid var(--dark-theme-dropdown-menu-item-focus-outline);
 }
 
-.menu :global(.ant-dropdown-menu-item) *:focus {
+.menu :global(.ant-dropdown-menu-item) *:focus-visible {
     color: var(--dark-theme-dropdown-menu-item-focus-color);
 }
