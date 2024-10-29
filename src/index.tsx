@@ -2,7 +2,7 @@ import "core-js/es6/map";
 import "core-js/es6/promise";
 import "core-js/es6/set";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider, useDispatch, batch } from "react-redux";
 import { ConfigProvider, Layout } from "antd";
@@ -33,7 +33,7 @@ function useLocationChange() {
     const location = useLocation() as LocationWithState;
     const dispatch = useDispatch();
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (
             location.pathname !== VIEWER_PATHNAME &&
             location.pathname !== EMBED_PATHNAME
