@@ -6,12 +6,16 @@
     background-color: var(--dark-theme-action-button-bg);
     border: none;
     color: var(--dark-theme-action-button-color);
-    padding: 0px;
+    padding: 4px 8px;
 }
 
-.nav-button.action-button:global(.ant-btn:hover),
-.nav-button.action-button:global(.ant-btn:focus) {
+.nav-button.action-button:global(.ant-btn:hover) {
     color: var(--dark-theme-action-button-hover-color);
+}
+
+.nav-button.action-button:global(.ant-btn:focus-visible) {
+    color: var(--dark-theme-action-button-focus-color);
+    outline: 1px solid var(--dark-theme-primary-button-focus-outline);
 }
 
 .nav-button.action-button:global(.ant-btn).disabled {
@@ -26,11 +30,18 @@
     color: var(--dark-theme-primary-button-color);
 }
 
-.nav-button.primary-button:global(.ant-btn:hover),
-.nav-button.primary-button:global(.ant-btn:focus) {
+.nav-button.primary-button:global(.ant-btn:hover) {
     color: var(--dark-theme-primary-button-hover-color);
     background-color: var(--dark-theme-primary-button-hover-bg);
     border-color: var(--dark-theme-primary-button-hover-border);
+}
+
+.nav-button.primary-button:global(.ant-btn:focus-visible) {
+    color: var(--dark-theme-primary-button-focus-color);
+    background-color: var(--dark-theme-primary-button-focus-bg);
+    border-color: var(--dark-theme-primary-button-focus-border);
+    outline: 1px solid var(--dark-theme-primary-button-focus-outline);
+    outline-offset: 2px;
 }
 
 .nav-button.primary-button:global(.ant-btn).disabled {
@@ -47,11 +58,18 @@
     color: var(--dark-theme-secondary-button-color);
 }
 
-.nav-button.secondary-button:global(.ant-btn:hover),
-.nav-button.secondary-button:global(.ant-btn:focus) {
+.nav-button.secondary-button:global(.ant-btn:hover) {
     color: var(--dark-theme-secondary-button-hover-color);
     background-color: var(--dark-theme-secondary-button-hover-bg);
     border-color: var(--dark-theme-secondary-button-hover-border);
+}
+
+.nav-button.secondary-button:global(.ant-btn:focus-visible) {
+    color: var(--dark-theme-secondary-button-focus-color);
+    background-color: var(--dark-theme-secondary-button-focus-bg);
+    border-color: var(--dark-theme-secondary-button-focus-border);
+    outline: 1px solid var(--dark-theme-secondary-button-focus-outline);
+    outline-offset: 2px;
 }
 
 .nav-button.secondary-button:global(.ant-btn).disabled {
@@ -59,4 +77,9 @@
     background-color: var(--dark-theme-secondary-button-disabled-bg);
     border-color: var(--dark-theme-secondary-button-disabled-border);
     cursor: not-allowed;
+}
+
+.nav-button.dropdown-item-button:global(.ant-btn) {
+    background-color: inherit;
+    border: inherit;
 }

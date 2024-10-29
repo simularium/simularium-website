@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useLocation, Link } from "react-router-dom";
-import { Dropdown, MenuProps } from "antd";
+import { MenuProps } from "antd";
 
 import { TUTORIAL_PATHNAME } from "../../routes";
 import {
@@ -13,8 +13,7 @@ import { ButtonClass } from "../../constants/interfaces";
 import { DownArrow } from "../Icons";
 import VersionModal from "../VersionModal";
 import NavButton from "../NavButton";
-
-import styles from "./style.css";
+import CustomDropdown from "../CustomDropdown";
 
 const HelpMenu = (): JSX.Element => {
     const [modalVisible, setModalVisible] = React.useState(false);
@@ -57,7 +56,6 @@ const HelpMenu = (): JSX.Element => {
         {
             key: "submit-issue",
             label: "Submit issue",
-            popupClassName: styles.submenu,
             popupOffset: [-0.45, -4],
             children: [
                 {
@@ -89,26 +87,25 @@ const HelpMenu = (): JSX.Element => {
         {
             key: "version",
             label: (
-                <a
-                    onClick={() => {
+                <NavButton
+                    titleText={"Version info"}
+                    clickHandler={() => {
                         setModalVisible(!modalVisible);
                     }}
-                >
-                    Version info
-                </a>
+                    buttonType={ButtonClass.DropdownItem}
+                />
             ),
         },
     ];
 
     return (
         <>
-            <Dropdown menu={{ items, theme: "dark", className: styles.menu }}>
-                <NavButton
-                    titleText={"Help "}
-                    icon={DownArrow}
-                    buttonType={ButtonClass.Secondary}
-                />
-            </Dropdown>
+            <CustomDropdown
+                items={items}
+                titleText={"Help"}
+                icon={DownArrow}
+                buttonType={ButtonClass.Secondary}
+            />
             {modalVisible && <VersionModal setModalVisible={setModalVisible} />}
         </>
     );
