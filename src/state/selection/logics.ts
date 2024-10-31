@@ -1,46 +1,68 @@
 import { createLogic } from "redux-logic";
-import { UIDisplayData } from "@aics/simularium-viewer";
 
 import { ReduxLogicDeps } from "../types";
-import { getSimulariumFile } from "../trajectory/selectors";
+import {
+    getDefaultUIDisplayData,
+    getSimulariumFile,
+} from "../trajectory/selectors";
 
-import { APPLY_USER_COLOR } from "./constants";
-import { getSelectedUIDisplayData } from "./selectors";
-import { setSelectedUIDisplayData } from "./actions";
+import {
+    GET_DISPLAY_DATA_FROM_BROWSER,
+    STORE_DISPLAY_DATA_IN_BROWSER,
+} from "./constants";
+import { setCurrentColorSettings, setSelectedUIDisplayData } from "./actions";
+import { compareAgentTrees } from "../../util";
+import { ColorSettings } from "./types";
 
-const storeColorsLogic = createLogic({
-    process(deps: ReduxLogicDeps, dispatch, done) {
-        const { action, getState } = deps;
-        const uiData: UIDisplayData = getSelectedUIDisplayData(getState());
-        const colorChange = action.payload;
-        const newUiData = uiData.map((agent) => {
-            const newAgent = { ...agent };
-            if (agent.name === colorChange.agent.name) {
-                if (colorChange.agent.tags.includes("")) {
-                    newAgent.color = colorChange.color;
-                }
-                const newDisplayStates = agent.displayStates.map(
-                    (state: any) => {
-                        if (colorChange.agent.tags.includes(state.id)) {
-                            return {
-                                ...state,
-                                color: colorChange.color,
-                            };
-                        }
-                        return state;
-                    }
-                );
-                newAgent.displayStates = newDisplayStates;
-            }
-            return newAgent;
-        });
-        dispatch(setSelectedUIDisplayData(newUiData));
-        // store color changes in local browser storage
+const storeDisplayDataInBrowserLogic = createLogic({
+    process(deps: ReduxLogicDeps) {
+        const { getState, action } = deps;
+        const displayData = action.payload;
         const fileKey = getSimulariumFile(getState()).name;
-        localStorage.setItem(fileKey, JSON.stringify(newUiData));
-        done();
+        localStorage.setItem(fileKey, JSON.stringify(displayData));
     },
-    type: APPLY_USER_COLOR,
+    type: STORE_DISPLAY_DATA_IN_BROWSER,
 });
 
-export default [storeColorsLogic];
+const applySessionColorsLogic = createLogic({
+    process(deps: ReduxLogicDeps, dispatch, done) {
+        const { getState } = deps;
+
+        const fileKey = getSimulariumFile(getState()).name;
+        const storedColorChanges = localStorage.getItem(fileKey) || "[]";
+        if (storedColorChanges === "[]" || storedColorChanges === "undefined") {
+            done();
+            return;
+        }
+
+        const storedUIData = JSON.parse(storedColorChanges);
+        const defaultUIData = getDefaultUIDisplayData(getState());
+        // const defaultUIData: UIDisplayData = [];
+
+        // If default UI data hasn't been received from the viewer yet
+        // store the retrieved settings but dont apply it yet.
+        if (defaultUIData.length === 0) {
+            dispatch(setSelectedUIDisplayData(storedUIData));
+            done();
+            return;
+        }
+        const validSettings = compareAgentTrees(storedUIData, defaultUIData);
+        if (!validSettings) {
+            console.warn(
+                "Agent structures do not match, not applying color settings from browser storage"
+            );
+            done();
+            return;
+        }
+        dispatch(setSelectedUIDisplayData(storedUIData));
+        dispatch(
+            setCurrentColorSettings({
+                currentColorSettings: ColorSettings.UserSelected,
+            })
+        );
+        done();
+    },
+    type: GET_DISPLAY_DATA_FROM_BROWSER,
+});
+
+export default [storeDisplayDataInBrowserLogic, applySessionColorsLogic];

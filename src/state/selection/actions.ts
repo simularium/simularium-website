@@ -1,5 +1,5 @@
 import { UIDisplayData } from "@aics/simularium-viewer";
-import { AgentMetadata, ColorChange } from "../../constants/interfaces";
+import { AgentMetadata } from "../../constants/interfaces";
 import {
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
@@ -10,8 +10,10 @@ import {
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
     SET_RECENT_COLORS,
     SET_SELECTED_AGENT,
-    APPLY_USER_COLOR,
     SET_SELECTED_DISPLAY_DATA,
+    GET_DISPLAY_DATA_FROM_BROWSER,
+    SET_CURRENT_COLOR_SETTINGS,
+    STORE_DISPLAY_DATA_IN_BROWSER,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -20,10 +22,11 @@ import {
     SetVisibleAction,
     AgentRenderingCheckboxMap,
     ResetAction,
-    ApplyUserColorAction,
     SetRecentColorsAction,
     SetSelectedAgentMetadataAction,
     SetSelectedUIDisplayDataAction,
+    ColorSettings,
+    SetCurrentColorSettingsAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -67,13 +70,6 @@ export function highlightAgentsByDisplayKey(
     };
 }
 
-export function applyUserColor(payload: ColorChange): ApplyUserColorAction {
-    return {
-        payload,
-        type: APPLY_USER_COLOR,
-    };
-}
-
 export function selectMetadata(
     key: string,
     payload: string | number
@@ -113,5 +109,29 @@ export function setSelectedUIDisplayData(
     return {
         payload: displayData,
         type: SET_SELECTED_DISPLAY_DATA,
+    };
+}
+
+export function storeDisplayDataInBrowser(
+    displayData: UIDisplayData
+): SetSelectedUIDisplayDataAction {
+    return {
+        payload: displayData,
+        type: STORE_DISPLAY_DATA_IN_BROWSER,
+    };
+}
+
+export function getDisplayDataFromBrowserStorage() {
+    return {
+        type: GET_DISPLAY_DATA_FROM_BROWSER,
+    };
+}
+
+export function setCurrentColorSettings(payload: {
+    currentColorSettings: ColorSettings;
+}): SetCurrentColorSettingsAction {
+    return {
+        payload,
+        type: SET_CURRENT_COLOR_SETTINGS,
     };
 }

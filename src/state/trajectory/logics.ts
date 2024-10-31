@@ -20,6 +20,7 @@ import {
     URL_PARAM_KEY_FILE_NAME,
     URL_PARAM_KEY_TIME,
 } from "../../constants";
+import { compareAgentTrees } from "../../util";
 import {
     getUserTrajectoryUrl,
     clearBrowserUrlParams,
@@ -27,11 +28,15 @@ import {
 import { ViewerStatus } from "../viewer/types";
 import {
     changeTime,
+    getDisplayDataFromBrowserStorage,
     resetAgentSelectionsAndHighlights,
+    setCurrentColorSettings,
     setSelectedUIDisplayData,
 } from "../selection/actions";
 import { setSimulariumController } from "../simularium/actions";
 import { getSimulariumController } from "../simularium/selectors";
+import { ColorSettings } from "../selection/types";
+import { getSelectedUIDisplayData } from "../selection/selectors";
 import { initialState as initialSelectionState } from "../selection/reducer";
 import { setStatus, setIsPlaying, setError } from "../viewer/actions";
 import { ReduxLogicDeps } from "../types";
@@ -217,6 +222,9 @@ const loadNetworkedFile = createLogic({
                     })
                 );
             })
+            .then(() => {
+                dispatch(getDisplayDataFromBrowserStorage());
+            })
             .then(done)
             .catch((error: FrontEndError) => {
                 handleFileLoadError(error, dispatch);
@@ -257,6 +265,7 @@ const loadLocalFile = createLogic({
         }
 
         clearOutFileTrajectoryUrlParam();
+        clearSimulariumFile({ newFile: true });
         simulariumController
             .changeFile(
                 {
@@ -278,6 +287,9 @@ const loadLocalFile = createLogic({
                         })
                     );
                 }
+            })
+            .then(() => {
+                dispatch(getDisplayDataFromBrowserStorage());
             })
             .then(done)
             .catch((error: FrontEndError) => {
@@ -640,11 +652,30 @@ const cancelConversionLogic = createLogic({
     type: CANCEL_CONVERSION,
 });
 
-const setInitialSelectedUIData = createLogic({
-    process(deps: ReduxLogicDeps, dispatch) {
-        const { action } = deps;
-        const uiData = action.payload;
-        dispatch(setSelectedUIDisplayData(uiData));
+const receiveDefaultUIDataLogic = createLogic({
+    process(deps: ReduxLogicDeps, dispatch, done) {
+        const { getState, action } = deps;
+        const browserStoredUIData = getSelectedUIDisplayData(getState());
+        /**
+         * If the conditions below are true, then valid color settings were
+         * retrieved from browser storage before the default ui data arrived
+         * and those settings should be applied.
+         * If false then userSelected data either doesn't exist, hasn't arrived yet, or
+         * is invalid: set to empty array for now.
+         */
+        if (
+            browserStoredUIData.length > 0 &&
+            compareAgentTrees(browserStoredUIData, action.payload)
+        ) {
+            dispatch(
+                setCurrentColorSettings({
+                    currentColorSettings: ColorSettings.UserSelected,
+                })
+            );
+        } else {
+            dispatch(setSelectedUIDisplayData([]));
+        }
+        done();
     },
     type: SET_DEFAULT_UI_DATA,
 });
@@ -661,5 +692,5 @@ export default [
     convertFileLogic,
     receiveConvertedFileLogic,
     cancelConversionLogic,
-    setInitialSelectedUIData,
+    receiveDefaultUIDataLogic,
 ];

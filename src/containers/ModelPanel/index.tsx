@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
+import { UIDisplayData } from "@aics/simularium-viewer";
 
 import { State } from "../../state/types";
 import { ViewerStatus } from "../../state/viewer/types";
@@ -10,23 +11,24 @@ import {
     requestTrajectory,
     changeToNetworkedFile,
 } from "../../state/trajectory/actions";
-import {
-    getUiDisplayDataTree,
-    getIsNetworkedFile,
-} from "../../state/trajectory/selectors";
+import { getIsNetworkedFile } from "../../state/trajectory/selectors";
 import {
     AgentRenderingCheckboxMap,
     ChangeAgentsRenderingStateAction,
     SetVisibleAction,
     SetRecentColorsAction,
-    ApplyUserColorAction,
+    ColorSettings,
+    SetCurrentColorSettingsAction,
+    SetSelectedUIDisplayDataAction,
 } from "../../state/selection/types";
 import {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
     setAgentsVisible,
     setRecentColors,
-    applyUserColor,
+    setSelectedUIDisplayData,
+    setCurrentColorSettings,
+    storeDisplayDataInBrowser,
 } from "../../state/selection/actions";
 import {
     getAgentVisibilityMap,
@@ -34,16 +36,18 @@ import {
     getRecentColors,
     getSelectedAgentMetadata,
 } from "../../state/selection/selectors";
+import { getCurrentUIData } from "../../state/compoundSelectors";
 import CheckBoxTree, { AgentDisplayNode } from "../../components/AgentTree";
 import NoTrajectoriesText from "../../components/NoTrajectoriesText";
 import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFileFailedText";
 import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
 import SideBarContents from "../../components/SideBarContents";
-import { AgentMetadata } from "../../constants/interfaces";
+import { AgentMetadata, ColorChange } from "../../constants/interfaces";
 import {
     getSelectAllVisibilityMap,
     getSelectNoneVisibilityMap,
     getIsSharedCheckboxIndeterminate,
+    getUiDisplayDataTree,
 } from "./selectors";
 
 import styles from "./style.css";
@@ -62,9 +66,12 @@ interface ModelPanelProps {
     isNetworkedFile: boolean;
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
     recentColors: string[];
-    applyUserColor: ActionCreator<ApplyUserColorAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
     selectedAgentMetadata: AgentMetadata;
+    currentUIDisplayData: UIDisplayData;
+    setCurrentColorSettings: ActionCreator<SetCurrentColorSettingsAction>;
+    setSelectedUIDisplayData: ActionCreator<SetSelectedUIDisplayDataAction>;
+    storeDisplayDataInBrowser: ActionCreator<SetSelectedUIDisplayDataAction>;
 }
 
 const ModelPanel: React.FC<ModelPanelProps> = ({
@@ -81,10 +88,42 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     isNetworkedFile,
     changeToNetworkedFile: loadNetworkFile,
     recentColors,
-    applyUserColor,
     setRecentColors,
     selectedAgentMetadata,
+    setSelectedUIDisplayData,
+    setCurrentColorSettings,
+    storeDisplayDataInBrowser,
+    currentUIDisplayData,
 }): JSX.Element => {
+    const updateSelectedUiDisplayData = (colorChange: ColorChange) => {
+        const newUiData = currentUIDisplayData.map((agent) => {
+            const newAgent = { ...agent };
+            if (agent.name === colorChange.agent.name) {
+                if (colorChange.agent.tags.includes("")) {
+                    newAgent.color = colorChange.color;
+                }
+                const newDisplayStates = agent.displayStates.map(
+                    (state: any) => {
+                        if (colorChange.agent.tags.includes(state.id)) {
+                            return {
+                                ...state,
+                                color: colorChange.color,
+                            };
+                        }
+                        return state;
+                    }
+                );
+                newAgent.displayStates = newDisplayStates;
+            }
+            return newAgent;
+        });
+        setSelectedUIDisplayData(newUiData);
+        setCurrentColorSettings({
+            currentColorSettings: ColorSettings.UserSelected,
+        });
+        storeDisplayDataInBrowser(newUiData);
+    };
+
     const checkboxTree = (
         <CheckBoxTree
             treeData={uiDisplayDataTree}
@@ -97,7 +136,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
             payloadForSelectNone={payloadForSelectNone}
             isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
             recentColors={recentColors}
-            applyUserColor={applyUserColor}
+            applyUserColor={updateSelectedUiDisplayData}
             setRecentColors={setRecentColors}
         />
     );
@@ -138,6 +177,7 @@ function mapStateToProps(state: State) {
         isNetworkedFile: getIsNetworkedFile(state),
         recentColors: getRecentColors(state),
         selectedAgentMetadata: getSelectedAgentMetadata(state),
+        currentUIDisplayData: getCurrentUIData(state),
     };
 }
 
@@ -147,8 +187,10 @@ const dispatchToPropsMap = {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
     setAgentsVisible,
-    applyUserColor,
     setRecentColors,
+    setSelectedUIDisplayData,
+    setCurrentColorSettings,
+    storeDisplayDataInBrowser,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ModelPanel);
