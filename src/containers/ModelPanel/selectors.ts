@@ -2,9 +2,33 @@ import { createSelector } from "reselect";
 import { isEmpty } from "lodash";
 
 import { AgentDisplayNode } from "../../components/AgentTree";
-import { getUiDisplayDataTree } from "../../state/trajectory/selectors";
 import { getAgentVisibilityMap } from "../../state/selection/selectors";
 import { AgentRenderingCheckboxMap } from "../../state/selection/types";
+import { getCurrentUIData } from "../../state/compoundSelectors";
+import { UIDisplayData } from "@aics/simularium-viewer";
+
+export const getUiDisplayDataTree = createSelector(
+    [getCurrentUIData],
+    (uiDisplayData: UIDisplayData) => {
+        if (!uiDisplayData.length) {
+            return [];
+        }
+        return uiDisplayData.map((agent) => ({
+            title: agent.name,
+            key: agent.name,
+            color: agent.color,
+            children: agent.displayStates.length
+                ? [
+                      ...agent.displayStates.map((state) => ({
+                          label: state.name,
+                          value: state.id,
+                          color: state.color,
+                      })),
+                  ]
+                : [],
+        }));
+    }
+);
 
 // Returns an agent visibility map that indicates all states should be visible
 export const getSelectAllVisibilityMap = createSelector(

@@ -1,7 +1,9 @@
+import { initialState, State } from "../../state";
 import {
     getSelectAllVisibilityMap,
     getSelectNoneVisibilityMap,
     getIsSharedCheckboxIndeterminate,
+    getUiDisplayDataTree,
 } from "./selectors";
 
 const mockUiDisplayData = [
@@ -50,9 +52,8 @@ const mockUiDisplayData = [
 describe("ModelPanel selectors", () => {
     describe("getSelectAllVisibilityMap", () => {
         it("Returns an agent visibility map with all possible states", () => {
-            const result = getSelectAllVisibilityMap.resultFunc(
-                mockUiDisplayData
-            );
+            const result =
+                getSelectAllVisibilityMap.resultFunc(mockUiDisplayData);
             const expected = {
                 agentWithChildren1: ["", "state1"],
                 agentWithChildren2: ["", "state1"],
@@ -64,9 +65,8 @@ describe("ModelPanel selectors", () => {
 
     describe("getSelectNoneVisibilityMap", () => {
         it("Returns an agent visibility map with none of the possible states", () => {
-            const result = getSelectNoneVisibilityMap.resultFunc(
-                mockUiDisplayData
-            );
+            const result =
+                getSelectNoneVisibilityMap.resultFunc(mockUiDisplayData);
             const expected = {
                 agentWithChildren1: [],
                 agentWithChildren2: [],
@@ -162,6 +162,69 @@ describe("ModelPanel selectors", () => {
                 mockAgentVisibilityMap
             );
             expect(result).toBe(true);
+        });
+    });
+    describe("getUiDisplayDataTree", () => {
+        it("returns an empty array if ui display data is empty", () => {
+            expect(getUiDisplayDataTree(initialState)).toStrictEqual([]);
+        });
+        it("correctly maps agent display info to an array of display data", () => {
+            const state: State = {
+                ...initialState,
+                trajectory: {
+                    ...initialState.trajectory,
+                    defaultUIData: [
+                        {
+                            name: "agent1",
+                            displayStates: [],
+                            color: "#bbbbbb",
+                        },
+                        {
+                            name: "agent2",
+                            color: "#aaaaaa",
+                            displayStates: [
+                                {
+                                    name: "state1",
+                                    id: "state1_id",
+                                    color: "#000000",
+                                },
+                                {
+                                    name: "state2",
+                                    id: "state2_id",
+                                    color: "#000000",
+                                },
+                            ],
+                        },
+                    ],
+                },
+            };
+
+            const expected = [
+                {
+                    title: "agent1",
+                    key: "agent1",
+                    children: [],
+                    color: "#bbbbbb",
+                },
+                {
+                    title: "agent2",
+                    key: "agent2",
+                    color: "#aaaaaa",
+                    children: [
+                        {
+                            color: "#000000",
+                            label: "state1",
+                            value: "state1_id",
+                        },
+                        {
+                            color: "#000000",
+                            label: "state2",
+                            value: "state2_id",
+                        },
+                    ],
+                },
+            ];
+            expect(getUiDisplayDataTree(state)).toStrictEqual(expected);
         });
     });
 });
