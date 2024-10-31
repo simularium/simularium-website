@@ -87,3 +87,8 @@ export interface SetSelectedUIDisplayDataAction {
     payload: UIDisplayData;
     type: string;
 }
+
+export enum ColorSettings {
+    UserSelected = "userSelected",
+    Default = "default",
+}
