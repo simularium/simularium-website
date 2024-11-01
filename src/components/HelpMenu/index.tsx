@@ -102,10 +102,9 @@ const HelpMenu = (): JSX.Element => {
         <>
             <CustomDropdown
                 items={items}
-                titleText={"Help "}
+                titleText={"Help"}
                 icon={DownArrow}
                 buttonType={ButtonClass.Secondary}
-                narrow={true}
             />
             {modalVisible && <VersionModal setModalVisible={setModalVisible} />}
         </>

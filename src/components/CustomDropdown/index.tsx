@@ -5,7 +5,6 @@ import React, {
     useRef,
     useState,
 } from "react";
-import classNames from "classnames";
 import { Dropdown, DropDownProps, MenuProps } from "antd";
 import { ButtonClass, DropdownState } from "../../constants/interfaces";
 import { DROPDOWN_HOVER_DELAY } from "../../constants";
@@ -20,7 +19,6 @@ interface CustomDropdownProps {
     buttonType: ButtonClass;
     placement?: DropDownProps["placement"];
     disabled?: boolean;
-    narrow?: boolean;
 }
 
 const CustomDropdown: React.FC<CustomDropdownProps> = ({
@@ -30,7 +28,6 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
     buttonType,
     placement,
     disabled,
-    narrow,
 }) => {
     const [dropdownState, setDropdownState] = useState<DropdownState>(
         DropdownState.CLOSED
@@ -108,12 +105,9 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
         );
     };
 
-    const menuClassNames = narrow
-        ? classNames(styles.menu, styles.narrow)
-        : styles.menu;
     return (
         <Dropdown
-            menu={{ items, theme: "dark", className: menuClassNames }}
+            menu={{ items, theme: "dark", className: styles.menu }}
             placement={placement}
             disabled={disabled}
             trigger={["click"]}

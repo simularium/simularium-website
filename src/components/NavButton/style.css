@@ -13,7 +13,7 @@
     color: var(--dark-theme-action-button-hover-color);
 }
 
-.nav-button.action-button:global(.ant-btn:focus) {
+.nav-button.action-button:global(.ant-btn:focus-visible) {
     color: var(--dark-theme-action-button-focus-color);
     outline: 1px solid var(--dark-theme-primary-button-focus-outline);
 }
@@ -36,7 +36,7 @@
     border-color: var(--dark-theme-primary-button-hover-border);
 }
 
-.nav-button.primary-button:global(.ant-btn:focus) {
+.nav-button.primary-button:global(.ant-btn:focus-visible) {
     color: var(--dark-theme-primary-button-focus-color);
     background-color: var(--dark-theme-primary-button-focus-bg);
     border-color: var(--dark-theme-primary-button-focus-border);
@@ -64,7 +64,7 @@
     border-color: var(--dark-theme-secondary-button-hover-border);
 }
 
-.nav-button.secondary-button:global(.ant-btn:focus) {
+.nav-button.secondary-button:global(.ant-btn:focus-visible) {
     color: var(--dark-theme-secondary-button-focus-color);
     background-color: var(--dark-theme-secondary-button-focus-bg);
     border-color: var(--dark-theme-secondary-button-focus-border);
