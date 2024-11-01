@@ -246,25 +246,25 @@ describe("General utilities", () => {
         const mockUIDisplayData: UIDisplayData = [
             {
                 name: "agent1",
-                color: "#0000FF",
+                color: "#0000ff",
                 displayStates: [
-                    { name: "state1", id: "1", color: "#0000FF" },
-                    { name: "state2", id: "2", color: "#0000FF" },
+                    { name: "state1", id: "state1", color: "#0000ff" },
+                    { name: "state2", id: "state2", color: "#0000ff" },
                 ],
             },
             {
                 name: "agent2",
-                color: "#FF0000",
+                color: "#ff0000",
                 displayStates: [
-                    { name: "state3", id: "3", color: "#FF0000" },
-                    { name: "state4", id: "4", color: "#FF0000" },
+                    { name: "state3", id: "state3", color: "#ff0000" },
+                    { name: "state4", id: "state4", color: "#ff0000" },
                 ],
             },
         ];
 
         it("should update agent color when tags include empty string", () => {
             const colorChange = {
-                color: "#00FF00",
+                color: "#00ff00",
                 agent: {
                     name: "agent1",
                     tags: [""],
@@ -276,13 +276,13 @@ describe("General utilities", () => {
                 mockUIDisplayData
             );
 
-            expect(result[0].color).toBe("#00FF00");
-            expect(result[1].color).toBe("#FF0000");
+            expect(result[0].color).toBe("#00ff00");
+            expect(result[1].color).toBe("#ff0000");
         });
 
         it("should update specific display states based on tags", () => {
             const colorChange = {
-                color: "#FFFF00",
+                color: "#ffff00",
                 agent: {
                     name: "agent1",
                     tags: ["state1"],
@@ -294,8 +294,8 @@ describe("General utilities", () => {
                 mockUIDisplayData
             );
 
-            expect(result[0].displayStates[0].color).toBe("#FFFF00"); // state1 updated
-            expect(result[0].displayStates[1].color).toBe("#0000FF"); // state2 unchanged
+            expect(result[0].displayStates[0].color).toBe("#ffff00"); // state1 updated
+            expect(result[0].displayStates[1].color).toBe("#0000ff"); // state2 unchanged
         });
 
         it("should update multiple display states for agents with multiple tags", () => {
@@ -318,7 +318,7 @@ describe("General utilities", () => {
 
         it("should not modify data when agent name does not match", () => {
             const colorChange = {
-                color: "#FFA500",
+                color: "#ffA500",
                 agent: {
                     name: "nonexistentAgent",
                     tags: [""],
