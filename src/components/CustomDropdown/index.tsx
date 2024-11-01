@@ -62,21 +62,20 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
      * Manually handling keydown and hover behavior because
      * our focus management overrides the defaults of the antd components.
      */
+    const openTriggers = new Set(["Enter", " ", "ArrowDown"]);
+
     const handleKeyDown: KeyboardEventHandler<any> = (event) => {
-        if (dropdownState === DropdownState.CLOSED) {
-            if (
-                (event.key === "Enter" ||
-                    event.key === " " ||
-                    event.key === "ArrowDown") &&
-                !event.defaultPrevented
-            ) {
-                event.preventDefault();
-                setDropdownState(DropdownState.FORCED_OPEN); // Opened by keyboard
-            }
-        } else if (event.key === "Escape") {
+        if (event.key === "Escape") {
             event.preventDefault();
             setDropdownState(DropdownState.CLOSED);
             triggerRef.current?.focus();
+        }
+        if (
+            openTriggers.has(event.key) &&
+            dropdownState === DropdownState.CLOSED
+        ) {
+            event.preventDefault();
+            setDropdownState(DropdownState.FORCED_OPEN); // Opened by keyboard
         }
     };
 
