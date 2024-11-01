@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { ActionCreator } from "redux";
-import { Dropdown, Button, MenuProps } from "antd";
+import { MenuProps } from "antd";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
@@ -21,8 +21,7 @@ import { VIEWER_PATHNAME } from "../../routes";
 import { DownArrow } from "../Icons";
 import FileUploadModal from "../FileUploadModal";
 import NavButton from "../NavButton";
-
-import styles from "./style.css";
+import CustomDropdown from "../CustomDropdown";
 
 interface LoadFileMenuProps {
     isBuffering: boolean;
@@ -73,7 +72,6 @@ const LoadFileMenu = ({
         {
             key: "from-examples",
             label: "Example models",
-            popupClassName: styles.submenu,
             popupOffset: [-0.45, -4],
             children: TRAJECTORIES.map((trajectory) => ({
                 key: trajectory.id,
@@ -94,8 +92,11 @@ const LoadFileMenu = ({
         {
             key: "file-upload",
             label: (
-                // to do ant5: "ghost" type depecrecated and removed, update styling
-                <Button onClick={showModal}>Simularium file</Button>
+                <NavButton
+                    titleText={"Simularium file"}
+                    clickHandler={showModal}
+                    buttonType={ButtonClass.DropdownItem}
+                />
             ),
         },
         {
@@ -116,18 +117,14 @@ const LoadFileMenu = ({
 
     return (
         <>
-            <Dropdown
-                menu={{ items, theme: "dark", className: styles.menu }}
+            <CustomDropdown
+                items={items}
+                titleText={"Load model"}
+                icon={DownArrow}
+                buttonType={ButtonClass.Primary}
                 placement="bottomRight"
                 disabled={isDisabled}
-            >
-                <NavButton
-                    titleText={"Load model"}
-                    icon={DownArrow}
-                    buttonType={ButtonClass.Primary}
-                    isDisabled={isDisabled}
-                />
-            </Dropdown>
+            />
             {/* 
                 Conditionally rendering the modal this way instead of as a `visible` prop
                 forces it to re-render every time it is opened, resetting the form inside.

@@ -45,6 +45,7 @@ export enum ButtonClass {
     Primary = "primary-button",
     Secondary = "secondary-button",
     Action = "action-button",
+    DropdownItem = "dropdown-item-button",
 }
 
 export enum IconGlyphs {
