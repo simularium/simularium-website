@@ -51,6 +51,7 @@ import {
 } from "./selectors";
 
 import styles from "./style.css";
+import { applyColorChangeToUiDisplayData } from "../../util";
 
 interface ModelPanelProps {
     uiDisplayDataTree: AgentDisplayNode[];
@@ -96,32 +97,15 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     currentUIDisplayData,
 }): JSX.Element => {
     const updateSelectedUiDisplayData = (colorChange: ColorChange) => {
-        const newUiData = currentUIDisplayData.map((agent) => {
-            const newAgent = { ...agent };
-            if (agent.name === colorChange.agent.name) {
-                if (colorChange.agent.tags.includes("")) {
-                    newAgent.color = colorChange.color;
-                }
-                const newDisplayStates = agent.displayStates.map(
-                    (state: any) => {
-                        if (colorChange.agent.tags.includes(state.id)) {
-                            return {
-                                ...state,
-                                color: colorChange.color,
-                            };
-                        }
-                        return state;
-                    }
-                );
-                newAgent.displayStates = newDisplayStates;
-            }
-            return newAgent;
-        });
-        setSelectedUIDisplayData(newUiData);
+        const newUIData = applyColorChangeToUiDisplayData(
+            colorChange,
+            currentUIDisplayData
+        );
+        setSelectedUIDisplayData(newUIData);
         setCurrentColorSettings({
             currentColorSettings: ColorSettings.UserSelected,
         });
-        storeDisplayDataInBrowser(newUiData);
+        storeDisplayDataInBrowser(newUIData);
     };
 
     const checkboxTree = (

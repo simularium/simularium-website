@@ -15,6 +15,7 @@ import {
     copyToClipboard,
     roundToTimeStepPrecision,
     compareAgentTrees,
+    applyColorChangeToUiDisplayData,
 } from "../";
 import {
     getFileIdFromUrl,
@@ -238,6 +239,98 @@ describe("General utilities", () => {
         });
         it("does not include unnecessary zeros", () => {
             expect(roundTimeForDisplay(1.20000001)).toBe(1.2);
+        });
+    });
+
+    describe("applyColorChangeToUiDisplayData", () => {
+        const mockUIDisplayData: UIDisplayData = [
+            {
+                name: "agent1",
+                color: "#0000FF",
+                displayStates: [
+                    { name: "state1", id: "1", color: "#0000FF" },
+                    { name: "state2", id: "2", color: "#0000FF" },
+                ],
+            },
+            {
+                name: "agent2",
+                color: "#FF0000",
+                displayStates: [
+                    { name: "state3", id: "3", color: "#FF0000" },
+                    { name: "state4", id: "4", color: "#FF0000" },
+                ],
+            },
+        ];
+
+        it("should update agent color when tags include empty string", () => {
+            const colorChange = {
+                color: "#00FF00",
+                agent: {
+                    name: "agent1",
+                    tags: [""],
+                },
+            };
+
+            const result = applyColorChangeToUiDisplayData(
+                colorChange,
+                mockUIDisplayData
+            );
+
+            expect(result[0].color).toBe("#00FF00");
+            expect(result[1].color).toBe("#FF0000");
+        });
+
+        it("should update specific display states based on tags", () => {
+            const colorChange = {
+                color: "#FFFF00",
+                agent: {
+                    name: "agent1",
+                    tags: ["state1"],
+                },
+            };
+
+            const result = applyColorChangeToUiDisplayData(
+                colorChange,
+                mockUIDisplayData
+            );
+
+            expect(result[0].displayStates[0].color).toBe("#FFFF00"); // state1 updated
+            expect(result[0].displayStates[1].color).toBe("#0000FF"); // state2 unchanged
+        });
+
+        it("should update multiple display states for agents with multiple tags", () => {
+            const colorChange = {
+                color: "#800080",
+                agent: {
+                    name: "agent1",
+                    tags: ["state1", "state2"],
+                },
+            };
+
+            const result = applyColorChangeToUiDisplayData(
+                colorChange,
+                mockUIDisplayData
+            );
+
+            expect(result[0].displayStates[0].color).toBe("#800080");
+            expect(result[0].displayStates[1].color).toBe("#800080");
+        });
+
+        it("should not modify data when agent name does not match", () => {
+            const colorChange = {
+                color: "#FFA500",
+                agent: {
+                    name: "nonexistentAgent",
+                    tags: [""],
+                },
+            };
+
+            const result = applyColorChangeToUiDisplayData(
+                colorChange,
+                mockUIDisplayData
+            );
+
+            expect(result).toEqual(mockUIDisplayData);
         });
     });
 });

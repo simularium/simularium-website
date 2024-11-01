@@ -1,6 +1,6 @@
 import { forOwn, isFunction } from "lodash";
 import React from "react";
-import { IconGlyphs } from "../constants/interfaces";
+import { ColorChange, IconGlyphs } from "../constants/interfaces";
 import { UIDisplayData } from "@aics/simularium-viewer";
 
 type AnyFunction = () => any;
@@ -128,4 +128,29 @@ export const compareAgentTrees = (a: UIDisplayData, b: UIDisplayData) => {
         }
     }
     return true;
+};
+
+export const applyColorChangeToUiDisplayData = (
+    colorChange: ColorChange,
+    uiDisplayData: UIDisplayData
+): UIDisplayData => {
+    return uiDisplayData.map((agent) => {
+        const newAgent = { ...agent };
+        if (agent.name === colorChange.agent.name) {
+            if (colorChange.agent.tags.includes("")) {
+                newAgent.color = colorChange.color;
+            }
+            const newDisplayStates = agent.displayStates.map((state: any) => {
+                if (colorChange.agent.tags.includes(state.id)) {
+                    return {
+                        ...state,
+                        color: colorChange.color,
+                    };
+                }
+                return state;
+            });
+            newAgent.displayStates = newDisplayStates;
+        }
+        return newAgent;
+    });
 };
