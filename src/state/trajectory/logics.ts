@@ -641,10 +641,11 @@ const cancelConversionLogic = createLogic({
 });
 
 const setInitialSelectedUIData = createLogic({
-    process(deps: ReduxLogicDeps, dispatch) {
+    process(deps: ReduxLogicDeps, dispatch, done) {
         const { action } = deps;
         const uiData = action.payload;
         dispatch(setSelectedUIDisplayData(uiData));
+        done();
     },
     type: SET_DEFAULT_UI_DATA,
 });
