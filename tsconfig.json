@@ -1,8 +1,27 @@
 {
-  "extends": "./tsconfig.base",
   "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "jsx": "react",
+    "lib": ["DOM", "ES2015", "ES6", "DOM.Iterable", "ScriptHost"],
+    "moduleResolution": "Node",
+    "skipLibCheck": true,
+    "noEmit": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "strict": true,
     "module": "ES6",
     "resolveJsonModule": true,
-    "esModuleInterop": true
-  }
+    "esModuleInterop": true,
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+        
+      }
+    ]
+  },
+  "include": [
+    "src/**/*"
+  ]
 }
