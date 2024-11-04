@@ -13,7 +13,7 @@
   ],
   "presets": [
     "@babel/preset-react",
-    ["@babel/preset-env", { "modules": false }],
+    ["@babel/preset-env", { "modules": "auto" }],
     "@babel/preset-typescript"
   ],
   "env": {

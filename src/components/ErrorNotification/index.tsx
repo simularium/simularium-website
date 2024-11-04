@@ -40,14 +40,13 @@ const ErrorNotification = ({
 
     return notification[level]({
         message: convertToSentenceCase(message),
-        description:
-            (
-                <div
-                    dangerouslySetInnerHTML={{
-                        __html: htmlData as string,
-                    }}
-                />
-            ) || "",
+        description: (
+            <div
+                dangerouslySetInnerHTML={{
+                    __html: htmlData as string,
+                }}
+            />
+        ),
         duration: getDuration(),
         onClose: onClose,
     });
