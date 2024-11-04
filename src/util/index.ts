@@ -107,6 +107,14 @@ export const roundToTimeStepPrecision = (
     return Math.round(input * multiplier) / multiplier;
 };
 
+/**
+Compare two instaces of UIDisplayData to see if they have the same agents
+and display states.
+This data structure is used to store different color settings. 
+We don't want to ever try and apply the color settings from one trajectory
+to another, even if by chance they shared the same file name, or other
+metadata.
+*/
 export const compareAgentTrees = (a: UIDisplayData, b: UIDisplayData) => {
     if (a.length !== b.length) {
         return false;
