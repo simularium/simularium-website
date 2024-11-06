@@ -72,9 +72,12 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
         }
         if (
             openTriggers.has(event.key) &&
-            dropdownState === DropdownState.CLOSED
+            dropdownState !== DropdownState.FORCED_OPEN
         ) {
             event.preventDefault();
+            if (closeTimeoutRef.current) {
+                clearTimeout(closeTimeoutRef.current);
+            }
             setDropdownState(DropdownState.FORCED_OPEN); // Opened by keyboard
         }
     };
@@ -111,7 +114,6 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
             disabled={disabled}
             trigger={["click"]}
             open={dropdownState !== DropdownState.CLOSED}
-            autoFocus={true}
             dropdownRender={(menu) => (
                 <div
                     ref={dropdownRef}
