@@ -88,7 +88,7 @@ export interface SetSelectedUIDisplayDataAction {
     type: string;
 }
 
-export enum ColorSettings {
+export enum ColorSetting {
     UserSelected = "userSelected",
     Default = "default",
 }

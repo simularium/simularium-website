@@ -1,21 +1,17 @@
 import { createSelector } from "reselect";
+import { UIDisplayData } from "@aics/simularium-viewer";
 
 import { getDefaultUIDisplayData } from "../trajectory/selectors";
 import {
-    getCurrentColorSettings,
+    getCurrentColorSetting,
     getSelectedUIDisplayData,
 } from "../selection/selectors";
-import { ColorSettings } from "../selection/types";
-import { UIDisplayData } from "@aics/simularium-viewer";
+import { ColorSetting } from "../selection/types";
 
 export const getCurrentUIData = createSelector(
-    [
-        getCurrentColorSettings,
-        getSelectedUIDisplayData,
-        getDefaultUIDisplayData,
-    ],
+    [getCurrentColorSetting, getSelectedUIDisplayData, getDefaultUIDisplayData],
     (
-        colorSetting: ColorSettings,
+        colorSetting: ColorSetting,
         sessionData: UIDisplayData,
         defaultData: UIDisplayData
     ) => {
@@ -23,7 +19,7 @@ export const getCurrentUIData = createSelector(
         if (!fileHasBeenParsed) {
             return [];
         }
-        if (colorSetting === ColorSettings.UserSelected) {
+        if (colorSetting === ColorSetting.UserSelected) {
             return sessionData;
         }
         return defaultData;
