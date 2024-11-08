@@ -5,6 +5,7 @@ import { ColorSetting } from "../selection/types";
 describe("getCurrentUIData", () => {
     it("returns empty array if default UI data has not been entered yet", () => {
         expect(getCurrentUIData(initialState)).toEqual([]);
+        1;
     });
     it("returns selectedUIDisplayData if colorSetting is equal to ColorSetting.UserSelected", () => {
         expect(
@@ -22,7 +23,7 @@ describe("getCurrentUIData", () => {
                 },
                 selection: {
                     ...initialState.selection,
-                    current: ColorSetting.UserSelected,
+                    currentColorSetting: ColorSetting.UserSelected,
                     selectedUIDisplayData: [
                         {
                             name: "agent1",
