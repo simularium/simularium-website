@@ -1,12 +1,13 @@
 import { getCurrentUIData } from ".";
 import { initialState } from "..";
-import { ColorSettings } from "../selection/types";
+import { ColorSetting } from "../selection/types";
 
 describe("getCurrentUIData", () => {
     it("returns empty array if default UI data has not been entered yet", () => {
         expect(getCurrentUIData(initialState)).toEqual([]);
+        1;
     });
-    it("returns selectedUIDisplayData if colorSetting is equal to ColorSettings.UserSelected", () => {
+    it("returns selectedUIDisplayData if colorSetting is equal to ColorSetting.UserSelected", () => {
         expect(
             getCurrentUIData({
                 ...initialState,
@@ -22,7 +23,7 @@ describe("getCurrentUIData", () => {
                 },
                 selection: {
                     ...initialState.selection,
-                    currentColorSettings: ColorSettings.UserSelected,
+                    currentColorSetting: ColorSetting.UserSelected,
                     selectedUIDisplayData: [
                         {
                             name: "agent1",
@@ -41,7 +42,7 @@ describe("getCurrentUIData", () => {
         ]);
     });
 
-    it("returns defaultUIData if colorSetting is euqal to ColorSettings.Default", () => {
+    it("returns defaultUIData if colorSetting is euqal to ColorSetting.Default", () => {
         expect(
             getCurrentUIData({
                 ...initialState,
@@ -57,7 +58,7 @@ describe("getCurrentUIData", () => {
                 },
                 selection: {
                     ...initialState.selection,
-                    currentColorSettings: ColorSettings.Default,
+                    currentColorSetting: ColorSetting.Default,
                     selectedUIDisplayData: [
                         {
                             name: "agent1",

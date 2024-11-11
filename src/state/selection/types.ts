@@ -83,12 +83,12 @@ export interface SetSelectedUIDisplayDataAction {
     type: string;
 }
 
-export interface SetCurrentColorSettingsAction {
-    payload: { currentColorSettings: ColorSettings };
+export interface SetCurrentColorSettingAction {
+    payload: { currentColorSetting: ColorSetting };
     type: string;
 }
 
-export enum ColorSettings {
+export enum ColorSetting {
     UserSelected = "userSelected",
     Default = "default",
 }
