@@ -52,7 +52,7 @@ const actionToConfigMap: TypeToDescriptionMap = {
                 agentVisibilityMap: initialState.agentVisibilityMap,
                 agentHighlightMap: initialState.agentHighlightMap,
                 setSelectedUIDisplayData: initialState.selectedUIDisplayData,
-                currentColorSettings: initialState.currentColorSettings,
+                currentColorSetting: initialState.currentColorSetting,
             };
         },
     },
@@ -179,15 +179,15 @@ const actionToConfigMap: TypeToDescriptionMap = {
         },
     },
     [SET_CURRENT_COLOR_SETTINGS]: {
-        accepts: (action: AnyAction): action is SetCurrentColorSettingsAction =>
+        accepts: (action: AnyAction): action is SetCurrentColorSettingAction =>
             action.type === SET_CURRENT_COLOR_SETTINGS,
         perform: (
             state: SelectionStateBranch,
-            action: SetCurrentColorSettingsAction
+            action: SetCurrentColorSettingAction
         ) => {
             return {
                 ...state,
-                currentColorSettings: action.payload.currentColorSettings,
+                currentColorSetting: action.payload.currentColorSetting,
             };
         },
     },

@@ -25,8 +25,8 @@ import {
     SetRecentColorsAction,
     SetSelectedAgentMetadataAction,
     SetSelectedUIDisplayDataAction,
-    ColorSettings,
-    SetCurrentColorSettingsAction,
+    ColorSetting,
+    SetCurrentColorSettingAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -127,9 +127,9 @@ export function getDisplayDataFromBrowserStorage() {
     };
 }
 
-export function setCurrentColorSettings(payload: {
-    currentColorSettings: ColorSettings;
-}): SetCurrentColorSettingsAction {
+export function setCurrentColorSetting(payload: {
+    currentColorSetting: ColorSetting;
+}): SetCurrentColorSettingAction {
     return {
         payload,
         type: SET_CURRENT_COLOR_SETTINGS,

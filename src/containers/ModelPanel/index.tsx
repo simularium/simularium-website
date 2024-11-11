@@ -17,8 +17,8 @@ import {
     ChangeAgentsRenderingStateAction,
     SetVisibleAction,
     SetRecentColorsAction,
-    ColorSettings,
-    SetCurrentColorSettingsAction,
+    ColorSetting,
+    SetCurrentColorSettingAction,
     SetSelectedUIDisplayDataAction,
 } from "../../state/selection/types";
 import {
@@ -27,7 +27,7 @@ import {
     setAgentsVisible,
     setRecentColors,
     setSelectedUIDisplayData,
-    setCurrentColorSettings,
+    setCurrentColorSetting,
     storeDisplayDataInBrowser,
 } from "../../state/selection/actions";
 import {
@@ -70,7 +70,7 @@ interface ModelPanelProps {
     setRecentColors: ActionCreator<SetRecentColorsAction>;
     selectedAgentMetadata: AgentMetadata;
     currentUIDisplayData: UIDisplayData;
-    setCurrentColorSettings: ActionCreator<SetCurrentColorSettingsAction>;
+    setCurrentColorSetting: ActionCreator<SetCurrentColorSettingAction>;
     setSelectedUIDisplayData: ActionCreator<SetSelectedUIDisplayDataAction>;
     storeDisplayDataInBrowser: ActionCreator<SetSelectedUIDisplayDataAction>;
 }
@@ -92,7 +92,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     setRecentColors,
     selectedAgentMetadata,
     setSelectedUIDisplayData,
-    setCurrentColorSettings,
+    setCurrentColorSetting,
     storeDisplayDataInBrowser,
     currentUIDisplayData,
 }): JSX.Element => {
@@ -102,8 +102,8 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
             currentUIDisplayData
         );
         setSelectedUIDisplayData(newUIData);
-        setCurrentColorSettings({
-            currentColorSettings: ColorSettings.UserSelected,
+        setCurrentColorSetting({
+            currentColorSetting: ColorSetting.UserSelected,
         });
         storeDisplayDataInBrowser(newUIData);
     };
@@ -173,7 +173,7 @@ const dispatchToPropsMap = {
     setAgentsVisible,
     setRecentColors,
     setSelectedUIDisplayData,
-    setCurrentColorSettings,
+    setCurrentColorSetting: setCurrentColorSetting,
     storeDisplayDataInBrowser,
 };
 

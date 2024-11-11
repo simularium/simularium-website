@@ -30,12 +30,12 @@ import {
     changeTime,
     getDisplayDataFromBrowserStorage,
     resetAgentSelectionsAndHighlights,
-    setCurrentColorSettings,
+    setCurrentColorSetting,
     setSelectedUIDisplayData,
 } from "../selection/actions";
 import { setSimulariumController } from "../simularium/actions";
 import { getSimulariumController } from "../simularium/selectors";
-import { ColorSettings } from "../selection/types";
+import { ColorSetting } from "../selection/types";
 import { getSelectedUIDisplayData } from "../selection/selectors";
 import { initialState as initialSelectionState } from "../selection/reducer";
 import { setStatus, setIsPlaying, setError } from "../viewer/actions";
@@ -668,8 +668,8 @@ const receiveDefaultUIDataLogic = createLogic({
             compareAgentTrees(browserStoredUIData, action.payload)
         ) {
             dispatch(
-                setCurrentColorSettings({
-                    currentColorSettings: ColorSettings.UserSelected,
+                setCurrentColorSetting({
+                    currentColorSetting: ColorSetting.UserSelected,
                 })
             );
         } else {

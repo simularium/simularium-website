@@ -10,9 +10,9 @@ import {
     GET_DISPLAY_DATA_FROM_BROWSER,
     STORE_DISPLAY_DATA_IN_BROWSER,
 } from "./constants";
-import { setCurrentColorSettings, setSelectedUIDisplayData } from "./actions";
+import { setCurrentColorSetting, setSelectedUIDisplayData } from "./actions";
 import { compareAgentTrees } from "../../util";
-import { ColorSettings } from "./types";
+import { ColorSetting } from "./types";
 
 const storeDisplayDataInBrowserLogic = createLogic({
     process(deps: ReduxLogicDeps) {
@@ -56,8 +56,8 @@ const applySessionColorsLogic = createLogic({
         }
         dispatch(setSelectedUIDisplayData(storedUIData));
         dispatch(
-            setCurrentColorSettings({
-                currentColorSettings: ColorSettings.UserSelected,
+            setCurrentColorSetting({
+                currentColorSetting: ColorSetting.UserSelected,
             })
         );
         done();
