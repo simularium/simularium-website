@@ -92,3 +92,9 @@ export interface ColorChange {
     agent: SelectionEntry;
     color: string;
 }
+
+export enum DropdownState {
+    OPEN = "open",
+    CLOSED = "closed",
+    FORCED_OPEN = "forced_open",
+}
