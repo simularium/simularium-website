@@ -159,13 +159,13 @@ const CameraControls = ({
                     tooltipText="Zoom in ( &uarr; )"
                     tooltipPlacement="left"
                     icon={ZoomIn}
-                    clickHandler={zoomIn}
+                    onClick={zoomIn}
                 />
                 <ViewportButton
                     tooltipText="Zoom out ( &darr; )"
                     tooltipPlacement="left"
                     icon={ZoomOut}
-                    clickHandler={zoomOut}
+                    onClick={zoomOut}
                 />
             </div>
             <div className={styles.radioGroup}>
@@ -176,7 +176,7 @@ const CameraControls = ({
                     tooltipPlacement="left"
                     icon={getIconGlyphClasses(IconGlyphs.Rotate)}
                     radioGroupPosition={"top"}
-                    clickHandler={() => setMode(ROTATE)}
+                    onClick={() => setMode(ROTATE)}
                     active={mode === ROTATE}
                 />
                 <ViewportButton
@@ -184,7 +184,7 @@ const CameraControls = ({
                     tooltipPlacement="left"
                     icon={getIconGlyphClasses(IconGlyphs.Pan)}
                     radioGroupPosition={"bottom"}
-                    clickHandler={() => setMode(PAN)}
+                    onClick={() => setMode(PAN)}
                     active={mode === PAN}
                 />
             </div>
@@ -192,7 +192,7 @@ const CameraControls = ({
                 tooltipText={"Focus (F)"}
                 tooltipPlacement="left"
                 icon={getIconGlyphClasses(IconGlyphs.Focus)}
-                clickHandler={() => {
+                onClick={() => {
                     saveFocusMode(!isFocused);
                 }}
                 active={isFocused}
@@ -203,7 +203,7 @@ const CameraControls = ({
                     tooltipPlacement="left"
                     icon={getIconGlyphClasses(IconGlyphs.Orthographic)}
                     radioGroupPosition={"top"}
-                    clickHandler={() => {
+                    onClick={() => {
                         setCameraProjectionType(ORTHOGRAPHIC);
                     }}
                     active={cameraProjectionType === ORTHOGRAPHIC}
@@ -213,7 +213,7 @@ const CameraControls = ({
                     tooltipPlacement="left"
                     icon={getIconGlyphClasses(IconGlyphs.Perspective)}
                     radioGroupPosition={"bottom"}
-                    clickHandler={() => {
+                    onClick={() => {
                         setCameraProjectionType(PERSPECTIVE);
                     }}
                     active={cameraProjectionType === PERSPECTIVE}

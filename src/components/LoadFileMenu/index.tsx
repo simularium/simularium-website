@@ -94,7 +94,7 @@ const LoadFileMenu = ({
             label: (
                 <NavButton
                     titleText={"Simularium file"}
-                    clickHandler={showModal}
+                    onClick={showModal}
                     buttonType={ButtonClass.DropdownItem}
                 />
             ),
