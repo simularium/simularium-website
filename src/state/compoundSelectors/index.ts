@@ -8,6 +8,13 @@ import {
 } from "../selection/selectors";
 import { ColorSetting } from "../selection/types";
 
+/**
+ * compoundSelectors are selectors that consume state from multiple branches
+ * of state, so don't belong in a particular branch's selectors file,
+ * and are consumed by multiple containers, and so don't belong in a particular
+ * container's selectors file.
+ */
+
 export const getCurrentUIData = createSelector(
     [getCurrentColorSetting, getSelectedUIDisplayData, getDefaultUIDisplayData],
     (
