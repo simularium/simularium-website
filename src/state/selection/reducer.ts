@@ -26,6 +26,7 @@ import {
     SetRecentColorsAction,
     SetSelectedAgentMetadataAction,
     SetSelectedUIDisplayDataAction,
+    ColorSetting,
 } from "./types";
 
 export const initialState = {
@@ -36,6 +37,7 @@ export const initialState = {
     recentColors: [],
     selectedAgentMetadata: {},
     selectedUIDisplayData: [],
+    currentColorSetting: ColorSetting.Default,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {

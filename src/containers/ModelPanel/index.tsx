@@ -10,10 +10,7 @@ import {
     requestTrajectory,
     changeToNetworkedFile,
 } from "../../state/trajectory/actions";
-import {
-    getUiDisplayDataTree,
-    getIsNetworkedFile,
-} from "../../state/trajectory/selectors";
+import { getIsNetworkedFile } from "../../state/trajectory/selectors";
 import {
     AgentRenderingCheckboxMap,
     ChangeAgentsRenderingStateAction,
@@ -44,6 +41,7 @@ import {
     getSelectAllVisibilityMap,
     getSelectNoneVisibilityMap,
     getIsSharedCheckboxIndeterminate,
+    getUiDisplayDataTree,
 } from "./selectors";
 
 import styles from "./style.css";
