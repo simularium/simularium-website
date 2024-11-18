@@ -1,10 +1,6 @@
 const path = require("path");
 const fs = require("fs");
 
-const lessToJs = require("less-vars-to-js");
-const themeVariables = lessToJs(
-    fs.readFileSync(path.join(__dirname, "../src/styles/ant-vars.less"), "utf8")
-);
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const { devServer, Env, stats } = require("./constants");
@@ -101,24 +97,6 @@ module.exports = ({ analyze, env, dest = "dist" } = {}) => ({
                     { loader: MiniCssExtractPlugin.loader },
                     {
                         loader: "css-loader",
-                    },
-                ],
-            },
-            {
-                test: /\.less$/,
-                use: [
-                    { loader: MiniCssExtractPlugin.loader },
-                    {
-                        loader: "css-loader",
-                    },
-                    {
-                        loader: "less-loader",
-                        options: {
-                            lessOptions: {
-                                javascriptEnabled: true,
-                                modifyVars: themeVariables,
-                            },
-                        },
                     },
                 ],
             },
