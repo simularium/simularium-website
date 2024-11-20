@@ -1,7 +1,6 @@
 import * as React from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
-import { UIDisplayData } from "@aics/simularium-viewer";
 
 import { State } from "../../state/types";
 import { ViewerStatus } from "../../state/viewer/types";
@@ -17,18 +16,14 @@ import {
     ChangeAgentsRenderingStateAction,
     SetVisibleAction,
     SetRecentColorsAction,
-    ColorSetting,
-    SetCurrentColorSettingAction,
-    SetSelectedUIDisplayDataAction,
+    HandleColorChangeAction,
 } from "../../state/selection/types";
 import {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
     setAgentsVisible,
     setRecentColors,
-    setSelectedUIDisplayData,
-    setCurrentColorSetting,
-    storeDisplayDataInBrowser,
+    handleColorChange,
 } from "../../state/selection/actions";
 import {
     getAgentVisibilityMap,
@@ -36,13 +31,12 @@ import {
     getRecentColors,
     getSelectedAgentMetadata,
 } from "../../state/selection/selectors";
-import { getCurrentUIData } from "../../state/compoundSelectors";
 import CheckBoxTree, { AgentDisplayNode } from "../../components/AgentTree";
 import NoTrajectoriesText from "../../components/NoTrajectoriesText";
 import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFileFailedText";
 import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
 import SideBarContents from "../../components/SideBarContents";
-import { AgentMetadata, ColorChange } from "../../constants/interfaces";
+import { AgentMetadata } from "../../constants/interfaces";
 import {
     getSelectAllVisibilityMap,
     getSelectNoneVisibilityMap,
@@ -51,7 +45,6 @@ import {
 } from "./selectors";
 
 import styles from "./style.css";
-import { applyColorChangeToUiDisplayData } from "../../util";
 
 interface ModelPanelProps {
     uiDisplayDataTree: AgentDisplayNode[];
@@ -69,10 +62,7 @@ interface ModelPanelProps {
     recentColors: string[];
     setRecentColors: ActionCreator<SetRecentColorsAction>;
     selectedAgentMetadata: AgentMetadata;
-    currentUIDisplayData: UIDisplayData;
-    setCurrentColorSetting: ActionCreator<SetCurrentColorSettingAction>;
-    setSelectedUIDisplayData: ActionCreator<SetSelectedUIDisplayDataAction>;
-    storeDisplayDataInBrowser: ActionCreator<SetSelectedUIDisplayDataAction>;
+    handleColorChange: ActionCreator<HandleColorChangeAction>;
 }
 
 const ModelPanel: React.FC<ModelPanelProps> = ({
@@ -91,23 +81,8 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     recentColors,
     setRecentColors,
     selectedAgentMetadata,
-    setSelectedUIDisplayData,
-    setCurrentColorSetting,
-    storeDisplayDataInBrowser,
-    currentUIDisplayData,
+    handleColorChange,
 }): JSX.Element => {
-    const updateSelectedUiDisplayData = (colorChange: ColorChange) => {
-        const newUIData = applyColorChangeToUiDisplayData(
-            colorChange,
-            currentUIDisplayData
-        );
-        setSelectedUIDisplayData(newUIData);
-        setCurrentColorSetting({
-            currentColorSetting: ColorSetting.UserSelected,
-        });
-        storeDisplayDataInBrowser(newUIData);
-    };
-
     const checkboxTree = (
         <CheckBoxTree
             treeData={uiDisplayDataTree}
@@ -120,7 +95,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
             payloadForSelectNone={payloadForSelectNone}
             isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
             recentColors={recentColors}
-            applyUserColor={updateSelectedUiDisplayData}
+            applyUserColor={handleColorChange}
             setRecentColors={setRecentColors}
         />
     );
@@ -161,7 +136,6 @@ function mapStateToProps(state: State) {
         isNetworkedFile: getIsNetworkedFile(state),
         recentColors: getRecentColors(state),
         selectedAgentMetadata: getSelectedAgentMetadata(state),
-        currentUIDisplayData: getCurrentUIData(state),
     };
 }
 
@@ -172,9 +146,7 @@ const dispatchToPropsMap = {
     highlightAgentsByDisplayKey,
     setAgentsVisible,
     setRecentColors,
-    setSelectedUIDisplayData,
-    setCurrentColorSetting: setCurrentColorSetting,
-    storeDisplayDataInBrowser,
+    handleColorChange,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ModelPanel);

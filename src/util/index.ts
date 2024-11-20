@@ -107,7 +107,7 @@ export const roundToTimeStepPrecision = (
     return Math.round(input * multiplier) / multiplier;
 };
 
-export const compareAgentTrees = (a: UIDisplayData, b: UIDisplayData) => {
+export const isSameAgentTree = (a: UIDisplayData, b: UIDisplayData) => {
     if (a.length !== b.length) {
         return false;
     }

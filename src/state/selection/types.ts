@@ -1,5 +1,5 @@
 import { UIDisplayData } from "@aics/simularium-viewer";
-import { AgentMetadata } from "../../constants/interfaces";
+import { AgentMetadata, ColorChange } from "../../constants/interfaces";
 import { TrajectoryStateBranch } from "../trajectory/types";
 
 export interface SelectionStateBranch {
@@ -83,8 +83,17 @@ export interface SetSelectedUIDisplayDataAction {
     type: string;
 }
 
+export interface HandleColorChangeAction {
+    payload: ColorChange;
+    type: string;
+}
+
 export interface SetCurrentColorSettingAction {
     payload: { currentColorSetting: ColorSetting };
+    type: string;
+}
+
+export interface GetDisplayDataFromBrowserAction {
     type: string;
 }
 

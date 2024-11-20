@@ -1,5 +1,5 @@
 import { UIDisplayData } from "@aics/simularium-viewer";
-import { AgentMetadata } from "../../constants/interfaces";
+import { AgentMetadata, ColorChange } from "../../constants/interfaces";
 import {
     SELECT_METADATA,
     CHANGE_TIME_HEAD,
@@ -13,7 +13,7 @@ import {
     SET_SELECTED_DISPLAY_DATA,
     GET_DISPLAY_DATA_FROM_BROWSER,
     SET_CURRENT_COLOR_SETTINGS,
-    STORE_DISPLAY_DATA_IN_BROWSER,
+    HANDLE_COLOR_CHANGE,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -27,6 +27,7 @@ import {
     SetSelectedUIDisplayDataAction,
     ColorSetting,
     SetCurrentColorSettingAction,
+    HandleColorChangeAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -112,12 +113,12 @@ export function setSelectedUIDisplayData(
     };
 }
 
-export function storeDisplayDataInBrowser(
-    displayData: UIDisplayData
-): SetSelectedUIDisplayDataAction {
+export function handleColorChange(
+    colorChange: ColorChange
+): HandleColorChangeAction {
     return {
-        payload: displayData,
-        type: STORE_DISPLAY_DATA_IN_BROWSER,
+        payload: colorChange,
+        type: HANDLE_COLOR_CHANGE,
     };
 }
 

@@ -23,7 +23,7 @@ export const SET_SELECTED_AGENT = makeSelectConstant("set-selected-agent");
 export const SET_SELECTED_DISPLAY_DATA = makeSelectConstant(
     "set-selected-display-data"
 );
-export const STORE_DISPLAY_DATA_IN_BROWSER = makeSelectConstant(
+export const HANDLE_COLOR_CHANGE = makeSelectConstant(
     "store-display-data-in-browser"
 );
 export const GET_DISPLAY_DATA_FROM_BROWSER = makeSelectConstant(
