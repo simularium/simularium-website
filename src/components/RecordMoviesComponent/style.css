@@ -5,6 +5,8 @@
 }
 
 .icon-container {
+    display: flex;
+    align-items: center;
     height: 100%;
     width: 100%;
 }
@@ -22,18 +24,18 @@
 }
 
 @keyframes pulse-red {
-  0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 #FF5252B3;
-  }
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 10px #FF525200;
-  }
-  100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 #FF525200;
-  }
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 #ff5252b3;
+    }
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px #ff525200;
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 #ff525200;
+    }
 }
 
 .status-container {
