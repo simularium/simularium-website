@@ -10,8 +10,10 @@ import {
     RESET_AGENT_SELECTIONS_AND_HIGHLIGHTS,
     SET_RECENT_COLORS,
     SET_SELECTED_AGENT,
-    APPLY_USER_COLOR,
     SET_SELECTED_DISPLAY_DATA,
+    GET_DISPLAY_DATA_FROM_BROWSER,
+    SET_CURRENT_COLOR_SETTINGS,
+    HANDLE_COLOR_CHANGE,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -20,10 +22,12 @@ import {
     SetVisibleAction,
     AgentRenderingCheckboxMap,
     ResetAction,
-    ApplyUserColorAction,
     SetRecentColorsAction,
     SetSelectedAgentMetadataAction,
     SetSelectedUIDisplayDataAction,
+    ColorSetting,
+    SetCurrentColorSettingAction,
+    HandleColorChangeAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
@@ -67,13 +71,6 @@ export function highlightAgentsByDisplayKey(
     };
 }
 
-export function applyUserColor(payload: ColorChange): ApplyUserColorAction {
-    return {
-        payload,
-        type: APPLY_USER_COLOR,
-    };
-}
-
 export function selectMetadata(
     key: string,
     payload: string | number
@@ -113,5 +110,29 @@ export function setSelectedUIDisplayData(
     return {
         payload: displayData,
         type: SET_SELECTED_DISPLAY_DATA,
+    };
+}
+
+export function handleColorChange(
+    colorChange: ColorChange
+): HandleColorChangeAction {
+    return {
+        payload: colorChange,
+        type: HANDLE_COLOR_CHANGE,
+    };
+}
+
+export function getDisplayDataFromBrowserStorage() {
+    return {
+        type: GET_DISPLAY_DATA_FROM_BROWSER,
+    };
+}
+
+export function setCurrentColorSetting(payload: {
+    currentColorSetting: ColorSetting;
+}): SetCurrentColorSettingAction {
+    return {
+        payload,
+        type: SET_CURRENT_COLOR_SETTINGS,
     };
 }

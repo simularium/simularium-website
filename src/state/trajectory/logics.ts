@@ -28,7 +28,6 @@ import { ViewerStatus } from "../viewer/types";
 import {
     changeTime,
     resetAgentSelectionsAndHighlights,
-    setSelectedUIDisplayData,
 } from "../selection/actions";
 import { setSimulariumController } from "../simularium/actions";
 import { getSimulariumController } from "../simularium/selectors";
@@ -63,7 +62,6 @@ import {
     CONVERT_FILE,
     RECEIVE_CONVERTED_FILE,
     CANCEL_CONVERSION,
-    SET_DEFAULT_UI_DATA,
 } from "./constants";
 import {
     ReceiveAction,
@@ -257,6 +255,7 @@ const loadLocalFile = createLogic({
         }
 
         clearOutFileTrajectoryUrlParam();
+        clearSimulariumFile({ newFile: true });
         simulariumController
             .changeFile(
                 {
@@ -640,15 +639,6 @@ const cancelConversionLogic = createLogic({
     type: CANCEL_CONVERSION,
 });
 
-const setInitialSelectedUIData = createLogic({
-    process(deps: ReduxLogicDeps, dispatch) {
-        const { action } = deps;
-        const uiData = action.payload;
-        dispatch(setSelectedUIDisplayData(uiData));
-    },
-    type: SET_DEFAULT_UI_DATA,
-});
-
 export default [
     requestPlotDataLogic,
     loadLocalFile,
@@ -661,5 +651,4 @@ export default [
     convertFileLogic,
     receiveConvertedFileLogic,
     cancelConversionLogic,
-    setInitialSelectedUIData,
 ];

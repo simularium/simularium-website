@@ -22,13 +22,8 @@ export const getCurrentUIData = createSelector(
         sessionData: UIDisplayData,
         defaultData: UIDisplayData
     ) => {
-        const fileHasBeenParsed = defaultData.length > 0;
-        if (!fileHasBeenParsed) {
-            return [];
-        }
-        if (colorSetting === ColorSetting.UserSelected) {
-            return sessionData;
-        }
-        return defaultData;
+        return colorSetting === ColorSetting.UserSelected
+            ? sessionData
+            : defaultData;
     }
 );

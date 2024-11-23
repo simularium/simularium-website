@@ -7,10 +7,7 @@ import { useDebounce } from "use-debounce";
 
 import { AGENT_COLORS } from "../../containers/ViewerPanel/constants";
 import { ColorChange } from "../../constants/interfaces";
-import {
-    ApplyUserColorAction,
-    SetRecentColorsAction,
-} from "../../state/selection/types";
+import { SetRecentColorsAction } from "../../state/selection/types";
 
 import styles from "./style.css";
 
@@ -20,7 +17,7 @@ interface ColorPickerProps {
     agentName: string;
     tags: string[];
     recentColors: string[];
-    applyUserColor: ActionCreator<ApplyUserColorAction>;
+    applyUserColor: (colorChange: ColorChange) => void;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 

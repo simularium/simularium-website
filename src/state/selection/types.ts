@@ -68,11 +68,6 @@ export interface ResetAction {
     type: string;
 }
 
-export interface ApplyUserColorAction {
-    payload: ColorChange;
-    type: string;
-}
-
 export interface SetRecentColorsAction {
     payload: string[];
     type: string;
@@ -85,6 +80,20 @@ export interface SetSelectedAgentMetadataAction {
 
 export interface SetSelectedUIDisplayDataAction {
     payload: UIDisplayData;
+    type: string;
+}
+
+export interface HandleColorChangeAction {
+    payload: ColorChange;
+    type: string;
+}
+
+export interface SetCurrentColorSettingAction {
+    payload: { currentColorSetting: ColorSetting };
+    type: string;
+}
+
+export interface GetDisplayDataFromBrowserAction {
     type: string;
 }
 

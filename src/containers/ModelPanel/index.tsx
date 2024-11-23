@@ -16,14 +16,14 @@ import {
     ChangeAgentsRenderingStateAction,
     SetVisibleAction,
     SetRecentColorsAction,
-    ApplyUserColorAction,
+    HandleColorChangeAction,
 } from "../../state/selection/types";
 import {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
     setAgentsVisible,
     setRecentColors,
-    applyUserColor,
+    handleColorChange,
 } from "../../state/selection/actions";
 import {
     getAgentVisibilityMap,
@@ -60,9 +60,9 @@ interface ModelPanelProps {
     isNetworkedFile: boolean;
     changeToNetworkedFile: ActionCreator<RequestNetworkFileAction>;
     recentColors: string[];
-    applyUserColor: ActionCreator<ApplyUserColorAction>;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
     selectedAgentMetadata: AgentMetadata;
+    handleColorChange: ActionCreator<HandleColorChangeAction>;
 }
 
 const ModelPanel: React.FC<ModelPanelProps> = ({
@@ -79,9 +79,9 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
     isNetworkedFile,
     changeToNetworkedFile: loadNetworkFile,
     recentColors,
-    applyUserColor,
     setRecentColors,
     selectedAgentMetadata,
+    handleColorChange,
 }): JSX.Element => {
     const checkboxTree = (
         <CheckBoxTree
@@ -95,7 +95,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
             payloadForSelectNone={payloadForSelectNone}
             isSharedCheckboxIndeterminate={isSharedCheckboxIndeterminate}
             recentColors={recentColors}
-            applyUserColor={applyUserColor}
+            applyUserColor={handleColorChange}
             setRecentColors={setRecentColors}
         />
     );
@@ -145,8 +145,8 @@ const dispatchToPropsMap = {
     turnAgentsOnByDisplayKey,
     highlightAgentsByDisplayKey,
     setAgentsVisible,
-    applyUserColor,
     setRecentColors,
+    handleColorChange,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ModelPanel);

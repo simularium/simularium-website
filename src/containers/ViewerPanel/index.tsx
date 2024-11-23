@@ -22,6 +22,7 @@ import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
 import {
     ChangeTimeAction,
+    GetDisplayDataFromBrowserAction,
     SetSelectedAgentMetadataAction,
     SetVisibleAction,
 } from "../../state/selection/types";
@@ -113,6 +114,7 @@ interface ViewerPanelProps {
     receiveConvertedFile: ActionCreator<ReceiveAction>;
     conversionProcessingData: ConversionProcessingData;
     setSelectedAgentMetadata: ActionCreator<SetSelectedAgentMetadataAction>;
+    getDisplayDataFromBrowserStorage: ActionCreator<GetDisplayDataFromBrowserAction>;
 }
 
 interface ViewerPanelState {
@@ -340,12 +342,14 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             setBuffering,
             isLooping,
             setUrlParams,
+            getDisplayDataFromBrowserStorage,
         } = this.props;
         if (this.state.isInitialPlay) {
             receiveTrajectory({
                 firstFrameTime: timeData.time,
                 lastFrameTime: (numFrames - 1) * timeStep + timeData.time,
             });
+            getDisplayDataFromBrowserStorage();
             if (hasUrlParamsSettings()) {
                 // these are settings that need to be applied after the trajectory
                 // is loaded but before the user can interact with the trajectory
@@ -669,6 +673,8 @@ const dispatchToPropsMap = {
     setUrlParams: trajectoryStateBranch.actions.setUrlParams,
     setSelectedAgentMetadata:
         selectionStateBranch.actions.setSelectedAgentMetadata,
+    getDisplayDataFromBrowserStorage:
+        selectionStateBranch.actions.getDisplayDataFromBrowserStorage,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);

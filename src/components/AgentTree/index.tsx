@@ -6,11 +6,11 @@ import { map, filter, isEmpty } from "lodash";
 
 import {
     ChangeAgentsRenderingStateAction,
-    ApplyUserColorAction,
     SetRecentColorsAction,
     SetVisibleAction,
     AgentRenderingCheckboxMap,
 } from "../../state/selection/types";
+import { ColorChange } from "../../constants/interfaces";
 import SharedCheckbox from "../SharedCheckbox";
 import AgentTreeSubmenu from "../AgentTreeSubmenu";
 import TreeNode from "../TreeNode";
@@ -18,6 +18,8 @@ import Checkbox from "../Checkbox";
 import { CHECKBOX_TYPE_STAR } from "../../constants";
 import ColorPicker from "../ColorPicker";
 import NoTypeMappingText from "../NoTrajectoriesText/NoTypeMappingText";
+
+import styles from "./style.css";
 
 const { Text } = Typography;
 
@@ -45,11 +47,10 @@ interface AgentTreeProps {
     payloadForSelectNone: AgentRenderingCheckboxMap;
     isSharedCheckboxIndeterminate: boolean;
     recentColors: string[];
-    applyUserColor: ActionCreator<ApplyUserColorAction>;
+    applyUserColor: (colorChange: ColorChange) => void;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 const CHECKBOX_SPAN_NO = 2;
-import styles from "./style.css";
 
 class AgentTree extends React.Component<AgentTreeProps> {
     onSubCheckboxChange = (key: string, values: string[]) => {

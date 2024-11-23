@@ -14,7 +14,8 @@ import {
     formatFloatForDisplay,
     copyToClipboard,
     roundToTimeStepPrecision,
-    compareAgentTrees,
+    isSameAgentTree,
+    applyColorChangeToUiDisplayData,
 } from "../";
 import {
     getFileIdFromUrl,
@@ -238,6 +239,98 @@ describe("General utilities", () => {
         });
         it("does not include unnecessary zeros", () => {
             expect(roundTimeForDisplay(1.20000001)).toBe(1.2);
+        });
+    });
+
+    describe("applyColorChangeToUiDisplayData", () => {
+        const mockUIDisplayData: UIDisplayData = [
+            {
+                name: "agent1",
+                color: "#0000ff",
+                displayStates: [
+                    { name: "state1", id: "state1", color: "#0000ff" },
+                    { name: "state2", id: "state2", color: "#0000ff" },
+                ],
+            },
+            {
+                name: "agent2",
+                color: "#ff0000",
+                displayStates: [
+                    { name: "state3", id: "state3", color: "#ff0000" },
+                    { name: "state4", id: "state4", color: "#ff0000" },
+                ],
+            },
+        ];
+
+        it("should update agent color when tags include empty string", () => {
+            const colorChange = {
+                color: "#00ff00",
+                agent: {
+                    name: "agent1",
+                    tags: [""],
+                },
+            };
+
+            const result = applyColorChangeToUiDisplayData(
+                colorChange,
+                mockUIDisplayData
+            );
+
+            expect(result[0].color).toBe("#00ff00");
+            expect(result[1].color).toBe("#ff0000");
+        });
+
+        it("should update specific display states based on tags", () => {
+            const colorChange = {
+                color: "#ffff00",
+                agent: {
+                    name: "agent1",
+                    tags: ["state1"],
+                },
+            };
+
+            const result = applyColorChangeToUiDisplayData(
+                colorChange,
+                mockUIDisplayData
+            );
+
+            expect(result[0].displayStates[0].color).toBe("#ffff00"); // state1 updated
+            expect(result[0].displayStates[1].color).toBe("#0000ff"); // state2 unchanged
+        });
+
+        it("should update multiple display states for agents with multiple tags", () => {
+            const colorChange = {
+                color: "#800080",
+                agent: {
+                    name: "agent1",
+                    tags: ["state1", "state2"],
+                },
+            };
+
+            const result = applyColorChangeToUiDisplayData(
+                colorChange,
+                mockUIDisplayData
+            );
+
+            expect(result[0].displayStates[0].color).toBe("#800080");
+            expect(result[0].displayStates[1].color).toBe("#800080");
+        });
+
+        it("should not modify data when agent name does not match", () => {
+            const colorChange = {
+                color: "#ffA500",
+                agent: {
+                    name: "nonexistentAgent",
+                    tags: [""],
+                },
+            };
+
+            const result = applyColorChangeToUiDisplayData(
+                colorChange,
+                mockUIDisplayData
+            );
+
+            expect(result).toEqual(mockUIDisplayData);
         });
     });
 });
@@ -534,7 +627,7 @@ describe("User Url handling", () => {
             expect(result).toBe(1);
         });
     });
-    describe("compareAgentTrees", () => {
+    describe("isSameAgentTree", () => {
         it("should return false if the arrays are different lengths", () => {
             const firstUIData: UIDisplayData = [
                 {
@@ -544,7 +637,7 @@ describe("User Url handling", () => {
                 },
             ];
             const secondUIData: UIDisplayData = [];
-            const result = compareAgentTrees(firstUIData, secondUIData);
+            const result = isSameAgentTree(firstUIData, secondUIData);
             expect(result).toBe(false);
         });
         it("should return false if the names are different", () => {
@@ -562,7 +655,7 @@ describe("User Url handling", () => {
                     color: "",
                 },
             ];
-            const result = compareAgentTrees(firstUIData, secondUIData);
+            const result = isSameAgentTree(firstUIData, secondUIData);
             expect(result).toBe(false);
         });
         it("should return false if some entry names match, but others don't", () => {
@@ -590,7 +683,7 @@ describe("User Url handling", () => {
                     color: "",
                 },
             ];
-            const result = compareAgentTrees(firstUIData, secondUIData);
+            const result = isSameAgentTree(firstUIData, secondUIData);
             expect(result).toBe(false);
         });
         it("should return false if displayState lengths don't match", () => {
@@ -608,7 +701,7 @@ describe("User Url handling", () => {
                     color: "",
                 },
             ];
-            const result = compareAgentTrees(firstUIData, secondUIData);
+            const result = isSameAgentTree(firstUIData, secondUIData);
             expect(result).toBe(false);
         });
         it("should return false if displayState names don't match", () => {
@@ -628,7 +721,7 @@ describe("User Url handling", () => {
                     color: "",
                 },
             ];
-            const result = compareAgentTrees(firstUIData, secondUIData);
+            const result = isSameAgentTree(firstUIData, secondUIData);
             expect(result).toBe(false);
         });
         it("should return false if displayState ids don't match", () => {
@@ -648,7 +741,7 @@ describe("User Url handling", () => {
                     color: "",
                 },
             ];
-            const result = compareAgentTrees(firstUIData, secondUIData);
+            const result = isSameAgentTree(firstUIData, secondUIData);
             expect(result).toBe(false);
         });
         it("should return true if the agent tree structures match", () => {
@@ -666,7 +759,7 @@ describe("User Url handling", () => {
                     color: "",
                 },
             ];
-            const result = compareAgentTrees(firstUIData, secondUIData);
+            const result = isSameAgentTree(firstUIData, secondUIData);
             expect(result).toBe(true);
         });
         it("should return true if the agent tree structures match but have different color properties", () => {
@@ -696,7 +789,7 @@ describe("User Url handling", () => {
                     color: "blue",
                 },
             ];
-            const result = compareAgentTrees(firstUIData, secondUIData);
+            const result = isSameAgentTree(firstUIData, secondUIData);
             expect(result).toBe(true);
         });
     });
