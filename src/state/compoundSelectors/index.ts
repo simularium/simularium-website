@@ -1,5 +1,6 @@
 import { createSelector } from "reselect";
 import { UIDisplayData } from "@aics/simularium-viewer";
+import { isEqual } from "lodash";
 
 import { getDefaultUIDisplayData } from "../trajectory/selectors";
 import {
@@ -18,5 +19,19 @@ export const getCurrentUIData = createSelector(
         return colorSetting === ColorSetting.UserSelected
             ? sessionData
             : defaultData;
+    }
+);
+
+export const getDefaultUISettingsApplied = createSelector(
+    [getSelectedUIDisplayData, getDefaultUIDisplayData],
+    (selectedUIDisplayData, defaultUIData) => {
+        /**
+         * we can't just check if currentColorSettings === ColorSettings.Default
+         * because that state can be used to preview settings
+         */
+        return (
+            selectedUIDisplayData.length === 0 ||
+            isEqual(selectedUIDisplayData, defaultUIData)
+        );
     }
 );

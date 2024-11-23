@@ -1,4 +1,4 @@
-import { getCurrentUIData } from ".";
+import { getCurrentUIData, getDefaultUISettingsApplied } from ".";
 import { initialState } from "..";
 import { ColorSetting } from "../selection/types";
 
@@ -75,5 +75,78 @@ describe("getCurrentUIData", () => {
                 color: "#bbbbbb",
             },
         ]);
+    });
+});
+
+describe("getDefaultUISettingsApplied", () => {
+    it("returns false if selectedUIDisplayData contains selections and selectedUIDisplayData and defaultUIData are not equal", () => {
+        expect(
+            getDefaultUISettingsApplied({
+                ...initialState,
+                trajectory: {
+                    defaultUIData: [
+                        {
+                            name: "agent1",
+                            displayStates: [],
+                            color: "#bbbbbb",
+                        },
+                    ],
+                },
+                selection: {
+                    ...initialState.selection,
+                    selectedUIDisplayData: [
+                        {
+                            name: "agent1",
+                            displayStates: [],
+                            color: "#000",
+                        },
+                    ],
+                },
+            })
+        ).toBe(false);
+    });
+    it("returns true if selectedUIDisplayData contains no selections", () => {
+        expect(
+            getDefaultUISettingsApplied({
+                ...initialState,
+                trajectory: {
+                    defaultUIData: [
+                        {
+                            name: "agent1",
+                            displayStates: [],
+                            color: "#bbbbbb",
+                        },
+                    ],
+                },
+                selection: {
+                    selectedUIDisplayData: [],
+                },
+            })
+        ).toBe(true);
+    });
+    it("returns true if selectedUIDisplayData and defaultUIData are equal", () => {
+        expect(
+            getDefaultUISettingsApplied({
+                ...initialState,
+                trajectory: {
+                    defaultUIData: [
+                        {
+                            name: "agent1",
+                            displayStates: [],
+                            color: "#bbbbbb",
+                        },
+                    ],
+                },
+                selection: {
+                    selectedUIDisplayData: [
+                        {
+                            name: "agent1",
+                            displayStates: [],
+                            color: "#bbbbbb",
+                        },
+                    ],
+                },
+            })
+        ).toBe(true);
     });
 });
