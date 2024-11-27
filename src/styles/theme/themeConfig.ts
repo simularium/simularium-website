@@ -1,7 +1,6 @@
 // Base colors - updates should match css vars!
 const PURE_WHITE = "#ffffff";
 const DARK = "#141219";
-const DARK_TWO = "#1e1b25";
 const DARK_THREE = "#25222e";
 const DARK_FOUR = "#2f2a3c";
 const OFF_WHITE = "#f7f7f7";
@@ -17,12 +16,17 @@ const WARM_GRAY = "#979797";
 const TRANSPARENT_WHITE = "rgba(255, 255, 255, 0.65)";
 const TRANSPARENT = "transparent";
 
+const APP_BG_COLOR = OFF_WHITE;
+const TABS_INTERACTION_COLOR = DARK_FOUR;
+const SLIDER_COLOR = WHITE_THREE;
+const CHECKBOX_BG_COLOR = WHITE_SIX;
+
 // Light Theme Tokens (Global defaults, Modal, Radio)
 const lightTheme = {
     // Global Tokens
     colorPrimary: BABY_PURPLE,
     colorBgBase: WHITE_SIX,
-    colorBgContainer: OFF_WHITE,
+    colorBgContainer: APP_BG_COLOR,
     colorBgLayout: WHITE_SIX,
     colorText: GRAYISH_BROWN,
     colorLink: BLUE,
@@ -33,8 +37,7 @@ const lightTheme = {
     // Input
     inputPlaceholderColor: WARM_GRAY,
     inputBorderColor: WARM_GRAY,
-    inputBgColor: OFF_WHITE,
-    inputHoverColor: BABY_PURPLE,
+    inputBgColor: APP_BG_COLOR,
 
     // Radio
     radioPrimaryColor: PURE_WHITE,
@@ -61,23 +64,17 @@ const darkTheme = {
     menuDarkSelectedColor: PURE_WHITE,
 
     // Button
-    buttonPrimaryColor: BABY_PURPLE,
     buttonDefaultBg: TRANSPARENT,
-    buttonDefaultColor: WHITE_THREE,
-    buttonDefaultBorder: DARK_TWO,
 
     // Checkbox
     checkboxBorderColor: WARM_GRAY,
-    checkboxPrimaryColor: WHITE_SIX,
-    checkboxBgColor: WHITE_SIX,
+    checkboxPrimaryColor: CHECKBOX_BG_COLOR,
+    checkboxBgColor: CHECKBOX_BG_COLOR,
     checkboxMarkColor: DARK,
 
     // Tabs
     tabsCardBg: LIGHT_PURPLE,
-    tabsInkBarColor: DARK_FOUR,
-    tabsItemHoverColor: DARK_FOUR,
-    tabsItemActiveColor: DARK_FOUR,
-    tabsItemSelectedColor: DARK_FOUR,
+    tabsInteractionColor: TABS_INTERACTION_COLOR,
 
     // Popover
     popoverBgColor: CHARCOAL_GRAY,
@@ -94,9 +91,7 @@ const darkTheme = {
     // Slider
     sliderRailBg: DARK_FOUR,
     sliderRailHoverBg: WARM_GRAY,
-    sliderTrackBg: WHITE_THREE,
-    sliderHandleColor: WHITE_THREE,
-    sliderDotBorderColor: WHITE_THREE,
+    sliderColor: SLIDER_COLOR,
 };
 
 export const simulariumTheme = {
@@ -127,18 +122,11 @@ export const simulariumTheme = {
             colorTextPlaceholder: lightTheme.inputPlaceholderColor,
             colorBorder: lightTheme.inputBorderColor,
             colorBgContainer: lightTheme.inputBgColor,
-            colorPrimaryHover: lightTheme.inputHoverColor,
-            hoverBorderColor: lightTheme.inputHoverColor,
         },
         Button: {
-            colorPrimary: darkTheme.buttonPrimaryColor,
-            colorPrimaryHover: darkTheme.buttonPrimaryColor,
             algorithm: true,
-            defaultBg: darkTheme.buttonDefaultBg,
             defaultHoverBg: darkTheme.buttonDefaultBg,
             defaultActiveBg: darkTheme.buttonDefaultBg,
-            defaultColor: darkTheme.buttonDefaultColor,
-            defaultBorderColor: darkTheme.buttonDefaultBorder,
             borderRadius: 3,
         },
         Radio: {
@@ -178,10 +166,10 @@ export const simulariumTheme = {
         },
         Tabs: {
             cardBg: darkTheme.tabsCardBg,
-            inkBarColor: darkTheme.tabsInkBarColor,
-            itemHoverColor: darkTheme.tabsItemHoverColor,
-            itemActiveColor: darkTheme.tabsItemActiveColor,
-            itemSelectedColor: darkTheme.tabsItemSelectedColor,
+            inkBarColor: darkTheme.tabsInteractionColor,
+            itemHoverColor: darkTheme.tabsInteractionColor,
+            itemActiveColor: darkTheme.tabsInteractionColor,
+            itemSelectedColor: darkTheme.tabsInteractionColor,
             horizontalItemMargin: "0 0 0 12",
             titleFontSizeLG: 18,
         },
@@ -201,16 +189,15 @@ export const simulariumTheme = {
         Slider: {
             railBg: darkTheme.sliderRailBg,
             railHoverBg: darkTheme.sliderRailHoverBg,
-            trackBg: darkTheme.sliderTrackBg,
-            handleColor: darkTheme.sliderHandleColor,
-            trackHoverBg: darkTheme.sliderTrackBg,
-            handleActiveColor: darkTheme.sliderHandleColor,
+            trackBg: darkTheme.sliderColor,
+            handleColor: darkTheme.sliderColor,
+            trackHoverBg: darkTheme.sliderColor,
+            handleActiveColor: darkTheme.sliderColor,
             handleActiveOutlineColor: TRANSPARENT,
             handleSize: 5.5,
             handleSizeHover: 5.5,
-            dotBorderColor: darkTheme.sliderDotBorderColor,
+            dotBorderColor: darkTheme.sliderColor,
         },
     },
 };
-
 export default simulariumTheme;
