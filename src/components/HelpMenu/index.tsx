@@ -89,7 +89,7 @@ const HelpMenu = (): JSX.Element => {
             label: (
                 <NavButton
                     titleText={"Version info"}
-                    clickHandler={() => {
+                    onClick={() => {
                         setModalVisible(!modalVisible);
                     }}
                     buttonType={ButtonClass.DropdownItem}

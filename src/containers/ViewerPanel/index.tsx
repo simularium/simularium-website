@@ -599,7 +599,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                                         ? ExitFullScreen
                                         : FullScreen
                                 }
-                                clickHandler={this.toggleIsFullScreen}
+                                onClick={this.toggleIsFullScreen}
                             />
                         )}
                     </div>

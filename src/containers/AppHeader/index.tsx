@@ -82,7 +82,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                 <NavButton
                     className={styles.simulariumHome}
                     titleText="SIMULARIUM HOME"
-                    clickHandler={() => {
+                    onClick={() => {
                         history.push("/");
                     }}
                 />
