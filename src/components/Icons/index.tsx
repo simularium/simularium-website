@@ -18,12 +18,14 @@ import {
     CaretDownFilled,
     FullscreenExitOutlined,
     FullscreenOutlined,
+    RightOutlined,
 } from "@ant-design/icons";
 
 import PurpleArrowPointingRight from "../../assets/open-arrow.svg";
 import AicsLogoWhite from "../../assets/AICS-logo-full.png";
 import Beta from "../../assets/beta.svg";
 import CaretAICS from "../../assets/icon-caret.svg";
+import exp from "constants";
 
 export const Loading = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 export const Play = <CaretRightOutlined />;
@@ -57,6 +59,7 @@ export const DownCaret = (
 export const FilledCaret = <CaretDownFilled />;
 export const FullScreen = <FullscreenOutlined />;
 export const ExitFullScreen = <FullscreenExitOutlined />;
+export const ArrowRight = <RightOutlined />;
 
 export default {
     Play,

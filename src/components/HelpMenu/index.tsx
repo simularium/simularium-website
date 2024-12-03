@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { MenuProps } from "antd";
 
 import { TUTORIAL_PATHNAME } from "../../routes";
@@ -12,8 +12,12 @@ import {
 import { ButtonClass } from "../../constants/interfaces";
 import { DownArrow } from "../Icons";
 import VersionModal from "../VersionModal";
-import NavButton from "../NavButton";
 import CustomDropdown from "../CustomDropdown";
+import {
+    DropdownAnchor,
+    DropdownButton,
+    DropdownRouterLink,
+} from "../CustomDropdown/DropdownMenuItems";
 
 const HelpMenu = (): JSX.Element => {
     const [modalVisible, setModalVisible] = React.useState(false);
@@ -21,15 +25,13 @@ const HelpMenu = (): JSX.Element => {
     const location = useLocation();
     const tutorialLink =
         location.pathname === "/viewer" ? (
-            <Link
-                to={TUTORIAL_PATHNAME}
-                target="_blank"
-                rel="noopener noreferrer"
-            >
+            <DropdownRouterLink to={TUTORIAL_PATHNAME} newTab={true}>
                 Quick start
-            </Link>
+            </DropdownRouterLink>
         ) : (
-            <Link to={TUTORIAL_PATHNAME}>Quick start</Link>
+            <DropdownRouterLink key="Tutorial" to={TUTORIAL_PATHNAME}>
+                Quick start
+            </DropdownRouterLink>
         );
 
     const items: MenuProps["items"] = [
@@ -40,46 +42,46 @@ const HelpMenu = (): JSX.Element => {
         {
             key: "forum",
             label: (
-                <a href={FORUM_URL} target="_blank" rel="noopener noreferrer">
+                <DropdownAnchor href={FORUM_URL} newTab={true}>
                     Forum
-                </a>
+                </DropdownAnchor>
             ),
         },
         {
             key: "github",
             label: (
-                <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
+                <DropdownAnchor href={GITHUB_URL} newTab={true}>
                     GitHub
-                </a>
+                </DropdownAnchor>
             ),
         },
         {
             key: "submit-issue",
-            label: "Submit issue",
+            label: (
+                <DropdownButton isSubmenuTrigger={true}>
+                    Submit issue
+                </DropdownButton>
+            ),
+            expandIcon: false,
             popupOffset: [-0.45, -4],
             children: [
                 {
                     key: "via-github",
                     label: (
-                        <a
-                            href={ISSUE_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
+                        <DropdownAnchor key="ViaGithub" href={ISSUE_URL}>
                             via GitHub (preferred)
-                        </a>
+                        </DropdownAnchor>
                     ),
                 },
                 {
                     key: "via-forum",
                     label: (
-                        <a
+                        <DropdownAnchor
+                            key="ViaForum"
                             href={FORUM_BUG_REPORT_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
                         >
                             via Forum (for non-GitHub users)
-                        </a>
+                        </DropdownAnchor>
                     ),
                 },
             ],
@@ -87,13 +89,12 @@ const HelpMenu = (): JSX.Element => {
         {
             key: "version",
             label: (
-                <NavButton
-                    titleText={"Version info"}
-                    clickHandler={() => {
-                        setModalVisible(!modalVisible);
-                    }}
-                    buttonType={ButtonClass.DropdownItem}
-                />
+                <DropdownButton
+                    key="Version"
+                    onClick={() => setModalVisible(!modalVisible)}
+                >
+                    Version info
+                </DropdownButton>
             ),
         },
     ];
