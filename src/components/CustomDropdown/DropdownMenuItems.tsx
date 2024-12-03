@@ -7,7 +7,7 @@ import { ArrowRight } from "../Icons";
 // elements, including buttons, router links, and
 // anchor tags. This file unifies their styling,
 // and then divides them into three component exports
-// for semantically explicit usage in menus.
+// for semantically explicit usage in dropdowns.
 
 // Common styles
 const baseStyles = css`
@@ -31,7 +31,9 @@ const baseStyles = css`
     }
 
     &&& {
-        &:focus {
+        &:focus, /* Handle focus state */
+        &:focus:hover, /* Explicitly handle focus + hover state to prevent antd overriding text color */
+        &:hover:focus {
             outline: 1.5px solid
                 var(--dark-theme-dropdown-menu-item-focus-outline);
             border: 2px solid var(--dark-theme-dropdown-menu-bg);
