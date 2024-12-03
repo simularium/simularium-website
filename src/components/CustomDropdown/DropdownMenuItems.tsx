@@ -16,18 +16,12 @@ const baseStyles = css`
     border-radius: 3px;
     color: var(--dark-theme-dropdown-menu-item-color);
     cursor: pointer;
-    display: flex;
     height: 28px;
-    min-width: 0px;
     padding: 4px;
-    transition: none !important;
     width: 100%;
-    text-decoration: none;
 
     svg {
-        fill: var(--dark-theme-dropdown-menu-item-color);
         font-size: 10px;
-        transition: fill 0.2s ease;
     }
 
     &&& {
