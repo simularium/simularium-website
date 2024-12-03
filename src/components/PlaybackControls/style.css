@@ -34,25 +34,9 @@
     margin: auto 10px;
 }
 
-.container .slider :global(.ant-slider-track) {
-    background-color: var(--dark-theme-slider-handle-color);
-}
-
 .container .slider :global(.ant-slider-track),
 .container .slider :global(.ant-slider-rail) {
     border-radius: 3px;
-}
-
-.container .slider :global(.ant-slider-handle) {
-    background-color: var(--dark-theme-slider-handle-color);
-    border: none;
-    height: 10px;
-    width: 10px;
-    margin-top: -3.5px;
-}
-
-.container .slider :global(.ant-slider-handle):focus {
-    box-shadow: none;
 }
 
 .time {

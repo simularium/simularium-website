@@ -165,6 +165,7 @@ const ColorPicker = ({
             placement="bottomLeft"
             onOpenChange={togglePopover}
             trigger="click"
+            overlayInnerStyle={{ padding: 0 }}
         >
             <label
                 className={classNames(

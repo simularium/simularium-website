@@ -27,8 +27,8 @@
 }
 
 .left-links img {
-    padding: 6px;
     border-radius: 6px;
+    vertical-align: middle;
 }
 
 .left-links a:focus-visible img {

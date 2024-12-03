@@ -1,10 +1,15 @@
-
 @import "./styles/colors.css";
 @import "./styles/constants.css";
 @import "./styles/icons.css";
 
 /* global styles
 css modules not applied */
+
+html {
+    line-height: 1.5715;
+    font-weight: 400;
+    font-size: 14px;
+}
 
 h1,
 h2 {
@@ -14,20 +19,25 @@ h2 {
 
 h1 {
     color: var(--light-theme-heading1-color);
-    font-size: 36px;
+    font-size: 38px;
 }
 
 h2 {
     color: var(--light-theme-heading2-color);
-    font-size: 24px;
+    font-size: 32px;
 }
 
 h3 {
-    font-size: 16px;
+    font-size: 21px;
+}
+
+h4 {
+    font-size: 19px;
+    font-weight: 500;
 }
 
 h5 {
-    font-size: 14px;
+    margin: 0px;
 }
 
 header {
@@ -39,7 +49,7 @@ img {
 }
 
 p {
-    margin-bottom: 0.5em;
+    margin: 0;
 }
 
 canvas:focus {
@@ -85,7 +95,6 @@ canvas:focus {
     -moz-osx-font-smoothing: grayscale;
 }
 
-
 /* 
 Icomoon font glyphs are used for our custom icons, 
 they can be styled like text: font-size, color, etc.
@@ -100,10 +109,10 @@ here, apply icon using "name-icon" class name in conjunction
 with "icon-moon" class name.
  */
 
- /* Current in-use icons */
+/* Current in-use icons */
 .star-empty-icon::after {
     content: var(--star-empty);
-    color: var(--dark-theme-icon-color)
+    color: var(--dark-theme-icon-color);
 }
 
 .star-dashed-icon::after {
