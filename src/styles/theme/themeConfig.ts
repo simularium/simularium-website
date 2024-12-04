@@ -13,21 +13,22 @@ const ALLEN_PURPLE = "#8d87aa";
 const GRAYISH_BROWN = "#4a4a4a";
 const BLUE = "#0094FF";
 const WARM_GRAY = "#979797";
-const TRANSPARENT_WHITE = "rgba(255, 255, 255, 0.65)";
+const FADED_WHITE = "rgba(255, 255, 255, 0.65)";
 const TRANSPARENT = "transparent";
 
 const APP_BG_COLOR = OFF_WHITE;
 const TABS_INTERACTION_COLOR = DARK_FOUR;
 const SLIDER_COLOR = WHITE_THREE;
 const CHECKBOX_BG_COLOR = WHITE_SIX;
+const LAYOUT_BG = WHITE_SIX;
 
 // Light Theme Tokens (Global defaults, Modal, Radio)
 const lightTheme = {
     // Global Tokens
     colorPrimary: BABY_PURPLE,
-    colorBgBase: WHITE_SIX,
+    colorBgBase: LAYOUT_BG,
     colorBgContainer: APP_BG_COLOR,
-    colorBgLayout: WHITE_SIX,
+    colorBgLayout: LAYOUT_BG,
     colorText: GRAYISH_BROWN,
     colorLink: BLUE,
 
@@ -52,14 +53,12 @@ const lightTheme = {
 // Dark Theme Tokens
 const darkTheme = {
     // Layout
-    layoutSiderBg: DARK,
-    layoutTriggerBg: DARK,
-    layoutTriggerColor: BABY_PURPLE,
+    layoutBg: DARK,
     layoutFooterBg: DARK_THREE,
     layoutLightTriggerColor: GRAYISH_BROWN,
 
     // Menu
-    menuDarkItemColor: TRANSPARENT_WHITE,
+    menuDarkItemColor: FADED_WHITE,
     menuDarkSelectedBg: BABY_PURPLE,
     menuDarkSelectedColor: PURE_WHITE,
 
@@ -82,7 +81,7 @@ const darkTheme = {
 
     // Dropdown
     dropdownBgColor: CHARCOAL_GRAY,
-    dropdownTextColor: TRANSPARENT_WHITE,
+    dropdownTextColor: FADED_WHITE,
 
     // Tag
     tagDefaultBg: ALLEN_PURPLE,
@@ -136,9 +135,8 @@ export const simulariumTheme = {
         Layout: {
             headerHeight: 60,
             headerPadding: 0,
-            siderBg: darkTheme.layoutSiderBg,
-            triggerBg: darkTheme.layoutTriggerBg,
-            triggerColor: darkTheme.layoutTriggerColor,
+            siderBg: darkTheme.layoutBg,
+            triggerBg: darkTheme.layoutBg,
             footerBg: darkTheme.layoutFooterBg,
             zeroTriggerWidth: 30,
             zeroTriggerHeight: 100,
