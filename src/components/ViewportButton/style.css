@@ -4,9 +4,6 @@
     border-color: var(--dark-theme-viewport-button-border);
     border-radius: 3px;
     color: var(--dark-theme-viewport-button-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     height: 26px;
     width: 26px;
     min-width: 26px;

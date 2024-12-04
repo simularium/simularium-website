@@ -81,7 +81,11 @@ const RecordMovieComponent = (props: RecordMovieComponentProps) => {
         if (!isRecording) {
             return startRecordingIcon;
         } else if (isHovering) {
-            return "stop-record-icon";
+            return classNames(
+                styles.iconContainer,
+                "icon-moon",
+                "stop-record-icon"
+            );
         } else return activeRecordingIcon;
     };
 
