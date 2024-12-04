@@ -3,7 +3,7 @@ import { Link, LinkProps } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { ArrowRight } from "../Icons";
 
-// Dropdown items can have a variety of base html
+// Dropdown items can be of a few component types
 // elements, including buttons, router links, and
 // anchor tags. This file unifies their styling,
 // and then divides them into three component exports
@@ -11,41 +11,38 @@ import { ArrowRight } from "../Icons";
 
 // Common styles
 const baseStyles = css`
+    font-family: ${(props) => props.theme.typography};
     background: none;
-    border: 2px solid var(--dark-theme-dropdown-menu-bg);
+    border: 2px solid ${({ theme }) => theme.colors.dropdown.background};
     border-radius: 3px;
-    color: var(--dark-theme-dropdown-menu-item-color);
+    color: ${({ theme }) => theme.colors.dropdown.text};
     cursor: pointer;
     height: 28px;
     padding: 4px;
     width: 100%;
-
-    svg {
-        font-size: 10px;
-    }
+    font-size: 14px;
 
     &&& {
-        &:focus, /* Handle focus state */
-        &:focus:hover, /* Explicitly handle focus + hover state to prevent antd overriding text color */
+        &:focus,
+        &:focus:hover,
         &:hover:focus {
-            outline: 1.5px solid
-                var(--dark-theme-dropdown-menu-item-focus-outline);
-            border: 2px solid var(--dark-theme-dropdown-menu-bg);
-            color: var(--dark-theme-dropdown-menu-item-hover-color);
-            background-color: var(--dark-theme-dropdown-menu-item-hover-bg);
+            outline: 1.5px solid ${({ theme }) => theme.colors.dropdown.active};
+            border: 2px solid ${({ theme }) => theme.colors.dropdown.background};
+            color: ${({ theme }) => theme.colors.dropdown.activeTextColor};
+            background-color: ${({ theme }) => theme.colors.dropdown.active};
 
             svg {
-                fill: var(--dark-theme-dropdown-menu-item-hover-color);
+                fill: ${({ theme }) => theme.colors.dropdown.background};
             }
         }
 
         &:hover:not(:focus) {
-            background-color: var(--dark-theme-dropdown-menu-item-hover-bg);
-            color: var(--dark-theme-dropdown-menu-item-hover-color);
-            border-color: var(--dark-theme-dropdown-menu-item-hover-bg);
+            background-color: ${({ theme }) => theme.colors.dropdown.active};
+            color: ${({ theme }) => theme.colors.dropdown.activeTextColor};
+            border-color: ${({ theme }) => theme.colors.dropdown.active};
 
             svg {
-                fill: var(--dark-theme-dropdown-menu-item-hover-color);
+                fill: ${({ theme }) => theme.colors.dropdown.background};
             }
         }
     }
@@ -57,6 +54,10 @@ const contentStyles = css`
     gap: 8px;
     justify-content: space-between;
     color: inherit;
+
+    svg {
+        font-size: 10px;
+    }
 `;
 
 // Styled components
@@ -83,7 +84,6 @@ interface BaseDropdownItemProps {
 }
 
 interface ButtonProps extends BaseDropdownItemProps {
-    onClick?: () => void;
     isSubmenuTrigger?: boolean;
 }
 
@@ -101,24 +101,24 @@ const getNewTabAttributes = (newTab?: boolean) =>
     newTab ? { target: "_blank", rel: "noopener noreferrer" } : {};
 
 // Components for use in dropdown menus:
-export const DropdownButton = ({
+export const DropdownButton: React.FC<ButtonProps> = ({
     children,
     className,
     onClick,
     isSubmenuTrigger,
-}: ButtonProps) => (
+}) => (
     <StyledDropdownButton type="button" onClick={onClick} className={className}>
         {children}
         {isSubmenuTrigger && ArrowRight}
     </StyledDropdownButton>
 );
 
-export const DropdownRouterLink = ({
+export const DropdownRouterLink: React.FC<RouterProps> = ({
     children,
     className,
     to,
     newTab,
-}: RouterProps) => (
+}) => (
     <StyledRouterLink
         to={to}
         className={className}
@@ -128,12 +128,12 @@ export const DropdownRouterLink = ({
     </StyledRouterLink>
 );
 
-export const DropdownAnchor = ({
+export const DropdownAnchor: React.FC<AnchorProps> = ({
     children,
     className,
     href,
     newTab,
-}: AnchorProps) => (
+}) => (
     <StyledExternalLink
         href={href}
         className={className}
