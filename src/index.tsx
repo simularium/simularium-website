@@ -5,7 +5,7 @@ import "core-js/es6/set";
 import React, { useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider, useDispatch, batch } from "react-redux";
-import { Layout } from "antd";
+import { ConfigProvider, Layout } from "antd";
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 
 import { APP_ID } from "./constants";
@@ -20,6 +20,8 @@ const { Header } = Layout;
 import "./style.css";
 import { setIsPlaying } from "./state/viewer/actions";
 import { clearSimulariumFile } from "./state/trajectory/actions";
+
+import simulariumTheme from "./styles/theme/themeConfig";
 
 export const store = createReduxStore();
 interface LocationWithState extends Location {
@@ -71,21 +73,23 @@ const App = () => {
 
     return (
         <Provider store={store}>
-            <Layout>
-                <BrowserRouter
-                    basename={
-                        process.env.GH_BUILD ? "/simularium-website/" : ""
-                    }
-                >
-                    <ScrollToTop />
-                    {location.pathname !== EMBED_PATHNAME && (
-                        <Header>
-                            <AppHeader />
-                        </Header>
-                    )}
-                    <RouterSwitch />
-                </BrowserRouter>
-            </Layout>
+            <ConfigProvider theme={simulariumTheme} wave={{ disabled: true }}>
+                <Layout>
+                    <BrowserRouter
+                        basename={
+                            process.env.GH_BUILD ? "/simularium-website/" : ""
+                        }
+                    >
+                        <ScrollToTop />
+                        {location.pathname !== EMBED_PATHNAME && (
+                            <Header>
+                                <AppHeader />
+                            </Header>
+                        )}
+                        <RouterSwitch />
+                    </BrowserRouter>
+                </Layout>
+            </ConfigProvider>
         </Provider>
     );
 };
