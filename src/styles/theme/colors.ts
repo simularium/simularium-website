@@ -27,7 +27,7 @@ export const baseColors = {
         eight: "#737373",
         nine: "#4a4a4a",
     },
-    //lighgest to darkest
+    // lightest to darkest
     purple: {
         one: "#e7e4f2", // fka light
         two: "#ddd9ec",

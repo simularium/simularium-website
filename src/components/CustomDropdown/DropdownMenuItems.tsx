@@ -3,8 +3,8 @@ import { Link, LinkProps } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { ArrowRight } from "../Icons";
 
-// Dropdown items can be of a few component types
-// elements, including buttons, router links, and
+// Dropdown items can be of a few component
+// varieties, including buttons, router links, and
 // anchor tags. This file unifies their styling,
 // and then divides them into three component exports
 // for semantically explicit usage in dropdowns.

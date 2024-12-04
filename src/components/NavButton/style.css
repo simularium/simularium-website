@@ -78,8 +78,3 @@
     border-color: var(--dark-theme-secondary-button-disabled-border);
     cursor: not-allowed;
 }
-/* 
-.nav-button.dropdown-item-button:global(.ant-btn) {
-    background-color: inherit;
-    border: inherit;
-} */
