@@ -44,8 +44,10 @@ function useLocationChange() {
                 dispatch(setIsPlaying(false));
                 dispatch(clearSimulariumFile({ newFile: false }));
             });
-            return;
         }
+    }, [location]);
+
+    React.useEffect(() => {
         const handlePopState = () => {
             if (window.location.pathname === VIEWER_PATHNAME) {
                 const trajectoryId = getUrlParamValue(
@@ -74,8 +76,10 @@ function useLocationChange() {
         };
 
         window.addEventListener("popstate", handlePopState);
-        return () => window.removeEventListener("popstate", handlePopState);
-    }, [location]);
+        return () => {
+            window.removeEventListener("popstate", handlePopState);
+        };
+    }, []);
 }
 
 const RouterSwitch = () => {
