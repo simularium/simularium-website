@@ -8,18 +8,22 @@ import { Provider, useDispatch, batch } from "react-redux";
 import { Layout } from "antd";
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 
-import { APP_ID } from "./constants";
-
-import { createReduxStore } from "./state";
 import routes, { EMBED_PATHNAME, VIEWER_PATHNAME } from "./routes";
 import ScrollToTop from "./components/ScrollToTop";
 import AppHeader from "./containers/AppHeader";
+import { APP_ID, URL_PARAM_KEY_FILE_NAME } from "./constants";
+import TRAJECTORIES from "./constants/networked-trajectories";
+import { createReduxStore } from "./state";
+import { setIsPlaying } from "./state/viewer/actions";
+import {
+    changeToNetworkedFile,
+    clearSimulariumFile,
+} from "./state/trajectory/actions";
+import { getUrlParamValue } from "./util/userUrlHandling";
 
 const { Header } = Layout;
 
 import "./style.css";
-import { setIsPlaying } from "./state/viewer/actions";
-import { clearSimulariumFile } from "./state/trajectory/actions";
 
 export const store = createReduxStore();
 interface LocationWithState extends Location {
@@ -40,7 +44,37 @@ function useLocationChange() {
                 dispatch(setIsPlaying(false));
                 dispatch(clearSimulariumFile({ newFile: false }));
             });
+            return;
         }
+        const handlePopState = () => {
+            if (window.location.pathname === VIEWER_PATHNAME) {
+                const trajectoryId = getUrlParamValue(
+                    window.location.href,
+                    URL_PARAM_KEY_FILE_NAME
+                );
+                if (trajectoryId) {
+                    const trajectory = TRAJECTORIES.find(
+                        (t) => t.id === trajectoryId
+                    );
+                    if (trajectory) {
+                        batch(() => {
+                            dispatch(setIsPlaying(false));
+                            dispatch(
+                                changeToNetworkedFile({
+                                    name: trajectory.id,
+                                    title: trajectory.title,
+                                })
+                            );
+                        });
+                    }
+                } else {
+                    dispatch(clearSimulariumFile({ newFile: false }));
+                }
+            }
+        };
+
+        window.addEventListener("popstate", handlePopState);
+        return () => window.removeEventListener("popstate", handlePopState);
     }, [location]);
 }
 
