@@ -12,7 +12,7 @@
     gap: 4px;
 }
 
-.menu :global(.ant-dropdown-menu-submenu-title),
-.menu :global(.ant-dropdown-menu-item-only-child) {
-    padding: 0px !important;
+.menu-wrapper .menu :global(.ant-dropdown-menu-submenu-title),
+.menu-wrapper .menu :global(.ant-dropdown-menu-item-only-child) {
+    padding: 0px;
 }
