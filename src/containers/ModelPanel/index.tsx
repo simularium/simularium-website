@@ -142,7 +142,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
                             titleText={"Restore color defaults"}
                             buttonType={ButtonClass.Action}
                             isDisabled={defaultUiSettingsApplied}
-                            clickHandler={clearUserSelectedColors}
+                            onClick={clearUserSelectedColors}
                             onMouseEnter={() =>
                                 handlePreviewDefaultColors(ColorSetting.Default)
                             }
