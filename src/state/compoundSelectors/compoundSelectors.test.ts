@@ -1,4 +1,4 @@
-import { getCurrentUIData, getDefaultUISettingsApplied } from ".";
+import { getCurrentUIData, areDefaultUISettingsApplied } from ".";
 import { initialState } from "..";
 import { ColorSetting } from "../selection/types";
 
@@ -78,10 +78,10 @@ describe("getCurrentUIData", () => {
     });
 });
 
-describe("getDefaultUISettingsApplied", () => {
+describe("areDefaultUISettingsApplied", () => {
     it("returns false if selectedUIDisplayData contains selections and selectedUIDisplayData and defaultUIData are not equal", () => {
         expect(
-            getDefaultUISettingsApplied({
+            areDefaultUISettingsApplied({
                 ...initialState,
                 trajectory: {
                     defaultUIData: [
@@ -107,7 +107,7 @@ describe("getDefaultUISettingsApplied", () => {
     });
     it("returns true if selectedUIDisplayData contains no selections", () => {
         expect(
-            getDefaultUISettingsApplied({
+            areDefaultUISettingsApplied({
                 ...initialState,
                 trajectory: {
                     defaultUIData: [
@@ -126,7 +126,7 @@ describe("getDefaultUISettingsApplied", () => {
     });
     it("returns true if selectedUIDisplayData and defaultUIData are equal", () => {
         expect(
-            getDefaultUISettingsApplied({
+            areDefaultUISettingsApplied({
                 ...initialState,
                 trajectory: {
                     defaultUIData: [

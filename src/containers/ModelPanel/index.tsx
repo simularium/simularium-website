@@ -3,7 +3,7 @@ import { ActionCreator } from "redux";
 import { connect } from "react-redux";
 
 import { State } from "../../state/types";
-import { getDefaultUISettingsApplied } from "../../state/compoundSelectors";
+import { areDefaultUISettingsApplied } from "../../state/compoundSelectors";
 import { ViewerStatus } from "../../state/viewer/types";
 import { getStatus } from "../../state/viewer/selectors";
 import { RequestNetworkFileAction } from "../../state/trajectory/types";
@@ -136,7 +136,7 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
             <SideBarContents
                 mainTitle="Agents"
                 content={[
-                    <div key="molecules">
+                    <div key="content">
                         {contentMap[viewerStatus]}
                         <NavButton
                             titleText={"Restore color defaults"}
@@ -173,7 +173,7 @@ function mapStateToProps(state: State) {
         isNetworkedFile: getIsNetworkedFile(state),
         recentColors: getRecentColors(state),
         selectedAgentMetadata: getSelectedAgentMetadata(state),
-        defaultUiSettingsApplied: getDefaultUISettingsApplied(state),
+        defaultUiSettingsApplied: areDefaultUISettingsApplied(state),
     };
 }
 

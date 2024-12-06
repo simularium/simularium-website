@@ -29,7 +29,7 @@ export const getCurrentUIData = createSelector(
     }
 );
 
-export const getDefaultUISettingsApplied = createSelector(
+export const areDefaultUISettingsApplied = createSelector(
     [getSelectedUIDisplayData, getDefaultUIDisplayData],
     (selectedUIDisplayData, defaultUIData) => {
         /**
