@@ -32,3 +32,6 @@ export const GET_DISPLAY_DATA_FROM_BROWSER = makeSelectConstant(
 export const SET_CURRENT_COLOR_SETTINGS = makeSelectConstant(
     "set-current-color-settings"
 );
+export const CLEAR_UI_DATA_FROM_STATE = makeSelectConstant(
+    "clear-ui-data-from-state"
+);

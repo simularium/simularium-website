@@ -9,6 +9,7 @@ import { getCurrentUIData } from "../compoundSelectors";
 import {
     GET_DISPLAY_DATA_FROM_BROWSER,
     HANDLE_COLOR_CHANGE,
+    CLEAR_UI_DATA_FROM_STATE,
 } from "./constants";
 import { setCurrentColorSetting, setSelectedUIDisplayData } from "./actions";
 import { applyColorChangeToUiDisplayData, isSameAgentTree } from "../../util";
@@ -57,9 +58,6 @@ const getDisplayDataFromBrowserLogic = createLogic({
             );
             reject(action);
         }
-        setCurrentColorSetting({
-            currentColorSetting: ColorSetting.UserSelected,
-        });
         allow(setSelectedUIDisplayData(storedUIData));
     },
     process() {
@@ -70,4 +68,24 @@ const getDisplayDataFromBrowserLogic = createLogic({
     type: GET_DISPLAY_DATA_FROM_BROWSER,
 });
 
-export default [handleColorChangeLogic, getDisplayDataFromBrowserLogic];
+export const resetSelectedUIDisplayDataLogic = createLogic({
+    process(deps: ReduxLogicDeps, dispatch, done) {
+        const { getState } = deps;
+        const fileKey = getSimulariumFile(getState()).name;
+        localStorage.removeItem(fileKey);
+        dispatch(
+            setCurrentColorSetting({
+                currentColorSetting: ColorSetting.Default,
+            })
+        );
+        dispatch(setSelectedUIDisplayData([]));
+        done();
+    },
+    type: CLEAR_UI_DATA_FROM_STATE,
+});
+
+export default [
+    handleColorChangeLogic,
+    getDisplayDataFromBrowserLogic,
+    resetSelectedUIDisplayDataLogic,
+];
