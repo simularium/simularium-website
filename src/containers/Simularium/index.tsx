@@ -188,8 +188,11 @@ class App extends React.Component<AppProps, AppState> {
     public handleDragOverViewer(event: DragEvent) {
         const { dragOverViewer, fileIsDraggedOverViewer } = this.props;
         event.preventDefault();
+
+        const hasFiles = event.dataTransfer?.types.includes("Files");
+
         clearTimeout(this.endDragover);
-        if (!fileIsDraggedOverViewer) {
+        if (!fileIsDraggedOverViewer && hasFiles) {
             dragOverViewer();
         }
     }
