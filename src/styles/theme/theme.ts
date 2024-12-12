@@ -1,4 +1,5 @@
 import { ThemeConfig } from "antd";
+import { DefaultTheme } from "styled-components";
 import { themeColors } from "./colors";
 
 const typographyToken = {
@@ -9,7 +10,7 @@ const typographyToken = {
 // make variables available as props in
 // .styled components by passing this into
 // the ThemeProvider in the StyleProvider
-export const styledTheme = {
+export const styledTheme: DefaultTheme = {
     colors: themeColors,
     typography: typographyToken.fontFamily,
 };

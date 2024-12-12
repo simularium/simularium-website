@@ -29,7 +29,7 @@ const HelpMenu = (): JSX.Element => {
                 Quick start
             </DropdownRouterLink>
         ) : (
-            <DropdownRouterLink key="Tutorial" to={TUTORIAL_PATHNAME}>
+            <DropdownRouterLink to={TUTORIAL_PATHNAME}>
                 Quick start
             </DropdownRouterLink>
         );
@@ -68,7 +68,7 @@ const HelpMenu = (): JSX.Element => {
                 {
                     key: "via-github",
                     label: (
-                        <DropdownAnchor key="ViaGithub" href={ISSUE_URL}>
+                        <DropdownAnchor href={ISSUE_URL}>
                             via GitHub (preferred)
                         </DropdownAnchor>
                     ),
@@ -76,10 +76,7 @@ const HelpMenu = (): JSX.Element => {
                 {
                     key: "via-forum",
                     label: (
-                        <DropdownAnchor
-                            key="ViaForum"
-                            href={FORUM_BUG_REPORT_URL}
-                        >
+                        <DropdownAnchor href={FORUM_BUG_REPORT_URL}>
                             via Forum (for non-GitHub users)
                         </DropdownAnchor>
                     ),
@@ -89,10 +86,7 @@ const HelpMenu = (): JSX.Element => {
         {
             key: "version",
             label: (
-                <DropdownButton
-                    key="Version"
-                    onClick={() => setModalVisible(!modalVisible)}
-                >
+                <DropdownButton onClick={() => setModalVisible(!modalVisible)}>
                     Version info
                 </DropdownButton>
             ),

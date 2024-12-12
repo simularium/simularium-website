@@ -23,9 +23,8 @@ const baseStyles = css`
     font-size: 14px;
 
     &&& {
-        &:focus,
-        &:focus:hover,
-        &:hover:focus {
+        &:focus-visible,
+        &:focus-visible:hover {
             outline: 1.5px solid ${({ theme }) => theme.colors.dropdown.active};
             border: 2px solid ${({ theme }) => theme.colors.dropdown.background};
             color: ${({ theme }) => theme.colors.dropdown.activeTextColor};
@@ -36,7 +35,7 @@ const baseStyles = css`
             }
         }
 
-        &:hover:not(:focus) {
+        &:hover:not(:focus-visible) {
             background-color: ${({ theme }) => theme.colors.dropdown.active};
             color: ${({ theme }) => theme.colors.dropdown.activeTextColor};
             border-color: ${({ theme }) => theme.colors.dropdown.active};
