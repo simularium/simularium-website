@@ -18,8 +18,9 @@ const baseStyles = css`
     color: ${({ theme }) => theme.colors.dropdown.text};
     cursor: pointer;
     height: 28px;
-    padding: 4px;
+    padding: 6px;
     width: 100%;
+    min-width: 177px;
     font-size: 14px;
 
     &&& {

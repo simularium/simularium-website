@@ -112,7 +112,7 @@ const LoadFileMenu = ({
                     to={{ pathname: VIEWER_PATHNAME }}
                     onClick={openConversionForm}
                 >
-                    Import other file type
+                    Other file type
                 </DropdownRouterLink>
             ),
         },

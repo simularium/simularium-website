@@ -110,7 +110,7 @@ export const antdTheme: ThemeConfig = {
             handleColor: themeColors.slider.color,
             trackHoverBg: themeColors.slider.color,
             handleActiveColor: themeColors.slider.color,
-            handleActiveOutlineColor: themeColors.transparent,
+            handleActiveOutlineColor: themeColors.transparentBg,
             handleSize: 5.5,
             handleSizeHover: 5.5,
             dotBorderColor: themeColors.slider.color,

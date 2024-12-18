@@ -1,4 +1,4 @@
-export const baseColors = {
+const baseColors = {
     black: "#000000",
     white: {
         pure: "#ffffff",
@@ -51,6 +51,7 @@ export const baseColors = {
 
 export const semanticColors = {
     // bg colors
+    transparentBg: baseColors.transparent,
     lightBg: baseColors.gray.one,
     mediumBg: baseColors.dark.six,
     grayBg: baseColors.gray.four,
@@ -138,7 +139,6 @@ export const componentColors = {
 };
 
 export const themeColors = {
-    ...baseColors,
     ...semanticColors,
     ...componentColors,
 };
