@@ -14,6 +14,7 @@ import {
     GET_DISPLAY_DATA_FROM_BROWSER,
     SET_CURRENT_COLOR_SETTINGS,
     HANDLE_COLOR_CHANGE,
+    CLEAR_UI_DATA_FROM_STATE,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -134,5 +135,11 @@ export function setCurrentColorSetting(payload: {
     return {
         payload,
         type: SET_CURRENT_COLOR_SETTINGS,
+    };
+}
+
+export function clearUserSelectedColors(): ResetAction {
+    return {
+        type: CLEAR_UI_DATA_FROM_STATE,
     };
 }
