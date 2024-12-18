@@ -103,7 +103,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                     conversionStatus={conversionStatus}
                     setConversionStatus={setConversionStatus}
                 />
-                <HelpMenu key="help" />
+                <HelpMenu />
                 <DownloadTrajectoryMenu
                     isBuffering={isBuffering}
                     simulariumFile={simulariumFile}
