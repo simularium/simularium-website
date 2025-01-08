@@ -1,44 +1,18 @@
-.menu {
+.menu-wrapper {
     width: fit-content;
     background-color: var(--dark-theme-dropdown-menu-bg);
     border-radius: 3px;
-    padding: 8px;
+    padding: 4px;
 }
 
-.menu svg {
-    fill: var(--dark-theme-menu-text-color);
+.menu {
+    background-color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
-.menu :global(.ant-dropdown-menu-item),
-.menu :global(.ant-dropdown-menu-submenu) {
-    border: 2px solid var(--dark-theme-dropdown-menu-item-bg);
-    border-radius: 4px;
-    height: 32px;
-}
-
-.menu :global(.ant-dropdown-menu-item) :global(.ant-btn) {
-    color: var(--dark-theme-dropdown-menu-item-color);
+.menu-wrapper .menu :global(.ant-dropdown-menu-submenu-title),
+.menu-wrapper .menu :global(.ant-dropdown-menu-item-only-child) {
     padding: 0px;
-}
-
-.menu :global(.ant-dropdown-menu-item):hover,
-.menu :global(.ant-dropdown-menu-submenu):hover {
-    background-color: var(--dark-theme-dropdown-menu-item-hover-bg);
-}
-
-.menu :global(.ant-dropdown-menu-item):hover *,
-.menu :global(.ant-dropdown-menu-submenu):hover * {
-    color: var(--dark-theme-dropdown-menu-item-hover-color);
-    fill: var(--dark-theme-dropdown-menu-item-hover-color);
-}
-
-.menu :global(.ant-dropdown-menu-item):focus-within,
-.menu :global(.ant-dropdown-menu-submenu):focus-within {
-    z-index: 1000;
-    background-color: var(--dark-theme-dropdown-menu-item-focus-bg);
-    outline: 1px solid var(--dark-theme-dropdown-menu-item-focus-outline);
-}
-
-.menu :global(.ant-dropdown-menu-item) *:focus-visible {
-    color: var(--dark-theme-dropdown-menu-item-focus-color);
 }
