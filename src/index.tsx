@@ -11,15 +11,16 @@ import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 import { APP_ID } from "./constants";
 
 import { createReduxStore } from "./state";
+import { setIsPlaying } from "./state/viewer/actions";
+import { clearSimulariumFile } from "./state/trajectory/actions";
 import routes, { EMBED_PATHNAME, VIEWER_PATHNAME } from "./routes";
 import ScrollToTop from "./components/ScrollToTop";
 import AppHeader from "./containers/AppHeader";
 
 const { Header } = Layout;
 
+import StyleProvider from "./styles/theme/StyleProvider";
 import "./style.css";
-import { setIsPlaying } from "./state/viewer/actions";
-import { clearSimulariumFile } from "./state/trajectory/actions";
 
 export const store = createReduxStore();
 interface LocationWithState extends Location {
@@ -71,21 +72,23 @@ const App = () => {
 
     return (
         <Provider store={store}>
-            <Layout>
-                <BrowserRouter
-                    basename={
-                        process.env.GH_BUILD ? "/simularium-website/" : ""
-                    }
-                >
-                    <ScrollToTop />
-                    {location.pathname !== EMBED_PATHNAME && (
-                        <Header>
-                            <AppHeader />
-                        </Header>
-                    )}
-                    <RouterSwitch />
-                </BrowserRouter>
-            </Layout>
+            <StyleProvider>
+                <Layout>
+                    <BrowserRouter
+                        basename={
+                            process.env.GH_BUILD ? "/simularium-website/" : ""
+                        }
+                    >
+                        <ScrollToTop />
+                        {location.pathname !== EMBED_PATHNAME && (
+                            <Header>
+                                <AppHeader />
+                            </Header>
+                        )}
+                        <RouterSwitch />
+                    </BrowserRouter>
+                </Layout>
+            </StyleProvider>
         </Provider>
     );
 };
