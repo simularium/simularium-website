@@ -7,6 +7,7 @@ import { useDebounce } from "use-debounce";
 
 import { AGENT_COLORS } from "../../containers/ViewerPanel/constants";
 import { ColorChange } from "../../constants/interfaces";
+import { COLORPICKER_POPOVER_OFFSET } from "../../constants";
 import {
     ApplyUserColorAction,
     SetRecentColorsAction,
@@ -166,6 +167,7 @@ const ColorPicker = ({
             onOpenChange={togglePopover}
             trigger="click"
             overlayInnerStyle={{ padding: 0 }}
+            align={{ targetOffset: COLORPICKER_POPOVER_OFFSET }}
         >
             <label
                 className={classNames(
