@@ -11,6 +11,7 @@
     --white-three: #d8d8d8;
     --white-four: #f2f2f2;
     --transparent-white: rgba(255, 255, 255, 0.65);
+    --transparent-black: rgba(0, 0, 0, 0.85);
     --dim-gray: #383838;
     --dim-gray-two: #6e6e6e;
     --purplish-gray: #4a4658;
@@ -122,7 +123,7 @@
     /* Light theme */
     /* general */
     --light-theme-bg: var(--light-purple);
-    --light-theme-color: var(--dark);
+    --light-theme-color: var(--transparent-black);
     --light-theme-white-bg: var(--pure-white);
     --light-theme-gray-bg: var(--white-four);
     --light-theme-faint-text: var(--white-two);

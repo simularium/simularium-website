@@ -99,7 +99,7 @@ const HelpMenu = (): JSX.Element => {
                 items={items}
                 titleText={"Help"}
                 icon={DownArrow}
-                buttonType={ButtonClass.Secondary}
+                variant={ButtonClass.DarkSecondary}
             />
             {modalVisible && <VersionModal setModalVisible={setModalVisible} />}
         </>

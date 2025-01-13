@@ -14,6 +14,7 @@ import {
 import { ButtonClass } from "../../constants/interfaces";
 
 import CustomModal from "../CustomModal";
+import { CustomButton } from "../CustomButton";
 import UrlUploadForm from "./url-upload-form";
 import LocalFileUpload from "../LocalFileUpload";
 import uploadFiles from "./upload-local-files";
@@ -98,16 +99,19 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 
     const footerButtons = (
         <>
-            <Button
-                className={ButtonClass.Primary}
+            <CustomButton
+                variant={ButtonClass.LightPrimary}
                 disabled={disableLoad}
                 onClick={onLoadClick}
             >
                 Load
-            </Button>
-            <Button className={ButtonClass.Secondary} onClick={closeModal}>
+            </CustomButton>
+            <CustomButton
+                variant={ButtonClass.LightSecondary}
+                onClick={closeModal}
+            >
                 Cancel
-            </Button>
+            </CustomButton>
         </>
     );
 

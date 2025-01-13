@@ -1,7 +1,7 @@
-import { Button } from "antd";
+import { CustomButton } from "../CustomButton";
 import React from "react";
-import classNames from "classnames";
 
+import { ButtonClass } from "../../constants/interfaces";
 import CustomModal from "../CustomModal";
 
 import styles from "./style.css";
@@ -17,15 +17,19 @@ const ConversionCancelModal: React.FC<ConversionCancelModalProps> = ({
 }) => {
     const footerButtons = (
         <>
-            <Button
-                className={classNames("primary-button", styles.wideButton)}
+            <CustomButton
+                variant={ButtonClass.LightPrimary}
+                className={styles.wideButton}
                 onClick={cancelProcessing}
             >
                 Yes, cancel
-            </Button>
-            <Button className="secondary-button" onClick={continueProcessing}>
+            </CustomButton>
+            <CustomButton
+                variant={ButtonClass.LightSecondary}
+                onClick={continueProcessing}
+            >
                 No
-            </Button>
+            </CustomButton>
         </>
     );
 

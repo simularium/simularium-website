@@ -4,7 +4,8 @@ import { NetworkedSimFile, LocalSimFile } from "../../state/trajectory/types";
 import { isOnlineTrajectory } from "../../util/userUrlHandling";
 import { Share } from "../Icons";
 import ShareTrajectoryModal from "../ShareTrajectoryModal";
-import NavButtonWithTooltip from "../NavButtonWithTooltip";
+import { TooltipButton } from "../CustomButton";
+import { ButtonClass } from "../../constants/interfaces";
 
 interface ShareTrajectoryButtonProps {
     isBuffering: boolean;
@@ -30,15 +31,16 @@ const ShareTrajectoryButton = ({
                     closeModal={handleShare}
                 />
             )}
-            <NavButtonWithTooltip
+            <TooltipButton
+                variant={ButtonClass.Action}
                 tooltipPlacement="bottomLeft"
                 titleText="Share"
                 icon={Share}
-                clickHandler={handleShare}
-                isDisabled={isDisabled}
+                onClick={handleShare}
+                disabled={isDisabled}
                 tooltipText={{
-                    default: "Share trajectory",
-                    disabled: "Load a model to perform this action",
+                    defaultText: "Share trajectory",
+                    disabledText: "Load a model to perform this action",
                 }}
             />
         </>

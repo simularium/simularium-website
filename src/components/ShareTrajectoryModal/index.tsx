@@ -15,6 +15,7 @@ import { ButtonClass } from "../../constants/interfaces";
 import { copyToClipboard, roundToTimeStepPrecision } from "../../util";
 import { editUrlParams } from "../../util/userUrlHandling";
 import { HorizontalFlexbox, VerticalFlexbox } from "../FlexboxUtility";
+import { CustomButton } from "../CustomButton";
 import EmbedSnippetPanel from "./EmbedSnippetPanel";
 
 import styles from "./style.css";
@@ -122,12 +123,12 @@ const ShareTrajectoryModal = ({
                         value={linkUrl}
                         disabled
                     />
-                    <Button
-                        className={"primary-button"}
+                    <CustomButton
+                        variant={ButtonClass.LightPrimary}
                         onClick={() => copyToClipboard(linkUrl)}
                     >
                         Copy
-                    </Button>
+                    </CustomButton>
                 </HorizontalFlexbox>
             </VerticalFlexbox>
         </>
@@ -157,9 +158,12 @@ const ShareTrajectoryModal = ({
                 </div>
             ),
             footer: (
-                <Button className={"secondary-button"} onClick={closeModal}>
+                <CustomButton
+                    variant={ButtonClass.LightSecondary}
+                    onClick={closeModal}
+                >
                     Ok
-                </Button>
+                </CustomButton>
             ),
         },
         isShareable: {
@@ -170,9 +174,12 @@ const ShareTrajectoryModal = ({
                 </VerticalFlexbox>
             ),
             footer: (
-                <Button className={ButtonClass.Secondary} onClick={closeModal}>
+                <CustomButton
+                    variant={ButtonClass.LightSecondary}
+                    onClick={closeModal}
+                >
                     Done
-                </Button>
+                </CustomButton>
             ),
         },
     };

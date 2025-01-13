@@ -1,7 +1,8 @@
-import { Button } from "antd";
 import React from "react";
 
 import CustomModal from "../CustomModal";
+import { CustomButton } from "../CustomButton";
+import { ButtonClass } from "../../constants/interfaces";
 
 interface RecordMoviesModalProps {
     downloadMovie: () => void;
@@ -21,12 +22,18 @@ const RecordMoviesModal: React.FC<RecordMoviesModalProps> = ({
 
     const footerButtons = (
         <>
-            <Button className="primary-button" onClick={closeModal}>
+            <CustomButton
+                variant={ButtonClass.LightPrimary}
+                onClick={closeModal}
+            >
                 Cancel
-            </Button>
-            <Button className="secondary-button" onClick={completeDownload}>
+            </CustomButton>
+            <CustomButton
+                variant={ButtonClass.LightSecondary}
+                onClick={completeDownload}
+            >
                 Save
-            </Button>
+            </CustomButton>
         </>
     );
 

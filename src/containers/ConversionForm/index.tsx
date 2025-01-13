@@ -25,15 +25,15 @@ import {
     ConversionProcessingData,
     ExtensionMap,
 } from "../../state/trajectory/conversion-data-types";
+import { MAX_CONVERSION_FILE_SIZE } from "../../constants";
+import { ButtonClass, ConversionError } from "../../constants/interfaces";
 import ConversionProcessingOverlay from "../../components/ConversionProcessingOverlay";
 import { Cancel, DownCaret } from "../../components/Icons";
+import { CustomButton } from "../../components/CustomButton";
+import ConversionErrorModal from "../../components/ConversionErrorModal";
 import customRequest from "./custom-request";
 
-import theme from "../../components/theme/light-theme.css";
 import styles from "./style.css";
-import { ConversionError } from "../../constants/interfaces";
-import ConversionErrorModal from "../../components/ConversionErrorModal";
-import { MAX_CONVERSION_FILE_SIZE } from "../../constants";
 
 interface ConversionProps {
     setConversionEngine: ActionCreator<SetConversionEngineAction>;
@@ -179,13 +179,17 @@ const ConversionForm = ({
 
     // TODO: use conversion template data to render the form
     const conversionForm = (
-        <div className={classNames(styles.container, theme.lightTheme)}>
+        <div className={classNames(styles.container)}>
             {conversionStatus === ConversionStatus.Active && (
                 <ConversionProcessingOverlay
                     fileName={conversionProcessingData.fileName}
                     cancelProcessing={cancelProcessing}
                 />
             )}
+            <ConversionProcessingOverlay
+                fileName={conversionProcessingData.fileName}
+                cancelProcessing={cancelProcessing}
+            />
             {errorModalOpen && (
                 <ConversionErrorModal
                     closeModal={closeErrorModal}
@@ -197,10 +201,10 @@ const ConversionForm = ({
             )}
             <div className={styles.formContent}>
                 <h3 className={styles.title}>Import a non-native file type</h3>
-                <h3>
+                <p>
                     Convert and import a non-simularium file by providing the
                     following information
-                </h3>
+                </p>
                 <h3 className={styles.sectionHeader}>
                     Provide file information (required)
                 </h3>
@@ -232,7 +236,9 @@ const ConversionForm = ({
                             handleFileSelection(file);
                         }}
                     >
-                        <Button className="primary-button">Select file</Button>
+                        <CustomButton variant={ButtonClass.LightPrimary}>
+                            Select file
+                        </CustomButton>
                     </Upload>
                     {fileToConvert && (
                         <button
@@ -258,16 +264,19 @@ const ConversionForm = ({
                     </>
                 )}
                 <Divider className={styles.divider} orientation="right" />
-                <Button className="secondary-button" onClick={cancelConversion}>
+                <CustomButton
+                    variant={ButtonClass.LightSecondary}
+                    onClick={cancelConversion}
+                >
                     Cancel
-                </Button>
-                <Button
-                    className="primary-button"
+                </CustomButton>
+                <CustomButton
+                    variant={ButtonClass.LightPrimary}
                     disabled={!fileToConvert || !engineSelected}
                     onClick={sendFileToConvert}
                 >
                     Next
-                </Button>
+                </CustomButton>
             </div>
         </div>
     );

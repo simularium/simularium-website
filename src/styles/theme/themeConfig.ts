@@ -14,6 +14,7 @@ const GRAYISH_BROWN = "#4a4a4a";
 const BLUE = "#0094FF";
 const WARM_GRAY = "#979797";
 const TRANSPARENT_WHITE = "rgba(255, 255, 255, 0.65)";
+const SEMI_TRANSPARENT_BLACK = "rgba(0,0,0,0.85)";
 const TRANSPARENT = "transparent";
 
 const APP_BG_COLOR = OFF_WHITE;
@@ -28,7 +29,7 @@ const lightTheme = {
     colorBgBase: WHITE_SIX,
     colorBgContainer: APP_BG_COLOR,
     colorBgLayout: WHITE_SIX,
-    colorText: GRAYISH_BROWN,
+    colorText: SEMI_TRANSPARENT_BLACK,
     colorLink: BLUE,
 
     // Form

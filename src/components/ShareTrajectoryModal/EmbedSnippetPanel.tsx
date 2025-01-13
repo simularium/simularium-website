@@ -1,11 +1,13 @@
 import React from "react";
 import classNames from "classnames";
-import { Input, Checkbox, Button } from "antd";
+import { Input, Checkbox } from "antd";
 import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
 import { copyToClipboard } from "../../util";
 import { getUrlParamValue } from "../../util/userUrlHandling";
+import { ButtonClass } from "../../constants/interfaces";
 import { DownArrow, UpArrow } from "../Icons";
 import { VerticalFlexbox, HorizontalFlexbox } from "../FlexboxUtility";
+import { CustomButton } from "../CustomButton";
 
 import styles from "./style.css";
 
@@ -130,12 +132,12 @@ const EmbedSnippetPanel = ({ startTime }: EmbedSnippetPanelProps) => {
                         value={embedSnippet}
                         disabled
                     />
-                    <Button
-                        className={"primary-button"}
+                    <CustomButton
+                        variant={ButtonClass.LightPrimary}
                         onClick={() => copyToClipboard(embedSnippet)}
                     >
                         Copy
-                    </Button>
+                    </CustomButton>
                 </VerticalFlexbox>
             </VerticalFlexbox>
         </>

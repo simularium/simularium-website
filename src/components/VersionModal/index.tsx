@@ -1,7 +1,8 @@
-import { Button } from "antd";
 import React from "react";
 
 import CustomModal from "../CustomModal";
+import { ButtonClass } from "../../constants/interfaces";
+import { CustomButton } from "../CustomButton";
 
 import styles from "./style.css";
 
@@ -15,9 +16,9 @@ const VersionModal: React.FC<VersionModalProps> = ({ setModalVisible }) => {
     };
 
     const footerButton = (
-        <Button className={"primary-button"} onClick={closeModal}>
+        <CustomButton variant={ButtonClass.LightPrimary} onClick={closeModal}>
             Close
-        </Button>
+        </CustomButton>
     );
 
     return (

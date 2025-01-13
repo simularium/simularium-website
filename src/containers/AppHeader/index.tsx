@@ -25,11 +25,12 @@ import {
     SetViewerStatusAction,
     SetErrorAction,
 } from "../../state/viewer/types";
-
-import styles from "./style.css";
+import { ButtonClass } from "../../constants/interfaces";
 import ShareTrajectoryButton from "../../components/ShareTrajectoryButton";
 import DownloadTrajectoryMenu from "../../components/DownloadTrajectoryMenu";
-import NavButton from "../../components/NavButton";
+import { CustomButton } from "../../components/CustomButton";
+
+import styles from "./style.css";
 
 interface AppHeaderProps {
     simulariumFile: LocalSimFile | NetworkedSimFile;
@@ -79,10 +80,11 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                     {AicsLogo}
                 </a>
                 <span className={styles.verticalBar}>|</span>
-                <NavButton
+                <CustomButton
+                    variant={ButtonClass.Action}
                     className={styles.simulariumHome}
                     titleText="SIMULARIUM HOME"
-                    clickHandler={() => {
+                    onClick={() => {
                         history.push("/");
                     }}
                 />

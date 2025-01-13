@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { Dropdown, DropDownProps, MenuProps } from "antd";
 import { ButtonClass } from "../../constants/interfaces";
-import NavButton from "../NavButton";
+import { CustomButton } from "../CustomButton";
 
 import styles from "./style.css";
 
@@ -9,7 +9,7 @@ interface CustomDropdownProps {
     items: MenuProps["items"];
     titleText: string;
     icon: ReactNode;
-    buttonType: ButtonClass;
+    variant: ButtonClass;
     placement?: DropDownProps["placement"];
     disabled?: boolean;
 }
@@ -18,7 +18,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
     items,
     titleText,
     icon,
-    buttonType,
+    variant,
     placement,
     disabled,
 }) => {
@@ -31,11 +31,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
                 <div className={styles.menuWrapper}>{menu}</div>
             )}
         >
-            <NavButton
-                titleText={titleText}
-                icon={icon}
-                buttonType={buttonType}
-            />
+            <CustomButton titleText={titleText} icon={icon} variant={variant} />
         </Dropdown>
     );
 };
