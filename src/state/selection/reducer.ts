@@ -14,6 +14,7 @@ import {
     SET_RECENT_COLORS,
     SET_SELECTED_AGENT,
     SET_SELECTED_DISPLAY_DATA,
+    SET_CURRENT_COLOR_SETTINGS,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -26,6 +27,8 @@ import {
     SetRecentColorsAction,
     SetSelectedAgentMetadataAction,
     SetSelectedUIDisplayDataAction,
+    ColorSetting,
+    SetCurrentColorSettingAction,
 } from "./types";
 
 export const initialState = {
@@ -36,6 +39,7 @@ export const initialState = {
     recentColors: [],
     selectedAgentMetadata: {},
     selectedUIDisplayData: [],
+    currentColorSetting: ColorSetting.Default,
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -47,6 +51,8 @@ const actionToConfigMap: TypeToDescriptionMap = {
                 ...state,
                 agentVisibilityMap: initialState.agentVisibilityMap,
                 agentHighlightMap: initialState.agentHighlightMap,
+                setSelectedUIDisplayData: initialState.selectedUIDisplayData,
+                currentColorSetting: initialState.currentColorSetting,
             };
         },
     },
@@ -169,6 +175,19 @@ const actionToConfigMap: TypeToDescriptionMap = {
             return {
                 ...state,
                 selectedUIDisplayData: action.payload,
+            };
+        },
+    },
+    [SET_CURRENT_COLOR_SETTINGS]: {
+        accepts: (action: AnyAction): action is SetCurrentColorSettingAction =>
+            action.type === SET_CURRENT_COLOR_SETTINGS,
+        perform: (
+            state: SelectionStateBranch,
+            action: SetCurrentColorSettingAction
+        ) => {
+            return {
+                ...state,
+                currentColorSetting: action.payload.currentColorSetting,
             };
         },
     },

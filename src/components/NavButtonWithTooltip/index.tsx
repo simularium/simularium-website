@@ -24,7 +24,7 @@ const NavButtonWithTooltip: React.FC<NavButtonWithTooltipProps> = ({
     tooltipPlacement,
     buttonType,
     icon,
-    clickHandler,
+    onClick,
     isDisabled = false,
     ...props
 }) => {
@@ -53,7 +53,7 @@ const NavButtonWithTooltip: React.FC<NavButtonWithTooltipProps> = ({
         icon,
         buttonType,
         isDisabled,
-        clickHandler,
+        onClick,
         onMouseEnter,
         onMouseLeave,
     };
@@ -69,7 +69,7 @@ const NavButtonWithTooltip: React.FC<NavButtonWithTooltipProps> = ({
             trigger={["hover", "focus"]}
             open={tooltipVisible}
         >
-            <NavButton {...navButtonProps} onClick={clickHandler} />
+            <NavButton {...navButtonProps} onClick={onClick} />
         </Tooltip>
     );
 };

@@ -63,14 +63,14 @@ const RecordMovieComponent = (props: RecordMovieComponentProps) => {
      * In this icon we are stacking glyphs to create multicolor icons via icomoon
      */
     const startRecordingIcon = (
-        <span className={styles.iconContainer}>
+        <div className={styles.iconContainer}>
             <span
                 className={classNames("icon-moon", "record-icon-circle")}
             ></span>
             <span
                 className={classNames("icon-moon", "record-icon-ring")}
             ></span>
-        </span>
+        </div>
     );
 
     const activeRecordingIcon = (
@@ -81,7 +81,11 @@ const RecordMovieComponent = (props: RecordMovieComponentProps) => {
         if (!isRecording) {
             return startRecordingIcon;
         } else if (isHovering) {
-            return "stop-record-icon";
+            return classNames(
+                styles.iconContainer,
+                "icon-moon",
+                "stop-record-icon"
+            );
         } else return activeRecordingIcon;
     };
 
@@ -110,7 +114,7 @@ const RecordMovieComponent = (props: RecordMovieComponentProps) => {
                 tooltipWhenDisabled={true}
                 tooltipText={getTooltipText()}
                 icon={getIcon()}
-                clickHandler={isRecording ? stop : start}
+                onClick={isRecording ? stop : start}
                 disabled={!supportedBrowser}
                 onMouseEnter={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}

@@ -46,7 +46,7 @@ const DownloadTrajectoryMenu = ({
         <NavButtonWithTooltip
             titleText="Download"
             icon={Download}
-            clickHandler={downloadFile}
+            onClick={downloadFile}
             isDisabled={isDisabled}
             tooltipText={{
                 default: "Download trajectory",
