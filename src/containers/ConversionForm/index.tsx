@@ -186,10 +186,6 @@ const ConversionForm = ({
                     cancelProcessing={cancelProcessing}
                 />
             )}
-            <ConversionProcessingOverlay
-                fileName={conversionProcessingData.fileName}
-                cancelProcessing={cancelProcessing}
-            />
             {errorModalOpen && (
                 <ConversionErrorModal
                     closeModal={closeErrorModal}

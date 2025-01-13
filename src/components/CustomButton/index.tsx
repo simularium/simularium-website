@@ -1,4 +1,4 @@
-import React, { ReactNode, useState, useEffect } from "react";
+import React, { ReactNode, useState, useEffect, forwardRef } from "react";
 import { Button as AntButton, Tooltip } from "antd";
 import styled, { css, RuleSet } from "styled-components";
 import type { ButtonProps as AntButtonProps } from "antd";
@@ -131,32 +131,40 @@ const StyledButton = styled(AntButton)<CustomButtonProps>`
     ${({ variant = ButtonClass.LightPrimary }) => variantStyles[variant]}
 `;
 
-export const CustomButton: React.FC<CustomButtonProps> = ({
-    children,
-    variant = ButtonClass.LightPrimary,
-    titleText,
-    icon,
-    onClick,
-    disabled,
-    ...props
-}) => {
-    const handleClick = () => {
-        if (!disabled) {
-            onClick?.();
-        }
-    };
+export const CustomButton = forwardRef<HTMLButtonElement, CustomButtonProps>(
+    (
+        {
+            children,
+            variant = ButtonClass.LightPrimary,
+            titleText,
+            icon,
+            onClick,
+            disabled,
+            ...props
+        },
+        ref
+    ) => {
+        const handleClick = () => {
+            if (!disabled) {
+                onClick?.();
+            }
+        };
 
-    return (
-        <StyledButton
-            variant={variant}
-            onClick={() => handleClick}
-            disabled={disabled}
-            {...props}
-        >
-            {titleText || children} {icon}
-        </StyledButton>
-    );
-};
+        return (
+            <StyledButton
+                ref={ref}
+                variant={variant}
+                onClick={() => handleClick}
+                disabled={disabled}
+                {...props}
+            >
+                {titleText || children} {icon}
+            </StyledButton>
+        );
+    }
+);
+
+CustomButton.displayName = "CustomButton";
 
 export const TooltipButton: React.FC<WithTooltipProps> = ({
     tooltipText = { defaultText: "", disabledText: "" },
