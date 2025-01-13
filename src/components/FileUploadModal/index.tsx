@@ -1,4 +1,4 @@
-import { Button, Form, Tabs } from "antd";
+import { Form, Tabs } from "antd";
 import { RcFile } from "antd/lib/upload";
 import React, { useState } from "react";
 import { ActionCreator } from "redux";

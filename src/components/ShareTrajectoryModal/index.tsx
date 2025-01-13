@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Input, Radio, RadioChangeEvent, Space } from "antd";
+import { Input, Radio, RadioChangeEvent, Space } from "antd";
 import classNames from "classnames";
 
 import { State } from "../../state/types";

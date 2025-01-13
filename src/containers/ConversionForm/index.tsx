@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ActionCreator } from "redux";
 import { connect } from "react-redux";
-import { Upload, Select, Divider, Button, Input } from "antd";
+import { Upload, Select, Divider, Input } from "antd";
 import { UploadFile } from "antd/lib/upload";
 import { v4 as uuidv4 } from "uuid";
 import classNames from "classnames";
