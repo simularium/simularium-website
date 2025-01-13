@@ -21,6 +21,8 @@
 
 .viewport-button:global(.ant-btn:hover):not(.disabled) {
     background-color: var(--dark-theme-viewport-button-hover-bg);
+    border-color: var(--dark-theme-viewport-button-bg);
+    color: var(--dark-theme-viewport-button-color);
 }
 
 .viewport-button:global(.ant-btn:hover):not(.disabled).active {
