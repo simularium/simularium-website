@@ -16,7 +16,7 @@ interface ViewportButtonProps extends ButtonProps {
      */
     icon?: ReactNode | string;
     radioGroupPosition?: "top" | "bottom";
-    clickHandler?: () => void;
+    onClick?: () => void;
     disabled?: boolean;
     active?: boolean;
     loading?: boolean;
@@ -28,7 +28,7 @@ const ViewportButton: React.FC<ViewportButtonProps> = ({
     tooltipPlacement,
     tooltipWhenDisabled,
     icon,
-    clickHandler,
+    onClick,
     disabled,
     loading,
     active,
@@ -61,7 +61,7 @@ const ViewportButton: React.FC<ViewportButtonProps> = ({
     const getTooltip = () =>
         !disabled || tooltipWhenDisabled ? tooltipText : "";
 
-    const getClickHandler = () => (!disabled ? clickHandler : undefined);
+    const getOnClick = () => (!disabled ? onClick : undefined);
 
     const buttonClassNames = classNames([
         className,
@@ -79,7 +79,7 @@ const ViewportButton: React.FC<ViewportButtonProps> = ({
             <Button
                 {...props}
                 className={buttonClassNames}
-                onClick={getClickHandler()}
+                onClick={getOnClick()}
                 loading={loading}
                 icon={getIcon()}
             />
