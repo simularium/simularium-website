@@ -7,11 +7,8 @@ import { useDebounce } from "use-debounce";
 
 import { AGENT_COLORS } from "../../containers/ViewerPanel/constants";
 import { ColorChange } from "../../constants/interfaces";
+import { SetRecentColorsAction } from "../../state/selection/types";
 import { COLORPICKER_POPOVER_OFFSET } from "../../constants";
-import {
-    ApplyUserColorAction,
-    SetRecentColorsAction,
-} from "../../state/selection/types";
 
 import styles from "./style.css";
 
@@ -21,7 +18,7 @@ interface ColorPickerProps {
     agentName: string;
     tags: string[];
     recentColors: string[];
-    applyUserColor: ActionCreator<ApplyUserColorAction>;
+    applyUserColor: (colorChange: ColorChange) => void;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 
@@ -36,7 +33,7 @@ const ColorPicker = ({
 }: ColorPickerProps): JSX.Element => {
     const [currentColor, setCurrentColor] = useState(initialColor);
     const [debouncedColor] = useDebounce(currentColor, 250);
-    const isInitialRender = useRef(true);
+    const isUserInteraction = useRef(false);
     const [isColorPickerVisible, setColorPickerVisible] = useState(false);
     const [lastSelectedColor, setLastSelectedColor] = useState(initialColor);
 
@@ -55,20 +52,24 @@ const ColorPicker = ({
             color: newColor.toLowerCase(),
         };
         applyUserColor(colorChange);
+        updateRecentColors(newColor.toLowerCase());
     };
 
     useEffect(() => {
-        if (isInitialRender.current) {
-            isInitialRender.current = false;
-        } else {
+        if (isUserInteraction.current) {
             handleColorChange(debouncedColor);
-            updateRecentColors(debouncedColor);
+            isUserInteraction.current = false;
         }
     }, [debouncedColor]);
 
     useEffect(() => {
         setCurrentColor(initialColor);
     }, [initialColor]);
+
+    const onColorUpdate = (newColor: string) => {
+        isUserInteraction.current = true;
+        setCurrentColor(newColor);
+    };
 
     const updateRecentColors = (color: string) => {
         if (recentColors.includes(color)) {
@@ -83,7 +84,7 @@ const ColorPicker = ({
 
     const renderColorPickerComponent = () => (
         <div className={styles.colorPicker}>
-            <HexColorPicker color={currentColor} onChange={setCurrentColor} />
+            <HexColorPicker color={currentColor} onChange={onColorUpdate} />
             <div className={styles.selectionDisplay}>
                 <div className={styles.colorSelections}>
                     <div className={styles.selection}>
@@ -91,7 +92,7 @@ const ColorPicker = ({
                             className={styles.largeSwatch}
                             style={{ backgroundColor: lastSelectedColor }}
                             onClick={() => {
-                                setCurrentColor(lastSelectedColor);
+                                onColorUpdate(lastSelectedColor);
                             }}
                         ></div>
                         <label>
@@ -112,9 +113,7 @@ const ColorPicker = ({
                     <HexColorInput
                         className={styles.hexInput}
                         color={currentColor}
-                        onChange={(color) =>
-                            setCurrentColor(color.toLowerCase())
-                        }
+                        onChange={(color) => onColorUpdate(color.toLowerCase())}
                     />
                     <label>Hex</label>
                 </div>
@@ -136,7 +135,7 @@ const ColorPicker = ({
                             key={color}
                             className={styles.swatch}
                             style={{ background: color }}
-                            onClick={() => setCurrentColor(color)}
+                            onClick={() => onColorUpdate(color)}
                         />
                     </Tooltip>
                 ))}
@@ -148,7 +147,7 @@ const ColorPicker = ({
                         key={color}
                         className={styles.swatch}
                         style={{ background: color }}
-                        onClick={() => setCurrentColor(color)}
+                        onClick={() => onColorUpdate(color)}
                     />
                 ))}
             </div>

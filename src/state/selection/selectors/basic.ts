@@ -13,3 +13,5 @@ export const getSelectedAgentMetadata = (state: State) =>
     state.selection.selectedAgentMetadata;
 export const getSelectedUIDisplayData = (state: State) =>
     state.selection.selectedUIDisplayData;
+export const getCurrentColorSetting = (state: State) =>
+    state.selection.currentColorSetting;
