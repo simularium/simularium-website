@@ -21,7 +21,6 @@
 .container h3 {
     color: var(--dark-theme-text-color-bright);
     font-weight: 400;
-    /* margin: 0px; */
     font-size: 16px;
 }
 
