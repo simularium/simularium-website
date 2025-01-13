@@ -21,7 +21,8 @@
 .container h3 {
     color: var(--dark-theme-text-color-bright);
     font-weight: 400;
-    margin: 0px;
+    /* margin: 0px; */
+    font-size: 16px;
 }
 
 .icon {
@@ -47,14 +48,19 @@
 .no-agent-row {
     display: flex;
     flex-direction: column;
+    font-size: 12px;
 }
 
 .no-agent-row p {
     margin-bottom: 4px;
 }
 
-.no-agent-text {
+p.no-agent-heading {
     font-size: 14px;
+}
+
+p.no-agent-text {
+    font-size: 12px;
 }
 
 .agent-missing-text {
