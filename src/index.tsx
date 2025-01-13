@@ -11,17 +11,16 @@ import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 import { APP_ID } from "./constants";
 
 import { createReduxStore } from "./state";
+import { setIsPlaying } from "./state/viewer/actions";
+import { clearSimulariumFile } from "./state/trajectory/actions";
 import routes, { EMBED_PATHNAME, VIEWER_PATHNAME } from "./routes";
 import ScrollToTop from "./components/ScrollToTop";
 import AppHeader from "./containers/AppHeader";
 
 const { Header } = Layout;
 
+import StyleProvider from "./styles/theme/StyleProvider";
 import "./style.css";
-import { setIsPlaying } from "./state/viewer/actions";
-import { clearSimulariumFile } from "./state/trajectory/actions";
-
-import simulariumTheme from "./styles/theme/themeConfig";
 
 export const store = createReduxStore();
 interface LocationWithState extends Location {
@@ -73,7 +72,7 @@ const App = () => {
 
     return (
         <Provider store={store}>
-            <ConfigProvider theme={simulariumTheme} wave={{ disabled: true }}>
+            <StyleProvider>
                 <Layout>
                     <BrowserRouter
                         basename={
@@ -89,7 +88,7 @@ const App = () => {
                         <RouterSwitch />
                     </BrowserRouter>
                 </Layout>
-            </ConfigProvider>
+            </StyleProvider>
         </Provider>
     );
 };

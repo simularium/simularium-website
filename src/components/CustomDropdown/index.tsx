@@ -27,6 +27,9 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
             menu={{ items, theme: "dark", className: styles.menu }}
             placement={placement}
             disabled={disabled}
+            dropdownRender={(menu) => (
+                <div className={styles.menuWrapper}>{menu}</div>
+            )}
         >
             <NavButton
                 titleText={titleText}
