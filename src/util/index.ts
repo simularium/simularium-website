@@ -1,5 +1,3 @@
-import { forOwn, isFunction } from "lodash";
-import React from "react";
 import { ColorChange, IconGlyphs } from "../constants/interfaces";
 import { UIDisplayData } from "@aics/simularium-viewer";
 
