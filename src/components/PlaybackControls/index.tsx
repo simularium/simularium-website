@@ -129,7 +129,7 @@ const PlayBackControls = ({
             tooltipText={isPlaying ? "Pause" : "Play"}
             tooltipPlacement="top"
             icon={isPlaying ? Pause : Play}
-            clickHandler={isPlaying ? pauseHandler : playHandler}
+            onClick={isPlaying ? pauseHandler : playHandler}
             disabled={loading || isEmpty}
             loading={loading}
         />
@@ -169,7 +169,7 @@ const PlayBackControls = ({
                     tooltipText="Skip 1 frame back"
                     tooltipPlacement="top"
                     icon={getIconGlyphClasses(IconGlyphs.StepBack)}
-                    clickHandler={prevHandler}
+                    onClick={prevHandler}
                     disabled={isStepBackDisabled || loading || isEmpty}
                     loading={loading}
                 />
@@ -178,7 +178,7 @@ const PlayBackControls = ({
                     tooltipText="Skip 1 frame ahead"
                     tooltipPlacement="top"
                     icon={getIconGlyphClasses(IconGlyphs.StepForward)}
-                    clickHandler={nextHandler}
+                    onClick={nextHandler}
                     disabled={isStepForwardDisabled || loading || isEmpty}
                     loading={loading}
                 />
@@ -204,7 +204,7 @@ const PlayBackControls = ({
                 tooltipText={isLooping ? "Turn off looping" : "Turn on looping"}
                 tooltipPlacement="top"
                 icon={getIconGlyphClasses(IconGlyphs.Loop)}
-                clickHandler={loopHandler}
+                onClick={loopHandler}
                 disabled={isEmpty}
                 active={isLooping}
                 loading={loading}

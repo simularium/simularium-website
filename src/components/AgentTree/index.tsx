@@ -19,6 +19,8 @@ import { CHECKBOX_TYPE_STAR } from "../../constants";
 import ColorPicker from "../ColorPicker";
 import NoTypeMappingText from "../NoTrajectoriesText/NoTypeMappingText";
 
+import styles from "./style.css";
+
 const { Text } = Typography;
 
 interface CheckBoxWithColor extends CheckboxOptionType {
@@ -49,7 +51,6 @@ interface AgentTreeProps {
     setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 const CHECKBOX_SPAN_NO = 2;
-import styles from "./style.css";
 
 class AgentTree extends React.Component<AgentTreeProps> {
     onSubCheckboxChange = (key: string, values: string[]) => {

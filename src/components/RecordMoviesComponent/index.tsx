@@ -114,7 +114,7 @@ const RecordMovieComponent = (props: RecordMovieComponentProps) => {
                 tooltipWhenDisabled={true}
                 tooltipText={getTooltipText()}
                 icon={getIcon()}
-                clickHandler={isRecording ? stop : start}
+                onClick={isRecording ? stop : start}
                 disabled={!supportedBrowser}
                 onMouseEnter={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}

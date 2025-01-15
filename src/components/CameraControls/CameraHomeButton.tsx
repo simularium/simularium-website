@@ -15,7 +15,7 @@ export const CameraHomeButton: React.FC<CameraHomeButtonProps> = ({
             tooltipText={"Home view (H)"}
             tooltipPlacement="left"
             icon={getIconGlyphClasses(IconGlyphs.Reset)}
-            clickHandler={resetCamera}
+            onClick={resetCamera}
         />
     );
 };

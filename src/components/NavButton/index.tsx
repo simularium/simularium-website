@@ -9,7 +9,7 @@ export interface NavButtonProps extends ButtonProps {
     titleText?: string;
     buttonType?: string;
     icon?: ReactNode;
-    clickHandler?: () => void;
+    onClick?: () => void;
     isDisabled?: boolean;
 }
 
@@ -18,7 +18,7 @@ const NavButton: React.FC<NavButtonProps> = ({
     titleText,
     buttonType = ButtonClass.Action,
     icon,
-    clickHandler,
+    onClick,
     isDisabled,
     ...props
 }) => {
@@ -34,7 +34,7 @@ const NavButton: React.FC<NavButtonProps> = ({
         <Button
             {...props}
             className={buttonClassNames}
-            onClick={!isDisabled ? clickHandler : undefined}
+            onClick={!isDisabled ? onClick : undefined}
         >
             {titleText} {icon}
         </Button>

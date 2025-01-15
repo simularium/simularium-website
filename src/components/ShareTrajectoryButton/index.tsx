@@ -34,7 +34,7 @@ const ShareTrajectoryButton = ({
                 tooltipPlacement="bottomLeft"
                 titleText="Share"
                 icon={Share}
-                clickHandler={handleShare}
+                onClick={handleShare}
                 isDisabled={isDisabled}
                 tooltipText={{
                     default: "Share trajectory",
