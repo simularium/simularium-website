@@ -138,9 +138,11 @@ const ShareTrajectoryModal = ({
         errorMessage: {
             content: (
                 <div>
-                    <h4>{Warn} The current file is stored on your device.</h4>
-                    <div>
-                        <h5>
+                    <h5 className={styles.localFileHeading}>
+                        {Warn} The current file is stored on your device.
+                    </h5>
+                    <div className={styles.localFileMessage}>
+                        <p>
                             To generate a shareable link, please save the file
                             in the public cloud using Dropbox, Google Drive, or
                             Amazon S3 and load the model into Simularium via
@@ -152,7 +154,7 @@ const ShareTrajectoryModal = ({
                             >
                                 Learn more
                             </a>
-                        </h5>
+                        </p>
                     </div>
                 </div>
             ),

@@ -129,7 +129,7 @@ const PlayBackControls = ({
             tooltipText={isPlaying ? "Pause" : "Play"}
             tooltipPlacement="top"
             icon={isPlaying ? Pause : Play}
-            onClick={isPlaying ? pauseHandler : playHandler}
+            onClick={isPlaying ? () => pauseHandler() : () => playHandler()}
             disabled={loading || isEmpty}
             loading={loading}
         />

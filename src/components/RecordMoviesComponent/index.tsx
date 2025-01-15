@@ -63,14 +63,14 @@ const RecordMovieComponent = (props: RecordMovieComponentProps) => {
      * In this icon we are stacking glyphs to create multicolor icons via icomoon
      */
     const startRecordingIcon = (
-        <span className={styles.iconContainer}>
+        <div className={styles.iconContainer}>
             <span
                 className={classNames("icon-moon", "record-icon-circle")}
             ></span>
             <span
                 className={classNames("icon-moon", "record-icon-ring")}
             ></span>
-        </span>
+        </div>
     );
 
     const activeRecordingIcon = (
