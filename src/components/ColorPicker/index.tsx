@@ -9,7 +9,6 @@ import { AGENT_COLORS } from "../../containers/ViewerPanel/constants";
 import { ColorChange } from "../../constants/interfaces";
 import { COLORPICKER_POPOVER_OFFSET } from "../../constants";
 import { SetRecentColorsAction } from "../../state/selection/types";
-import { COLORPICKER_POPOVER_OFFSET } from "../../constants";
 
 import styles from "./style.css";
 
