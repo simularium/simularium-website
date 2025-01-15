@@ -5,7 +5,7 @@ import "core-js/es6/set";
 import React, { useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider, useDispatch, batch } from "react-redux";
-import { ConfigProvider, Layout } from "antd";
+import { Layout } from "antd";
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 import routes, { EMBED_PATHNAME, VIEWER_PATHNAME } from "./routes";
 import ScrollToTop from "./components/ScrollToTop";
