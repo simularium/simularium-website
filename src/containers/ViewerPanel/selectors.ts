@@ -11,15 +11,15 @@ import {
     getAgentsToHide,
     getCurrentTime,
     getHighlightedAgents,
-    getSelectedUIDisplayData,
 } from "../../state/selection/selectors";
 import { AgentRenderingCheckboxMap } from "../../state/selection/types";
 import { roundTimeForDisplay } from "../../util";
 import { DisplayTimes } from "./types";
 import { isNetworkSimFileInterface } from "../../state/trajectory/types";
+import { getCurrentUIData } from "../../state/compoundSelectors";
 
 export const getSelectionStateInfoForViewer = createSelector(
-    [getHighlightedAgents, getAgentsToHide, getSelectedUIDisplayData],
+    [getHighlightedAgents, getAgentsToHide, getCurrentUIData],
     (highlightedAgents, hiddenAgents, appliedColors): SelectionStateInfo => ({
         highlightedAgents,
         hiddenAgents,

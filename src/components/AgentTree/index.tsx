@@ -6,11 +6,11 @@ import { map, filter, isEmpty } from "lodash";
 
 import {
     ChangeAgentsRenderingStateAction,
-    ApplyUserColorAction,
     SetRecentColorsAction,
     SetVisibleAction,
     AgentRenderingCheckboxMap,
 } from "../../state/selection/types";
+import { ColorChange } from "../../constants/interfaces";
 import SharedCheckbox from "../SharedCheckbox";
 import AgentTreeSubmenu from "../AgentTreeSubmenu";
 import TreeNode from "../TreeNode";
@@ -47,7 +47,7 @@ interface AgentTreeProps {
     payloadForSelectNone: AgentRenderingCheckboxMap;
     isSharedCheckboxIndeterminate: boolean;
     recentColors: string[];
-    applyUserColor: ActionCreator<ApplyUserColorAction>;
+    applyUserColor: (colorChange: ColorChange) => void;
     setRecentColors: ActionCreator<SetRecentColorsAction>;
 }
 const CHECKBOX_SPAN_NO = 2;
