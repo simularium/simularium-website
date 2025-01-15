@@ -45,5 +45,3 @@
 .viewport-button:global(.ant-btn).disabled :global(.record-icon-circle) {
     color: var(--dark-theme-viewport-button-disabled-color);
 }
-
-

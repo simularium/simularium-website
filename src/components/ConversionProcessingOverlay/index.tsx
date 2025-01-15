@@ -51,7 +51,7 @@ const ConversionProcessingOverlay = ({
                     <div>Processing...</div>
                 </div>
                 <h3 className={styles.newInstanceText}>
-                    Open another instance of Simularium{" "}
+                    Open another instance of Simularium
                 </h3>
                 <CustomButton
                     variant={ButtonClass.LightSecondary}
