@@ -103,8 +103,12 @@ const MetadataPanel: React.FC<MetadataPanelProps> = ({
         if (!selectedAgentMetadata.uniqueId) {
             return (
                 <div className={styles.noAgentRow}>
-                    <p className={styles.noAgentText}>Nothing to see here...</p>
-                    <p>Select an agent in the viewport to view its metadata.</p>
+                    <p className={styles.noAgentHeading}>
+                        Nothing to see here...
+                    </p>
+                    <p className={styles.noAgentText}>
+                        Select an agent in the viewport to view its metadata.
+                    </p>
                 </div>
             );
         }

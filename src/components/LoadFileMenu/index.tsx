@@ -127,7 +127,7 @@ const LoadFileMenu = ({
                 items={items}
                 titleText={"Load model"}
                 icon={DownArrow}
-                buttonType={ButtonClass.Primary}
+                variant={ButtonClass.DarkPrimary}
                 placement="bottomRight"
                 disabled={isDisabled}
             />

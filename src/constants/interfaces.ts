@@ -42,8 +42,10 @@ export type TooltipPlacement =
     | "rightBottom";
 
 export enum ButtonClass {
-    Primary = "primary-button",
-    Secondary = "secondary-button",
+    LightPrimary = "light-primary-button",
+    LightSecondary = "light-secondary-button",
+    DarkPrimary = "dark-primary-button",
+    DarkSecondary = "dark-secondary-button",
     Action = "action-button",
 }
 

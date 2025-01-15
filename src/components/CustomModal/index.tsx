@@ -4,7 +4,7 @@ import classNames from "classnames";
 
 import { IconGlyphs } from "../../constants/interfaces";
 import { getIconGlyphClasses } from "../../util";
-import theme from "../theme/light-theme.css";
+
 import styles from "./style.css";
 
 type OmittedProps =
@@ -57,7 +57,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
             {...props}
             className={classNames(
                 styles.modal,
-                theme.lightTheme,
                 divider && styles.divider,
                 props.className
             )}

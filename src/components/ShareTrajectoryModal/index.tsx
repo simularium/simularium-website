@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Input, Radio, RadioChangeEvent, Space } from "antd";
+import { Input, Radio, RadioChangeEvent, Space } from "antd";
 import classNames from "classnames";
 
 import { State } from "../../state/types";
@@ -15,6 +15,7 @@ import { ButtonClass } from "../../constants/interfaces";
 import { copyToClipboard, roundToTimeStepPrecision } from "../../util";
 import { editUrlParams } from "../../util/userUrlHandling";
 import { HorizontalFlexbox, VerticalFlexbox } from "../FlexboxUtility";
+import { CustomButton } from "../CustomButton";
 import EmbedSnippetPanel from "./EmbedSnippetPanel";
 
 import styles from "./style.css";
@@ -122,12 +123,12 @@ const ShareTrajectoryModal = ({
                         value={linkUrl}
                         disabled
                     />
-                    <Button
-                        className={"primary-button"}
+                    <CustomButton
+                        variant={ButtonClass.LightPrimary}
                         onClick={() => copyToClipboard(linkUrl)}
                     >
                         Copy
-                    </Button>
+                    </CustomButton>
                 </HorizontalFlexbox>
             </VerticalFlexbox>
         </>
@@ -138,13 +139,15 @@ const ShareTrajectoryModal = ({
         errorMessage: {
             content: (
                 <div>
-                    <h4>{Warn} The current file is stored on your device.</h4>
-                    <div>
-                        <h5>
+                    <h5 className={styles.localFileHeading}>
+                        {Warn} The current file is stored on your device.
+                    </h5>
+                    <div className={styles.localFileMessage}>
+                        <p>
                             To generate a shareable link, please save the file
                             in the public cloud using Dropbox, Google Drive, or
                             Amazon S3 and load the model into Simularium via
-                            URL.
+                            URL.{" "}
                             <a
                                 href="https://simularium.allencell.org/tutorial#share-a-link"
                                 target="_blank"
@@ -152,14 +155,17 @@ const ShareTrajectoryModal = ({
                             >
                                 Learn more
                             </a>
-                        </h5>
+                        </p>
                     </div>
                 </div>
             ),
             footer: (
-                <Button className={"secondary-button"} onClick={closeModal}>
+                <CustomButton
+                    variant={ButtonClass.LightSecondary}
+                    onClick={closeModal}
+                >
                     Ok
-                </Button>
+                </CustomButton>
             ),
         },
         isShareable: {
@@ -170,9 +176,12 @@ const ShareTrajectoryModal = ({
                 </VerticalFlexbox>
             ),
             footer: (
-                <Button className={ButtonClass.Secondary} onClick={closeModal}>
+                <CustomButton
+                    variant={ButtonClass.LightSecondary}
+                    onClick={closeModal}
+                >
                     Done
-                </Button>
+                </CustomButton>
             ),
         },
     };

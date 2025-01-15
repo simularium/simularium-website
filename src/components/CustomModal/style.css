@@ -2,12 +2,14 @@
 .modal :global(.ant-modal-content) {
     /* prevents modal body color rendering under header/footer at corners */
     color: var(--light-theme-modal-color);
+    padding: 0px;
 }
 
 .modal :global(.ant-modal-header) {
     display: flex;
     justify-content: center;
     padding: 26px 24px 14px;
+    margin-bottom: 0px;
 }
 
 .modal :global(.ant-modal-title) {
@@ -16,6 +18,7 @@
     display: flex;
     font-size: 21px;
     font-weight: 400;
+    max-height: 21px;
 }
 
 .modal :global(.close-icon::after) {
@@ -48,6 +51,8 @@
 .modal :global(.ant-modal-footer) {
     background-color: var(--light-theme-modal-bg);
     padding: 0px;
+    border-radius: 6px;
+    margin-top: 0px;
 }
 
 .footer-button-container {
@@ -56,11 +61,6 @@
     gap: 12px;
     margin: 0px;
     padding: 20px 24px;
-}
-
-.modal :global(.ant-modal-footer) button {
-    height: 32px;
-    width: 83px;
 }
 
 .modal :global(.ant-input),

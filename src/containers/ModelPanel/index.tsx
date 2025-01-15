@@ -42,7 +42,7 @@ import NoTrajectoriesText from "../../components/NoTrajectoriesText";
 import NetworkFileFailedText from "../../components/NoTrajectoriesText/NetworkFileFailedText";
 import NoTypeMappingText from "../../components/NoTrajectoriesText/NoTypeMappingText";
 import SideBarContents from "../../components/SideBarContents";
-import NavButton from "../../components/NavButton";
+import { CustomButton } from "../../components/CustomButton";
 import { AgentMetadata, ButtonClass } from "../../constants/interfaces";
 import {
     getSelectAllVisibilityMap,
@@ -138,10 +138,10 @@ const ModelPanel: React.FC<ModelPanelProps> = ({
                 content={[
                     <div key="content">
                         {contentMap[viewerStatus]}
-                        <NavButton
+                        <CustomButton
                             titleText={"Restore color defaults"}
-                            buttonType={ButtonClass.Action}
-                            isDisabled={defaultUiSettingsApplied}
+                            variant={ButtonClass.Action}
+                            disabled={defaultUiSettingsApplied}
                             onClick={clearUserSelectedColors}
                             onMouseEnter={() =>
                                 handlePreviewDefaultColors(ColorSetting.Default)

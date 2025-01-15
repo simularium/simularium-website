@@ -4,7 +4,8 @@ import { ISimulariumFile } from "@aics/simularium-viewer";
 import { DOWNLOAD_URL } from "../../constants";
 import { NetworkedSimFile, LocalSimFile } from "../../state/trajectory/types";
 import { Download } from "../Icons";
-import NavButtonWithTooltip from "../NavButtonWithTooltip";
+import { TooltipButton } from "../CustomButton";
+import { ButtonClass } from "../../constants/interfaces";
 
 interface DownloadTrajectoryMenuProps {
     isBuffering: boolean;
@@ -43,16 +44,17 @@ const DownloadTrajectoryMenu = ({
     };
 
     return (
-        <NavButtonWithTooltip
+        <TooltipButton
+            variant={ButtonClass.Action}
             titleText="Download"
             icon={Download}
             onClick={downloadFile}
-            isDisabled={isDisabled}
+            disabled={isDisabled}
             tooltipText={{
-                default: "Download trajectory",
-                disabled: "Load a model to perform this action",
+                defaultText: "Download trajectory",
+                disabledText: "Load a model to perform this action",
             }}
-            tooltipPlacement="bottomLeft"
+            tooltipPlacement="bottomRight"
         />
     );
 };
