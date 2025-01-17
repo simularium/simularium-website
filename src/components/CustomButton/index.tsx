@@ -21,7 +21,7 @@ interface TooltipText {
     disabledText?: string;
 }
 
-interface TooltilButtonProps extends CustomButtonProps {
+interface TooltipButtonProps extends CustomButtonProps {
     tooltipText: TooltipText;
     tooltipPlacement?: TooltipPlacement;
 }
@@ -160,24 +160,16 @@ export const CustomButton = forwardRef<HTMLButtonElement, CustomButtonProps>(
 
 CustomButton.displayName = "CustomButton";
 
-export const TooltipButton: React.FC<TooltilButtonProps> = ({
+export const TooltipButton: React.FC<TooltipButtonProps> = ({
     tooltipText = { defaultText: "", disabledText: "" },
     tooltipPlacement,
     disabled = false,
     ...buttonProps
 }) => {
-    const [tooltipRenderText, setTooltipRenderText] = useState(
-        disabled ? tooltipText.disabledText : tooltipText.defaultText
-    );
+    const tooltipRenderText = disabled
+        ? tooltipText.disabledText
+        : tooltipText.defaultText;
     const [tooltipVisible, setTooltipVisible] = useState(false);
-
-    useEffect(() => {
-        if (!tooltipVisible) {
-            setTooltipRenderText(
-                disabled ? tooltipText.disabledText : tooltipText.defaultText
-            );
-        }
-    }, [disabled, tooltipText, tooltipVisible]);
 
     const handleMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
         setTooltipVisible(true);
@@ -190,21 +182,24 @@ export const TooltipButton: React.FC<TooltilButtonProps> = ({
     };
 
     return (
-        <Tooltip
-            placement={tooltipPlacement}
-            title={tooltipRenderText}
-            color={TOOLTIP_COLOR}
-            mouseEnterDelay={TOOLTIP_DELAY}
-            align={{ targetOffset: NAV_BAR_TOOLTIP_OFFSET }}
-            trigger={["hover", "focus"]}
-            open={tooltipVisible}
+        <div
+            className="inline-block"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
         >
-            <CustomButton
-                {...buttonProps}
-                disabled={disabled}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-            />
-        </Tooltip>
+            <Tooltip
+                placement={tooltipPlacement}
+                title={tooltipRenderText}
+                color={TOOLTIP_COLOR}
+                mouseEnterDelay={TOOLTIP_DELAY}
+                align={{ targetOffset: NAV_BAR_TOOLTIP_OFFSET }}
+                trigger={["hover", "focus"]}
+                open={tooltipVisible}
+            >
+                <div>
+                    <CustomButton {...buttonProps} disabled={disabled} />
+                </div>
+            </Tooltip>
+        </div>
     );
 };
