@@ -118,10 +118,12 @@ export const DropdownRouterLink: React.FC<RouterProps> = ({
     className,
     to,
     newTab,
+    onClick,
 }) => (
     <StyledRouterLink
         to={to}
         className={className}
+        onClick={onClick}
         {...getNewTabAttributes(newTab)}
     >
         {children}

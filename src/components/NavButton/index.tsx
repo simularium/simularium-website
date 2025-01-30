@@ -8,6 +8,7 @@ export interface NavButtonProps extends ButtonProps {
     titleText?: string;
     buttonType?: string;
     icon?: ReactNode;
+    onClick?: () => void;
     isDisabled?: boolean;
 }
 

@@ -117,6 +117,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
             dropdownRender={(menu) => (
                 <div
                     ref={dropdownRef}
+                    className={styles.menuWrapper}
                     tabIndex={-1}
                     onKeyDown={handleKeyDown}
                     onMouseEnter={handleMouseEnter}

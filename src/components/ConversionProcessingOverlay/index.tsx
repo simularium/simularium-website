@@ -48,7 +48,9 @@ const ConversionProcessingOverlay = ({
                     </div>
                     <div>Processing...</div>
                 </div>
-                <h3>Open another instance of Simularium </h3>
+                <h3 className={styles.newInstanceText}>
+                    Open another instance of Simularium
+                </h3>
                 <Button
                     className="secondary-button"
                     href={`https://simularium.allencell.org/viewer`}

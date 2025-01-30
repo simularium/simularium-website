@@ -16,6 +16,7 @@ interface ViewportButtonProps extends ButtonProps {
      */
     icon?: ReactNode | string;
     radioGroupPosition?: "top" | "bottom";
+    onClick?: () => void;
     disabled?: boolean;
     active?: boolean;
     loading?: boolean;

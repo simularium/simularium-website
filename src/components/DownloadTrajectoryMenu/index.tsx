@@ -52,7 +52,7 @@ const DownloadTrajectoryMenu = ({
                 default: "Download trajectory",
                 disabled: "Load a model to perform this action",
             }}
-            tooltipPlacement="bottomLeft"
+            tooltipPlacement="bottomRight"
         />
     );
 };

@@ -64,7 +64,6 @@ const NavButtonWithTooltip: React.FC<NavButtonWithTooltipProps> = ({
             title={tooltipRenderText}
             color={TOOLTIP_COLOR}
             mouseEnterDelay={TOOLTIP_DELAY}
-            arrow={{ pointAtCenter: true }}
             align={{ targetOffset: NAV_BAR_TOOLTIP_OFFSET }}
             trigger={["hover", "focus"]}
             open={tooltipVisible}

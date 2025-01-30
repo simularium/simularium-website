@@ -44,10 +44,6 @@
     height: 40px;
 }
 
-.container :global(.header-checkbox .ant-checkbox) {
-    top: 3.5px;
-}
-
 .sub-menu {
     flex-flow: row;
 }

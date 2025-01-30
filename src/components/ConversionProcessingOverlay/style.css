@@ -12,6 +12,7 @@
 
 .title {
     color: var(--light-theme-color);
+    font-size: 24px;
     font-weight: 600;
 }
 
@@ -36,6 +37,12 @@
 .spin-container {
     margin: 20px 0;
     padding: 30px 50px 10px;
+}
+
+.new-instance-text {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 0.5em;
 }
 
 .divider-container {

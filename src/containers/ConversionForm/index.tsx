@@ -197,10 +197,10 @@ const ConversionForm = ({
             )}
             <div className={styles.formContent}>
                 <h3 className={styles.title}>Import a non-native file type</h3>
-                <h3>
+                <p>
                     Convert and import a non-simularium file by providing the
                     following information
-                </h3>
+                </p>
                 <h3 className={styles.sectionHeader}>
                     Provide file information (required)
                 </h3>
