@@ -58,6 +58,7 @@ export const semanticColors = {
     mediumBg: baseColors.dark.six,
     grayBg: baseColors.gray.four,
     darkBg: baseColors.dark.four,
+    darkActiveBg: baseColors.dark.one,
     lightPurpleBg: baseColors.purple.one,
     // text colors
     lightBgText: baseColors.dark.one,
@@ -92,15 +93,17 @@ export const componentColors = {
                 background: baseColors.dark.five,
                 text: baseColors.gray.six,
                 hover: {
-                    background: baseColors.dark.one,
+                    background: semanticColors.darkActiveBg,
                     text: semanticColors.primaryPurple,
                 },
                 active: {
-                    background: baseColors.dark.one,
+                    background: semanticColors.darkActiveBg,
                     text: semanticColors.primaryPurple,
                 },
                 focus: {
-                    outline: semanticColors.primaryPurple,
+                    background: semanticColors.darkActiveBg,
+                    outline: semanticColors.darkActiveBg,
+                    text: semanticColors.primaryPurple,
                 },
                 disabled: {
                     background: baseColors.purple.three,
@@ -119,7 +122,9 @@ export const componentColors = {
                     text: semanticColors.lightBgActiveText,
                 },
                 focus: {
-                    outline: semanticColors.primaryPurple,
+                    background: semanticColors.activePurple,
+                    outline: semanticColors.activePurple,
+                    text: semanticColors.lightBgActiveText,
                 },
                 disabled: {
                     background: baseColors.gray.ten,
@@ -144,7 +149,9 @@ export const componentColors = {
                     // add border?
                 },
                 focus: {
-                    outline: semanticColors.primaryPurple,
+                    background: semanticColors.darkActiveBg,
+                    outline: semanticColors.darkActiveBg,
+                    text: semanticColors.primaryPurple,
                 },
                 disabled: {
                     background: baseColors.gray.three,
@@ -165,7 +172,9 @@ export const componentColors = {
                     text: semanticColors.lightBgActiveText,
                 },
                 focus: {
-                    outline: semanticColors.primaryPurple,
+                    background: semanticColors.activePurple,
+                    outline: semanticColors.activePurple,
+                    text: semanticColors.darkActiveBg,
                 },
                 disabled: {
                     background: semanticColors.transparentBg,
@@ -185,6 +194,7 @@ export const componentColors = {
             },
             focus: {
                 outline: semanticColors.activePurple,
+                text: semanticColors.activePurple,
             },
             disabled: {
                 text: baseColors.gray.eight,

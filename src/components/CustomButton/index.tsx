@@ -35,14 +35,11 @@ const baseStyles = css`
     align-items: center;
     gap: 8px;
     cursor: pointer;
+    border: none;
+    outline-offset: 1px;
 
     &:disabled {
         cursor: not-allowed;
-    }
-
-    &:focus-visible {
-        outline: 1px solid ${({ theme }) => theme.colors.lightPurpleBg};
-        outline-offset: 1px;
     }
 `;
 
@@ -56,24 +53,23 @@ const generateButtonStyles = (
         },
     }) => {
         const buttonTheme = button[variant][theme];
-        const { background, text, border, hover, active, disabled } =
+        const { background, text, hover, focus, active, disabled } =
             buttonTheme;
 
         return css`
             background-color: ${background};
-            border: 1px solid ${variant === "primary" ? background : border};
             color: ${text};
 
-            &&& {
+            &&&& {
                 &:hover:not(:disabled) {
                     background-color: ${hover.background};
                     border-color: ${hover.background};
                     color: ${hover.text};
                 }
 
-                &:active:not(:disabled) {
-                    background-color: ${hover.background};
-                    border-color: ${active.background};
+                &:focus-visible:not(:disabled) {
+                    background-color: ${focus.background};
+                    outline: 1px solid ${focus.outline};
                     color: ${active.text};
                 }
 
@@ -101,14 +97,14 @@ const actionStyles = css`
         padding: 6px 8px;
         min-width: auto;
 
-        &&& {
+        &&&& {
             &:hover:not(:disabled) {
                 color: ${action.hover.background};
             }
 
-            &:active:not(:disabled) {
-                border: ${action.active.text};
-                color: ${action.active.text};
+            &:focus-visible:not(:disabled) {
+                outline: 1px solid ${action.focus.outline};
+                color: ${action.focus.text};
             }
 
             &:disabled {
