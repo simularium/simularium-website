@@ -11,6 +11,7 @@
     --white-three: #d8d8d8;
     --white-four: #f2f2f2;
     --transparent-white: rgba(255, 255, 255, 0.65);
+    --transparent-black: rgba(0, 0, 0, 0.85);
     --dim-gray: #383838;
     --dim-gray-two: #6e6e6e;
     --purplish-gray: #4a4658;
@@ -55,41 +56,9 @@
     --dark-theme-viewport-button-toggle-border: var(--dim-gray-two);
     --dark-theme-viewport-button-hover-bg: var(--purplish-gray);
     --dark-theme-viewport-button-disabled-color: var(--dim-gray-two);
-    /* dark theme action buttons */
-    --dark-theme-action-button-bg: transparent;
-    --dark-theme-action-button-color: var(--baby-purple);
-    --dark-theme-action-button-hover-color: var(--light-purple-two);
-    --dark-theme-action-button-focus-color: var(--light-purple-two);
+    /* main buttons */
     --dark-theme-primary-button-focus-outline: var(--light-purple-two);
-    --dark-theme-action-button-disabled-color: var(--dim-gray-two);
-    /* dark theme primary buttons */
-    --dark-theme-primary-button-bg: var(--baby-purple);
-    --dark-theme-primary-button-border: var(--baby-purple);
-    --dark-theme-primary-button-color: var(--dark-two);
-    --dark-theme-primary-button-hover-bg: var(--light-purple-two);
-    --dark-theme-primary-button-hover-border: var(--light-purple-two);
-    --dark-theme-primary-button-hover-color: var(--dark-two);
-    --dark-theme-primary-button-focus-bg: var(--light-purple-two);
-    --dark-theme-primary-button-focus-border: var(--dark-three);
-    --dark-theme-primary-button-focus-outline: var(--light-purple-two);
-    --dark-theme-primary-button-focus-color: var(--dark-two);
-    --dark-theme-primary-button-disabled-bg: var(--slate-gray);
-    --dark-theme-primary-button-disabled-border: var(--slate-gray);
-    --dark-theme-primary-button-disabled-color: var(--text-gray);
-    /* dark theme secondary buttons */
-    --dark-theme-secondary-button-bg: transparent;
-    --dark-theme-secondary-button-border: var(--baby-purple);
-    --dark-theme-secondary-button-color: var(--baby-purple);
-    --dark-theme-secondary-button-hover-bg: var(--light-purple-two);
-    --dark-theme-secondary-button-hover-border: var(--light-purple-two);
-    --dark-theme-secondary-button-hover-color: var(--dark-two);
-    --dark-theme-secondary-button-focus-bg: var(--light-purple-two);
-    --dark-theme-secondary-button-focus-border: var(--dark-three);
-    --dark-theme-secondary-button-focus-outline: var(--light-purple-two);
-    --dark-theme-secondary-button-focus-color: var(--dark-two);
-    --dark-theme-secondary-button-disabled-bg: transparent;
-    --dark-theme-secondary-button-disabled-border: var(--dark-theme-header-bg);
-    --dark-theme-secondary-button-disabled-color: var(--dim-gray-two);
+    /* --dark-theme-primary-button-bg: var(--baby-purple);
     /* dark theme general/uncategorized */
     --dark-theme-record-button-red: var(--bright-red);
     --dark-theme-body-bg: var(--black);
@@ -122,7 +91,7 @@
     /* Light theme */
     /* general */
     --light-theme-bg: var(--light-purple);
-    --light-theme-color: var(--dark);
+    --light-theme-color: var(--transparent-black);
     --light-theme-white-bg: var(--pure-white);
     --light-theme-gray-bg: var(--white-four);
     --light-theme-faint-text: var(--white-two);

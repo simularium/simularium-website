@@ -26,6 +26,8 @@ const baseColors = {
         seven: "#979797",
         eight: "#737373",
         nine: "#4a4a4a",
+        ten: "#4b4b4b", // todo place in right position relative to brightness
+        eleven: "#a0a0a0",
     },
     // lightest to darkest
     purple: {
@@ -56,6 +58,7 @@ export const semanticColors = {
     mediumBg: baseColors.dark.six,
     grayBg: baseColors.gray.four,
     darkBg: baseColors.dark.four,
+    darkActiveBg: baseColors.dark.one,
     lightPurpleBg: baseColors.purple.one,
     // text colors
     lightBgText: baseColors.dark.one,
@@ -85,6 +88,118 @@ export const componentColors = {
     button: {
         hoverBg: baseColors.transparent,
         activeBg: baseColors.transparent,
+        primary: {
+            light: {
+                background: baseColors.dark.five,
+                text: baseColors.gray.six,
+                hover: {
+                    background: semanticColors.darkActiveBg,
+                    text: semanticColors.primaryPurple,
+                },
+                active: {
+                    background: semanticColors.darkActiveBg,
+                    text: semanticColors.primaryPurple,
+                },
+                focus: {
+                    background: semanticColors.darkActiveBg,
+                    outline: semanticColors.darkActiveBg,
+                    text: semanticColors.primaryPurple,
+                },
+                disabled: {
+                    background: baseColors.purple.three,
+                    text: baseColors.gray.six,
+                },
+            },
+            dark: {
+                background: semanticColors.primaryPurple,
+                text: baseColors.dark.three,
+                hover: {
+                    background: semanticColors.activePurple,
+                    text: semanticColors.lightBgActiveText,
+                },
+                active: {
+                    background: semanticColors.activePurple,
+                    text: semanticColors.lightBgActiveText,
+                },
+                focus: {
+                    background: semanticColors.activePurple,
+                    outline: semanticColors.activePurple,
+                    text: semanticColors.lightBgActiveText,
+                },
+                disabled: {
+                    background: baseColors.gray.ten,
+                    text: baseColors.gray.eleven,
+                },
+            },
+        },
+        secondary: {
+            background: semanticColors.transparentBg,
+            border: baseColors.dark.five,
+            text: baseColors.dark.five,
+            light: {
+                background: semanticColors.transparentBg,
+                text: baseColors.dark.five,
+                hover: {
+                    background: baseColors.dark.one,
+                    text: semanticColors.primaryPurple,
+                },
+                active: {
+                    background: baseColors.dark.one,
+                    text: semanticColors.primaryPurple,
+                    // add border?
+                },
+                focus: {
+                    background: semanticColors.darkActiveBg,
+                    outline: semanticColors.darkActiveBg,
+                    text: semanticColors.primaryPurple,
+                },
+                disabled: {
+                    background: baseColors.gray.three,
+                    text: baseColors.purple.three,
+                    border: baseColors.purple.three,
+                },
+            },
+            dark: {
+                background: semanticColors.transparentBg,
+                text: semanticColors.primaryPurple,
+                border: semanticColors.primaryPurple,
+                hover: {
+                    background: semanticColors.activePurple,
+                    text: semanticColors.lightBgActiveText,
+                },
+                active: {
+                    background: semanticColors.activePurple,
+                    text: semanticColors.lightBgActiveText,
+                },
+                focus: {
+                    background: semanticColors.activePurple,
+                    outline: semanticColors.activePurple,
+                    text: semanticColors.darkActiveBg,
+                },
+                disabled: {
+                    background: semanticColors.transparentBg,
+                    text: baseColors.gray.eight,
+                    border: baseColors.gray.eight,
+                },
+            },
+        },
+        action: {
+            background: semanticColors.transparentBg,
+            text: semanticColors.primaryPurple,
+            hover: {
+                text: semanticColors.activePurple,
+            },
+            active: {
+                text: semanticColors.activePurple,
+            },
+            focus: {
+                outline: semanticColors.activePurple,
+                text: semanticColors.activePurple,
+            },
+            disabled: {
+                text: baseColors.gray.eight,
+            },
+        },
     },
     radio: {
         primary: semanticColors.whiteText,

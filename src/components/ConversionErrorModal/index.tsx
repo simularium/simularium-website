@@ -1,7 +1,8 @@
-import { Button } from "antd";
 import React from "react";
 import classNames from "classnames";
 
+import { ButtonClass } from "../../constants/interfaces";
+import { CustomButton } from "../CustomButton";
 import CustomModal from "../CustomModal";
 import { Exclamation } from "../Icons";
 
@@ -19,9 +20,9 @@ const ConversionErrorModal: React.FC<ConversionErrorModalProps> = ({
     showForumMessage = true,
 }) => {
     const footerButton = (
-        <Button className="primary-button" onClick={closeModal}>
+        <CustomButton variant={ButtonClass.LightPrimary} onClick={closeModal}>
             OK
-        </Button>
+        </CustomButton>
     );
 
     return (

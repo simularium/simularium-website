@@ -8,7 +8,7 @@ import React, {
 import { Dropdown, DropDownProps, MenuProps } from "antd";
 import { ButtonClass, DropdownState } from "../../constants/interfaces";
 import { DROPDOWN_HOVER_DELAY } from "../../constants";
-import NavButton from "../NavButton";
+import { CustomButton } from "../CustomButton";
 
 import styles from "./style.css";
 
@@ -16,7 +16,7 @@ interface CustomDropdownProps {
     items: MenuProps["items"];
     titleText: string;
     icon: ReactNode;
-    buttonType: ButtonClass;
+    variant: ButtonClass;
     placement?: DropDownProps["placement"];
     disabled?: boolean;
 }
@@ -25,7 +25,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
     items,
     titleText,
     icon,
-    buttonType,
+    variant,
     placement,
     disabled,
 }) => {
@@ -127,11 +127,11 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
                 </div>
             )}
         >
-            <NavButton
+            <CustomButton
                 ref={triggerRef as React.RefObject<HTMLButtonElement>}
                 titleText={titleText}
                 icon={icon}
-                buttonType={buttonType}
+                variant={variant}
                 onClick={buttonClickHandler}
                 onKeyDown={handleKeyDown}
                 onMouseEnter={handleMouseEnter}

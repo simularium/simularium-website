@@ -63,11 +63,6 @@
     padding: 20px 24px;
 }
 
-.modal :global(.ant-modal-footer) button {
-    height: 32px;
-    width: 83px;
-}
-
 .modal :global(.ant-input),
 .modal :global(.ant-input):global(.ant-input-disabled) {
     border-radius: 3px;
