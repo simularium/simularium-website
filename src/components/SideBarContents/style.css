@@ -12,7 +12,6 @@
     border-radius: 6px;
     flex: 1;
     background-color: var(--dark-theme-sidebar-bg);
-    padding-right: 10px;
 }
 
 .card :global(.ant-card-head) {

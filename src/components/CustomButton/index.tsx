@@ -53,12 +53,13 @@ const generateButtonStyles = (
         },
     }) => {
         const buttonTheme = button[variant][theme];
-        const { background, text, hover, focus, active, disabled } =
+        const { background, text, border, hover, focus, active, disabled } =
             buttonTheme;
 
         return css`
             background-color: ${background};
             color: ${text};
+            border: 1px solid ${border};
 
             &&&& {
                 &:hover:not(:disabled) {
