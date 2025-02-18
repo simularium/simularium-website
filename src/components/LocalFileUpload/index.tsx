@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, message, Upload, UploadProps } from "antd";
+import { message, Upload, UploadProps } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import { RcFile } from "antd/lib/upload";
 
 import { ButtonClass } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
+import { CustomButton } from "../CustomButton";
 
 import styles from "./style.css";
 
@@ -71,7 +72,9 @@ const LocalFileUpload: React.FC<FileUploadProps> = ({
                 }}
             >
                 {children || (
-                    <Button className={ButtonClass.Primary}>Select file</Button>
+                    <CustomButton variant={ButtonClass.LightPrimary}>
+                        Select file
+                    </CustomButton>
                 )}
             </Link>
         </Upload>

@@ -23,4 +23,5 @@
     font-size: 12px;
     border-color: var(--dark-theme-version-badge-purple);
     background-color: var(--dark-theme-version-badge-purple);
+    color: var(--dark-theme-text-color-bright)
 }

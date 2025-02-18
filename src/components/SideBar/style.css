@@ -18,6 +18,12 @@
     padding: 0 0 0 10px;
 }
 
+.sider.left {
+    left: 0;
+    right: inherit;
+    padding: 0 0 10px;
+}
+
 .sider :global(.ant-collapse-content-box) {
     padding: 3px 0;
 }
@@ -27,6 +33,8 @@
 
 .sider :global(.ant-layout-sider-children) {
     overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 :global(.ant-collapse),

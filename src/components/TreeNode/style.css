@@ -16,10 +16,17 @@
 
 .header :global(.ant-btn), :global(.ant-btn:active), :global(.ant-btn:focus) {
     color: var(--dark-theme-agent-dropdown-toggle);
+
 }
 
 .toggle-button {
     border: none;
+    background-color: transparent;
+    animation: none;
+}
+
+.header :global(.ant-btn).toggle-button:hover {
+    color: var(--dark-theme-agent-dropdown-toggle-hover);
 }
 
 .toggle-button.active {

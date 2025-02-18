@@ -17,16 +17,25 @@
     align-items: flex-start;
 }
 
+.thumbnail {
+    display: grid;
+}
+
+.static-thumbnail,
 .animated-thumbnail {
-    display: none;
+      grid-area: 1 / 1;
+}
+
+.animated-thumbnail {
+    opacity: 0;
 }
 
 .thumbnail:hover .animated-thumbnail {
-    display: block;
+    opacity: 1;
 }
 
 .thumbnail:hover .static-thumbnail {
-    display: none;
+    opacity: 0;
 }
 
 .trajectory-description {
@@ -51,7 +60,8 @@
 }
 
 /* Necessary to make flexbox spacing work */
-.version-tag, .simulated-time {
+.version-tag,
+.simulated-time {
     margin: 0 !important;
 }
 

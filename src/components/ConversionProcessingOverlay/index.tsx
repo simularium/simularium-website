@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Button, Divider, Spin } from "antd";
+import { Divider, Spin } from "antd";
 
+import { ButtonClass } from "../../constants/interfaces";
 import ConversionCancelModal from "../ConversionCancelModal";
+import { CustomButton } from "../CustomButton";
 import { UpRightArrow, GoBack } from "../Icons";
 
 import styles from "./style.css";
@@ -48,24 +50,26 @@ const ConversionProcessingOverlay = ({
                     </div>
                     <div>Processing...</div>
                 </div>
-                <h3>Open another instance of Simularium </h3>
-                <Button
-                    className="secondary-button"
+                <h3 className={styles.newInstanceText}>
+                    Open another instance of Simularium
+                </h3>
+                <CustomButton
+                    variant={ButtonClass.LightSecondary}
                     href={`https://simularium.allencell.org/viewer`}
                     target="_blank"
                 >
                     Open in new tab {UpRightArrow}
-                </Button>
+                </CustomButton>
             </div>
             <div className={styles.dividerContainer}>
                 <Divider> </Divider>
             </div>
-            <Button
-                className="secondary-button"
+            <CustomButton
+                variant={ButtonClass.LightSecondary}
                 onClick={() => setCancelModalOpen(true)}
             >
                 Cancel file import
-            </Button>
+            </CustomButton>
         </div>
     );
 

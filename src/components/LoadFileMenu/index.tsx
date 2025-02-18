@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import { ActionCreator } from "redux";
 import { MenuProps } from "antd";
 
@@ -20,8 +20,11 @@ import { ButtonClass, TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
 import { DownArrow } from "../Icons";
 import FileUploadModal from "../FileUploadModal";
-import NavButton from "../NavButton";
 import CustomDropdown from "../CustomDropdown";
+import {
+    DropdownButton,
+    DropdownRouterLink,
+} from "../CustomDropdown/DropdownMenuItems";
 
 interface LoadFileMenuProps {
     isBuffering: boolean;
@@ -71,43 +74,46 @@ const LoadFileMenu = ({
     const items: MenuProps["items"] = [
         {
             key: "from-examples",
-            label: "Example models",
+            label: (
+                <DropdownButton isSubmenuTrigger={true}>
+                    Example models
+                </DropdownButton>
+            ),
+            expandIcon: false,
             popupOffset: [-0.45, -4],
             children: TRAJECTORIES.map((trajectory) => ({
                 key: trajectory.id,
                 label: (
-                    <Link
-                        onClick={() => onClick(trajectory)}
+                    <DropdownRouterLink
                         to={{
                             pathname: VIEWER_PATHNAME,
                             search: `?${URL_PARAM_KEY_FILE_NAME}=${trajectory.id}`,
                         }}
+                        onClick={() => onClick(trajectory)}
                     >
                         {trajectory.title}
                         {trajectory.subtitle && `: ${trajectory.subtitle}`}
-                    </Link>
+                    </DropdownRouterLink>
                 ),
             })),
         },
         {
             key: "file-upload",
             label: (
-                <NavButton
-                    titleText={"Simularium file"}
-                    onClick={showModal}
-                    buttonType={ButtonClass.DropdownItem}
-                />
+                <DropdownButton onClick={showModal}>
+                    Simularium file
+                </DropdownButton>
             ),
         },
         {
             key: "file-convert",
             label: (
-                <Link
-                    onClick={openConversionForm}
+                <DropdownRouterLink
                     to={{ pathname: VIEWER_PATHNAME }}
+                    onClick={openConversionForm}
                 >
-                    Import other file type
-                </Link>
+                    Other file type
+                </DropdownRouterLink>
             ),
         },
     ];
@@ -121,7 +127,7 @@ const LoadFileMenu = ({
                 items={items}
                 titleText={"Load model"}
                 icon={DownArrow}
-                buttonType={ButtonClass.Primary}
+                variant={ButtonClass.DarkPrimary}
                 placement="bottomRight"
                 disabled={isDisabled}
             />

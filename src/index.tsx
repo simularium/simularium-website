@@ -2,12 +2,11 @@ import "core-js/es6/map";
 import "core-js/es6/promise";
 import "core-js/es6/set";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider, useDispatch, batch } from "react-redux";
 import { Layout } from "antd";
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
-
 import routes, { EMBED_PATHNAME, VIEWER_PATHNAME } from "./routes";
 import ScrollToTop from "./components/ScrollToTop";
 import AppHeader from "./containers/AppHeader";
@@ -23,6 +22,7 @@ import { getUrlParamValue } from "./util/userUrlHandling";
 
 const { Header } = Layout;
 
+import StyleProvider from "./styles/theme/StyleProvider";
 import "./style.css";
 
 export const store = createReduxStore();
@@ -35,7 +35,7 @@ function useLocationChange() {
     const location = useLocation() as LocationWithState;
     const dispatch = useDispatch();
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (
             location.pathname !== VIEWER_PATHNAME &&
             location.pathname !== EMBED_PATHNAME
@@ -109,21 +109,23 @@ const App = () => {
 
     return (
         <Provider store={store}>
-            <Layout>
-                <BrowserRouter
-                    basename={
-                        process.env.GH_BUILD ? "/simularium-website/" : ""
-                    }
-                >
-                    <ScrollToTop />
-                    {location.pathname !== EMBED_PATHNAME && (
-                        <Header>
-                            <AppHeader />
-                        </Header>
-                    )}
-                    <RouterSwitch />
-                </BrowserRouter>
-            </Layout>
+            <StyleProvider>
+                <Layout>
+                    <BrowserRouter
+                        basename={
+                            process.env.GH_BUILD ? "/simularium-website/" : ""
+                        }
+                    >
+                        <ScrollToTop />
+                        {location.pathname !== EMBED_PATHNAME && (
+                            <Header>
+                                <AppHeader />
+                            </Header>
+                        )}
+                        <RouterSwitch />
+                    </BrowserRouter>
+                </Layout>
+            </StyleProvider>
         </Provider>
     );
 };
