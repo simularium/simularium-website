@@ -15,6 +15,7 @@ import {
     SET_CURRENT_COLOR_SETTINGS,
     HANDLE_COLOR_CHANGE,
     CLEAR_UI_DATA_FROM_STATE,
+    CHANGE_FRAME_HEAD,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -29,12 +30,20 @@ import {
     ColorSetting,
     SetCurrentColorSettingAction,
     HandleColorChangeAction,
+    ChangeFrameAction,
 } from "./types";
 
 export function changeTime(time: number): ChangeTimeAction {
     return {
         payload: time,
         type: CHANGE_TIME_HEAD,
+    };
+}
+
+export function changeFrame(frame: number): ChangeFrameAction {
+    return {
+        payload: frame,
+        type: CHANGE_FRAME_HEAD,
     };
 }
 

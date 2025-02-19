@@ -18,3 +18,4 @@ export const getConversionStatus = (state: State) =>
     state.trajectory.conversionStatus;
 export const getDefaultUIDisplayData = (state: State) =>
     state.trajectory.defaultUIData;
+export const getCacheRange = (state: State) => state.trajectory.cacheRange;

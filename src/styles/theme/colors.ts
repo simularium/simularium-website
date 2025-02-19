@@ -250,6 +250,7 @@ export const componentColors = {
         rail: semanticColors.darkBg,
         railHover: semanticColors.primaryBorder,
         color: semanticColors.sliderColor,
+        track: semanticColors.primaryBorder,
     },
 };
 

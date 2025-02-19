@@ -15,6 +15,7 @@ import {
     SET_SELECTED_AGENT,
     SET_SELECTED_DISPLAY_DATA,
     SET_CURRENT_COLOR_SETTINGS,
+    CHANGE_FRAME_HEAD,
 } from "./constants";
 import {
     ChangeAgentsRenderingStateAction,
@@ -29,10 +30,12 @@ import {
     SetSelectedUIDisplayDataAction,
     ColorSetting,
     SetCurrentColorSettingAction,
+    ChangeFrameAction,
 } from "./types";
 
 export const initialState = {
     time: 0,
+    currentFrame: 0,
     numberPanelsCollapsed: 0,
     agentVisibilityMap: {},
     agentHighlightMap: {},
@@ -190,6 +193,14 @@ const actionToConfigMap: TypeToDescriptionMap = {
                 currentColorSetting: action.payload.currentColorSetting,
             };
         },
+    },
+    [CHANGE_FRAME_HEAD]: {
+        accepts: (action: AnyAction): action is ChangeFrameAction =>
+            action.type === CHANGE_FRAME_HEAD,
+        perform: (state: SelectionStateBranch, action: ChangeFrameAction) => ({
+            ...state,
+            currentFrame: action.payload,
+        }),
     },
 };
 

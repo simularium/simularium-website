@@ -20,6 +20,7 @@ import {
     CANCEL_CONVERSION,
     SET_CONVERSION_TITLE,
     SET_DEFAULT_UI_DATA,
+    SET_CACHE_RANGE,
 } from "./constants";
 import { AvailableEngines } from "./conversion-data-types";
 import {
@@ -43,6 +44,7 @@ import {
     CancelConversionAction,
     SetConversionTitleAction,
     SetDefaultUIDataAction,
+    SetCacheRangeAction,
 } from "./types";
 
 export function receiveTrajectory(
@@ -204,5 +206,12 @@ export function setDefaultUIData(
     return {
         payload,
         type: SET_DEFAULT_UI_DATA,
+    };
+}
+
+export function setCacheRange(payload: number[]): SetCacheRangeAction {
+    return {
+        payload,
+        type: SET_CACHE_RANGE,
     };
 }

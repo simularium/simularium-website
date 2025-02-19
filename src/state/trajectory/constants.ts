@@ -43,3 +43,4 @@ export const SET_CONVERSION_TITLE = makeTrajectoryConstant(
 export const SET_DEFAULT_UI_DATA = makeTrajectoryConstant(
     "set-default-ui-data"
 );
+export const SET_CACHE_RANGE = makeTrajectoryConstant("set-cache-range");

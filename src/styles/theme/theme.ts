@@ -106,7 +106,7 @@ export const antdTheme: ThemeConfig = {
         Slider: {
             railBg: themeColors.slider.rail,
             railHoverBg: themeColors.slider.railHover,
-            trackBg: themeColors.slider.color,
+            trackBg: themeColors.slider.track,
             handleColor: themeColors.slider.color,
             trackHoverBg: themeColors.slider.color,
             handleActiveColor: themeColors.slider.color,

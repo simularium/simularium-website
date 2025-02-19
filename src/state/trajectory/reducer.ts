@@ -16,6 +16,7 @@ import {
     CONVERT_FILE,
     RECEIVE_CONVERTED_FILE,
     SET_CONVERSION_TITLE,
+    SET_CACHE_RANGE,
 } from "./constants";
 import {
     TrajectoryStateBranch,
@@ -29,6 +30,7 @@ import {
     ConvertFileAction,
     SetConversionTitleAction,
     SetDefaultUIDataAction,
+    SetCacheRangeAction,
 } from "./types";
 
 export const initialState = {
@@ -55,6 +57,7 @@ export const initialState = {
         fileId: "",
         title: "",
     },
+    cacheRange: [],
 };
 
 const actionToConfigMap: TypeToDescriptionMap = {
@@ -192,6 +195,19 @@ const actionToConfigMap: TypeToDescriptionMap = {
             return {
                 ...state,
                 defaultUIData: action.payload,
+            };
+        },
+    },
+    [SET_CACHE_RANGE]: {
+        accepts: (action: AnyAction): action is SetCacheRangeAction =>
+            action.type === SET_CACHE_RANGE,
+        perform: (
+            state: TrajectoryStateBranch,
+            action: SetCacheRangeAction
+        ) => {
+            return {
+                ...state,
+                cacheRange: action.payload,
             };
         },
     },

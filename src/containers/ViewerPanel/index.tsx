@@ -10,7 +10,10 @@ import SimulariumViewer, {
     TimeData,
 } from "@aics/simularium-viewer";
 import "@aics/simularium-viewer/style/style.css";
-import { AgentData } from "@aics/simularium-viewer/type-declarations/simularium/types";
+import {
+    AgentData,
+    CacheLog,
+} from "@aics/simularium-viewer/type-declarations/simularium/types";
 import { connect } from "react-redux";
 import { Modal } from "antd";
 import Bowser from "bowser";
@@ -21,6 +24,7 @@ import selectionStateBranch from "../../state/selection";
 import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
 import {
+    ChangeFrameAction,
     ChangeTimeAction,
     GetDisplayDataFromBrowserAction,
     SetSelectedAgentMetadataAction,
@@ -42,6 +46,7 @@ import {
     ConversionStatus,
     SetConversionStatusAction,
     SetUrlParamsAction,
+    SetCacheRangeAction,
 } from "../../state/trajectory/types";
 import { batchActions } from "../../state/util";
 import PlaybackControls from "../../components/PlaybackControls";
@@ -115,6 +120,10 @@ interface ViewerPanelProps {
     conversionProcessingData: ConversionProcessingData;
     setSelectedAgentMetadata: ActionCreator<SetSelectedAgentMetadataAction>;
     getDisplayDataFromBrowserStorage: ActionCreator<GetDisplayDataFromBrowserAction>;
+    setCacheRange: ActionCreator<SetCacheRangeAction>;
+    cacheRange: number[];
+    currentFrame: number;
+    changeFrame: ActionCreator<ChangeFrameAction>;
 }
 
 interface ViewerPanelState {
@@ -142,6 +151,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             this.onTrajectoryFileInfoChanged.bind(this);
         this.skipToTime = this.skipToTime.bind(this);
         this.resize = this.resize.bind(this);
+        this.goToFrame = this.goToFrame.bind(this);
 
         this.state = {
             isInitialPlay: true,
@@ -249,13 +259,13 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
     }
 
     public playForwardOne() {
-        const { time, timeStep } = this.props;
-        this.skipToTime(time + timeStep);
+        const { currentFrame } = this.props;
+        this.goToFrame(currentFrame + 1);
     }
 
     public playBackOne() {
-        const { time, timeStep } = this.props;
-        this.skipToTime(time - timeStep);
+        const { currentFrame } = this.props;
+        this.goToFrame(currentFrame - 1);
     }
 
     public handleJsonMeshData(jsonData: any) {
@@ -343,6 +353,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             isLooping,
             setUrlParams,
             getDisplayDataFromBrowserStorage,
+            changeFrame,
         } = this.props;
         if (this.state.isInitialPlay) {
             receiveTrajectory({
@@ -360,6 +371,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
         const actions: AnyAction[] = [
             changeTime(timeData.time),
+            changeFrame(timeData.frameNumber),
             setBuffering(false),
         ];
 
@@ -377,6 +389,11 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
 
         batchActions(actions);
+    }
+
+    public goToFrame(frame: number) {
+        const { simulariumController } = this.props;
+        simulariumController.movePlaybackFrame(frame);
     }
 
     public skipToTime(time: number) {
@@ -489,6 +506,11 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         }
     }
 
+    private onCacheUpdate = (log: CacheLog) => {
+        const { setCacheRange } = this.props;
+        setCacheRange(log.framesInCache);
+    };
+
     public render(): JSX.Element {
         const {
             time,
@@ -540,6 +562,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     }
                     onRecordedMovie={this.onRecordedMovie}
                     onFollowObjectChanged={this.onSelectedAgentChange}
+                    onCacheUpdate={this.onCacheUpdate}
                 />
                 {firstFrameTime !== lastFrameTime && (
                     <div
@@ -568,6 +591,10 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                             isEmpty={status === ViewerStatus.Empty}
                             displayType={playBackControlsType}
                             resetCamera={simulariumController.resetCamera}
+                            cacheRange={this.props.cacheRange}
+                            currentFrame={this.props.currentFrame}
+                            numFrames={this.props.numFrames}
+                            goToFrame={this.goToFrame}
                         />
 
                         {playBackControlsType ===
@@ -652,6 +679,8 @@ function mapStateToProps(state: State) {
             trajectoryStateBranch.selectors.getConversionStatus(state),
         conversionProcessingData:
             trajectoryStateBranch.selectors.getConversionProcessingData(state),
+        cacheRange: trajectoryStateBranch.selectors.getCacheRange(state),
+        currentFrame: selectionStateBranch.selectors.getCurrentFrame(state),
     };
 }
 
@@ -675,6 +704,8 @@ const dispatchToPropsMap = {
         selectionStateBranch.actions.setSelectedAgentMetadata,
     getDisplayDataFromBrowserStorage:
         selectionStateBranch.actions.getDisplayDataFromBrowserStorage,
+    setCacheRange: trajectoryStateBranch.actions.setCacheRange,
+    changeFrame: selectionStateBranch.actions.changeFrame,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(ViewerPanel);

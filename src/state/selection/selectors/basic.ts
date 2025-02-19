@@ -15,3 +15,4 @@ export const getSelectedUIDisplayData = (state: State) =>
     state.selection.selectedUIDisplayData;
 export const getCurrentColorSetting = (state: State) =>
     state.selection.currentColorSetting;
+export const getCurrentFrame = (state: State) => state.selection.currentFrame;

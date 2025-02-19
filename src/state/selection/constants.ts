@@ -35,3 +35,4 @@ export const SET_CURRENT_COLOR_SETTINGS = makeSelectConstant(
 export const CLEAR_UI_DATA_FROM_STATE = makeSelectConstant(
     "clear-ui-data-from-state"
 );
+export const CHANGE_FRAME_HEAD = makeSelectConstant("change-frame-head");

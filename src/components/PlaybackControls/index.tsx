@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, useState } from "react";
+import React, { KeyboardEvent, useEffect, useState } from "react";
 import { Slider, InputNumber } from "antd";
 import classNames from "classnames";
 import { compareTimes } from "@aics/simularium-viewer";
@@ -35,6 +35,10 @@ interface PlayBackProps {
     isEmpty: boolean;
     displayType: PlaybackControlsDisplay;
     resetCamera: () => void;
+    cacheRange: number[];
+    currentFrame: number;
+    numFrames: number;
+    goToFrame: (frame: number) => void;
 }
 
 const PlayBackControls = ({
@@ -56,34 +60,74 @@ const PlayBackControls = ({
     isEmpty,
     displayType,
     resetCamera,
+    cacheRange,
+    currentFrame,
+    numFrames,
+    goToFrame,
 }: PlayBackProps): JSX.Element => {
     // Where to resume playing if simulation was playing before scrubbing
-    const [timeToResumeAfterScrubbing, setTimeToResumeAfterScrubbing] =
+    const [frameToResumeAfterScrubbing, setFrameToResumeAfterScrubbing] =
         useState(-1);
     const [timeInput, setTimeInput] = useState(firstFrameTime);
+    const [frameRange, setFrameRange] = useState([0, 0, 0]);
 
-    // - Gets called once when the user clicks on the slider to skip to a specific time
+    // Keep slider range values in sync with global state
+    useEffect(() => {
+        const firstCachedFrame = cacheRange[0];
+        const lastCachedFrame = cacheRange[cacheRange.length - 1];
+        setFrameRange([firstCachedFrame, currentFrame, lastCachedFrame]);
+    }, [currentFrame, cacheRange]);
+
+    const handleSliderChange = (newVals: number[]) => {
+        const oldVals = frameRange;
+
+        // Clicking different parts of the slider track will try to update
+        // one of the three handle values, depending where the current range is.
+        // We want the event value always assigned to the visible "playback" handle.
+        const diff0 = Math.abs(newVals[0] - oldVals[0]);
+        const diff1 = Math.abs(newVals[1] - oldVals[1]);
+        const diff2 = Math.abs(newVals[2] - oldVals[2]);
+        let largestDiffIndex = 0;
+        let largestDiffValue = diff0;
+        if (diff1 > largestDiffValue) {
+            largestDiffIndex = 1;
+            largestDiffValue = diff1;
+        }
+        if (diff2 > largestDiffValue) {
+            largestDiffIndex = 2;
+            largestDiffValue = diff2;
+        }
+
+        // Apply value to middle handle, lock the outer handles
+        const newMiddle = newVals[largestDiffIndex];
+        const newFirst = oldVals[0];
+        const newLast = oldVals[2];
+        const lockedVals = [newFirst, newMiddle, newLast];
+
+        setFrameRange(lockedVals);
+        handleFrameChange(newMiddle);
+    };
+
+    // - Gets called once when the user clicks on the slider to skip to a specific frame
     // - Gets called multiple times when user is scrubbing (every time the play head
     //     passes through a time value associated with a frame)
-    const handleTimeChange = (sliderValue: number): void => {
-        onTimeChange(sliderValue);
+    const handleFrameChange = (frame: number): void => {
+        goToFrame(frame);
         if (isPlaying) {
-            // Need to save the sliderValue as timeToResumeAfterScrubbing to use in handleSliderMouseUp,
-            // because the sliderValue argument available in handleSliderMouseUp is not accurate
-            // when the time between mouse down and mouse up is short.
-            setTimeToResumeAfterScrubbing(sliderValue);
+            // set frame to resume
+            setFrameToResumeAfterScrubbing(frame);
             pauseHandler();
-        } else if (timeToResumeAfterScrubbing >= 0) {
+        } else if (frameToResumeAfterScrubbing >= 0) {
             // Update value if user is still dragging
-            setTimeToResumeAfterScrubbing(sliderValue);
+            setFrameToResumeAfterScrubbing(frame);
         }
     };
 
     const handleSliderMouseUp = (): void => {
         // Resume playing if simulation was playing before
-        if (timeToResumeAfterScrubbing >= 0) {
-            playHandler(timeToResumeAfterScrubbing);
-            setTimeToResumeAfterScrubbing(-1);
+        if (frameToResumeAfterScrubbing >= 0) {
+            goToFrame(frameToResumeAfterScrubbing);
+            setFrameToResumeAfterScrubbing(-1);
         }
     };
 
@@ -137,16 +181,15 @@ const PlayBackControls = ({
 
     const TimeSlider = (
         <Slider
-            value={time}
-            onChange={handleTimeChange}
-            onAfterChange={handleSliderMouseUp}
+            range
+            value={frameRange}
+            min={0}
+            max={numFrames}
+            onChange={handleSliderChange}
+            onChangeComplete={handleSliderMouseUp}
+            step={1}
             tooltip={{ open: false }}
-            className={classNames(styles.slider, styles.item)}
-            step={timeStep}
-            min={firstFrameTime}
-            max={lastFrameTime}
-            disabled={loading || isEmpty}
-            range={false}
+            className={classNames(styles.slider)}
         />
     );
 

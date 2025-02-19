@@ -135,3 +135,8 @@ export interface SetDefaultUIDataAction {
     payload: UIDisplayData;
     type: string;
 }
+
+export interface SetCacheRangeAction {
+    payload: number[];
+    type: string;
+}
