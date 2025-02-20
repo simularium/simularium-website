@@ -1,7 +1,6 @@
-import React, { KeyboardEvent, useEffect, useState } from "react";
+import React, { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { Slider, InputNumber } from "antd";
 import classNames from "classnames";
-import { compareTimes } from "@aics/simularium-viewer";
 
 import {
     DisplayTimes,
@@ -18,16 +17,14 @@ import styles from "./style.css";
 
 interface PlayBackProps {
     playHandler: (timeOverride?: number) => void;
-    time: number;
+    currentFrame: number;
     pauseHandler: () => void;
     prevHandler: () => void;
     nextHandler: () => void;
     loopHandler: () => void;
-    firstFrameTime: number;
-    lastFrameTime: number;
     isPlaying: boolean;
     isLooping: boolean;
-    onTimeChange: (time: number) => void;
+    goToFrame: (frame: number) => void;
     loading: boolean;
     timeStep: number;
     displayTimes: DisplayTimes;
@@ -36,13 +33,11 @@ interface PlayBackProps {
     displayType: PlaybackControlsDisplay;
     resetCamera: () => void;
     cacheRange: number[];
-    currentFrame: number;
     numFrames: number;
-    goToFrame: (frame: number) => void;
 }
 
 const PlayBackControls = ({
-    time,
+    currentFrame,
     playHandler,
     pauseHandler,
     prevHandler,
@@ -50,9 +45,6 @@ const PlayBackControls = ({
     isPlaying,
     isLooping,
     nextHandler,
-    firstFrameTime,
-    lastFrameTime,
-    onTimeChange,
     loading,
     timeStep,
     displayTimes,
@@ -61,91 +53,64 @@ const PlayBackControls = ({
     displayType,
     resetCamera,
     cacheRange,
-    currentFrame,
     numFrames,
     goToFrame,
 }: PlayBackProps): JSX.Element => {
-    // Where to resume playing if simulation was playing before scrubbing
-    const [frameToResumeAfterScrubbing, setFrameToResumeAfterScrubbing] =
-        useState(-1);
-    const [timeInput, setTimeInput] = useState(firstFrameTime);
-    const [frameRange, setFrameRange] = useState([0, 0, 0]);
+    const [cacheMinMax, setCacheMinMax] = useState([0, 0]);
+    const [localPlaybackFrame, setLocalPlaybackFrame] = useState(0);
+    const [frameInput, setFrameInput] = useState(0);
 
-    // Keep slider range values in sync with global state
+    const isDraggingRef = useRef(false);
+    const wasPlayingWhenDragStartedRef = useRef(false);
+
     useEffect(() => {
-        const firstCachedFrame = cacheRange[0];
-        const lastCachedFrame = cacheRange[cacheRange.length - 1];
-        setFrameRange([firstCachedFrame, currentFrame, lastCachedFrame]);
-    }, [currentFrame, cacheRange]);
+        setCacheMinMax([cacheRange[0], cacheRange[cacheRange.length - 1]]);
+    }, [cacheRange]);
 
-    const handleSliderChange = (newVals: number[]) => {
-        const oldVals = frameRange;
-
-        // Clicking different parts of the slider track will try to update
-        // one of the three handle values, depending where the current range is.
-        // We want the event value always assigned to the visible "playback" handle.
-        const diff0 = Math.abs(newVals[0] - oldVals[0]);
-        const diff1 = Math.abs(newVals[1] - oldVals[1]);
-        const diff2 = Math.abs(newVals[2] - oldVals[2]);
-        let largestDiffIndex = 0;
-        let largestDiffValue = diff0;
-        if (diff1 > largestDiffValue) {
-            largestDiffIndex = 1;
-            largestDiffValue = diff1;
+    // keep slider handle in sync with state when not dragging
+    useEffect(() => {
+        if (!isDraggingRef.current) {
+            setLocalPlaybackFrame(currentFrame);
         }
-        if (diff2 > largestDiffValue) {
-            largestDiffIndex = 2;
-            largestDiffValue = diff2;
+    }, [currentFrame]);
+
+    const handleSliderChange = (value: number) => {
+        if (!isDraggingRef.current) {
+            isDraggingRef.current = true;
+            wasPlayingWhenDragStartedRef.current = isPlaying;
+            if (isPlaying) {
+                pauseHandler();
+            }
         }
-
-        // Apply value to middle handle, lock the outer handles
-        const newMiddle = newVals[largestDiffIndex];
-        const newFirst = oldVals[0];
-        const newLast = oldVals[2];
-        const lockedVals = [newFirst, newMiddle, newLast];
-
-        setFrameRange(lockedVals);
-        handleFrameChange(newMiddle);
+        setLocalPlaybackFrame(value);
+        goToFrame(value);
     };
 
-    // - Gets called once when the user clicks on the slider to skip to a specific frame
-    // - Gets called multiple times when user is scrubbing (every time the play head
-    //     passes through a time value associated with a frame)
-    const handleFrameChange = (frame: number): void => {
-        goToFrame(frame);
-        if (isPlaying) {
-            // set frame to resume
-            setFrameToResumeAfterScrubbing(frame);
-            pauseHandler();
-        } else if (frameToResumeAfterScrubbing >= 0) {
-            // Update value if user is still dragging
-            setFrameToResumeAfterScrubbing(frame);
+    const handleSliderAfterChange = () => {
+        isDraggingRef.current = false;
+        goToFrame(localPlaybackFrame);
+        if (wasPlayingWhenDragStartedRef.current) {
+            wasPlayingWhenDragStartedRef.current = false;
+            playHandler();
         }
     };
 
-    const handleSliderMouseUp = (): void => {
-        // Resume playing if simulation was playing before
-        if (frameToResumeAfterScrubbing >= 0) {
-            goToFrame(frameToResumeAfterScrubbing);
-            setFrameToResumeAfterScrubbing(-1);
-        }
-    };
-
-    // Called after every keystroke
     const handleTimeInputChange = (userInput: number | null): void => {
         if (userInput !== null) {
-            setTimeInput(userInput as number);
+            const adjustedTime = userInput / timeUnits.magnitude;
+            const frameFloat = adjustedTime / timeStep;
+            const frame = Math.round(frameFloat);
+
+            // Clamp the frame number to valid range
+            const clampedFrame = Math.max(0, Math.min(frame, numFrames));
+            setFrameInput(clampedFrame);
         }
     };
 
     const handleTimeInputKeyDown = (event: KeyboardEvent): void => {
         if (event.key === "Enter" || event.key === "Tab") {
-            // User input will be aligned with the displayed time values, which were multiplied
-            // by timeUnits.magnitude in the getDisplayTimes selector, so we have to undo the
-            // multiplication before requesting the time. timeUnits.magnitude is 1 for a vast
-            // majority of the time so it shouldn't make a difference most times.
-            if (typeof timeInput === "number") {
-                onTimeChange(timeInput / timeUnits.magnitude);
+            if (typeof frameInput === "number") {
+                goToFrame(frameInput);
             }
         }
         if (event.key === "Escape") {
@@ -161,12 +126,7 @@ const PlayBackControls = ({
         return `${displayTimes.maxNumChars + 1}ch`;
     };
 
-    // Disable step back button if time - timeStep < firstFrameTime
-    const isStepBackDisabled =
-        compareTimes(time - timeStep, firstFrameTime, timeStep) === -1;
-    // Disable step forward button if time + timeStep > lastFrameTime
-    const isStepForwardDisabled =
-        compareTimes(time + timeStep, lastFrameTime, timeStep) === 1;
+    const globalDisabled = loading || isEmpty;
 
     const PlayPauseButton = (
         <ViewportButton
@@ -174,23 +134,36 @@ const PlayBackControls = ({
             tooltipPlacement="top"
             icon={isPlaying ? Pause : Play}
             onClick={isPlaying ? () => pauseHandler() : () => playHandler()}
-            disabled={loading || isEmpty}
+            disabled={globalDisabled}
             loading={loading}
         />
     );
 
     const TimeSlider = (
-        <Slider
-            range
-            value={frameRange}
-            min={0}
-            max={numFrames}
-            onChange={handleSliderChange}
-            onChangeComplete={handleSliderMouseUp}
-            step={1}
-            tooltip={{ open: false }}
-            className={classNames(styles.slider)}
-        />
+        <div className={styles.sliderContainer}>
+            {/* This slider has a handle to change playback head */}
+            <Slider
+                range={false}
+                value={localPlaybackFrame}
+                min={0}
+                max={numFrames}
+                onChange={handleSliderChange}
+                onChangeComplete={handleSliderAfterChange}
+                step={1}
+                tooltip={{ open: false }}
+                className={classNames(styles.slider, styles.playbackSlider)}
+            />
+            {/* This is just for display and shows the range of cached frames */}
+            <Slider
+                range
+                value={[cacheMinMax[0], cacheMinMax[1]]}
+                min={0}
+                max={numFrames}
+                step={1}
+                tooltip={{ open: false }}
+                className={classNames(styles.slider, styles.cacheSlider)}
+            />
+        </div>
     );
 
     const minimalControlsContainer = (
@@ -213,7 +186,7 @@ const PlayBackControls = ({
                     tooltipPlacement="top"
                     icon={getIconGlyphClasses(IconGlyphs.StepBack)}
                     onClick={prevHandler}
-                    disabled={isStepBackDisabled || loading || isEmpty}
+                    disabled={currentFrame <= 0 || globalDisabled}
                     loading={loading}
                 />
                 {PlayPauseButton}
@@ -222,7 +195,7 @@ const PlayBackControls = ({
                     tooltipPlacement="top"
                     icon={getIconGlyphClasses(IconGlyphs.StepForward)}
                     onClick={nextHandler}
-                    disabled={isStepForwardDisabled || loading || isEmpty}
+                    disabled={currentFrame >= numFrames - 1 || globalDisabled}
                     loading={loading}
                 />
             </div>
@@ -235,7 +208,7 @@ const PlayBackControls = ({
                     value={displayTimes.roundedTime}
                     onChange={handleTimeInputChange}
                     onKeyDown={handleTimeInputKeyDown}
-                    disabled={loading || isEmpty || isPlaying}
+                    disabled={globalDisabled || isPlaying}
                     style={{ width: getTimeInputWidth() }}
                 />
                 <span className={styles.lastFrameTime}>

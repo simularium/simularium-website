@@ -274,23 +274,8 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
         receiveAgentTypeIds(particleTypeIds);
     }
 
-    // timeOverride is passed in when the user manipulates the playback slider
-    // because this.props.time sometimes doesn't get updated in time before mouseUp
-    public startPlay(timeOverride?: number) {
-        const {
-            time,
-            timeStep,
-            simulariumController,
-            firstFrameTime,
-            lastFrameTime,
-            setBuffering,
-            setIsPlaying,
-        } = this.props;
-        let newTime = timeOverride !== undefined ? timeOverride : time;
-        if (newTime + timeStep >= lastFrameTime) {
-            newTime = firstFrameTime;
-        }
-        simulariumController.playFromTime(newTime);
+    public startPlay() {
+        const { setBuffering, setIsPlaying } = this.props;
         setBuffering(true);
         setIsPlaying(true);
     }
@@ -383,7 +368,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             compareTimes(timeData.time, lastFrameTime, timeStep) === 0;
         if (atLastFrame && isLooping) {
             actions.push(changeTime(0));
-            this.startPlay(0);
+            this.startPlay();
         } else if (atLastFrame) {
             this.pause();
         }
@@ -513,7 +498,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
 
     public render(): JSX.Element {
         const {
-            time,
             firstFrameTime,
             lastFrameTime,
             simulariumController,
@@ -574,27 +558,23 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                     >
                         <PlaybackControls
                             playHandler={this.startPlay}
-                            time={time}
+                            currentFrame={this.props.currentFrame}
                             timeStep={timeStep}
                             displayTimes={displayTimes}
                             timeUnits={timeUnits}
-                            onTimeChange={this.skipToTime}
+                            goToFrame={this.goToFrame}
                             pauseHandler={this.pause}
                             prevHandler={this.playBackOne}
                             nextHandler={this.playForwardOne}
                             isPlaying={isPlaying}
                             isLooping={isLooping}
                             loopHandler={this.toggleLooping}
-                            firstFrameTime={firstFrameTime}
-                            lastFrameTime={lastFrameTime}
                             loading={isBuffering}
                             isEmpty={status === ViewerStatus.Empty}
                             displayType={playBackControlsType}
                             resetCamera={simulariumController.resetCamera}
                             cacheRange={this.props.cacheRange}
-                            currentFrame={this.props.currentFrame}
                             numFrames={this.props.numFrames}
-                            goToFrame={this.goToFrame}
                         />
 
                         {playBackControlsType ===
