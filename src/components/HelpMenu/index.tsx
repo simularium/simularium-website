@@ -26,7 +26,7 @@ const HelpMenu = (): JSX.Element => {
     const tutorialLink =
         location.pathname === "/viewer" ? (
             <DropdownRouterLink to={TUTORIAL_PATHNAME} newTab={true}>
-                Quick start
+                Getting started
             </DropdownRouterLink>
         ) : (
             <DropdownRouterLink to={TUTORIAL_PATHNAME}>
@@ -97,7 +97,7 @@ const HelpMenu = (): JSX.Element => {
         <>
             <CustomDropdown
                 items={items}
-                titleText={"Help"}
+                titleText={"Resources"}
                 icon={DownArrow}
                 variant={ButtonClass.DarkSecondary}
             />
