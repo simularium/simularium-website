@@ -58,12 +58,13 @@ export const semanticColors = {
     mediumBg: baseColors.dark.six,
     grayBg: baseColors.gray.four,
     darkBg: baseColors.dark.four,
+    darkerBg: baseColors.dark.three,
     darkActiveBg: baseColors.dark.one,
     lightPurpleBg: baseColors.purple.one,
     // text colors
     lightBgText: baseColors.dark.one,
     lightBgActiveText: baseColors.dark.three,
-    darkBgText: baseColors.gray.nine,
+    darkBgText: baseColors.gray.five,
     whiteText: baseColors.white.pure,
     // accent colors
     primaryPurple: baseColors.purple.six,
@@ -77,6 +78,9 @@ export const semanticColors = {
 };
 
 export const componentColors = {
+    card: {
+        bg: semanticColors.darkBg,
+    },
     form: {
         label: semanticColors.darkBgText,
     },
