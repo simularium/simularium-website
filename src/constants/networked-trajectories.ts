@@ -114,7 +114,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         title: "Actin-based Listeria Propulsion",
         subtitle: "Normal ActA Distribution",
         totalSimulatedTime: "120s",
-        authors: "Jonathan Alberts, et al",
+        authors: "Jonathan Alberts, et al.",
         publication: {
             title:
                 "In Silico Reconstitution of Listeria Propulsion Exhibits Nano-Saltation",
