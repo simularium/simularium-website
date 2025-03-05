@@ -5,6 +5,7 @@ import Simularium from "../containers/Simularium";
 export const VIEWER_PATHNAME = "/viewer";
 export const TUTORIAL_PATHNAME = "/tutorial";
 export const EMBED_PATHNAME = "/embed";
+export const ABOUT_PATHNAME = "/about";
 
 export default [
     {
