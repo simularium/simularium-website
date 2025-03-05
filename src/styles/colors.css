@@ -40,6 +40,11 @@
     --color-picker-tooltip: var(--dark-blue-gray);
     --cancel-icon-color: var(--brick-red);
     /* Dark theme */
+    /* general */
+    --dark-theme-bg: var(--dark-three);
+    --dark-theme-darker-bg: var(--dark-two);
+    --dark-theme-scroll-track: var(--dark-four);
+    --dark-theme-scroll-thumb: var(--dark-two);
     /* dark theme dropdown menu */
     --dark-theme-dropdown-menu-bg: var(--charcoal-gray);
     --dark-theme-dropdown-menu-item-bg: var(--charcoal-gray);
@@ -63,7 +68,7 @@
     --dark-theme-record-button-red: var(--bright-red);
     --dark-theme-body-bg: var(--black);
     --dark-theme-header-bg: var(--dark-three);
-    --dark-theme-text-color: var(--off-white);
+    --dark-theme-text-color: var(--white-two);
     --dark-theme-text-color-bright: var(--pure-white);
     --dark-theme-dim-color: var(--text-gray);
     --dark-theme-slider-handle-color: var(--white-three);
@@ -84,6 +89,8 @@
     --dark-theme-btn-hover-bg: var(--grayish-brown);
     --dark-theme-tooltip-bg: var(--charcoal-gray);
     --dark-theme-version-badge-purple: var(--dark-five);
+    --dark-theme-card-version-badge-bg: var(--slate-gray);
+    --dark-theme-card-version-badge-color: var(--pure-white);
     --dark-theme-icon-color: var(--warm-gray);
     --dark-theme-star-icon-active-color: var(--white-two);
     --dark-theme-divider: var(--white-two);
@@ -95,8 +102,8 @@
     --light-theme-white-bg: var(--pure-white);
     --light-theme-gray-bg: var(--white-four);
     --light-theme-faint-text: var(--white-two);
-    --light-theme-heading1-color: var(--dark-three);
-    --light-theme-heading2-color: var(--grayish-brown);
+    --light-theme-heading1-color: var(--white-two);
+    --light-theme-heading2-color: var(--white-two);
     --light-theme-checkbox-color: var(--dark-three);
     --light-theme-blue-text: var(--blue);
     --light-theme-divider: var(--heather);
