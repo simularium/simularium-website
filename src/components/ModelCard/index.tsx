@@ -146,7 +146,7 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                     icon={caretIcon}
                     onClick={() => setIsOpen(!isOpen)}
                 >
-                    {isOpen ? "SHOW LESS" : "READ MORE"}
+                    {isOpen ? "READ LESS" : "READ MORE"}
                 </CustomButton>
                 <CustomButton
                     className={styles.loadButton}
