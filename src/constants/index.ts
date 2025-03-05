@@ -71,3 +71,4 @@ export const CONTROLS_MIN_WIDTH = 650;
 export const CONTROLS_MIN_HEIGHT = 320;
 export const SCALE_BAR_MIN_WIDTH = 550;
 export const DROPDOWN_HOVER_DELAY = 300;
+export const SHORT_CARD_TITLE_MAX_LENGTH = 46;

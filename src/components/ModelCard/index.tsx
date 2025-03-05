@@ -3,7 +3,10 @@ import { Card, Tag } from "antd";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
 
-import { URL_PARAM_KEY_FILE_NAME } from "../../constants";
+import {
+    SHORT_CARD_TITLE_MAX_LENGTH,
+    URL_PARAM_KEY_FILE_NAME,
+} from "../../constants";
 import { ButtonClass, TrajectoryDisplayData } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
 import { CustomButton } from "../CustomButton";
@@ -39,7 +42,8 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
         window.location.href = `${VIEWER_PATHNAME}?${URL_PARAM_KEY_FILE_NAME}=${id}`;
     };
 
-    const displayTitleIsLong = title.length + (subtitle?.length || 0) > 50;
+    const displayTitleIsLong =
+        title.length + (subtitle?.length || 0) > SHORT_CARD_TITLE_MAX_LENGTH;
     const caretIcon = (
         <div className={classNames(styles.caret, isOpen && styles.rotated)}>
             {FilledCaret}
