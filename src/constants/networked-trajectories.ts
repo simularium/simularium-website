@@ -34,7 +34,7 @@ const createLink = (url: string, text?: string): string => {
 };
 
 const thirdPartyLicensing = (licenseUrl: string) => {
-    return `${createLink(licenseUrl, "Third party licensing")} requirements`;
+    return `${createLink(licenseUrl, "Third party licensing")} requirements.`;
 };
 
 const softwareUsed = (

@@ -122,10 +122,6 @@
     font-size: 10px;
 }
 
-.legalese a {
-    text-decoration: underline;
-}
-
 .buttons {
     flex: 0 0 auto;
     display: flex;
