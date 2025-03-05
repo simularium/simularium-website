@@ -3,13 +3,11 @@ import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
 
 import TRAJECTORIES from "../../constants/networked-trajectories";
-
+import { ABOUT_PATHNAME, TUTORIAL_PATHNAME } from "../../routes";
 import { Book, Read } from "../Icons";
 import ModelCard from "../ModelCard";
 import ContentPage from "../ContentPage";
 import ContentPagePanel from "../ContentPagePanel";
-import ContactPanel from "../ContactPanel";
-import { ABOUT_PATHNAME, TUTORIAL_PATHNAME } from "../../routes";
 
 import styles from "./style.css";
 
