@@ -29,8 +29,10 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
         authors,
         publication,
         description,
-        code,
-        legalese,
+        softwareUsedUrl,
+        inputDataUrl,
+        outputDataUrl,
+        thirdPartyLicensingUrl,
         imageFile,
         gifFile,
         subtitle,
@@ -49,6 +51,57 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
             {FilledCaret}
         </div>
     );
+
+    const createLink = (url: string, text?: string): string => {
+        return `<a href='${url}'>${text || "here"}</a>`;
+    };
+
+    const thirdPartyLicensing = (licenseUrl: string) => {
+        return `${createLink(
+            licenseUrl,
+            "Third party licensing"
+        )} requirements.`;
+    };
+
+    const softwareUsed = (
+        softwareUrl?: string,
+        resources?: {
+            inputsUrl?: string;
+            outputsUrl?: string;
+        }
+    ): string => {
+        let description = "";
+
+        if (softwareUrl) {
+            description += `${createLink(
+                softwareUrl,
+                "Software used"
+            )} to generate data.`;
+        }
+
+        if (resources?.inputsUrl) {
+            description += ` The input data file is ${createLink(
+                resources.inputsUrl
+            )}.`;
+        }
+
+        if (resources?.outputsUrl) {
+            description += ` The outputs that were visualized can be downloaded ${createLink(
+                resources.outputsUrl
+            )}.`;
+        }
+
+        return description;
+    };
+
+    const codeUrlsText = softwareUsed(softwareUsedUrl, {
+        inputsUrl: inputDataUrl,
+        outputsUrl: outputDataUrl,
+    });
+
+    const legaleseText = thirdPartyLicensingUrl
+        ? thirdPartyLicensing(thirdPartyLicensingUrl)
+        : "";
 
     return (
         <Card
@@ -119,19 +172,19 @@ const ModelCard: React.FunctionComponent<ModelCardProps> = (
                             </a>
                         </div>
                         <div>
-                            {code && (
+                            {codeUrlsText && (
                                 <p
                                     className={styles.legalese}
                                     dangerouslySetInnerHTML={{
-                                        __html: code,
+                                        __html: codeUrlsText,
                                     }}
                                 />
                             )}
-                            {legalese && (
+                            {legaleseText && (
                                 <p
                                     className={styles.legalese}
                                     dangerouslySetInnerHTML={{
-                                        __html: legalese,
+                                        __html: legaleseText,
                                     }}
                                 />
                             )}

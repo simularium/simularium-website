@@ -29,41 +29,6 @@ import bloodPlasmaGif from "../assets/card-images/blood_plasma_thumb.gif";
 
 import { TrajectoryDisplayData } from "./interfaces";
 
-const createLink = (url: string, text?: string): string => {
-    return `<a href='${url}'>${text || "here"}</a>`;
-};
-
-const thirdPartyLicensing = (licenseUrl: string) => {
-    return `${createLink(licenseUrl, "Third party licensing")} requirements.`;
-};
-
-const softwareUsed = (
-    softwareUrl: string,
-    resources?: {
-        inputsUrl?: string;
-        outputsUrl?: string;
-    }
-): string => {
-    let description = `${createLink(
-        softwareUrl,
-        "Software used"
-    )} to generate data.`;
-
-    if (resources?.inputsUrl) {
-        description += ` The input data file is ${createLink(
-            resources.inputsUrl
-        )}.`;
-    }
-
-    if (resources?.outputsUrl) {
-        description += ` The outputs that were visualized can be downloaded ${createLink(
-            resources.outputsUrl
-        )}.`;
-    }
-
-    return description;
-};
-
 const TRAJECTORIES: TrajectoryDisplayData[] = [
     {
         modelName: "Blood Plasma",
@@ -81,10 +46,9 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A cellPACK model of a 100 nm × 100 nm × 15 nm volume of human blood plasma based on a mesoscale recipe containing information for the most abundant macromolecules.",
-        code: softwareUsed("https://github.com/mesoscope/cellpack"),
-        legalese: thirdPartyLicensing(
-            "https://github.com/mesoscope/cellpack/blob/main/LICENSE"
-        ),
+        softwareUsedUrl: "https://github.com/mesoscope/cellpack",
+        thirdPartyLicensingUrl:
+            "https://github.com/mesoscope/cellpack/blob/main/LICENSE",
         imageFile: bloodPlasmaImage,
         gifFile: bloodPlasmaGif,
     },
@@ -162,9 +126,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A SpringSaLaD model of liquid-liquid phase separation above Ksp where condensate forms.",
-        code: softwareUsed(
-            "https://github.com/achattaraj/Ksp_phase_separation"
-        ),
+        softwareUsedUrl: "https://github.com/achattaraj/Ksp_phase_separation",
         imageFile: springSalad3Image,
         gifFile: springSalad3Gif,
     },
@@ -182,9 +144,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A SpringSaLaD model of liquid-liquid phase separation at Ksp where condensate forms.",
-        code: softwareUsed(
-            "https://github.com/achattaraj/Ksp_phase_separation"
-        ),
+        softwareUsedUrl: "https://github.com/achattaraj/Ksp_phase_separation",
         imageFile: springSalad2Image,
         gifFile: springSalad2Gif,
     },
@@ -202,9 +162,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A SpringSaLaD model of liquid-liquid phase separation below Ksp where no condensate forms.",
-        code: softwareUsed(
-            "https://github.com/achattaraj/Ksp_phase_separation"
-        ),
+        softwareUsedUrl: "https://github.com/achattaraj/Ksp_phase_separation",
         imageFile: springSalad1Image,
         gifFile: springSalad1Gif,
     },
@@ -222,9 +180,8 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
             url: "https://www.mdpi.com/1099-4300/22/10/1101",
         },
         description: "Model of chemotactic E. coli using Vivarium.",
-        code: softwareUsed("https://github.com/vivarium-collective/vivarium-chemotaxis"),
-        legalese:
-            thirdPartyLicensing("https://github.com/vivarium-collective/vivarium-chemotaxis/blob/master/LICENSE"),
+        softwareUsedUrl: "https://github.com/vivarium-collective/vivarium-chemotaxis",
+        thirdPartyLicensingUrl: "https://github.com/vivarium-collective/vivarium-chemotaxis/blob/master/LICENSE",
         imageFile: vivariumImage,
         gifFile: vivariumGif,
     },
@@ -244,13 +201,10 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A MEDYAN model of interacting actin filaments, α–actinin crosslinkers, and myosin motors. High myosin activity causes formation of an aster-like structure.",
-        code: softwareUsed(
-            "https://bitbucket.org/jkomianos/medyan/src/master/",
-            { outputsUrl: "https://drum.lib.umd.edu/handle/1903/21856" }
-        ),
-        legalese: thirdPartyLicensing(
-            "https://bitbucket.org/jkomianos/medyan/src/master/license.txt"
-        ),
+        softwareUsedUrl: "https://bitbucket.org/jkomianos/medyan/src/master/",
+        outputDataUrl: "https://drum.lib.umd.edu/handle/1903/21856",
+        thirdPartyLicensingUrl:
+            "https://bitbucket.org/jkomianos/medyan/src/master/license.txt",
         imageFile: medyan2Image,
         gifFile: medyan2Gif,
     },
@@ -269,13 +223,10 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A MEDYAN model of interacting actin filaments, α–actinin crosslinkers, and myosin motors. Low myosin activity maintains the bundle structure.",
-        code: softwareUsed(
-            "https://bitbucket.org/jkomianos/medyan/src/master/",
-            { outputsUrl: "https://drum.lib.umd.edu/handle/1903/21856" }
-        ),
-        legalese: thirdPartyLicensing(
-            "https://bitbucket.org/jkomianos/medyan/src/master/license.txt"
-        ),
+        softwareUsedUrl: "https://bitbucket.org/jkomianos/medyan/src/master/",
+        outputDataUrl: "https://drum.lib.umd.edu/handle/1903/21856",
+        thirdPartyLicensingUrl:
+            "https://bitbucket.org/jkomianos/medyan/src/master/license.txt",
         imageFile: medyan1Image,
         gifFile: medyan1Gif,
     },
@@ -293,13 +244,11 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A Smoldyn model of a dendritic spine with CaMKII and molecules of the postsynaptic density at the spine tip.",
-        code: softwareUsed("https://github.com/ssandrews/Smoldyn", {
-            inputsUrl:
-                "http://www.smoldyn.org/archive/Andrews_Arkin_2010/spine.txt",
-        }),
-        legalese: thirdPartyLicensing(
-            "https://github.com/ssandrews/Smoldyn/blob/master/LICENSE"
-        ),
+        softwareUsedUrl: "https://github.com/ssandrews/Smoldyn",
+        inputDataUrl:
+            "http://www.smoldyn.org/archive/Andrews_Arkin_2010/spine.txt",
+        thirdPartyLicensingUrl:
+            "https://github.com/ssandrews/Smoldyn/blob/master/LICENSE",
         imageFile: smoldynSpineImage,
         gifFile: smoldynSpineGif,
     },
@@ -317,13 +266,11 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A Smoldyn example model of the E. coli Min system, which is used to find the cell center during cell division.",
-        code: softwareUsed("https://github.com/ssandrews/Smoldyn", {
-            inputsUrl:
-                "https://github.com/ssandrews/Smoldyn/blob/master/examples/S99_more/Min/Min1.txt",
-        }),
-        legalese: thirdPartyLicensing(
-            "https://github.com/ssandrews/Smoldyn/blob/master/LICENSE"
-        ),
+        softwareUsedUrl: "https://github.com/ssandrews/Smoldyn",
+        inputDataUrl:
+            "https://github.com/ssandrews/Smoldyn/blob/master/examples/S99_more/Min/Min1.txt",
+        thirdPartyLicensingUrl:
+            "https://github.com/ssandrews/Smoldyn/blob/master/LICENSE",
         imageFile: smoldynMin1Image,
         gifFile: smoldynMin1Gif,
     },
@@ -359,10 +306,9 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A PhysiCell model of SARS-CoV-2 dynamics in human lung epithelium.",
-        code: softwareUsed("https://github.com/pc4covid19/pc4covid19"),
-        legalese: thirdPartyLicensing(
-            "https://github.com/pc4covid19/pc4covid19/blob/master/LICENSE"
-        ),
+        softwareUsedUrl: "https://github.com/pc4covid19/pc4covid19",
+        thirdPartyLicensingUrl:
+            "https://github.com/pc4covid19/pc4covid19/blob/master/LICENSE",
         imageFile: covidImage,
         gifFile: covidGif,
     },
@@ -380,12 +326,10 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A CytoSim model of a branched actin network internalizing an endocytic pit against membrane tension.",
-        code: softwareUsed(
-            "https://github.com/DrubinBarnes/Akamatsu_CME_manuscript"
-        ),
-        legalese: thirdPartyLicensing(
-            "https://github.com/DrubinBarnes/Akamatsu_CME_manuscript/blob/master/LICENSE"
-        ),
+        softwareUsedUrl:
+            "https://github.com/DrubinBarnes/Akamatsu_CME_manuscript",
+        thirdPartyLicensingUrl:
+            "https://github.com/DrubinBarnes/Akamatsu_CME_manuscript/blob/master/LICENSE",
         imageFile: endocytosisImage,
         gifFile: endocytosisGif,
     },
