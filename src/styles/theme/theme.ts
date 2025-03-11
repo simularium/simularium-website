@@ -21,8 +21,8 @@ export const antdTheme: ThemeConfig = {
         colorPrimary: themeColors.primaryPurple,
         colorBgBase: themeColors.lightBg,
         colorBgContainer: themeColors.lightBg,
-        colorBgLayout: themeColors.lightBg,
-        colorText: themeColors.lightBgText,
+        colorBgLayout: themeColors.darkBg,
+        colorText: themeColors.darkBgText,
         colorLink: themeColors.primaryBlue,
         borderRadius: 0,
         controlHeight: 32,
@@ -30,6 +30,9 @@ export const antdTheme: ThemeConfig = {
         controlHeightSM: 24,
     },
     components: {
+        Card: {
+            colorBgContainer: themeColors.card.bg,
+        },
         Form: {
             labelColor: themeColors.form.label,
             verticalLabelPadding: "0 0 4px 0",

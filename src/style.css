@@ -11,6 +11,10 @@ html {
     font-size: 14px;
 }
 
+body {
+    background-color: var(--dark-theme-bg);
+}
+
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
@@ -23,12 +27,12 @@ h2 {
 }
 
 h1 {
-    color: var(--light-theme-heading1-color);
+    color: var(--dark-theme-heading1-color);
     font-size: 38px;
 }
 
 h2 {
-    color: var(--light-theme-heading2-color);
+    color: var(--dark-theme-heading2-color);
     font-size: 32px;
 }
 

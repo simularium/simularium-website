@@ -15,8 +15,10 @@ export interface TrajectoryDisplayData {
         url: string;
     };
     description: string;
-    code?: string;
-    legalese?: string;
+    softwareUsedUrl?: string;
+    inputDataUrl?: string;
+    outputDataUrl?: string;
+    thirdPartyLicensingUrl?: string;
     imageFile: string;
     gifFile: string;
 }

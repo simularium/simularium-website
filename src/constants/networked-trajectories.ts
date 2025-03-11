@@ -29,10 +29,6 @@ import bloodPlasmaGif from "../assets/card-images/blood_plasma_thumb.gif";
 
 import { TrajectoryDisplayData } from "./interfaces";
 
-const thirdPartyLicensing = (licenseUrl: string) => {
-    return `Please note that the use of this software is subject to third party licensing requirements, which are currently available <a href='${licenseUrl}'>here</a>.`;
-};
-
 const TRAJECTORIES: TrajectoryDisplayData[] = [
     {
         modelName: "Blood Plasma",
@@ -50,10 +46,9 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A cellPACK model of a 100 nm × 100 nm × 15 nm volume of human blood plasma based on a mesoscale recipe containing information for the most abundant macromolecules.",
-        code: "Software used to generate this data is available <a href='https://github.com/mesoscope/cellpack'>here</a>.",
-        legalese: thirdPartyLicensing(
-            "https://github.com/mesoscope/cellpack/blob/main/LICENSE"
-        ),
+        softwareUsedUrl: "https://github.com/mesoscope/cellpack",
+        thirdPartyLicensingUrl:
+            "https://github.com/mesoscope/cellpack/blob/main/LICENSE",
         imageFile: bloodPlasmaImage,
         gifFile: bloodPlasmaGif,
     },
@@ -63,7 +58,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         id: "covid19",
         title: "SARS-CoV-2 Virion",
         totalSimulatedTime: "0s",
-        authors: "Ngan Nguyen et al.",
+        authors: "Ngan Nguyen, et al.",
         publication: {
             title:
                 "Modeling in the Time of COVID-19: Statistical and Rule-based Mesoscale Models",
@@ -83,7 +78,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         title: "Actin-based Listeria Propulsion",
         subtitle: "Normal ActA Distribution",
         totalSimulatedTime: "120s",
-        authors: "Jonathan Alberts et al",
+        authors: "Jonathan Alberts, et al.",
         publication: {
             title:
                 "In Silico Reconstitution of Listeria Propulsion Exhibits Nano-Saltation",
@@ -103,7 +98,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         id: "listeria_ultrapolar",
         title: "Actin-based Listeria Propulsion: Ultrapolar ActA Distribution",
         totalSimulatedTime: "60s",
-        authors: "Susanne Rafelski et al.",
+        authors: "Susanne Rafelski, et al.",
         publication: {
             title:
                 "An Experimental and Computational Study of the Effect of ActA Polarity on the Speed of Listeria monocytogenes Actin-based Motility",
@@ -122,7 +117,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         id: "springsalad_condensate_formation_Above_Ksp.simularium",
         title: "Condensate Formation: Above Ksp",
         totalSimulatedTime: "0.4s",
-        authors: "Aniruddha Chattaraj et al.",
+        authors: "Aniruddha Chattaraj, et al.",
         publication: {
             title: "The solubility product extends the buffering concept to heterotypic biomolecular condensates",
             journal: "eLife",
@@ -131,7 +126,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A SpringSaLaD model of liquid-liquid phase separation above Ksp where condensate forms.",
-        code: "Software used to generate this data is available <a href='https://github.com/achattaraj/Ksp_phase_separation'>here</a>.",
+        softwareUsedUrl: "https://github.com/achattaraj/Ksp_phase_separation",
         imageFile: springSalad3Image,
         gifFile: springSalad3Gif,
     },
@@ -140,7 +135,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         id: "springsalad_condensate_formation_At_Ksp.simularium",
         title: "Condensate Formation: At Ksp",
         totalSimulatedTime: "0.4s",
-        authors: "Aniruddha Chattaraj et al.",
+        authors: "Aniruddha Chattaraj, et al.",
         publication: {
             title: "The solubility product extends the buffering concept to heterotypic biomolecular condensates",
             journal: "eLife",
@@ -149,7 +144,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A SpringSaLaD model of liquid-liquid phase separation at Ksp where condensate forms.",
-        code: "Software used to generate this data is available <a href='https://github.com/achattaraj/Ksp_phase_separation'>here</a>.",
+        softwareUsedUrl: "https://github.com/achattaraj/Ksp_phase_separation",
         imageFile: springSalad2Image,
         gifFile: springSalad2Gif,
     },
@@ -158,7 +153,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         id: "springsalad_condensate_formation_Below_Ksp.simularium",
         title: "Condensate Formation: Below Ksp",
         totalSimulatedTime: "1s",
-        authors: "Aniruddha Chattaraj et al.",
+        authors: "Aniruddha Chattaraj, et al.",
         publication: {
             title: "The solubility product extends the buffering concept to heterotypic biomolecular condensates",
             journal: "eLife",
@@ -167,7 +162,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A SpringSaLaD model of liquid-liquid phase separation below Ksp where no condensate forms.",
-        code: "Software used to generate this data is available <a href='https://github.com/achattaraj/Ksp_phase_separation'>here</a>.",
+        softwareUsedUrl: "https://github.com/achattaraj/Ksp_phase_separation",
         imageFile: springSalad1Image,
         gifFile: springSalad1Gif,
     },
@@ -185,10 +180,8 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
             url: "https://www.mdpi.com/1099-4300/22/10/1101",
         },
         description: "Model of chemotactic E. coli using Vivarium.",
-        code:
-            "Software used to generate this data is available <a href='https://github.com/vivarium-collective/vivarium-chemotaxis'>here</a>.",
-        legalese:
-            thirdPartyLicensing("https://github.com/vivarium-collective/vivarium-chemotaxis/blob/master/LICENSE"),
+        softwareUsedUrl: "https://github.com/vivarium-collective/vivarium-chemotaxis",
+        thirdPartyLicensingUrl: "https://github.com/vivarium-collective/vivarium-chemotaxis/blob/master/LICENSE",
         imageFile: vivariumImage,
         gifFile: vivariumGif,
     },
@@ -199,7 +192,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         title: "Actin Bundle Dynamics with α–Actinin and Myosin",
         subtitle: "High Myosin Activity",
         totalSimulatedTime: "33min",
-        authors: "Chandrasekaran et al.",
+        authors: "Chandrasekaran, et al.",
         publication: {
             title: "Remarkable structural transformations of actin bundles are driven by their initial polarity, motor activity, crosslinking, and filament treadmilling",
             journal: "PLoS Computational Biology",
@@ -208,10 +201,10 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A MEDYAN model of interacting actin filaments, α–actinin crosslinkers, and myosin motors. High myosin activity causes formation of an aster-like structure.",
-        code: "Software used to generate this data is available <a href='https://bitbucket.org/jkomianos/medyan/src/master/'>here</a>. The outputs that were visualized can be downloaded <a href='https://drum.lib.umd.edu/handle/1903/21856'>here</a>.",
-        legalese: thirdPartyLicensing(
-            "https://bitbucket.org/jkomianos/medyan/src/master/license.txt"
-        ),
+        softwareUsedUrl: "https://bitbucket.org/jkomianos/medyan/src/master/",
+        outputDataUrl: "https://drum.lib.umd.edu/handle/1903/21856",
+        thirdPartyLicensingUrl:
+            "https://bitbucket.org/jkomianos/medyan/src/master/license.txt",
         imageFile: medyan2Image,
         gifFile: medyan2Gif,
     },
@@ -221,7 +214,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         title: "Actin Bundle Dynamics with α–Actinin and Myosin",
         subtitle: "Low Myosin Activity",
         totalSimulatedTime: "33min",
-        authors: "Chandrasekaran et al.",
+        authors: "Chandrasekaran, et al.",
         publication: {
             title: "Remarkable structural transformations of actin bundles are driven by their initial polarity, motor activity, crosslinking, and filament treadmilling",
             journal: "PLoS Computational Biology",
@@ -230,10 +223,10 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A MEDYAN model of interacting actin filaments, α–actinin crosslinkers, and myosin motors. Low myosin activity maintains the bundle structure.",
-        code: "Software used to generate this data is available <a href='https://bitbucket.org/jkomianos/medyan/src/master/'>here</a>. The outputs that were visualized can be downloaded <a href='https://drum.lib.umd.edu/handle/1903/21856'>here</a>.",
-        legalese: thirdPartyLicensing(
-            "https://bitbucket.org/jkomianos/medyan/src/master/license.txt"
-        ),
+        softwareUsedUrl: "https://bitbucket.org/jkomianos/medyan/src/master/",
+        outputDataUrl: "https://drum.lib.umd.edu/handle/1903/21856",
+        thirdPartyLicensingUrl:
+            "https://bitbucket.org/jkomianos/medyan/src/master/license.txt",
         imageFile: medyan1Image,
         gifFile: medyan1Gif,
     },
@@ -242,7 +235,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         id: "smoldyn_spine.simularium",
         title: "Sequestration of CaMKII in dendritic spines",
         totalSimulatedTime: "1.5s",
-        authors: "Shahid Khan et al.",
+        authors: "Shahid Khan, et al.",
         publication: {
             title: "Sequestration of CaMKII in dendritic spines in silico",
             journal: "J Comp Neuro",
@@ -251,10 +244,11 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A Smoldyn model of a dendritic spine with CaMKII and molecules of the postsynaptic density at the spine tip.",
-        code: "Software used to generate this data is available <a href='https://github.com/ssandrews/Smoldyn'>here</a>. The input data file is <a href='http://www.smoldyn.org/archive/Andrews_Arkin_2010/spine.txt'>here</a>.",
-        legalese: thirdPartyLicensing(
-            "https://github.com/ssandrews/Smoldyn/blob/master/LICENSE"
-        ),
+        softwareUsedUrl: "https://github.com/ssandrews/Smoldyn",
+        inputDataUrl:
+            "http://www.smoldyn.org/archive/Andrews_Arkin_2010/spine.txt",
+        thirdPartyLicensingUrl:
+            "https://github.com/ssandrews/Smoldyn/blob/master/LICENSE",
         imageFile: smoldynSpineImage,
         gifFile: smoldynSpineGif,
     },
@@ -263,7 +257,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         id: "smoldyn_min1.simularium",
         title: "Spatiotemporal oscillations in the E. coli Min system",
         totalSimulatedTime: "100s",
-        authors: "Steve Andrews et al.",
+        authors: "Steve Andrews, et al.",
         publication: {
             title: "Detailed Simulations of Cell Biology with Smoldyn 2.1",
             journal: "PLoS Computational Biology",
@@ -272,10 +266,11 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A Smoldyn example model of the E. coli Min system, which is used to find the cell center during cell division.",
-        code: "Software used to generate this data is available <a href='https://github.com/ssandrews/Smoldyn'>here</a>. The input data file is <a href='https://github.com/ssandrews/Smoldyn/blob/master/examples/S99_more/Min/Min1.txt'>here</a>.",
-        legalese: thirdPartyLicensing(
-            "https://github.com/ssandrews/Smoldyn/blob/master/LICENSE"
-        ),
+        softwareUsedUrl: "https://github.com/ssandrews/Smoldyn",
+        inputDataUrl:
+            "https://github.com/ssandrews/Smoldyn/blob/master/examples/S99_more/Min/Min1.txt",
+        thirdPartyLicensingUrl:
+            "https://github.com/ssandrews/Smoldyn/blob/master/LICENSE",
         imageFile: smoldynMin1Image,
         gifFile: smoldynMin1Gif,
     },
@@ -284,7 +279,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         id: "nanoparticle_wrapping.simularium",
         title: "Membrane Wrapping a Nanoparticle",
         totalSimulatedTime: "5.48ms",
-        authors: "Mohsen Sadeghi et al.",
+        authors: "Mohsen Sadeghi, et al.",
         publication: {
             title: "Particle-based membrane model for mesoscopic simulation of cellular dynamics",
             journal: "J Chem Phys",
@@ -302,7 +297,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         title: "SARS-CoV-2 Dynamics in Human Lung Epithelium",
         version: "4.1",
         totalSimulatedTime: "24h",
-        authors: "Michael Getz et al.",
+        authors: "Michael Getz, et al.",
         publication: {
             title: "Rapid community-driven development of a SARS-CoV-2 tissue simulator",
             journal: "bioRxiv",
@@ -311,10 +306,9 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A PhysiCell model of SARS-CoV-2 dynamics in human lung epithelium.",
-        code: "Software used to generate this data is available <a href='https://github.com/pc4covid19/pc4covid19'>here</a>.",
-        legalese: thirdPartyLicensing(
-            "https://github.com/pc4covid19/pc4covid19/blob/master/LICENSE"
-        ),
+        softwareUsedUrl: "https://github.com/pc4covid19/pc4covid19",
+        thirdPartyLicensingUrl:
+            "https://github.com/pc4covid19/pc4covid19/blob/master/LICENSE",
         imageFile: covidImage,
         gifFile: covidGif,
     },
@@ -323,7 +317,7 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         id: "endocytosis.simularium",
         title: "Actin in Clathrin-mediated Endocytosis",
         totalSimulatedTime: "15s",
-        authors: "Matthew Akamatsu et al.",
+        authors: "Matthew Akamatsu, et al.",
         publication: {
             title: "Principles of self-organization and load adaptation by the actin cytoskeleton during clathrin-mediated endocytosis",
             journal: "eLife",
@@ -332,10 +326,10 @@ const TRAJECTORIES: TrajectoryDisplayData[] = [
         },
         description:
             "A CytoSim model of a branched actin network internalizing an endocytic pit against membrane tension.",
-        code: "Software used to generate this data is available <a href='https://github.com/DrubinBarnes/Akamatsu_CME_manuscript'>here</a>.",
-        legalese: thirdPartyLicensing(
-            "https://github.com/DrubinBarnes/Akamatsu_CME_manuscript/blob/master/LICENSE"
-        ),
+        softwareUsedUrl:
+            "https://github.com/DrubinBarnes/Akamatsu_CME_manuscript",
+        thirdPartyLicensingUrl:
+            "https://github.com/DrubinBarnes/Akamatsu_CME_manuscript/blob/master/LICENSE",
         imageFile: endocytosisImage,
         gifFile: endocytosisGif,
     },

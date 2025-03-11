@@ -7,7 +7,6 @@ import flowchartImg from "../../assets/overview-image.png";
 import agentRepOptionsImg from "../../assets/agent-rep-options.png";
 import { BetaTag } from "../Icons";
 import ModelCard from "../ModelCard";
-import BlankCard from "../BlankCard";
 import Footer from "../Footer";
 import { TUTORIAL_PATHNAME } from "../../routes";
 import { CYTOSIM_URL, READDY_URL } from "../../constants";
@@ -71,7 +70,6 @@ const LandingPage = (): JSX.Element => {
                                 );
                             }
                         )}
-                        <BlankCard />
                         {TRAJECTORIES.slice(NUM_CARDS_PER_ROW - 1).map(
                             (trajectory) => {
                                 return (
