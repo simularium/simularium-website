@@ -1,88 +1,49 @@
-.content {
-    display: block;
+
+.tag-line {
+    margin-bottom: 6px;
+}
+
+.bordered-cards {
+    display: flex;
+    gap: 50px;
+    justify-content: space-evenly;
+    margin-top: 10px;
     width: 100%;
-    margin: auto;
 }
 
-.content h1, h2 {
-    margin-bottom: 0px;
+.bordered-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid var(--dark-theme-text-color);
+    border-radius: 6px;
+    flex: 1;
+    padding: 1em;
 }
 
-@media screen and (min-width: 576px) {
-    .content h1, h2 {
-        margin-top: -0.3em;
-    }
+.bordered-content-inner {
+    line-height: 20px;
 }
 
-/* Makes font size smaller for paragraph blocks on mobile */
-@media screen and (max-width: 480px) {
-    .content p {
-        font-size: 0.8rem;
-        margin-bottom: 1em;
-    }
-
-    .content li {
-        font-size: 0.8rem;
-    }
+.bordered-content-icon {
+    color: var(--dark-theme-text-color);
+    font-size: 29px;
 }
 
-.panel {
-    background-color: var(--light-theme-gray-bg);
-    padding-left: 1.5em;
-    padding-right: 1.5em;
-    padding-top: 3em;
-    padding-bottom: 2em;
-    font-size: 20px;
-}
-
-/* Prevents content from horizontally spreading too much when browser window is very wide */
-.text-content {
-    max-width: 1010px;
-    margin-left: auto;
-    margin-right: auto;
+.default-text-color {
+    color: var(--dark-theme-text-color);
 }
 
 .cards {
-    max-width: 1500px;
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    margin: auto;
+    row-gap: 2em;
 }
 
 .cards > * {
-    margin-top: 2em;
     margin-left: 1em;
     margin-right: 1em;
-}
-
-.caption {
-    margin-top: 1em;
-    margin-bottom: 2.5em;
-    font-size: 16px;
-    text-align: center;
-}
-
-.try-simularium-panel {
-    composes: panel;
-    background-color: var(--light-theme-bg);
-}
-
-.future-simularium-panel {
-    composes: panel;
-    background-color: var(--light-theme-white-bg);
-}
-
-.citation-panel {
-    composes: panel;
-    background-color: var(--light-theme-white-bg);
-}
-
-.citation-content {
-    composes: text-content;
-    display: flex;
-    margin: 2em auto 1em auto;
-    justify-content: space-between;
 }
 
 .citation-text { 
@@ -91,23 +52,10 @@
     justify-content: space-between;
 }
 
-.journal-cover {
-    margin: auto 1.5em auto auto;
-    width: 323px;
-}
-
-.image {
-    display: block;
-    margin: 2em auto 1em auto;
-}
-
-.image-bottom {
-    display: block;
-    margin: 0 auto 2em auto;
-}
-
 .markdown {
     column-count: 2;
+    column-gap: 56px;
+    margin-top: 16px;
 }
 
 .markdown > * {
@@ -116,9 +64,6 @@
 }
 
 @media screen and (max-width: 1010px) {
-    .journal-cover {
-        margin-top: 0;
-    }
     .citation-text p {
         font-size: 14px;
     }

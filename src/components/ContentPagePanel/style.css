@@ -1,0 +1,29 @@
+.panel {
+    padding-top: 36px;
+    padding-bottom: 32px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.panel .panel-inner {
+    align-items: center;
+    color: var(--dark-theme-text-color);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    max-width: 980px;
+    text-align: left;
+}
+
+.panel-inner.wide {
+    max-width: 1370px;
+}
+
+.dark-section {
+    width: 100%;
+    background-color: var(--dark-theme-darker-bg);
+}
