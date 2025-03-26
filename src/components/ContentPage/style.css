@@ -1,0 +1,27 @@
+.page-content {
+  display: block;
+  margin: auto;
+}
+
+@media screen and (min-width: 576px) {
+    .page-content h1, h2 {
+        margin-top: -0.3em;
+    }
+}
+
+/* Makes font size smaller for paragraph blocks on mobile */
+@media screen and (max-width: 480px) {
+    .page-content p {
+        font-size: 0.8rem;
+        margin-bottom: 1em;
+    }
+
+    .page-content li {
+        font-size: 0.8rem;
+    }
+}
+
+.divider {
+  background-color: var(--footer-text-border-bottom);
+  width: 100%;
+}
