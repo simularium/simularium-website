@@ -1,0 +1,36 @@
+.warningContainer {
+    position: absolute;
+    top: var(--header-height);
+    transform: translateX(-50%);
+    left: 50%;
+    color: var(--dark-theme-primary-color);
+    background-color: transparent;
+    border: 1px solid;
+    padding: 8px 6px 8px 10px;
+    transition: opacity 3s ease-out;
+    opacity: 1;
+    z-index: 100;
+    border-radius: 4px;
+    width: 244px;
+}
+
+.fadeOut {
+    opacity: 0;
+}
+
+.warningContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 6px;
+    color: var(--dark-theme-primary-color);
+}
+
+.closeButton {
+    background: none;
+    padding: 2px 0px;
+    font-size: 18px;
+    border: none;
+    color: var(--dark-theme-primary-color);
+    cursor: pointer;
+}
