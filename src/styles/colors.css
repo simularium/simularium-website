@@ -45,6 +45,8 @@
     --dark-theme-darker-bg: var(--dark-two);
     --dark-theme-scroll-track: var(--dark-four);
     --dark-theme-scroll-thumb: var(--dark-two);
+    --dark-theme-heading1-color: var(--white-two);
+    --dark-theme-heading2-color: var(--white-two);
     /* dark theme dropdown menu */
     --dark-theme-dropdown-menu-bg: var(--charcoal-gray);
     --dark-theme-dropdown-menu-item-bg: var(--charcoal-gray);

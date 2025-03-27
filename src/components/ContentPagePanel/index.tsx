@@ -1,4 +1,5 @@
 import * as React from "react";
+import classNames from "classnames";
 import styles from "./style.css";
 
 interface ContentPagePanelProps {
@@ -16,17 +17,16 @@ const ContentPagePanel: React.FC<ContentPagePanelProps> = ({
     id,
     className = "",
 }) => {
-    const panelClasses = `
-    ${styles.panel} 
-    ${isDark ? styles.darkSection : ""} 
-    ${className}
-  `;
+    const panelClasses = classNames(
+        styles.panel,
+        isDark ? styles.darkSection : "",
+        className
+    );
 
-    const innerClasses = `
-    ${styles.panelInner}
-    ${isWide ? styles.wide : ""}
-  `;
-
+    const innerClasses = classNames(
+        styles.panelInner,
+        isWide ? styles.wide : ""
+    );
     return (
         <div className={panelClasses} id={id}>
             <div className={innerClasses}>{children}</div>
