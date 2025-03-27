@@ -17,14 +17,14 @@ const ContentPage: React.FC<ContentPageProps> = ({
     className = "",
 }) => {
     return (
-        <React.Fragment>
+        <>
             <Content className={`${styles.pageContent} ${className}`}>
                 {children}
             </Content>
             <ContactPanel />
             <Divider className={styles.divider} />
             <Footer />
-        </React.Fragment>
+        </>
     );
 };
 

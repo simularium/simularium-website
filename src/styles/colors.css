@@ -63,6 +63,9 @@
     --dark-theme-viewport-button-disabled-color: var(--dim-gray-two);
     /* main buttons */
     --dark-theme-primary-button-focus-outline: var(--light-purple-two);
+    /* visual glossary */
+    --dark-theme-visual-glossary-content-bg: var(--dark-three);
+    --dark-theme-visual-glossary-header-bg: var(--dark-four);
     /* --dark-theme-primary-button-bg: var(--baby-purple);
     /* dark theme general/uncategorized */
     --dark-theme-record-button-red: var(--bright-red);

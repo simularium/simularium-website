@@ -1,0 +1,14 @@
+.left-align {
+    align-items: baseline;
+}
+
+.left-align h3 {
+    margin-top: 16px;
+}
+
+.image-container  {
+    background-color: var(--light-theme-bg);
+    padding: 16px 16px 6px 16px;
+    border-radius: 8px;
+}
+

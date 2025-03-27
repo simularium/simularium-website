@@ -1,10 +1,12 @@
 import TutorialPage from "../components/TutorialPage";
 import LandingPage from "../components/LandingPage";
 import Simularium from "../containers/Simularium";
+import AboutPage from "../components/AboutPage";
 
 export const VIEWER_PATHNAME = "/viewer";
 export const TUTORIAL_PATHNAME = "/tutorial";
 export const EMBED_PATHNAME = "/embed";
+export const ABOUT_PATHNAME = "/about";
 
 export default [
     {
@@ -26,5 +28,10 @@ export default [
         name: "Embed",
         component: Simularium,
         path: EMBED_PATHNAME,
+    },
+    {
+        name: "About",
+        component: AboutPage,
+        path: ABOUT_PATHNAME,
     },
 ];
