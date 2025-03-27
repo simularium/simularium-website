@@ -71,9 +71,8 @@ canvas:focus {
 @font-face {
     font-family: "Overpass";
     font-style: normal;
-    font-weight: 400;
-    src: url("https://fonts.gstatic.com/s/overpass/v20/qFdH35S-S5i3fKtE4HvUDvc.woff2")
-        format("woff2");
+    font-weight: normal;
+    src: url("https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100..900;1,100..900&display=swap");
     line-gap-override: 0;
 }
 
