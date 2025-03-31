@@ -37,12 +37,6 @@
     }
 }
 
-
-/* Makes font size smaller and reduces whitespace on mobile */
-@media screen and (max-width: 480px) {
-
-}
-
 :global(.ant-typography code) {
     margin-top: 2em;
     margin-bottom: 2em;
