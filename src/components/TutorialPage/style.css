@@ -1,8 +1,7 @@
 .content {
     display: block;
     margin: auto;
-    padding: 2em;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .text {
@@ -10,14 +9,19 @@
     margin: auto;
 }
 
-.intro {
-    margin-top: 1.5em;
-    margin-bottom: 1.5em;
-    font-size: 20px;
+.list {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.list li {
+    font-size: 16px;
 }
 
 .list-header {
-    font-size: 20px;
+    padding-left: 20px;
+    margin-bottom: 16px;
 }
 
 .drag-drop-image {
@@ -33,24 +37,10 @@
     }
 }
 
-.approach-block {
-    margin-bottom: 2em;
-}
 
 /* Makes font size smaller and reduces whitespace on mobile */
 @media screen and (max-width: 480px) {
-    .approach-block {
-        font-size: 0.7rem;
-        padding: 0;
-    }
 
-    .approach-block ol, ul {
-        padding-left: 1em;
-    }
-
-    .approach-block .list-header {
-        font-size: 0.8rem;
-    }
 }
 
 :global(.ant-typography code) {
