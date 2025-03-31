@@ -15,6 +15,10 @@
     width: 100%;
 }
 
+.disc {
+    list-style-type: disc;
+}
+
 .list li {
     font-size: 16px;
 }

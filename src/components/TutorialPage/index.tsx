@@ -7,6 +7,7 @@ import { SUPPORTED_ENGINES, DOWNLOAD_URL } from "../../constants";
 import ContentPage from "../ContentPage";
 import ContentPagePanel from "../ContentPagePanel";
 import styles from "./style.css";
+import classNames from "classnames";
 
 const { Text } = Typography;
 const TutorialPage = (): JSX.Element => {
@@ -20,7 +21,6 @@ const TutorialPage = (): JSX.Element => {
                     download example data or convert your own data.
                 </p>
             </ContentPagePanel>
-
             <ContentPagePanel isDark={true}>
                 <ul className={styles.list}>
                     <h3 className={styles.listHeader}>
@@ -48,10 +48,8 @@ const TutorialPage = (): JSX.Element => {
                     </ol>
                     <img className={styles.dragDropImage} src={dragDropImage} />
                 </ul>
-
-                {/* Convert your data into Simularium format */}
                 <ul className={styles.list}>
-                    <h3 className={styles.listHeader} id="convert-your-data">
+                    <h3 className={styles.listHeader}>
                         Convert your data into Simularium format
                     </h3>
                     <ol>
@@ -204,10 +202,8 @@ const TutorialPage = (): JSX.Element => {
                         </li>
                     </ol>
                 </ul>
-
-                {/* Share a link to your data */}
                 <ul className={styles.list}>
-                    <h3 className={styles.listHeader} id="share-a-link">
+                    <h3 className={styles.listHeader}>
                         Share a link to your data
                     </h3>
                     <ol>
@@ -250,14 +246,10 @@ const TutorialPage = (): JSX.Element => {
                     </ol>
                 </ul>
             </ContentPagePanel>
-
-            {/* Browser support */}
             <ContentPagePanel>
                 <ul className={styles.list}>
-                    <h3 className={styles.listHeader} id="browser-support">
-                        Browser support
-                    </h3>
-                    <ul>
+                    <h3 className={styles.listHeader}>Browser support</h3>
+                    <ul className={styles.disc}>
                         <li>
                             Currently, Simularium supports Chrome, Safari, Edge,
                             and Firefox. Some features may not work on other
