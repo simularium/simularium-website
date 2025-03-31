@@ -24,7 +24,7 @@ const baseStyles = css`
     font-size: 14px;
 
     &&& {
-        align-items: baseline;
+        align-items: center;
         &:focus-visible,
         &:focus-visible:hover {
             outline: 1.5px solid ${({ theme }) => theme.colors.dropdown.active};

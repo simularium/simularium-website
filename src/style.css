@@ -69,6 +69,14 @@ canvas:focus {
 }
 
 @font-face {
+    font-family: "Overpass";
+    font-style: normal;
+    font-weight: normal;
+    src: url("https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100..900;1,100..900&display=swap");
+    line-gap-override: 0;
+}
+
+@font-face {
     font-family: "icomoon";
     src: url("./assets/fonts/icomoon.eot?jthex9");
     src: url("./assets/fonts/icomoon.eot?jthex9#iefix")
