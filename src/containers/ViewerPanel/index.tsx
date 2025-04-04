@@ -52,6 +52,7 @@ import { EMBED_PATHNAME, TUTORIAL_PATHNAME } from "../../routes";
 import ErrorNotification from "../../components/ErrorNotification";
 import { ExitFullScreen, FullScreen } from "../../components/Icons";
 import ViewportButton from "../../components/ViewportButton";
+import SmallScreenWarning from "../../components/SmallScreenWarning";
 import {
     SCALE_BAR_MIN_WIDTH,
     CONTROLS_MIN_HEIGHT,
@@ -181,18 +182,6 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                         or choose OK to continue anyway.
                     </p>
                 ),
-            });
-        }
-        // disable small screen warning on embed page
-        const location = window.location;
-        if (
-            window.matchMedia(MOBILE_CUTOFF).matches &&
-            location.pathname !== EMBED_PATHNAME
-        ) {
-            Modal.warning({
-                title: "Small screens are not supported",
-                content:
-                    "The Simularium Viewer does not support small screens at this time. Please use a larger screen for the best experience.",
             });
         }
         const current = this.centerContent.current;
@@ -513,6 +502,10 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
             this.embedDisplaySettings;
         return (
             <div ref={this.centerContent} className={styles.container}>
+                {window.matchMedia(MOBILE_CUTOFF).matches &&
+                    location.pathname !== EMBED_PATHNAME && (
+                        <SmallScreenWarning />
+                    )}
                 <SimulariumViewer
                     height={this.state.height}
                     width={this.state.width}
@@ -604,9 +597,7 @@ class ViewerPanel extends React.Component<ViewerPanelProps, ViewerPanelState> {
                         )}
                     </div>
                 )}
-
                 {showScaleBar && <ScaleBar label={scaleBarLabel} />}
-
                 <CameraControls
                     resetCamera={simulariumController.resetCamera}
                     zoomIn={simulariumController.zoomIn}
