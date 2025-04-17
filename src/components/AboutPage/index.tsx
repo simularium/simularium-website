@@ -44,7 +44,7 @@ const AboutPage = (): JSX.Element => {
                         Simularium will allow you to modify, run, and even
                         create simulations.
                     </p>
-                    <h3>Current object representtion options:</h3>
+                    <h3>Current object representation options:</h3>
                     <p>
                         Spheres: by default, each agent in a scene is
                         represented as a single sphere Mesh surfaces: represent
