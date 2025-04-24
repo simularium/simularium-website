@@ -116,7 +116,7 @@
         "react-markdown": "^7.0.1",
         "react-plotly.js": "^2.5.0",
         "react-redux": "^8.0.4",
-        "react-router-dom": "^5.2.0",
+        "react-router-dom": "^7.5.2",
         "react-waypoint": "^10.3.0",
         "redux": "4.2.0",
         "redux-logic": "^3.0.3",
