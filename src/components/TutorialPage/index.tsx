@@ -7,7 +7,6 @@ import { SUPPORTED_ENGINES, DOWNLOAD_URL } from "../../constants";
 import ContentPage from "../ContentPage";
 import ContentPagePanel from "../ContentPagePanel";
 import styles from "./style.css";
-import classNames from "classnames";
 
 const { Text } = Typography;
 const TutorialPage = (): JSX.Element => {
@@ -266,18 +265,6 @@ const TutorialPage = (): JSX.Element => {
                         </li>
                     </ul>
                 </ul>
-            </ContentPagePanel>
-
-            <ContentPagePanel isDark={true}>
-                <h3>Contact us</h3>
-                <p>
-                    We are collecting user feedback to improve this application.
-                    To find tutorials, seek technical support, report bugs or
-                    request features, use the Help menu found in the upper right
-                    corner of this website. Please contact us if you have ideas
-                    for potential collaborations, or want to be alerted to major
-                    updates.
-                </p>
             </ContentPagePanel>
         </ContentPage>
     );
