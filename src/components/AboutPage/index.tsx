@@ -44,21 +44,41 @@ const AboutPage = (): JSX.Element => {
                         Simularium will allow you to modify, run, and even
                         create simulations.
                     </p>
-                    <h3>Current object representtion options:</h3>
-                    <p>
-                        Spheres: by default, each agent in a scene is
-                        represented as a single sphere Mesh surfaces: represent
-                        each agent as a mesh file, e.g. coarse molecular
-                        surfaces Multi-sphere: provide Protein Databank .pdb
-                        files Line representations for fibers, filaments, or
-                        bonds
-                    </p>
-                    <h3>Upcoming plans</h3>
-                    <p>
-                        Volume rendering for RDME or PDE-based simulation
-                        results Support for .cif files and coarse-grain
-                        sphereTree files for multi-sphere rendering
-                    </p>
+                    <h3>Current object representation options:</h3>
+                    <span>
+                        <p>
+                            Spheres: by default, each agent in a scene is
+                            represented as a single sphere
+                        </p>
+                    </span>
+                    <span>
+                        <p>
+                            Mesh surfaces: represent each agent as a mesh file,
+                            e.g. coarse molecular surfaces
+                        </p>
+                    </span>
+                    <span>
+                        <p>Multi-sphere: provide Protein Databank .pdb files</p>
+                    </span>
+                    <span>
+                        <p>
+                            Line representations for fibers, filaments, or bonds
+                        </p>
+                    </span>
+
+                    <h3>Upcoming plans: </h3>
+                    <span>
+                        <p>
+                            Volume rendering for RDME or PDE-based simulation
+                            results
+                        </p>
+                    </span>
+                    <span>
+                        <p>
+                            Support for .cif files and coarse-grain sphereTree
+                            files for multi-sphere rendering
+                        </p>
+                    </span>
                 </div>
                 <div className={styles.imageContainer}>
                     <img src={flowchartImg} alt="Flowchart of Simularium" />
@@ -72,7 +92,7 @@ const AboutPage = (): JSX.Element => {
             <ContentPagePanel isDark={true}>
                 <h2>Future plans for Simularium</h2>
                 <h3>
-                    Create. modify, run, experiment, share, interoperate, & grow
+                    Create, modify, run, experiment, share, interoperate, & grow
                     as a community
                 </h3>
                 <p>
@@ -80,17 +100,33 @@ const AboutPage = (): JSX.Element => {
                     users to modify simulation parameters for provided models
                     through the web-based interface, to run the modified
                     simulations on the cloud, and to analyze the results.
-                    Simularium currently supports CytoSim and ReaDDy. We plan to
-                    wrap several published packages that can serve as templates
-                    for community development and to encourage growth of the
-                    system by providing a well- documented API for simulation
-                    engine integration. We are investigating the use of these
-                    types of simulations and the various simulation engines that
-                    generated them for use in building an integrated,
-                    mechanistic understanding of human cells. We will also work
-                    with educators at all levels of science teaching to
-                    integrate and test Simularium`&apos;`s potential for use in
-                    active learning classroom/lab/homework activities.
+                    Simularium currently supports{" "}
+                    <a
+                        href="https://gitlab.com/f.nedelec/cytosim"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        CytoSim
+                    </a>{" "}
+                    and{" "}
+                    <a
+                        href="https://readdy.github.io"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        ReaDDy
+                    </a>
+                    . We plan to wrap several published packages that can serve
+                    as templates for community development and to encourage
+                    growth of the system by providing a well-documented API for
+                    simulation engine integration. We are investigating the use
+                    of these types of simulations and the various simulation
+                    engines that generated them for use in building an
+                    integrated, mechanistic understanding of human cells. We
+                    will also work with educators at all levels of science
+                    teaching to integrate and test Simularium`&apos;`s potential
+                    for use in active learning classroom/lab/homework
+                    activities.
                 </p>
             </ContentPagePanel>
         </ContentPage>
