@@ -94,6 +94,15 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                 lastModified={lastModified}
             />
             <div className={styles.buttonContainer}>
+                <DownloadTrajectoryMenu
+                    isBuffering={isBuffering}
+                    simulariumFile={simulariumFile}
+                    isNetworkedFile={isNetworkedFile}
+                />
+                <ShareTrajectoryButton
+                    simulariumFile={simulariumFile}
+                    isBuffering={isBuffering}
+                />
                 <LoadFileMenu
                     key="select"
                     selectFile={loadNetworkFile}
@@ -106,15 +115,6 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                     setConversionStatus={setConversionStatus}
                 />
                 <HelpMenu />
-                <DownloadTrajectoryMenu
-                    isBuffering={isBuffering}
-                    simulariumFile={simulariumFile}
-                    isNetworkedFile={isNetworkedFile}
-                />
-                <ShareTrajectoryButton
-                    simulariumFile={simulariumFile}
-                    isBuffering={isBuffering}
-                />
             </div>
         </div>
     );

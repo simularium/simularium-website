@@ -1,7 +1,7 @@
 .container {
     display: flex;
     align-items: flex-start;
-    flex-wrap: wrap;
+
     max-width: fit-content;
     margin: auto;
 }
@@ -16,13 +16,35 @@
 
 .container :global(.ant-collapse) {
     width: 740px;
+    max-width: 800px;
     display: block;
-    margin: 1em auto 2em auto;
-    background-color: var(--light-theme-visual-glossary-header-bg);
     border: transparent;
     border-radius: 3px;
     font-size: 20px;
-    box-shadow: 3px 3px 10px var(--text-gray);
+    margin-top: 20px;
+}
+
+.container :global(.ant-collapse-content.ant-collapse-content-active) {
+    overflow: auto;
+}
+
+.container :global(.ant-collapse-content.ant-collapse-content-active)::-webkit-scrollbar {
+   width: 12px;
+}
+
+
+.container :global(.ant-collapse-content.ant-collapse-content-active)::-webkit-scrollbar-track {
+   background-color: var(--dark-theme-scroll-track);
+}
+
+.container :global(.ant-collapse-content.ant-collapse-content-active)::-webkit-scrollbar-thumb {
+   background-color: var(--dark-theme-scroll-thumb);
+   border-radius: 4px;
+}
+
+.container :global(.ant-collapse-header) {
+    color: var(--dark-theme-text-color);
+    background-color: var(--dark-theme-visual-glossary-header-bg);
 }
 
 .container :global(.ant-collapse > .ant-collapse-item) {
@@ -30,7 +52,7 @@
 }
 
 .container :global(.ant-collapse-content) {
-    background-color: var(--light-theme-visual-glossary-content-bg);
+    background-color: var(--dark-theme-visual-glossary-content-bg);
     font-size: 16px;
     border: none;
     height: 417px;
@@ -39,4 +61,16 @@
 
 .topLevelList > li {
     margin-bottom: 0.5em;
+}
+
+@media screen and (max-width: 1430px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .container img {
+        width: 100%;
+    }
+
 }

@@ -26,7 +26,7 @@ const renderGlossaryItems = visualGlossary.map((item: VisualGlossaryItem) => {
 });
 
 const VisualGlossary = (): JSX.Element => {
-    const wideScreenMinWidth = "1622px";
+    const wideScreenMinWidth = "1430px";
 
     // Lay out image and legend side-by-side when screen is wide enough
     const [isScreenWide, setIsScreenWide] = useState(
@@ -40,7 +40,7 @@ const VisualGlossary = (): JSX.Element => {
 
     // Legend box should be collapsed by default when underneath image
     // and always in an open state when next to image
-    const collapseProps = isScreenWide && { activeKey: "1" };
+    const collapseProps = isScreenWide && { defaultActiveKey: "1" };
 
     return (
         <div className={styles.container}>

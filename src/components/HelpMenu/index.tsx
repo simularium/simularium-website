@@ -2,7 +2,7 @@ import * as React from "react";
 import { useLocation } from "react-router-dom";
 import { MenuProps } from "antd";
 
-import { TUTORIAL_PATHNAME } from "../../routes";
+import { ABOUT_PATHNAME, TUTORIAL_PATHNAME } from "../../routes";
 import {
     FORUM_URL,
     FORUM_BUG_REPORT_URL,
@@ -23,21 +23,26 @@ const HelpMenu = (): JSX.Element => {
     const [modalVisible, setModalVisible] = React.useState(false);
 
     const location = useLocation();
-    const tutorialLink =
-        location.pathname === "/viewer" ? (
-            <DropdownRouterLink to={TUTORIAL_PATHNAME} newTab={true}>
-                Quick start
-            </DropdownRouterLink>
-        ) : (
-            <DropdownRouterLink to={TUTORIAL_PATHNAME}>
-                Quick start
-            </DropdownRouterLink>
-        );
 
     const items: MenuProps["items"] = [
         {
+            key: "about",
+            label: (
+                <DropdownRouterLink to={ABOUT_PATHNAME}>
+                    About Simularium
+                </DropdownRouterLink>
+            ),
+        },
+        {
             key: "tutorial",
-            label: tutorialLink,
+            label: (
+                <DropdownRouterLink
+                    to={TUTORIAL_PATHNAME}
+                    newTab={location.pathname === "/viewer"}
+                >
+                    Getting started
+                </DropdownRouterLink>
+            ),
         },
         {
             key: "forum",
@@ -97,7 +102,7 @@ const HelpMenu = (): JSX.Element => {
         <>
             <CustomDropdown
                 items={items}
-                titleText={"Help"}
+                titleText={"Resources"}
                 icon={DownArrow}
                 variant={ButtonClass.DarkSecondary}
             />
