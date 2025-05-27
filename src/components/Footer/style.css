@@ -25,11 +25,12 @@
     font-weight: 200;
     font-size: 14px;
     color: var(--footer-link);
+    background-color: transparent;
     border: none;
     padding: 0;
 }
 
 .container :global(#ot-sdk-btn.ot-sdk-show-settings):hover, :global(#ot-sdk-btn.ot-sdk-show-settings):active, :global(#ot-sdk-btn.ot-sdk-show-settings):focus {
-    color: var(--footer-link);
+    color: var(--footer-link-active);
     background-color: transparent;
 }
