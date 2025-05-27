@@ -7,7 +7,7 @@ css modules not applied */
 
 html {
     line-height: 1.5715;
-    font-weight: 400;
+    font-weight: 300;
     font-size: 14px;
 }
 
@@ -23,7 +23,7 @@ h1, h2, h3, h4, h5, h6 {
 h1,
 h2 {
     text-align: center;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 h1 {
