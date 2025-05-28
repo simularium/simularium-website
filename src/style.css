@@ -7,7 +7,7 @@ css modules not applied */
 
 html {
     line-height: 1.5715;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 14px;
 }
 
@@ -23,7 +23,7 @@ h1, h2, h3, h4, h5, h6 {
 h1,
 h2 {
     text-align: center;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 h1 {
@@ -72,7 +72,7 @@ canvas:focus {
     font-family: "Overpass";
     font-style: normal;
     font-weight: normal;
-    src: url("https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100..900;1,100..900&display=swap");
+    src: url("https://fonts.googleapis.com/css2?family=Overpass:wght@100;200;300;400;500;600;700;800;900&display=swap");
     line-gap-override: 0;
 }
 
