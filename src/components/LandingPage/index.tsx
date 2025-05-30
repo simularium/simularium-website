@@ -44,15 +44,19 @@ const LandingPage = (): JSX.Element => {
                             </p>
                         </div>
                     </Link>
-                    <div className={styles.borderedContent}>
+
+                    <Link
+                        to={ABOUT_PATHNAME}
+                        className={styles.borderedContent}
+                    >
                         <div className={styles.borderedContentIcon}>{Read}</div>
                         <div className={styles.borderedContentInner}>
-                            <Link to={ABOUT_PATHNAME}>
-                                <p>About Simularium</p>
-                            </Link>
-                            <p>Read more about Simularium and future plans</p>
+                            <p>About Simularium</p>
+                            <p className={styles.defaultTextColor}>
+                                Read more about Simularium and future plans
+                            </p>
                         </div>
-                    </div>
+                    </Link>
                 </div>
             </ContentPagePanel>
             <ContentPagePanel isDark={true} isWide={true}>
