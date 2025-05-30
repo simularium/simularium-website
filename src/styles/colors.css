@@ -27,6 +27,7 @@
     --baby-purple: #b59ff6;
     --allen-purple: #8d87aa;
     --blue: #0094ff;
+    --light-blue: #52c2ff;
     --baby-purple-two: #dccfff;
     --medium-gray: #aeaeae;
     --dark-blue-gray: #69738a;
@@ -37,6 +38,8 @@
     --footer-bg: var(--dark-three);
     --footer-text: var(--warm-gray);
     --footer-text-border-bottom: var(--grayish-brown);
+    --footer-link: var(--blue);
+    --footer-link-active: var(--light-blue);
     --color-picker-tooltip: var(--dark-blue-gray);
     --cancel-icon-color: var(--brick-red);
     /* Dark theme */
