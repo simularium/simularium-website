@@ -46,8 +46,8 @@ const LandingPage = (): JSX.Element => {
                     </Link>
 
                     <Link
-                        to={ABOUT_PATHNAME}
                         className={styles.borderedContent}
+                        to={ABOUT_PATHNAME}
                     >
                         <div className={styles.borderedContentIcon}>{Read}</div>
                         <div className={styles.borderedContentInner}>
