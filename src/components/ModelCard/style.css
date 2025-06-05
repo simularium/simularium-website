@@ -5,9 +5,9 @@
     flex-direction: column;
     filter: drop-shadow(2px 2px 10px black);
     gap: 10px;
-    padding: 16px 20px;
+    padding: 16px 20px 20px;
     overflow: hidden;
-    width: 400px;
+    width: 342px;
 }
 
 .card.card-closed {
