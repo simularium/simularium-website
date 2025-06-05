@@ -45,7 +45,7 @@
         "@types/uuid": "^9.0.7",
         "@typescript-eslint/eslint-plugin": "^5.42.1",
         "@typescript-eslint/parser": "^5.42.1",
-        "@webpack-cli/serve": "^1.7.0",
+        "@webpack-cli/serve": "^2.0.5",
         "auto-changelog": "^2.3.0",
         "babel-jest": "^29.2.2",
         "babel-loader": "8.0.5",
@@ -92,7 +92,7 @@
         "url-loader": "^4.1.1",
         "webpack": "^5.94.0",
         "webpack-bundle-analyzer": "^4.6.1",
-        "webpack-cli": "^4.9.1",
+        "webpack-cli": "^5.1.4",
         "webpack-dev-server": "^5.2.1"
     },
     "dependencies": {
