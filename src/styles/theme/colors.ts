@@ -92,6 +92,7 @@ export const componentColors = {
             light: {
                 background: baseColors.dark.five,
                 text: baseColors.gray.six,
+                border: baseColors.dark.five,
                 hover: {
                     background: semanticColors.darkActiveBg,
                     text: semanticColors.primaryPurple,
@@ -113,6 +114,7 @@ export const componentColors = {
             dark: {
                 background: semanticColors.primaryPurple,
                 text: baseColors.dark.three,
+                border: semanticColors.primaryPurple,
                 hover: {
                     background: semanticColors.activePurple,
                     text: semanticColors.lightBgActiveText,
@@ -139,6 +141,7 @@ export const componentColors = {
             light: {
                 background: semanticColors.transparentBg,
                 text: baseColors.dark.five,
+                border: semanticColors.transparentBg,
                 hover: {
                     background: baseColors.dark.one,
                     text: semanticColors.primaryPurple,
@@ -188,6 +191,7 @@ export const componentColors = {
             text: semanticColors.primaryPurple,
             hover: {
                 text: semanticColors.activePurple,
+                background: semanticColors.lightPurpleBg,
             },
             active: {
                 text: semanticColors.activePurple,

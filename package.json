@@ -41,7 +41,6 @@
         "@types/react-plotly.js": "^2.2.4",
         "@types/react-router-dom": "^5.1.5",
         "@types/sinon": "7.0.6",
-        "@types/styled-components": "^5.1.34",
         "@types/uuid": "^9.0.7",
         "@typescript-eslint/eslint-plugin": "^5.42.1",
         "@typescript-eslint/parser": "^5.42.1",
