@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { Typography } from "antd";
+import classNames from "classnames";
 import dragDropImage from "../../assets/drag-drop.gif";
 import { VIEWER_PATHNAME } from "../../routes";
 import { SUPPORTED_ENGINES, DOWNLOAD_URL } from "../../constants";
@@ -11,14 +12,14 @@ import styles from "./style.css";
 const { Text } = Typography;
 const TutorialPage = (): JSX.Element => {
     return (
-        <ContentPage>
+        <ContentPage contactPanelIsDark={true}>
             <ContentPagePanel>
                 <h1>Getting Started with Simularium</h1>
-                <p>
+                <h3>
                     To get started with the{" "}
                     <Link to={VIEWER_PATHNAME}>Simularium Viewer</Link>, either
                     download example data or convert your own data.
-                </p>
+                </h3>
             </ContentPagePanel>
             <ContentPagePanel isDark={true}>
                 <ul className={styles.list}>
@@ -107,7 +108,7 @@ const TutorialPage = (): JSX.Element => {
                                 </li>
                                 <li>
                                     We support the following simulators:
-                                    <ul>
+                                    <ul className={styles.disc}>
                                         {SUPPORTED_ENGINES.map(
                                             (engine: string[]) => {
                                                 const [name, url] = engine;
@@ -132,7 +133,7 @@ const TutorialPage = (): JSX.Element => {
                                     If you used one of our supported simulators
                                     to generate your data, choose the notebook
                                     for that simulator:
-                                    <ul>
+                                    <ul className={styles.disc}>
                                         {SUPPORTED_ENGINES.map(
                                             (engine: string[]) => {
                                                 const name = engine[0];
@@ -228,7 +229,7 @@ const TutorialPage = (): JSX.Element => {
                             dialog, provide the URL to your Simularium file and
                             choose Load.
                         </li>
-                        <ul>
+                        <ul className={styles.disc}>
                             <li>
                                 If your file uses geometry files, like .obj or
                                 .pdb files, make sure you&apos;ve provided the
@@ -246,24 +247,20 @@ const TutorialPage = (): JSX.Element => {
                 </ul>
             </ContentPagePanel>
             <ContentPagePanel>
-                <ul className={styles.list}>
-                    <h3 className={styles.listHeader}>Browser support</h3>
-                    <ul className={styles.disc}>
-                        <li>
-                            Currently, Simularium supports Chrome, Safari, Edge,
-                            and Firefox. Some features may not work on other
-                            browsers.
-                        </li>
-                        <li>
-                            If using Safari on a Mac, please enable WebGL 2.0 by
-                            choosing Develop &gt; Experimental Features and
-                            enabling &quot;WebGL 2.0&quot; (If you do not have a
-                            Develop menu in your menu bar, first choose Safari
-                            &gt; Preferences &gt; Advanced and enable &quot;Show
-                            Develop menu in menu bar&quot;.) Then reload the
-                            viewer.
-                        </li>
-                    </ul>
+                <h2 className={styles.headerSpacing}>Browser support</h2>
+                <ul className={classNames(styles.disc, styles.list)}>
+                    <li>
+                        Currently, Simularium supports Chrome, Safari, Edge, and
+                        Firefox. Some features may not work on other browsers.
+                    </li>
+                    <li>
+                        If using Safari on a Mac, please enable WebGL 2.0 by
+                        choosing Develop &gt; Experimental Features and enabling
+                        &quot;WebGL 2.0&quot; (If you do not have a Develop menu
+                        in your menu bar, first choose Safari &gt; Preferences
+                        &gt; Advanced and enable &quot;Show Develop menu in menu
+                        bar&quot;.) Then reload the viewer.
+                    </li>
                 </ul>
             </ContentPagePanel>
         </ContentPage>

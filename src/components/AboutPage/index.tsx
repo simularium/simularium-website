@@ -91,7 +91,7 @@ const AboutPage = (): JSX.Element => {
 
             <ContentPagePanel isDark={true}>
                 <h2>Future plans for Simularium</h2>
-                <h3>
+                <h3 className={styles.headerSpacing}>
                     Create, modify, run, experiment, share, interoperate, & grow
                     as a community
                 </h3>
@@ -124,7 +124,7 @@ const AboutPage = (): JSX.Element => {
                     engines that generated them for use in building an
                     integrated, mechanistic understanding of human cells. We
                     will also work with educators at all levels of science
-                    teaching to integrate and test Simularium`&apos;`s potential
+                    teaching to integrate and test Simularium&apos;s potential
                     for use in active learning classroom/lab/homework
                     activities.
                 </p>
