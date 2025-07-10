@@ -19,7 +19,7 @@ interface CustomModalProps extends Omit<ModalProps, OmittedProps> {
     titleText?: string;
     footerButtons?: React.ReactNode;
     divider?: boolean;
-    wrapProps?: Record<string, unknown>;
+    wrapProps?: { onDragOver: (e: DragEvent) => void };
     wrapClassName?: string;
 }
 

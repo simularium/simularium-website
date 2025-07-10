@@ -12,7 +12,6 @@ import {
     SetErrorAction,
     SetViewerStatusAction,
 } from "../../state/viewer/types";
-import { resetDragOverViewer } from "../../state/viewer/actions";
 import { ButtonClass } from "../../constants/interfaces";
 
 import CustomModal from "../CustomModal";
@@ -60,16 +59,13 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     useEffect(() => {
         if (!fileIsDraggedOverViewer) return;
 
-        const handleWindowDrop = (e: DragEvent) => {
-            e.preventDefault();
-            if (e.dataTransfer?.types.includes("Files")) {
-                closeModal();
-            }
+        const handleWindowDrop = () => {
+            closeModal();
         };
 
         window.addEventListener("drop", handleWindowDrop);
         return () => window.removeEventListener("drop", handleWindowDrop);
-    }, [fileIsDraggedOverViewer, closeModal, resetDragOverViewer]);
+    }, [fileIsDraggedOverViewer]);
 
     const fileDragClass = fileIsDraggedOverViewer
         ? styles.fileDragged
@@ -148,12 +144,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
             width={525}
             wrapClassName={fileDragClass}
             wrapProps={{
-                onDragOver: (e: DragEvent) => {
-                    if (e.dataTransfer?.types.includes("Files")) {
-                        e.preventDefault();
-                        handleDragOver(e);
-                    }
-                },
+                onDragOver: (e: DragEvent) => handleDragOver(e),
             }}
         >
             <Tabs
