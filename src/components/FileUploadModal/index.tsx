@@ -141,11 +141,12 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
             className={classNames(styles.uploadModal, fileDragClass)}
             titleText="Choose a Simularium file to load"
             footerButtons={footerButtons}
-            width={525}
+            width={603}
             wrapClassName={fileDragClass}
             wrapProps={{
                 onDragOver: (e: DragEvent) => handleDragOver(e),
             }}
+            divider
         >
             <Tabs
                 items={tabItems}
