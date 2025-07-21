@@ -10,18 +10,20 @@ const { Content } = Layout;
 interface ContentPageProps {
     children: React.ReactNode;
     className?: string;
+    contactPanelIsDark?: boolean;
 }
 
 const ContentPage: React.FC<ContentPageProps> = ({
     children,
     className = "",
+    contactPanelIsDark = false,
 }) => {
     return (
         <>
             <Content className={`${styles.pageContent} ${className}`}>
                 {children}
             </Content>
-            <ContactPanel />
+            <ContactPanel isDark={contactPanelIsDark} />
             <Divider className={styles.divider} />
             <Footer />
         </>

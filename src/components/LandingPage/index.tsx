@@ -60,7 +60,9 @@ const LandingPage = (): JSX.Element => {
                 </div>
             </ContentPagePanel>
             <ContentPagePanel isDark={true} isWide={true}>
-                <h1>Load an example to explore Simularium now</h1>
+                <h2 className={styles.headerSpacing}>
+                    Load an example to explore Simularium now
+                </h2>
                 <div className={styles.cards}>
                     {TRAJECTORIES.slice(0, NUM_CARDS_PER_ROW - 1).map(
                         (trajectory) => {
@@ -85,7 +87,7 @@ const LandingPage = (): JSX.Element => {
                 </div>
             </ContentPagePanel>
             <ContentPagePanel>
-                <h1>Cite Simularium</h1>
+                <h2 className={styles.headerSpacing}>Cite Simularium</h2>
                 <div className={styles.citationText}>
                     <div className={styles.articleTitle}>
                         <a
@@ -109,8 +111,8 @@ const LandingPage = (): JSX.Element => {
                 </div>
             </ContentPagePanel>
             <ContentPagePanel isDark={true}>
-                <h1>Acknowledgments</h1>
-                <h3>
+                <h2>Acknowledgments</h2>
+                <h3 className={styles.headerSpacing}>
                     We&apos;d like to thank the following people for their
                     contributions to Simularium
                 </h3>
