@@ -256,10 +256,10 @@ const TutorialPage = (): JSX.Element => {
                     <li>
                         If using Safari on a Mac, please enable WebGL 2.0 by
                         choosing Develop &gt; Experimental Features and enabling
-                        &quot;WebGL 2.0&quot; (If you do not have a Develop menu
+                        &quot;WebGL 2.0&quot; (if you do not have a Develop menu
                         in your menu bar, first choose Safari &gt; Preferences
                         &gt; Advanced and enable &quot;Show Develop menu in menu
-                        bar&quot;.) Then reload the viewer.
+                        bar&quot;). Then reload the viewer.
                     </li>
                 </ul>
             </ContentPagePanel>
