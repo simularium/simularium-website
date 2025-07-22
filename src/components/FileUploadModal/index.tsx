@@ -59,12 +59,8 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     useEffect(() => {
         if (!fileIsDraggedOverViewer) return;
 
-        const handleWindowDrop = () => {
-            closeModal();
-        };
-
-        window.addEventListener("drop", handleWindowDrop);
-        return () => window.removeEventListener("drop", handleWindowDrop);
+        window.addEventListener("drop", closeModal);
+        return () => window.removeEventListener("drop", closeModal);
     }, [fileIsDraggedOverViewer]);
 
     const fileDragClass = fileIsDraggedOverViewer
