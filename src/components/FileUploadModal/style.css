@@ -34,10 +34,6 @@
     font-weight: 400;
 }
 
-.file-dragged:global(.ant-modal-wrap) {
-    pointer-events: none;
-}
-
-.file-dragged :global(.ant-modal-content) {
+.file-dragged:global(.ant-modal-wrap), .file-dragged :global(.ant-modal-content) {
     pointer-events: none;
 }
