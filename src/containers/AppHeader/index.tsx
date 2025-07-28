@@ -24,6 +24,7 @@ import viewerStateBranch from "../../state/viewer";
 import {
     SetViewerStatusAction,
     SetErrorAction,
+    DragOverViewerAction,
 } from "../../state/viewer/types";
 import { ButtonClass } from "../../constants/interfaces";
 import ShareTrajectoryButton from "../../components/ShareTrajectoryButton";
@@ -43,6 +44,8 @@ interface AppHeaderProps {
     setError: ActionCreator<SetErrorAction>;
     conversionStatus: ConversionStatus;
     setConversionStatus: ActionCreator<SetConversionStatusAction>;
+    fileIsDraggedOverViewer: boolean;
+    dragOverViewer: ActionCreator<DragOverViewerAction>;
 }
 
 const AppHeader: React.FC<AppHeaderProps> = ({
@@ -56,6 +59,8 @@ const AppHeader: React.FC<AppHeaderProps> = ({
     isNetworkedFile,
     conversionStatus,
     setConversionStatus,
+    fileIsDraggedOverViewer,
+    dragOverViewer,
 }) => {
     const history = useHistory();
 
@@ -113,6 +118,8 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                     setError={setError}
                     conversionStatus={conversionStatus}
                     setConversionStatus={setConversionStatus}
+                    handleDragOver={dragOverViewer}
+                    fileIsDraggedOverViewer={fileIsDraggedOverViewer}
                 />
                 <HelpMenu />
             </div>
@@ -129,6 +136,8 @@ function mapStateToProps(state: State) {
             trajectoryStateBranch.selectors.getIsNetworkedFile(state),
         conversionStatus:
             trajectoryStateBranch.selectors.getConversionStatus(state),
+        fileIsDraggedOverViewer:
+            viewerStateBranch.selectors.getFileDraggedOver(state),
     };
 }
 
@@ -140,6 +149,7 @@ const dispatchToPropsMap = {
     setViewerStatus: viewerStateBranch.actions.setStatus,
     setError: viewerStateBranch.actions.setError,
     setConversionStatus: trajectoryStateBranch.actions.setConversionStatus,
+    dragOverViewer: viewerStateBranch.actions.dragOverViewer,
 };
 
 export default connect(mapStateToProps, dispatchToPropsMap)(AppHeader);
