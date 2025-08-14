@@ -18,7 +18,7 @@
         "lint": "eslint src --ext .ts,.tsx",
         "typeCheck": "tsc -p tsconfig.json --noEmit",
         "update-viewer": "npm i @aics/simularium-viewer@latest",
-        "test": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest --coverage",
+        "test": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest",
         "test-watch": "jest --coverage --watchAll",
         "version": "auto-changelog -p --tag-pattern v.+ && git add CHANGELOG.md"
     },
@@ -94,7 +94,7 @@
         "webpack-dev-server": "^4.10.1"
     },
     "dependencies": {
-        "@aics/simularium-viewer": "^3.10.1",
+        "@aics/simularium-viewer": "^3.10.2",
         "@ant-design/css-animation": "^1.7.3",
         "@ant-design/icons": "^4.8.3",
         "antd": "^5.22.3",
