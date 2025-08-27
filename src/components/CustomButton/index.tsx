@@ -8,6 +8,7 @@ import {
     TOOLTIP_DELAY,
 } from "../../constants";
 import { ButtonClass, TooltipPlacement } from "../../constants/interfaces";
+import { ThemedProps } from "../../styles/theme/theme";
 
 interface CustomButtonProps extends Omit<AntButtonProps, "type" | "variant"> {
     variant?: ButtonClass;
@@ -26,7 +27,7 @@ interface TooltipButtonProps extends CustomButtonProps {
     tooltipPlacement?: TooltipPlacement;
 }
 
-const baseStyles = css`
+const baseStyles = css<ThemedProps>`
     font-family: ${(props) => props.theme.typography};
     border-radius: 3px;
     height: 32px;
@@ -46,7 +47,7 @@ const baseStyles = css`
 const generateButtonStyles = (
     variant: "primary" | "secondary",
     theme: "light" | "dark"
-) => css`
+) => css<ThemedProps>`
     ${({
         theme: {
             colors: { button },
@@ -84,7 +85,7 @@ const generateButtonStyles = (
     }}
 `;
 
-const actionStyles = css`
+const actionStyles = css<ThemedProps>`
     ${({
         theme: {
             colors: {
@@ -115,7 +116,7 @@ const actionStyles = css`
     `}
 `;
 
-const variantStyles: Record<ButtonClass, RuleSet<object>> = {
+const variantStyles: Record<ButtonClass, RuleSet<ThemedProps>> = {
     [ButtonClass.LightPrimary]: generateButtonStyles("primary", "light"),
     [ButtonClass.LightSecondary]: generateButtonStyles("secondary", "light"),
     [ButtonClass.DarkPrimary]: generateButtonStyles("primary", "dark"),
@@ -123,7 +124,7 @@ const variantStyles: Record<ButtonClass, RuleSet<object>> = {
     [ButtonClass.Action]: actionStyles,
 };
 
-const StyledButton = styled(AntButton)<CustomButtonProps>`
+const StyledButton = styled(AntButton)<CustomButtonProps & ThemedProps>`
     ${baseStyles}
     ${({ variant = ButtonClass.LightPrimary }) => variantStyles[variant]}
 `;

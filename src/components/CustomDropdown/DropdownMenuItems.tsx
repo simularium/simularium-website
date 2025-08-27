@@ -2,6 +2,7 @@ import React from "react";
 import { Link, LinkProps } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { ArrowRight } from "../Icons";
+import { ThemedProps, ThemeType } from "../../styles/theme/theme";
 
 // Dropdown items can be of a few component
 // varieties, including buttons, router links, and
@@ -10,7 +11,7 @@ import { ArrowRight } from "../Icons";
 // for semantically explicit usage in dropdowns.
 
 // Common styles
-const baseStyles = css`
+const baseStyles = css<{ theme: ThemeType }>`
     font-family: ${(props) => props.theme.typography};
     background: none;
     border: 2px solid ${({ theme }) => theme.colors.dropdown.background};
@@ -62,17 +63,17 @@ const contentStyles = css`
 `;
 
 // Styled components
-const StyledDropdownButton = styled.button`
+const StyledDropdownButton = styled.button<ThemedProps>`
     ${baseStyles}
     ${contentStyles}
 `;
 
-const StyledRouterLink = styled(Link)`
+const StyledRouterLink = styled(Link)<ThemedProps>`
     ${baseStyles}
     ${contentStyles}
 `;
 
-const StyledExternalLink = styled.a`
+const StyledExternalLink = styled.a<ThemedProps>`
     ${baseStyles}
     ${contentStyles}
 `;
