@@ -1,6 +1,17 @@
+.file-upload :global(.ant-upload){
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+}
+
 .file-upload :global(.ant-upload-list) {
     min-height: 30px;
 }
+
+.file-upload.list-empty :global(.ant-upload-list) {
+    display: none;
+}
+
 .file-upload :global(.ant-upload-list-item):hover,
 .file-upload :global(.ant-upload-list-item-list-type-text):focus,
 .file-upload :global(.ant-upload-list-item-list-type-text) :global(.ant-upload-list-item-info):hover {
@@ -28,3 +39,8 @@
     width: max-content;
 }
 
+.file-upload .drag {
+    border: 1px dashed var(--heather);
+    font-size: 14px;
+    padding: 20px 16px;
+}
