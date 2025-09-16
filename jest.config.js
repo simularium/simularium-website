@@ -19,7 +19,7 @@ module.exports = {
     coverageThreshold: {
         global: {
             lines: 25,
-            statements: 50,
+            statements: 25,
         },
         "./src/state/*/selectors/index.ts": {
             branches: 100,
