@@ -9,7 +9,15 @@ jobs:
         if: ${{ github.actor != 'dependabot[bot]' }}
         steps:
             - uses: actions/checkout@v3
+            - uses: actions/setup-node@v4
+              with:
+                node-version: 18            # or 20; match what you use locally
+                cache: 'npm'
+            - run: npm ci
             - uses: ArtiomTr/jest-coverage-report-action@v2.2.4
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   annotations: failed-tests
+                  skip-step: install
+              env:
+                NODE_OPTIONS: --experimental-vm-modules
