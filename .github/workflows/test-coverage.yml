@@ -11,7 +11,7 @@ jobs:
             - uses: actions/checkout@v3
             - uses: actions/setup-node@v4
               with:
-                node-version: 18            # or 20; match what you use locally
+                node-version: 16
                 cache: 'npm'
             - run: npm ci
             - uses: ArtiomTr/jest-coverage-report-action@v2.2.4
