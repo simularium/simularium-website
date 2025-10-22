@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import { message, Upload, UploadProps } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import { RcFile } from "antd/lib/upload";
+import classNames from "classnames";
 
 import { ButtonClass } from "../../constants/interfaces";
 import { VIEWER_PATHNAME } from "../../routes";
 import { CustomButton } from "../CustomButton";
+import { Drag } from "../Icons";
 
 import styles from "./style.css";
 
@@ -35,7 +37,9 @@ const LocalFileUpload: React.FC<FileUploadProps> = ({
     ...uploadConfigProps
 }) => {
     const uploadPresetProps: UploadProps = {
-        className: styles.fileUpload,
+        className: classNames(styles.fileUpload, {
+            [styles.listEmpty]: fileList.length === 0,
+        }),
         showUploadList: {
             removeIcon: <CloseOutlined />,
         },
@@ -64,6 +68,11 @@ const LocalFileUpload: React.FC<FileUploadProps> = ({
 
     return (
         <Upload {...uploadPresetProps} {...uploadConfigProps}>
+            <div className={styles.drag}>
+                {" "}
+                {Drag} Drag and drop a .simularium file anywhere in this window
+                or browse to a location.{" "}
+            </div>
             <Link
                 // Redirect to /viewer if necessary and/or clear out viewer
                 to={{
@@ -73,7 +82,7 @@ const LocalFileUpload: React.FC<FileUploadProps> = ({
             >
                 {children || (
                     <CustomButton variant={ButtonClass.LightPrimary}>
-                        Select file
+                        Browse
                     </CustomButton>
                 )}
             </Link>

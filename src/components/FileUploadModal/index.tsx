@@ -1,7 +1,8 @@
 import { Form, Tabs } from "antd";
 import { RcFile } from "antd/lib/upload";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ActionCreator } from "redux";
+import classNames from "classnames";
 
 import {
     ClearSimFileDataAction,
@@ -33,6 +34,8 @@ interface FileUploadModalProps {
     setViewerStatus: ActionCreator<SetViewerStatusAction>;
     clearSimulariumFile: ActionCreator<ClearSimFileDataAction>;
     setError: ActionCreator<SetErrorAction>;
+    fileIsDraggedOverViewer: boolean;
+    handleDragOver: (e: DragEvent) => void;
 }
 
 const FileUploadModal: React.FC<FileUploadModalProps> = ({
@@ -41,6 +44,8 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     loadLocalFile,
     setViewerStatus,
     setError,
+    fileIsDraggedOverViewer,
+    handleDragOver,
 }) => {
     const [openTab, setOpenTab] = useState<string>(UploadTab.Device);
     const [noUrlInput, setNoUrlInput] = useState(true);
@@ -50,6 +55,17 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     const closeModal = () => {
         setIsModalVisible(false);
     };
+
+    useEffect(() => {
+        if (!fileIsDraggedOverViewer) return;
+
+        window.addEventListener("drop", closeModal);
+        return () => window.removeEventListener("drop", closeModal);
+    }, [fileIsDraggedOverViewer]);
+
+    const fileDragClass = fileIsDraggedOverViewer
+        ? styles.fileDragged
+        : undefined;
 
     const onUrlInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         // Form subcomponent takes care of its own submit behavior
@@ -118,10 +134,15 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     return (
         <CustomModal
             closeHandler={closeModal}
-            className={styles.uploadModal}
+            className={classNames(styles.uploadModal, fileDragClass)}
             titleText="Choose a Simularium file to load"
             footerButtons={footerButtons}
-            width={525}
+            width={603}
+            wrapClassName={fileDragClass}
+            wrapProps={{
+                onDragOver: (e: DragEvent) => handleDragOver(e),
+            }}
+            divider
         >
             <Tabs
                 items={tabItems}
