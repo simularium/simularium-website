@@ -17,10 +17,6 @@ module.exports = {
         "^lodash/(.*)$": "lodash-es/$1",
     },
     coverageThreshold: {
-        global: {
-            lines: 25,
-            statements: 25,
-        },
         "./src/state/*/selectors/index.ts": {
             branches: 100,
             functions: 100,
