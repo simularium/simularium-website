@@ -103,7 +103,7 @@
         "bowser": "^2.11.0",
         "classnames": "2.2.5",
         "core-js": "2.5.5",
-        "lodash": "^4.17.20",
+        "lodash": "^4.17.23",
         "moment": "^2.29.4",
         "plotly.js": "^2.25.2",
         "query-string": "^6.13.1",
