@@ -19,6 +19,8 @@ interface CustomModalProps extends Omit<ModalProps, OmittedProps> {
     titleText?: string;
     footerButtons?: React.ReactNode;
     divider?: boolean;
+    wrapProps?: { onDragOver: (e: DragEvent) => void };
+    wrapClassName?: string;
 }
 
 /** Wrapper to keep styling of modals consistent:
@@ -31,6 +33,8 @@ const CustomModal: React.FC<CustomModalProps> = ({
     titleText,
     footerButtons,
     divider,
+    wrapProps,
+    wrapClassName,
     ...props
 }) => {
     const title = (
@@ -66,6 +70,8 @@ const CustomModal: React.FC<CustomModalProps> = ({
             footer={footer}
             open
             centered
+            wrapClassName={wrapClassName}
+            wrapProps={wrapProps}
         />
     );
 };

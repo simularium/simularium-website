@@ -33,3 +33,7 @@
 .upload-modal :global(.ant-tabs .ant-tabs-tab-active) {
     font-weight: 400;
 }
+
+.file-dragged:global(.ant-modal-wrap), .file-dragged :global(.ant-modal-content) {
+    pointer-events: none;
+}

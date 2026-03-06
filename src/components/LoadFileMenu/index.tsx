@@ -35,6 +35,8 @@ interface LoadFileMenuProps {
     setError: ActionCreator<SetErrorAction>;
     conversionStatus: ConversionStatus;
     setConversionStatus: ActionCreator<SetConversionStatusAction>;
+    fileIsDraggedOverViewer: boolean;
+    handleDragOver: (e: DragEvent) => void;
 }
 
 const LoadFileMenu = ({
@@ -46,6 +48,8 @@ const LoadFileMenu = ({
     setError,
     conversionStatus,
     setConversionStatus,
+    fileIsDraggedOverViewer,
+    handleDragOver,
 }: LoadFileMenuProps): JSX.Element => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const location = useLocation();
@@ -142,6 +146,8 @@ const LoadFileMenu = ({
                     loadLocalFile={loadLocalFile}
                     setViewerStatus={setViewerStatus}
                     setError={setError}
+                    handleDragOver={handleDragOver}
+                    fileIsDraggedOverViewer={fileIsDraggedOverViewer}
                 />
             )}
         </>

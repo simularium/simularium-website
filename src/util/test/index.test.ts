@@ -1,3 +1,4 @@
+import { jest } from "@jest/globals";
 import {
     URL_PARAM_KEY_FILE_NAME,
     URL_PARAM_KEY_USER_URL,
@@ -485,6 +486,7 @@ describe("User Url handling", () => {
                     writeText: jest.fn(),
                 },
                 writable: true,
+                configurable: true,
             });
         });
 
@@ -503,11 +505,12 @@ describe("User Url handling", () => {
         it("should handle error if writing to clipboard fails", async () => {
             const text = "Hello, World!";
             const error = new Error("Failed to write to clipboard");
-            console.error = jest.fn();
-
-            (navigator.clipboard.writeText as jest.Mock).mockRejectedValueOnce(
-                error
-            );
+            console.error = jest.fn<(err: unknown) => void>();
+            const writeTextMock = navigator.clipboard
+                .writeText as jest.MockedFunction<
+                typeof navigator.clipboard.writeText
+            >;
+            writeTextMock.mockRejectedValueOnce(error);
 
             await copyToClipboard(text);
 
