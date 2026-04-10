@@ -87,6 +87,10 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                     onClick={() => {
                         history.push("/");
                     }}
+                    // prevent lingering default focus style after following link
+                    onMouseUp={(e) => {
+                        (e.currentTarget as HTMLButtonElement).blur();
+                    }}
                 />
             </div>
             <ViewerTitle

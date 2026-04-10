@@ -46,6 +46,10 @@
     margin-right: 1em;
 }
 
+.header-spacing {
+    margin-bottom: 16px;
+}
+
 .citation-text { 
     display: flex;
     flex-direction: column;
