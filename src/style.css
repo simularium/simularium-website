@@ -72,7 +72,7 @@ canvas:focus {
     font-family: "Overpass";
     font-style: normal;
     font-weight: normal;
-    src: url("https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100..900;1,100..900&display=swap");
+    src: url("https://fonts.googleapis.com/css2?family=Overpass:wght@100;200;300;400;500;600;700;800;900&display=swap");
     line-gap-override: 0;
 }
 
