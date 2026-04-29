@@ -76,7 +76,7 @@
         "lint-staged": "^11.2.6",
         "lodash-es": "^4.18.1",
         "mini-css-extract-plugin": "2.6.1",
-        "postcss": "^8.4.17",
+        "postcss": "^8.5.12",
         "postcss-flexbugs-fixes": "5.0.2",
         "postcss-loader": "7.0.1",
         "postcss-preset-env": "7.8.2",
@@ -120,7 +120,7 @@
         "redux": "4.2.0",
         "redux-logic": "^3.0.3",
         "reselect": "4.0.0",
-        "styled-components": "^6.1.13",
+        "styled-components": "^6.4.1",
         "use-debounce": "^9.0.4",
         "uuid": "^14.0.0"
     }
