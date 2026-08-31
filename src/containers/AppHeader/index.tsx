@@ -17,7 +17,7 @@ import {
 import LoadFileMenu from "../../components/LoadFileMenu";
 import ViewerTitle from "../../components/ViewerTitle";
 import HelpMenu from "../../components/HelpMenu";
-import { AicsLogo } from "../../components/Icons";
+import { AllenInstituteLogo } from "../../components/Icons";
 import { State } from "../../state/types";
 import trajectoryStateBranch from "../../state/trajectory";
 import viewerStateBranch from "../../state/viewer";
@@ -78,11 +78,11 @@ const AppHeader: React.FC<AppHeaderProps> = ({
             <div className={styles.leftLinks}>
                 <a
                     href="https://allencell.org"
-                    title="Allen Cell Explorer"
+                    aria-label="Go to allencell.org"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    {AicsLogo}
+                    {AllenInstituteLogo}
                 </a>
                 <span className={styles.verticalBar}>|</span>
                 <CustomButton

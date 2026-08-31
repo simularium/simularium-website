@@ -23,7 +23,7 @@ import {
 } from "@ant-design/icons";
 
 import PurpleArrowPointingRight from "../../assets/open-arrow.svg";
-import AicsLogoWhite from "../../assets/AICS-logo-full.png";
+import AllenInstituteLogoWhite from "../../assets/AI_cell_science_stacked_white.svg";
 import Beta from "../../assets/beta.svg";
 import CaretAICS from "../../assets/icon-caret.svg";
 
@@ -48,7 +48,13 @@ export const Exclamation = <ExclamationCircleFilled />;
 export const Drag = <DragOutlined />;
 
 export const PurpleArrow = <img src={PurpleArrowPointingRight} />;
-export const AicsLogo = <img src={AicsLogoWhite} style={{ width: "140px" }} />;
+export const AllenInstituteLogo = (
+    <img
+        src={AllenInstituteLogoWhite}
+        alt="Allen Institute logo"
+        style={{ width: "140px" }}
+    />
+);
 export const BetaTag = <img src={Beta} style={{ width: "42px" }} />;
 export const UpRightArrow = <ArrowLeftOutlined rotate={135} />;
 export const DownCaret = (
@@ -72,7 +78,7 @@ export default {
     ArrowLeftOutlined,
     GoBack,
     PurpleArrow,
-    AicsLogo,
+    AllenInstituteLogo,
     Reset,
     ZoomIn,
     ZoomOut,
