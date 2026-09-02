@@ -24,13 +24,15 @@ const getBasePlugins = (dist, env) => {
             filename: "style.[contenthash].css",
         }),
         new HtmlWebpackPlugin({
-            favicon: "./src/assets/AICS-logo.svg",
+            favicon: "./src/assets/AI_lens_blue.svg",
             template: path.resolve(__dirname, "index.template.html"),
             meta: {
                 viewport: "width=device-width, initial-scale=1",
                 description:
                     "The Simularium Viewer makes it easy to share and interrogate interactive 3D visualizations of biological simulation trajectories and related plots directly in a web browser.",
+                author: "The cell science accelerator at the Allen Institute",
                 ["og:title"]: "Simularium",
+                ["og:site_name"]: "Allen Institute, Cell Science",
                 ["og:description"]:
                     "The Simularium Viewer makes it easy to share and interrogate interactive 3D visualizations of biological simulation trajectories and related plots directly in a web browser.",
                 ["og:url"]: "https://simularium.allencell.org",
