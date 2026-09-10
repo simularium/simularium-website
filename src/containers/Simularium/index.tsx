@@ -111,7 +111,7 @@ class App extends React.Component<AppProps, AppState> {
         const fileName = parsed[URL_PARAM_KEY_FILE_NAME];
         const userTrajectoryUrl = parsed[URL_PARAM_KEY_USER_URL];
 
-        const loadNetworkedFile = (fileName: string | string[]) => {
+        const loadNetworkedFile = (fileName: string | (string | null)[]) => {
             const networkedFile = find(TRAJECTORIES, { id: fileName });
             if (networkedFile) {
                 const fileData = networkedFile as TrajectoryDisplayData;
@@ -132,7 +132,7 @@ class App extends React.Component<AppProps, AppState> {
         };
 
         const loadUserTrajectoryUrl = (
-            userTrajectoryUrl: string | string[]
+            userTrajectoryUrl: string | (string | null)[]
         ) => {
             const verifiedUrl = urlCheck(userTrajectoryUrl);
             const fileId = getFileIdFromUrl(verifiedUrl, parsed.id);

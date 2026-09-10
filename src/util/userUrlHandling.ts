@@ -33,7 +33,7 @@ export const isGoogleDriveUrl = (url: string) => /google.com/g.test(url);
 
 export const getGoogleDriveFileId = (
     googleDriveUrl: string,
-    id?: string | string[] | null
+    id?: string | (string | null)[] | null
 ): string | undefined => {
     // already checked it was a google url before entering this function.
     if (id && isString(id)) {
@@ -62,7 +62,7 @@ export const getGoogleDriveFileId = (
 
 export const getFileIdFromUrl = (
     url: string,
-    idParam?: string | string[] | null
+    idParam?: string | (string | null)[] | null
 ) => {
     if (isGoogleDriveUrl(url)) {
         return getGoogleDriveFileId(url, idParam);
